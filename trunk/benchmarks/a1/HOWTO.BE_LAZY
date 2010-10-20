@@ -1,1 +1,0 @@
-setenv TESTNAME OSP_Put_latency ; setenv NODES 512 ; setenv MODE dual ; make ${TESTNAME}.${NODES}.${MODE}.output
