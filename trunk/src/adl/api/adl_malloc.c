@@ -4,15 +4,15 @@
  *      See COPYRIGHT in top-level directory.
  */
 
-#include "a1.h"
-#include "a1d.h"
-#include "a1u.h"
+#include "osp.h"
+#include "ospd.h"
+#include "ospu.h"
 
-int A1_Exchange_segments(A1_group_t* group, void* ptr[])
+int OSP_Exchange_segments(OSP_group_t* group, void* ptr[])
 {
-    int status = A1_SUCCESS;
+    int status = OSP_SUCCESS;
 
-    A1U_FUNC_ENTER();
+    OSPU_FUNC_ENTER();
 
     /* FIXME: The profiling interface needs to go here */
 
@@ -21,22 +21,22 @@ int A1_Exchange_segments(A1_group_t* group, void* ptr[])
 #   ifdef HAVE_ERROR_CHECKING
 #   endif
 
-    status = A1D_Exchange_segments(group, ptr);
-    A1U_ERR_POP(status != A1_SUCCESS, "A1D_Exchange_segments returned an error\n");
+    status = OSPD_Exchange_segments(group, ptr);
+    OSPU_ERR_POP(status != OSP_SUCCESS, "OSPD_Exchange_segments returned an error\n");
 
   fn_exit: 
-    A1U_FUNC_EXIT();
+    OSPU_FUNC_EXIT();
     return status;
 
   fn_fail:  
     goto fn_exit;
 }
 
-int  A1_Alloc_segment(void** pointer, int bytes)
+int  OSP_Alloc_segment(void** pointer, int bytes)
 {
-    int status = A1_SUCCESS;
+    int status = OSP_SUCCESS;
 
-    A1U_FUNC_ENTER();
+    OSPU_FUNC_ENTER();
 
     /* FIXME: The profiling interface needs to go here */
 
@@ -51,11 +51,11 @@ int  A1_Alloc_segment(void** pointer, int bytes)
       goto fn_exit;
     }
 
-    status = A1D_Alloc_segment(pointer, bytes);
-    A1U_ERR_POP(status != A1_SUCCESS, "A1D_Alloc_segment returned an error\n");
+    status = OSPD_Alloc_segment(pointer, bytes);
+    OSPU_ERR_POP(status != OSP_SUCCESS, "OSPD_Alloc_segment returned an error\n");
 
   fn_exit: 
-    A1U_FUNC_EXIT();
+    OSPU_FUNC_EXIT();
     return status;
 
   fn_fail: 

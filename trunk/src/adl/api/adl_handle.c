@@ -4,15 +4,15 @@
  *      See COPYRIGHT in top-level directory.
  */
 
-#include "a1.h"
-#include "a1d.h"
-#include "a1u.h"
+#include "osp.h"
+#include "ospd.h"
+#include "ospu.h"
 
-int A1_Allocate_handle(A1_handle_t *a1_handle)
+int OSP_Allocate_handle(OSP_handle_t *osp_handle)
 {
-    int status = A1_SUCCESS;
+    int status = OSP_SUCCESS;
 
-    A1U_FUNC_ENTER();
+    OSPU_FUNC_ENTER();
 
     /* FIXME: The profiling interface needs to go here */
 
@@ -21,22 +21,22 @@ int A1_Allocate_handle(A1_handle_t *a1_handle)
 #   ifdef HAVE_ERROR_CHECKING
 #   endif
 
-    status = A1D_Allocate_handle(a1_handle); 
-    A1U_ERR_POP(status!=A1_SUCCESS, "A1D_Allocate_handle returned an error\n");
+    status = OSPD_Allocate_handle(osp_handle); 
+    OSPU_ERR_POP(status!=OSP_SUCCESS, "OSPD_Allocate_handle returned an error\n");
 
   fn_exit:
-    A1U_FUNC_EXIT();
+    OSPU_FUNC_EXIT();
     return status;
 
   fn_fail:
     goto fn_exit;
 }
 
-int A1_Release_handle(A1_handle_t a1_handle)
+int OSP_Release_handle(OSP_handle_t osp_handle)
 {
-    int status = A1_SUCCESS;
+    int status = OSP_SUCCESS;
 
-    A1U_FUNC_ENTER();
+    OSPU_FUNC_ENTER();
 
     /* FIXME: The profiling interface needs to go here */
 
@@ -45,11 +45,11 @@ int A1_Release_handle(A1_handle_t a1_handle)
 #   ifdef HAVE_ERROR_CHECKING
 #   endif
 
-    status = A1D_Release_handle(a1_handle);                                        
-    A1U_ERR_POP(status!=A1_SUCCESS, "A1D_Release_handle returned an error\n");
+    status = OSPD_Release_handle(osp_handle);                                        
+    OSPU_ERR_POP(status!=OSP_SUCCESS, "OSPD_Release_handle returned an error\n");
 
   fn_exit:
-    A1U_FUNC_EXIT();
+    OSPU_FUNC_EXIT();
     return status;
 
   fn_fail:

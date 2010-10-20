@@ -4,11 +4,11 @@
  *      See COPYRIGHT in top-level directory.
  */
 
-#include "a1.h"
-#include "a1u.h"
-#include "a1d.h"
+#include "osp.h"
+#include "ospu.h"
+#include "ospd.h"
 
-#define A1UI_ACC(datatype, source, target, scaling, count)                  \
+#define OSPUI_ACC(datatype, source, target, scaling, count)                  \
         do {                                                                     \
             int w;                                                                 \
             datatype *s = (datatype *) source;                                     \
@@ -18,98 +18,98 @@
             t[w] += s[w]*c;                                                   \
         } while(0)                                                               \
 
-int A1U_Acc_memcpy(void* source_ptr,
+int OSPU_Acc_memcpy(void* source_ptr,
                    void* target_ptr,
                    int bytes,
-                   A1_datatype_t a1_type,
+                   OSP_datatype_t osp_type,
                    void* scaling)
 {
-    int status = A1_SUCCESS;
+    int status = OSP_SUCCESS;
 
-    A1U_FUNC_ENTER();
+    OSPU_FUNC_ENTER();
 
-    A1D_Global_lock_acquire();
+    OSPD_Global_lock_acquire();
 
-    switch (a1_type)
+    switch (osp_type)
     {
-        case A1_DOUBLE:
-            A1UI_ACC(double,
+        case OSP_DOUBLE:
+            OSPUI_ACC(double,
                      source_ptr,
                      target_ptr,
                      *((double *) scaling),
                      bytes/sizeof(double));
-        case A1_INT32:
-            A1UI_ACC(int32_t,
+        case OSP_INT32:
+            OSPUI_ACC(int32_t,
                      source_ptr,
                      target_ptr,
                      *((int32_t *) scaling),
                      bytes/sizeof(int32_t));
             break;
-        case A1_INT64:
-            A1UI_ACC(int64_t,
+        case OSP_INT64:
+            OSPUI_ACC(int64_t,
                      source_ptr,
                      target_ptr,
                      *((int64_t *) scaling),
                      bytes/sizeof(int64_t));
             break;
-        case A1_UINT32:
-            A1UI_ACC(uint32_t,
+        case OSP_UINT32:
+            OSPUI_ACC(uint32_t,
                      source_ptr,
                      target_ptr,
                      *((uint32_t *) scaling),
                      bytes/sizeof(uint32_t));
             break;
-        case A1_UINT64:
-            A1UI_ACC(uint64_t,
+        case OSP_UINT64:
+            OSPUI_ACC(uint64_t,
                      source_ptr,
                      target_ptr,
                      *((uint64_t *) scaling),
                      bytes/sizeof(uint64_t));
             break;
-        case A1_FLOAT:
-            A1UI_ACC(float,
+        case OSP_FLOAT:
+            OSPUI_ACC(float,
                      source_ptr,
                      target_ptr,
                      *((float *) scaling),
                      bytes/sizeof(float));
             break;
         default:
-            status = A1_ERROR;
-            A1U_ERR_POP((status != A1_SUCCESS), "Invalid datatype in A1U_Acc_memcpy \n");
+            status = OSP_ERROR;
+            OSPU_ERR_POP((status != OSP_SUCCESS), "Invalid datatype in OSPU_Acc_memcpy \n");
             break;
     }
 
-    A1D_Global_lock_release();
+    OSPD_Global_lock_release();
 
     fn_exit:
-    A1U_FUNC_EXIT();
+    OSPU_FUNC_EXIT();
     return status;
 
     fn_fail:
     goto fn_exit;
 }
 
-int A1U_AccS_memcpy(int stride_level,
+int OSPU_AccS_memcpy(int stride_level,
                     int *block_sizes,
                     void* source_ptr,
                     int *src_stride_ar,
                     void* target_ptr,
                     int *trg_stride_ar,
-                    A1_datatype_t a1_type,
+                    OSP_datatype_t osp_type,
                     void* scaling)
 {
-    int status = A1_SUCCESS;
+    int status = OSP_SUCCESS;
     int chunk_count = 1;
     int *block_sizes_w;
     int i, y;
 
-    A1U_FUNC_ENTER();
+    OSPU_FUNC_ENTER();
 
-    A1D_Global_lock_acquire();
+    OSPD_Global_lock_acquire();
 
     block_sizes_w = malloc(sizeof(int) * (stride_level + 1));
-    A1U_ERR_POP((status = (NULL == block_sizes_w)),
-                "malloc failed in A1U_PutS_memcpy");
+    OSPU_ERR_POP((status = (NULL == block_sizes_w)),
+                "malloc failed in OSPU_PutS_memcpy");
 
     memcpy(block_sizes_w, block_sizes, sizeof(int) * (stride_level + 1));
 
@@ -118,53 +118,53 @@ int A1U_AccS_memcpy(int stride_level,
 
     for (i = 0; i < chunk_count; i++)
     {
-        switch (a1_type)
+        switch (osp_type)
         {
-            case A1_DOUBLE:
-                A1UI_ACC(double,
+            case OSP_DOUBLE:
+                OSPUI_ACC(double,
                          source_ptr,
                          target_ptr,
                          *((double *) scaling),
                          block_sizes[0]/sizeof(double));
                 break;
-            case A1_INT32:
-                A1UI_ACC(int32_t,
+            case OSP_INT32:
+                OSPUI_ACC(int32_t,
                          source_ptr,
                          target_ptr,
                          *((int32_t *) scaling),
                          block_sizes[0]/sizeof(int32_t));
                 break;
-            case A1_INT64:
-                A1UI_ACC(int64_t,
+            case OSP_INT64:
+                OSPUI_ACC(int64_t,
                          source_ptr,
                          target_ptr,
                          *((int64_t *) scaling),
                          block_sizes[0]/sizeof(int64_t));
                 break;
-            case A1_UINT32:
-                A1UI_ACC(uint32_t,
+            case OSP_UINT32:
+                OSPUI_ACC(uint32_t,
                          source_ptr,
                          target_ptr,
                          *((uint32_t *) scaling),
                          block_sizes[0]/sizeof(uint32_t));
                 break;
-            case A1_UINT64:
-                A1UI_ACC(uint64_t,
+            case OSP_UINT64:
+                OSPUI_ACC(uint64_t,
                          source_ptr,
                          target_ptr,
                          *((uint64_t *) scaling),
                          block_sizes[0]/sizeof(uint64_t));
                 break;
-            case A1_FLOAT:
-                A1UI_ACC(float,
+            case OSP_FLOAT:
+                OSPUI_ACC(float,
                          source_ptr,
                          target_ptr,
                          *((float *) scaling),
                          block_sizes[0]/sizeof(float));
                 break;
             default:
-                status = A1_ERROR;
-                A1U_ERR_POP((status != A1_SUCCESS), "Invalid data type in putacc \n");
+                status = OSP_ERROR;
+                OSPU_ERR_POP((status != OSP_SUCCESS), "Invalid data type in putacc \n");
                 break;
         }
 
@@ -176,7 +176,7 @@ int A1U_AccS_memcpy(int stride_level,
             {
                 if (y == stride_level)
                 {
-                    A1U_ASSERT(i == chunk_count - 1, status);
+                    OSPU_ASSERT(i == chunk_count - 1, status);
                     return status;
                 }
                 y++;
@@ -206,86 +206,86 @@ int A1U_AccS_memcpy(int stride_level,
         }
     }
 
-    A1D_Global_lock_release();
+    OSPD_Global_lock_release();
 
     fn_exit:
-    A1U_FUNC_EXIT();
+    OSPU_FUNC_EXIT();
     return status;
 
     fn_fail:
     goto fn_exit;
 }
 
-int A1U_AccV_memcpy(A1_iov_t *iov_ar,
+int OSPU_AccV_memcpy(OSP_iov_t *iov_ar,
                     int ar_len,
-                    A1_datatype_t a1_type,
+                    OSP_datatype_t osp_type,
                     void* scaling)
 {
-    int i, j, status = A1_SUCCESS;
+    int i, j, status = OSP_SUCCESS;
 
-    A1U_FUNC_ENTER();
+    OSPU_FUNC_ENTER();
 
-    A1D_Global_lock_acquire();
+    OSPD_Global_lock_acquire();
 
     for (i=0; i<ar_len; i++)
     {
         for(j=0; j<iov_ar[i].ptr_ar_len; j++) 
         {
-            switch (a1_type)
+            switch (osp_type)
             {
-                case A1_DOUBLE:
-                    A1UI_ACC(double,
+                case OSP_DOUBLE:
+                    OSPUI_ACC(double,
                              iov_ar[i].source_ptr_ar[j],
                              iov_ar[i].target_ptr_ar[j],
                              *((double *) scaling),
                              (iov_ar[i].size)/sizeof(double));
                     break;
-                case A1_INT32:
-                    A1UI_ACC(int32_t,
+                case OSP_INT32:
+                    OSPUI_ACC(int32_t,
                              iov_ar[i].source_ptr_ar[j],
                              iov_ar[i].target_ptr_ar[j],
                              *((int32_t *) scaling),
                              (iov_ar[i].size)/sizeof(int32_t));
                     break;
-                case A1_INT64:
-                    A1UI_ACC(int64_t,
+                case OSP_INT64:
+                    OSPUI_ACC(int64_t,
                              iov_ar[i].source_ptr_ar[j],
                              iov_ar[i].target_ptr_ar[j],
                              *((int64_t *) scaling),
                              (iov_ar[i].size)/sizeof(int64_t));
                     break;
-                case A1_UINT32:
-                    A1UI_ACC(uint32_t,
+                case OSP_UINT32:
+                    OSPUI_ACC(uint32_t,
                              iov_ar[i].source_ptr_ar[j],
                              iov_ar[i].target_ptr_ar[j],
                              *((uint32_t *) scaling),
                              (iov_ar[i].size)/sizeof(uint32_t));
                     break;
-                case A1_UINT64:
-                    A1UI_ACC(uint64_t,
+                case OSP_UINT64:
+                    OSPUI_ACC(uint64_t,
                              iov_ar[i].source_ptr_ar[j],
                              iov_ar[i].target_ptr_ar[j],
                              *((uint64_t *) scaling),
                              (iov_ar[i].size)/sizeof(uint64_t));
                     break;
-                case A1_FLOAT:
-                    A1UI_ACC(float,
+                case OSP_FLOAT:
+                    OSPUI_ACC(float,
                              iov_ar[i].source_ptr_ar[j],
                              iov_ar[i].target_ptr_ar[j],
                              *((float *) scaling),
                              (iov_ar[i].size)/sizeof(float));
                     break;
                 default:
-                    status = A1_ERROR;
-                    A1U_ERR_POP((status != A1_SUCCESS), "Invalid data type in putacc \n");
+                    status = OSP_ERROR;
+                    OSPU_ERR_POP((status != OSP_SUCCESS), "Invalid data type in putacc \n");
                     break;
             }
         }
     }
 
-    A1D_Global_lock_release();
+    OSPD_Global_lock_release();
 
-    fn_exit: A1U_FUNC_EXIT();
+    fn_exit: OSPU_FUNC_EXIT();
     return status;
 
     fn_fail:

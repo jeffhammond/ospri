@@ -4,39 +4,39 @@
  *      See COPYRIGHT in top-level directory.
  */
 
-#include "a1.h"
-#include "a1d.h"
-#include "a1u.h"
+#include "osp.h"
+#include "ospd.h"
+#include "ospu.h"
 
 /* This is here because the build system does not yet have the necessary
  * logic to set these options for each device. */
-#define A1D_IMPLEMENTS_PUTACCS
+#define OSPD_IMPLEMENTS_PUTACCS
 
-#if defined A1D_IMPLEMENTS_PUTACCS
+#if defined OSPD_IMPLEMENTS_PUTACCS
 
-int A1_PutAccS(int target,
+int OSP_PutAccS(int target,
                int stride_level,
                int *block_sizes,
                void* source_ptr,
                int *src_stride_ar,
                void* target_ptr,
                int *trg_stride_ar,
-               A1_datatype_t a1_type,
+               OSP_datatype_t osp_type,
                void* scaling)
 {
-    int status = A1_SUCCESS;
-    int my_rank = A1D_Process_id(A1_GROUP_WORLD);
+    int status = OSP_SUCCESS;
+    int my_rank = OSPD_Process_id(OSP_GROUP_WORLD);
 
-    A1U_FUNC_ENTER();
+    OSPU_FUNC_ENTER();
 
 #   ifdef HAVE_ERROR_CHECKING
 #   endif
 
-#   ifdef A1_TAU_PROFILING
+#   ifdef OSP_TAU_PROFILING
     {
       int i, bytes = 1;
       for (i = 0; i <= stride_levels; i++) total_bytes *= count[i];
-      TAU_TRACE_SENDMSG (A1_TAU_TAG_PUTACCS, target, total_bytes);
+      TAU_TRACE_SENDMSG (OSP_TAU_TAG_PUTACCS, target, total_bytes);
     }
 #   endif
 
@@ -44,87 +44,87 @@ int A1_PutAccS(int target,
     if(stride_level == 0)
     {
         /* Bypass is ALWAYS better for accumulate; we do not test against threshold. */
-        if (target == my_rank && a1u_settings.network_bypass)
+        if (target == my_rank && ospu_settings.network_bypass)
         {
-           status = A1U_Acc_memcpy(source_ptr,
+           status = OSPU_Acc_memcpy(source_ptr,
                                    target_ptr,
                                    block_sizes[0],
-                                   a1_type,
+                                   osp_type,
                                    scaling);
-           A1U_ERR_POP(status != A1_SUCCESS, "A1U_Acc_memcpy returned an error\n");
+           OSPU_ERR_POP(status != OSP_SUCCESS, "OSPU_Acc_memcpy returned an error\n");
         }
         else
         { 
-           status = A1D_PutAcc(target,
+           status = OSPD_PutAcc(target,
                                source_ptr,
                                target_ptr,
                                block_sizes[0],
-                               a1_type,
+                               osp_type,
                                scaling);
-           A1U_ERR_POP((status!=A1_SUCCESS), "A1D_PutAcc returned error\n");
+           OSPU_ERR_POP((status!=OSP_SUCCESS), "OSPD_PutAcc returned error\n");
         }
         goto fn_exit;
     }
 
     /* Bypass is ALWAYS better for accumulate; we do not test against threshold. */
-    if (target == my_rank && a1u_settings.network_bypass)
+    if (target == my_rank && ospu_settings.network_bypass)
     {
-        status = A1U_AccS_memcpy(stride_level,
+        status = OSPU_AccS_memcpy(stride_level,
                                  block_sizes,
                                  source_ptr,
                                  src_stride_ar,
                                  target_ptr,
                                  trg_stride_ar,
-                                 a1_type,
+                                 osp_type,
                                  scaling);
-        A1U_ERR_POP(status != A1_SUCCESS, "A1U_AccS_memcpy returned an error\n");
+        OSPU_ERR_POP(status != OSP_SUCCESS, "OSPU_AccS_memcpy returned an error\n");
     }
     else
     {
-        status = A1D_PutAccS(target,
+        status = OSPD_PutAccS(target,
                              stride_level,
                              block_sizes,
                              source_ptr,
                              src_stride_ar,
                              target_ptr,
                              trg_stride_ar,
-                             a1_type,
+                             osp_type,
                              scaling);
-        A1U_ERR_POP(status, "A1D_PutAccS returned error\n");
+        OSPU_ERR_POP(status, "OSPD_PutAccS returned error\n");
     }
 
     fn_exit:
-    A1U_FUNC_EXIT();
+    OSPU_FUNC_EXIT();
     return status;
 
     fn_fail:
     goto fn_exit;
 }
 
-int A1_NbPutAccS(int target,
+int OSP_NbPutAccS(int target,
                  int stride_level,
                  int *block_sizes,
                  void* source_ptr,
                  int *src_stride_ar,
                  void* target_ptr,
                  int *trg_stride_ar,
-                 A1_datatype_t a1_type,
+                 OSP_datatype_t osp_type,
                  void* scaling,
-                 A1_handle_t a1_handle)
+                 OSP_handle_t osp_handle)
 {
-    int status = A1_SUCCESS;
-    int my_rank = A1D_Process_id(A1_GROUP_WORLD);
+    int status = OSP_SUCCESS;
+    int my_rank = OSPD_Process_id(OSP_GROUP_WORLD);
 
-    A1U_FUNC_ENTER();
+    OSPU_FUNC_ENTER();
 
 #   ifdef HAVE_ERROR_CHECKING
 #   endif
 
-#   ifdef A1_TAU_PROFILING
+#   ifdef OSP_TAU_PROFILING
     {
       int i, bytes = 1;
       for (i = 0; i <= stride_levels; i++) total_bytes *= count[i];
-      TAU_TRACE_SENDMSG (A1_TAU_TAG_NBPUTACCS, target, total_bytes);
+      TAU_TRACE_SENDMSG (OSP_TAU_TAG_NBPUTACCS, target, total_bytes);
     }
 #   endif
 
@@ -132,59 +132,59 @@ int A1_NbPutAccS(int target,
     if(stride_level == 0)
     {
         /* Bypass is ALWAYS better for accumulate; we do not test against threshold. */
-        if (target == my_rank && a1u_settings.network_bypass)
+        if (target == my_rank && ospu_settings.network_bypass)
         {
-           status = A1U_Acc_memcpy(source_ptr,
+           status = OSPU_Acc_memcpy(source_ptr,
                                    target_ptr,
                                    block_sizes[0],
-                                   a1_type,
+                                   osp_type,
                                    scaling);
-           A1U_ERR_POP(status != A1_SUCCESS, "A1U_Acc_memcpy returned an error\n");
+           OSPU_ERR_POP(status != OSP_SUCCESS, "OSPU_Acc_memcpy returned an error\n");
         }
         else
         {
-           status = A1D_NbPutAcc(target,
+           status = OSPD_NbPutAcc(target,
                                  source_ptr,
                                  target_ptr,
                                  block_sizes[0],
-                                 a1_type,
+                                 osp_type,
                                  scaling,
-		   	         a1_handle);
-           A1U_ERR_POP((status!=A1_SUCCESS), "A1D_PutAcc returned error\n");
+		   	         osp_handle);
+           OSPU_ERR_POP((status!=OSP_SUCCESS), "OSPD_PutAcc returned error\n");
         }
         goto fn_exit;
     }
 
     /* Bypass is ALWAYS better for accumulate; we do not test against threshold. */
-    if (target == my_rank && a1u_settings.network_bypass)
+    if (target == my_rank && ospu_settings.network_bypass)
     {
-        status = A1U_AccS_memcpy(stride_level,
+        status = OSPU_AccS_memcpy(stride_level,
                                  block_sizes,
                                  source_ptr,
                                  src_stride_ar,
                                  target_ptr,
                                  trg_stride_ar,
-                                 a1_type,
+                                 osp_type,
                                  scaling);
-        A1U_ERR_POP(status != A1_SUCCESS, "A1U_AccS_memcpy returned an error\n");
+        OSPU_ERR_POP(status != OSP_SUCCESS, "OSPU_AccS_memcpy returned an error\n");
     }
     else
     {
-        status = A1D_NbPutAccS(target,
+        status = OSPD_NbPutAccS(target,
                                stride_level,
                                block_sizes,
                                source_ptr,
                                src_stride_ar,
                                target_ptr,
                                trg_stride_ar,
-                               a1_type,
+                               osp_type,
                                scaling,
-                               a1_handle);
-        A1U_ERR_POP(status, "NbPutAccS returned error\n");
+                               osp_handle);
+        OSPU_ERR_POP(status, "NbPutAccS returned error\n");
     }
 
     fn_exit:
-    A1U_FUNC_EXIT();
+    OSPU_FUNC_EXIT();
     return status;
 
     fn_fail:
@@ -193,191 +193,191 @@ int A1_NbPutAccS(int target,
 
 #else
 
-int A1I_Recursive_PutAcc(int target,
+int OSPI_Recursive_PutAcc(int target,
                          int stride_level,
                          int *block_sizes,
                          void* source_ptr,
                          int *src_stride_ar,
                          void* target_ptr,
                          int *trg_stride_ar,
-                         A1_datatype_t a1_type,
+                         OSP_datatype_t osp_type,
                          void* scaling,
-                         A1_handle_t a1_handle)
+                         OSP_handle_t osp_handle)
 {
-    int i, status = A1_SUCCESS;
+    int i, status = OSP_SUCCESS;
 
-    A1U_FUNC_ENTER();
+    OSPU_FUNC_ENTER();
 
     if (stride_level > 0)
     {
         for (i = 0; i < block_sizes[stride_level]; i++)
         {
-            status = A1I_Recursive_PutAcc(target,
+            status = OSPI_Recursive_PutAcc(target,
                                           stride_level - 1,
                                           block_sizes,
                                           (void *) ((size_t) source_ptr + i * src_stride_ar[stride_level - 1]),
                                           src_stride_ar,
                                           (void *) ((size_t) target_ptr + i * trg_stride_ar[stride_level - 1]),
                                           trg_stride_ar,
-                                          a1_type,
+                                          osp_type,
                                           scaling,
-                                          a1_handle);
-            A1U_ERR_POP(status != A1_SUCCESS,
-                        "A1I_Recursive_PutAcc returned error in A1I_Recursive_PutAcc.\n");
+                                          osp_handle);
+            OSPU_ERR_POP(status != OSP_SUCCESS,
+                        "OSPI_Recursive_PutAcc returned error in OSPI_Recursive_PutAcc.\n");
         }
     }
     else
     {
-        status = A1D_NbPutAcc(target,
+        status = OSPD_NbPutAcc(target,
                               source_ptr,
                               target_ptr,
                               block_sizes[0],
-                              a1_type,
+                              osp_type,
                               scaling,
-                              a1_handle);
-        A1U_ERR_POP(status != A1_SUCCESS, "A1D_NbPutAcc returned with an error \n");
+                              osp_handle);
+        OSPU_ERR_POP(status != OSP_SUCCESS, "OSPD_NbPutAcc returned with an error \n");
     }
 
     fn_exit:
-    A1U_FUNC_EXIT();
+    OSPU_FUNC_EXIT();
     return status;
 
     fn_fail:
     goto fn_exit;
 }
 
-int A1_PutAccS(int target,
+int OSP_PutAccS(int target,
                int stride_level,
                int *block_sizes,
                void* source_ptr,
                int *src_stride_ar,
                void* target_ptr,
                int *trg_stride_ar,
-               A1_datatype_t a1_type,
+               OSP_datatype_t osp_type,
                void* scaling)
 {
-    int status = A1_SUCCESS;
-    int my_rank = A1D_Process_id(A1_GROUP_WORLD);
-    A1_handle_t a1_handle;
+    int status = OSP_SUCCESS;
+    int my_rank = OSPD_Process_id(OSP_GROUP_WORLD);
+    OSP_handle_t osp_handle;
 
-    A1U_FUNC_ENTER();
+    OSPU_FUNC_ENTER();
 
 #   ifdef HAVE_ERROR_CHECKING
 #   endif
 
-#   ifdef A1_TAU_PROFILING
+#   ifdef OSP_TAU_PROFILING
     {
       int i, bytes = 1;
       for (i = 0; i <= stride_levels; i++) total_bytes *= count[i];
-      TAU_TRACE_SENDMSG (A1_TAU_TAG_PUTACCS, target, total_bytes);
+      TAU_TRACE_SENDMSG (OSP_TAU_TAG_PUTACCS, target, total_bytes);
     }
 #   endif
 
     /* Bypass is ALWAYS better for accumulate; we do not test against threshold. */
-    if (target == my_rank && a1u_settings.network_bypass)
+    if (target == my_rank && ospu_settings.network_bypass)
     {
-        status = A1U_AccS_memcpy(stride_level,
+        status = OSPU_AccS_memcpy(stride_level,
                                  block_sizes,
                                  source_ptr,
                                  src_stride_ar,
                                  target_ptr,
                                  trg_stride_ar,
-                                 a1_type,
+                                 osp_type,
                                  scaling);
-        A1U_ERR_POP(status != A1_SUCCESS, "A1U_AccS_memcpy returned an error\n");
+        OSPU_ERR_POP(status != OSP_SUCCESS, "OSPU_AccS_memcpy returned an error\n");
     }
     else
     {
-        status = A1D_Allocate_handle(&a1_handle);
-        A1U_ERR_POP(status!=A1_SUCCESS, "A1D_Allocate_handle returned error\n");
+        status = OSPD_Allocate_handle(&osp_handle);
+        OSPU_ERR_POP(status!=OSP_SUCCESS, "OSPD_Allocate_handle returned error\n");
 
-        status = A1I_Recursive_PutAcc(target,
+        status = OSPI_Recursive_PutAcc(target,
                                       stride_level,
                                       block_sizes,
                                       source_ptr,
                                       src_stride_ar,
                                       target_ptr,
                                       trg_stride_ar,
-                                      a1_type,
+                                      osp_type,
                                       scaling,
-                                      a1_handle);
-        A1U_ERR_POP(status!=A1_SUCCESS, "A1I_Recursive_PutAcc returned error\n");
+                                      osp_handle);
+        OSPU_ERR_POP(status!=OSP_SUCCESS, "OSPI_Recursive_PutAcc returned error\n");
 
-        status = A1D_Wait_handle(a1_handle);
-        A1U_ERR_POP(status!=A1_SUCCESS, "A1D_Wait_handle returned error\n");
+        status = OSPD_Wait_handle(osp_handle);
+        OSPU_ERR_POP(status!=OSP_SUCCESS, "OSPD_Wait_handle returned error\n");
     }
 
     fn_exit:
     /* Could also test for NULL, assuming we set it as such in the declaration. */
-    if(target == my_rank && a1u_settings.network_bypass) A1D_Release_handle(a1_handle);
-    A1U_FUNC_EXIT();
+    if(target == my_rank && ospu_settings.network_bypass) OSPD_Release_handle(osp_handle);
+    OSPU_FUNC_EXIT();
     return status;
 
     fn_fail:
     goto fn_exit;
 }
 
-int A1_NbPutAccS(int target,
+int OSP_NbPutAccS(int target,
                  int stride_level,
                  int *block_sizes,
                  void* source_ptr,
                  int *src_stride_ar,
                  void* target_ptr,
                  int *trg_stride_ar,
-                 A1_datatype_t a1_type,
+                 OSP_datatype_t osp_type,
                  void* scaling,
-                 A1_handle_t a1_handle)
+                 OSP_handle_t osp_handle)
 {
-    int status = A1_SUCCESS;
-    int my_rank = A1D_Process_id(A1_GROUP_WORLD);
+    int status = OSP_SUCCESS;
+    int my_rank = OSPD_Process_id(OSP_GROUP_WORLD);
 
-    A1U_FUNC_ENTER();
+    OSPU_FUNC_ENTER();
 
 #   ifdef HAVE_ERROR_CHECKING
 #   endif
 
-#   ifdef A1_TAU_PROFILING
+#   ifdef OSP_TAU_PROFILING
     {
       int i, bytes = 1;
       for (i = 0; i <= stride_levels; i++) total_bytes *= count[i];
-      TAU_TRACE_SENDMSG (A1_TAU_TAG_NBPUTACCS, target, total_bytes);
+      TAU_TRACE_SENDMSG (OSP_TAU_TAG_NBPUTACCS, target, total_bytes);
     }
 #   endif
 
     /* Bypass is ALWAYS better for accumulate; we do not test against threshold. */
-    if (target == my_rank && a1u_settings.network_bypass)
+    if (target == my_rank && ospu_settings.network_bypass)
     {
-        status = A1U_AccS_memcpy(stride_level,
+        status = OSPU_AccS_memcpy(stride_level,
                                  block_sizes,
                                  source_ptr,
                                  src_stride_ar,
                                  target_ptr,
                                  trg_stride_ar,
-                                 a1_type,
+                                 osp_type,
                                  scaling);
-        A1U_ERR_POP(status != A1_SUCCESS, "A1U_AccS_memcpy returned an error\n");
+        OSPU_ERR_POP(status != OSP_SUCCESS, "OSPU_AccS_memcpy returned an error\n");
     }
     else
     {
-        status = A1I_Recursive_PutAcc(target,
+        status = OSPI_Recursive_PutAcc(target,
                                       stride_level,
                                       block_sizes,
                                       source_ptr,
                                       src_stride_ar,
                                       target_ptr,
                                       trg_stride_ar,
-                                      a1_type,
+                                      osp_type,
                                       scaling,
-                                      a1_handle);
-        A1U_ERR_POP(status!=A1_SUCCESS, "A1I_Recursive_PutAcc returned error\n");
+                                      osp_handle);
+        OSPU_ERR_POP(status!=OSP_SUCCESS, "OSPI_Recursive_PutAcc returned error\n");
     }
 
     fn_exit:
-    A1U_FUNC_EXIT();
+    OSPU_FUNC_EXIT();
     return status;
 
     fn_fail:
     goto fn_exit;
 }
 
-#endif /* A1D_IMPLEMENTS_PUTACCV */
+#endif /* OSPD_IMPLEMENTS_PUTACCV */

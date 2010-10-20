@@ -50,7 +50,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <a1.h>
+#include <osp.h>
 
 #define MAX_DIM 1024 
 
@@ -64,32 +64,32 @@ int main()
     int iterations;
     double t_start, t_stop, t_total, d_total, bw;
     int count[2], src_stride, trg_stride, stride_level;
-    A1_handle_t a1_handle;
+    OSP_handle_t osp_handle;
 
-    A1_Initialize(A1_THREAD_SINGLE);
+    OSP_Initialize(OSP_THREAD_SINGLE);
 
-    rank = A1_Process_id(A1_GROUP_WORLD);
-    nranks = A1_Process_total(A1_GROUP_WORLD);
+    rank = OSP_Process_id(OSP_GROUP_WORLD);
+    nranks = OSP_Process_total(OSP_GROUP_WORLD);
 
-    A1_Barrier_group(A1_GROUP_WORLD);
+    OSP_Barrier_group(OSP_GROUP_WORLD);
 
     bufsize = MAX_DIM * MAX_DIM * sizeof(double);
     buffer = (double **) malloc(sizeof(double *) * nranks);
-    A1_Alloc_segment((void **) &(buffer[rank]), bufsize);
-    A1_Exchange_segments(A1_GROUP_WORLD, (void **) buffer);
+    OSP_Alloc_segment((void **) &(buffer[rank]), bufsize);
+    OSP_Exchange_segments(OSP_GROUP_WORLD, (void **) buffer);
 
     for (i = 0; i < bufsize / sizeof(double); i++)
     {
         *(buffer[rank] + i) = 1.0 + rank;
     }
 
-    A1_Allocate_handle(&a1_handle);
+    OSP_Allocate_handle(&osp_handle);
 
-    A1_Barrier_group(A1_GROUP_WORLD);
+    OSP_Barrier_group(OSP_GROUP_WORLD);
 
     if (rank == 0)
     {
-        printf("A1_GetS Bandwidth in MBPS \n");
+        printf("OSP_GetS Bandwidth in MBPS \n");
         printf("%30s %30s %22s \n", "MsgSize", "Dimensions(array of doubles)", "Latency");
         fflush(stdout);
 
@@ -107,22 +107,22 @@ int main()
 
             iterations = (MAX_DIM * MAX_DIM)/(dim*dim);
 
-            t_start = A1_Time_seconds();
+            t_start = OSP_Time_seconds();
             for (i = 0; i < iterations; i++)
             {
 
-                A1_NbGetS(1,
+                OSP_NbGetS(1,
                           stride_level,
                           count,
                           (void *) buffer[dest],
                           &src_stride,
                           (void *) buffer[rank],
                           &trg_stride,
-                          a1_handle);
+                          osp_handle);
 
             }
-            A1_Wait_handle(a1_handle);
-            t_stop = A1_Time_seconds();
+            OSP_Wait_handle(osp_handle);
+            t_stop = OSP_Time_seconds();
 
             char temp[10];
             sprintf(temp, "%dX%d", dim, dim);
@@ -157,12 +157,12 @@ int main()
 
     }
 
-    A1_Barrier_group(A1_GROUP_WORLD);
+    OSP_Barrier_group(OSP_GROUP_WORLD);
 
-    A1_Release_segments(A1_GROUP_WORLD, (void *) buffer[rank]);
-    A1_Free_segment((void *) buffer[rank]);
+    OSP_Release_segments(OSP_GROUP_WORLD, (void *) buffer[rank]);
+    OSP_Free_segment((void *) buffer[rank]);
 
-    A1_Finalize();
+    OSP_Finalize();
 
     return 0;
 }

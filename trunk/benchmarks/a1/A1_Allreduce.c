@@ -50,7 +50,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <a1.h>
+#include <osp.h>
 #include <armci.h>
 
 #define MAX_MSG_SIZE 1024*1024
@@ -64,21 +64,21 @@ int main()
     int t_start, t_stop, t_latency;
     int expected;
 
-    A1_Initialize(A1_THREAD_SINGLE);
+    OSP_Initialize(OSP_THREAD_SINGLE);
 
-    rank = A1_Process_id(A1_GROUP_WORLD);
-    nranks = A1_Process_total(A1_GROUP_WORLD);
+    rank = OSP_Process_id(OSP_GROUP_WORLD);
+    nranks = OSP_Process_total(OSP_GROUP_WORLD);
 
     bufsize = MAX_MSG_SIZE;
     buffer = (int *) malloc(bufsize);
 
     if (rank == 0)
     {
-        printf("A1_Allreduce Test - in usec \n");
+        printf("OSP_Allreduce Test - in usec \n");
         fflush(stdout);
     }
 
-    A1_Barrier_group(A1_GROUP_WORLD);
+    OSP_Barrier_group(OSP_GROUP_WORLD);
 
     for (msgsize = sizeof(int); msgsize < MAX_MSG_SIZE; msgsize *= 2)
     {
@@ -88,10 +88,10 @@ int main()
                  buffer[i] = rank;
             }
 
-            A1_Allreduce_group(A1_GROUP_WORLD,
+            OSP_Allreduce_group(OSP_GROUP_WORLD,
                                msgsize/sizeof(int),
-                               A1_SUM,
-                               A1_INT32,
+                               OSP_SUM,
+                               OSP_INT32,
                                (void *) buffer,
                                (void *) buffer);
 
@@ -115,10 +115,10 @@ int main()
                   buffer[i] = 1;
             }
 
-            A1_Allreduce_group(A1_GROUP_WORLD,
+            OSP_Allreduce_group(OSP_GROUP_WORLD,
                                msgsize/sizeof(int),
-                               A1_PROD,
-                               A1_INT32,
+                               OSP_PROD,
+                               OSP_INT32,
                                (void *) buffer,
                                (void *) buffer);
 
@@ -140,7 +140,7 @@ int main()
     }
 
     free(buffer);
-    A1_Finalize();
+    OSP_Finalize();
 
     return 0;
 }

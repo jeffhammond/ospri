@@ -49,20 +49,20 @@
  */
 
 #include <stdio.h>
-#include <a1.h>
+#include <osp.h>
 
 int main()
 {
     int rank;
 
-    A1_Initialize(A1_THREAD_SINGLE);
+    OSP_Initialize(OSP_THREAD_SINGLE);
 
-    rank = A1_Process_id(A1_GROUP_WORLD);
+    rank = OSP_Process_id(OSP_GROUP_WORLD);
 
-    printf("[%d] Hello A1 \n", rank);
+    printf("[%d] Hello OSP \n", rank);
     fflush(stdout);
 
-    A1_Finalize();
+    OSP_Finalize();
 
     return 0;
 }

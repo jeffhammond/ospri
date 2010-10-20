@@ -4,16 +4,16 @@
  *      See COPYRIGHT in top-level directory.
  */
 
-#include "a1.h"
-#include "a1d.h"
-#include "a1u.h"
+#include "osp.h"
+#include "ospd.h"
+#include "ospu.h"
 
-int A1_Initialize(int thread_level)
+int OSP_Initialize(int thread_level)
 {
-    int status = A1_SUCCESS;
-    static int a1_active = 0;
+    int status = OSP_SUCCESS;
+    static int osp_active = 0;
 
-    A1U_FUNC_ENTER();
+    OSPU_FUNC_ENTER();
 
     /* FIXME: The profiling interface needs to go here */
 
@@ -23,23 +23,23 @@ int A1_Initialize(int thread_level)
 #   endif
 
     /* we only want this function to run once */
-    if(a1_active == 1)
+    if(osp_active == 1)
     {
         return status;
     }
-    a1_active = 1;
+    osp_active = 1;
 
-    status = A1D_Initialize(thread_level);
-    A1U_ERR_POP(status!=A1_SUCCESS, "A1D_Initialize returned error\n");
+    status = OSPD_Initialize(thread_level);
+    OSPU_ERR_POP(status!=OSP_SUCCESS, "OSPD_Initialize returned error\n");
 
-    status = A1U_Read_parameters();
-    A1U_ERR_POP(status!=A1_SUCCESS, "A1U_Read_parameters returned error\n");
+    status = OSPU_Read_parameters();
+    OSPU_ERR_POP(status!=OSP_SUCCESS, "OSPU_Read_parameters returned error\n");
 
-    status = A1U_Print_parameters();
-    A1U_ERR_POP(status!=A1_SUCCESS, "A1U_Print_parameters returned error\n");
+    status = OSPU_Print_parameters();
+    OSPU_ERR_POP(status!=OSP_SUCCESS, "OSPU_Print_parameters returned error\n");
 
   fn_exit: 
-    A1U_FUNC_EXIT();
+    OSPU_FUNC_EXIT();
     return status;
 
   fn_fail: 

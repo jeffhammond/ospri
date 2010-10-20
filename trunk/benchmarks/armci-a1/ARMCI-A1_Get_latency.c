@@ -51,7 +51,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <armci.h>
-#include <a1.h>
+#include <osp.h>
 
 #define MAX_MSG_SIZE 1024*1024
 #define ITERATIONS 100
@@ -68,8 +68,8 @@ int main(int argc, char **argv)
 
     ARMCI_Init_args(&argc, &argv);
 
-    rank = A1_Process_id(A1_GROUP_WORLD);
-    nranks = A1_Process_total(A1_GROUP_WORLD);
+    rank = OSP_Process_id(OSP_GROUP_WORLD);
+    nranks = OSP_Process_total(OSP_GROUP_WORLD);
 
     bufsize = MAX_MSG_SIZE * (ITERATIONS + SKIP);
     buffer = (double **) malloc(sizeof(double *) * nranks);
@@ -80,7 +80,7 @@ int main(int argc, char **argv)
         *(buffer[rank] + i) = 1.0 + rank;
     }
 
-    A1_Barrier_group(A1_GROUP_WORLD);
+    OSP_Barrier_group(OSP_GROUP_WORLD);
 
     if (rank == 0)
     {
@@ -97,14 +97,14 @@ int main(int argc, char **argv)
             for (i = 0; i < ITERATIONS + SKIP; i++)
             {
 
-                if (i == SKIP) t_start = A1_Time_seconds();
+                if (i == SKIP) t_start = OSP_Time_seconds();
 
                 ARMCI_Get((void *) ((size_t) buffer[dest] + (size_t)(i
                         * msgsize)), (void *) ((size_t) buffer[rank]
                         + (size_t)(i * msgsize)), msgsize, 1);
 
             }
-            t_stop = A1_Time_seconds();
+            t_stop = OSP_Time_seconds();
             printf("%20d %20.2f \n", msgsize, ((t_stop - t_start) * 1000000)
                     / ITERATIONS);
             fflush(stdout);
@@ -130,7 +130,7 @@ int main(int argc, char **argv)
 
     }
 
-    A1_Barrier_group(A1_GROUP_WORLD);
+    OSP_Barrier_group(OSP_GROUP_WORLD);
 
     ARMCI_Free(buffer[rank]);
 

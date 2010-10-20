@@ -6,20 +6,20 @@
 
 #include "mpidimpl.h"
 
-void A1D_Barrier_group(A1_group_t* group) {
+void OSPD_Barrier_group(OSP_group_t* group) {
 
-    A1U_FUNC_ENTER();
+    OSPU_FUNC_ENTER();
 
-    if(group == A1_GROUP_WORLD) {
+    if(group == OSP_GROUP_WORLD) {
         MPI_Barrier(MPI_COMM_WORLD);
         goto fn_exit;
     } else {
-        A1U_ERR_ABORT(1,"A1D_Barrier_group not implement for non-world groups!");
+        OSPU_ERR_ABORT(1,"OSPD_Barrier_group not implement for non-world groups!");
         goto fn_fail;
     }
 
   fn_exit:
-    A1U_FUNC_EXIT();
+    OSPU_FUNC_EXIT();
     return;
 
   fn_fail:

@@ -13,7 +13,7 @@ _BGP_Atomic global_atomic;
 volatile int shared[4 * NITERS] __attribute__((__aligned__(16)));
 volatile int shared_idx __attribute__((__aligned__(16)));
 
-#define A1DI_GLOBAL_ATOMIC_ACQUIRE()                    \
+#define OSPDI_GLOBAL_ATOMIC_ACQUIRE()                    \
  {                                                      \
    volatile int done __attribute__((__aligned__(16)));  \
    done = 0;                                            \
@@ -23,7 +23,7 @@ volatile int shared_idx __attribute__((__aligned__(16)));
    } while(!done);                                      \
  }                                                      \
 
-#define A1DI_GLOBAL_ATOMIC_RELEASE() do{ global_atomic.atom = 0; _bgp_mbar(); }while(0)
+#define OSPDI_GLOBAL_ATOMIC_RELEASE() do{ global_atomic.atom = 0; _bgp_mbar(); }while(0)
 
 void *execute(void * dummy)
 {
@@ -34,14 +34,14 @@ void *execute(void * dummy)
     t_start = DCMF_Timebase();
     for (i = 0; i < NITERS; i++)
     {
-        A1DI_GLOBAL_ATOMIC_ACQUIRE();
+        OSPDI_GLOBAL_ATOMIC_ACQUIRE();
         _bgp_dcache_touch_line(&shared_idx);
         idx = shared_idx;
         shared[idx] = coreid;
         idx++;
         shared_idx = idx;
         _bgp_mbar();
-        A1DI_GLOBAL_ATOMIC_RELEASE();
+        OSPDI_GLOBAL_ATOMIC_RELEASE();
     }
     t_stop = DCMF_Timebase();
     printf("Time at id %d is: %lld t_start %lld t_stop %lld\n", coreid, (t_stop

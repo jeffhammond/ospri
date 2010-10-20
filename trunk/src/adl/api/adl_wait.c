@@ -4,15 +4,15 @@
  *      See COPYRIGHT in top-level directory.
  */
 
-#include "a1.h"
-#include "a1d.h"
-#include "a1u.h"
+#include "osp.h"
+#include "ospd.h"
+#include "ospu.h"
 
-int A1_Wait_handle(A1_handle_t handle) 
+int OSP_Wait_handle(OSP_handle_t handle) 
 {
-    int status = A1_SUCCESS;
+    int status = OSP_SUCCESS;
 
-    A1U_FUNC_ENTER();
+    OSPU_FUNC_ENTER();
 
     /* FIXME: The profiling interface needs to go here */
 
@@ -21,22 +21,22 @@ int A1_Wait_handle(A1_handle_t handle)
 #   ifdef HAVE_ERROR_CHECKING
 #   endif
 
-    status = A1D_Wait_handle(handle); 
-    A1U_ERR_POP(status!=A1_SUCCESS, "A1D_Wait_handle returned an error\n");
+    status = OSPD_Wait_handle(handle); 
+    OSPU_ERR_POP(status!=OSP_SUCCESS, "OSPD_Wait_handle returned an error\n");
 
   fn_exit:
-    A1U_FUNC_EXIT();
+    OSPU_FUNC_EXIT();
     return status;
 
   fn_fail:
     goto fn_exit;
 }
 
-int A1_Wait_handle_list(int count, A1_handle_t *handle)
+int OSP_Wait_handle_list(int count, OSP_handle_t *handle)
 {
-    int status = A1_SUCCESS;
+    int status = OSP_SUCCESS;
 
-    A1U_FUNC_ENTER();
+    OSPU_FUNC_ENTER();
 
     /* FIXME: The profiling interface needs to go here */
 
@@ -45,22 +45,22 @@ int A1_Wait_handle_list(int count, A1_handle_t *handle)
 #   ifdef HAVE_ERROR_CHECKING
 #   endif
 
-    status = A1D_Wait_handle_list(count, handle);
-    A1U_ERR_POP(status!=A1_SUCCESS, "A1D_Wait_handle_list returned an error\n");
+    status = OSPD_Wait_handle_list(count, handle);
+    OSPU_ERR_POP(status!=OSP_SUCCESS, "OSPD_Wait_handle_list returned an error\n");
 
   fn_exit:
-    A1U_FUNC_EXIT();
+    OSPU_FUNC_EXIT();
     return status;
 
   fn_fail:
     goto fn_exit;
 }
 
-int A1_Wait_handle_all(void)
+int OSP_Wait_handle_all(void)
 {
-    int status = A1_SUCCESS;
+    int status = OSP_SUCCESS;
 
-    A1U_FUNC_ENTER();
+    OSPU_FUNC_ENTER();
 
     /* FIXME: The profiling interface needs to go here */
 
@@ -69,22 +69,22 @@ int A1_Wait_handle_all(void)
 #   ifdef HAVE_ERROR_CHECKING
 #   endif
 
-    status = A1D_Wait_handle_all();
-    A1U_ERR_POP(status!=A1_SUCCESS, "A1D_Wait_handle_all returned an error\n");
+    status = OSPD_Wait_handle_all();
+    OSPU_ERR_POP(status!=OSP_SUCCESS, "OSPD_Wait_handle_all returned an error\n");
 
   fn_exit:
-    A1U_FUNC_EXIT();
+    OSPU_FUNC_EXIT();
     return status;
 
   fn_fail:
     goto fn_exit;
 }
 
-int A1_Test_handle(A1_handle_t handle, A1_bool_t* completed)
+int OSP_Test_handle(OSP_handle_t handle, OSP_bool_t* completed)
 {
-    int status = A1_SUCCESS;
+    int status = OSP_SUCCESS;
 
-    A1U_FUNC_ENTER();
+    OSPU_FUNC_ENTER();
 
     /* FIXME: The profiling interface needs to go here */
 
@@ -93,11 +93,11 @@ int A1_Test_handle(A1_handle_t handle, A1_bool_t* completed)
 #   ifdef HAVE_ERROR_CHECKING
 #   endif
 
-    status = A1D_Test_handle(handle, completed);
-    A1U_ERR_POP(status!=A1_SUCCESS, "A1D_Test_handle returned an error\n");
+    status = OSPD_Test_handle(handle, completed);
+    OSPU_ERR_POP(status!=OSP_SUCCESS, "OSPD_Test_handle returned an error\n");
 
   fn_exit:
-    A1U_FUNC_EXIT();
+    OSPU_FUNC_EXIT();
     return status;
 
   fn_fail:
@@ -105,11 +105,11 @@ int A1_Test_handle(A1_handle_t handle, A1_bool_t* completed)
 }
 
 
-int A1_Test_handle_list(int count, A1_handle_t *handle, A1_bool_t* *completed)
+int OSP_Test_handle_list(int count, OSP_handle_t *handle, OSP_bool_t* *completed)
 {
-    int status = A1_SUCCESS;
+    int status = OSP_SUCCESS;
 
-    A1U_FUNC_ENTER();
+    OSPU_FUNC_ENTER();
 
     /* FIXME: The profiling interface needs to go here */
 
@@ -118,11 +118,11 @@ int A1_Test_handle_list(int count, A1_handle_t *handle, A1_bool_t* *completed)
 #   ifdef HAVE_ERROR_CHECKING
 #   endif
 
-    status = A1D_Test_handle_list(count, handle, completed);
-    A1U_ERR_POP(status!=A1_SUCCESS, "A1D_Test_handle_list returned an error\n");
+    status = OSPD_Test_handle_list(count, handle, completed);
+    OSPU_ERR_POP(status!=OSP_SUCCESS, "OSPD_Test_handle_list returned an error\n");
 
   fn_exit:
-    A1U_FUNC_EXIT();
+    OSPU_FUNC_EXIT();
     return status;
 
   fn_fail:

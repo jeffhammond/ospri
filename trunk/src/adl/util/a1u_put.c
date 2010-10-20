@@ -4,51 +4,51 @@
  *      See COPYRIGHT in top-level directory.
  */
 
-#include "a1.h"
-#include "a1u.h"
-#include "a1d.h"
+#include "osp.h"
+#include "ospu.h"
+#include "ospd.h"
 
-int A1U_Put_memcpy(void* src,
+int OSPU_Put_memcpy(void* src,
                    void* dst,
                    int bytes)
 {
-    int status = A1_SUCCESS;
+    int status = OSP_SUCCESS;
 
-    A1U_FUNC_ENTER();
+    OSPU_FUNC_ENTER();
 
-    A1D_Global_lock_acquire();
+    OSPD_Global_lock_acquire();
 
     memcpy(dst, src, bytes);
 
-    A1D_Global_lock_release();
+    OSPD_Global_lock_release();
 
     fn_exit:
-    A1U_FUNC_EXIT();
+    OSPU_FUNC_EXIT();
     return status;
 
     fn_fail:
     goto fn_exit;
 }
 
-int A1U_PutS_memcpy(int stride_level,
+int OSPU_PutS_memcpy(int stride_level,
                     int *block_sizes,
                     void* source_ptr,
                     int *src_stride_ar,
                     void* target_ptr,
                     int *trg_stride_ar)
 {
-    int status = A1_SUCCESS;
+    int status = OSP_SUCCESS;
     int chunk_count = 1;
     int *block_sizes_w;
     int i, y;
 
-    A1U_FUNC_ENTER();
+    OSPU_FUNC_ENTER();
 
-    A1D_Global_lock_acquire();
+    OSPD_Global_lock_acquire();
 
     block_sizes_w = malloc(sizeof(int) * (stride_level + 1));
-    A1U_ERR_POP((status = (NULL == block_sizes_w)),
-                "malloc failed in A1U_PutS_memcpy");
+    OSPU_ERR_POP((status = (NULL == block_sizes_w)),
+                "malloc failed in OSPU_PutS_memcpy");
 
     memcpy(block_sizes_w, block_sizes, sizeof(int) * (stride_level + 1));
 
@@ -67,7 +67,7 @@ int A1U_PutS_memcpy(int stride_level,
             {
                 if (y == stride_level)
                 {
-                    A1U_ASSERT(i == chunk_count - 1, status);
+                    OSPU_ASSERT(i == chunk_count - 1, status);
                     return status;
                 }
                 y++;
@@ -97,24 +97,24 @@ int A1U_PutS_memcpy(int stride_level,
         }
     }
 
-    A1D_Global_lock_release();
+    OSPD_Global_lock_release();
 
     fn_exit:
-    A1U_FUNC_EXIT();
+    OSPU_FUNC_EXIT();
     return status;
 
     fn_fail:
     goto fn_exit;
 }
 
-int A1U_PutV_memcpy(A1_iov_t *iov_ar,
+int OSPU_PutV_memcpy(OSP_iov_t *iov_ar,
                     int ar_len)
 {
-    int i, j, status = A1_SUCCESS;
+    int i, j, status = OSP_SUCCESS;
 
-    A1U_FUNC_ENTER();
+    OSPU_FUNC_ENTER();
 
-    A1D_Global_lock_acquire();
+    OSPD_Global_lock_acquire();
 
     for (i=0; i<ar_len; i++)
     {
@@ -124,9 +124,9 @@ int A1U_PutV_memcpy(A1_iov_t *iov_ar,
         }
     }
 
-    A1D_Global_lock_release();
+    OSPD_Global_lock_release();
 
-    fn_exit: A1U_FUNC_EXIT();
+    fn_exit: OSPU_FUNC_EXIT();
     return status;
 
     fn_fail:

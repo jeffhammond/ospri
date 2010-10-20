@@ -51,7 +51,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <mpi.h>
-#include <a1.h>
+#include <osp.h>
 
 #define COUNT 1024*1024
 
@@ -70,20 +70,20 @@ int main(int argc, char* argv[])
 
     MPI_Init_thread(&argc, &argv, MPI_THREAD_MULTIPLE, &provided);
 
-    A1_Initialize(A1_THREAD_SINGLE);
+    OSP_Initialize(OSP_THREAD_SINGLE);
 
-    rank = A1_Process_id(A1_GROUP_WORLD);
-    nranks = A1_Process_total(A1_GROUP_WORLD);
+    rank = OSP_Process_id(OSP_GROUP_WORLD);
+    nranks = OSP_Process_total(OSP_GROUP_WORLD);
 
     complete = (int *) malloc(sizeof(int) * COUNT);
 
     counter = (int **) malloc(sizeof(int *) * nranks); 
-    A1_Alloc_segment((void **) &(counter[rank]), sizeof(int)); 
-    A1_Exchange_segments(A1_GROUP_WORLD, (void **) counter);
+    OSP_Alloc_segment((void **) &(counter[rank]), sizeof(int)); 
+    OSP_Exchange_segments(OSP_GROUP_WORLD, (void **) counter);
 
     if (rank == 0)
     {
-        printf("A1_RMW Test - in usec \n");
+        printf("OSP_RMW Test - in usec \n");
         fflush(stdout);
     }
 
@@ -101,27 +101,27 @@ int main(int argc, char* argv[])
     counter_fetch = 0;
     counters_received = 0;
 
-    A1_Barrier_group(A1_GROUP_WORLD);    
+    OSP_Barrier_group(OSP_GROUP_WORLD);    
  
     while(counter_fetch < COUNT)
     {  
-        A1_Rmw(target,
+        OSP_Rmw(target,
                (void *) &increment,
                (void *) &counter_fetch,
                (void *) counter[target],
                sizeof(int),
-               A1_FETCH_AND_ADD,
-               A1_INT32);
+               OSP_FETCH_AND_ADD,
+               OSP_INT32);
 
         /* s/1/rank/ means we will know who got the counter */
         if (counter_fetch < COUNT) complete[counter_fetch] = rank;
         counters_received++;
     }
 
-    A1_Allreduce_group(A1_GROUP_WORLD, 
+    OSP_Allreduce_group(OSP_GROUP_WORLD, 
                        COUNT,                   
-                       A1_SUM,
-                       A1_INT32,
+                       OSP_SUM,
+                       OSP_INT32,
                        (void *) complete,
                        (void *) complete);
 
@@ -136,7 +136,7 @@ int main(int argc, char* argv[])
     }
     printf("[%d] The RMW update completed successfully \n", rank);
     fflush(stdout);
-    A1_Barrier_group(A1_GROUP_WORLD);
+    OSP_Barrier_group(OSP_GROUP_WORLD);
 
     if (0==rank)
     {
@@ -148,15 +148,15 @@ int main(int argc, char* argv[])
         }
         fflush(stdout);
     }
-    A1_Barrier_group(A1_GROUP_WORLD);
+    OSP_Barrier_group(OSP_GROUP_WORLD);
 
     printf("process %d received %d counters\n", rank, counters_received);
     fflush(stdout);
 
-    A1_Release_segments(A1_GROUP_WORLD, counter[rank]);
-    A1_Free_segment(counter[rank]);
+    OSP_Release_segments(OSP_GROUP_WORLD, counter[rank]);
+    OSP_Free_segment(counter[rank]);
 
-    A1_Finalize();
+    OSP_Finalize();
 
     return 0;
 }

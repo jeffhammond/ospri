@@ -3,8 +3,8 @@
 #     See COPYRIGHT in top-level directory.
 #
 
-liba1_la_SOURCES += $(top_srcdir)/src/adl/util/a1u_put.c \
-                    $(top_srcdir)/src/adl/util/a1u_get.c \
-                    $(top_srcdir)/src/adl/util/a1u_acc.c \
-                    $(top_srcdir)/src/adl/util/a1u_mod.c \
-                    $(top_srcdir)/src/adl/util/a1u_param.c 
+libosp_la_SOURCES += $(top_srcdir)/src/adl/util/ospu_put.c \
+                    $(top_srcdir)/src/adl/util/ospu_get.c \
+                    $(top_srcdir)/src/adl/util/ospu_acc.c \
+                    $(top_srcdir)/src/adl/util/ospu_mod.c \
+                    $(top_srcdir)/src/adl/util/ospu_param.c 

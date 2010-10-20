@@ -1,12 +1,12 @@
-# Environment variable A1_INSTALL should point to the install directory of A1
+# Environment variable OSP_INSTALL should point to the install directory of OSP
 # Environment variable ARMCI_INSTALL should point to the install directory of ARMCI
 # Environment variable GA_INSTALL should point to the install directory of GA
 
 CC      = mpixlc_r 
 COPT    = -g -O0
 
-INCLUDE = -I$(GA_INSTALL)/include -I$(A1_INSTALL)/include 
-LIBS    = -I$(GA_INSTALL)/lib -lglobal -ltcgmsg-mpi -lma -L$(A1_INSTALL)/lib -la1 
+INCLUDE = -I$(GA_INSTALL)/include -I$(OSP_INSTALL)/include 
+LIBS    = -I$(GA_INSTALL)/lib -lglobal -ltcgmsg-mpi -lma -L$(OSP_INSTALL)/lib -losp 
 
 LD      = $(CC)
 CFLAGS  = $(COPT) $(INCLUDE)

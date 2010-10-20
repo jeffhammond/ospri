@@ -1,5 +1,5 @@
 #GetS Latency in usec 
-#MsgSize          Array-Dim                  A1               ARMCI 
+#MsgSize          Array-Dim                  OSP               ARMCI 
        8               1                   3.96               12.15 
       32               2                   5.81               14.01 
      128               4                   8.83               17.30 

@@ -6,14 +6,14 @@
 
 #include "mpidimpl.h"
 
-int A1DI_Flush_all()
+int OSPDI_Flush_all()
 {
-    int result = A1_SUCCESS;
+    int result = OSP_SUCCESS;
 
-    A1U_FUNC_ENTER();
+    OSPU_FUNC_ENTER();
 
   fn_exit:
-    A1U_FUNC_EXIT();
+    OSPU_FUNC_EXIT();
     return result;
 
   fn_fail:

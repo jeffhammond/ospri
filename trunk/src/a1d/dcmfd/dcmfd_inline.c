@@ -37,13 +37,13 @@ static __inline__ void reset(volatile uint32_t *global_lock)
    return;
 }
 
-void A1DI_Global_lock_acquire()
+void OSPDI_Global_lock_acquire()
 {
    while(testandset(&global_lock)); 
    return;
 }
 
-void A1DI_Global_lock_release()
+void OSPDI_Global_lock_release()
 {
    reset(&global_lock);
    return;

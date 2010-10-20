@@ -6,70 +6,70 @@
 
 #include "dcmfdimpl.h"
 
-DCMF_Protocol_t A1D_Generic_putacc_protocol;
+DCMF_Protocol_t OSPD_Generic_putacc_protocol;
 
-void A1DI_RecvDone_putacc_callback(void *clientdata, DCMF_Error_t *error)
+void OSPDI_RecvDone_putacc_callback(void *clientdata, DCMF_Error_t *error)
 {
-    int status = A1_SUCCESS;
+    int status = OSP_SUCCESS;
 
-    A1D_Request_t *a1d_request = (A1D_Request_t *) clientdata;
-    A1D_Putacc_header_t *header = (A1D_Putacc_header_t *) a1d_request->buffer_ptr;
-    void* source_ptr = (void *) ((size_t) a1d_request->buffer_ptr + sizeof(A1D_Putacc_header_t));
-    int data_size = a1d_request->buffer_size - sizeof(A1D_Putacc_header_t);
+    OSPD_Request_t *ospd_request = (OSPD_Request_t *) clientdata;
+    OSPD_Putacc_header_t *header = (OSPD_Putacc_header_t *) ospd_request->buffer_ptr;
+    void* source_ptr = (void *) ((size_t) ospd_request->buffer_ptr + sizeof(OSPD_Putacc_header_t));
+    int data_size = ospd_request->buffer_size - sizeof(OSPD_Putacc_header_t);
 
     switch (header->datatype)
     {
-        case A1_DOUBLE:
-            A1DI_ACC(double,
+        case OSP_DOUBLE:
+            OSPDI_ACC(double,
                     source_ptr,
                     header->target_ptr,
                     (header->scaling).double_value,
                     data_size/sizeof(double));
             break;
-        case A1_INT32:
-            A1DI_ACC(int32_t,
+        case OSP_INT32:
+            OSPDI_ACC(int32_t,
                     source_ptr,
                     header->target_ptr,
                     (header->scaling).int32_value,
                     data_size / sizeof(int32_t));
             break;
-        case A1_INT64:
-            A1DI_ACC(int64_t,
+        case OSP_INT64:
+            OSPDI_ACC(int64_t,
                     source_ptr,
                     header->target_ptr,
                     (header->scaling).int64_value,
                     data_size / sizeof(int64_t));
             break;
-        case A1_UINT32:
-            A1DI_ACC(uint32_t,
+        case OSP_UINT32:
+            OSPDI_ACC(uint32_t,
                     source_ptr,
                     header->target_ptr,
                     (header->scaling).uint32_value,
                     data_size / sizeof(uint32_t));
             break;
-        case A1_UINT64:
-            A1DI_ACC(uint64_t,
+        case OSP_UINT64:
+            OSPDI_ACC(uint64_t,
                     source_ptr,
                     header->target_ptr,
                     (header->scaling).uint64_value,
                     data_size / sizeof(uint64_t));
             break;
-        case A1_FLOAT:
-            A1DI_ACC(float,
+        case OSP_FLOAT:
+            OSPDI_ACC(float,
                     source_ptr,
                     header->target_ptr,
                     (header->scaling).float_value,
                     data_size / sizeof(float));
             break;
         default:
-            A1U_ERR_ABORT(status, "Invalid datatype received in Putacc operation\n");
+            OSPU_ERR_ABORT(status, "Invalid datatype received in Putacc operation\n");
             break;
     }
 
-    A1DI_Release_request(a1d_request);
+    OSPDI_Release_request(ospd_request);
 }
 
-DCMF_Request_t* A1DI_RecvSend_putacc_callback(void *clientdata,
+DCMF_Request_t* OSPDI_RecvSend_putacc_callback(void *clientdata,
                                               const DCQuad *msginfo,
                                               unsigned count,
                                               size_t peer,
@@ -79,170 +79,170 @@ DCMF_Request_t* A1DI_RecvSend_putacc_callback(void *clientdata,
                                               DCMF_Callback_t *cb_done)
 {
     int status = 0;
-    A1D_Request_t *a1d_request;
+    OSPD_Request_t *ospd_request;
 
-    a1d_request = A1DI_Get_request(0);
-    A1U_ERR_ABORT(status = (a1d_request == NULL),
-            "A1DI_Get_request returned NULL in A1DI_RecvSend_putacc_callback\n");
+    ospd_request = OSPDI_Get_request(0);
+    OSPU_ERR_ABORT(status = (ospd_request == NULL),
+            "OSPDI_Get_request returned NULL in OSPDI_RecvSend_putacc_callback\n");
 
-    A1U_ASSERT_ABORT(sizeof(A1D_Putacc_header_t) == count*sizeof(DCQuad),
-            "Header of invalid size received in A1DI_RecvSend_putacc_callback\n")
+    OSPU_ASSERT_ABORT(sizeof(OSPD_Putacc_header_t) == count*sizeof(DCQuad),
+            "Header of invalid size received in OSPDI_RecvSend_putacc_callback\n")
 
-    a1d_request->buffer_size = sndlen + sizeof(A1D_Putacc_header_t);
-    status = A1DI_Malloc((void **) &(a1d_request->buffer_ptr),
-                         sndlen + sizeof(A1D_Putacc_header_t));
-    A1U_ERR_ABORT(status != 0,
-            "A1DI_Malloc failed in A1DI_RecvSend_packedputs_callback\n");
+    ospd_request->buffer_size = sndlen + sizeof(OSPD_Putacc_header_t);
+    status = OSPDI_Malloc((void **) &(ospd_request->buffer_ptr),
+                         sndlen + sizeof(OSPD_Putacc_header_t));
+    OSPU_ERR_ABORT(status != 0,
+            "OSPDI_Malloc failed in OSPDI_RecvSend_packedputs_callback\n");
 
-    A1DI_Memcpy(a1d_request->buffer_ptr,(void *) msginfo,sizeof(A1D_Putacc_header_t));
+    OSPDI_Memcpy(ospd_request->buffer_ptr,(void *) msginfo,sizeof(OSPD_Putacc_header_t));
 
     *rcvlen = sndlen;
-    *rcvbuf = (char *) ((size_t) a1d_request->buffer_ptr + sizeof(A1D_Putacc_header_t));
+    *rcvbuf = (char *) ((size_t) ospd_request->buffer_ptr + sizeof(OSPD_Putacc_header_t));
 
-    cb_done->function = A1DI_RecvDone_putacc_callback;
-    cb_done->clientdata = (void *) a1d_request;
+    cb_done->function = OSPDI_RecvDone_putacc_callback;
+    cb_done->clientdata = (void *) ospd_request;
 
-    return &(a1d_request->request);
+    return &(ospd_request->request);
 }
 
-void A1DI_RecvSendShort_putacc_callback(void *clientdata,
+void OSPDI_RecvSendShort_putacc_callback(void *clientdata,
                                         const DCQuad *msginfo,
                                         unsigned count,
                                         size_t peer,
                                         const char *src,
                                         size_t bytes)
 {
-    int status = A1_SUCCESS;
-    A1D_Putacc_header_t *header = (A1D_Putacc_header_t *) msginfo;
+    int status = OSP_SUCCESS;
+    OSPD_Putacc_header_t *header = (OSPD_Putacc_header_t *) msginfo;
     void* source_ptr = (void *) src;
 
     switch (header->datatype)
     {
-        case A1_DOUBLE:
-            A1DI_ACC(double,
+        case OSP_DOUBLE:
+            OSPDI_ACC(double,
                     source_ptr,
                     header->target_ptr,
                     (header->scaling).double_value,
                     bytes/sizeof(double));
             break;
-        case A1_INT32:
-            A1DI_ACC(int32_t,
+        case OSP_INT32:
+            OSPDI_ACC(int32_t,
                     source_ptr,
                     header->target_ptr,
                     (header->scaling).int32_value,
                     bytes / sizeof(int32_t));
             break;
-        case A1_INT64:
-            A1DI_ACC(int64_t,
+        case OSP_INT64:
+            OSPDI_ACC(int64_t,
                     source_ptr,
                     header->target_ptr,
                     (header->scaling).int64_value,
                     bytes / sizeof(int64_t));
             break;
-        case A1_UINT32:
-            A1DI_ACC(uint32_t,
+        case OSP_UINT32:
+            OSPDI_ACC(uint32_t,
                     source_ptr,
                     header->target_ptr,
                     (header->scaling).uint32_value,
                     bytes / sizeof(uint32_t));
             break;
-        case A1_UINT64:
-            A1DI_ACC(uint64_t,
+        case OSP_UINT64:
+            OSPDI_ACC(uint64_t,
                     source_ptr,
                     header->target_ptr,
                     (header->scaling).uint64_value,
                     bytes / sizeof(uint64_t));
             break;
-        case A1_FLOAT:
-            A1DI_ACC(float,
+        case OSP_FLOAT:
+            OSPDI_ACC(float,
                     source_ptr,
                     header->target_ptr,
                     (header->scaling).float_value,
                     bytes/sizeof(float));
             break;
         default:
-            A1U_ERR_ABORT(status, "Invalid datatype received in Putacc operation \n")
+            OSPU_ERR_ABORT(status, "Invalid datatype received in Putacc operation \n")
             ;
             break;
     }
 }
 
-int A1DI_Putacc_initialize()
+int OSPDI_Putacc_initialize()
 {
-    int status = A1_SUCCESS;
+    int status = OSP_SUCCESS;
     DCMF_Send_Configuration_t conf;
 
-    A1U_FUNC_ENTER();
+    OSPU_FUNC_ENTER();
 
     conf.protocol = DCMF_DEFAULT_SEND_PROTOCOL;
     conf.network = DCMF_TORUS_NETWORK;
-    conf.cb_recv_short = A1DI_RecvSendShort_putacc_callback;
+    conf.cb_recv_short = OSPDI_RecvSendShort_putacc_callback;
     conf.cb_recv_short_clientdata = NULL;
-    conf.cb_recv = A1DI_RecvSend_putacc_callback;
+    conf.cb_recv = OSPDI_RecvSend_putacc_callback;
     conf.cb_recv_clientdata = NULL;
 
-    status = DCMF_Send_register(&A1D_Generic_putacc_protocol, &conf);
-    A1U_ERR_POP(status != DCMF_SUCCESS,
+    status = DCMF_Send_register(&OSPD_Generic_putacc_protocol, &conf);
+    OSPU_ERR_POP(status != DCMF_SUCCESS,
             "DCMF_Send_register registration returned with error %d \n",
             status);
 
-    fn_exit: A1U_FUNC_EXIT();
+    fn_exit: OSPU_FUNC_EXIT();
     return status;
 
     fn_fail: goto fn_exit;
 }
 
-int A1D_PutAcc(int target,
+int OSPD_PutAcc(int target,
                void* source_ptr,
                void* target_ptr,
                int bytes,
-               A1_datatype_t a1_type,
+               OSP_datatype_t osp_type,
                void* scaling)
 {
-    int status = A1_SUCCESS;
+    int status = OSP_SUCCESS;
     DCMF_Request_t request;
     DCMF_Callback_t done_callback;
     volatile int active;
-    A1D_Putacc_header_t header;
+    OSPD_Putacc_header_t header;
 
-    A1U_FUNC_ENTER();
+    OSPU_FUNC_ENTER();
 
-    A1DI_CRITICAL_ENTER();
+    OSPDI_CRITICAL_ENTER();
 
-    done_callback.function = A1DI_Generic_done;
+    done_callback.function = OSPDI_Generic_done;
     done_callback.clientdata = (void *) &active;
     active = 1;
 
     header.target_ptr = target_ptr;
-    header.datatype = a1_type;
+    header.datatype = osp_type;
 
-    switch (a1_type)
+    switch (osp_type)
     {
-        case A1_DOUBLE:
+        case OSP_DOUBLE:
             (header.scaling).double_value = *((double *) scaling);
             break;
-        case A1_INT32:
+        case OSP_INT32:
             (header.scaling).int32_value = *((int32_t *) scaling);
             break;
-        case A1_INT64:
+        case OSP_INT64:
             (header.scaling).int64_value = *((int64_t *) scaling);
             break;
-        case A1_UINT32:
+        case OSP_UINT32:
             (header.scaling).uint32_value = *((uint32_t *) scaling);
             break;
-        case A1_UINT64:
+        case OSP_UINT64:
             (header.scaling).uint64_value = *((uint64_t *) scaling);
             break;
-        case A1_FLOAT:
+        case OSP_FLOAT:
             (header.scaling).float_value = *((float *) scaling);
             break;
         default:
-            status = A1_ERROR;
-            A1U_ERR_POP((status != A1_SUCCESS), "Invalid data type in putacc \n");
+            status = OSP_ERROR;
+            OSPU_ERR_POP((status != OSP_SUCCESS), "Invalid data type in putacc \n");
             break;
     }
 
-    status = DCMF_Send(&A1D_Generic_putacc_protocol,
+    status = DCMF_Send(&OSPD_Generic_putacc_protocol,
                        &request,
                        done_callback,
                        DCMF_SEQUENTIAL_CONSISTENCY,
@@ -251,80 +251,80 @@ int A1D_PutAcc(int target,
                        source_ptr,
                        (DCQuad *) &header,
                        (unsigned) 2);
-    A1U_ERR_POP((status != A1_SUCCESS), "DCMF_Send returned with an error \n");
+    OSPU_ERR_POP((status != OSP_SUCCESS), "DCMF_Send returned with an error \n");
 
-    A1D_Connection_send_active[target]++;
-    A1DI_Conditional_advance(active > 0);
+    OSPD_Connection_send_active[target]++;
+    OSPDI_Conditional_advance(active > 0);
 
     fn_exit:
-    A1DI_CRITICAL_EXIT();
-    A1U_FUNC_EXIT();
+    OSPDI_CRITICAL_EXIT();
+    OSPU_FUNC_EXIT();
     return status;
 
     fn_fail: goto fn_exit;
 }
 
-int A1D_NbPutAcc(int target,
+int OSPD_NbPutAcc(int target,
                  void* source_ptr,
                  void* target_ptr,
                  int bytes,
-                 A1_datatype_t a1_type,
+                 OSP_datatype_t osp_type,
                  void* scaling,
-                 A1_handle_t a1_handle)
+                 OSP_handle_t osp_handle)
 {
-    int status = A1_SUCCESS;
-    A1D_Handle_t *a1d_handle;
+    int status = OSP_SUCCESS;
+    OSPD_Handle_t *ospd_handle;
     DCMF_Callback_t done_callback;
-    A1D_Request_t *a1d_request;
-    A1D_Putacc_header_t header;
+    OSPD_Request_t *ospd_request;
+    OSPD_Putacc_header_t header;
 
-    A1U_FUNC_ENTER();
+    OSPU_FUNC_ENTER();
 
-    A1DI_CRITICAL_ENTER();
+    OSPDI_CRITICAL_ENTER();
 
-    a1d_handle = (A1D_Handle_t *) a1_handle;
+    ospd_handle = (OSPD_Handle_t *) osp_handle;
 
-    a1d_handle->active++;
+    ospd_handle->active++;
 
-    a1d_request = A1DI_Get_request(1);
-    A1U_ERR_POP(status = (a1d_request == NULL),
-            "A1DI_Get_request returned NULL request \n");
-    A1DI_Set_handle(a1d_request, a1d_handle);
+    ospd_request = OSPDI_Get_request(1);
+    OSPU_ERR_POP(status = (ospd_request == NULL),
+            "OSPDI_Get_request returned NULL request \n");
+    OSPDI_Set_handle(ospd_request, ospd_handle);
 
-    done_callback.function = A1DI_Request_done;
-    done_callback.clientdata = (void *) a1d_request;
+    done_callback.function = OSPDI_Request_done;
+    done_callback.clientdata = (void *) ospd_request;
 
     header.target_ptr = target_ptr;
-    header.datatype = a1_type;
+    header.datatype = osp_type;
 
-    switch (a1_type)
+    switch (osp_type)
     {
-        case A1_DOUBLE:
+        case OSP_DOUBLE:
             (header.scaling).double_value = *((double *) scaling);
             break;
-        case A1_INT32:
+        case OSP_INT32:
             (header.scaling).int32_value = *((int32_t *) scaling);
             break;
-        case A1_INT64:
+        case OSP_INT64:
             (header.scaling).int64_value = *((int64_t *) scaling);
             break;
-        case A1_UINT32:
+        case OSP_UINT32:
             (header.scaling).uint32_value = *((uint32_t *) scaling);
             break;
-        case A1_UINT64:
+        case OSP_UINT64:
             (header.scaling).uint64_value = *((uint64_t *) scaling);
             break;
-        case A1_FLOAT:
+        case OSP_FLOAT:
             (header.scaling).float_value = *((float *) scaling);
             break;
         default:
-            status = A1_ERROR;
-            A1U_ERR_POP(status, "Invalid data type in putacc \n");
+            status = OSP_ERROR;
+            OSPU_ERR_POP(status, "Invalid data type in putacc \n");
             break;
     }
 
-    status = DCMF_Send(&A1D_Generic_putacc_protocol,
-                       &(a1d_request->request),
+    status = DCMF_Send(&OSPD_Generic_putacc_protocol,
+                       &(ospd_request->request),
                        done_callback,
                        DCMF_SEQUENTIAL_CONSISTENCY,
                        target,
@@ -332,13 +332,13 @@ int A1D_NbPutAcc(int target,
                        source_ptr,
                        (DCQuad *) &header,
                        (unsigned) 2);
-    A1U_ERR_POP((status != DCMF_SUCCESS), "DCMF_Send returned with an error \n");
+    OSPU_ERR_POP((status != DCMF_SUCCESS), "DCMF_Send returned with an error \n");
 
-    A1D_Connection_send_active[target]++;
+    OSPD_Connection_send_active[target]++;
 
     fn_exit:
-    A1DI_CRITICAL_EXIT();
-    A1U_FUNC_EXIT();
+    OSPDI_CRITICAL_EXIT();
+    OSPU_FUNC_EXIT();
     return status;
 
     fn_fail: goto fn_exit;

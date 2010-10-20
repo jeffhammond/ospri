@@ -7,7 +7,7 @@ dnl
 
 AC_PREREQ(2.62)
 
-AC_INIT([a1],[0])
+AC_INIT([osp],[0])
 AC_CONFIG_AUX_DIR(m4)
 AC_CONFIG_MACRO_DIR(m4)
 AM_INIT_AUTOMAKE([-Wall -Werror foreign 1.11 silent-rules])
@@ -24,8 +24,8 @@ if test ! -s "$srcdir/maint/version" ; then
 fi
 
 # ABI version
-liba1_abi_version=`cat $srcdir/maint/version | grep ^liba1_abi_version | cut -f3 -d' '`
-AC_SUBST(liba1_abi_version)
+libosp_abi_version=`cat $srcdir/maint/version | grep ^libosp_abi_version | cut -f3 -d' '`
+AC_SUBST(libosp_abi_version)
 
 # Release version
 # Produce a numeric version assuming the following format:
@@ -46,13 +46,13 @@ AC_SUBST(liba1_abi_version)
 #
 # Numeric version will have 1 digit for MAJ, 2 digits for MIN,
 # 2 digits for REV, 1 digit for EXT and 2 digits for EXT_NUMBER.
-A1_VERSION=`cat $srcdir/maint/version | grep ^A1_VERSION | cut -f3 -d' '`
+OSP_VERSION=`cat $srcdir/maint/version | grep ^OSP_VERSION | cut -f3 -d' '`
 changequote(<<,>>)
-V1=`expr $A1_VERSION : '\([0-9]*\)\.[0-9]*\.*[0-9]*[a-zA-Z]*[0-9]*'`
-V2=`expr $A1_VERSION : '[0-9]*\.\([0-9]*\)\.*[0-9]*[a-zA-Z]*[0-9]*'`
-V3=`expr $A1_VERSION : '[0-9]*\.[0-9]*\.*\([0-9]*\)[a-zA-Z]*[0-9]*'`
-V4=`expr $A1_VERSION : '[0-9]*\.[0-9]*\.*[0-9]*\([a-zA-Z]*\)[0-9]*'`
-V5=`expr $A1_VERSION : '[0-9]*\.[0-9]*\.*[0-9]*[a-zA-Z]*\([0-9]*\)'`
+V1=`expr $OSP_VERSION : '\([0-9]*\)\.[0-9]*\.*[0-9]*[a-zA-Z]*[0-9]*'`
+V2=`expr $OSP_VERSION : '[0-9]*\.\([0-9]*\)\.*[0-9]*[a-zA-Z]*[0-9]*'`
+V3=`expr $OSP_VERSION : '[0-9]*\.[0-9]*\.*\([0-9]*\)[a-zA-Z]*[0-9]*'`
+V4=`expr $OSP_VERSION : '[0-9]*\.[0-9]*\.*[0-9]*\([a-zA-Z]*\)[0-9]*'`
+V5=`expr $OSP_VERSION : '[0-9]*\.[0-9]*\.*[0-9]*[a-zA-Z]*\([0-9]*\)'`
 changequote([,])
 
 if test "$V2" -le 9 ; then V2=0$V2 ; fi
@@ -72,18 +72,18 @@ elif test "$V4" = "p" ; then
 fi
 if test "$V5" -le 9 ; then V5=0$V5 ; fi
 
-A1_NUMVERSION=`expr $V1$V2$V3$V4$V5 + 0`
-AC_SUBST(A1_NUMVERSION)
-AC_SUBST(A1_VERSION)
+OSP_NUMVERSION=`expr $V1$V2$V3$V4$V5 + 0`
+AC_SUBST(OSP_NUMVERSION)
+AC_SUBST(OSP_VERSION)
 
-AC_CONFIG_HEADER(src/include/a1conf.h)
+AC_CONFIG_HEADER(src/include/ospconf.h)
 AH_TOP([/* -*- Mode: C; c-basic-offset:4 ; -*- */
 /*
  *  (C) 2010 by Argonne National Laboratory.
  *      See COPYRIGHT in top-level directory.
  */
-#ifndef A1CONF_H_INCLUDED
-#define A1CONF_H_INCLUDED
+#ifndef OSPCONF_H_INCLUDED
+#define OSPCONF_H_INCLUDED
 ])
 AH_BOTTOM([#endif])
 
@@ -102,16 +102,16 @@ AC_CHECK_HEADERS(stdio.h stdlib.h string.h strings.h unistd.h stdarg.h sys/types
 		sys/stat.h time.h errno.h)
 
 ## Check what device we want to use
-a1_device_dcmfd=false
-a1_device_pthreadd=false
-a1_device_mpid=false
-a1_device_geminid=false
-a1_device_lapid=false
-a1_device_ibd=false
-AC_ARG_WITH(device, AC_HELP_STRING([--with-device],[A1 device to use]),
-	a1_device=$withval,a1_device=dcmfd)
+osp_device_dcmfd=false
+osp_device_pthreadd=false
+osp_device_mpid=false
+osp_device_geminid=false
+osp_device_lapid=false
+osp_device_ibd=false
+AC_ARG_WITH(device, AC_HELP_STRING([--with-device],[OSP device to use]),
+	osp_device=$withval,osp_device=dcmfd)
 got_device=no
-for dev in `echo $a1_device | sed -e 's/:/ /g' -e 's/,/ /g'` ; do
+for dev in `echo $osp_device | sed -e 's/:/ /g' -e 's/,/ /g'` ; do
     case "$dev" in
     	 dcmfd)
 		PAC_SET_HEADER_LIB_PATH(dcmf)
@@ -125,10 +125,10 @@ for dev in `echo $a1_device | sed -e 's/:/ /g' -e 's/,/ /g'` ; do
 		fi
 		if test "$got_dcmf" = "yes" ; then
 		   got_device=yes
-                   a1_device_dcmfd=true
+                   osp_device_dcmfd=true
 		fi
                 got_device=yes
-                a1_device_dcmfd=true
+                osp_device_dcmfd=true
 		;;
          pthreadd)
         PAC_SET_HEADER_LIB_PATH(pthread)
@@ -137,10 +137,10 @@ for dev in `echo $a1_device | sed -e 's/:/ /g' -e 's/,/ /g'` ; do
                 got_pthread=yes,got_pthread=no)
         if test "$got_pthread" = "yes" ; then
            got_device=yes
-                   a1_device_pthreadd=true
+                   osp_device_pthreadd=true
         fi
                 got_device=yes
-                a1_device_pthreadd=true
+                osp_device_pthreadd=true
         ;;
     	 mpid)
 		PAC_SET_HEADER_LIB_PATH(mpi)
@@ -149,16 +149,16 @@ for dev in `echo $a1_device | sed -e 's/:/ /g' -e 's/,/ /g'` ; do
 			got_mpi=yes,got_mpi=no)
 		if test "$got_mpi" = "yes" ; then
 		   got_device=yes
-                   a1_device_mpid=true
+                   osp_device_mpid=true
 		fi
                 got_device=yes
-                a1_device_mpid=true
+                osp_device_mpid=true
 		;;
 	 *)
 		;;
     esac
 done
-AM_CONDITIONAL([a1_device_dcmfd],[$a1_device_dcmfd])
+AM_CONDITIONAL([osp_device_dcmfd],[$osp_device_dcmfd])
 if test "$got_device" = "no" ; then
    AC_ERROR([no valid device found])
 fi
@@ -208,6 +208,6 @@ AC_SUBST(top_srcdir)
 
 ## Final output
 AC_OUTPUT(Makefile
-	src/include/a1.h
-	a1-doxygen.cfg
+	src/include/osp.h
+	osp-doxygen.cfg
 	)

@@ -4,15 +4,15 @@
  *      See COPYRIGHT in top-level directory.
  */
 
-#include "a1.h"
-#include "a1d.h"
-#include "a1u.h"
+#include "osp.h"
+#include "ospd.h"
+#include "ospu.h"
 
-int A1_Flush_group(A1_group_t * group)
+int OSP_Flush_group(OSP_group_t * group)
 {
-    int status = A1_SUCCESS;
+    int status = OSP_SUCCESS;
 
-    A1U_FUNC_ENTER();
+    OSPU_FUNC_ENTER();
 
     /* FIXME: The profiling interface needs to go here */
 
@@ -21,11 +21,11 @@ int A1_Flush_group(A1_group_t * group)
 #   ifdef HAVE_ERROR_CHECKING
 #   endif
 
-    status = A1D_Flush_group(group);
-    A1U_ERR_POP(status != A1_SUCCESS, "A1D_Flush_all returned an error\n");
+    status = OSPD_Flush_group(group);
+    OSPU_ERR_POP(status != OSP_SUCCESS, "OSPD_Flush_all returned an error\n");
 
   fn_exit: 
-    A1U_FUNC_EXIT();
+    OSPU_FUNC_EXIT();
     return status;
 
   fn_fail: 

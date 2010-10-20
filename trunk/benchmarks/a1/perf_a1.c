@@ -9,7 +9,7 @@
 #include <assert.h>
 #include <unistd.h>
 #include <math.h>
-#include "a1.h"
+#include "osp.h"
 
 #define SIZE 550
 #define MAXPROC 8
@@ -34,7 +34,7 @@ void check_result(double *src_buf, double *dst_buf, int *stride, int *count,
 void acc_array(double scale, double *array1, double *array2, int *stride,
                int *count, int stride_levels);
 
-#define TIMER A1_Time_seconds
+#define TIMER OSP_Time_seconds
 
 double time_get(double *src_buf, double *dst_buf, int chunk, int loop,
                 int proc, int levels)
@@ -63,12 +63,12 @@ double time_get(double *src_buf, double *dst_buf, int chunk, int loop,
     for(i=0; i<loop; i++) {
          
         if(levels)
-           A1_GetS(proc, stride_levels, count, src_buf, stride, dst_buf, stride);
+           OSP_GetS(proc, stride_levels, count, src_buf, stride, dst_buf, stride);
         else
-           A1_Get(proc, src_buf, dst_buf, count[0]);
+           OSP_Get(proc, src_buf, dst_buf, count[0]);
 
         if(CHECK_RESULT) {
-            sprintf(check_type, "A1_GetS:");
+            sprintf(check_type, "OSP_GetS:");
             check_result(tmp_buf_ptr, dst_buf, stride, count, stride_levels);
         }
         
@@ -120,15 +120,15 @@ double time_put(double *src_buf, double *dst_buf, int chunk, int loop,
     start_time = TIMER();
     for(i=0; i<loop; i++) {
         if(levels)
-           A1_PutS(proc, stride_levels, count, src_buf, stride, dst_buf, stride);
+           OSP_PutS(proc, stride_levels, count, src_buf, stride, dst_buf, stride);
         else
-           A1_Put(proc, src_buf, dst_buf, count[0]);
+           OSP_Put(proc, src_buf, dst_buf, count[0]);
 
         if(CHECK_RESULT) {
-            A1_Flush_group(A1_GROUP_WORLD); 
-            A1_GetS(proc, stride_levels, count, dst_buf, stride, tmp_buf, stride);
+            OSP_Flush_group(OSP_GROUP_WORLD); 
+            OSP_GetS(proc, stride_levels, count, dst_buf, stride, tmp_buf, stride);
 
-            sprintf(check_type, "A1_PutS:");
+            sprintf(check_type, "OSP_PutS:");
             check_result(tmp_buf, src_buf, stride, count, stride_levels);
         }
         
@@ -178,16 +178,16 @@ double time_put_remote(double *src_buf, double *dst_buf, int chunk, int loop,
     start_time = TIMER();
     for(i=0; i<loop; i++) {
         if(levels)
-           A1_PutS(proc, stride_levels, count, src_buf, stride, dst_buf, stride);
+           OSP_PutS(proc, stride_levels, count, src_buf, stride, dst_buf, stride);
         else
-           A1_Put(proc, src_buf, dst_buf, count[0]);
+           OSP_Put(proc, src_buf, dst_buf, count[0]);
 
-        A1_Flush_group(A1_GROUP_WORLD);
+        OSP_Flush_group(OSP_GROUP_WORLD);
 
         if(CHECK_RESULT) {
-            A1_GetS(proc, stride_levels, count, dst_buf, stride, tmp_buf, stride);
+            OSP_GetS(proc, stride_levels, count, dst_buf, stride, tmp_buf, stride);
 
-            sprintf(check_type, "A1_PutS:");
+            sprintf(check_type, "OSP_PutS:");
             check_result(tmp_buf, src_buf, stride, count, stride_levels);
         }
         
@@ -241,19 +241,19 @@ double time_acc(double *src_buf, double *dst_buf, int chunk, int loop,
         double scale = (double)i;
 
         if(CHECK_RESULT) {
-            A1_GetS(proc, stride_levels, count, dst_buf, stride, before_buf, stride);
+            OSP_GetS(proc, stride_levels, count, dst_buf, stride, before_buf, stride);
 
             acc_array(scale, before_buf, src_buf, stride, count,stride_levels);
         }
 
-        A1_PutAccS(proc, stride_levels, count, src_buf, stride, dst_buf, stride,
-                   A1_DOUBLE, &scale);
+        OSP_PutAccS(proc, stride_levels, count, src_buf, stride, dst_buf, stride,
+                   OSP_DOUBLE, &scale);
 
         if(CHECK_RESULT) {
-            A1_Flush_group(A1_GROUP_WORLD);
-            A1_GetS(proc, stride_levels, count, dst_buf, stride, after_buf, stride);
+            OSP_Flush_group(OSP_GROUP_WORLD);
+            OSP_GetS(proc, stride_levels, count, dst_buf, stride, after_buf, stride);
             
-            sprintf(check_type, "A1_AccS:");
+            sprintf(check_type, "OSP_AccS:");
             check_result(after_buf, before_buf, stride, count, stride_levels);
         }
         
@@ -307,20 +307,20 @@ double time_acc_remote(double *src_buf, double *dst_buf, int chunk, int loop,
         double scale = (double)i;
 
         if(CHECK_RESULT) {
-            A1_GetS(proc, stride_levels, count, dst_buf, stride, before_buf, stride);
+            OSP_GetS(proc, stride_levels, count, dst_buf, stride, before_buf, stride);
 
             acc_array(scale, before_buf, src_buf, stride, count,stride_levels);
         }
 
-        A1_PutAccS(proc, stride_levels, count, src_buf, stride, dst_buf, stride,
-                   A1_DOUBLE, &scale);
+        OSP_PutAccS(proc, stride_levels, count, src_buf, stride, dst_buf, stride,
+                   OSP_DOUBLE, &scale);
 
-        A1_Flush_group(A1_GROUP_WORLD);
+        OSP_Flush_group(OSP_GROUP_WORLD);
 
         if(CHECK_RESULT) {
-            A1_GetS(proc, stride_levels, count, dst_buf, stride, after_buf, stride);
+            OSP_GetS(proc, stride_levels, count, dst_buf, stride, after_buf, stride);
             
-            sprintf(check_type, "A1_AccS:");
+            sprintf(check_type, "OSP_AccS:");
             check_result(after_buf, before_buf, stride, count, stride_levels);
         }
         
@@ -364,19 +364,19 @@ void test_1D()
         assert(buf != NULL);
     }
    
-    ierr = A1_Alloc_segment(&ptr[me], (SIZE * SIZE * sizeof(double))); 
+    ierr = OSP_Alloc_segment(&ptr[me], (SIZE * SIZE * sizeof(double))); 
     assert(ierr == 0); 
-    ierr = A1_Exchange_segments(A1_GROUP_WORLD, ptr);    
+    ierr = OSP_Exchange_segments(OSP_GROUP_WORLD, ptr);    
     assert(ierr == 0); 
-    ierr = A1_Alloc_segment(&get_ptr[me], (SIZE * SIZE * sizeof(double)));      
+    ierr = OSP_Alloc_segment(&get_ptr[me], (SIZE * SIZE * sizeof(double)));      
     assert(ierr == 0); 
-    ierr = A1_Exchange_segments(A1_GROUP_WORLD, get_ptr);
+    ierr = OSP_Exchange_segments(OSP_GROUP_WORLD, get_ptr);
     assert(ierr == 0); 
 
-    /* A1 - initialize the data window */
+    /* OSP - initialize the data window */
     fill_array(ptr[me], SIZE*SIZE, me);
     fill_array(get_ptr[me], SIZE*SIZE, me);
-    A1_Barrier_group(A1_GROUP_WORLD);
+    OSP_Barrier_group(OSP_GROUP_WORLD);
     
     /* only the proc 0 does the work */
     if(me == 0) {
@@ -436,14 +436,14 @@ void test_1D()
     }
     else sleep(60);
     
-    A1_Flush_group(A1_GROUP_WORLD);
-    A1_Barrier_group(A1_GROUP_WORLD);
+    OSP_Flush_group(OSP_GROUP_WORLD);
+    OSP_Barrier_group(OSP_GROUP_WORLD);
     
     /* cleanup */
-    A1_Release_segments(A1_GROUP_WORLD, get_ptr[me]);
-    A1_Free_segment(get_ptr[me]);
-    A1_Release_segments(A1_GROUP_WORLD, ptr[me]);
-    A1_Free_segment(ptr[me]);
+    OSP_Release_segments(OSP_GROUP_WORLD, get_ptr[me]);
+    OSP_Free_segment(get_ptr[me]);
+    OSP_Release_segments(OSP_GROUP_WORLD, ptr[me]);
+    OSP_Free_segment(ptr[me]);
     
     if(me == 0) free(buf);
 }
@@ -465,19 +465,19 @@ void test_1D_remote()
         assert(buf != NULL);
     }
    
-    ierr = A1_Alloc_segment(&ptr[me], (SIZE * SIZE * sizeof(double))); 
+    ierr = OSP_Alloc_segment(&ptr[me], (SIZE * SIZE * sizeof(double))); 
     assert(ierr == 0); 
-    ierr = A1_Exchange_segments(A1_GROUP_WORLD, ptr);    
+    ierr = OSP_Exchange_segments(OSP_GROUP_WORLD, ptr);    
     assert(ierr == 0); 
-    ierr = A1_Alloc_segment(&get_ptr[me], (SIZE * SIZE * sizeof(double)));      
+    ierr = OSP_Alloc_segment(&get_ptr[me], (SIZE * SIZE * sizeof(double)));      
     assert(ierr == 0); 
-    ierr = A1_Exchange_segments(A1_GROUP_WORLD, get_ptr);
+    ierr = OSP_Exchange_segments(OSP_GROUP_WORLD, get_ptr);
     assert(ierr == 0); 
 
-    /* A1 - initialize the data window */
+    /* OSP - initialize the data window */
     fill_array(ptr[me], SIZE*SIZE, me);
     fill_array(get_ptr[me], SIZE*SIZE, me);
-    A1_Barrier_group(A1_GROUP_WORLD);
+    OSP_Barrier_group(OSP_GROUP_WORLD);
     
     /* only the proc 0 does the work */
     if(me == 0) {
@@ -537,14 +537,14 @@ void test_1D_remote()
     }
     else sleep(60);
     
-    A1_Flush_group(A1_GROUP_WORLD);
-    A1_Barrier_group(A1_GROUP_WORLD);
+    OSP_Flush_group(OSP_GROUP_WORLD);
+    OSP_Barrier_group(OSP_GROUP_WORLD);
     
     /* cleanup */
-    A1_Release_segments(A1_GROUP_WORLD, get_ptr[me]);
-    A1_Free_segment(get_ptr[me]);
-    A1_Release_segments(A1_GROUP_WORLD, ptr[me]);
-    A1_Free_segment(ptr[me]);
+    OSP_Release_segments(OSP_GROUP_WORLD, get_ptr[me]);
+    OSP_Free_segment(get_ptr[me]);
+    OSP_Release_segments(OSP_GROUP_WORLD, ptr[me]);
+    OSP_Free_segment(ptr[me]);
     
     if(me == 0) free(buf);
 }
@@ -565,20 +565,20 @@ void test_2D()
         assert(buf != NULL);
     }
 
-    ierr = A1_Alloc_segment(&ptr[me], (SIZE * SIZE * sizeof(double)));
+    ierr = OSP_Alloc_segment(&ptr[me], (SIZE * SIZE * sizeof(double)));
     assert(ierr == 0);
-    ierr = A1_Exchange_segments(A1_GROUP_WORLD, ptr);
+    ierr = OSP_Exchange_segments(OSP_GROUP_WORLD, ptr);
     assert(ierr == 0);
-    ierr = A1_Alloc_segment(&get_ptr[me], (SIZE * SIZE * sizeof(double)));
+    ierr = OSP_Alloc_segment(&get_ptr[me], (SIZE * SIZE * sizeof(double)));
     assert(ierr == 0);
-    ierr = A1_Exchange_segments(A1_GROUP_WORLD, get_ptr);
+    ierr = OSP_Exchange_segments(OSP_GROUP_WORLD, get_ptr);
     assert(ierr == 0);
     
-    /* A1 - initialize the data window */
+    /* OSP - initialize the data window */
     fill_array(ptr[me], SIZE*SIZE, me);
     fill_array(get_ptr[me], SIZE*SIZE, me);
 
-    A1_Barrier_group(A1_GROUP_WORLD);
+    OSP_Barrier_group(OSP_GROUP_WORLD);
     
     /* only the proc 0 doest the work */
     /* print the title */
@@ -638,14 +638,14 @@ void test_2D()
     }
     else sleep(60);
     
-    A1_Flush_group(A1_GROUP_WORLD);
-    A1_Barrier_group(A1_GROUP_WORLD);
+    OSP_Flush_group(OSP_GROUP_WORLD);
+    OSP_Barrier_group(OSP_GROUP_WORLD);
 
     /* cleanup */
-    A1_Release_segments(A1_GROUP_WORLD, get_ptr[me]);
-    A1_Free_segment(get_ptr[me]);
-    A1_Release_segments(A1_GROUP_WORLD, ptr[me]);
-    A1_Free_segment(ptr[me]);
+    OSP_Release_segments(OSP_GROUP_WORLD, get_ptr[me]);
+    OSP_Free_segment(get_ptr[me]);
+    OSP_Release_segments(OSP_GROUP_WORLD, ptr[me]);
+    OSP_Free_segment(ptr[me]);
 
     if(me == 0) free(buf);
 
@@ -667,20 +667,20 @@ void test_2D_remote()
         assert(buf != NULL);
     }
 
-    ierr = A1_Alloc_segment(&ptr[me], (SIZE * SIZE * sizeof(double)));
+    ierr = OSP_Alloc_segment(&ptr[me], (SIZE * SIZE * sizeof(double)));
     assert(ierr == 0);
-    ierr = A1_Exchange_segments(A1_GROUP_WORLD, ptr);
+    ierr = OSP_Exchange_segments(OSP_GROUP_WORLD, ptr);
     assert(ierr == 0);
-    ierr = A1_Alloc_segment(&get_ptr[me], (SIZE * SIZE * sizeof(double)));
+    ierr = OSP_Alloc_segment(&get_ptr[me], (SIZE * SIZE * sizeof(double)));
     assert(ierr == 0);
-    ierr = A1_Exchange_segments(A1_GROUP_WORLD, get_ptr);
+    ierr = OSP_Exchange_segments(OSP_GROUP_WORLD, get_ptr);
     assert(ierr == 0);
     
-    /* A1 - initialize the data window */
+    /* OSP - initialize the data window */
     fill_array(ptr[me], SIZE*SIZE, me);
     fill_array(get_ptr[me], SIZE*SIZE, me);
 
-    A1_Barrier_group(A1_GROUP_WORLD);
+    OSP_Barrier_group(OSP_GROUP_WORLD);
     
     /* only the proc 0 doest the work */
     /* print the title */
@@ -740,14 +740,14 @@ void test_2D_remote()
     }
     else sleep(60);
     
-    A1_Flush_group(A1_GROUP_WORLD);
-    A1_Barrier_group(A1_GROUP_WORLD);
+    OSP_Flush_group(OSP_GROUP_WORLD);
+    OSP_Barrier_group(OSP_GROUP_WORLD);
 
     /* cleanup */
-    A1_Release_segments(A1_GROUP_WORLD, get_ptr[me]);
-    A1_Free_segment(get_ptr[me]);
-    A1_Release_segments(A1_GROUP_WORLD, ptr[me]);
-    A1_Free_segment(ptr[me]);
+    OSP_Release_segments(OSP_GROUP_WORLD, get_ptr[me]);
+    OSP_Free_segment(get_ptr[me]);
+    OSP_Release_segments(OSP_GROUP_WORLD, ptr[me]);
+    OSP_Free_segment(ptr[me]);
 
     if(me == 0) free(buf);
 
@@ -756,22 +756,22 @@ void test_2D_remote()
 int main(int argc, char **argv)
 {
 
-    /* initialize A1 */
-    A1_Initialize(A1_THREAD_SINGLE);
+    /* initialize OSP */
+    OSP_Initialize(OSP_THREAD_SINGLE);
 
-    me = A1_Process_id(A1_GROUP_WORLD);
-    nproc = A1_Process_total(A1_GROUP_WORLD);
+    me = OSP_Process_id(OSP_GROUP_WORLD);
+    nproc = OSP_Process_total(OSP_GROUP_WORLD);
 
     if(nproc < 2 || nproc> MAXPROC) {
         if(me == 0)
             fprintf(stderr,
                     "USAGE: 2 <= processes <= %d - got %d\n", MAXPROC, nproc);
-        A1_Barrier_group(A1_GROUP_WORLD);
+        OSP_Barrier_group(OSP_GROUP_WORLD);
         exit(0);
     }
     
     if(!me)printf("\n             Performance of Basic Blocking Communication Operations\n");
-    A1_Barrier_group(A1_GROUP_WORLD);
+    OSP_Barrier_group(OSP_GROUP_WORLD);
     
     CHECK_RESULT=1; test_1D(); CHECK_RESULT=0; /* warmup run */
 
@@ -791,7 +791,7 @@ int main(int argc, char **argv)
     if(!me)printf("\n\t\t\tStrided Data Transfer - Remote completion\n");
     test_2D_remote();
 
-    A1_Barrier_group(A1_GROUP_WORLD);
+    OSP_Barrier_group(OSP_GROUP_WORLD);
     if(me == 0){
        if(warn_accuracy) 
           printf("\nWARNING: Your timer does not have sufficient accuracy for this test (%d)\n",warn_accuracy);
@@ -799,19 +799,19 @@ int main(int argc, char **argv)
        fflush(stdout);
     }
 
-    A1_Barrier_group(A1_GROUP_WORLD);
+    OSP_Barrier_group(OSP_GROUP_WORLD);
     CHECK_RESULT=1;
     if(!me)printf("\n\t\t\tContiguous Data Transfer\n");
     test_1D();
     if(me == 0) printf("OK\n");
-    A1_Barrier_group(A1_GROUP_WORLD);
+    OSP_Barrier_group(OSP_GROUP_WORLD);
     if(!me)printf("\n\t\t\tStrided Data Transfer\n");
     test_2D();
     if(me == 0) printf("OK\n\n\nTests Completed.\n");
-    A1_Barrier_group(A1_GROUP_WORLD);
+    OSP_Barrier_group(OSP_GROUP_WORLD);
 
     /* done */
-    A1_Finalize();
+    OSP_Finalize();
     return(0);
 }    
 
@@ -857,7 +857,7 @@ void check_result(double *src_buf, double *dst_buf, int *stride, int *count,
                 fprintf(stdout,"Error:%s comparison failed: (%d) (%f :%f) %d\n",
                         check_type, j, ((double *)((char *)src_buf+idx))[j],
                         ((double *)((char *)dst_buf+idx))[j], count[0]);
-                A1_Abort(0, "failed");
+                OSP_Abort(0, "failed");
             }
     }
 }

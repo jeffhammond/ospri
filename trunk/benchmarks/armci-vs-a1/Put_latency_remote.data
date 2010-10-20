@@ -1,5 +1,5 @@
 #Put latency for Remote completion
-#Message Size         DCMF        A1  	    ARMCI
+#Message Size         DCMF        OSP  	    ARMCI
            8          3.29       6.68 	    13.27 
           16          3.26       6.88 	    13.35 
           32          3.28       6.66 	    13.30 

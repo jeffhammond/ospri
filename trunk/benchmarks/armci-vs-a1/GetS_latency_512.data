@@ -1,5 +1,5 @@
 #ARMCI_GetS Latency in usec 
-Size        Dimensions              A1             ARMCI 
+Size        Dimensions              OSP             ARMCI 
 4096           512X1              77.18           1247.88 
 8192           512X2              85.60           1247.08 
 16384          512X4             112.83           1252.52 

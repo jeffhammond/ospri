@@ -6,17 +6,17 @@
 
 #include "dcmfdimpl.h"
 
-int A1DI_Direct_putv(int target,
-                     A1_iov_t *iov_ar,
+int OSPDI_Direct_putv(int target,
+                     OSP_iov_t *iov_ar,
                      int ar_len,
-                     A1D_Handle_t *a1d_handle)
+                     OSPD_Handle_t *ospd_handle)
 {
-    int i, j, status = A1_SUCCESS;
+    int i, j, status = OSP_SUCCESS;
     size_t src_disp, dst_disp, size;
     DCMF_Callback_t done_callback;
-    A1D_Request_t *a1d_request;
+    OSPD_Request_t *ospd_request;
 
-    A1U_FUNC_ENTER();
+    OSPU_FUNC_ENTER();
 
     for (i=0; i<ar_len; i++)
     {
@@ -24,103 +24,103 @@ int A1DI_Direct_putv(int target,
         {
 
            src_disp = (size_t) iov_ar[i].source_ptr_ar[j]
-                   - (size_t) A1D_Membase_global[A1D_Process_info.my_rank];
+                   - (size_t) OSPD_Membase_global[OSPD_Process_info.my_rank];
            dst_disp = (size_t) iov_ar[i].target_ptr_ar[j]
-                   - (size_t) A1D_Membase_global[target];
+                   - (size_t) OSPD_Membase_global[target];
            size = iov_ar[i].size;
 
-           a1d_request = A1DI_Get_request(1);
-           A1U_ERR_POP(status = (a1d_request == NULL),
-               "A1DI_Get_request returned error. \n");
-           A1DI_Set_handle(a1d_request, a1d_handle);
+           ospd_request = OSPDI_Get_request(1);
+           OSPU_ERR_POP(status = (ospd_request == NULL),
+               "OSPDI_Get_request returned error. \n");
+           OSPDI_Set_handle(ospd_request, ospd_handle);
 
-           done_callback.function = A1DI_Request_done;
-           done_callback.clientdata = (void *) a1d_request;
+           done_callback.function = OSPDI_Request_done;
+           done_callback.clientdata = (void *) ospd_request;
 
-           a1d_handle->active++;
+           ospd_handle->active++;
 
-           status = DCMF_Put(&A1D_Generic_put_protocol,
-                          &(a1d_request->request),
+           status = DCMF_Put(&OSPD_Generic_put_protocol,
+                          &(ospd_request->request),
                           done_callback,
                           DCMF_SEQUENTIAL_CONSISTENCY,
                           target,
                           size,
-                          &A1D_Memregion_global[A1D_Process_info.my_rank],
-                          &A1D_Memregion_global[target],
+                          &OSPD_Memregion_global[OSPD_Process_info.my_rank],
+                          &OSPD_Memregion_global[target],
                           src_disp,
                           dst_disp,
-                          A1D_Nocallback);
-            A1U_ERR_POP(status != DCMF_SUCCESS, "DCMF_Put returned with an error \n");
+                          OSPD_Nocallback);
+            OSPU_ERR_POP(status != DCMF_SUCCESS, "DCMF_Put returned with an error \n");
 
-            A1D_Connection_put_active[target]++;
+            OSPD_Connection_put_active[target]++;
 
         }
     }
 
   fn_exit: 
-    A1U_FUNC_EXIT();
+    OSPU_FUNC_EXIT();
     return status;
 
   fn_fail: 
     goto fn_exit;
 }
 
-int A1D_PutV(int target,
-             A1_iov_t *iov_ar,
+int OSPD_PutV(int target,
+             OSP_iov_t *iov_ar,
              int ar_len)
 {
-    int status = A1_SUCCESS;
-    A1D_Handle_t *a1d_handle;
+    int status = OSP_SUCCESS;
+    OSPD_Handle_t *ospd_handle;
 
-    A1U_FUNC_ENTER();
+    OSPU_FUNC_ENTER();
 
-    A1DI_CRITICAL_ENTER();
+    OSPDI_CRITICAL_ENTER();
 
-    a1d_handle = A1DI_Get_handle();
-    A1U_ERR_POP(status = (a1d_handle == NULL),
-                "A1DI_Get_handle returned NULL in A1D_PutS. \n");
+    ospd_handle = OSPDI_Get_handle();
+    OSPU_ERR_POP(status = (ospd_handle == NULL),
+                "OSPDI_Get_handle returned NULL in OSPD_PutS. \n");
 
-    status = A1DI_Direct_putv(target,
+    status = OSPDI_Direct_putv(target,
                               iov_ar,
                               ar_len,
-                              a1d_handle); 
-    A1U_ERR_POP(status, "A1DI_Direct_putv returned with an error \n");
+                              ospd_handle); 
+    OSPU_ERR_POP(status, "OSPDI_Direct_putv returned with an error \n");
 
-    A1DI_Conditional_advance(a1d_handle->active > 0);
+    OSPDI_Conditional_advance(ospd_handle->active > 0);
 
   fn_exit:
-    A1DI_Release_handle(a1d_handle);
-    A1DI_CRITICAL_EXIT();
-    A1U_FUNC_EXIT();
+    OSPDI_Release_handle(ospd_handle);
+    OSPDI_CRITICAL_EXIT();
+    OSPU_FUNC_EXIT();
     return status;
 
   fn_fail: 
     goto fn_exit;
 }
 
-int A1D_NbPutV(int target,
-               A1_iov_t *iov_ar,
+int OSPD_NbPutV(int target,
+               OSP_iov_t *iov_ar,
                int ar_len,
-               A1_handle_t a1_handle)
+               OSP_handle_t osp_handle)
 {   
-    int status = A1_SUCCESS;
-    A1D_Handle_t *a1d_handle;
+    int status = OSP_SUCCESS;
+    OSPD_Handle_t *ospd_handle;
 
-    A1U_FUNC_ENTER();
+    OSPU_FUNC_ENTER();
 
-    A1DI_CRITICAL_ENTER();
+    OSPDI_CRITICAL_ENTER();
 
-    a1d_handle = (A1D_Handle_t *) a1_handle;
+    ospd_handle = (OSPD_Handle_t *) osp_handle;
 
-    status = A1DI_Direct_putv(target,
+    status = OSPDI_Direct_putv(target,
                               iov_ar,
                               ar_len,
-                              a1d_handle);    
-    A1U_ERR_POP(status, "A1DI_Direct_putv returned with an error \n");
+                              ospd_handle);    
+    OSPU_ERR_POP(status, "OSPDI_Direct_putv returned with an error \n");
 
   fn_exit:
-    A1DI_CRITICAL_EXIT();
-    A1U_FUNC_EXIT();
+    OSPDI_CRITICAL_EXIT();
+    OSPU_FUNC_EXIT();
     return status;
 
   fn_fail:

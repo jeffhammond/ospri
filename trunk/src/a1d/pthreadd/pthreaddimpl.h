@@ -6,16 +6,16 @@
 
 #include <pthread.h>
 #include <assert.h>
-#include "a1.h"
-#include "a1u.h"
-#include "a1d.h"
+#include "osp.h"
+#include "ospu.h"
+#include "ospd.h"
 
 /*************************************************
  *                 Constants                     *
  ************************************************/
 
-#define A1C_ALIGNMENT 16
-#define A1C_MAX_STRIDED_DIM 4
+#define OSPC_ALIGNMENT 16
+#define OSPC_MAX_STRIDED_DIM 4
 
 /*************************************************
 *                  Global Lock                   *
@@ -23,20 +23,20 @@
 
 extern pthread_mutex_t global_mutex;
 
-#define A1DI_GLOBAL_MUTEX_ACQUIRE()                 \
+#define OSPDI_GLOBAL_MUTEX_ACQUIRE()                 \
  {                                                   \
     int rc = 0                                      \
     rc = pthread_mutex_lock(&global_mutex);          \
-    A1U_ERR_POP(rc != 0,                             \
+    OSPU_ERR_POP(rc != 0,                             \
                 "pthread_mutex_lock returned %d\n",  \
                 rc);                                 \
  }                                                   \
 
-#define A1DI_GLOBAL_MUTEX_RELEASE()                     \
+#define OSPDI_GLOBAL_MUTEX_RELEASE()                     \
  {                                                      \
      int rc = 0                                         \
      rc = pthread_mutex_unlock(&global_mutex);          \
-     A1U_ERR_POP(rc != 0,                               \
+     OSPU_ERR_POP(rc != 0,                               \
                  "pthread_mutex_unlock returned %d\n",  \
                  rc);                                   \
  }
@@ -45,34 +45,34 @@ extern pthread_mutex_t global_mutex;
  *          Memory Allocation Macros             *
  *************************************************/
 
-//#define A1DI_Malloc_aligned(ptr, num) posix_memalign(ptr, a1d_settings.alignment, num)
-#define A1DI_Malloc_aligned(ptr, num) ((*ptr = malloc(num)) == NULL)
+//#define OSPDI_Malloc_aligned(ptr, num) posix_memalign(ptr, ospd_settings.alignment, num)
+#define OSPDI_Malloc_aligned(ptr, num) ((*ptr = malloc(num)) == NULL)
 
-#define A1DI_Malloc(ptr, num)  ((ptr = malloc(num)) == NULL)
+#define OSPDI_Malloc(ptr, num)  ((ptr = malloc(num)) == NULL)
 
-#define A1DI_Free(ptr) free(ptr)
+#define OSPDI_Free(ptr) free(ptr)
 
-#define A1DI_Memset(ptr, val, num)  memset(ptr, val, num)
+#define OSPDI_Memset(ptr, val, num)  memset(ptr, val, num)
 
-#define A1DI_Memcpy(trg, src, num)  memcpy(trg, src, num)
+#define OSPDI_Memcpy(trg, src, num)  memcpy(trg, src, num)
 
 /*************************************************
  *          Critical Section Macros              *
  *************************************************/
 
-#define A1DI_CRITICAL_ENTER()                                    \
+#define OSPDI_CRITICAL_ENTER()                                    \
     do {                                                          \
-      if(a1d_settings.thread_safe)                                 \
+      if(ospd_settings.thread_safe)                                 \
       {                                                           \
-          A1DI_GLOBAL_MUTEX_ACQUIRE();                            \
+          OSPDI_GLOBAL_MUTEX_ACQUIRE();                            \
       }                                                           \
     } while (0)                                                  \
 
-#define A1DI_CRITICAL_EXIT()                                     \
+#define OSPDI_CRITICAL_EXIT()                                     \
     do {                                                          \
-      if(a1d_settings.thread_safe)                                 \
+      if(ospd_settings.thread_safe)                                 \
       {                                                           \
-          A1DI_GLOBAL_MUTEX_RELEASE();                            \
+          OSPDI_GLOBAL_MUTEX_RELEASE();                            \
       }                                                           \
     } while (0)                                                  \
 
@@ -80,7 +80,7 @@ extern pthread_mutex_t global_mutex;
  *          Non-contiguous macros                *
  *************************************************/
 
-#define A1DI_ACC_EXECUTE(datatype, source, target, scaling, count)          \
+#define OSPDI_ACC_EXECUTE(datatype, source, target, scaling, count)          \
    do {                                                                     \
      int i;                                                                 \
      datatype *a = (datatype *) source;                                     \
@@ -97,7 +97,7 @@ typedef struct
 {
     volatile uint32_t thread_safe;
     volatile uint32_t alignment;
-} A1D_Settings_t;
+} OSPD_Settings_t;
 
 typedef struct
 {
@@ -105,14 +105,14 @@ typedef struct
     size_t my_node;
     size_t num_ranks;
     size_t num_nodes;
-} A1D_Process_info_t;
+} OSPD_Process_info_t;
 
 /*************************************************
  *             Global variables                  *
  ************************************************/
 
-extern A1D_Process_info_t A1D_Process_info;
-extern A1D_Settings_t a1d_settings;
+extern OSPD_Process_info_t OSPD_Process_info;
+extern OSPD_Settings_t ospd_settings;
 
 /*************************************************
  *             Function Prototypes               *

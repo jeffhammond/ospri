@@ -6,16 +6,16 @@
 
 #include "mpidimpl.h"
 
-int A1D_Finalize(void)
+int OSPD_Finalize(void)
 {
-    int status = A1_SUCCESS;
+    int status = OSP_SUCCESS;
 
-    A1U_FUNC_ENTER();
+    OSPU_FUNC_ENTER();
 
     MPI_Finalize();
 
   fn_exit:
-    A1U_FUNC_EXIT();
+    OSPU_FUNC_EXIT();
     return status;
 
   fn_fail:

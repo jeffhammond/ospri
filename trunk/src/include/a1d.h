@@ -4,27 +4,27 @@
  *      See COPYRIGHT in top-level directory.
  */
 
-#include "a1.h"
-#include "a1u.h"
+#include "osp.h"
+#include "ospu.h"
 
-#if !defined A1D_H_INCLUDED
-#define A1D_H_INCLUDED
+#if !defined OSPD_H_INCLUDED
+#define OSPD_H_INCLUDED
 
 /* ********************************************************************* */
 /*                                                                       */
-/*               A1 data structures                                      */
+/*               OSP data structures                                      */
 /*                                                                       */
 /* ********************************************************************* */
 
-/* FIXME: This should be in another header but we're using a1u.h
+/* FIXME: This should be in another header but we're using ospu.h
  *         already exists for other purposes.  I will deal with all of
  *         this after we submit the IPDPS paper and fix the build system.
  */
 
 /**
- * \brief A1 device-independent settings type.
+ * \brief OSP device-independent settings type.
  *
- * \see A1_Initialize
+ * \see OSP_Initialize
  *
  * \ingroup TYPEDEFS
  *
@@ -36,13 +36,13 @@ typedef struct
     uint32_t network_bypass_upper_limit_1d;
     uint32_t network_bypass_upper_limit_Nd;
     uint32_t armci_strict_ordering;
-} A1U_Settings_t;
+} OSPU_Settings_t;
 
-extern A1U_Settings_t a1u_settings;
+extern OSPU_Settings_t ospu_settings;
 
 /* ********************************************************************* */
 /*                                                                       */
-/*               A1 device-independent internal functions                */
+/*               OSP device-independent internal functions                */
 /*                                                                       */
 /* ********************************************************************* */
 
@@ -54,7 +54,7 @@ extern A1U_Settings_t a1u_settings;
  * \ingroup MANAGEMENT
  */
 
-int A1U_Read_parameters(void);
+int OSPU_Read_parameters(void);
 
 /**
  * \brief Prints the device-indpendent parameter information
@@ -64,35 +64,35 @@ int A1U_Read_parameters(void);
  * \ingroup MANAGEMENT
  */
 
-int A1U_Print_parameters(void);
+int OSPU_Print_parameters(void);
 
 /* ********************************************************************* */
 /*                                                                       */
-/*               A1 device-level functions                               */
+/*               OSP device-level functions                               */
 /*                                                                       */
 /* ********************************************************************* */
 
 /**
- * \brief Device level implementation of A1_Initialize.
+ * \brief Device level implementation of OSP_Initialize.
  *
- * \param[out] rc               The error code from initializing A1
- * \param[in]  A1_thread_level  The type of thread support for A1
- *
- * \ingroup MANAGEMENT
- */
-int A1D_Initialize(int A1_thread_level);
-
-/**
- * \brief Device level implementation of A1_Finalize.
- *
- * \param[out] rc  The error code from terminating A1.  
+ * \param[out] rc               The error code from initializing OSP
+ * \param[in]  OSP_thread_level  The type of thread support for OSP
  *
  * \ingroup MANAGEMENT
  */
-int A1D_Finalize(void);
+int OSPD_Initialize(int OSP_thread_level);
 
 /**
- * \brief Device level implementation of A1_Abort.
+ * \brief Device level implementation of OSP_Finalize.
+ *
+ * \param[out] rc  The error code from terminating OSP.  
+ *
+ * \ingroup MANAGEMENT
+ */
+int OSPD_Finalize(void);
+
+/**
+ * \brief Device level implementation of OSP_Abort.
  *
  * \param[in]  error_code    The error code to be returned to the submitting environment.
  * \param[in]  error_message Text string to print to stderr upon termination.
@@ -100,16 +100,16 @@ int A1D_Finalize(void);
  * \ingroup MANAGEMENT
  */
 
-void A1D_Abort(int error_code, char error_message[]);
+void OSPD_Abort(int error_code, char error_message[]);
 
 /**
- * \brief Device level implementation of A1D_Alloc_segment.
+ * \brief Device level implementation of OSPD_Alloc_segment.
  *
- * A local operation to allocate memory to be used in context of A1 copy operations.
+ * A local operation to allocate memory to be used in context of OSP copy operations.
  *
  * \note Memory allocated with this function will be properly aligned for the architecture.
  *
- * \warning Memory allocated with this function must be freed by A1_Free_segment.
+ * \warning Memory allocated with this function must be freed by OSP_Free_segment.
  *
  * \param[out] rc            The error code.
  * \param[out] ptr           Pointer to memory.
@@ -117,14 +117,14 @@ void A1D_Abort(int error_code, char error_message[]);
  *
  * \ingroup MEMORY
  */
-int A1D_Alloc_segment(void** pointer, int bytes);
+int OSPD_Alloc_segment(void** pointer, int bytes);
 
 /**
- * \brief Device level implementation of A1D_Free_segment.
+ * \brief Device level implementation of OSPD_Free_segment.
  *
- * A local operation to free memory allocated by A1_Alloc_segment.
+ * A local operation to free memory allocated by OSP_Alloc_segment.
  *
- * \warning It is erroneous to attempt to free memory not allocated by A1_Alloc_segment.
+ * \warning It is erroneous to attempt to free memory not allocated by OSP_Alloc_segment.
  *
  * \param[out] rc            The error code.
  * \param[in] ptr           Pointer to memory.
@@ -132,12 +132,12 @@ int A1D_Alloc_segment(void** pointer, int bytes);
  * \ingroup MEMORY
  */
 
-int A1D_Free_segment(void* pointer);
+int OSPD_Free_segment(void* pointer);
 
 /**
- * \brief Device level implementation of A1_Exchange_segments.
+ * \brief Device level implementation of OSP_Exchange_segments.
  *
- *  A collective operation to allocate memory to be used in context of A1 copy operations.
+ *  A collective operation to allocate memory to be used in context of OSP copy operations.
  *
  * \param[out] rc         The error code.
  * \param[in]  group      Group of processes within which the pointer list is exchanged.
@@ -147,13 +147,13 @@ int A1D_Free_segment(void* pointer);
  *
  * \ingroup MEMORY 
  */
-int A1D_Exchange_segments(A1_group_t* group, void **ptr);
+int OSPD_Exchange_segments(OSP_group_t* group, void **ptr);
 
 /**
- * \brief Device level implementation of A1_Release_segments.
+ * \brief Device level implementation of OSP_Release_segments.
  *
  * A collective operation to invalidate and de-register memory segments
- * associated with an A1D_Exchange_segments call. 
+ * associated with an OSPD_Exchange_segments call. 
  *
  * \param[out] rc          The error code.
  * \param[in]  group       Group of processes within which the pointer list was exchanged.
@@ -161,112 +161,112 @@ int A1D_Exchange_segments(A1_group_t* group, void **ptr);
  *
  * \ingroup MEMORY 
  */
-int A1D_Release_segments(A1_group_t* group, void *ptr);
+int OSPD_Release_segments(OSP_group_t* group, void *ptr);
 
 /**
- * \brief Device level implementation of A1_Allocate_handle.
+ * \brief Device level implementation of OSP_Allocate_handle.
  *
  * Allocates a non-blocking handle.
  *
  * \param[in] handle      Non-blocking handle upon which to be waited.
  *
- * \see A1_handle_t, A1_Wait_handle_list, A1_Test_handle
+ * \see OSP_handle_t, OSP_Wait_handle_list, OSP_Test_handle
  *
  * \ingroup MEMORY
  */
 
-int A1D_Allocate_handle(A1_handle_t *handle);
+int OSPD_Allocate_handle(OSP_handle_t *handle);
 
 
 /**
- * \brief Device level implementation of A1_Release_handle.
+ * \brief Device level implementation of OSP_Release_handle.
  * 
  * Releases a non-blocking handle.
  * 
  * \param[in] handle      Non-blocking handle upon which to be waited.
  *
- * \see A1_handle_t, A1_Wait_handle_list, A1_Test_handle
+ * \see OSP_handle_t, OSP_Wait_handle_list, OSP_Test_handle
  *
  * \ingroup MEMORY
  */
 
-int A1D_Release_handle(A1_handle_t handle);
+int OSPD_Release_handle(OSP_handle_t handle);
 
 /**
- * \brief Device level implementation of A1_Wait_handle_all.
+ * \brief Device level implementation of OSP_Wait_handle_all.
  *
  * Waits for operations on all handle to complete.
  *
  * \param[in] handle      Non-blocking handle upon which to be waited.
  *
- * \see A1_handle_t, A1_Wait_handle_list, A1_Test_handle
+ * \see OSP_handle_t, OSP_Wait_handle_list, OSP_Test_handle
  *
  * \ingroup MEMORY
  */
 
-int A1D_Wait_handle_all(void);
+int OSPD_Wait_handle_all(void);
 
 /**
- * \brief Device level implementation of A1_Wait_handle.
+ * \brief Device level implementation of OSP_Wait_handle.
  *
  * Waits for operations on a handle to complete.
  *
  * \param[in] handle      Non-blocking handle upon which to be waited.
  *
- * \see A1_handle_t, A1_Wait_handle_list, A1_Test_handle
+ * \see OSP_handle_t, OSP_Wait_handle_list, OSP_Test_handle
  *
  * \ingroup MEMORY
  */
 
-int A1D_Wait_handle(A1_handle_t handle);
+int OSPD_Wait_handle(OSP_handle_t handle);
 
 /**
- * \brief Device level implementation of A1_Wait_handle_list.
+ * \brief Device level implementation of OSP_Wait_handle_list.
  *
  * Waits for operations on a list of handles to complete.
  *
  * \param[in] count          Number of handles
- * \param[in] a1_handle      Non-blocking handles upon which to be waited.
+ * \param[in] osp_handle      Non-blocking handles upon which to be waited.
  *
- * \see A1_handle_t, A1_Wait_handle_list, A1_Test_handle
+ * \see OSP_handle_t, OSP_Wait_handle_list, OSP_Test_handle
  *
  * \ingroup MEMORY
  */
 
-int A1D_Wait_handle_list(int count, A1_handle_t *a1_handle);
+int OSPD_Wait_handle_list(int count, OSP_handle_t *osp_handle);
 
 /**
- * \brief Device level implementation of A1_Test_handle.
+ * \brief Device level implementation of OSP_Test_handle.
  *
  * Test for completion of operations on a handle.
  *
  * \param[in] handle      Non-blocking handle upon which to be waited.
  *
- * \see A1_handle_t, A1_Wait_handle_list, A1_Test_handle
+ * \see OSP_handle_t, OSP_Wait_handle_list, OSP_Test_handle
  *
  * \ingroup MEMORY
  */
 
-int A1D_Test_handle(A1_handle_t handle, A1_bool_t* completed);
+int OSPD_Test_handle(OSP_handle_t handle, OSP_bool_t* completed);
 
 /**
- * \brief Device level implementation of A1_Test_handle_list.
+ * \brief Device level implementation of OSP_Test_handle_list.
  *
  * Test for completion of operations on a list of handles.
  *
  * \param[in] count          Number of handles
- * \param[in] a1_handle      Non-blocking handles upon which to be tested.
+ * \param[in] osp_handle      Non-blocking handles upon which to be tested.
  *
- * \see A1_handle_t, A1_Wait_handle_list, A1_Test_handle
+ * \see OSP_handle_t, OSP_Wait_handle_list, OSP_Test_handle
  *
  * \ingroup MEMORY
  */
-int A1D_Test_handle_list(int count,
-                         A1_handle_t *a1_handle,
-                         A1_bool_t* *completed);
+int OSPD_Test_handle_list(int count,
+                         OSP_handle_t *osp_handle,
+                         OSP_bool_t* *completed);
 
 /**
- * \brief Device level implementation of A1_Barrier_group.
+ * \brief Device level implementation of OSP_Barrier_group.
  *
  * On return, this call ensures that all processes within the entire group
  * have reached this point in the program.
@@ -275,19 +275,19 @@ int A1D_Test_handle_list(int count,
  *
  * \ingroup  SYNCHRONIZATION
  */
-int A1D_Barrier_group(A1_group_t* group);
+int OSPD_Barrier_group(OSP_group_t* group);
 
 /**
- * \brief Device level implementation of A1_NbBarrier_group.
+ * \brief Device level implementation of OSP_NbBarrier_group.
  *
  * \param[in] group          Group of processes to synchronize.
  *
  * \ingroup  SYNCHRONIZATION
  */
-int A1_NbBarrier_group(A1_group_t* group, A1_handle_t handle);
+int OSP_NbBarrier_group(OSP_group_t* group, OSP_handle_t handle);
 
 /**
- * \brief Device level implementation of A1_Sync_group.
+ * \brief Device level implementation of OSP_Sync_group.
  *
  * On return, this call ensures that all processes within the entire group
  * have reached this point in the program and that all messages have completed remotely.
@@ -296,19 +296,19 @@ int A1_NbBarrier_group(A1_group_t* group, A1_handle_t handle);
  *
  * \ingroup  SYNCHRONIZATION
  */
-int A1D_Sync_group(A1_group_t* group);
+int OSPD_Sync_group(OSP_group_t* group);
 
 /**
- * \brief Device level implementation of A1_NbSync_group.
+ * \brief Device level implementation of OSP_NbSync_group.
  *
  * \param[in] group          Group of processes to synchronize.
  *
  * \ingroup  SYNCHRONIZATION
  */
-int A1D_NbSync_group(A1_group_t* group, A1_handle_t handle);
+int OSPD_NbSync_group(OSP_group_t* group, OSP_handle_t handle);
 
 /**
- * \brief Device level implementation of A1_Put.
+ * \brief Device level implementation of OSP_Put.
  *
  * Blocking copy of contiguous data from local memory to remote memory.
  *
@@ -320,10 +320,10 @@ int A1D_NbSync_group(A1_group_t* group, A1_handle_t handle);
  *
  * \ingroup  COPY OPERATIONS
  */
-int A1D_Put(int target, void* src, void* dst, int bytes);
+int OSPD_Put(int target, void* src, void* dst, int bytes);
 
 /**
- * \brief Device level implementation of A1_NbPut.
+ * \brief Device level implementation of OSP_NbPut.
  *
  * Non-Blocking copy of contiguous data from local memory to remote memory.
  *
@@ -332,14 +332,14 @@ int A1D_Put(int target, void* src, void* dst, int bytes);
  * \param[in]  source_ptr    Starting address in the (local) source memory.
  * \param[in]  target_ptr    Starting address in the (remote) target memory.
  * \param[in]  bytes         Amount of data to transfer, in bytes.
- * \param[in]  handle        Opaque A1 handle for request
+ * \param[in]  handle        Opaque OSP handle for request
  *
  * \ingroup  COPY OPERATIONS
  */
-int A1D_NbPut(int target, void* src, void* dst, int bytes, A1_handle_t handle);
+int OSPD_NbPut(int target, void* src, void* dst, int bytes, OSP_handle_t handle);
 
 /**
- * \brief Device level implementation of A1_PutS.
+ * \brief Device level implementation of OSP_PutS.
  *
  * Blocking copy of non-contiguous (strided) data from local memory to remote memory.
  *
@@ -354,7 +354,7 @@ int A1D_NbPut(int target, void* src, void* dst, int bytes, A1_handle_t handle);
  *
  * \ingroup COPY OPERATIONS
  */
-int A1D_PutS(int target,
+int OSPD_PutS(int target,
              int stride_level,
              int block_sizes[],
              void* source_ptr,
@@ -363,7 +363,7 @@ int A1D_PutS(int target,
              int trg_stride_ar[]);
 
 /**
- * \brief Device level implementation of A1_NbPutS.
+ * \brief Device level implementation of OSP_NbPutS.
  * 
  * Non-Blocking copy of non-contiguous (strided) data from local memory to remote memory.
  * 
@@ -375,22 +375,22 @@ int A1D_PutS(int target,
  * \param[in]  src_stride_ar   Array of stride distances at source, in bytes.
  * \param[in]  target_ptr      Starting address in the (remote) target memory.
  * \param[in]  trg_stride_ar   Array of stride distances at target, in bytes.
- * \param[in]  handle        Opaque A1 handle for request
+ * \param[in]  handle        Opaque OSP handle for request
  *
  * \ingroup COPY OPERATIONS
  */
 
-int A1D_NbPutS(int target,
+int OSPD_NbPutS(int target,
                int stride_level,
                int block_sizes[],
                void* source_ptr,
                int src_stride_ar[],
                void* target_ptr,
                int trg_stride_ar[],
-               A1_handle_t handle);
+               OSP_handle_t handle);
 
 /**
- * \brief Device level implementation of A1_PutV.
+ * \brief Device level implementation of OSP_PutV.
  * 
  *  Blocking copy of non-contiguous data from local memory to remote memory.
  * 
@@ -400,17 +400,17 @@ int A1D_NbPutS(int target,
  *                             chunks of same size.
  * \param[in]  ar_len          Number of elements in the array.
  * 
- * \see A1_NbPut, A1_NbPutV, A1_NbMultiPut, A1_NbMultiPutS, A1_NbMultiPutV
+ * \see OSP_NbPut, OSP_NbPutV, OSP_NbMultiPut, OSP_NbMultiPutS, OSP_NbMultiPutV
  * 
  * \ingroup DATA_TRANSFER
  */
 
-int A1D_PutV(int target, 
-             A1_iov_t *iov_ar,
+int OSPD_PutV(int target, 
+             OSP_iov_t *iov_ar,
              int ar_len);
 
 /**
- * \brief Device level implementation of A1_NbPutV.
+ * \brief Device level implementation of OSP_NbPutV.
  * 
  *  Non-Blocking copy of non-contiguous data from local memory to remote memory.
  * 
@@ -419,20 +419,20 @@ int A1D_PutV(int target,
  * \param[in]  iov_ar          Array of io vectors. Each vector represents a set of
  *                             chunks of same size.
  * \param[in]  ar_len          Number of elements in the array.
- * \param[in]  a1_handle       A1 Opaque handle
+ * \param[in]  osp_handle       OSP Opaque handle
  * 
- * \see A1_NbPut, A1_NbPutV, A1_NbMultiPut, A1_NbMultiPutS, A1_NbMultiPutV
+ * \see OSP_NbPut, OSP_NbPutV, OSP_NbMultiPut, OSP_NbMultiPutS, OSP_NbMultiPutV
  * 
  * \ingroup DATA_TRANSFER
  */
 
-int A1D_NbPutV(int target, 
-               A1_iov_t *iov_ar,
+int OSPD_NbPutV(int target, 
+               OSP_iov_t *iov_ar,
                int ar_len,
-               A1_handle_t a1_handle);
+               OSP_handle_t osp_handle);
 
 /**
- * \brief Device level implementation of A1_Get.
+ * \brief Device level implementation of OSP_Get.
  *
  * Blocking copy of contiguous data from remote memory to local memory.
  *
@@ -444,10 +444,10 @@ int A1D_NbPutV(int target,
  *
  * \ingroup  COPY OPERATIONS
  */
-int A1D_Get(int target, void* src, void* dst, int bytes);
+int OSPD_Get(int target, void* src, void* dst, int bytes);
 
 /**
- * \brief Device level implementation of A1_Get.
+ * \brief Device level implementation of OSP_Get.
  *
  * Non-Blocking copy of contiguous data from remote memory to local memory.
  *
@@ -456,14 +456,14 @@ int A1D_Get(int target, void* src, void* dst, int bytes);
  * \param[in]  source_ptr    Starting address in the (remote) source memory.
  * \param[in]  target_ptr    Starting address in the (local) target memory.
  * \param[in]  bytes         Amount of data to transfer, in bytes.
- * \param[in]  handle        Opaque A1 handle for request
+ * \param[in]  handle        Opaque OSP handle for request
  *
  * \ingroup  COPY OPERATIONS
  */
-int A1D_NbGet(int target, void* src, void* dst, int bytes, A1_handle_t handle);
+int OSPD_NbGet(int target, void* src, void* dst, int bytes, OSP_handle_t handle);
 
 /**
- * \brief Device level implementation of A1_GetS.
+ * \brief Device level implementation of OSP_GetS.
  *
  * Blocking copy of non-contiguous (strided) data from remote memory to local memory.
  *
@@ -478,7 +478,7 @@ int A1D_NbGet(int target, void* src, void* dst, int bytes, A1_handle_t handle);
  *
  * \ingroup COPY OPERATIONS
  */
-int A1D_GetS(int target,
+int OSPD_GetS(int target,
              int stride_level,
              int block_sizes[],
              void* source_ptr,
@@ -487,7 +487,7 @@ int A1D_GetS(int target,
              int trg_stride_ar[]);
 
 /**
- * \brief Device level implementation of A1_NbGetS.
+ * \brief Device level implementation of OSP_NbGetS.
  *
  * Non-Blocking copy of non-contiguous (strided) data from remote memory to local memory.
  *
@@ -499,21 +499,21 @@ int A1D_GetS(int target,
  * \param[in]  src_stride_ar   Array of stride distances at source, in bytes.
  * \param[in]  target_ptr      Starting address in the (local) target memory.
  * \param[in]  trg_stride_ar   Array of stride distances at target, in bytes.
- * \param[in]  handle          Opaque A1 handle for request
+ * \param[in]  handle          Opaque OSP handle for request
  *
  * \ingroup COPY OPERATIONS
  */
-int A1D_NbGetS(int target,
+int OSPD_NbGetS(int target,
                int stride_level,
                int block_sizes[],
                void* source_ptr,
                int src_stride_ar[],
                void* target_ptr,
                int trg_stride_ar[],
-               A1_handle_t handle);
+               OSP_handle_t handle);
 
 /**
- * \brief  Device level implementation of A1_GetV.
+ * \brief  Device level implementation of OSP_GetV.
  *
  * Blocking copy of non-contiguous data from remote memory to local memory.
  *
@@ -523,17 +523,17 @@ int A1D_NbGetS(int target,
  *                             chunks of same size.
  * \param[in]  ar_len          Number of elements in the array.
  * 
- * \see A1_NbPut, A1_NbPutV, A1_NbMultiPut, A1_NbMultiPutS, A1_NbMultiPutV
+ * \see OSP_NbPut, OSP_NbPutV, OSP_NbMultiPut, OSP_NbMultiPutS, OSP_NbMultiPutV
  * 
  * \ingroup DATA_TRANSFER
  */
 
-int A1D_GetV(int target,
-             A1_iov_t *iov_ar,
+int OSPD_GetV(int target,
+             OSP_iov_t *iov_ar,
              int ar_len);
 
 /**
- * \brief Device level implementation of A1_NbGetV
+ * \brief Device level implementation of OSP_NbGetV
  *
  * Non-Blocking copy of non-contiguous data from remote memory to local memory.
  *
@@ -542,20 +542,20 @@ int A1D_GetV(int target,
  * \param[in]  iov_ar          Array of io vectors. Each vector represents a set of
  *                             chunks of same size.
  * \param[in]  ar_len          Number of elements in the array.
- * \param[in]  handle          A1 Opaque handle
+ * \param[in]  handle          OSP Opaque handle
  * 
- * \see A1_NbPut, A1_NbPutV, A1_NbMultiPut, A1_NbMultiPutS, A1_NbMultiPutV
+ * \see OSP_NbPut, OSP_NbPutV, OSP_NbMultiPut, OSP_NbMultiPutS, OSP_NbMultiPutV
  * 
  * \ingroup DATA_TRANSFER
  */
 
-int A1D_NbGetV(int target,
-               A1_iov_t *iov_ar,
+int OSPD_NbGetV(int target,
+               OSP_iov_t *iov_ar,
                int ar_len,
-               A1_handle_t handle);
+               OSP_handle_t handle);
 
 /**
- * \brief Device level implementation of A1_PutAcc
+ * \brief Device level implementation of OSP_PutAcc
  *
  * Blocking accumulate of contiguous data from local memory onto remote memory.
  *
@@ -564,20 +564,20 @@ int A1D_NbGetV(int target,
  * \param[in]  source_ptr    Starting address in the (local) source memory.
  * \param[in]  target_ptr    Starting address in the (remote) target memory.
  * \param[in]  bytes         Amount of data to transfer, in bytes.
- * \param[in]  a1_type       Amount of data to transfer, in bytes.
+ * \param[in]  osp_type       Amount of data to transfer, in bytes.
  * \param[in]  scaling       Factor for scaling source
  *
  * \ingroup COPY OPERATIONS
  */
-int A1D_PutAcc(int target,
+int OSPD_PutAcc(int target,
                void* source_ptr,
                void* target_ptr,
                int bytes,
-               A1_datatype_t a1_type,
+               OSP_datatype_t osp_type,
                void* scaling);
 
 /**
- * \brief Device level implementation of A1_NbPutAcc
+ * \brief Device level implementation of OSP_NbPutAcc
  * 
  * Non-Blocking accumulate of contiguous data from local memory onto remote memory.
  * 
@@ -586,22 +586,22 @@ int A1D_PutAcc(int target,
  * \param[in]  source_ptr    Starting address in the (local) source memory.
  * \param[in]  target_ptr    Starting address in the (remote) target memory.
  * \param[in]  bytes         Amount of data to transfer, in bytes.
- * \param[in]  a1_type       Amount of data to transfer, in bytes.
+ * \param[in]  osp_type       Amount of data to transfer, in bytes.
  * \param[in]  scaling       Factor for scaling source
- * \param[in]  handle        Opaque A1 handle
+ * \param[in]  handle        Opaque OSP handle
  *
  * \ingroup COPY OPERATIONS
  */
-int A1D_NbPutAcc(int target,
+int OSPD_NbPutAcc(int target,
                  void* source_ptr,
                  void* target_ptr,
                  int bytes,
-                 A1_datatype_t a1_type,
+                 OSP_datatype_t osp_type,
                  void* scaling,
-                 A1_handle_t handle);
+                 OSP_handle_t handle);
 
 /**
- * \brief Device level implementation of A1_PutAccS 
+ * \brief Device level implementation of OSP_PutAccS 
  *
  * Blocking accumulate of non-contiguous (strided) data from local memory to remote memory.
  *
@@ -613,23 +613,23 @@ int A1D_NbPutAcc(int target,
  * \param[in]  src_stride_ar   Array of stride distances at source, in bytes.
  * \param[in]  target_ptr      Starting address in the (remote) target memory.
  * \param[in]  trg_stride_ar   Array of stride distances at target, in bytes.
- * \param[in]  a1_type         Amount of data to transfer, in bytes.
+ * \param[in]  osp_type         Amount of data to transfer, in bytes.
  * \param[in]  scaling         Factor for scaling source
  *
  * \ingroup COPY OPERATIONS
  */
-int A1D_PutAccS(int target,
+int OSPD_PutAccS(int target,
                 int stride_level,
                 int block_sizes[],
                 void* source_ptr,
                 int *src_stride_ar,
                 void* target_ptr,
                 int *trg_stride_ar,
-                A1_datatype_t a1_type,
+                OSP_datatype_t osp_type,
                 void* scaling);
 
 /**
- * \brief Device level implementation of A1_NbPutAccS
+ * \brief Device level implementation of OSP_NbPutAccS
  *
  * Non-Blocking accumulate of non-contiguous (strided) data from local memory to remote memory.
  *
@@ -641,25 +641,25 @@ int A1D_PutAccS(int target,
  * \param[in]  src_stride_ar   Array of stride distances at source, in bytes.
  * \param[in]  target_ptr      Starting address in the (remote) target memory.
  * \param[in]  trg_stride_ar   Array of stride distances at target, in bytes.
- * \param[in]  a1_type         Amount of data to transfer, in bytes.
+ * \param[in]  osp_type         Amount of data to transfer, in bytes.
  * \param[in]  scaling         Factor for scaling source
- * \param[in]  handle          Opaque A1 handle
+ * \param[in]  handle          Opaque OSP handle
  *
  * \ingroup COPY OPERATIONS
  */
-int A1D_NbPutAccS(int target,
+int OSPD_NbPutAccS(int target,
                   int stride_level,
                   int block_sizes[],
                   void* source_ptr,
                   int *src_stride_ar,
                   void* target_ptr,
                   int *trg_stride_ar,
-                  A1_datatype_t a1_type,
+                  OSP_datatype_t osp_type,
                   void* scaling,
-                  A1_handle_t handle);
+                  OSP_handle_t handle);
 
 /**
- * \brief Device level implementation of A1_PutAccV
+ * \brief Device level implementation of OSP_PutAccV
  * 
  * Blocking accumulate of non-contiguous data from local memory to remote memory.
  *
@@ -668,22 +668,22 @@ int A1D_NbPutAccS(int target,
  * \param[in]  iov_ar          Array of io vectors. Each vector represents a set of
  *                             chunks of same size.
  * \param[in]  ar_len          Number of elements in the array.
- * \param[in]  a1_type         Type of data and scaling factor
+ * \param[in]  osp_type         Type of data and scaling factor
  * \param[in]  *scaling        Scaling factor in the accumulate operation.
  *
- * \see A1_NbPut, A1_NbPutV, A1_NbMultiPut, A1_NbMultiPutS, A1_NbMultiPutV
+ * \see OSP_NbPut, OSP_NbPutV, OSP_NbMultiPut, OSP_NbMultiPutS, OSP_NbMultiPutV
  *
  * \ingroup DATA_TRANSFER
  */
 
-int A1D_PutAccV(int target,
-                A1_iov_t *iov_ar,
+int OSPD_PutAccV(int target,
+                OSP_iov_t *iov_ar,
                 int ar_len,
-                A1_datatype_t a1_type,
+                OSP_datatype_t osp_type,
                 void* scaling);
 
 /**
- * \brief Device level implementation of A1_PutAccV
+ * \brief Device level implementation of OSP_PutAccV
  * 
  * Blocking accumulate of non-contiguous data from local memory to remote memory.
  *
@@ -692,24 +692,24 @@ int A1D_PutAccV(int target,
  * \param[in]  iov_ar          Array of io vectors. Each vector represents a set of
  *                             chunks of same size.
  * \param[in]  ar_len          Number of elements in the array.
- * \param[in]  a1_type         Type of data and scaling factor
+ * \param[in]  osp_type         Type of data and scaling factor
  * \param[in]  *scaling        Scaling factor in the accumulate operation.
- * \param[in]  a1_handle       A1 opaque handle
+ * \param[in]  osp_handle       OSP opaque handle
  *
- * \see A1_NbPut, A1_NbPutV, A1_NbMultiPut, A1_NbMultiPutS, A1_NbMultiPutV
+ * \see OSP_NbPut, OSP_NbPutV, OSP_NbMultiPut, OSP_NbMultiPutS, OSP_NbMultiPutV
  *
  * \ingroup DATA_TRANSFER
  */
 
-int A1D_NbPutAccV(int target,
-                  A1_iov_t *iov_ar,
+int OSPD_NbPutAccV(int target,
+                  OSP_iov_t *iov_ar,
                   int ar_len,
-                  A1_datatype_t a1_type,
+                  OSP_datatype_t osp_type,
                   void* scaling,
-                  A1_handle_t a1_handle);
+                  OSP_handle_t osp_handle);
 
 /**
- * \brief Device level implementation of A1_PutModV
+ * \brief Device level implementation of OSP_PutModV
  *
  * \brief Blocking remote modify of non-contiguous data from local memory to remote memory.
  *
@@ -718,61 +718,61 @@ int A1D_NbPutAccV(int target,
  * \param[in]  iov_ar          Array of io vectors. Each vector represents a set of
  *                             chunks of same size.
  * \param[in]  ar_len          Number of elements in the array.
- * \param[in]  a1_op           Reduce operation
- * \param[in]  a1_type         Type of data and scaling factor
+ * \param[in]  osp_op           Reduce operation
+ * \param[in]  osp_type         Type of data and scaling factor
  *
- * \see A1_NbPut, A1_NbPutV, A1_NbMultiPut, A1_NbMultiPutS, A1_NbMultiPutV
+ * \see OSP_NbPut, OSP_NbPutV, OSP_NbMultiPut, OSP_NbMultiPutS, OSP_NbMultiPutV
  *
  * \ingroup DATA_TRANSFER
  */
 
-int A1D_PutModV(int target,
-                A1_iov_t *iov_ar,
+int OSPD_PutModV(int target,
+                OSP_iov_t *iov_ar,
                 int ar_len,
-                A1_reduce_op_t a1_op,
-                A1_datatype_t a1_type);
+                OSP_reduce_op_t osp_op,
+                OSP_datatype_t osp_type);
 
 /**
  * \brief Collective operation to allocate a counter.
  *
  * \param[out] rc            The error code.
- * \param[in]  counter       A1 shared counter.
+ * \param[in]  counter       OSP shared counter.
  * 
  * \ingroup Atomics
  */
-int A1D_Create_counter(A1_group_t* group, 
-                       A1_counter_t *counter);
+int OSPD_Create_counter(OSP_group_t* group, 
+                       OSP_counter_t *counter);
 
 /**
  * \brief Collective operation to deallocate and deregister a counter.
  *
  * \param[out]    rc            The error code.
- * \param[in]     group         A1 group over which the counter is shared.
- * \param[inout]  counter       A1 shared counter.
+ * \param[in]     group         OSP group over which the counter is shared.
+ * \param[inout]  counter       OSP shared counter.
  *
- * \see a1_counter_t, A1_Create_counter, A1_Incr_counter, A1_NbIncr_counter
+ * \see osp_counter_t, OSP_Create_counter, OSP_Incr_counter, OSP_NbIncr_counter
  *
  * \ingroup Atomics
  */
 
-int A1D_Destroy_counter(A1_group_t* group,
-                       A1_counter_t *counter); 
+int OSPD_Destroy_counter(OSP_group_t* group,
+                       OSP_counter_t *counter); 
 
 
 /**
  * \brief Atomically updates a shared counter and returns the current value.
  *
  * \param[out] rc            The error code.
- * \param[in]  counter       A1 shared counter.
+ * \param[in]  counter       OSP shared counter.
  * \param[in]  increment     The value to add to the counter.
  * \param[in]  original      The remote value of the counter prior to the increment.
  *
- * \see a1_counter_t, A1_Create_counter, A1_Destroy_counter, A1_NbIncr_counter
+ * \see osp_counter_t, OSP_Create_counter, OSP_Destroy_counter, OSP_NbIncr_counter
  *
  * \ingroup Atomics
  */
 
-int A1D_Incr_counter(A1_counter_t counter,
+int OSPD_Incr_counter(OSP_counter_t counter,
                      long increment,
                      long* original);
 
@@ -789,97 +789,97 @@ int A1D_Incr_counter(A1_counter_t counter,
  *
  * \ingroup Atomics
  */
-int A1D_Rmw(int target,
+int OSPD_Rmw(int target,
            void* source_ptr_in,
            void* source_ptr_out,
            void* target_ptr,
            int bytes,
-           A1_atomic_op_t op,
-           A1_datatype_t a1_type);
+           OSP_atomic_op_t op,
+           OSP_datatype_t osp_type);
 
 
 /**
- * \brief Device level implementation of A1_Create_mutexes
+ * \brief Device level implementation of OSP_Create_mutexes
  *
  * Collective operation to allocate and register a list of mutexes.
  *
  * \param[out]    rc            The error code.
- * \param[in]     group         A1 group over which the mutexes are shared.
+ * \param[in]     group         OSP group over which the mutexes are shared.
  * \param[in]     count         Number of mutexes to be created.
  * \param[int]    count_ar      An arrays storing the number of mutexes on each process
  *
  * \ingroup Atomics
  */
-int A1D_Create_mutexes(A1_group_t* group, 
+int OSPD_Create_mutexes(OSP_group_t* group, 
                        int mutex_count, 
                        int *mutex_count_ar);
 
 /**
- * \brief Device level implementation of A1_Destroy_mutexes
+ * \brief Device level implementation of OSP_Destroy_mutexes
  *
  * Collective operation to unregister and deallocate a list of mutexes.
  *
  * \param[out]    rc            The error code.
- * \param[in]     group         A1 group over which the mutexes are shared.
+ * \param[in]     group         OSP group over which the mutexes are shared.
  *
  * \ingroup Atomics
  */
-int A1D_Destroy_mutexes(A1_group_t* group);
+int OSPD_Destroy_mutexes(OSP_group_t* group);
 
 /**
- * \brief Device level implementation of A1_Lock_mutex
+ * \brief Device level implementation of OSP_Lock_mutex
  * 
  * Operation to lock a mutex. Blocks until lock has been acquired.
  *
  * \param[out]    rc            The error code.
- * \param[in]     group         A1 group over which the mutexes are shared.
- * \param[in]     mutex         A1 mutex.
+ * \param[in]     group         OSP group over which the mutexes are shared.
+ * \param[in]     mutex         OSP mutex.
  * \param[in]     proc          Process on which you want to lock mutex on
  *
  * \ingroup Atomics
  */
-int A1D_Lock_mutex(A1_group_t* group, 
+int OSPD_Lock_mutex(OSP_group_t* group, 
                    int mutex, 
                    int proc);
 
 /**
- * \brief Device level implementation of A1_Trylock_mutex
+ * \brief Device level implementation of OSP_Trylock_mutex
  * 
  * Operation to trylock a mutex.
  *
  * \param[out]    rc            The error code.
- * \param[in]     group         A1 group over which the mutexes are shared.
- * \param[in]     mutex         A1 mutex.
+ * \param[in]     group         OSP group over which the mutexes are shared.
+ * \param[in]     mutex         OSP mutex.
  * \param[in]     proc          Process on which you want to lock mutex on
  * \param[out]    acquired      returns 1 if was acquired
  *
  * \ingroup Atomics
  */
 
-int A1D_Trylock_mutex(A1_group_t* group, 
+int OSPD_Trylock_mutex(OSP_group_t* group, 
                       int mutex, 
                       int proc, 
-                      A1_bool_t *acquired);
+                      OSP_bool_t *acquired);
 
 /**
- * \brief Device level implementation of A1_Unlock_mutex
+ * \brief Device level implementation of OSP_Unlock_mutex
  *  
  * Operation to unlock a mutex.  This call blocks until the mutex has been unlocked.
  *
  * \param[out]    rc            The error code.
- * \param[in]     group         A1 group over which the mutexes are shared.
- * \param[in]     mutex         A1 mutex.
+ * \param[in]     group         OSP group over which the mutexes are shared.
+ * \param[in]     mutex         OSP mutex.
  * \param[in]     proc          Process on which you want to lock mutex on
  *
  * \ingroup Atomics
  */
 
-int A1D_Unlock_mutex(A1_group_t* group, 
+int OSPD_Unlock_mutex(OSP_group_t* group, 
                      int mutex, 
                      int proc);
 
 /**
- * \brief Device level implementation of A1_Flush 
+ * \brief Device level implementation of OSP_Flush 
  * 
  *  On return, this call ensure that all blocking put or accumulate operations
  *  issued to a particular process are complete remotely.
@@ -888,10 +888,10 @@ int A1D_Unlock_mutex(A1_group_t* group,
  *
  * \ingroup COMPLETION
  */
-int A1D_Flush(int proc);
+int OSPD_Flush(int proc);
 
 /**
- * \brief Device level implementation of A1_Flush_group
+ * \brief Device level implementation of OSP_Flush_group
  *
  *  On return, this call ensure that all blocking put or accumulate operations
  *  issued to the group of processes are complete remotely.
@@ -900,7 +900,7 @@ int A1D_Flush(int proc);
  *
  * \ingroup COMPLETION
  */
-int A1D_Flush_group(A1_group_t *group);
+int OSPD_Flush_group(OSP_group_t *group);
 
 /**
  * \brief Reduce data from all processes and broadcast results to all processes.  
@@ -911,10 +911,10 @@ int A1D_Flush_group(A1_group_t *group);
  *
  * \ingroup MANYTOMANY
  */
-int A1D_Allreduce_group(A1_group_t* group,
+int OSPD_Allreduce_group(OSP_group_t* group,
                        int count,
-                       A1_reduce_op_t a1_op,
-                       A1_datatype_t a1_type,
+                       OSP_reduce_op_t osp_op,
+                       OSP_datatype_t osp_type,
                        void* in,
                        void* out);
 
@@ -927,13 +927,13 @@ int A1D_Allreduce_group(A1_group_t* group,
  *
  * \ingroup MANYTOMANY
  */
-int A1D_NbAllreduce_group(A1_group_t* group,
+int OSPD_NbAllreduce_group(OSP_group_t* group,
                          int count,
-                         A1_reduce_op_t a1_op,
-                         A1_datatype_t a1_type,
+                         OSP_reduce_op_t osp_op,
+                         OSP_datatype_t osp_type,
                          void* in,
                          void* out,
-                         A1_handle_t a1_handle);
+                         OSP_handle_t osp_handle);
 
 /**
  * \brief
@@ -944,7 +944,7 @@ int A1D_NbAllreduce_group(A1_group_t* group,
  *
  * \ingroup MANYTOMANY
  */
-int A1D_Bcast_group(A1_group_t* group,
+int OSPD_Bcast_group(OSP_group_t* group,
                    int root,
                    int count,
                    void* buffer);
@@ -959,14 +959,14 @@ int A1D_Bcast_group(A1_group_t* group,
  * \ingroup MANYTOMANY
  */
 
-int A1D_NbBcast_group(A1_group_t* group,
+int OSPD_NbBcast_group(OSP_group_t* group,
                       int root,
                       int count,
                       void* buffer,
-                      A1_handle_t a1_handle);
+                      OSP_handle_t osp_handle);
 
 /**
- * \brief Device level implementation of A1_Process_id 
+ * \brief Device level implementation of OSP_Process_id 
  *
  * Returns process rank relative to the group base specified.
  *
@@ -975,10 +975,10 @@ int A1D_NbBcast_group(A1_group_t* group,
  *
  * \ingroup INFORMATION
  */
-int A1D_Process_id(A1_group_t* group);
+int OSPD_Process_id(OSP_group_t* group);
 
 /**
- * \brief Device level implementation of A1_Process_total 
+ * \brief Device level implementation of OSP_Process_total 
  *
  * Returns the total number of processes in  the group base specified.
  * 
@@ -987,10 +987,10 @@ int A1D_Process_id(A1_group_t* group);
  *
  * \ingroup INFORMATION
  */
-int A1D_Process_total(A1_group_t* group);
+int OSPD_Process_total(OSP_group_t* group);
 
 /**
- * \brief Device level implementation of A1_Node_id
+ * \brief Device level implementation of OSP_Node_id
  *
  * Returns node rank relative to the group base specified.
  *
@@ -999,10 +999,10 @@ int A1D_Process_total(A1_group_t* group);
  *
  * \ingroup INFORMATION
  */
-int A1D_Node_id(A1_group_t* group);
+int OSPD_Node_id(OSP_group_t* group);
 
 /**
- * \brief Device level implementation of A1_Node_total
+ * \brief Device level implementation of OSP_Node_total
  *
  * Returns total number of nodes in the group base specified.
  * 
@@ -1011,10 +1011,10 @@ int A1D_Node_id(A1_group_t* group);
  *
  * \ingroup INFORMATION
  */
-int A1D_Node_total(A1_group_t* group);
+int OSPD_Node_total(OSP_group_t* group);
 
 /**
- * \brief Device level implementation of A1_Time_seconds 
+ * \brief Device level implementation of OSP_Time_seconds 
  * 
  * Timer in units of seconds.
  *
@@ -1022,10 +1022,10 @@ int A1D_Node_total(A1_group_t* group);
  *
  * \ingroup INFORMATION
  */
-double A1D_Time_seconds(void);
+double OSPD_Time_seconds(void);
 
 /**
- * \brief Device level implementation of A1_Time_cycles 
+ * \brief Device level implementation of OSP_Time_cycles 
  *
  * Timer in units of cycles.
  *
@@ -1033,10 +1033,10 @@ double A1D_Time_seconds(void);
  *
  * \ingroup INFORMATION
  */
-unsigned long long A1D_Time_cycles(void);
+unsigned long long OSPD_Time_cycles(void);
 
-void A1D_Global_lock_acquire(void);
+void OSPD_Global_lock_acquire(void);
 
-void A1D_Global_lock_release(void);
+void OSPD_Global_lock_release(void);
 
-#endif /* A1D_H_INCLUDED */
+#endif /* OSPD_H_INCLUDED */

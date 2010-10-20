@@ -1,10 +1,10 @@
-# Environment variable A1_INSTALL should point to the install directory of A1 
+# Environment variable OSP_INSTALL should point to the install directory of OSP 
 
 CC      = mpixlc_r 
 COPT    = -O3 -qstrict
 
-INCLUDE = -I$(A1_INSTALL)/include 
-LIBS    = -L$(A1_INSTALL)/lib -la1 
+INCLUDE = -I$(OSP_INSTALL)/include 
+LIBS    = -L$(OSP_INSTALL)/lib -losp 
 
 LD      = $(CC)
 CFLAGS  = $(COPT) $(INCLUDE)

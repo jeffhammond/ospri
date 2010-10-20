@@ -4,13 +4,13 @@
  *      See COPYRIGHT in top-level directory.
  */
 
-#include "a1.h"
-#include "a1d.h"
-#include "a1u.h"
+#include "osp.h"
+#include "ospd.h"
+#include "ospu.h"
 
-int A1_Process_id(A1_group_t* group)
+int OSP_Process_id(OSP_group_t* group)
 {
-    A1U_FUNC_ENTER();
+    OSPU_FUNC_ENTER();
 
     /* FIXME: The profiling interface needs to go here */
 
@@ -20,16 +20,16 @@ int A1_Process_id(A1_group_t* group)
 #   endif
 
   fn_exit: 
-    A1U_FUNC_EXIT();
-    return A1D_Process_id(group);
+    OSPU_FUNC_EXIT();
+    return OSPD_Process_id(group);
 
   fn_fail: 
     goto fn_exit;
 }
 
-int A1_Process_total(A1_group_t* group)
+int OSP_Process_total(OSP_group_t* group)
 {
-    A1U_FUNC_ENTER();
+    OSPU_FUNC_ENTER();
 
     /* FIXME: The profiling interface needs to go here */
 
@@ -39,16 +39,16 @@ int A1_Process_total(A1_group_t* group)
 #   endif
 
   fn_exit: 
-    A1U_FUNC_EXIT();
-    return A1D_Process_total(group);
+    OSPU_FUNC_EXIT();
+    return OSPD_Process_total(group);
 
   fn_fail: 
     goto fn_exit;
 }
 
-int A1_Node_id(A1_group_t* group)
+int OSP_Node_id(OSP_group_t* group)
 {
-    A1U_FUNC_ENTER();
+    OSPU_FUNC_ENTER();
 
     /* FIXME: The profiling interface needs to go here */
 
@@ -58,16 +58,16 @@ int A1_Node_id(A1_group_t* group)
 #   endif
 
   fn_exit: 
-    A1U_FUNC_EXIT();
-    return A1D_Node_id(group);
+    OSPU_FUNC_EXIT();
+    return OSPD_Node_id(group);
 
   fn_fail: 
     goto fn_exit;
 }
 
-int A1_Node_total(A1_group_t* group)
+int OSP_Node_total(OSP_group_t* group)
 {
-    A1U_FUNC_ENTER();
+    OSPU_FUNC_ENTER();
 
     /* FIXME: The profiling interface needs to go here */
 
@@ -77,16 +77,16 @@ int A1_Node_total(A1_group_t* group)
 #   endif
 
   fn_exit: 
-    A1U_FUNC_EXIT();
-    return A1D_Node_total(group);
+    OSPU_FUNC_EXIT();
+    return OSPD_Node_total(group);
 
   fn_fail: 
     goto fn_exit;
 }
 
-double A1_Time_seconds(void)
+double OSP_Time_seconds(void)
 {
-    A1U_FUNC_ENTER();
+    OSPU_FUNC_ENTER();
 
     /* FIXME: The profiling interface needs to go here */
 
@@ -96,16 +96,16 @@ double A1_Time_seconds(void)
 #   endif
 
   fn_exit: 
-    A1U_FUNC_EXIT();
-    return A1D_Time_seconds();
+    OSPU_FUNC_EXIT();
+    return OSPD_Time_seconds();
 
   fn_fail: 
     goto fn_exit;
 }
 
-unsigned long long A1_Time_cycles(void)
+unsigned long long OSP_Time_cycles(void)
 {
-    A1U_FUNC_ENTER();
+    OSPU_FUNC_ENTER();
 
     /* FIXME: The profiling interface needs to go here */
 
@@ -115,8 +115,8 @@ unsigned long long A1_Time_cycles(void)
 #   endif
 
   fn_exit: 
-    A1U_FUNC_EXIT();
-    return A1D_Time_cycles();
+    OSPU_FUNC_EXIT();
+    return OSPD_Time_cycles();
 
   fn_fail: 
     goto fn_exit;

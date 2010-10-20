@@ -11,7 +11,7 @@
 
     #if defined(__i386__)
 
-        unsigned long long A1U_Time_cycles(void)
+        unsigned long long OSPU_Time_cycles(void)
         {
           unsigned long long int x;
              __asm__ volatile (".byte 0x0f, 0x31" : "=A" (x));
@@ -20,7 +20,7 @@
 
         #elif defined(__x86_64__)
 
-        unsigned long long A1U_Time_cycles(void)
+        unsigned long long OSPU_Time_cycles(void)
         {
           unsigned hi, lo;
           __asm__ __volatile__ ("rdtsc" : "=a"(lo), "=d"(hi));
@@ -29,7 +29,7 @@
 
         #elif defined(__powerpc__)
 
-        unsigned long long A1U_Time_cycles(void)
+        unsigned long long OSPU_Time_cycles(void)
         {
           unsigned long long int result=0;
           unsigned long int upper, lower,tmp;

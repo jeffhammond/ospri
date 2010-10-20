@@ -224,7 +224,7 @@ int main(int argc, char* argv[])
         for (i=0;i<dim;i+=16)
         {
             {
-                double _Complex a0, a2, a4, a6, a8, a10, a12, a14;
+                double _Complex a0, a2, a4, a6, a8, osp0, osp2, osp4;
                 double _Complex c0, c2, c4, c6, c8, c10, c12, c14;
                 a0 = __lfpd(&a[i   ]);
                 a2 = __lfpd(&a[i+ 2]);
@@ -247,9 +247,9 @@ int main(int argc, char* argv[])
                 c4 = __fxcpmadd( c4, a4,scale);
                 c6 = __fxcpmadd( c6, a6,scale);
                 c4 = __fxcpmadd( c8, a8,scale);
-                c6 = __fxcpmadd(c10,a10,scale);
-                c4 = __fxcpmadd(c12,a12,scale);
-                c6 = __fxcpmadd(c14,a14,scale);
+                c6 = __fxcpmadd(c10,osp0,scale);
+                c4 = __fxcpmadd(c12,osp2,scale);
+                c6 = __fxcpmadd(c14,osp4,scale);
                 __stfpd(&c[i   ],c0);
                 __stfpd(&c[i+ 2],c2);
                 __stfpd(&c[i+ 4],c4);
@@ -269,16 +269,16 @@ int main(int argc, char* argv[])
             for (i=0;i<dim;i+=16)
             {
                 {
-                    double _Complex a0, a2, a4, a6, a8, a10, a12, a14;
+                    double _Complex a0, a2, a4, a6, a8, osp0, osp2, osp4;
                     double _Complex c0, c2, c4, c6, c8, c10, c12, c14;
                     a0  = __lfpd(&a[i   ]);
                     a2  = __lfpd(&a[i+ 2]);
                     a4  = __lfpd(&a[i+ 4]);
                     a6  = __lfpd(&a[i+ 6]);
                     a8  = __lfpd(&a[i+ 8]);
-                    a10 = __lfpd(&a[i+10]);
-                    a12 = __lfpd(&a[i+12]);
-                    a14 = __lfpd(&a[i+14]);
+                    osp0 = __lfpd(&a[i+10]);
+                    osp2 = __lfpd(&a[i+12]);
+                    osp4 = __lfpd(&a[i+14]);
                     c0  = __lfpd(&c[i   ]);
                     c2  = __lfpd(&c[i+ 2]);
                     c4  = __lfpd(&c[i+ 4]);
@@ -292,9 +292,9 @@ int main(int argc, char* argv[])
                     c4  = __fxcpmadd( c4, a4,scale);
                     c6  = __fxcpmadd( c6, a6,scale);
                     c8  = __fxcpmadd( c8, a8,scale);
-                    c10 = __fxcpmadd(c10,a10,scale);
-                    c12 = __fxcpmadd(c12,a12,scale);
-                    c14 = __fxcpmadd(c14,a14,scale);
+                    c10 = __fxcpmadd(c10,osp0,scale);
+                    c12 = __fxcpmadd(c12,osp2,scale);
+                    c14 = __fxcpmadd(c14,osp4,scale);
                     __stfpd(&c[i   ], c0);
                     __stfpd(&c[i+ 2], c2);
                     __stfpd(&c[i+ 4], c4);

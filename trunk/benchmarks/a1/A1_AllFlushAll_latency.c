@@ -51,7 +51,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <mpi.h>
-#include <a1.h>
+#include <osp.h>
 
 #define MAX_MSG_SIZE 1024*1024
 #define ITERATIONS 100
@@ -68,16 +68,16 @@ int main(int argc, char **argv)
 
     MPI_Init_thread(&argc, &argv, MPI_THREAD_MULTIPLE, &provided);
 
-    A1_Initialize(A1_THREAD_SINGLE);
+    OSP_Initialize(OSP_THREAD_SINGLE);
 
-    rank = A1_Process_id(A1_GROUP_WORLD);
-    nranks = A1_Process_total(A1_GROUP_WORLD);
+    rank = OSP_Process_id(OSP_GROUP_WORLD);
+    nranks = OSP_Process_total(OSP_GROUP_WORLD);
 
     buffer = (double **) malloc(sizeof(double *) * nranks);
 
     bufsize = MAX_MSG_SIZE * (ITERATIONS + SKIP);
-    A1_Alloc_segment((void**) &(buffer[rank]), bufsize);
-    A1_Exchange_segments(A1_GROUP_WORLD, (void **) buffer);
+    OSP_Alloc_segment((void**) &(buffer[rank]), bufsize);
+    OSP_Exchange_segments(OSP_GROUP_WORLD, (void **) buffer);
 
     scaling = 2.0;
     for (i = 0; i < bufsize / sizeof(double); i++)
@@ -88,67 +88,67 @@ int main(int argc, char **argv)
     if (0 == rank)
     {
         printf("TESTING ALL-FLUSH-ALL\n");
-        printf("A1_Put + A1_Sync_group Latency - in usec \n");
+        printf("OSP_Put + OSP_Sync_group Latency - in usec \n");
         printf("%20s %22s\n", "Message Size", "Latency");
         fflush(stdout);
     }
 
     for (msgsize = sizeof(double); msgsize < MAX_MSG_SIZE; msgsize *= 2)
     {
-        A1_Sync_group(A1_GROUP_WORLD);
+        OSP_Sync_group(OSP_GROUP_WORLD);
         for (i = 0; i < ITERATIONS + SKIP; i++)
         {
             for (j = 0; j < nranks; j++)
             {
-                A1_Put(j,
+                OSP_Put(j,
                        (void *) ((size_t) buffer[rank] + (size_t) (i * msgsize)),
                        (void *) ((size_t) buffer[j] + (size_t) (i * msgsize)),
                        msgsize);
             }
-            t_start = A1_Time_seconds();
-            A1_Sync_group(A1_GROUP_WORLD);
-            t_stop = A1_Time_seconds();
+            t_start = OSP_Time_seconds();
+            OSP_Sync_group(OSP_GROUP_WORLD);
+            t_stop = OSP_Time_seconds();
             if (i >= SKIP) t_latency = t_latency + (t_stop - t_start);
         }
         printf("%20d %20.2f \n", msgsize, ((t_latency) * 1000000) / ITERATIONS);
         fflush(stdout);
-        A1_Sync_group(A1_GROUP_WORLD);
+        OSP_Sync_group(OSP_GROUP_WORLD);
     }
 
     if (0 == rank)
     {
         printf("\n");
-        printf("A1_PutAcc + FlushAll Latency - in usec \n");
+        printf("OSP_PutAcc + FlushAll Latency - in usec \n");
         printf("%20s %22s\n", "Message Size", "Latency");
         fflush(stdout);
     }
 
     for (msgsize = sizeof(double); msgsize < MAX_MSG_SIZE; msgsize *= 2)
     {
-        A1_Sync_group(A1_GROUP_WORLD);
+        OSP_Sync_group(OSP_GROUP_WORLD);
         for (i = 0; i < ITERATIONS + SKIP; i++)
         {
             for (j = 0; j < nranks; j++)
             {
-                A1_PutAcc(j,
+                OSP_PutAcc(j,
                           (void *) ((size_t) buffer[rank] + (size_t) (i * msgsize)),
                           (void *) ((size_t) buffer[j] + (size_t) (i * msgsize)),
                           msgsize,
-                          A1_DOUBLE,
+                          OSP_DOUBLE,
                           (void *) &scaling);
             }
-            t_start = A1_Time_seconds();
-            A1_Sync_group(A1_GROUP_WORLD);
-            t_stop = A1_Time_seconds();
+            t_start = OSP_Time_seconds();
+            OSP_Sync_group(OSP_GROUP_WORLD);
+            t_stop = OSP_Time_seconds();
             if (i >= SKIP) t_latency = t_latency + (t_stop - t_start);
         }
         printf("%20d %20.2f \n", msgsize, ((t_latency) * 1000000) / ITERATIONS);
         fflush(stdout);
-        A1_Sync_group(A1_GROUP_WORLD);
+        OSP_Sync_group(OSP_GROUP_WORLD);
     }
 
-    A1_Release_segments(A1_GROUP_WORLD, buffer[rank]);
-    A1_Finalize();
+    OSP_Release_segments(OSP_GROUP_WORLD, buffer[rank]);
+    OSP_Finalize();
     MPI_Finalize();
 
     return 0;

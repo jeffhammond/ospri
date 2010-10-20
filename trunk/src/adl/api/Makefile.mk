@@ -3,7 +3,7 @@
 #     See COPYRIGHT in top-level directory.
 #
 
-liba1_la_SOURCES += $(top_srcdir)/src/adl/api/adl_initialize.c \
+libosp_la_SOURCES += $(top_srcdir)/src/adl/api/adl_initialize.c \
                     $(top_srcdir)/src/adl/api/adl_finalize.c \
                     $(top_srcdir)/src/adl/api/adl_malloc.c \
                     $(top_srcdir)/src/adl/api/adl_free.c \

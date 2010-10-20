@@ -50,7 +50,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <a1.h>
+#include <osp.h>
 
 #define MAX_MSGSIZE 2*1024*1024
 #define ITERATIONS_VERYSMALL 20000 
@@ -67,33 +67,33 @@ int main()
     double **buffer;
     double t_start, t_stop, t_total, d_total;
     double expected, bandwidth;
-    A1_handle_t a1_handle;
+    OSP_handle_t osp_handle;
 
     max_msgsize = MAX_MSGSIZE;
 
-    A1_Initialize(A1_THREAD_SINGLE);
+    OSP_Initialize(OSP_THREAD_SINGLE);
 
-    rank = A1_Process_id(A1_GROUP_WORLD);
-    nranks = A1_Process_total(A1_GROUP_WORLD);
+    rank = OSP_Process_id(OSP_GROUP_WORLD);
+    nranks = OSP_Process_total(OSP_GROUP_WORLD);
 
     bufsize = max_msgsize * ITERATIONS_LARGE;
     buffer = (double **) malloc(sizeof(double *) * nranks);
-    A1_Alloc_segment((void **) &(buffer[rank]), bufsize);
-    A1_Exchange_segments(A1_GROUP_WORLD, (void **) buffer);
+    OSP_Alloc_segment((void **) &(buffer[rank]), bufsize);
+    OSP_Exchange_segments(OSP_GROUP_WORLD, (void **) buffer);
 
     for (i = 0; i < bufsize / sizeof(double); i++)
     {
         *(buffer[rank] + i) = 1.0 + rank;
     }
 
-    A1_Allocate_handle(&a1_handle);
+    OSP_Allocate_handle(&osp_handle);
 
-    A1_Barrier_group(A1_GROUP_WORLD);
+    OSP_Barrier_group(OSP_GROUP_WORLD);
 
     if (rank == 0)
     {
 
-        printf("A1_Put Bandwidth in MBPS \n");
+        printf("OSP_Put Bandwidth in MBPS \n");
         printf("%20s %22s \n", "Message Size", "Bandwidth");
         fflush(stdout);
 
@@ -108,38 +108,38 @@ int main()
             else if (msgsize <= 512 * 1024) iterations = ITERATIONS_MEDIUM;
             else iterations = ITERATIONS_LARGE;
 
-            t_start = A1_Time_seconds();
+            t_start = OSP_Time_seconds();
 
             for (i = 0; i < iterations; i++)
             {
 
-                A1_NbPut(dest, (void *) ((size_t) buffer[dest] + (size_t)(i
+                OSP_NbPut(dest, (void *) ((size_t) buffer[dest] + (size_t)(i
                         * msgsize)), (void *) ((size_t) buffer[rank]
-                        + (size_t)(i * msgsize)), msgsize, a1_handle);
+                        + (size_t)(i * msgsize)), msgsize, osp_handle);
 
             }
 
-            A1_Wait_handle(a1_handle);
+            OSP_Wait_handle(osp_handle);
 
-            t_stop = A1_Time_seconds();
+            t_stop = OSP_Time_seconds();
             d_total = (iterations * msgsize) / (1024 * 1024);
             t_total = t_stop - t_start;
             bandwidth = d_total / t_total;
             printf("%20d %20.4lf \n", msgsize, bandwidth);
             fflush(stdout);
            
-            A1_Flush(dest);
+            OSP_Flush(dest);
         }
 
     }
 
-    A1_Barrier_group(A1_GROUP_WORLD);
+    OSP_Barrier_group(OSP_GROUP_WORLD);
 
-    A1_Release_handle(a1_handle);
+    OSP_Release_handle(osp_handle);
 
-    A1_Release_segments(A1_GROUP_WORLD, buffer[rank]);
+    OSP_Release_segments(OSP_GROUP_WORLD, buffer[rank]);
 
-    A1_Finalize();
+    OSP_Finalize();
 
     return 0;
 }

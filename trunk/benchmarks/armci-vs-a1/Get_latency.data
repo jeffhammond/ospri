@@ -1,5 +1,5 @@
 #Get Latency in usec 
-#Message Size          DCMF          A1         ARMCI 
+#Message Size          DCMF          OSP         ARMCI 
            8           3.29         3.32        12.94 
           16           3.29         3.37        13.19 
           32           3.34         3.48        13.82 

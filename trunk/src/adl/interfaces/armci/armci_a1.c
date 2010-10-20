@@ -5,36 +5,36 @@
  */
 
 #include "armci.h"
-#include "a1.h"
-#include "a1d.h"
-#include "a1u.h"
+#include "osp.h"
+#include "ospd.h"
+#include "ospu.h"
 #include "assert.h"
 
-/* #define A1_ARMCI_PROFILING */
+/* #define OSP_ARMCI_PROFILING */
 
-#ifdef A1_ARMCI_PROFILING
-int __a1_prof_me = -1;
-char* __a1_prof_name[32];
-double __a1_prof_t0;
-double __a1_prof_t1;
-double __a1_prof_dt;
+#ifdef OSP_ARMCI_PROFILING
+int __osp_prof_me = -1;
+char* __osp_prof_name[32];
+double __osp_prof_t0;
+double __osp_prof_t1;
+double __osp_prof_dt;
 
 #define AAP_INIT()                                    \
         do {                                              \
-            __a1_prof_me = A1_Process_id(A1_GROUP_WORLD); \
+            __osp_prof_me = OSP_Process_id(OSP_GROUP_WORLD); \
         } while (0)
 
 #define AAP_START(a)                      \
         do {                                  \
-            __a1_prof_name[0] = a;            \
-            __a1_prof_t0 = A1_Time_seconds(); \
+            __osp_prof_name[0] = a;            \
+            __osp_prof_t0 = OSP_Time_seconds(); \
         } while (0)
 
 #define AAP_STOP()                                                                      \
         do {                                                                                \
-            __a1_prof_t1 = A1_Time_seconds();                                               \
-            __a1_prof_dt = __a1_prof_t1 - __a1_prof_t0;                                     \
-            printf("iam %d: %s took %10.4lf s\n",__a1_prof_me,__a1_prof_name,__a1_prof_dt); \
+            __osp_prof_t1 = OSP_Time_seconds();                                               \
+            __osp_prof_dt = __osp_prof_t1 - __osp_prof_t0;                                     \
+            printf("iam %d: %s took %10.4lf s\n",__osp_prof_me,__osp_prof_name,__osp_prof_dt); \
             fflush(stdout);                                                                 \
         } while (0)
 
@@ -47,14 +47,14 @@ double __a1_prof_dt;
 #define AAP_ARGS(...)
 #endif
 
-/* TODO We really should have ARMCI-to-A1 type/op conversion functions/macros
+/* TODO We really should have ARMCI-to-OSP type/op conversion functions/macros
  *      instead of repeating that code so many times */
 
 int ARMCI_Init_args(int *argc, char ***argv)
 {
-    int status = A1_SUCCESS;
+    int status = OSP_SUCCESS;
 
-    A1U_FUNC_ENTER();
+    OSPU_FUNC_ENTER();
 
     /* FIXME: The profiling interface needs to go here */
 
@@ -65,10 +65,10 @@ int ARMCI_Init_args(int *argc, char ***argv)
 
     AAP_INIT();
 
-    status = A1_Initialize(A1_THREAD_SINGLE);
-    A1U_ERR_POP(status != A1_SUCCESS, "A1_Initialize returned an error\n");
+    status = OSP_Initialize(OSP_THREAD_SINGLE);
+    OSPU_ERR_POP(status != OSP_SUCCESS, "OSP_Initialize returned an error\n");
 
-    fn_exit: A1U_FUNC_EXIT();
+    fn_exit: OSPU_FUNC_EXIT();
     return status;
 
     fn_fail: goto fn_exit;
@@ -77,9 +77,9 @@ int ARMCI_Init_args(int *argc, char ***argv)
 
 int ARMCI_Init(void)
 {
-    int status = A1_SUCCESS;
+    int status = OSP_SUCCESS;
 
-    A1U_FUNC_ENTER();
+    OSPU_FUNC_ENTER();
 
     /* FIXME: The profiling interface needs to go here */
 
@@ -90,10 +90,10 @@ int ARMCI_Init(void)
 
     AAP_INIT();
 
-    status = A1_Initialize(A1_THREAD_SINGLE);
-    A1U_ERR_POP(status != A1_SUCCESS, "A1_Initialize returned an error\n");
+    status = OSP_Initialize(OSP_THREAD_SINGLE);
+    OSPU_ERR_POP(status != OSP_SUCCESS, "OSP_Initialize returned an error\n");
 
-    fn_exit: A1U_FUNC_EXIT();
+    fn_exit: OSPU_FUNC_EXIT();
     return status;
 
     fn_fail: goto fn_exit;
@@ -102,9 +102,9 @@ int ARMCI_Init(void)
 
 int ARMCI_Finalize(void)
 {
-    int status = A1_SUCCESS;
+    int status = OSP_SUCCESS;
 
-    A1U_FUNC_ENTER();
+    OSPU_FUNC_ENTER();
 
     /* FIXME: The profiling interface needs to go here */
 
@@ -113,10 +113,10 @@ int ARMCI_Finalize(void)
 #   ifdef HAVE_ERROR_CHECKING
 #   endif
 
-    status = A1_Finalize();
-    A1U_ERR_POP(status != A1_SUCCESS, "A1D_Finalize returned an error\n");
+    status = OSP_Finalize();
+    OSPU_ERR_POP(status != OSP_SUCCESS, "OSPD_Finalize returned an error\n");
 
-    fn_exit: A1U_FUNC_EXIT();
+    fn_exit: OSPU_FUNC_EXIT();
     return status;
 
     fn_fail: goto fn_exit;
@@ -125,10 +125,10 @@ int ARMCI_Finalize(void)
 
 int ARMCI_Malloc(void* ptr[], armci_size_t bytes)
 {
-    int status = A1_SUCCESS;
+    int status = OSP_SUCCESS;
     int my_rank;
 
-    A1U_FUNC_ENTER();
+    OSPU_FUNC_ENTER();
 
     /* FIXME: The profiling interface needs to go here */
 
@@ -137,7 +137,7 @@ int ARMCI_Malloc(void* ptr[], armci_size_t bytes)
 #   ifdef HAVE_ERROR_CHECKING
 #   endif
 
-    my_rank = A1_Process_id(A1_GROUP_WORLD);
+    my_rank = OSP_Process_id(OSP_GROUP_WORLD);
 
     if (bytes == 0)
     {
@@ -145,15 +145,15 @@ int ARMCI_Malloc(void* ptr[], armci_size_t bytes)
     }
     else
     {
-        status = A1_Alloc_segment(&ptr[my_rank], bytes);
-        A1U_ERR_POP(status != A1_SUCCESS, "A1_Alloc_segment returned an error\n");
+        status = OSP_Alloc_segment(&ptr[my_rank], bytes);
+        OSPU_ERR_POP(status != OSP_SUCCESS, "OSP_Alloc_segment returned an error\n");
     }
 
-    status = A1_Exchange_segments(A1_GROUP_WORLD, ptr);
-    A1U_ERR_POP(status != A1_SUCCESS,
-            "A1_Exchange_segments returned an error\n");
+    status = OSP_Exchange_segments(OSP_GROUP_WORLD, ptr);
+    OSPU_ERR_POP(status != OSP_SUCCESS,
+            "OSP_Exchange_segments returned an error\n");
 
-    fn_exit: A1U_FUNC_EXIT();
+    fn_exit: OSPU_FUNC_EXIT();
     return status;
 
     fn_fail: goto fn_exit;
@@ -162,10 +162,10 @@ int ARMCI_Malloc(void* ptr[], armci_size_t bytes)
 
 void* ARMCI_Malloc_local(armci_size_t bytes)
 {
-    int status = A1_SUCCESS;
+    int status = OSP_SUCCESS;
     void *segment_ptr;
 
-    A1U_FUNC_ENTER();
+    OSPU_FUNC_ENTER();
 
     /* FIXME: The profiling interface needs to go here */
 
@@ -174,10 +174,10 @@ void* ARMCI_Malloc_local(armci_size_t bytes)
 #   ifdef HAVE_ERROR_CHECKING
 #   endif
 
-    status = A1_Alloc_segment(&segment_ptr, bytes);
-    A1U_ERR_ABORT(status != A1_SUCCESS, "A1_Alloc_segement returned an error\n");
+    status = OSP_Alloc_segment(&segment_ptr, bytes);
+    OSPU_ERR_ABORT(status != OSP_SUCCESS, "OSP_Alloc_segement returned an error\n");
 
-    fn_exit: A1U_FUNC_EXIT();
+    fn_exit: OSPU_FUNC_EXIT();
     return segment_ptr;
 
     fn_fail: goto fn_exit;
@@ -185,9 +185,9 @@ void* ARMCI_Malloc_local(armci_size_t bytes)
 
 int ARMCI_Free(void *ptr)
 {
-    int status = A1_SUCCESS;
+    int status = OSP_SUCCESS;
 
-    A1U_FUNC_ENTER();
+    OSPU_FUNC_ENTER();
 
     /* FIXME: The profiling interface needs to go here */
 
@@ -196,13 +196,13 @@ int ARMCI_Free(void *ptr)
 #   ifdef HAVE_ERROR_CHECKING
 #   endif
 
-    status = A1_Release_segments(A1_GROUP_WORLD, ptr);
-    A1U_ERR_POP(status != A1_SUCCESS, "A1_Release_segments returned an error\n");
+    status = OSP_Release_segments(OSP_GROUP_WORLD, ptr);
+    OSPU_ERR_POP(status != OSP_SUCCESS, "OSP_Release_segments returned an error\n");
 
-    status = A1_Free_segment(ptr);
-    A1U_ERR_POP(status != A1_SUCCESS, "A1_Free_segment returned an error\n");
+    status = OSP_Free_segment(ptr);
+    OSPU_ERR_POP(status != OSP_SUCCESS, "OSP_Free_segment returned an error\n");
 
-    fn_exit: A1U_FUNC_EXIT();
+    fn_exit: OSPU_FUNC_EXIT();
     return status;
 
     fn_fail: goto fn_exit;
@@ -210,9 +210,9 @@ int ARMCI_Free(void *ptr)
 
 int ARMCI_Free_local(void *ptr)
 {
-    int status = A1_SUCCESS;
+    int status = OSP_SUCCESS;
 
-    A1U_FUNC_ENTER();
+    OSPU_FUNC_ENTER();
 
     /* FIXME: The profiling interface needs to go here */
 
@@ -221,10 +221,10 @@ int ARMCI_Free_local(void *ptr)
 #   ifdef HAVE_ERROR_CHECKING
 #   endif
 
-    status = A1_Free_segment(ptr);
-    A1U_ERR_POP(status != A1_SUCCESS, "A1_Free_segment returned an error\n");
+    status = OSP_Free_segment(ptr);
+    OSPU_ERR_POP(status != OSP_SUCCESS, "OSP_Free_segment returned an error\n");
 
-    fn_exit: A1U_FUNC_EXIT();
+    fn_exit: OSPU_FUNC_EXIT();
     return status;
 
     fn_fail: goto fn_exit;
@@ -232,10 +232,10 @@ int ARMCI_Free_local(void *ptr)
 
 void ARMCI_INIT_HANDLE(armci_hdl_t* handle)
 {
-    int status = A1_SUCCESS;
-    A1_handle_t a1_handle;
+    int status = OSP_SUCCESS;
+    OSP_handle_t osp_handle;
 
-    A1U_FUNC_ENTER();
+    OSPU_FUNC_ENTER();
 
     /* FIXME: The profiling interface needs to go here */
 
@@ -244,13 +244,13 @@ void ARMCI_INIT_HANDLE(armci_hdl_t* handle)
 #   ifdef HAVE_ERROR_CHECKING
 #   endif
 
-    status = A1_Allocate_handle(&a1_handle);
-    A1U_ERR_ABORT(status != A1_SUCCESS,
-            "A1_Allocate_handle returned an error\n");
+    status = OSP_Allocate_handle(&osp_handle);
+    OSPU_ERR_ABORT(status != OSP_SUCCESS,
+            "OSP_Allocate_handle returned an error\n");
 
-    *handle = a1_handle;
+    *handle = osp_handle;
 
-    fn_exit: A1U_FUNC_EXIT();
+    fn_exit: OSPU_FUNC_EXIT();
     return;
 
     fn_fail: goto fn_exit;
@@ -258,9 +258,9 @@ void ARMCI_INIT_HANDLE(armci_hdl_t* handle)
 
 int ARMCI_Put(void* src, void* dst, int bytes, int proc)
 {
-    int status = A1_SUCCESS;
+    int status = OSP_SUCCESS;
 
-    A1U_FUNC_ENTER();
+    OSPU_FUNC_ENTER();
 
     /* FIXME: The profiling interface needs to go here */
 
@@ -269,19 +269,19 @@ int ARMCI_Put(void* src, void* dst, int bytes, int proc)
 #   ifdef HAVE_ERROR_CHECKING
 #   endif
 
-    AAP_ARGS("iam %d: A1_Put proc = %d, bytes = %d\n",__a1_prof_me,proc,bytes);AAP_START("A1_Put          ");
+    AAP_ARGS("iam %d: OSP_Put proc = %d, bytes = %d\n",__osp_prof_me,proc,bytes);AAP_START("OSP_Put          ");
 
-    if ( 1==a1u_settings.armci_strict_ordering )
+    if ( 1==ospu_settings.armci_strict_ordering )
     {
-        status = A1_Flush(proc);
-        A1U_ERR_POP(status != A1_SUCCESS, "A1_Flush returned an error\n");
+        status = OSP_Flush(proc);
+        OSPU_ERR_POP(status != OSP_SUCCESS, "OSP_Flush returned an error\n");
     }
 
-    status = A1_Put(proc, src, dst, bytes);
-    A1U_ERR_POP(status != A1_SUCCESS, "A1_Put returned an error\n");
+    status = OSP_Put(proc, src, dst, bytes);
+    OSPU_ERR_POP(status != OSP_SUCCESS, "OSP_Put returned an error\n");
     AAP_STOP();
 
-    fn_exit: A1U_FUNC_EXIT();
+    fn_exit: OSPU_FUNC_EXIT();
     return status;
 
     fn_fail: goto fn_exit;
@@ -289,10 +289,10 @@ int ARMCI_Put(void* src, void* dst, int bytes, int proc)
 
 int ARMCI_NbPut(void* src, void* dst, int bytes, int proc, armci_hdl_t* handle)
 {
-    int status = A1_SUCCESS;
-    A1_handle_t a1_handle;
+    int status = OSP_SUCCESS;
+    OSP_handle_t osp_handle;
 
-    A1U_FUNC_ENTER();
+    OSPU_FUNC_ENTER();
 
     /* FIXME: The profiling interface needs to go here */
 
@@ -301,15 +301,15 @@ int ARMCI_NbPut(void* src, void* dst, int bytes, int proc, armci_hdl_t* handle)
 #   ifdef HAVE_ERROR_CHECKING
 #   endif
 
-    a1_handle = (A1_handle_t) *handle;
+    osp_handle = (OSP_handle_t) *handle;
 
-    AAP_ARGS("iam %d: A1_NbPut proc = %d, levels = %d, count[0] = %d, count[1] = %d\n",__a1_prof_me,proc,stride_levels,count[0],count[stride_levels-1]);
-    AAP_START("A1_NbPutS          ");
-    status = A1_NbPut(proc, src, dst, bytes, a1_handle);
-    A1U_ERR_POP(status != A1_SUCCESS, "A1_NbPut returned an error\n");
+    AAP_ARGS("iam %d: OSP_NbPut proc = %d, levels = %d, count[0] = %d, count[1] = %d\n",__osp_prof_me,proc,stride_levels,count[0],count[stride_levels-1]);
+    AAP_START("OSP_NbPutS          ");
+    status = OSP_NbPut(proc, src, dst, bytes, osp_handle);
+    OSPU_ERR_POP(status != OSP_SUCCESS, "OSP_NbPut returned an error\n");
     AAP_STOP();
 
-    fn_exit: A1U_FUNC_EXIT();
+    fn_exit: OSPU_FUNC_EXIT();
     return status;
 
     fn_fail: goto fn_exit;
@@ -323,9 +323,9 @@ int ARMCI_PutS(void* src_ptr,
                int stride_levels,
                int proc)
 {
-    int status = A1_SUCCESS;
+    int status = OSP_SUCCESS;
 
-    A1U_FUNC_ENTER();
+    OSPU_FUNC_ENTER();
 
     /* FIXME: The profiling interface needs to go here */
 
@@ -334,25 +334,25 @@ int ARMCI_PutS(void* src_ptr,
 #   ifdef HAVE_ERROR_CHECKING
 #   endif
 
-    AAP_ARGS("iam %d: A1_PutS proc = %d, levels = %d, count[0] = %d, count[1] = %d\n",__a1_prof_me,proc,stride_levels,count[0],count[stride_levels-1]);
-    AAP_START("A1_PutS          ");
+    AAP_ARGS("iam %d: OSP_PutS proc = %d, levels = %d, count[0] = %d, count[1] = %d\n",__osp_prof_me,proc,stride_levels,count[0],count[stride_levels-1]);
+    AAP_START("OSP_PutS          ");
 
-    if ( 1==a1u_settings.armci_strict_ordering )
+    if ( 1==ospu_settings.armci_strict_ordering )
     {
-        status = A1_Flush(proc);
-        A1U_ERR_POP(status != A1_SUCCESS, "A1_Flush returned an error\n");
+        status = OSP_Flush(proc);
+        OSPU_ERR_POP(status != OSP_SUCCESS, "OSP_Flush returned an error\n");
     }
 
-    status = A1_PutS(proc,
+    status = OSP_PutS(proc,
                      stride_levels,
                      count,
                      src_ptr,
                      src_stride_ar,
                      dst_ptr,
                      dst_stride_ar);
-    A1U_ERR_POP(status != A1_SUCCESS, "A1_PutS returned an error\n");AAP_STOP();
+    OSPU_ERR_POP(status != OSP_SUCCESS, "OSP_PutS returned an error\n");AAP_STOP();
 
-    fn_exit: A1U_FUNC_EXIT();
+    fn_exit: OSPU_FUNC_EXIT();
     return status;
 
     fn_fail: goto fn_exit;
@@ -367,10 +367,10 @@ int ARMCI_NbPutS(void* src_ptr,
                  int proc,
                  armci_hdl_t* handle)
 {
-    int status = A1_SUCCESS;
-    A1_handle_t a1_handle;
+    int status = OSP_SUCCESS;
+    OSP_handle_t osp_handle;
 
-    A1U_FUNC_ENTER();
+    OSPU_FUNC_ENTER();
 
     /* FIXME: The profiling interface needs to go here */
 
@@ -379,21 +379,21 @@ int ARMCI_NbPutS(void* src_ptr,
 #   ifdef HAVE_ERROR_CHECKING
 #   endif
 
-    a1_handle = (A1_handle_t) *handle;
+    osp_handle = (OSP_handle_t) *handle;
 
-    AAP_ARGS("iam %d: A1_NbPutS proc = %d, levels = %d, count[0] = %d, count[1] = %d\n",__a1_prof_me,proc,stride_levels,count[0],count[stride_levels-1]);
-    AAP_START("A1_NbPutS          ");
-    status = A1_NbPutS(proc,
+    AAP_ARGS("iam %d: OSP_NbPutS proc = %d, levels = %d, count[0] = %d, count[1] = %d\n",__osp_prof_me,proc,stride_levels,count[0],count[stride_levels-1]);
+    AAP_START("OSP_NbPutS          ");
+    status = OSP_NbPutS(proc,
                        stride_levels,
                        count,
                        src_ptr,
                        src_stride_ar,
                        dst_ptr,
                        dst_stride_ar,
-                       a1_handle);
-    A1U_ERR_POP(status != A1_SUCCESS, "A1_NbPutS returned an error\n");AAP_STOP();
+                       osp_handle);
+    OSPU_ERR_POP(status != OSP_SUCCESS, "OSP_NbPutS returned an error\n");AAP_STOP();
 
-    fn_exit: A1U_FUNC_EXIT();
+    fn_exit: OSPU_FUNC_EXIT();
     return status;
 
     fn_fail: goto fn_exit;
@@ -401,10 +401,10 @@ int ARMCI_NbPutS(void* src_ptr,
 
 int ARMCI_PutV(armci_giov_t *dsrc_arr, int arr_len, int proc)
 {
-    int status = A1_SUCCESS;
-    A1_iov_t *a1_iov_ar;
+    int status = OSP_SUCCESS;
+    OSP_iov_t *osp_iov_ar;
 
-    A1U_FUNC_ENTER();
+    OSPU_FUNC_ENTER();
 
     /* FIXME: The profiling interface needs to go here */
 
@@ -413,27 +413,27 @@ int ARMCI_PutV(armci_giov_t *dsrc_arr, int arr_len, int proc)
 #   ifdef HAVE_ERROR_CHECKING
 #   endif
 
-    /* ARMCI iov and A1 iov are similar structures but follow 
+    /* ARMCI iov and OSP iov are similar structures but follow 
      * different naming conventions. So we make a copy.*/
-    /* TODO Why not use A1D_Malloc here? A1D_Malloc is not exposed here, currently*/
-    status = posix_memalign((void **) &a1_iov_ar, 16, sizeof(A1_iov_t)
+    /* TODO Why not use OSPD_Malloc here? OSPD_Malloc is not exposed here, currently*/
+    status = posix_memalign((void **) &osp_iov_ar, 16, sizeof(OSP_iov_t)
             * arr_len);
-    A1U_ERR_POP(status != 0, "posix_memalign returned an error\n");
+    OSPU_ERR_POP(status != 0, "posix_memalign returned an error\n");
 
-    memcpy((void *) a1_iov_ar, (void *) dsrc_arr, sizeof(A1_iov_t) * arr_len);
+    memcpy((void *) osp_iov_ar, (void *) dsrc_arr, sizeof(OSP_iov_t) * arr_len);
 
-    if ( 1==a1u_settings.armci_strict_ordering )
+    if ( 1==ospu_settings.armci_strict_ordering )
     {
-        status = A1_Flush(proc);
-        A1U_ERR_POP(status != A1_SUCCESS, "A1_Flush returned an error\n");
+        status = OSP_Flush(proc);
+        OSPU_ERR_POP(status != OSP_SUCCESS, "OSP_Flush returned an error\n");
     }
 
-    status = A1_PutV(proc, a1_iov_ar, arr_len);
-    A1U_ERR_POP(status != A1_SUCCESS, "A1_PutV returned an error\n");
+    status = OSP_PutV(proc, osp_iov_ar, arr_len);
+    OSPU_ERR_POP(status != OSP_SUCCESS, "OSP_PutV returned an error\n");
 
-    free(a1_iov_ar);
+    free(osp_iov_ar);
 
-    fn_exit: A1U_FUNC_EXIT();
+    fn_exit: OSPU_FUNC_EXIT();
     return status;
 
     fn_fail: goto fn_exit;
@@ -444,11 +444,11 @@ int ARMCI_NbPutV(armci_giov_t *dsrc_arr,
                  int proc,
                  armci_hdl_t* handle)
 {
-    int status = A1_SUCCESS;
-    A1_iov_t *a1_iov_ar;
-    A1_handle_t a1_handle;
+    int status = OSP_SUCCESS;
+    OSP_iov_t *osp_iov_ar;
+    OSP_handle_t osp_handle;
 
-    A1U_FUNC_ENTER();
+    OSPU_FUNC_ENTER();
 
     /* FIXME: The profiling interface needs to go here */
 
@@ -457,25 +457,25 @@ int ARMCI_NbPutV(armci_giov_t *dsrc_arr,
 #   ifdef HAVE_ERROR_CHECKING
 #   endif
 
-    a1_handle = (A1_handle_t) *handle;
+    osp_handle = (OSP_handle_t) *handle;
 
-    /* ARMCI iov and A1 iov are similar structures but follow
+    /* ARMCI iov and OSP iov are similar structures but follow
      * different naming conventions. So we make a copy.*/
-    /* TODO Why not use A1D_Malloc here? A1D_Malloc is not exposed here, currently*/
-    status = posix_memalign((void **) &a1_iov_ar, 16, sizeof(A1_iov_t)
+    /* TODO Why not use OSPD_Malloc here? OSPD_Malloc is not exposed here, currently*/
+    status = posix_memalign((void **) &osp_iov_ar, 16, sizeof(OSP_iov_t)
             * arr_len);
-    A1U_ERR_POP(status != 0, "posix_memalign returned an error\n");
+    OSPU_ERR_POP(status != 0, "posix_memalign returned an error\n");
 
-    memcpy((void *) a1_iov_ar, (void *) dsrc_arr, sizeof(A1_iov_t) * arr_len);
+    memcpy((void *) osp_iov_ar, (void *) dsrc_arr, sizeof(OSP_iov_t) * arr_len);
 
-    status = A1_NbPutV(proc, a1_iov_ar, arr_len, a1_handle);
-    A1U_ERR_POP(status != A1_SUCCESS, "A1_NbPutV returned an error\n");
+    status = OSP_NbPutV(proc, osp_iov_ar, arr_len, osp_handle);
+    OSPU_ERR_POP(status != OSP_SUCCESS, "OSP_NbPutV returned an error\n");
 
     /* it is okay to free this as soon as the function returns?  so we copy it upon
-     * entry into A1D_NbPutV? */
-    free(a1_iov_ar);
+     * entry into OSPD_NbPutV? */
+    free(osp_iov_ar);
 
-    fn_exit: A1U_FUNC_EXIT();
+    fn_exit: OSPU_FUNC_EXIT();
     return status;
 
     fn_fail: goto fn_exit;
@@ -483,9 +483,9 @@ int ARMCI_NbPutV(armci_giov_t *dsrc_arr,
 
 int ARMCI_Get(void* src, void* dst, int bytes, int proc)
 {
-    int status = A1_SUCCESS;
+    int status = OSP_SUCCESS;
 
-    A1U_FUNC_ENTER();
+    OSPU_FUNC_ENTER();
 
     /* FIXME: The profiling interface needs to go here */
 
@@ -494,20 +494,20 @@ int ARMCI_Get(void* src, void* dst, int bytes, int proc)
 #   ifdef HAVE_ERROR_CHECKING
 #   endif
 
-    AAP_ARGS("iam %d: A1_Get proc = %d, bytes = %d\n",__a1_prof_me,proc,bytes);
-    AAP_START("A1_Get         ");
+    AAP_ARGS("iam %d: OSP_Get proc = %d, bytes = %d\n",__osp_prof_me,proc,bytes);
+    AAP_START("OSP_Get         ");
 
-    if ( 1==a1u_settings.armci_strict_ordering )
+    if ( 1==ospu_settings.armci_strict_ordering )
     {
-        status = A1_Flush(proc);
-        A1U_ERR_POP(status != A1_SUCCESS, "A1_Flush returned an error\n");
+        status = OSP_Flush(proc);
+        OSPU_ERR_POP(status != OSP_SUCCESS, "OSP_Flush returned an error\n");
     }
 
-    status = A1_Get(proc, src, dst, bytes);
-    A1U_ERR_POP(status != A1_SUCCESS, "A1_Get returned an error\n");
+    status = OSP_Get(proc, src, dst, bytes);
+    OSPU_ERR_POP(status != OSP_SUCCESS, "OSP_Get returned an error\n");
     AAP_STOP();
 
-    fn_exit: A1U_FUNC_EXIT();
+    fn_exit: OSPU_FUNC_EXIT();
     return status;
 
     fn_fail: goto fn_exit;
@@ -515,10 +515,10 @@ int ARMCI_Get(void* src, void* dst, int bytes, int proc)
 
 int ARMCI_NbGet(void* src, void* dst, int bytes, int proc, armci_hdl_t* handle)
 {
-    int status = A1_SUCCESS;
-    A1_handle_t a1_handle;
+    int status = OSP_SUCCESS;
+    OSP_handle_t osp_handle;
 
-    A1U_FUNC_ENTER();
+    OSPU_FUNC_ENTER();
 
     /* FIXME: The profiling interface needs to go here */
 
@@ -527,15 +527,15 @@ int ARMCI_NbGet(void* src, void* dst, int bytes, int proc, armci_hdl_t* handle)
 #   ifdef HAVE_ERROR_CHECKING
 #   endif
 
-    a1_handle = (A1_handle_t) *handle;
+    osp_handle = (OSP_handle_t) *handle;
 
-    AAP_ARGS("iam %d: A1_NbGet proc = %d, levels = %d, count[0] = %d, count[1] = %d\n",__a1_prof_me,proc,stride_levels,count[0],count[stride_levels-1]);
-    AAP_START("A1_NbGet           ");
-    status = A1_NbGet(proc, src, dst, bytes, a1_handle);
-    A1U_ERR_POP(status != A1_SUCCESS, "A1_NbGet returned an error\n");
+    AAP_ARGS("iam %d: OSP_NbGet proc = %d, levels = %d, count[0] = %d, count[1] = %d\n",__osp_prof_me,proc,stride_levels,count[0],count[stride_levels-1]);
+    AAP_START("OSP_NbGet           ");
+    status = OSP_NbGet(proc, src, dst, bytes, osp_handle);
+    OSPU_ERR_POP(status != OSP_SUCCESS, "OSP_NbGet returned an error\n");
     AAP_STOP();
 
-    fn_exit: A1U_FUNC_EXIT();
+    fn_exit: OSPU_FUNC_EXIT();
     return status;
 
     fn_fail: goto fn_exit;
@@ -549,9 +549,9 @@ int ARMCI_GetS(void* src_ptr,
                int stride_levels,
                int proc)
 {
-    int status = A1_SUCCESS;
+    int status = OSP_SUCCESS;
 
-    A1U_FUNC_ENTER();
+    OSPU_FUNC_ENTER();
 
     /* FIXME: The profiling interface needs to go here */
 
@@ -560,26 +560,26 @@ int ARMCI_GetS(void* src_ptr,
 #   ifdef HAVE_ERROR_CHECKING
 #   endif
 
-    AAP_ARGS("iam %d: A1_GetS proc = %d, levels = %d, count[0] = %d, count[1] = %d\n",__a1_prof_me,proc,stride_levels,count[0],count[stride_levels-1]);
-    AAP_START("A1_GetS           ");
+    AAP_ARGS("iam %d: OSP_GetS proc = %d, levels = %d, count[0] = %d, count[1] = %d\n",__osp_prof_me,proc,stride_levels,count[0],count[stride_levels-1]);
+    AAP_START("OSP_GetS           ");
 
-    if ( 1==a1u_settings.armci_strict_ordering )
+    if ( 1==ospu_settings.armci_strict_ordering )
     {
-        status = A1_Flush(proc);
-        A1U_ERR_POP(status != A1_SUCCESS, "A1_Flush returned an error\n");
+        status = OSP_Flush(proc);
+        OSPU_ERR_POP(status != OSP_SUCCESS, "OSP_Flush returned an error\n");
     }
 
-    status = A1_GetS(proc,
+    status = OSP_GetS(proc,
                      stride_levels,
                      count,
                      src_ptr,
                      src_stride_ar,
                      dst_ptr,
                      dst_stride_ar);
-    A1U_ERR_POP(status != A1_SUCCESS, "A1_GetS returned an error\n");
+    OSPU_ERR_POP(status != OSP_SUCCESS, "OSP_GetS returned an error\n");
     AAP_STOP();
 
-    fn_exit: A1U_FUNC_EXIT();
+    fn_exit: OSPU_FUNC_EXIT();
     return status;
 
     fn_fail: goto fn_exit;
@@ -594,10 +594,10 @@ int ARMCI_NbGetS(void* src_ptr,
                  int proc,
                  armci_hdl_t* handle)
 {
-    int status = A1_SUCCESS;
-    A1_handle_t a1_handle;
+    int status = OSP_SUCCESS;
+    OSP_handle_t osp_handle;
 
-    A1U_FUNC_ENTER();
+    OSPU_FUNC_ENTER();
 
     /* FIXME: The profiling interface needs to go here */
 
@@ -606,22 +606,22 @@ int ARMCI_NbGetS(void* src_ptr,
 #   ifdef HAVE_ERROR_CHECKING
 #   endif
 
-    a1_handle = (A1_handle_t) *handle;
+    osp_handle = (OSP_handle_t) *handle;
 
-    AAP_ARGS("iam %d: A1_NbGetS proc = %d, levels = %d, count[0] = %d, count[1] = %d\n",__a1_prof_me,proc,stride_levels,count[0],count[stride_levels-1]);
-    AAP_START("A1_NbGetS           ");
-    status = A1_NbGetS(proc,
+    AAP_ARGS("iam %d: OSP_NbGetS proc = %d, levels = %d, count[0] = %d, count[1] = %d\n",__osp_prof_me,proc,stride_levels,count[0],count[stride_levels-1]);
+    AAP_START("OSP_NbGetS           ");
+    status = OSP_NbGetS(proc,
                        stride_levels,
                        count,
                        src_ptr,
                        src_stride_ar,
                        dst_ptr,
                        dst_stride_ar,
-                       a1_handle);
-    A1U_ERR_POP(status != A1_SUCCESS, "A1_NbPutS returned an error\n");
+                       osp_handle);
+    OSPU_ERR_POP(status != OSP_SUCCESS, "OSP_NbPutS returned an error\n");
     AAP_STOP();
 
-    fn_exit: A1U_FUNC_EXIT();
+    fn_exit: OSPU_FUNC_EXIT();
     return status;
 
     fn_fail: goto fn_exit;
@@ -629,10 +629,10 @@ int ARMCI_NbGetS(void* src_ptr,
 
 int ARMCI_GetV(armci_giov_t *dsrc_arr, int arr_len, int proc)
 {
-    int status = A1_SUCCESS;
-    A1_iov_t *a1_iov_ar;
+    int status = OSP_SUCCESS;
+    OSP_iov_t *osp_iov_ar;
 
-    A1U_FUNC_ENTER();
+    OSPU_FUNC_ENTER();
 
     /* FIXME: The profiling interface needs to go here */
 
@@ -641,28 +641,28 @@ int ARMCI_GetV(armci_giov_t *dsrc_arr, int arr_len, int proc)
 #   ifdef HAVE_ERROR_CHECKING
 #   endif
 
-    /* ARMCI iov and A1 iov are similar structures but follow
+    /* ARMCI iov and OSP iov are similar structures but follow
      * different naming conventions. So we make a copy.*/
 
-    /* TODO Why not use A1D_Malloc here? */
-    status = posix_memalign((void **) &a1_iov_ar, 16, sizeof(A1_iov_t)
+    /* TODO Why not use OSPD_Malloc here? */
+    status = posix_memalign((void **) &osp_iov_ar, 16, sizeof(OSP_iov_t)
             * arr_len);
-    A1U_ERR_POP(status != 0, "posix_memalign returned an error\n");
+    OSPU_ERR_POP(status != 0, "posix_memalign returned an error\n");
 
-    memcpy((void *) a1_iov_ar, (void *) dsrc_arr, sizeof(A1_iov_t) * arr_len);
+    memcpy((void *) osp_iov_ar, (void *) dsrc_arr, sizeof(OSP_iov_t) * arr_len);
 
-    if ( 1==a1u_settings.armci_strict_ordering )
+    if ( 1==ospu_settings.armci_strict_ordering )
     {
-        status = A1_Flush(proc);
-        A1U_ERR_POP(status != A1_SUCCESS, "A1_Flush returned an error\n");
+        status = OSP_Flush(proc);
+        OSPU_ERR_POP(status != OSP_SUCCESS, "OSP_Flush returned an error\n");
     }
 
-    status = A1_GetV(proc, a1_iov_ar, arr_len);
-    A1U_ERR_POP(status != A1_SUCCESS, "A1_GetV returned an error\n");
+    status = OSP_GetV(proc, osp_iov_ar, arr_len);
+    OSPU_ERR_POP(status != OSP_SUCCESS, "OSP_GetV returned an error\n");
 
-    free(a1_iov_ar);
+    free(osp_iov_ar);
 
-    fn_exit: A1U_FUNC_EXIT();
+    fn_exit: OSPU_FUNC_EXIT();
     return status;
 
     fn_fail: goto fn_exit;
@@ -673,11 +673,11 @@ int ARMCI_NbGetV(armci_giov_t *dsrc_arr,
                  int proc,
                  armci_hdl_t* handle)
 {
-    int status = A1_SUCCESS;
-    A1_iov_t *a1_iov_ar;
-    A1_handle_t a1_handle;
+    int status = OSP_SUCCESS;
+    OSP_iov_t *osp_iov_ar;
+    OSP_handle_t osp_handle;
 
-    A1U_FUNC_ENTER();
+    OSPU_FUNC_ENTER();
 
     /* FIXME: The profiling interface needs to go here */
 
@@ -686,24 +686,24 @@ int ARMCI_NbGetV(armci_giov_t *dsrc_arr,
 #   ifdef HAVE_ERROR_CHECKING
 #   endif
 
-    a1_handle = (A1_handle_t) *handle;
+    osp_handle = (OSP_handle_t) *handle;
 
-    /* ARMCI iov and A1 iov are similar structures but follow
+    /* ARMCI iov and OSP iov are similar structures but follow
      * different naming conventions. So we make a copy.*/
 
-    /* TODO Why not use A1D_Malloc here? */
-    status = posix_memalign((void **) &a1_iov_ar, 16, sizeof(A1_iov_t)
+    /* TODO Why not use OSPD_Malloc here? */
+    status = posix_memalign((void **) &osp_iov_ar, 16, sizeof(OSP_iov_t)
             * arr_len);
-    A1U_ERR_POP(status != 0, "posix_memalign returned an error\n");
+    OSPU_ERR_POP(status != 0, "posix_memalign returned an error\n");
 
-    memcpy((void *) a1_iov_ar, (void *) dsrc_arr, sizeof(A1_iov_t) * arr_len);
+    memcpy((void *) osp_iov_ar, (void *) dsrc_arr, sizeof(OSP_iov_t) * arr_len);
 
-    status = A1_NbGetV(proc, a1_iov_ar, arr_len, a1_handle);
-    A1U_ERR_POP(status != A1_SUCCESS, "A1_NbGetV returned an error\n");
+    status = OSP_NbGetV(proc, osp_iov_ar, arr_len, osp_handle);
+    OSPU_ERR_POP(status != OSP_SUCCESS, "OSP_NbGetV returned an error\n");
 
-    free(a1_iov_ar);
+    free(osp_iov_ar);
 
-    fn_exit: A1U_FUNC_EXIT();
+    fn_exit: OSPU_FUNC_EXIT();
     return status;
 
     fn_fail: goto fn_exit;
@@ -716,10 +716,10 @@ int ARMCI_Acc(int datatype,
               int bytes,
               int proc)
 {
-    int status = A1_SUCCESS;
-    A1_datatype_t a1_type;
+    int status = OSP_SUCCESS;
+    OSP_datatype_t osp_type;
 
-    A1U_FUNC_ENTER();
+    OSPU_FUNC_ENTER();
 
     /* FIXME: The profiling interface needs to go here */
 
@@ -733,43 +733,43 @@ int ARMCI_Acc(int datatype,
         case ARMCI_INT:
         case ARMCI_LONG:
         case ARMCI_ACC_INT:
-            a1_type = A1_INT32;
+            osp_type = OSP_INT32;
             break;
         case ARMCI_LONG_LONG:
-            a1_type = A1_INT64;
+            osp_type = OSP_INT64;
             break;
         case ARMCI_FLOAT:
         case ARMCI_ACC_FLT:
-            a1_type = A1_FLOAT;
+            osp_type = OSP_FLOAT;
             break;
         case ARMCI_DOUBLE:
         case ARMCI_ACC_DBL:
-            a1_type = A1_DOUBLE;
+            osp_type = OSP_DOUBLE;
             break;
         case ARMCI_ACC_CPL:
-            A1U_ERR_ABORT(status != A1_ERROR, "ARMCI_ACC_CPL datatype not supported\n");
+            OSPU_ERR_ABORT(status != OSP_ERROR, "ARMCI_ACC_CPL datatype not supported\n");
         case ARMCI_ACC_DCP:
-            A1U_ERR_ABORT(status != A1_ERROR, "ARMCI_ACC_DCP datatype not supported\n");
+            OSPU_ERR_ABORT(status != OSP_ERROR, "ARMCI_ACC_DCP datatype not supported\n");
         default:
-            A1U_ERR_ABORT(status != A1_ERROR, "invalid datatype\n");
+            OSPU_ERR_ABORT(status != OSP_ERROR, "invalid datatype\n");
     }
 
-    AAP_ARGS("iam %d: A1_PutAcc proc = %d, bytes = %d\n",__a1_prof_me,proc,bytes);
-    AAP_START("A1_PutAcc             ");
+    AAP_ARGS("iam %d: OSP_PutAcc proc = %d, bytes = %d\n",__osp_prof_me,proc,bytes);
+    AAP_START("OSP_PutAcc             ");
 
     /* accumulate flushes puts before and holds the lock throughout
-    if ( 1==a1u_settings.armci_strict_ordering )
+    if ( 1==ospu_settings.armci_strict_ordering )
     {
-        status = A1_Flush(proc);
-        A1U_ERR_POP(status != A1_SUCCESS, "A1_Flush returned an error\n");
+        status = OSP_Flush(proc);
+        OSPU_ERR_POP(status != OSP_SUCCESS, "OSP_Flush returned an error\n");
     }
     */
 
-    status = A1_PutAcc(proc, src, dst, bytes, a1_type, scale);
-    A1U_ERR_POP(status != A1_SUCCESS, "A1_PutAcc returned an error\n");
+    status = OSP_PutAcc(proc, src, dst, bytes, osp_type, scale);
+    OSPU_ERR_POP(status != OSP_SUCCESS, "OSP_PutAcc returned an error\n");
     AAP_STOP();
 
-    fn_exit: A1U_FUNC_EXIT();
+    fn_exit: OSPU_FUNC_EXIT();
     return status;
 
     fn_fail: goto fn_exit;
@@ -783,11 +783,11 @@ int ARMCI_NbAcc(int datatype,
                 int proc,
                 armci_hdl_t* handle)
 {
-    int status = A1_SUCCESS;
-    A1_datatype_t a1_type;
-    A1_handle_t a1_handle;
+    int status = OSP_SUCCESS;
+    OSP_datatype_t osp_type;
+    OSP_handle_t osp_handle;
 
-    A1U_FUNC_ENTER();
+    OSPU_FUNC_ENTER();
 
     /* FIXME: The profiling interface needs to go here */
 
@@ -796,41 +796,41 @@ int ARMCI_NbAcc(int datatype,
 #   ifdef HAVE_ERROR_CHECKING
 #   endif
 
-    a1_handle = (A1_handle_t) *handle;
+    osp_handle = (OSP_handle_t) *handle;
 
     switch (datatype)
     {
         case ARMCI_INT:
         case ARMCI_LONG:
         case ARMCI_ACC_INT:
-            a1_type = A1_INT32;
+            osp_type = OSP_INT32;
             break;
         case ARMCI_LONG_LONG:
-            a1_type = A1_INT64;
+            osp_type = OSP_INT64;
             break;
         case ARMCI_FLOAT:
         case ARMCI_ACC_FLT:
-            a1_type = A1_FLOAT;
+            osp_type = OSP_FLOAT;
             break;
         case ARMCI_DOUBLE:
         case ARMCI_ACC_DBL:
-            a1_type = A1_DOUBLE;
+            osp_type = OSP_DOUBLE;
             break;
         case ARMCI_ACC_CPL:
-            A1U_ERR_ABORT(status != A1_ERROR, "ARMCI_ACC_CPL datatype not supported\n");
+            OSPU_ERR_ABORT(status != OSP_ERROR, "ARMCI_ACC_CPL datatype not supported\n");
         case ARMCI_ACC_DCP:
-            A1U_ERR_ABORT(status != A1_ERROR, "ARMCI_ACC_DCP datatype not supported\n");
+            OSPU_ERR_ABORT(status != OSP_ERROR, "ARMCI_ACC_DCP datatype not supported\n");
         default:
-            A1U_ERR_ABORT(status != A1_ERROR, "invalid datatype\n");
+            OSPU_ERR_ABORT(status != OSP_ERROR, "invalid datatype\n");
     }
 
-    AAP_ARGS("iam %d: A1_NbPutAcc proc = %d, bytes = %d\n",__a1_prof_me,proc,bytes);
-    AAP_START("A1_NbPutAcc             ");
-    status = A1_NbPutAcc(proc, src, dst, bytes, a1_type, scale, a1_handle);
-    A1U_ERR_POP(status != A1_SUCCESS, "A1_NbPutAcc returned an error\n");
+    AAP_ARGS("iam %d: OSP_NbPutAcc proc = %d, bytes = %d\n",__osp_prof_me,proc,bytes);
+    AAP_START("OSP_NbPutAcc             ");
+    status = OSP_NbPutAcc(proc, src, dst, bytes, osp_type, scale, osp_handle);
+    OSPU_ERR_POP(status != OSP_SUCCESS, "OSP_NbPutAcc returned an error\n");
     AAP_STOP();
 
-    fn_exit: A1U_FUNC_EXIT();
+    fn_exit: OSPU_FUNC_EXIT();
     return status;
 
     fn_fail: goto fn_exit;
@@ -846,10 +846,10 @@ int ARMCI_AccS(int datatype,
                int stride_levels,
                int proc)
 {
-    int status = A1_SUCCESS;
-    A1_datatype_t a1_type;
+    int status = OSP_SUCCESS;
+    OSP_datatype_t osp_type;
 
-    A1U_FUNC_ENTER();
+    OSPU_FUNC_ENTER();
 
     /* FIXME: The profiling interface needs to go here */
 
@@ -864,51 +864,51 @@ int ARMCI_AccS(int datatype,
         case ARMCI_LONG:
         case ARMCI_ACC_INT:
         case ARMCI_ACC_LNG:
-            a1_type = A1_INT32;
+            osp_type = OSP_INT32;
             break;
         case ARMCI_LONG_LONG:
-            a1_type = A1_INT64;
+            osp_type = OSP_INT64;
             break;
         case ARMCI_FLOAT:
         case ARMCI_ACC_FLT:
-            a1_type = A1_FLOAT;
+            osp_type = OSP_FLOAT;
             break;
         case ARMCI_DOUBLE:
         case ARMCI_ACC_DBL:
-            a1_type = A1_DOUBLE;
+            osp_type = OSP_DOUBLE;
             break;
         case ARMCI_ACC_CPL:
-            A1U_ERR_ABORT(status != A1_ERROR, "ARMCI_ACC_CPL datatype not supported\n");
+            OSPU_ERR_ABORT(status != OSP_ERROR, "ARMCI_ACC_CPL datatype not supported\n");
         case ARMCI_ACC_DCP:
-            A1U_ERR_ABORT(status != A1_ERROR, "ARMCI_ACC_DCP datatype not supported\n");
+            OSPU_ERR_ABORT(status != OSP_ERROR, "ARMCI_ACC_DCP datatype not supported\n");
         default:
-            A1U_ERR_ABORT(status != A1_ERROR, "invalid datatype %d \n", datatype);
+            OSPU_ERR_ABORT(status != OSP_ERROR, "invalid datatype %d \n", datatype);
     }
 
-    AAP_ARGS("iam %d: A1_PutAccS proc = %d, levels = %d, count[0] = %d, count[1] = %d\n",__a1_prof_me,proc,stride_levels,count[0],count[stride_levels-1]);
-    AAP_START("A1_PutAccS             ");
+    AAP_ARGS("iam %d: OSP_PutAccS proc = %d, levels = %d, count[0] = %d, count[1] = %d\n",__osp_prof_me,proc,stride_levels,count[0],count[stride_levels-1]);
+    AAP_START("OSP_PutAccS             ");
 
     /* accumulate flushes puts before and holds the lock throughout
-    if ( 1==a1u_settings.armci_strict_ordering )
+    if ( 1==ospu_settings.armci_strict_ordering )
     {
-        status = A1_Flush(proc);
-        A1U_ERR_POP(status != A1_SUCCESS, "A1_Flush returned an error\n");
+        status = OSP_Flush(proc);
+        OSPU_ERR_POP(status != OSP_SUCCESS, "OSP_Flush returned an error\n");
     }
     */
 
-    status = A1_PutAccS(proc,
+    status = OSP_PutAccS(proc,
                         stride_levels,
                         count,
                         src_ptr,
                         src_stride_ar,
                         dst_ptr,
                         dst_stride_ar,
-                        a1_type,
+                        osp_type,
                         scale);
-    A1U_ERR_POP(status != A1_SUCCESS, "A1_PutAccS returned an error\n");
+    OSPU_ERR_POP(status != OSP_SUCCESS, "OSP_PutAccS returned an error\n");
     AAP_STOP();
 
-    fn_exit: A1U_FUNC_EXIT();
+    fn_exit: OSPU_FUNC_EXIT();
     return status;
 
     fn_fail: goto fn_exit;
@@ -925,11 +925,11 @@ int ARMCI_NbAccS(int datatype,
                  int proc,
                  armci_hdl_t* handle)
 {
-    int status = A1_SUCCESS;
-    A1_datatype_t a1_type;
-    A1_handle_t a1_handle;
+    int status = OSP_SUCCESS;
+    OSP_datatype_t osp_type;
+    OSP_handle_t osp_handle;
 
-    A1U_FUNC_ENTER();
+    OSPU_FUNC_ENTER();
 
     /* FIXME: The profiling interface needs to go here */
 
@@ -938,50 +938,50 @@ int ARMCI_NbAccS(int datatype,
 #   ifdef HAVE_ERROR_CHECKING
 #   endif
 
-    a1_handle = (A1_handle_t) *handle;
+    osp_handle = (OSP_handle_t) *handle;
 
     switch (datatype)
     {
         case ARMCI_INT:
         case ARMCI_LONG:
         case ARMCI_ACC_INT:
-            a1_type = A1_INT32;
+            osp_type = OSP_INT32;
             break;
         case ARMCI_LONG_LONG:
-            a1_type = A1_INT64;
+            osp_type = OSP_INT64;
             break;
         case ARMCI_FLOAT:
         case ARMCI_ACC_FLT:
-            a1_type = A1_FLOAT;
+            osp_type = OSP_FLOAT;
             break;
         case ARMCI_DOUBLE:
         case ARMCI_ACC_DBL:
-            a1_type = A1_DOUBLE;
+            osp_type = OSP_DOUBLE;
             break;
         case ARMCI_ACC_CPL:
-            A1U_ERR_ABORT(status != A1_ERROR, "ARMCI_ACC_CPL datatype not supported\n");
+            OSPU_ERR_ABORT(status != OSP_ERROR, "ARMCI_ACC_CPL datatype not supported\n");
         case ARMCI_ACC_DCP:
-            A1U_ERR_ABORT(status != A1_ERROR, "ARMCI_ACC_DCP datatype not supported\n");
+            OSPU_ERR_ABORT(status != OSP_ERROR, "ARMCI_ACC_DCP datatype not supported\n");
         default:
-            A1U_ERR_ABORT(status != A1_ERROR, "invalid datatype\n");
+            OSPU_ERR_ABORT(status != OSP_ERROR, "invalid datatype\n");
     }
 
-    AAP_ARGS("iam %d: A1_NbPutAccS proc = %d, levels = %d, count[0] = %d, count[1] = %d\n",__a1_prof_me,proc,stride_levels,count[0],count[stride_levels-1]);
-    AAP_START("A1_NbPutAccS             ");
-    status = A1_NbPutAccS(proc,
+    AAP_ARGS("iam %d: OSP_NbPutAccS proc = %d, levels = %d, count[0] = %d, count[1] = %d\n",__osp_prof_me,proc,stride_levels,count[0],count[stride_levels-1]);
+    AAP_START("OSP_NbPutAccS             ");
+    status = OSP_NbPutAccS(proc,
                           stride_levels,
                           count,
                           src_ptr,
                           src_stride_ar,
                           dst_ptr,
                           dst_stride_ar,
-                          a1_type,
+                          osp_type,
                           scale,
-                          a1_handle);
-    A1U_ERR_POP(status != A1_SUCCESS, "A1_NbPutAccS returned an error\n");
+                          osp_handle);
+    OSPU_ERR_POP(status != OSP_SUCCESS, "OSP_NbPutAccS returned an error\n");
     AAP_STOP();
 
-    fn_exit: A1U_FUNC_EXIT();
+    fn_exit: OSPU_FUNC_EXIT();
     return status;
 
     fn_fail: goto fn_exit;
@@ -993,12 +993,12 @@ int ARMCI_AccV(int datatype,
                int arr_len,
                int proc)
 {
-    int status = A1_SUCCESS;
-    A1_iov_t *a1_iov_ar;
-    A1_reduce_op_t a1_op; /* only used by PutModV */
-    A1_datatype_t a1_type;
+    int status = OSP_SUCCESS;
+    OSP_iov_t *osp_iov_ar;
+    OSP_reduce_op_t osp_op; /* only used by PutModV */
+    OSP_datatype_t osp_type;
 
-    A1U_FUNC_ENTER();
+    OSPU_FUNC_ENTER();
 
     /* FIXME: The profiling interface needs to go here */
 
@@ -1012,60 +1012,60 @@ int ARMCI_AccV(int datatype,
         case ARMCI_INT:
         case ARMCI_LONG:
         case ARMCI_ACC_INT:
-            a1_type = A1_INT32;
+            osp_type = OSP_INT32;
             break;
         case ARMCI_LONG_LONG:
-            a1_type = A1_INT64;
+            osp_type = OSP_INT64;
             break;
         case ARMCI_FLOAT:
         case ARMCI_ACC_FLT:
-            a1_type = A1_FLOAT;
+            osp_type = OSP_FLOAT;
             break;
         case ARMCI_DOUBLE:
         case ARMCI_ACC_DBL:
-            a1_type = A1_DOUBLE;
+            osp_type = OSP_DOUBLE;
             break;
         case ARMCI_ACC_RA:
-            a1_type = A1_INT32;
-            a1_op = A1_BXOR;
-            status = posix_memalign((void **) &a1_iov_ar, 16, sizeof(A1_iov_t) * arr_len);
-            A1U_ERR_POP(status != 0, "posix_memalign returned an error\n");
-            memcpy((void *) a1_iov_ar, (void *) dsrc_arr, sizeof(A1_iov_t) * arr_len);
-            status = A1_PutModV(proc, a1_iov_ar, arr_len, a1_op, a1_type);
-            A1U_ERR_POP(status != A1_SUCCESS, "A1_PutModV returned an error\n");
-            free(a1_iov_ar);
+            osp_type = OSP_INT32;
+            osp_op = OSP_BXOR;
+            status = posix_memalign((void **) &osp_iov_ar, 16, sizeof(OSP_iov_t) * arr_len);
+            OSPU_ERR_POP(status != 0, "posix_memalign returned an error\n");
+            memcpy((void *) osp_iov_ar, (void *) dsrc_arr, sizeof(OSP_iov_t) * arr_len);
+            status = OSP_PutModV(proc, osp_iov_ar, arr_len, osp_op, osp_type);
+            OSPU_ERR_POP(status != OSP_SUCCESS, "OSP_PutModV returned an error\n");
+            free(osp_iov_ar);
             goto fn_exit;
             break;
         case ARMCI_ACC_CPL:
-            A1U_ERR_ABORT(status != A1_ERROR, "ARMCI_ACC_CPL datatype not supported\n");
+            OSPU_ERR_ABORT(status != OSP_ERROR, "ARMCI_ACC_CPL datatype not supported\n");
         case ARMCI_ACC_DCP:
-            A1U_ERR_ABORT(status != A1_ERROR, "ARMCI_ACC_DCP datatype not supported\n");
+            OSPU_ERR_ABORT(status != OSP_ERROR, "ARMCI_ACC_DCP datatype not supported\n");
         default:
-            A1U_ERR_ABORT(status != A1_ERROR, "invalid datatype\n");
+            OSPU_ERR_ABORT(status != OSP_ERROR, "invalid datatype\n");
     }
 
-    /* ARMCI iov and A1 iov are similar structures but follow
+    /* ARMCI iov and OSP iov are similar structures but follow
      * different naming conventions. So we make a copy.*/
-    status = posix_memalign((void **) &a1_iov_ar, 16, sizeof(A1_iov_t)
+    status = posix_memalign((void **) &osp_iov_ar, 16, sizeof(OSP_iov_t)
             * arr_len);
-    A1U_ERR_POP(status != 0, "posix_memalign returned an error\n");
+    OSPU_ERR_POP(status != 0, "posix_memalign returned an error\n");
 
-    memcpy((void *) a1_iov_ar, (void *) dsrc_arr, sizeof(A1_iov_t) * arr_len);
+    memcpy((void *) osp_iov_ar, (void *) dsrc_arr, sizeof(OSP_iov_t) * arr_len);
 
     /* accumulate flushes puts before and holds the lock throughout
-    if ( 1==a1u_settings.armci_strict_ordering )
+    if ( 1==ospu_settings.armci_strict_ordering )
     {
-        status = A1_Flush(proc);
-        A1U_ERR_POP(status != A1_SUCCESS, "A1_Flush returned an error\n");
+        status = OSP_Flush(proc);
+        OSPU_ERR_POP(status != OSP_SUCCESS, "OSP_Flush returned an error\n");
     }
     */
 
-    status = A1_PutAccV(proc, a1_iov_ar, arr_len, a1_type, scale);
-    A1U_ERR_POP(status != A1_SUCCESS, "A1_PutAccV returned an error\n");
+    status = OSP_PutAccV(proc, osp_iov_ar, arr_len, osp_type, scale);
+    OSPU_ERR_POP(status != OSP_SUCCESS, "OSP_PutAccV returned an error\n");
 
-    free(a1_iov_ar);
+    free(osp_iov_ar);
 
-    fn_exit: A1U_FUNC_EXIT();
+    fn_exit: OSPU_FUNC_EXIT();
     return status;
 
     fn_fail: goto fn_exit;
@@ -1078,12 +1078,12 @@ int ARMCI_NbAccV(int datatype,
                  int proc,
                  armci_hdl_t* handle)
 {
-    int status = A1_SUCCESS;
-    A1_iov_t *a1_iov_ar;
-    A1_datatype_t a1_type;
-    A1_handle_t a1_handle;
+    int status = OSP_SUCCESS;
+    OSP_iov_t *osp_iov_ar;
+    OSP_datatype_t osp_type;
+    OSP_handle_t osp_handle;
 
-    A1U_FUNC_ENTER();
+    OSPU_FUNC_ENTER();
 
     /* FIXME: The profiling interface needs to go here */
 
@@ -1092,48 +1092,48 @@ int ARMCI_NbAccV(int datatype,
 #   ifdef HAVE_ERROR_CHECKING
 #   endif
 
-    a1_handle = (A1_handle_t) *handle;
+    osp_handle = (OSP_handle_t) *handle;
 
     switch (datatype)
     {
         case ARMCI_INT:
         case ARMCI_LONG:
         case ARMCI_ACC_INT:
-            a1_type = A1_INT32;
+            osp_type = OSP_INT32;
             break;
         case ARMCI_LONG_LONG:
-            a1_type = A1_INT64;
+            osp_type = OSP_INT64;
             break;
         case ARMCI_FLOAT:
         case ARMCI_ACC_FLT:
-            a1_type = A1_FLOAT;
+            osp_type = OSP_FLOAT;
             break;
         case ARMCI_DOUBLE:
         case ARMCI_ACC_DBL:
-            a1_type = A1_DOUBLE;
+            osp_type = OSP_DOUBLE;
             break;
         case ARMCI_ACC_CPL:
-            A1U_ERR_ABORT(status != A1_ERROR, "ARMCI_ACC_CPL datatype not supported\n");
+            OSPU_ERR_ABORT(status != OSP_ERROR, "ARMCI_ACC_CPL datatype not supported\n");
         case ARMCI_ACC_DCP:
-            A1U_ERR_ABORT(status != A1_ERROR, "ARMCI_ACC_DCP datatype not supported\n");
+            OSPU_ERR_ABORT(status != OSP_ERROR, "ARMCI_ACC_DCP datatype not supported\n");
         default:
-            A1U_ERR_ABORT(status != A1_ERROR, "invalid datatype\n");
+            OSPU_ERR_ABORT(status != OSP_ERROR, "invalid datatype\n");
     }
 
-    /* ARMCI iov and A1 iov are similar structures but follow
+    /* ARMCI iov and OSP iov are similar structures but follow
      * different naming conventions. So we make a copy.*/
-    status = posix_memalign((void **) &a1_iov_ar, 16, sizeof(A1_iov_t)
+    status = posix_memalign((void **) &osp_iov_ar, 16, sizeof(OSP_iov_t)
             * arr_len);
-    A1U_ERR_POP(status != 0, "posix_memalign returned an error\n");
+    OSPU_ERR_POP(status != 0, "posix_memalign returned an error\n");
 
-    memcpy((void *) a1_iov_ar, (void *) dsrc_arr, sizeof(A1_iov_t) * arr_len);
+    memcpy((void *) osp_iov_ar, (void *) dsrc_arr, sizeof(OSP_iov_t) * arr_len);
 
-    status = A1_NbPutAccV(proc, a1_iov_ar, arr_len, a1_type, scale, a1_handle);
-    A1U_ERR_POP(status != A1_SUCCESS, "A1_NbPutAccV returned an error\n");
+    status = OSP_NbPutAccV(proc, osp_iov_ar, arr_len, osp_type, scale, osp_handle);
+    OSPU_ERR_POP(status != OSP_SUCCESS, "OSP_NbPutAccV returned an error\n");
 
-    free(a1_iov_ar);
+    free(osp_iov_ar);
 
-    fn_exit: A1U_FUNC_EXIT();
+    fn_exit: OSPU_FUNC_EXIT();
     return status;
 
     fn_fail: goto fn_exit;
@@ -1142,40 +1142,40 @@ int ARMCI_NbAccV(int datatype,
 int ARMCI_Rmw(int op, void *ploc, void *prem, int value, int proc)
 {
 
-    int status = A1_SUCCESS;
-    A1_atomic_op_t a1_op;
+    int status = OSP_SUCCESS;
+    OSP_atomic_op_t osp_op;
 
-    A1U_FUNC_ENTER();
+    OSPU_FUNC_ENTER();
 
 #   ifdef HAVE_ERROR_CHECKING
 #   endif
 
     if (op == ARMCI_FETCH_AND_ADD || op == ARMCI_FETCH_AND_ADD_LONG)
     {
-        a1_op = A1_FETCH_AND_ADD;
+        osp_op = OSP_FETCH_AND_ADD;
     }
     else if (op == ARMCI_SWAP || op == ARMCI_SWAP_LONG)
     {
-        a1_op = ARMCI_SWAP;
+        osp_op = ARMCI_SWAP;
     }
     else
     {
-        A1U_ERR_POP(status != A1_ERROR, "Unsupported rmw operation : %d \n", op);
+        OSPU_ERR_POP(status != OSP_ERROR, "Unsupported rmw operation : %d \n", op);
     }
 
     /* accumulate flushes puts before and holds the lock throughout
-    if ( 1==a1u_settings.armci_strict_ordering )
+    if ( 1==ospu_settings.armci_strict_ordering )
     {
-        status = A1_Flush(proc);
-        A1U_ERR_POP(status != A1_SUCCESS, "A1_Flush returned an error\n");
+        status = OSP_Flush(proc);
+        OSPU_ERR_POP(status != OSP_SUCCESS, "OSP_Flush returned an error\n");
     }
     */
 
     /*Assuming int and long as 32bit signed integers*/
-    status = A1_Rmw(proc, &value, ploc, prem, sizeof(int), a1_op, A1_INT32);
-    A1U_ERR_POP(status != A1_SUCCESS, "A1_Rmw returned an error\n");
+    status = OSP_Rmw(proc, &value, ploc, prem, sizeof(int), osp_op, OSP_INT32);
+    OSPU_ERR_POP(status != OSP_SUCCESS, "OSP_Rmw returned an error\n");
 
-    fn_exit: A1U_FUNC_EXIT();
+    fn_exit: OSPU_FUNC_EXIT();
     return status;
 
     fn_fail: goto fn_exit;
@@ -1184,10 +1184,10 @@ int ARMCI_Rmw(int op, void *ploc, void *prem, int value, int proc)
 int ARMCI_Wait(armci_hdl_t* handle)
 {
 
-    int status = A1_SUCCESS;
-    A1_handle_t a1_handle;
+    int status = OSP_SUCCESS;
+    OSP_handle_t osp_handle;
 
-    A1U_FUNC_ENTER();
+    OSPU_FUNC_ENTER();
 
     /* FIXME: The profiling interface needs to go here */
 
@@ -1196,12 +1196,12 @@ int ARMCI_Wait(armci_hdl_t* handle)
 #   ifdef HAVE_ERROR_CHECKING
 #   endif
 
-    a1_handle = (A1_handle_t) *handle;
+    osp_handle = (OSP_handle_t) *handle;
 
-    status = A1_Wait_handle(a1_handle);
-    A1U_ERR_POP(status != A1_SUCCESS, "A1_Wait_handle returned an error\n");
+    status = OSP_Wait_handle(osp_handle);
+    OSPU_ERR_POP(status != OSP_SUCCESS, "OSP_Wait_handle returned an error\n");
 
-    fn_exit: A1U_FUNC_EXIT();
+    fn_exit: OSPU_FUNC_EXIT();
     return status;
 
     fn_fail: goto fn_exit;
@@ -1210,11 +1210,11 @@ int ARMCI_Wait(armci_hdl_t* handle)
 int ARMCI_Test(armci_hdl_t* handle)
 {
 
-    int status = A1_SUCCESS;
-    A1_handle_t a1_handle;
-    A1_bool_t complete;
+    int status = OSP_SUCCESS;
+    OSP_handle_t osp_handle;
+    OSP_bool_t complete;
 
-    A1U_FUNC_ENTER();
+    OSPU_FUNC_ENTER();
 
     /* FIXME: The profiling interface needs to go here */
 
@@ -1223,12 +1223,12 @@ int ARMCI_Test(armci_hdl_t* handle)
 #   ifdef HAVE_ERROR_CHECKING
 #   endif
 
-    a1_handle = (A1_handle_t) *handle;
+    osp_handle = (OSP_handle_t) *handle;
 
-    status = A1_Test_handle(a1_handle, &complete);
-    A1U_ERR_POP(status != A1_SUCCESS, "A1_Test_handle returned an error\n");
+    status = OSP_Test_handle(osp_handle, &complete);
+    OSPU_ERR_POP(status != OSP_SUCCESS, "OSP_Test_handle returned an error\n");
 
-    fn_exit: A1U_FUNC_EXIT();
+    fn_exit: OSPU_FUNC_EXIT();
     return !complete;
 
     fn_fail: goto fn_exit;
@@ -1236,9 +1236,9 @@ int ARMCI_Test(armci_hdl_t* handle)
 
 int ARMCI_WaitAll(void)
 {
-    int status = A1_SUCCESS;
+    int status = OSP_SUCCESS;
 
-    A1U_FUNC_ENTER();
+    OSPU_FUNC_ENTER();
 
     /* FIXME: The profiling interface needs to go here */
 
@@ -1247,10 +1247,10 @@ int ARMCI_WaitAll(void)
 #   ifdef HAVE_ERROR_CHECKING
 #   endif
 
-    status = A1_Wait_handle_all();
-    A1U_ERR_POP(status != A1_SUCCESS, "A1_Wait_handle_all returned an error\n");
+    status = OSP_Wait_handle_all();
+    OSPU_ERR_POP(status != OSP_SUCCESS, "OSP_Wait_handle_all returned an error\n");
 
-    fn_exit: A1U_FUNC_EXIT();
+    fn_exit: OSPU_FUNC_EXIT();
     return status;
 
     fn_fail: goto fn_exit;
@@ -1258,9 +1258,9 @@ int ARMCI_WaitAll(void)
 
 void ARMCI_Fence(int proc)
 {
-    int status = A1_SUCCESS;
+    int status = OSP_SUCCESS;
 
-    A1U_FUNC_ENTER();
+    OSPU_FUNC_ENTER();
 
     /* FIXME: The profiling interface needs to go here */
 
@@ -1269,10 +1269,10 @@ void ARMCI_Fence(int proc)
 #   ifdef HAVE_ERROR_CHECKING
 #   endif
 
-    status = A1_Flush(proc);
-    A1U_ERR_ABORT(status != A1_SUCCESS, "A1_Flush returned an error\n");
+    status = OSP_Flush(proc);
+    OSPU_ERR_ABORT(status != OSP_SUCCESS, "OSP_Flush returned an error\n");
 
-    fn_exit: A1U_FUNC_EXIT();
+    fn_exit: OSPU_FUNC_EXIT();
     return;
 
     fn_fail: goto fn_exit;
@@ -1280,9 +1280,9 @@ void ARMCI_Fence(int proc)
 
 void ARMCI_AllFence(void)
 {
-    int status = A1_SUCCESS;
+    int status = OSP_SUCCESS;
 
-    A1U_FUNC_ENTER();
+    OSPU_FUNC_ENTER();
 
     /* FIXME: The profiling interface needs to go here */
 
@@ -1291,10 +1291,10 @@ void ARMCI_AllFence(void)
 #   ifdef HAVE_ERROR_CHECKING
 #   endif
 
-    status = A1_Flush_group(A1_GROUP_WORLD);
-    A1U_ERR_ABORT(status != A1_SUCCESS, "A1_Flush_group returned an error\n");
+    status = OSP_Flush_group(OSP_GROUP_WORLD);
+    OSPU_ERR_ABORT(status != OSP_SUCCESS, "OSP_Flush_group returned an error\n");
 
-    fn_exit: A1U_FUNC_EXIT();
+    fn_exit: OSPU_FUNC_EXIT();
     return;
 
     fn_fail: goto fn_exit;
@@ -1302,9 +1302,9 @@ void ARMCI_AllFence(void)
 
 int ARMCI_Barrier(void)
 {
-    int status = A1_SUCCESS;
+    int status = OSP_SUCCESS;
 
-    A1U_FUNC_ENTER();
+    OSPU_FUNC_ENTER();
 
     /* FIXME: The profiling interface needs to go here */
 
@@ -1313,10 +1313,10 @@ int ARMCI_Barrier(void)
 #   ifdef HAVE_ERROR_CHECKING
 #   endif
 
-    status = A1_Sync_group(A1_GROUP_WORLD);
-    A1U_ERR_POP(status != A1_SUCCESS, "A1_Sync_group returned an error\n");
+    status = OSP_Sync_group(OSP_GROUP_WORLD);
+    OSPU_ERR_POP(status != OSP_SUCCESS, "OSP_Sync_group returned an error\n");
 
-    fn_exit: A1U_FUNC_EXIT();
+    fn_exit: OSPU_FUNC_EXIT();
     return status;
 
     fn_fail: goto fn_exit;
@@ -1326,7 +1326,7 @@ int armci_msg_nproc(void)
 {
     int nproc;
 
-    A1U_FUNC_ENTER();
+    OSPU_FUNC_ENTER();
 
     /* FIXME: The profiling interface needs to go here */
 
@@ -1335,9 +1335,9 @@ int armci_msg_nproc(void)
 #   ifdef HAVE_ERROR_CHECKING
 #   endif
 
-    nproc = A1_Process_total(A1_GROUP_WORLD);
+    nproc = OSP_Process_total(OSP_GROUP_WORLD);
 
-    fn_exit: A1U_FUNC_EXIT();
+    fn_exit: OSPU_FUNC_EXIT();
     return nproc;
 
     fn_fail: goto fn_exit;
@@ -1347,11 +1347,11 @@ int armci_msg_me(void)
 {
     int me;
 
-    A1U_FUNC_ENTER();
+    OSPU_FUNC_ENTER();
 
-    me = A1_Process_id(A1_GROUP_WORLD);
+    me = OSP_Process_id(OSP_GROUP_WORLD);
 
-    fn_exit: A1U_FUNC_EXIT();
+    fn_exit: OSPU_FUNC_EXIT();
     return me;
 
     fn_fail: goto fn_exit;
@@ -1361,11 +1361,11 @@ int armci_domain_id(armci_domain_t domain, int glob_proc_id)
 {
     int domain_id;
 
-    A1U_FUNC_ENTER();
+    OSPU_FUNC_ENTER();
 
     domain_id = 0;
 
-    fn_exit: A1U_FUNC_EXIT();
+    fn_exit: OSPU_FUNC_EXIT();
     return domain_id;
 
     fn_fail: goto fn_exit;
@@ -1378,13 +1378,13 @@ int armci_domain_id(armci_domain_t domain, int glob_proc_id)
 
 int ARMCI_Create_mutexes(int num)
 {
-    int status = A1_SUCCESS;
+    int status = OSP_SUCCESS;
 
-    A1U_FUNC_ENTER();
+    OSPU_FUNC_ENTER();
 
-    A1U_ERR_ABORT(A1_ERROR, "This function is not supported in ARMCI-A1\n");
+    OSPU_ERR_ABORT(OSP_ERROR, "This function is not supported in ARMCI-OSP\n");
 
-    fn_exit: A1U_FUNC_EXIT();
+    fn_exit: OSPU_FUNC_EXIT();
     return status;
 
     fn_fail: goto fn_exit;
@@ -1392,11 +1392,11 @@ int ARMCI_Create_mutexes(int num)
 
 void ARMCI_Lock(int mutex, int proc)
 {
-    A1U_FUNC_ENTER();
+    OSPU_FUNC_ENTER();
 
-    A1U_ERR_ABORT(A1_ERROR, "This function is not supported in ARMCI-A1\n");
+    OSPU_ERR_ABORT(OSP_ERROR, "This function is not supported in ARMCI-OSP\n");
 
-    fn_exit: A1U_FUNC_EXIT();
+    fn_exit: OSPU_FUNC_EXIT();
     return;
 
     fn_fail: goto fn_exit;
@@ -1404,11 +1404,11 @@ void ARMCI_Lock(int mutex, int proc)
 
 void ARMCI_Unlock(int mutex, int proc)
 {
-    A1U_FUNC_ENTER();
+    OSPU_FUNC_ENTER();
 
-    A1U_ERR_ABORT(A1_ERROR, "This function is not supported in ARMCI-A1\n");
+    OSPU_ERR_ABORT(OSP_ERROR, "This function is not supported in ARMCI-OSP\n");
 
-    fn_exit: A1U_FUNC_EXIT();
+    fn_exit: OSPU_FUNC_EXIT();
     return;
 
     fn_fail: goto fn_exit;
@@ -1416,13 +1416,13 @@ void ARMCI_Unlock(int mutex, int proc)
 
 int ARMCI_Destroy_mutexes(void)
 {
-    int status = A1_SUCCESS;
+    int status = OSP_SUCCESS;
 
-    A1U_FUNC_ENTER();
+    OSPU_FUNC_ENTER();
 
-    A1U_ERR_ABORT(A1_ERROR, "This function is not supported in ARMCI-A1\n");
+    OSPU_ERR_ABORT(OSP_ERROR, "This function is not supported in ARMCI-OSP\n");
 
-    fn_exit: A1U_FUNC_EXIT();
+    fn_exit: OSPU_FUNC_EXIT();
     return status;
 
     fn_fail: goto fn_exit;
@@ -1430,11 +1430,11 @@ int ARMCI_Destroy_mutexes(void)
 
 void ARMCI_Copy(void *src, void *dst, int n)
 {
-    A1U_FUNC_ENTER();
+    OSPU_FUNC_ENTER();
 
-    A1U_ERR_ABORT(A1_ERROR, "This function is not supported in ARMCI-A1\n");
+    OSPU_ERR_ABORT(OSP_ERROR, "This function is not supported in ARMCI-OSP\n");
 
-    fn_exit: A1U_FUNC_EXIT();
+    fn_exit: OSPU_FUNC_EXIT();
     return;
 
     fn_fail: goto fn_exit;
@@ -1447,13 +1447,13 @@ void ARMCI_Copy(void *src, void *dst, int n)
 
 int ARMCI_Absolute_id(ARMCI_Group *group, int group_rank)
 {
-    int status = A1_SUCCESS;
+    int status = OSP_SUCCESS;
 
-    A1U_FUNC_ENTER();
+    OSPU_FUNC_ENTER();
 
-    A1U_ERR_ABORT(A1_ERROR, "This function is not supported in ARMCI-A1\n");
+    OSPU_ERR_ABORT(OSP_ERROR, "This function is not supported in ARMCI-OSP\n");
 
-    fn_exit: A1U_FUNC_EXIT();
+    fn_exit: OSPU_FUNC_EXIT();
     return status;
 
     fn_fail: goto fn_exit;
@@ -1461,11 +1461,11 @@ int ARMCI_Absolute_id(ARMCI_Group *group, int group_rank)
 
 void ARMCI_Cleanup(void)
 {
-    A1U_FUNC_ENTER();
+    OSPU_FUNC_ENTER();
 
-    A1U_ERR_ABORT(A1_ERROR, "This function is not supported in ARMCI-A1\n");
+    OSPU_ERR_ABORT(OSP_ERROR, "This function is not supported in ARMCI-OSP\n");
 
-    fn_exit: A1U_FUNC_EXIT();
+    fn_exit: OSPU_FUNC_EXIT();
     return;
 
     fn_fail: goto fn_exit;
@@ -1473,11 +1473,11 @@ void ARMCI_Cleanup(void)
 
 void ARMCI_Error(char *message, int code)
 {
-    A1U_FUNC_ENTER();
+    OSPU_FUNC_ENTER();
 
-    A1_Abort(code, message);
+    OSP_Abort(code, message);
 
-    fn_exit: A1U_FUNC_EXIT();
+    fn_exit: OSPU_FUNC_EXIT();
     return;
 
     fn_fail: goto fn_exit;
@@ -1485,9 +1485,9 @@ void ARMCI_Error(char *message, int code)
 
 int ARMCI_Uses_shm(void)
 {
-    A1U_FUNC_ENTER();
+    OSPU_FUNC_ENTER();
 
-    fn_exit: A1U_FUNC_EXIT();
+    fn_exit: OSPU_FUNC_EXIT();
     return 0;
 
     fn_fail: goto fn_exit;
@@ -1495,11 +1495,11 @@ int ARMCI_Uses_shm(void)
 
 void ARMCI_Set_shm_limit(unsigned long shmemlimit)
 {
-    A1U_FUNC_ENTER();
+    OSPU_FUNC_ENTER();
 
-    A1U_ERR_ABORT(A1_ERROR, "This function is not supported in ARMCI-A1\n");
+    OSPU_ERR_ABORT(OSP_ERROR, "This function is not supported in ARMCI-OSP\n");
 
-    fn_exit: A1U_FUNC_EXIT();
+    fn_exit: OSPU_FUNC_EXIT();
     return;
 
     fn_fail: goto fn_exit;
@@ -1507,13 +1507,13 @@ void ARMCI_Set_shm_limit(unsigned long shmemlimit)
 
 int ARMCI_Uses_shm_grp(ARMCI_Group *group)
 {
-    int status = A1_SUCCESS;
+    int status = OSP_SUCCESS;
 
-    A1U_FUNC_ENTER();
+    OSPU_FUNC_ENTER();
 
-    A1U_ERR_ABORT(A1_ERROR, "This function is not supported in ARMCI-A1\n");
+    OSPU_ERR_ABORT(OSP_ERROR, "This function is not supported in ARMCI-OSP\n");
 
-    fn_exit: A1U_FUNC_EXIT();
+    fn_exit: OSPU_FUNC_EXIT();
     return status;
 
     fn_fail: goto fn_exit;
@@ -1521,11 +1521,11 @@ int ARMCI_Uses_shm_grp(ARMCI_Group *group)
 
 void ARMCI_Group_get_world(ARMCI_Group *group_out)
 {
-    A1U_FUNC_ENTER();
+    OSPU_FUNC_ENTER();
 
-    *group_out = A1_GROUP_WORLD;
+    *group_out = OSP_GROUP_WORLD;
 
-    fn_exit: A1U_FUNC_EXIT();
+    fn_exit: OSPU_FUNC_EXIT();
     return;
 
     fn_fail: goto fn_exit;
@@ -1533,11 +1533,11 @@ void ARMCI_Group_get_world(ARMCI_Group *group_out)
 
 void ARMCI_Group_set_default(ARMCI_Group *group)
 {
-    A1U_FUNC_ENTER();
+    OSPU_FUNC_ENTER();
 
-    A1U_ERR_ABORT(A1_ERROR, "This function is not supported in ARMCI-A1\n");
+    OSPU_ERR_ABORT(OSP_ERROR, "This function is not supported in ARMCI-OSP\n");
 
-    fn_exit: A1U_FUNC_EXIT();
+    fn_exit: OSPU_FUNC_EXIT();
     return;
 
     fn_fail: goto fn_exit;
@@ -1545,11 +1545,11 @@ void ARMCI_Group_set_default(ARMCI_Group *group)
 
 void ARMCI_Group_create(int n, int *pid_list, ARMCI_Group *group_out)
 {
-    A1U_FUNC_ENTER();
+    OSPU_FUNC_ENTER();
 
-    A1U_ERR_ABORT(A1_ERROR, "This function is not supported in ARMCI-A1 \n");
+    OSPU_ERR_ABORT(OSP_ERROR, "This function is not supported in ARMCI-OSP \n");
 
-    fn_exit: A1U_FUNC_EXIT();
+    fn_exit: OSPU_FUNC_EXIT();
     return;
 
     fn_fail: goto fn_exit;
@@ -1557,11 +1557,11 @@ void ARMCI_Group_create(int n, int *pid_list, ARMCI_Group *group_out)
 
 void ARMCI_Group_free(ARMCI_Group *group)
 {
-    A1U_FUNC_ENTER();
+    OSPU_FUNC_ENTER();
 
-    A1U_ERR_ABORT(A1_ERROR, "This function is not supported in ARMCI-A1\n");
+    OSPU_ERR_ABORT(OSP_ERROR, "This function is not supported in ARMCI-OSP\n");
 
-    fn_exit: A1U_FUNC_EXIT();
+    fn_exit: OSPU_FUNC_EXIT();
     return;
 
     fn_fail: goto fn_exit;
@@ -1569,13 +1569,13 @@ void ARMCI_Group_free(ARMCI_Group *group)
 
 int ARMCI_Free_group(void *ptr, ARMCI_Group *group)
 {
-    int status = A1_SUCCESS;
+    int status = OSP_SUCCESS;
 
-    A1U_FUNC_ENTER();
+    OSPU_FUNC_ENTER();
 
-    A1U_ERR_ABORT(A1_ERROR, "This function is not supported in ARMCI-A1\n");
+    OSPU_ERR_ABORT(OSP_ERROR, "This function is not supported in ARMCI-OSP\n");
 
-    fn_exit: A1U_FUNC_EXIT();
+    fn_exit: OSPU_FUNC_EXIT();
     return status;
 
     fn_fail: goto fn_exit;
@@ -1583,13 +1583,13 @@ int ARMCI_Free_group(void *ptr, ARMCI_Group *group)
 
 int ARMCI_Malloc_group(void *ptr_arr[], armci_size_t bytes, ARMCI_Group *group)
 {
-    int status = A1_SUCCESS;
+    int status = OSP_SUCCESS;
 
-    A1U_FUNC_ENTER();
+    OSPU_FUNC_ENTER();
 
-    A1U_ERR_ABORT(A1_ERROR, "This function is not supported in ARMCI-A1\n");
+    OSPU_ERR_ABORT(OSP_ERROR, "This function is not supported in ARMCI-OSP\n");
 
-    fn_exit: A1U_FUNC_EXIT();
+    fn_exit: OSPU_FUNC_EXIT();
     return status;
 
     fn_fail: goto fn_exit;
@@ -1597,56 +1597,56 @@ int ARMCI_Malloc_group(void *ptr_arr[], armci_size_t bytes, ARMCI_Group *group)
 
 void armci_msg_gop_scope(int scope, void *x, int n, char* op, int type)
 {
-    int status = A1_SUCCESS;
-    A1_reduce_op_t a1_op;
-    A1_datatype_t a1_type;
+    int status = OSP_SUCCESS;
+    OSP_reduce_op_t osp_op;
+    OSP_datatype_t osp_type;
 
-    A1U_FUNC_ENTER();
+    OSPU_FUNC_ENTER();
 
     if (scope != SCOPE_ALL)
     {
-        A1U_ERR_ABORT(A1_ERROR, "Only SCOPE_ALL is supported in armci_msg_gop_scope");
+        OSPU_ERR_ABORT(OSP_ERROR, "Only SCOPE_ALL is supported in armci_msg_gop_scope");
     }
 
     switch (type)
     {
         case ARMCI_INT:
         case ARMCI_LONG:
-            a1_type = A1_INT32;
+            osp_type = OSP_INT32;
             break;
         case ARMCI_LONG_LONG:
-            a1_type = A1_INT64;
+            osp_type = OSP_INT64;
             break;
         case ARMCI_FLOAT:
-            a1_type = A1_FLOAT;
+            osp_type = OSP_FLOAT;
             break;
         case ARMCI_DOUBLE:
-            a1_type = A1_DOUBLE;
+            osp_type = OSP_DOUBLE;
             break;
         default:
-            A1U_ERR_ABORT(A1_ERROR, "Invalid datatype received in armci_msg_group_gop_scope");
+            OSPU_ERR_ABORT(OSP_ERROR, "Invalid datatype received in armci_msg_group_gop_scope");
             break;
     }
 
-    if (strncmp(op, "+", 1) == 0) a1_op = A1_SUM;
-    else if (strncmp(op, "*", 1) == 0) a1_op = A1_PROD;
-    else if (strncmp(op, "max", 3) == 0) a1_op = A1_MAX;
-    else if (strncmp(op, "min", 3) == 0) a1_op = A1_MIN;
-    else if (strncmp(op, "absmax", 6) == 0) a1_op = A1_MAXABS;
-    else if (strncmp(op, "absmin", 6) == 0) a1_op = A1_MINABS;
-    else if (strncmp(op, "or", 2) == 0) a1_op = A1_OR;
-    else A1U_ERR_ABORT(A1_ERROR, "Invalid op received in armci_msg_group_gop_scope");
+    if (strncmp(op, "+", 1) == 0) osp_op = OSP_SUM;
+    else if (strncmp(op, "*", 1) == 0) osp_op = OSP_PROD;
+    else if (strncmp(op, "max", 3) == 0) osp_op = OSP_MAX;
+    else if (strncmp(op, "min", 3) == 0) osp_op = OSP_MIN;
+    else if (strncmp(op, "absmax", 6) == 0) osp_op = OSP_MAXABS;
+    else if (strncmp(op, "absmin", 6) == 0) osp_op = OSP_MINABS;
+    else if (strncmp(op, "or", 2) == 0) osp_op = OSP_OR;
+    else OSPU_ERR_ABORT(OSP_ERROR, "Invalid op received in armci_msg_group_gop_scope");
 
-    status = A1_Allreduce_group(A1_GROUP_WORLD,
+    status = OSP_Allreduce_group(OSP_GROUP_WORLD,
                                 n,
-                                a1_op,
-                                a1_type,
+                                osp_op,
+                                osp_type,
                                 x,
                                 x);
-    A1U_ERR_ABORT(status != A1_SUCCESS, "A1_Allreduce_group returned error\n");
+    OSPU_ERR_ABORT(status != OSP_SUCCESS, "OSP_Allreduce_group returned error\n");
 
     fn_exit:
-    A1U_FUNC_EXIT();
+    OSPU_FUNC_EXIT();
     return;
 
     fn_fail:
@@ -1655,11 +1655,11 @@ void armci_msg_gop_scope(int scope, void *x, int n, char* op, int type)
 
 void armci_msg_snd(int tag, void* buffer, int len, int to)
 {
-    A1U_FUNC_ENTER();
+    OSPU_FUNC_ENTER();
 
-    A1U_ERR_ABORT(A1_ERROR, "This function is not supported in ARMCI-A1\n");
+    OSPU_ERR_ABORT(OSP_ERROR, "This function is not supported in ARMCI-OSP\n");
 
-    fn_exit: A1U_FUNC_EXIT();
+    fn_exit: OSPU_FUNC_EXIT();
     return;
 
     fn_fail: goto fn_exit;
@@ -1667,11 +1667,11 @@ void armci_msg_snd(int tag, void* buffer, int len, int to)
 
 void armci_msg_rcv(int tag, void* buffer, int buflen, int *msglen, int from)
 {
-    A1U_FUNC_ENTER();
+    OSPU_FUNC_ENTER();
 
-    A1U_ERR_ABORT(A1_ERROR, "This function is not supported in ARMCI-A1\n");
+    OSPU_ERR_ABORT(OSP_ERROR, "This function is not supported in ARMCI-OSP\n");
 
-    fn_exit: A1U_FUNC_EXIT();
+    fn_exit: OSPU_FUNC_EXIT();
     return;
 
     fn_fail: goto fn_exit;
@@ -1679,13 +1679,13 @@ void armci_msg_rcv(int tag, void* buffer, int buflen, int *msglen, int from)
 
 int armci_msg_rcvany(int tag, void* buffer, int buflen, int *msglen)
 {
-    int status = A1_SUCCESS;
+    int status = OSP_SUCCESS;
 
-    A1U_FUNC_ENTER();
+    OSPU_FUNC_ENTER();
 
-    A1U_ERR_ABORT(A1_ERROR, "This function is not supported in ARMCI-A1\n");
+    OSPU_ERR_ABORT(OSP_ERROR, "This function is not supported in ARMCI-OSP\n");
 
-    fn_exit: A1U_FUNC_EXIT();
+    fn_exit: OSPU_FUNC_EXIT();
     return status;
 
     fn_fail: goto fn_exit;
@@ -1697,11 +1697,11 @@ void armci_write_strided(void *ptr,
                          int count[],
                          char *buf)
 {
-    A1U_FUNC_ENTER();
+    OSPU_FUNC_ENTER();
 
-    A1U_ERR_ABORT(A1_ERROR, "This function is not supported in ARMCI-A1\n");
+    OSPU_ERR_ABORT(OSP_ERROR, "This function is not supported in ARMCI-OSP\n");
 
-    fn_exit: A1U_FUNC_EXIT();
+    fn_exit: OSPU_FUNC_EXIT();
     return;
 
     fn_fail: goto fn_exit;
@@ -1713,11 +1713,11 @@ void armci_read_strided(void *ptr,
                         int count[],
                         char *buf)
 {
-    A1U_FUNC_ENTER();
+    OSPU_FUNC_ENTER();
 
-    A1U_ERR_ABORT(A1_ERROR, "This function is not supported in ARMCI-A1\n");
+    OSPU_ERR_ABORT(OSP_ERROR, "This function is not supported in ARMCI-OSP\n");
 
-    fn_exit: A1U_FUNC_EXIT();
+    fn_exit: OSPU_FUNC_EXIT();
     return;
 
     fn_fail: goto fn_exit;
@@ -1733,13 +1733,13 @@ int ARMCI_PutS_flag_dir(void *src_ptr,
                         int val,
                         int proc)
 {
-    int status = A1_SUCCESS;
+    int status = OSP_SUCCESS;
 
-    A1U_FUNC_ENTER();
+    OSPU_FUNC_ENTER();
 
-    A1U_ERR_ABORT(A1_ERROR, "This function is not supported in ARMCI-A1\n");
+    OSPU_ERR_ABORT(OSP_ERROR, "This function is not supported in ARMCI-OSP\n");
 
-    fn_exit: A1U_FUNC_EXIT();
+    fn_exit: OSPU_FUNC_EXIT();
     return status;
 
     fn_fail: goto fn_exit;
@@ -1755,13 +1755,13 @@ int ARMCI_PutS_flag(void *src_ptr,
                     int val,
                     int proc)
 {
-    int status = A1_SUCCESS;
+    int status = OSP_SUCCESS;
 
-    A1U_FUNC_ENTER();
+    OSPU_FUNC_ENTER();
 
-    A1U_ERR_ABORT(A1_ERROR, "This function is not supported in ARMCI-A1\n");
+    OSPU_ERR_ABORT(OSP_ERROR, "This function is not supported in ARMCI-OSP\n");
 
-    fn_exit: A1U_FUNC_EXIT();
+    fn_exit: OSPU_FUNC_EXIT();
     return status;
 
     fn_fail: goto fn_exit;
@@ -1771,12 +1771,12 @@ int ARMCI_Same_node(int proc)
 {
     int val;
 
-    A1U_FUNC_ENTER();
+    OSPU_FUNC_ENTER();
 
     /* each process is its own node */
-    val = (proc == A1_Process_id(A1_GROUP_WORLD) ? 1 : 0);
+    val = (proc == OSP_Process_id(OSP_GROUP_WORLD) ? 1 : 0);
 
-    fn_exit: A1U_FUNC_EXIT();
+    fn_exit: OSPU_FUNC_EXIT();
     return val;
 
     fn_fail: goto fn_exit;
@@ -1786,12 +1786,12 @@ int armci_domain_same_id(armci_domain_t domain, int proc)
 {
     int val;
 
-    A1U_FUNC_ENTER();
+    OSPU_FUNC_ENTER();
 
     /* this function always returns false */
     val = 0;
 
-    fn_exit: A1U_FUNC_EXIT();
+    fn_exit: OSPU_FUNC_EXIT();
     return val;
 
     fn_fail: goto fn_exit;
@@ -1801,12 +1801,12 @@ int armci_domain_my_id(armci_domain_t domain)
 {
     int val;
 
-    A1U_FUNC_ENTER();
+    OSPU_FUNC_ENTER();
 
     /* this function always returns false */
     val = 0;
 
-    fn_exit: A1U_FUNC_EXIT();
+    fn_exit: OSPU_FUNC_EXIT();
     return val;
 
     fn_fail: goto fn_exit;
@@ -1816,12 +1816,12 @@ int armci_domain_count(armci_domain_t domain)
 {
     int val;
 
-    A1U_FUNC_ENTER();
+    OSPU_FUNC_ENTER();
 
     /* this function always returns one */
     val = 1;
 
-    fn_exit: A1U_FUNC_EXIT();
+    fn_exit: OSPU_FUNC_EXIT();
     return val;
 
     fn_fail: goto fn_exit;
@@ -1831,11 +1831,11 @@ int armci_domain_nprocs(armci_domain_t domain, int id)
 {
     int nproc;
 
-    A1U_FUNC_ENTER();
+    OSPU_FUNC_ENTER();
 
-    nproc = A1_Process_total(A1_GROUP_WORLD);
+    nproc = OSP_Process_total(OSP_GROUP_WORLD);
 
-    fn_exit: A1U_FUNC_EXIT();
+    fn_exit: OSPU_FUNC_EXIT();
     return nproc;
 
     fn_fail: goto fn_exit;
@@ -1845,12 +1845,12 @@ int armci_domain_glob_proc_id(armci_domain_t domain, int id, int loc_proc_id)
 {
     int val;
 
-    A1U_FUNC_ENTER();
+    OSPU_FUNC_ENTER();
 
     /* this function always returns zero */
     val = 0;
 
-    fn_exit: A1U_FUNC_EXIT();
+    fn_exit: OSPU_FUNC_EXIT();
     return val;
 
     fn_fail: goto fn_exit;
@@ -1858,30 +1858,30 @@ int armci_domain_glob_proc_id(armci_domain_t domain, int id, int loc_proc_id)
 
 void armci_msg_llgop(long long *x, int n, char* op)
 {
-    int status = A1_SUCCESS;
-    A1_reduce_op_t a1_op;
+    int status = OSP_SUCCESS;
+    OSP_reduce_op_t osp_op;
 
-    A1U_FUNC_ENTER();
+    OSPU_FUNC_ENTER();
 
-    if (strncmp(op, "+", 1) == 0) a1_op = A1_SUM;
-    else if (strncmp(op, "*", 1) == 0) a1_op = A1_PROD;
-    else if (strncmp(op, "max", 3) == 0) a1_op = A1_MAX;
-    else if (strncmp(op, "min", 3) == 0) a1_op = A1_MIN;
-    else if (strncmp(op, "absmax", 6) == 0) a1_op = A1_MAXABS;
-    else if (strncmp(op, "absmin", 6) == 0) a1_op = A1_MINABS;
-    else if (strncmp(op, "or", 2) == 0) a1_op = A1_OR;
-    else A1U_ERR_POP(A1_ERROR, "Invalid op received\n");
+    if (strncmp(op, "+", 1) == 0) osp_op = OSP_SUM;
+    else if (strncmp(op, "*", 1) == 0) osp_op = OSP_PROD;
+    else if (strncmp(op, "max", 3) == 0) osp_op = OSP_MAX;
+    else if (strncmp(op, "min", 3) == 0) osp_op = OSP_MIN;
+    else if (strncmp(op, "absmax", 6) == 0) osp_op = OSP_MAXABS;
+    else if (strncmp(op, "absmin", 6) == 0) osp_op = OSP_MINABS;
+    else if (strncmp(op, "or", 2) == 0) osp_op = OSP_OR;
+    else OSPU_ERR_POP(OSP_ERROR, "Invalid op received\n");
 
-    status = A1_Allreduce_group(A1_GROUP_WORLD,
+    status = OSP_Allreduce_group(OSP_GROUP_WORLD,
                                 n,
-                                a1_op,
-                                A1_INT64,
+                                osp_op,
+                                OSP_INT64,
                                 x,
                                 x);
-    A1U_ERR_ABORT(status != A1_SUCCESS, "A1_Allreduce_group returned error\n");
+    OSPU_ERR_ABORT(status != OSP_SUCCESS, "OSP_Allreduce_group returned error\n");
 
     fn_exit:
-    A1U_FUNC_EXIT();
+    OSPU_FUNC_EXIT();
     return;
 
     fn_fail:
@@ -1890,14 +1890,14 @@ void armci_msg_llgop(long long *x, int n, char* op)
 
 void armci_msg_bcast(void* buffer, int len, int root)
 {
-    int status = A1_SUCCESS;
+    int status = OSP_SUCCESS;
 
-    A1U_FUNC_ENTER();
+    OSPU_FUNC_ENTER();
 
-    status = A1_Bcast_group(A1_GROUP_WORLD, root, len, buffer);
-    A1U_ERR_ABORT(status != A1_SUCCESS, "A1_Bcast_group returned error\n");
+    status = OSP_Bcast_group(OSP_GROUP_WORLD, root, len, buffer);
+    OSPU_ERR_ABORT(status != OSP_SUCCESS, "OSP_Bcast_group returned error\n");
 
-    fn_exit: A1U_FUNC_EXIT();
+    fn_exit: OSPU_FUNC_EXIT();
     return;
 
     fn_fail: goto fn_exit;
@@ -1905,15 +1905,15 @@ void armci_msg_bcast(void* buffer, int len, int root)
 
 void armci_msg_barrier(void)
 {
-    int status = A1_SUCCESS;
+    int status = OSP_SUCCESS;
 
-    A1U_FUNC_ENTER();
+    OSPU_FUNC_ENTER();
 
-    status = A1_Barrier_group(A1_GROUP_WORLD);
+    status = OSP_Barrier_group(OSP_GROUP_WORLD);
 
-    A1U_ERR_ABORT(status != A1_SUCCESS, "A1_Barrier_group returned error\n");
+    OSPU_ERR_ABORT(status != OSP_SUCCESS, "OSP_Barrier_group returned error\n");
 
-    fn_exit: A1U_FUNC_EXIT();
+    fn_exit: OSPU_FUNC_EXIT();
     return;
 
     fn_fail: goto fn_exit;
@@ -1921,30 +1921,30 @@ void armci_msg_barrier(void)
 
 void armci_msg_dgop(double *x, int n, char* op)
 {
-    int status = A1_SUCCESS;
-    A1_reduce_op_t a1_op;
+    int status = OSP_SUCCESS;
+    OSP_reduce_op_t osp_op;
 
-    A1U_FUNC_ENTER();
+    OSPU_FUNC_ENTER();
 
-    if (strncmp(op, "+", 1) == 0) a1_op = A1_SUM;
-    else if (strncmp(op, "*", 1) == 0) a1_op = A1_PROD;
-    else if (strncmp(op, "max", 3) == 0) a1_op = A1_MAX;
-    else if (strncmp(op, "min", 3) == 0) a1_op = A1_MIN;
-    else if (strncmp(op, "absmax", 6) == 0) a1_op = A1_MAXABS;
-    else if (strncmp(op, "absmin", 6) == 0) a1_op = A1_MINABS;
-    else if (strncmp(op, "or", 2) == 0) a1_op = A1_OR;
-    else A1U_ERR_POP(A1_ERROR, "Invalid op received\n");
+    if (strncmp(op, "+", 1) == 0) osp_op = OSP_SUM;
+    else if (strncmp(op, "*", 1) == 0) osp_op = OSP_PROD;
+    else if (strncmp(op, "max", 3) == 0) osp_op = OSP_MAX;
+    else if (strncmp(op, "min", 3) == 0) osp_op = OSP_MIN;
+    else if (strncmp(op, "absmax", 6) == 0) osp_op = OSP_MAXABS;
+    else if (strncmp(op, "absmin", 6) == 0) osp_op = OSP_MINABS;
+    else if (strncmp(op, "or", 2) == 0) osp_op = OSP_OR;
+    else OSPU_ERR_POP(OSP_ERROR, "Invalid op received\n");
 
-    status = A1_Allreduce_group(A1_GROUP_WORLD,
+    status = OSP_Allreduce_group(OSP_GROUP_WORLD,
                                 n,
-                                a1_op,
-                                A1_DOUBLE,
+                                osp_op,
+                                OSP_DOUBLE,
                                 x,
                                 x);
-    A1U_ERR_ABORT(status != A1_SUCCESS, "A1_Allreduce_group returned error\n");
+    OSPU_ERR_ABORT(status != OSP_SUCCESS, "OSP_Allreduce_group returned error\n");
 
     fn_exit:
-    A1U_FUNC_EXIT();
+    OSPU_FUNC_EXIT();
     return;
 
     fn_fail:
@@ -1953,30 +1953,30 @@ void armci_msg_dgop(double *x, int n, char* op)
 
 void armci_msg_fgop(float *x, int n, char* op)
 {
-    int status = A1_SUCCESS;
-    A1_reduce_op_t a1_op;
+    int status = OSP_SUCCESS;
+    OSP_reduce_op_t osp_op;
 
-    A1U_FUNC_ENTER();
+    OSPU_FUNC_ENTER();
 
-    if (strncmp(op, "+", 1) == 0) a1_op = A1_SUM;
-    else if (strncmp(op, "*", 1) == 0) a1_op = A1_PROD;
-    else if (strncmp(op, "max", 3) == 0) a1_op = A1_MAX;
-    else if (strncmp(op, "min", 3) == 0) a1_op = A1_MIN;
-    else if (strncmp(op, "absmax", 6) == 0) a1_op = A1_MAXABS;
-    else if (strncmp(op, "absmin", 6) == 0) a1_op = A1_MINABS;
-    else if (strncmp(op, "or", 2) == 0) a1_op = A1_OR;
-    else A1U_ERR_POP(A1_ERROR, "Invalid op received\n");
+    if (strncmp(op, "+", 1) == 0) osp_op = OSP_SUM;
+    else if (strncmp(op, "*", 1) == 0) osp_op = OSP_PROD;
+    else if (strncmp(op, "max", 3) == 0) osp_op = OSP_MAX;
+    else if (strncmp(op, "min", 3) == 0) osp_op = OSP_MIN;
+    else if (strncmp(op, "absmax", 6) == 0) osp_op = OSP_MAXABS;
+    else if (strncmp(op, "absmin", 6) == 0) osp_op = OSP_MINABS;
+    else if (strncmp(op, "or", 2) == 0) osp_op = OSP_OR;
+    else OSPU_ERR_POP(OSP_ERROR, "Invalid op received\n");
 
-    status = A1_Allreduce_group(A1_GROUP_WORLD,
+    status = OSP_Allreduce_group(OSP_GROUP_WORLD,
                                 n,
-                                a1_op,
-                                A1_FLOAT,
+                                osp_op,
+                                OSP_FLOAT,
                                 x,
                                 x);
-    A1U_ERR_ABORT(status != A1_SUCCESS, "A1_Allreduce_group returned error\n");
+    OSPU_ERR_ABORT(status != OSP_SUCCESS, "OSP_Allreduce_group returned error\n");
 
     fn_exit:
-    A1U_FUNC_EXIT();
+    OSPU_FUNC_EXIT();
     return;
 
     fn_fail:
@@ -1985,30 +1985,30 @@ void armci_msg_fgop(float *x, int n, char* op)
 
 void armci_msg_igop(int *x, int n, char* op)
 {
-    int status = A1_SUCCESS;
-    A1_reduce_op_t a1_op;
+    int status = OSP_SUCCESS;
+    OSP_reduce_op_t osp_op;
 
-    A1U_FUNC_ENTER();
+    OSPU_FUNC_ENTER();
 
-    if (strncmp(op, "+", 1) == 0) a1_op = A1_SUM;
-    else if (strncmp(op, "*", 1) == 0) a1_op = A1_PROD;
-    else if (strncmp(op, "max", 3) == 0) a1_op = A1_MAX;
-    else if (strncmp(op, "min", 3) == 0) a1_op = A1_MIN;
-    else if (strncmp(op, "absmax", 6) == 0) a1_op = A1_MAXABS;
-    else if (strncmp(op, "absmin", 6) == 0) a1_op = A1_MINABS;
-    else if (strncmp(op, "or", 2) == 0) a1_op = A1_OR;
-    else A1U_ERR_POP(A1_ERROR, "Invalid op received\n");
+    if (strncmp(op, "+", 1) == 0) osp_op = OSP_SUM;
+    else if (strncmp(op, "*", 1) == 0) osp_op = OSP_PROD;
+    else if (strncmp(op, "max", 3) == 0) osp_op = OSP_MAX;
+    else if (strncmp(op, "min", 3) == 0) osp_op = OSP_MIN;
+    else if (strncmp(op, "absmax", 6) == 0) osp_op = OSP_MAXABS;
+    else if (strncmp(op, "absmin", 6) == 0) osp_op = OSP_MINABS;
+    else if (strncmp(op, "or", 2) == 0) osp_op = OSP_OR;
+    else OSPU_ERR_POP(OSP_ERROR, "Invalid op received\n");
 
-    status = A1_Allreduce_group(A1_GROUP_WORLD,
+    status = OSP_Allreduce_group(OSP_GROUP_WORLD,
                                 n,
-                                a1_op,
-                                A1_INT32,
+                                osp_op,
+                                OSP_INT32,
                                 x,
                                 x);
-    A1U_ERR_ABORT(status != A1_SUCCESS, "A1_Allreduce_group returned error\n");
+    OSPU_ERR_ABORT(status != OSP_SUCCESS, "OSP_Allreduce_group returned error\n");
 
     fn_exit:
-    A1U_FUNC_EXIT();
+    OSPU_FUNC_EXIT();
     return;
 
     fn_fail:
@@ -2017,30 +2017,30 @@ void armci_msg_igop(int *x, int n, char* op)
 
 void armci_msg_lgop(long *x, int n, char* op)
 {
-    int status = A1_SUCCESS;
-    A1_reduce_op_t a1_op;
+    int status = OSP_SUCCESS;
+    OSP_reduce_op_t osp_op;
 
-    A1U_FUNC_ENTER();
+    OSPU_FUNC_ENTER();
 
-    if (strncmp(op, "+", 1) == 0) a1_op = A1_SUM;
-    else if (strncmp(op, "*", 1) == 0) a1_op = A1_PROD;
-    else if (strncmp(op, "max", 3) == 0) a1_op = A1_MAX;
-    else if (strncmp(op, "min", 3) == 0) a1_op = A1_MIN;
-    else if (strncmp(op, "absmax", 6) == 0) a1_op = A1_MAXABS;
-    else if (strncmp(op, "absmin", 6) == 0) a1_op = A1_MINABS;
-    else if (strncmp(op, "or", 2) == 0) a1_op = A1_OR;
-    else A1U_ERR_POP(A1_ERROR, "Invalid op received\n");
+    if (strncmp(op, "+", 1) == 0) osp_op = OSP_SUM;
+    else if (strncmp(op, "*", 1) == 0) osp_op = OSP_PROD;
+    else if (strncmp(op, "max", 3) == 0) osp_op = OSP_MAX;
+    else if (strncmp(op, "min", 3) == 0) osp_op = OSP_MIN;
+    else if (strncmp(op, "absmax", 6) == 0) osp_op = OSP_MAXABS;
+    else if (strncmp(op, "absmin", 6) == 0) osp_op = OSP_MINABS;
+    else if (strncmp(op, "or", 2) == 0) osp_op = OSP_OR;
+    else OSPU_ERR_POP(OSP_ERROR, "Invalid op received\n");
 
-    status = A1_Allreduce_group(A1_GROUP_WORLD,
+    status = OSP_Allreduce_group(OSP_GROUP_WORLD,
                                 n,
-                                a1_op,
-                                A1_INT32,
+                                osp_op,
+                                OSP_INT32,
                                 x,
                                 x);
-    A1U_ERR_ABORT(status != A1_SUCCESS, "A1_Allreduce_group returned error\n");
+    OSPU_ERR_ABORT(status != OSP_SUCCESS, "OSP_Allreduce_group returned error\n");
 
     fn_exit:
-    A1U_FUNC_EXIT();
+    OSPU_FUNC_EXIT();
     return;
 
     fn_fail:
@@ -2049,57 +2049,57 @@ void armci_msg_lgop(long *x, int n, char* op)
 
 void armci_msg_reduce(void *x, int n, char* op, int datatype)
 {
-    int status = A1_SUCCESS;
-    A1_reduce_op_t a1_op;
-    A1_datatype_t a1_type;
+    int status = OSP_SUCCESS;
+    OSP_reduce_op_t osp_op;
+    OSP_datatype_t osp_type;
 
-    A1U_FUNC_ENTER();
+    OSPU_FUNC_ENTER();
 
-    if (strncmp(op, "+", 1) == 0) a1_op = A1_SUM;
-    else if (strncmp(op, "*", 1) == 0) a1_op = A1_PROD;
-    else if (strncmp(op, "max", 3) == 0) a1_op = A1_MAX;
-    else if (strncmp(op, "min", 3) == 0) a1_op = A1_MIN;
-    else if (strncmp(op, "absmax", 6) == 0) a1_op = A1_MAXABS;
-    else if (strncmp(op, "absmin", 6) == 0) a1_op = A1_MINABS;
-    else if (strncmp(op, "or", 2) == 0) a1_op = A1_OR;
-    else A1U_ERR_POP(A1_ERROR, "Invalid op received\n");
+    if (strncmp(op, "+", 1) == 0) osp_op = OSP_SUM;
+    else if (strncmp(op, "*", 1) == 0) osp_op = OSP_PROD;
+    else if (strncmp(op, "max", 3) == 0) osp_op = OSP_MAX;
+    else if (strncmp(op, "min", 3) == 0) osp_op = OSP_MIN;
+    else if (strncmp(op, "absmax", 6) == 0) osp_op = OSP_MAXABS;
+    else if (strncmp(op, "absmin", 6) == 0) osp_op = OSP_MINABS;
+    else if (strncmp(op, "or", 2) == 0) osp_op = OSP_OR;
+    else OSPU_ERR_POP(OSP_ERROR, "Invalid op received\n");
 
     switch (datatype)
     {
         case ARMCI_INT:
         case ARMCI_LONG:
         case ARMCI_ACC_INT:
-            a1_type = A1_INT32;
+            osp_type = OSP_INT32;
             break;
         case ARMCI_LONG_LONG:
-            a1_type = A1_INT64;
+            osp_type = OSP_INT64;
             break;
         case ARMCI_FLOAT:
         case ARMCI_ACC_FLT:
-            a1_type = A1_FLOAT;
+            osp_type = OSP_FLOAT;
             break;
         case ARMCI_DOUBLE:
         case ARMCI_ACC_DBL:
-            a1_type = A1_DOUBLE;
+            osp_type = OSP_DOUBLE;
             break;
         case ARMCI_ACC_CPL:
-            A1U_ERR_ABORT(status != A1_ERROR, "ARMCI_ACC_CPL datatype not supported\n");
+            OSPU_ERR_ABORT(status != OSP_ERROR, "ARMCI_ACC_CPL datatype not supported\n");
         case ARMCI_ACC_DCP:
-            A1U_ERR_ABORT(status != A1_ERROR, "ARMCI_ACC_DCP datatype not supported\n");
+            OSPU_ERR_ABORT(status != OSP_ERROR, "ARMCI_ACC_DCP datatype not supported\n");
         default:
-            A1U_ERR_ABORT(status != A1_ERROR, "invalid datatype\n");
+            OSPU_ERR_ABORT(status != OSP_ERROR, "invalid datatype\n");
     }
 
-    status = A1_Allreduce_group(A1_GROUP_WORLD,
+    status = OSP_Allreduce_group(OSP_GROUP_WORLD,
                                 n,
-                                a1_op,
-                                a1_type,
+                                osp_op,
+                                osp_type,
                                 x,
                                 x);
-    A1U_ERR_ABORT(status != A1_SUCCESS, "A1_Allreduce_group returned error\n");
+    OSPU_ERR_ABORT(status != OSP_SUCCESS, "OSP_Allreduce_group returned error\n");
 
     fn_exit:
-    A1U_FUNC_EXIT();
+    OSPU_FUNC_EXIT();
     return;
 
     fn_fail:
@@ -2108,11 +2108,11 @@ void armci_msg_reduce(void *x, int n, char* op, int datatype)
 
 void armci_msg_bintree(int scope, int* Root, int *Up, int *Left, int *Right)
 {
-    A1U_FUNC_ENTER();
+    OSPU_FUNC_ENTER();
 
-    A1U_ERR_ABORT(A1_ERROR, "This function is not supported in ARMCI-A1\n");
+    OSPU_ERR_ABORT(OSP_ERROR, "This function is not supported in ARMCI-OSP\n");
 
-    fn_exit: A1U_FUNC_EXIT();
+    fn_exit: OSPU_FUNC_EXIT();
     return;
 
     fn_fail: goto fn_exit;
@@ -2120,11 +2120,11 @@ void armci_msg_bintree(int scope, int* Root, int *Up, int *Left, int *Right)
 
 void armci_exchange_address(void *ptr_ar[], int n)
 {
-    A1U_FUNC_ENTER();
+    OSPU_FUNC_ENTER();
 
-    A1U_ERR_ABORT(A1_ERROR, "This function is not supported in ARMCI-A1\n");
+    OSPU_ERR_ABORT(OSP_ERROR, "This function is not supported in ARMCI-OSP\n");
 
-    fn_exit: A1U_FUNC_EXIT();
+    fn_exit: OSPU_FUNC_EXIT();
     return;
 
     fn_fail: goto fn_exit;
@@ -2132,32 +2132,32 @@ void armci_exchange_address(void *ptr_ar[], int n)
 
 void armci_msg_group_igop(int *x, int n, char* op, ARMCI_Group *group)
 {
-    int status = A1_SUCCESS;
-    A1_reduce_op_t a1_op;
+    int status = OSP_SUCCESS;
+    OSP_reduce_op_t osp_op;
 
-    A1U_FUNC_ENTER();
+    OSPU_FUNC_ENTER();
 
     /*We need a check if it is a world group, we assume it for now*/
 
-    if (strncmp(op, "+", 1) == 0) a1_op = A1_SUM;
-    else if (strncmp(op, "*", 1) == 0) a1_op = A1_PROD;
-    else if (strncmp(op, "max", 3) == 0) a1_op = A1_MAX;
-    else if (strncmp(op, "min", 3) == 0) a1_op = A1_MIN;
-    else if (strncmp(op, "absmax", 6) == 0) a1_op = A1_MAXABS;
-    else if (strncmp(op, "absmin", 6) == 0) a1_op = A1_MINABS;
-    else if (strncmp(op, "or", 2) == 0) a1_op = A1_OR;
-    else A1U_ERR_POP(A1_ERROR, "Invalid op received\n");
+    if (strncmp(op, "+", 1) == 0) osp_op = OSP_SUM;
+    else if (strncmp(op, "*", 1) == 0) osp_op = OSP_PROD;
+    else if (strncmp(op, "max", 3) == 0) osp_op = OSP_MAX;
+    else if (strncmp(op, "min", 3) == 0) osp_op = OSP_MIN;
+    else if (strncmp(op, "absmax", 6) == 0) osp_op = OSP_MAXABS;
+    else if (strncmp(op, "absmin", 6) == 0) osp_op = OSP_MINABS;
+    else if (strncmp(op, "or", 2) == 0) osp_op = OSP_OR;
+    else OSPU_ERR_POP(OSP_ERROR, "Invalid op received\n");
 
-    status = A1_Allreduce_group(A1_GROUP_WORLD,
+    status = OSP_Allreduce_group(OSP_GROUP_WORLD,
                                 n,
-                                a1_op,
-                                A1_INT32,
+                                osp_op,
+                                OSP_INT32,
                                 x,
                                 x);
-    A1U_ERR_ABORT(status != A1_SUCCESS, "A1_Allreduce_group returned error\n");
+    OSPU_ERR_ABORT(status != OSP_SUCCESS, "OSP_Allreduce_group returned error\n");
 
     fn_exit:
-    A1U_FUNC_EXIT();
+    OSPU_FUNC_EXIT();
     return;
 
     fn_fail:
@@ -2166,32 +2166,32 @@ void armci_msg_group_igop(int *x, int n, char* op, ARMCI_Group *group)
 
 void armci_msg_group_lgop(long *x, int n, char* op, ARMCI_Group *group)
 {
-    int status = A1_SUCCESS;
-    A1_reduce_op_t a1_op;
+    int status = OSP_SUCCESS;
+    OSP_reduce_op_t osp_op;
 
-    A1U_FUNC_ENTER();
+    OSPU_FUNC_ENTER();
 
     /*We need a check if it is a world group, we assume it for now*/
 
-    if (strncmp(op, "+", 1) == 0) a1_op = A1_SUM;
-    else if (strncmp(op, "*", 1) == 0) a1_op = A1_PROD;
-    else if (strncmp(op, "max", 3) == 0) a1_op = A1_MAX;
-    else if (strncmp(op, "min", 3) == 0) a1_op = A1_MIN;
-    else if (strncmp(op, "absmax", 6) == 0) a1_op = A1_MAXABS;
-    else if (strncmp(op, "absmin", 6) == 0) a1_op = A1_MINABS;
-    else if (strncmp(op, "or", 2) == 0) a1_op = A1_OR;
-    else A1U_ERR_POP(A1_ERROR, "Invalid op received\n");
+    if (strncmp(op, "+", 1) == 0) osp_op = OSP_SUM;
+    else if (strncmp(op, "*", 1) == 0) osp_op = OSP_PROD;
+    else if (strncmp(op, "max", 3) == 0) osp_op = OSP_MAX;
+    else if (strncmp(op, "min", 3) == 0) osp_op = OSP_MIN;
+    else if (strncmp(op, "absmax", 6) == 0) osp_op = OSP_MAXABS;
+    else if (strncmp(op, "absmin", 6) == 0) osp_op = OSP_MINABS;
+    else if (strncmp(op, "or", 2) == 0) osp_op = OSP_OR;
+    else OSPU_ERR_POP(OSP_ERROR, "Invalid op received\n");
 
-    status = A1_Allreduce_group(A1_GROUP_WORLD,
+    status = OSP_Allreduce_group(OSP_GROUP_WORLD,
                                 n,
-                                a1_op,
-                                A1_INT32,
+                                osp_op,
+                                OSP_INT32,
                                 x,
                                 x);
-    A1U_ERR_ABORT(status != A1_SUCCESS, "A1_Allreduce_group returned error\n");
+    OSPU_ERR_ABORT(status != OSP_SUCCESS, "OSP_Allreduce_group returned error\n");
 
     fn_exit:
-    A1U_FUNC_EXIT();
+    OSPU_FUNC_EXIT();
     return;
 
     fn_fail:
@@ -2200,32 +2200,32 @@ void armci_msg_group_lgop(long *x, int n, char* op, ARMCI_Group *group)
 
 void armci_msg_group_llgop(long long *x, int n, char* op, ARMCI_Group *group)
 {
-    int status = A1_SUCCESS;
-    A1_reduce_op_t a1_op;
+    int status = OSP_SUCCESS;
+    OSP_reduce_op_t osp_op;
 
-    A1U_FUNC_ENTER();
+    OSPU_FUNC_ENTER();
 
     /*We need a check if it is a world group, we assume it for now*/
 
-    if (strncmp(op, "+", 1) == 0) a1_op = A1_SUM;
-    else if (strncmp(op, "*", 1) == 0) a1_op = A1_PROD;
-    else if (strncmp(op, "max", 3) == 0) a1_op = A1_MAX;
-    else if (strncmp(op, "min", 3) == 0) a1_op = A1_MIN;
-    else if (strncmp(op, "absmax", 6) == 0) a1_op = A1_MAXABS;
-    else if (strncmp(op, "absmin", 6) == 0) a1_op = A1_MINABS;
-    else if (strncmp(op, "or", 2) == 0) a1_op = A1_OR;
-    else A1U_ERR_POP(A1_ERROR, "Invalid op received\n");
+    if (strncmp(op, "+", 1) == 0) osp_op = OSP_SUM;
+    else if (strncmp(op, "*", 1) == 0) osp_op = OSP_PROD;
+    else if (strncmp(op, "max", 3) == 0) osp_op = OSP_MAX;
+    else if (strncmp(op, "min", 3) == 0) osp_op = OSP_MIN;
+    else if (strncmp(op, "absmax", 6) == 0) osp_op = OSP_MAXABS;
+    else if (strncmp(op, "absmin", 6) == 0) osp_op = OSP_MINABS;
+    else if (strncmp(op, "or", 2) == 0) osp_op = OSP_OR;
+    else OSPU_ERR_POP(OSP_ERROR, "Invalid op received\n");
 
-    status = A1_Allreduce_group(A1_GROUP_WORLD,
+    status = OSP_Allreduce_group(OSP_GROUP_WORLD,
                                 n,
-                                a1_op,
-                                A1_INT64,
+                                osp_op,
+                                OSP_INT64,
                                 x,
                                 x);
-    A1U_ERR_ABORT(status != A1_SUCCESS, "A1_Allreduce_group returned error\n");
+    OSPU_ERR_ABORT(status != OSP_SUCCESS, "OSP_Allreduce_group returned error\n");
 
     fn_exit:
-    A1U_FUNC_EXIT();
+    OSPU_FUNC_EXIT();
     return;
 
     fn_fail:
@@ -2234,32 +2234,32 @@ void armci_msg_group_llgop(long long *x, int n, char* op, ARMCI_Group *group)
 
 void armci_msg_group_fgop(float *x, int n, char* op, ARMCI_Group *group)
 {
-    int status = A1_SUCCESS;
-    A1_reduce_op_t a1_op;
+    int status = OSP_SUCCESS;
+    OSP_reduce_op_t osp_op;
 
-    A1U_FUNC_ENTER();
+    OSPU_FUNC_ENTER();
 
     /*We need a check if it is a world group, we assume it for now*/
 
-    if (strncmp(op, "+", 1) == 0) a1_op = A1_SUM;
-    else if (strncmp(op, "*", 1) == 0) a1_op = A1_PROD;
-    else if (strncmp(op, "max", 3) == 0) a1_op = A1_MAX;
-    else if (strncmp(op, "min", 3) == 0) a1_op = A1_MIN;
-    else if (strncmp(op, "absmax", 6) == 0) a1_op = A1_MAXABS;
-    else if (strncmp(op, "absmin", 6) == 0) a1_op = A1_MINABS;
-    else if (strncmp(op, "or", 2) == 0) a1_op = A1_OR;
-    else A1U_ERR_POP(A1_ERROR, "Invalid op received\n");
+    if (strncmp(op, "+", 1) == 0) osp_op = OSP_SUM;
+    else if (strncmp(op, "*", 1) == 0) osp_op = OSP_PROD;
+    else if (strncmp(op, "max", 3) == 0) osp_op = OSP_MAX;
+    else if (strncmp(op, "min", 3) == 0) osp_op = OSP_MIN;
+    else if (strncmp(op, "absmax", 6) == 0) osp_op = OSP_MAXABS;
+    else if (strncmp(op, "absmin", 6) == 0) osp_op = OSP_MINABS;
+    else if (strncmp(op, "or", 2) == 0) osp_op = OSP_OR;
+    else OSPU_ERR_POP(OSP_ERROR, "Invalid op received\n");
 
-    status = A1_Allreduce_group(A1_GROUP_WORLD,
+    status = OSP_Allreduce_group(OSP_GROUP_WORLD,
                                 n,
-                                a1_op,
-                                A1_FLOAT,
+                                osp_op,
+                                OSP_FLOAT,
                                 x,
                                 x);
-    A1U_ERR_ABORT(status != A1_SUCCESS, "A1_Allreduce_group returned error\n");
+    OSPU_ERR_ABORT(status != OSP_SUCCESS, "OSP_Allreduce_group returned error\n");
 
     fn_exit:
-    A1U_FUNC_EXIT();
+    OSPU_FUNC_EXIT();
     return;
 
     fn_fail:
@@ -2268,32 +2268,32 @@ void armci_msg_group_fgop(float *x, int n, char* op, ARMCI_Group *group)
 
 void armci_msg_group_dgop(double *x, int n, char* op, ARMCI_Group *group)
 {
-    int status = A1_SUCCESS;
-    A1_reduce_op_t a1_op;
+    int status = OSP_SUCCESS;
+    OSP_reduce_op_t osp_op;
 
-    A1U_FUNC_ENTER();
+    OSPU_FUNC_ENTER();
 
     /*We need a check if it is a world group, we assume it for now*/
 
-    if (strncmp(op, "+", 1) == 0) a1_op = A1_SUM;
-    else if (strncmp(op, "*", 1) == 0) a1_op = A1_PROD;
-    else if (strncmp(op, "max", 3) == 0) a1_op = A1_MAX;
-    else if (strncmp(op, "min", 3) == 0) a1_op = A1_MIN;
-    else if (strncmp(op, "absmax", 6) == 0) a1_op = A1_MAXABS;
-    else if (strncmp(op, "absmin", 6) == 0) a1_op = A1_MINABS;
-    else if (strncmp(op, "or", 2) == 0) a1_op = A1_OR;
-    else  A1U_ERR_POP(A1_ERROR, "Invalid op received\n");
+    if (strncmp(op, "+", 1) == 0) osp_op = OSP_SUM;
+    else if (strncmp(op, "*", 1) == 0) osp_op = OSP_PROD;
+    else if (strncmp(op, "max", 3) == 0) osp_op = OSP_MAX;
+    else if (strncmp(op, "min", 3) == 0) osp_op = OSP_MIN;
+    else if (strncmp(op, "absmax", 6) == 0) osp_op = OSP_MAXABS;
+    else if (strncmp(op, "absmin", 6) == 0) osp_op = OSP_MINABS;
+    else if (strncmp(op, "or", 2) == 0) osp_op = OSP_OR;
+    else  OSPU_ERR_POP(OSP_ERROR, "Invalid op received\n");
 
-    status = A1_Allreduce_group(A1_GROUP_WORLD,
+    status = OSP_Allreduce_group(OSP_GROUP_WORLD,
                                 n,
-                                a1_op,
-                                A1_DOUBLE,
+                                osp_op,
+                                OSP_DOUBLE,
                                 x,
                                 x);
-    A1U_ERR_ABORT(status != A1_SUCCESS, "A1_Allreduce_group returned error\n");
+    OSPU_ERR_ABORT(status != OSP_SUCCESS, "OSP_Allreduce_group returned error\n");
 
     fn_exit:
-    A1U_FUNC_EXIT();
+    OSPU_FUNC_EXIT();
     return;
 
     fn_fail:
@@ -2306,20 +2306,20 @@ void armci_msg_group_bcast_scope(int scope,
                                  int root,
                                  ARMCI_Group *group)
 {
-    int status = A1_SUCCESS;
-    A1U_FUNC_ENTER();
+    int status = OSP_SUCCESS;
+    OSPU_FUNC_ENTER();
 
     if (scope != SCOPE_ALL)
     {
-        A1U_ERR_ABORT(A1_ERROR, "Only SCOPE_ALL is supported \n");
+        OSPU_ERR_ABORT(OSP_ERROR, "Only SCOPE_ALL is supported \n");
     }
 
     /*We need a check if it is a world group, we assume it for now*/
 
-    status = A1_Bcast_group(A1_GROUP_WORLD, root, len, buf);
-    A1U_ERR_ABORT(status != A1_SUCCESS, "A1_Bcast_group returned error\n");
+    status = OSP_Bcast_group(OSP_GROUP_WORLD, root, len, buf);
+    OSPU_ERR_ABORT(status != OSP_SUCCESS, "OSP_Bcast_group returned error\n");
 
-    fn_exit: A1U_FUNC_EXIT();
+    fn_exit: OSPU_FUNC_EXIT();
     return;
 
     fn_fail: goto fn_exit;
@@ -2327,13 +2327,13 @@ void armci_msg_group_bcast_scope(int scope,
 
 void armci_msg_group_barrier(ARMCI_Group *group)
 {
-    A1U_FUNC_ENTER();
+    OSPU_FUNC_ENTER();
 
     /*We need a check if it is a world group, we assume it for now*/
 
-    A1_Barrier_group(A1_GROUP_WORLD);
+    OSP_Barrier_group(OSP_GROUP_WORLD);
 
-    fn_exit: A1U_FUNC_EXIT();
+    fn_exit: OSPU_FUNC_EXIT();
     return;
 
     fn_fail: goto fn_exit;
@@ -2346,15 +2346,15 @@ void armci_msg_group_gop_scope(int scope,
                                int type,
                                ARMCI_Group *group)
 {
-    int status = A1_SUCCESS;
-    A1_reduce_op_t a1_op;
-    A1_datatype_t a1_type;
+    int status = OSP_SUCCESS;
+    OSP_reduce_op_t osp_op;
+    OSP_datatype_t osp_type;
 
-    A1U_FUNC_ENTER();
+    OSPU_FUNC_ENTER();
 
     if (scope != SCOPE_ALL)
     {
-        A1U_ERR_ABORT(A1_ERROR, "Only SCOPE_ALL is supported in armci_msg_gop_scope");
+        OSPU_ERR_ABORT(OSP_ERROR, "Only SCOPE_ALL is supported in armci_msg_gop_scope");
     }
 
     /*We need a check if it is a world group, we assume it for now*/
@@ -2363,41 +2363,41 @@ void armci_msg_group_gop_scope(int scope,
     {
         case ARMCI_INT:
         case ARMCI_LONG:
-            a1_type = A1_INT32;
+            osp_type = OSP_INT32;
             break;
         case ARMCI_LONG_LONG:
-            a1_type = A1_INT64;
+            osp_type = OSP_INT64;
             break;
         case ARMCI_FLOAT:
-            a1_type = A1_FLOAT;
+            osp_type = OSP_FLOAT;
             break;
         case ARMCI_DOUBLE:
-            a1_type = A1_DOUBLE;
+            osp_type = OSP_DOUBLE;
             break;
         default:
-            A1U_ERR_ABORT(A1_ERROR, "Invalid datatype received in armci_msg_group_gop_scope");
+            OSPU_ERR_ABORT(OSP_ERROR, "Invalid datatype received in armci_msg_group_gop_scope");
             break;
     }
 
-    if (strncmp(op, "+", 1) == 0) a1_op = A1_SUM;
-    else if (strncmp(op, "*", 1) == 0) a1_op = A1_PROD;
-    else if (strncmp(op, "max", 3) == 0) a1_op = A1_MAX;
-    else if (strncmp(op, "min", 3) == 0) a1_op = A1_MIN;
-    else if (strncmp(op, "absmax", 6) == 0) a1_op = A1_MAXABS;
-    else if (strncmp(op, "absmin", 6) == 0) a1_op = A1_MINABS;
-    else if (strncmp(op, "or", 2) == 0) a1_op = A1_OR;
-    else A1U_ERR_ABORT(A1_ERROR, "Invalid op received in armci_msg_group_gop_scope");
+    if (strncmp(op, "+", 1) == 0) osp_op = OSP_SUM;
+    else if (strncmp(op, "*", 1) == 0) osp_op = OSP_PROD;
+    else if (strncmp(op, "max", 3) == 0) osp_op = OSP_MAX;
+    else if (strncmp(op, "min", 3) == 0) osp_op = OSP_MIN;
+    else if (strncmp(op, "absmax", 6) == 0) osp_op = OSP_MAXABS;
+    else if (strncmp(op, "absmin", 6) == 0) osp_op = OSP_MINABS;
+    else if (strncmp(op, "or", 2) == 0) osp_op = OSP_OR;
+    else OSPU_ERR_ABORT(OSP_ERROR, "Invalid op received in armci_msg_group_gop_scope");
 
-    status = A1_Allreduce_group(A1_GROUP_WORLD,
+    status = OSP_Allreduce_group(OSP_GROUP_WORLD,
                                 n,
-                                a1_op,
-                                a1_type,
+                                osp_op,
+                                osp_type,
                                 x,
                                 x);
-    A1U_ERR_ABORT(status != A1_SUCCESS, "A1_Allreduce_group returned error\n");
+    OSPU_ERR_ABORT(status != OSP_SUCCESS, "OSP_Allreduce_group returned error\n");
 
     fn_exit:
-    A1U_FUNC_EXIT();
+    OSPU_FUNC_EXIT();
     return;
 
     fn_fail:
@@ -2410,11 +2410,11 @@ void armci_grp_clus_brdcst(void *buf,
                            int grp_clus_nproc,
                            ARMCI_Group *mastergroup)
 {
-    A1U_FUNC_ENTER();
+    OSPU_FUNC_ENTER();
 
-    A1U_ERR_ABORT(A1_ERROR, "This function is not supported in ARMCI-A1\n");
+    OSPU_ERR_ABORT(OSP_ERROR, "This function is not supported in ARMCI-OSP\n");
 
-    fn_exit: A1U_FUNC_EXIT();
+    fn_exit: OSPU_FUNC_EXIT();
     return;
 
     fn_fail: goto fn_exit;
@@ -2422,11 +2422,11 @@ void armci_grp_clus_brdcst(void *buf,
 
 void armci_exchange_address_grp(void *ptr_arr[], int n, ARMCI_Group *group)
 {
-    A1U_FUNC_ENTER();
+    OSPU_FUNC_ENTER();
 
-    A1U_ERR_ABORT(A1_ERROR, "This function is not supported in ARMCI-A1\n");
+    OSPU_ERR_ABORT(OSP_ERROR, "This function is not supported in ARMCI-OSP\n");
 
-    fn_exit: A1U_FUNC_EXIT();
+    fn_exit: OSPU_FUNC_EXIT();
     return;
 
     fn_fail: goto fn_exit;
@@ -2434,11 +2434,11 @@ void armci_exchange_address_grp(void *ptr_arr[], int n, ARMCI_Group *group)
 
 void armci_msg_bcast_scope(int scope, void* buffer, int len, int root)
 {
-    A1U_FUNC_ENTER();
+    OSPU_FUNC_ENTER();
 
-    A1U_ERR_ABORT(A1_ERROR, "This function is not supported in ARMCI-A1\n");
+    OSPU_ERR_ABORT(OSP_ERROR, "This function is not supported in ARMCI-OSP\n");
 
-    fn_exit: A1U_FUNC_EXIT();
+    fn_exit: OSPU_FUNC_EXIT();
     return;
 
     fn_fail: goto fn_exit;
@@ -2446,14 +2446,14 @@ void armci_msg_bcast_scope(int scope, void* buffer, int len, int root)
 
 void armci_msg_brdcst(void* buffer, int len, int root)
 {
-    int status = A1_SUCCESS;
+    int status = OSP_SUCCESS;
 
-    A1U_FUNC_ENTER();
+    OSPU_FUNC_ENTER();
 
-    status = A1_Bcast_group(A1_GROUP_WORLD, root, len, buffer);
-    A1U_ERR_ABORT(status != A1_SUCCESS, "A1_Bcast_group returned error\n");
+    status = OSP_Bcast_group(OSP_GROUP_WORLD, root, len, buffer);
+    OSPU_ERR_ABORT(status != OSP_SUCCESS, "OSP_Bcast_group returned error\n");
 
-    fn_exit: A1U_FUNC_EXIT();
+    fn_exit: OSPU_FUNC_EXIT();
     return;
 
     fn_fail: goto fn_exit;
@@ -2466,11 +2466,11 @@ void armci_msg_sel_scope(int scope,
                          int type,
                          int contribute)
 {
-    A1U_FUNC_ENTER();
+    OSPU_FUNC_ENTER();
 
-    A1U_ERR_ABORT(A1_ERROR, "This function is not supported in ARMCI-A1\n");
+    OSPU_ERR_ABORT(OSP_ERROR, "This function is not supported in ARMCI-OSP\n");
 
-    fn_exit: A1U_FUNC_EXIT();
+    fn_exit: OSPU_FUNC_EXIT();
     return;
 
     fn_fail: goto fn_exit;

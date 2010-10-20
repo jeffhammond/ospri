@@ -1,4 +1,4 @@
-A1_PutS Overlap - NbPutS + DGEMM + Wait. Time in cycles	A1_PutS Overlap - NbPutS + DGEMM + Wait. Time in cycles
+OSP_PutS Overlap - NbPutS + DGEMM + Wait. Time in cycles	OSP_PutS Overlap - NbPutS + DGEMM + Wait. Time in cycles
 #Msg Size  Dimensions(array of doubles)      Handoff-Base Latency    Handoff+DGEMM Overlap   NoHandoff-Base Latency   Handoff+DGEMM Overlap
     4096                          512X1               411452              485485                412534              823706 
     8192                          512X2               479912              563515                475601              950841 

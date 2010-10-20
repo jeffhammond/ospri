@@ -4,9 +4,9 @@
  *      See COPYRIGHT in top-level directory.
  */
 
-#include "a1.h"
-#include "a1u.h"
-#include "a1d.h"
+#include "osp.h"
+#include "ospu.h"
+#include "ospd.h"
 #include "mpi.h"
 #include <assert.h>
 
@@ -30,7 +30,7 @@ typedef struct
 {
    size_t my_rank;
    size_t num_ranks;
-} A1D_Process_info_t;
+} OSPD_Process_info_t;
 
 
 /*************************************************

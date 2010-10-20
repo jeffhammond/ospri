@@ -1,4 +1,4 @@
-Size                    Dimensions              A1-Local            A1-Remote             ARMCI-Local         ARMCI-Remote 
+Size                    Dimensions              OSP-Local            OSP-Remote             ARMCI-Local         ARMCI-Remote 
  4096                        512X1                55.65               128.83                  929.29               921.68 
  8192                        512X2                62.50               152.59                  931.45               934.21 
  16384                       512X4                82.97               166.77                  935.82               939.98 

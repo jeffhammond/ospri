@@ -1,5 +1,5 @@
-#A1_GetS Bandwidth in MBPS 	
-#MsgSize   Dimensions(array of doubles)                  A1             ARMCI 
+#OSP_GetS Bandwidth in MBPS 	
+#MsgSize   Dimensions(array of doubles)                  OSP             ARMCI 
       8                            1X1                 1.61              2.92 
      32                            2X2                 4.64              6.21 
     128                            4X4                11.84             12.81 

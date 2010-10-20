@@ -25,7 +25,7 @@
 #ifdef USE_ARMCI
 #include "../armci/src/armci.h"
 #else
-#include "$(A1_INSTALL)/include/armci.h"
+#include "$(OSP_INSTALL)/include/armci.h"
 #endif
 
 int main(int argc, char **argv)

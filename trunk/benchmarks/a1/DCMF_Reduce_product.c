@@ -50,7 +50,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <a1.h>
+#include <osp.h>
 #include <dcmf.h>
 #include "dcmf_collectives.h"
 

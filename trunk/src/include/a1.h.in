@@ -4,8 +4,8 @@
  *      See COPYRIGHT in top-level directory.
  */
 
-#if !defined A1_H_INCLUDED
-#define A1_H_INCLUDED
+#if !defined OSP_H_INCLUDED
+#define OSP_H_INCLUDED
 
 /* Keep C++ compilers from getting confused */
 #if defined(__cplusplus)
@@ -13,12 +13,12 @@ extern "C"
 {
 #endif /* __cplusplus */
 
-#define A1_SUCCESS 0
-#define A1_ERROR   1
+#define OSP_SUCCESS 0
+#define OSP_ERROR   1
 
-/** @file a1.h.in */
+/** @file osp.h.in */
 
-/*! \addtogroup a1 A1 Public Interface
+/*! \addtogroup osp OSP Public Interface
  * @{
  */
 
@@ -29,12 +29,12 @@ extern "C"
 /* ********************************************************************* */
 
 /**
- * \brief Thread support within A1.
+ * \brief Thread support within OSP.
  *
  * Implementation details:
  *
- * A1_THREAD_SINGLE, A1_THREAD_FUNNELED, A1_THREAD_SERIALIZED and
- * A1_THREAD_MULTIPLE have the same meaning as the MPI descriptors
+ * OSP_THREAD_SINGLE, OSP_THREAD_FUNNELED, OSP_THREAD_SERIALIZED and
+ * OSP_THREAD_MULTIPLE have the same meaning as the MPI descriptors
  * of similar name.
  *
  * \ingroup ENUMS
@@ -43,18 +43,18 @@ extern "C"
 
 typedef enum
 {
-    A1_THREAD_SINGLE,     /**< There is only one thread present. */
-    A1_THREAD_FUNNELED,   /**< There are multiple threads present
-                               but only the main thread makes A1 calls. */
-    A1_THREAD_SERIALIZED, /**< There are multiple threads present and each can make A1 calls,
+    OSP_THREAD_SINGLE,     /**< There is only one thread present. */
+    OSP_THREAD_FUNNELED,   /**< There are multiple threads present
+                               but only the main thread makes OSP calls. */
+    OSP_THREAD_SERIALIZED, /**< There are multiple threads present and each can make OSP calls,
                                but never simultaneously. */
-    A1_THREAD_MULTIPLE    /**< There are multiple threads present and each can make A1 calls. */
-} A1_thread_level;
+    OSP_THREAD_MULTIPLE    /**< There are multiple threads present and each can make OSP calls. */
+} OSP_thread_level;
 
 /**
- * \brief Datatype support within A1.
+ * \brief Datatype support within OSP.
  *
- * \note A1 does not support complex numbers yet.  This is okay because
+ * \note OSP does not support complex numbers yet.  This is okay because
  *       imaginary numbers don't exist, by definition :-)
  *
  * \ingroup ENUMS
@@ -63,16 +63,16 @@ typedef enum
 
 typedef enum
 {
-    A1_INT32,  /**< int32  */
-    A1_INT64,  /**< int64  */
-    A1_UINT32, /**< uint32 */
-    A1_UINT64, /**< uint64 */
-    A1_FLOAT,  /**< single-precision */
-    A1_DOUBLE, /**< double-precision */
-} A1_datatype_t;
+    OSP_INT32,  /**< int32  */
+    OSP_INT64,  /**< int64  */
+    OSP_UINT32, /**< uint32 */
+    OSP_UINT64, /**< uint64 */
+    OSP_FLOAT,  /**< single-precision */
+    OSP_DOUBLE, /**< double-precision */
+} OSP_datatype_t;
 
 /**
- * \brief A1 boolean.
+ * \brief OSP boolean.
  *
  * \ingroup ENUMS
  *
@@ -80,12 +80,12 @@ typedef enum
 
 typedef enum
 {
-    A1_TRUE = 1,
-    A1_FALSE = 0,
-} A1_bool_t;
+    OSP_TRUE = 1,
+    OSP_FALSE = 0,
+} OSP_bool_t;
 
 /**
- * \brief A1 result (error code).
+ * \brief OSP result (error code).
  *
  * \ingroup ENUMS
  *
@@ -93,14 +93,14 @@ typedef enum
 
 typedef enum
 {
-    A1_NO_ERROR = 0, /* Can't use A1_SUCCESS since we're already using that.  Should fix this. */
-    A1_MEMORY_ERROR,
-    A1_NETWORK_ERROR,
-    A1_UNKNOWN_ERROR,
-} A1_result_t;
+    OSP_NO_ERROR = 0, /* Can't use OSP_SUCCESS since we're already using that.  Should fix this. */
+    OSP_MEMORY_ERROR,
+    OSP_NETWORK_ERROR,
+    OSP_UNKNOWN_ERROR,
+} OSP_result_t;
 
 /**
- * \brief A1 reduction operations
+ * \brief OSP reduction operations
  *
  * \ingroup ENUMS
  *
@@ -108,21 +108,21 @@ typedef enum
 
 typedef enum
 {
-    A1_SUM,
-    A1_PROD,
-    A1_MAX,
-    A1_MIN,
-    A1_MAXABS, /* Returns MAX(ABS(buffer)) */
-    A1_MINABS, /* Returns MIN(ABS(buffer)) */
-    A1_OR,     /* should be only for integer types but I don't know if we check */
-    A1_BXOR,   /* bit-wise XOR - only for integer types */
-    A1_SAME,   /* Sets the return value if the buffer (element) is the same across all nodes.
+    OSP_SUM,
+    OSP_PROD,
+    OSP_MAX,
+    OSP_MIN,
+    OSP_MAXABS, /* Returns MAX(ABS(buffer)) */
+    OSP_MINABS, /* Returns MIN(ABS(buffer)) */
+    OSP_OR,     /* should be only for integer types but I don't know if we check */
+    OSP_BXOR,   /* bit-wise XOR - only for integer types */
+    OSP_SAME,   /* Sets the return value if the buffer (element) is the same across all nodes.
                   This operation is equivalent to doing MAX(buffer) and MIN(-buffer) simultaneously
                   and testing for equality element-wise. */
-} A1_reduce_op_t;
+} OSP_reduce_op_t;
 
 /**
- * \brief A1 RMW operations
+ * \brief OSP RMW operations
  *
  * \ingroup ENUMS
  *
@@ -130,55 +130,55 @@ typedef enum
 
 typedef enum
 {
-    A1_FETCH_AND_ADD,
-    A1_SWAP,
-} A1_atomic_op_t;
+    OSP_FETCH_AND_ADD,
+    OSP_SWAP,
+} OSP_atomic_op_t;
 
 /* ********************************************************************* */
 /*                                                                       */
-/*               A1 data structures                                      */
+/*               OSP data structures                                      */
 /*                                                                       */
 /* ********************************************************************* */
 
 /**
- * \brief A1 memregion type.
+ * \brief OSP memregion type.
  *
- * \see A1_Allocate_memregion, A1_Free_memregion, A1_Bind_memregion
+ * \see OSP_Allocate_memregion, OSP_Free_memregion, OSP_Bind_memregion
  *
  * \ingroup TYPEDEFS
  *
  */
 
-typedef struct A1_memregion
+typedef struct OSP_memregion
 {
     void* base_address;
     unsigned size;           /* Size in elements of type not bytes (unless bytes is type). */
-    A1_datatype_t type;      /* Not sure if this is the right idea but one can always use bytes. */
+    OSP_datatype_t type;      /* Not sure if this is the right idea but one can always use bytes. */
     void* memregion_options; /* This is a pointer to the device-specific memregion options that
                                  are the motivation for creating this struct in the first place. */
-} A1_memregion_t;
+} OSP_memregion_t;
 
 /**
- * \brief A1 offset type.
+ * \brief OSP offset type.
  *
- * \see A1_PutMR
+ * \see OSP_PutMR
  *
  * \ingroup TYPEDEFS
  *
  */
 
-typedef unsigned int A1_offset_t;
+typedef unsigned int OSP_offset_t;
 
 /**
- * \brief A1 group type.
+ * \brief OSP group type.
  *
- * \see A1_PutMR
+ * \see OSP_PutMR
  *
  * \ingroup TYPEDEFS
  *
  */
 
-/* TODO: Implement A1 group types.  I wonder if the user-accessible type should be
+/* TODO: Implement OSP group types.  I wonder if the user-accessible type should be
  *        a pointer to the internal implementation to prevent people from doing
  *        stupid kinds of direct access.
  */
@@ -188,79 +188,79 @@ typedef unsigned int A1_offset_t;
  *         where the group is confined to a single node.  There will also
  *         be quirks arising in the GPU context I want to deal with directly.
  */
-typedef struct A1_group
+typedef struct OSP_group
 {
     int* rank_list;
-} A1_group_t;
+} OSP_group_t;
 
-A1_group_t a1_group_world;
+OSP_group_t osp_group_world;
 
-#define A1_GROUP_WORLD &a1_group_world
+#define OSP_GROUP_WORLD &osp_group_world
 
 /**
- * \brief A1 endpoint type.
+ * \brief OSP endpoint type.
  *
- * \see A1_PutMR
+ * \see OSP_PutMR
  *
  * \ingroup TYPEDEFS
  *
  */
 
-typedef unsigned int A1_endpoint_t;
+typedef unsigned int OSP_endpoint_t;
 
 /**
- * \brief A1 size type.
+ * \brief OSP size type.
  *
- * \see A1_PutMR
+ * \see OSP_PutMR
  *
  * \ingroup TYPEDEFS
  *
  */
 
-typedef unsigned int A1_size_t;
+typedef unsigned int OSP_size_t;
 
 /**
- * \brief A1 non-blocking handle type.
+ * \brief OSP non-blocking handle type.
  *
- * \see A1_Test_handle, A1_Test_handle_list,
- *      A1_Wait_handle, A1_Wait_handle_list,
- *      A1_Reset_handle, A1_Reset_handle_list
+ * \see OSP_Test_handle, OSP_Test_handle_list,
+ *      OSP_Wait_handle, OSP_Wait_handle_list,
+ *      OSP_Reset_handle, OSP_Reset_handle_list
  *
  * \ingroup TYPEDEFS
  *
  */
 
-typedef void* A1_handle_t;
+typedef void* OSP_handle_t;
 
 /**
- * \brief A1 shared counter.
+ * \brief OSP shared counter.
  *
  * \ingroup TYPEDEFS
  *
  */
 
-typedef void* A1_counter_t;
+typedef void* OSP_counter_t;
 
 /**
- * \brief A1 io vector type.
+ * \brief OSP io vector type.
  *
- * \see A1_PutV, A1_GetV, A1_PutAccV
+ * \see OSP_PutV, OSP_GetV, OSP_PutAccV
  *
  * \ingroup TYPEDEFS
  *
  */
 
-typedef struct A1_iov_t
+typedef struct OSP_iov_t
 {
     void **source_ptr_ar;
     void **target_ptr_ar;
     int size; /*In bytes*/
     int ptr_ar_len;
-} A1_iov_t;
+} OSP_iov_t;
 
 /* ********************************************************************* */
 /*                                                                       */
-/*               A1 external API - Helper Functions                      */
+/*               OSP external API - Helper Functions                      */
 /*                                                                       */
 /* ********************************************************************* */
 
@@ -273,12 +273,12 @@ typedef struct A1_iov_t
  *
  * \param[out] rc   Number of cpu clock cycles from an arbitrary time in the past.
  *
- * \see A1_Time_seconds
+ * \see OSP_Time_seconds
  *
  * \ingroup INFORMATION
  */
 
-unsigned long long A1_Time_cycles(void);
+unsigned long long OSP_Time_cycles(void);
 
 /**
  * \brief Timer in units of seconds.
@@ -286,16 +286,16 @@ unsigned long long A1_Time_cycles(void);
  *
  * \param[out] rc   Number of seconds from an arbitrary time in the past.
  *
- * \see A1_Time_cycles
+ * \see OSP_Time_cycles
  *
  * \ingroup INFORMATION
  */
 
-double A1_Time_seconds(void);
+double OSP_Time_seconds(void);
 
 /* ********************************************************************* */
 /*                                                                       */
-/*               A1 external API - Process Information                   */
+/*               OSP external API - Process Information                   */
 /*                                                                       */
 /* ********************************************************************* */
 
@@ -307,12 +307,12 @@ double A1_Time_seconds(void);
  *       argument passed by reference for the sake of Fortran compatibility
  *       (or whatever their reason is).
  *
- * \see A1_Node_id, A1_Process_total
+ * \see OSP_Node_id, OSP_Process_total
  *
  * \ingroup INFORMATION
  */
 
-int A1_Process_id(A1_group_t* group);
+int OSP_Process_id(OSP_group_t* group);
 
 /**
  * \brief Returns total number of processes in a group or -1 in the case of an error.
@@ -321,12 +321,12 @@ int A1_Process_id(A1_group_t* group);
  *       argument passed by reference for the sake of Fortran compatibility
  *       (or whatever their reason is).
  *
- * \see A1_Process_id, A1_Node_total
+ * \see OSP_Process_id, OSP_Node_total
  *
  * \ingroup INFORMATION
  */
 
-int A1_Process_total(A1_group_t* group);
+int OSP_Process_total(OSP_group_t* group);
 
 /**
  * \brief Returns node rank relative to the group base of the process calling it,
@@ -335,12 +335,12 @@ int A1_Process_total(A1_group_t* group);
  * \note Jeff hates MPI-style function style where return value is an argument
  *       passed by reference for the sake of Fortran compatibility.
  *
- * \see A1_Process_id, A1_Node_total
+ * \see OSP_Process_id, OSP_Node_total
  *
  * \ingroup INFORMATION
  */
 
-int A1_Node_id(A1_group_t* group);
+int OSP_Node_id(OSP_group_t* group);
 
 /**
  * \brief Returns total number of nodes in a group, or -1 in the case of an error.
@@ -348,134 +348,134 @@ int A1_Node_id(A1_group_t* group);
  * \note Jeff hates MPI-style function style where return value is an argument
  *       passed by reference for the sake of Fortran compatibility.
  *
- * \see A1_Node_id, A1_Process_total
+ * \see OSP_Node_id, OSP_Process_total
  *
  * \ingroup INFORMATION
  */
 
-int A1_Node_total(A1_group_t* group);
+int OSP_Node_total(OSP_group_t* group);
 
 /* ********************************************************************* */
 /*                                                                       */
-/*               A1 external API - management                            */
+/*               OSP external API - management                            */
 /*                                                                       */
 /* ********************************************************************* */
 
 /**
  * \brief Initializes the Al environment.
  *
- * \warning If the MPID device is used, one should be careful in using A1_Initialize and MPI_Init/MPI_Init_thread.
+ * \warning If the MPID device is used, one should be careful in using OSP_Initialize and MPI_Init/MPI_Init_thread.
  *
- * \note Unlike MPI, A1_Initialize may be called many times and but is not thread-safe.
- *       Improper use of A1_Initialize (calling it more than once) shall be
+ * \note Unlike MPI, OSP_Initialize may be called many times and but is not thread-safe.
+ *       Improper use of OSP_Initialize (calling it more than once) shall be
  *       indicated by a non-zero error code and potentially warnings in
  *       stderr.
  *
  * \note Implementation detail: we need global variable indicated where or not
- *       A1 is alive or not to make this function thread-safe.
+ *       OSP is alive or not to make this function thread-safe.
  *
- * \note This routine is called A1_Initialize for syntactic symmetry with
- *       A1_Finalize and because of Jeff's schadenfreude toward Pavan.
+ * \note This routine is called OSP_Initialize for syntactic symmetry with
+ *       OSP_Finalize and because of Jeff's schadenfreude toward Pavan.
  *
- * \param[out] rc               The error code from initializing A1
- * \param[in]  A1_thread_level  The type of thread support for A1
+ * \param[out] rc               The error code from initializing OSP
+ * \param[in]  OSP_thread_level  The type of thread support for OSP
  *
- * \see A1_thread_level
+ * \see OSP_thread_level
  *
  * \ingroup MANAGEMENT
  */
 
-int A1_Initialize(int A1_thread_level);
+int OSP_Initialize(int OSP_thread_level);
 
 /**
- * \brief Terminates the A1 environment normally.
+ * \brief Terminates the OSP environment normally.
  *
- * \warning If the MPID device is used, one should be careful in using A1_Finalize and MPI_Finalize.
+ * \warning If the MPID device is used, one should be careful in using OSP_Finalize and MPI_Finalize.
  *
- * \note Unlike MPI, A1_Finalize may be called many times and is thread-safe.
- *       Improper use of A1_Finalize (calling it more than once) shall be
+ * \note Unlike MPI, OSP_Finalize may be called many times and is thread-safe.
+ *       Improper use of OSP_Finalize (calling it more than once) shall be
  *       indicated by a non-zero error code and potentially warnings in
  *       stderr.
  *
  * \note Implementation detail: we need global variable indicated where or not
- *       A1 is alive or not to make this function thread-safe.
+ *       OSP is alive or not to make this function thread-safe.
  *
- * \param[out] rc    The error code from terminating A1.
+ * \param[out] rc    The error code from terminating OSP.
  *
- * \see A1_Initialize, A1_Abort
+ * \see OSP_Initialize, OSP_Abort
  *
  * \ingroup MANAGEMENT
  */
 
-int A1_Finalize(void);
+int OSP_Finalize(void);
 
 /**
- * \brief Terminates the A1 environment abnormally.
+ * \brief Terminates the OSP environment abnormally.
  *
- * \warning This must be the last A1 call made in any code unless A1_Finalize is called instead.
+ * \warning This must be the last OSP call made in any code unless OSP_Finalize is called instead.
  *
  * \param[in]  error_code    The error code to be returned to the submitting environment.
  * \param[in]  error_message Text string to print to stderr upon termination.
  *
- * \see A1_Initialize, A1_Finalize
+ * \see OSP_Initialize, OSP_Finalize
  *
  * \ingroup MANAGEMENT
  */
 
-void A1_Abort(int error_code, char error_message[]);
+void OSP_Abort(int error_code, char error_message[]);
 
 /* ********************************************************************* */
 /*                                                                       */
-/*               A1 external API - memory                                */
+/*               OSP external API - memory                                */
 /*                                                                       */
 /* ********************************************************************* */
 
 /**
- * \brief A local operation to allocate memory to be used in context of A1 copy operations.
+ * \brief A local operation to allocate memory to be used in context of OSP copy operations.
  *
  * \note Memory allocated with this function will be properly aligned for the architecture.
  *
- * \warning Memory allocated with this function must be freed by A1_Free_segment.
+ * \warning Memory allocated with this function must be freed by OSP_Free_segment.
  *
  * \param[out] rc            The error code.
  * \param[out] ptr           Pointer to memregion structure to be created.
  * \param[in]  bytes         The amount of memory requested.
  *
- * \see A1_Free_memregion, A1_Bind_memregion
+ * \see OSP_Free_memregion, OSP_Bind_memregion
  *
  * \ingroup MEMORY
  */
 
-int A1_Allocate_memregion(A1_memregion_t* memregion, int bytes);
+int OSP_Allocate_memregion(OSP_memregion_t* memregion, int bytes);
 
 /**
- * \brief A local operation to free memory allocated by A1_Alloc_segment.
+ * \brief A local operation to free memory allocated by OSP_Alloc_segment.
  *
- * \warning It is erroneous to attempt to free memory not allocated by A1_Alloc_segment.
+ * \warning It is erroneous to attempt to free memory not allocated by OSP_Alloc_segment.
  *
  * \param[out] rc            The error code.
  * \param[in]  memregion     Pointer to memregion structure to be destroyed.
  *
- * \see A1_Alloc_segment, A1_Register_segment
+ * \see OSP_Alloc_segment, OSP_Register_segment
  *
  * \ingroup MEMORY
  */
 
-int A1_Free_memregion(A1_memregion_t* memregion);
+int OSP_Free_memregion(OSP_memregion_t* memregion);
 
 /**
- * \brief A local operation to register memory to be used in context of A1 copy operations.
+ * \brief A local operation to register memory to be used in context of OSP copy operations.
  *
- * \note This call is not necessary for memory allocated with A1_Alloc_segment.
+ * \note This call is not necessary for memory allocated with OSP_Alloc_segment.
  *
  * \note Memory allocated with this function will be tested for proper alignment and return
  *       an error if alignment checking has been disabled and the pointer is not properly aligned.
  *
- * \note A1_Register_segment will check for valid allocation of the memory provided,
+ * \note OSP_Register_segment will check for valid allocation of the memory provided,
  *       potentially by writing "\0" to all bytes.
  *
  * \note This call may not work in all contexts.  For example, CUDA provides no API call to
- *       register pre-allocated memory.  A truly portable A1 program must not call this
+ *       register pre-allocated memory.  A truly portable OSP program must not call this
  *       function.
  *
  * \note We can make this call portable if we copy the existing data into the memregion
@@ -487,41 +487,41 @@ int A1_Free_memregion(A1_memregion_t* memregion);
  * \param[in]  ptr           Pointer to previously-allocated memory.
  * \param[in]  bytes         The amount of memory provided.
  *
- * \see A1_Alloc_segment, A1_Free_segment
+ * \see OSP_Alloc_segment, OSP_Free_segment
  *
  * \ingroup MEMORY
  */
 
-int A1_Bind_memregion(A1_memregion_t* memregion, void** pointer, int bytes);
+int OSP_Bind_memregion(OSP_memregion_t* memregion, void** pointer, int bytes);
 
 /**
- * \brief A collective operation to exchange addresses of segments to be used in context of A1 copy operations.
+ * \brief A collective operation to exchange addresses of segments to be used in context of OSP copy operations.
  *
  * \note There is no local de-registration call because that could lead to erroneous programs.
- *       De-registration can only be effected by a call to A1_Release_segments, which is collective.
+ *       De-registration can only be effected by a call to OSP_Release_segments, which is collective.
  *
  * \param[out] rc            The error code.
  * \param[in]  group         Group of processes within which the pointer list is exchanged.
  * \param[in]  ptr           Pointer array. Each one points to memory allocated at one process, in order of ranks.
  * \param[in]  bytes         The size of memory allocated at each process.
  *
- * \see A1_Release_segments
+ * \see OSP_Release_segments
  *
  * \ingroup MEMORY
  */
 
 /* TODO: We should just implement alltoall and eliminate this function from the API. */
-int A1_Exchange_memregions(A1_group_t* group, void **ptr);
+int OSP_Exchange_memregions(OSP_group_t* group, void **ptr);
 
 /**
  * \brief A collective operation to invalidate and de-register memory segments
- *        associated with an A1_Exchange_segments call.
+ *        associated with an OSP_Exchange_segments call.
  *
  * \param[out] rc            The error code.
  * \param[in]  group         Group of processes within which the pointer list was exchanged.
  * \param[in]  ptr           Pointer to the allocated memory.
  *
- * \see A1_Exchange_segments
+ * \see OSP_Exchange_segments
  *
  * \ingroup MEMORY
  */
@@ -531,127 +531,127 @@ int A1_Exchange_memregions(A1_group_t* group, void **ptr);
  *
  * \param[in] handle      Non-blocking handle upon which to be waited.
  *
- * \see A1_handle_t, A1_Wait_handle_list, A1_Test_handle
+ * \see OSP_handle_t, OSP_Wait_handle_list, OSP_Test_handle
  *
  * \ingroup MEMORY
  */
 
-int A1_Allocate_handle(A1_handle_t *handle);
+int OSP_Allocate_handle(OSP_handle_t *handle);
 
 /**
  * \brief Initializes the give non-blocking handle.
  *
  * \param[in] handle      Non-blocking handle upon which to be waited.
  *
- * \see A1_handle_t, A1_Wait_handle_list, A1_Test_handle
+ * \see OSP_handle_t, OSP_Wait_handle_list, OSP_Test_handle
  *
  * \ingroup MEMORY
  */
 
-int A1_Release_handle(A1_handle_t handle);
+int OSP_Release_handle(OSP_handle_t handle);
 
 /**************************************************************************************/
 /*    WARNING: THIS PART OF THE API IS DEPRECATED AND WILL BE REMOVED EVENTUALLY      */
 /**************************************************************************************/
 
 /**
- * \brief A local operation to allocate memory to be used in context of A1 copy operations.
+ * \brief A local operation to allocate memory to be used in context of OSP copy operations.
  *
  * \note Memory allocated with this function will be properly aligned for the architecture.
  *
- * \warning Memory allocated with this function must be freed by A1_Free_segment.
+ * \warning Memory allocated with this function must be freed by OSP_Free_segment.
  *
  * \param[out] rc            The error code.
  * \param[out] ptr           Pointer to memory.
  * \param[in]  bytes         The amount of memory requested.
  *
- * \see A1_Free_segment, A1_Register_segment
+ * \see OSP_Free_segment, OSP_Register_segment
  *
  * \ingroup MEMORY
  */
 
-int A1_Alloc_segment(void** pointer, int bytes);
+int OSP_Alloc_segment(void** pointer, int bytes);
 
 /**
- * \brief A local operation to free memory allocated by A1_Alloc_segment.
+ * \brief A local operation to free memory allocated by OSP_Alloc_segment.
  *
- * \warning It is erroneous to attempt to free memory not allocated by A1_Alloc_segment.
+ * \warning It is erroneous to attempt to free memory not allocated by OSP_Alloc_segment.
  *
  * \param[out] rc            The error code.
  * \param[in] ptr           Pointer to memory.
  *
- * \see A1_Alloc_segment, A1_Register_segment
+ * \see OSP_Alloc_segment, OSP_Register_segment
  *
  * \ingroup MEMORY
  */
 
-int A1_Free_segment(void* pointer);
+int OSP_Free_segment(void* pointer);
 
 /**
- * \brief A local operation to register memory to be used in context of A1 copy operations.
+ * \brief A local operation to register memory to be used in context of OSP copy operations.
  *
- * \note This call is not necessary for memory allocated with A1_Alloc_segment.
+ * \note This call is not necessary for memory allocated with OSP_Alloc_segment.
  *
  * \note Memory allocated with this function will be tested for proper alignment and return
  *       an error if alignment checking has been disabled and the pointer is not properly aligned.
  *
- * \note A1_Register_segment will check for valid allocation of the memory provided,
+ * \note OSP_Register_segment will check for valid allocation of the memory provided,
  *       potentially by writing "\0" to all bytes.
  *
  * \note This call may not work in all contexts.  For example, CUDA provides no API call to
- *       register pre-allocated memory.  A truly portable A1 program must not call this
+ *       register pre-allocated memory.  A truly portable OSP program must not call this
  *       function.
  *
  * \param[out] rc            The error code.
  * \param[in]  ptr           Pointer to memory.
  * \param[in]  bytes         The amount of memory provided.
  *
- * \see A1_Alloc_segment, A1_Free_segment
+ * \see OSP_Alloc_segment, OSP_Free_segment
  *
  * \ingroup MEMORY
  */
 
-int A1_Register_segment(void** pointer, int bytes);
+int OSP_Register_segment(void** pointer, int bytes);
 
 /**
- * \brief A collective operation to exchange addresses of segments to be used in context of A1 copy operations.
+ * \brief A collective operation to exchange addresses of segments to be used in context of OSP copy operations.
  *
  * \note There is no local de-registration call because that could lead to erroneous programs.
- *       De-registration can only be effected by a call to A1_Release_segments, which is collective.
+ *       De-registration can only be effected by a call to OSP_Release_segments, which is collective.
  *
  * \param[out] rc            The error code.
  * \param[in]  group         Group of processes within which the pointer list is exchanged.
  * \param[in]  ptr           Pointer array. Each one points to memory allocated at one process, in order of ranks.
  * \param[in]  bytes         The size of memory allocated at each process.
  *
- * \see A1_Release_segments
+ * \see OSP_Release_segments
  *
  * \ingroup MEMORY
  */
 
 /* TODO: We should just implement alltoall and eliminate this function from the API. */
-int A1_Exchange_segments(A1_group_t* group, void **ptr);
+int OSP_Exchange_segments(OSP_group_t* group, void **ptr);
 
 /**
  * \brief A collective operation to invalidate and de-register memory segments
- *        associated with an A1_Exchange_segments call.
+ *        associated with an OSP_Exchange_segments call.
  *
  * \param[out] rc            The error code.
  * \param[in]  group         Group of processes within which the pointer list was exchanged.
  * \param[in]  ptr           Pointer to the allocated memory.
  *
- * \see A1_Exchange_segments
+ * \see OSP_Exchange_segments
  *
  * \ingroup MEMORY
  */
 
 /* TODO: I'm not sure this function is required.  One can get this functionality
  *        by having all processes free their segments and then calling a barrier. */
-int A1_Release_segments(A1_group_t* group, void* ptr);
+int OSP_Release_segments(OSP_group_t* group, void* ptr);
 
 /* ********************************************************************** */
 /*                                                                        */
-/*               A1 external API - atomic operations                      */
+/*               OSP external API - atomic operations                      */
 /*                                                                        */
 /* ********************************************************************** */
 
@@ -659,29 +659,29 @@ int A1_Release_segments(A1_group_t* group, void* ptr);
  * \brief Collective operation to allocate and register a counter.
  *
  * \param[out]    rc            The error code.
- * \param[in]     group         A1 group over which the counter is shared.
- * \param[inout]  counter       A1 shared counter.
+ * \param[in]     group         OSP group over which the counter is shared.
+ * \param[inout]  counter       OSP shared counter.
  *
- * \see a1_counter_t, A1_Destroy_counter, A1_Incr_counter
+ * \see osp_counter_t, OSP_Destroy_counter, OSP_Incr_counter
  *
  * \ingroup Atomics
  */
 
-int A1_Create_counter(A1_group_t* group, A1_counter_t *counter);
+int OSP_Create_counter(OSP_group_t* group, OSP_counter_t *counter);
 
 /**
  * \brief Collective operation to deallocate and deregister a counter.
  *
  * \param[out]    rc            The error code.
- * \param[in]     group         A1 group over which the counter is shared.
- * \param[inout]  counter       A1 shared counter.
+ * \param[in]     group         OSP group over which the counter is shared.
+ * \param[inout]  counter       OSP shared counter.
  *
- * \see a1_counter_t, A1_Create_counter, A1_Incr_counter, A1_NbIncr_counter
+ * \see osp_counter_t, OSP_Create_counter, OSP_Incr_counter, OSP_NbIncr_counter
  *
  * \ingroup Atomics
  */
 
-int A1_Destroy_counter(A1_group_t* group, A1_counter_t *counter);
+int OSP_Destroy_counter(OSP_group_t* group, OSP_counter_t *counter);
 
 /* TODO: Does PPC32 (or 32-bit processors in general) support hardware atomics for 64-bit integers???
  *       I would like to use int64_t on all platforms if we can use them on Blue Gene/P.
@@ -691,129 +691,129 @@ int A1_Destroy_counter(A1_group_t* group, A1_counter_t *counter);
  * \brief Atomically updates a shared counter and returns the current value.
  *
  * \param[out] rc            The error code.
- * \param[in]  counter       A1 shared counter.
+ * \param[in]  counter       OSP shared counter.
  * \param[in]  increment     The value to add to the counter.
  * \param[in]  original      The remote value of the counter prior to the increment.
  *
- * \see a1_counter_t, A1_Create_counter, A1_Destroy_counter, A1_NbIncr_counter
+ * \see osp_counter_t, OSP_Create_counter, OSP_Destroy_counter, OSP_NbIncr_counter
  *
  * \ingroup Atomics
  */
 
-int A1_Incr_counter(A1_counter_t counter, long increment, long* original);
+int OSP_Incr_counter(OSP_counter_t counter, long increment, long* original);
 
 /**
  * \brief Non-blocking atomic RMW update of a shared counter.
  *
  * \param[out] rc            The error code.
- * \param[in]  counter       A1 shared counter.
+ * \param[in]  counter       OSP shared counter.
  * \param[in]  increment     The value to add to the counter.
  * \param[in]  original      The remote value of the counter prior to the increment.
  * \param[out] handle        Opaque handle for the request
  *
- * \see a1_counter_t, A1_Create_counter, A1_Destroy_counter, A1_Incr_counter
+ * \see osp_counter_t, OSP_Create_counter, OSP_Destroy_counter, OSP_Incr_counter
  *
  * \ingroup Atomics
  */
 
-int A1_NbIncr_counter(A1_counter_t counter,
+int OSP_NbIncr_counter(OSP_counter_t counter,
                       long* increment,
                       long* original,
-                      A1_handle_t handle);
+                      OSP_handle_t handle);
 
 /**
  * \brief Collective operation to allocate and register a list of mutexes.
  *
  * \param[out]    rc            The error code.
- * \param[in]     group         A1 group over which the mutexes are shared.
+ * \param[in]     group         OSP group over which the mutexes are shared.
  * \param[in]     count         Number of mutexes to be created.
  * \param[int]    count_ar      An arrays storing the number of mutexes on each process
  *
- * \see a1_mutex_t, A1_Destroy_mutexes, A1_Lock_mutex, A1_Trylock_mutex, A1_Unlock_mutex
+ * \see osp_mutex_t, OSP_Destroy_mutexes, OSP_Lock_mutex, OSP_Trylock_mutex, OSP_Unlock_mutex
  *
  * \ingroup Atomics
  */
 
-int A1_Create_mutexes(A1_group_t* group, int mutex_count, int *mutex_count_ar);
+int OSP_Create_mutexes(OSP_group_t* group, int mutex_count, int *mutex_count_ar);
 
 /**
  * \brief Collective operation to deallocate and deregister a list of mutexes
  *
- * \note Implementors: A1_mutex_t cannot be dynamically allocated otherwise this function
+ * \note Implementors: OSP_mutex_t cannot be dynamically allocated otherwise this function
  *                     will create a memory leak.
  *
  * \param[out]    rc            The error code.
- * \param[in]     group         A1 group over which the mutexes are shared.
- * \param[in]     mutexes       Pointer to vector A1 mutexes.
+ * \param[in]     group         OSP group over which the mutexes are shared.
+ * \param[in]     mutexes       Pointer to vector OSP mutexes.
  *
- * \see a1_mutex_t, A1_Create_mutexes, A1_Lock_mutex, A1_Trylock_mutex, A1_Unlock_mutex
+ * \see osp_mutex_t, OSP_Create_mutexes, OSP_Lock_mutex, OSP_Trylock_mutex, OSP_Unlock_mutex
  *
  * \ingroup Atomics
  */
 
-int A1_Destroy_mutexes(A1_group_t* group);
+int OSP_Destroy_mutexes(OSP_group_t* group);
 
 /**
  * \brief Local operation to lock a mutex.  This call blocks until the mutex has been locked.
  *
  * \param[out]    rc            The error code.
- * \param[in]     group         A1 group over which the mutexes are shared.
- * \param[in]     mutex         A1 mutex.
+ * \param[in]     group         OSP group over which the mutexes are shared.
+ * \param[in]     mutex         OSP mutex.
  * \param[in]     proc          Process on which you want to lock mutex on
  *
- * \see a1_mutex_t, A1_Trylock_mutex, A1_Unlock_mutex, A1_Create_mutexes, A1_Destroy_mutex, A1_Trylock_mutex, A1_Unlock_mutex
+ * \see osp_mutex_t, OSP_Trylock_mutex, OSP_Unlock_mutex, OSP_Create_mutexes, OSP_Destroy_mutex, OSP_Trylock_mutex, OSP_Unlock_mutex
  *
  * \ingroup Atomics
  */
 
-int A1_Lock_mutex(A1_group_t* group, int mutex, int proc);
+int OSP_Lock_mutex(OSP_group_t* group, int mutex, int proc);
 
 /**
  * \brief Local operation to trylock a mutex.
  *
  * \param[out]    rc            The error code.
- * \param[in]     group         A1 group over which the mutexes are shared.
- * \param[in]     mutex         A1 mutex.
+ * \param[in]     group         OSP group over which the mutexes are shared.
+ * \param[in]     mutex         OSP mutex.
  * \param[in]     proc          Process on which you want to lock mutex on
  *
- * \see a1_mutex_t, A1_Lock_mutex, A1_Unlock_mutex, A1_Create_mutexes, A1_Destroy_mutex, A1_Trylock_mutex, A1_Unlock_mutex
+ * \see osp_mutex_t, OSP_Lock_mutex, OSP_Unlock_mutex, OSP_Create_mutexes, OSP_Destroy_mutex, OSP_Trylock_mutex, OSP_Unlock_mutex
  *
  * \ingroup Atomics
  */
 
-int A1_Trylock_mutex(A1_group_t* group, int mutex, int proc, A1_bool_t *acquired);
+int OSP_Trylock_mutex(OSP_group_t* group, int mutex, int proc, OSP_bool_t *acquired);
 
 /**
  * \brief Local operation to unlock a mutex.  This call blocks until the mutex has been unlocked.
  *
  * \param[out]    rc            The error code.
- * \param[in]     group         A1 group over which the mutexes are shared.
- * \param[in]     mutex         A1 mutex.
+ * \param[in]     group         OSP group over which the mutexes are shared.
+ * \param[in]     mutex         OSP mutex.
  * \param[in]     proc          Process on which you want to lock mutex on
  *
- * \see a1_mutex_t, A1_Lock_mutex, A1_Trylock_mutex, A1_Create_mutexes, A1_Destroy_mutex, A1_Trylock_mutex, A1_Unlock_mutex
+ * \see osp_mutex_t, OSP_Lock_mutex, OSP_Trylock_mutex, OSP_Create_mutexes, OSP_Destroy_mutex, OSP_Trylock_mutex, OSP_Unlock_mutex
  *
  * \ingroup Atomics
  */
 
-int A1_Unlock_mutex(A1_group_t* group, int mutex, int proc);
+int OSP_Unlock_mutex(OSP_group_t* group, int mutex, int proc);
 
 /**
  * \brief Local operation to lock a list of mutexes.  This call blocks until ALL
  *        mutexes have been locked.
  *
  * \param[out]    rc            The error code.
- * \param[in]     group         A1 group over which the mutexes are shared.
+ * \param[in]     group         OSP group over which the mutexes are shared.
  * \param[in]     count         Number of mutexes to be locked.
- * \param[in]     mutexes       Pointer to vector A1 mutexes.
+ * \param[in]     mutexes       Pointer to vector OSP mutexes.
  * \param[in]     proc          Pointer to vector or process ranks.
  *
- * \see a1_mutex_t, A1_Create_mutexes, A1_Destroy_mutex, A1_Trylock_mutex, A1_Unlock_mutex
+ * \see osp_mutex_t, OSP_Create_mutexes, OSP_Destroy_mutex, OSP_Trylock_mutex, OSP_Unlock_mutex
  *
  * \ingroup Atomics
  */
 
-int A1_Lock_mutexes(A1_group_t* group, unsigned count, int *mutexes, int *procs);
+int OSP_Lock_mutexes(OSP_group_t* group, unsigned count, int *mutexes, int *procs);
 
 /**
  * \brief Local operation to trylock a list of mutexes.  This call attempts to acquire all the
@@ -821,38 +821,38 @@ int A1_Lock_mutexes(A1_group_t* group, unsigned count, int *mutexes, int *procs)
  *        indicating if the lock was acquired or not.
  *
  * \param[out]    rc            The error code.
- * \param[in]     group         A1 group over which the mutexes are shared.
+ * \param[in]     group         OSP group over which the mutexes are shared.
  * \param[in]     count         Number of mutexes to be locked.
- * \param[in]     mutexes       Pointer to vector A1 mutexes.
- * \param[inout]  acquired      Pointer to vector A1 booleans indicating if the lock was acquired.
+ * \param[in]     mutexes       Pointer to vector OSP mutexes.
+ * \param[inout]  acquired      Pointer to vector OSP booleans indicating if the lock was acquired.
  *
- * \see a1_mutex_t, A1_Create_mutexes, A1_Destroy_mutex, A1_Trylock_mutex, A1_Unlock_mutex
+ * \see osp_mutex_t, OSP_Create_mutexes, OSP_Destroy_mutex, OSP_Trylock_mutex, OSP_Unlock_mutex
  *
  * \ingroup Atomics
  */
 
-int A1_Trylock_mutexes(A1_group_t* group, unsigned count, int *mutexes, int *procs, A1_bool_t* *acquired);
+int OSP_Trylock_mutexes(OSP_group_t* group, unsigned count, int *mutexes, int *procs, OSP_bool_t* *acquired);
 
 /**
  * \brief Local operation to unlock a list of mutexes
  *
  * \param[out]    rc            The error code.
- * \param[in]     group         A1 group over which the mutexes are shared.
+ * \param[in]     group         OSP group over which the mutexes are shared.
  * \param[in]     count         Number of mutexes to be locked.
- * \param[in]     mutexes       Pointer to vector A1 mutexes.
+ * \param[in]     mutexes       Pointer to vector OSP mutexes.
  *
- * \see a1_mutex_t, A1_Create_mutexes, A1_Destroy_mutex, A1_Trylock_mutex, A1_Unlock_mutex
+ * \see osp_mutex_t, OSP_Create_mutexes, OSP_Destroy_mutex, OSP_Trylock_mutex, OSP_Unlock_mutex
  *
  * \ingroup Atomics
  */
 
-int A1_Unlock_mutexes(A1_group_t* group, unsigned count, int *mutexes, int *procs);
+int OSP_Unlock_mutexes(OSP_group_t* group, unsigned count, int *mutexes, int *procs);
 
 /* FIXME: More API functions to come */
 
 /* ********************************************************************** */
 /*                                                                        */
-/*               A1 external API - data transfer operations               */
+/*               OSP external API - data transfer operations               */
 /*                                                                        */
 /* ********************************************************************** */
 
@@ -870,17 +870,17 @@ int A1_Unlock_mutexes(A1_group_t* group, unsigned count, int *mutexes, int *proc
  * \param[in]  target_offset    Offset into target (remote) memory region.
  * \param[in]  bytes            Amount of data to transfer in bytes.
  *
- * \see A1_Put
+ * \see OSP_Put
  *
  * \ingroup DATA_TRANSFER
  */
 
-/* int A1_PutMR(A1_endpoint_t target, */
-/*             A1_memregion_t* source_mr, */
-/*             A1_offset_t source_offset, */
-/*             A1_memregion_t* target_mr, */
-/*             A1_offset_t target_offset, */
-/*             A1_size_t bytes); */
+/* int OSP_PutMR(OSP_endpoint_t target, */
+/*             OSP_memregion_t* source_mr, */
+/*             OSP_offset_t source_offset, */
+/*             OSP_memregion_t* target_mr, */
+/*             OSP_offset_t target_offset, */
+/*             OSP_size_t bytes); */
 
 /**************************************************************************************/
 /*    WARNING: THIS PART OF THE API IS DEPRECATED AND WILL BE REMOVED EVENTUALLY      */
@@ -895,12 +895,12 @@ int A1_Unlock_mutexes(A1_group_t* group, unsigned count, int *mutexes, int *proc
  * \param[in]  target_ptr    Starting address in the (remote) target memory.
  * \param[in]  bytes         Amount of data to transfer in bytes.
  *
- * \see A1_NbPut, A1_MultiPut
+ * \see OSP_NbPut, OSP_MultiPut
  *
  * \ingroup DATA_TRANSFER
  */
 
-int A1_Put(int target, void* source_ptr, void* target_ptr, int bytes);
+int OSP_Put(int target, void* source_ptr, void* target_ptr, int bytes);
 
 /**
  * \brief Non-Blocking copy of contiguous data from local memory to remote memory.
@@ -912,23 +912,23 @@ int A1_Put(int target, void* source_ptr, void* target_ptr, int bytes);
  * \param[in]  bytes         Amount of data to transfer in bytes.
  * \param[out] handle        Opaque handle for the request
  *
- * \see A1_Put, A1_NbMultiPut
+ * \see OSP_Put, OSP_NbMultiPut
  *
  * \ingroup DATA_TRANSFER
  */
 
-int A1_NbPut(int target,
+int OSP_NbPut(int target,
              void* source_ptr,
              void* target_ptr,
              int bytes,
-             A1_handle_t handle);
+             OSP_handle_t handle);
 
 /**
  * \brief Blocking copy of contiguous data from local memory to remote memory.
  *
- * \note A1_MultiPut can be used for single-target non-contiguous put as well,
- *       but the implementation may be far from optimal relative to A1_PutS
- *       and A1_PutV.
+ * \note OSP_MultiPut can be used for single-target non-contiguous put as well,
+ *       but the implementation may be far from optimal relative to OSP_PutS
+ *       and OSP_PutV.
  *
  * \param[out] rc            The error code.
  * \param[in]  count         Number of operations to be performed
@@ -937,12 +937,12 @@ int A1_NbPut(int target,
  * \param[in]  target_ptr    Vector of starting addresses in the (remote) target memory.
  * \param[in]  bytes         Vector of quantity of data to transfer in bytes.
  *
- * \see A1_Put
+ * \see OSP_Put
  *
  * \ingroup DATA_TRANSFER
  */
 
-int A1_MultiPut(int count,
+int OSP_MultiPut(int count,
                 int *targets,
                 void* *source_ptr,
                 void* *target_ptr,
@@ -951,9 +951,9 @@ int A1_MultiPut(int count,
 /**
  * \brief Nonblocking copy of contiguous data from local memory to remote memory.
  *
- * \note A1_MultiPut can be used for single-target non-contiguous put as well,
- *       but the implementation may be far from optimal relative to A1_PutS
- *       and A1_PutV.
+ * \note OSP_MultiPut can be used for single-target non-contiguous put as well,
+ *       but the implementation may be far from optimal relative to OSP_PutS
+ *       and OSP_PutV.
  *
  * \param[out] rc            The error code.
  * \param[in]  count         Number of operations to be performed
@@ -962,17 +962,17 @@ int A1_MultiPut(int count,
  * \param[in]  target_ptr    Vector of starting addresses in the (remote) target memory.
  * \param[in]  bytes         Vector of quantity of data to transfer in bytes.
  *
- * \see A1_NbPut, A1_MultiPut
+ * \see OSP_NbPut, OSP_MultiPut
  *
  * \ingroup DATA_TRANSFER
  */
 
-int A1_NbMultiPut(int count,
+int OSP_NbMultiPut(int count,
                   int *targets,
                   void* *source_ptr,
                   void* *target_ptr,
                   int *bytes,
-                  A1_handle_t handle);
+                  OSP_handle_t handle);
 
 /**
  * \brief Blocking copy of strided data from local memory to remote memory.
@@ -986,12 +986,12 @@ int A1_NbMultiPut(int count,
  * \param[in]  target_ptr      Starting address in the (remote) target memory.
  * \param[in]  trg_stride_ar   Array of stride distances at target in bytes.
  *
- * \see A1_Put, A1_PutV, A1_MultiPut, A1_MultiPutS, A1_MultiPutV
+ * \see OSP_Put, OSP_PutV, OSP_MultiPut, OSP_MultiPutS, OSP_MultiPutV
  *
  * \ingroup DATA_TRANSFER
  */
 
-int A1_PutS(int target,
+int OSP_PutS(int target,
             int stride_levels,
             int *block_sizes,
             void* source_ptr,
@@ -1010,21 +1010,21 @@ int A1_PutS(int target,
  * \param[in]  src_stride_ar   Array of stride distances at source in bytes.
  * \param[in]  target_ptr      Starting address in the (remote) target memory.
  * \param[in]  trg_stride_ar   Array of stride distances at target in bytes.
- * \param[out] handle          Opaque A1 handle
+ * \param[out] handle          Opaque OSP handle
  *
- * \see A1_NbPut, A1_NbPutV, A1_NbMultiPut, A1_NbMultiPutS, A1_NbMultiPutV
+ * \see OSP_NbPut, OSP_NbPutV, OSP_NbMultiPut, OSP_NbMultiPutS, OSP_NbMultiPutV
  *
  * \ingroup DATA_TRANSFER
  */
 
-int A1_NbPutS(int target,
+int OSP_NbPutS(int target,
               int stride_levels,
               int *block_sizes,
               void* source_ptr,
               int *src_stride_ar,
               void* target_ptr,
               int *trg_stride_ar,
-              A1_handle_t handle);
+              OSP_handle_t handle);
 
 /**
  * \brief Blocking copy of contiguous data from local memory to remote memory.
@@ -1041,12 +1041,12 @@ int A1_NbPutS(int target,
  * \param[in]  target_ptr      Vector of starting in the (remote) target memory.
  * \param[in]  trg_stride_ar   Vector of arrays of stride distances at target in bytes.
  *
- * \see A1_Put, A1_Get, A1_Copy, A1_PutAcc
+ * \see OSP_Put, OSP_Get, OSP_Copy, OSP_PutAcc
  *
  * \ingroup DATA_TRANSFER
  */
 
-int A1_MultiPutS(int count,
+int OSP_MultiPutS(int count,
                  int *targets,
                  int stride_levels,
                  int* *block_sizes,
@@ -1069,14 +1069,14 @@ int A1_MultiPutS(int count,
  * \param[in]  src_stride_ar   Vector of arrays of stride distances at source in bytes.
  * \param[in]  target_ptr      Vector of starting in the (remote) target memory.
  * \param[in]  trg_stride_ar   Vector of arrays of stride distances at target in bytes.
- * \param[out] handle          Opaque A1 handle
+ * \param[out] handle          Opaque OSP handle
  *
- * \see A1_Put, A1_Get, A1_Copy, A1_PutAcc
+ * \see OSP_Put, OSP_Get, OSP_Copy, OSP_PutAcc
  *
  * \ingroup DATA_TRANSFER
  */
 
-int A1_NbMultiPutS(int count,
+int OSP_NbMultiPutS(int count,
                    int *targets,
                    int stride_levels,
                    int* *block_sizes,
@@ -1084,7 +1084,7 @@ int A1_NbMultiPutS(int count,
                    int *src_stride_ar,
                    void* target_ptr,
                    int *trg_stride_ar,
-                   A1_handle_t handle);
+                   OSP_handle_t handle);
 
 /**
  * \brief Blocking copy of non-contiguous data from local memory to remote memory.
@@ -1094,12 +1094,12 @@ int A1_NbMultiPutS(int count,
  * \param[in]  iov_ar          Array of io vectors. Each vector represents a set of chunks of same size.
  * \param[in]  ar_len          Number of elements in the array.
  *
- * \see A1_NbPut, A1_NbPutV, A1_NbMultiPut, A1_NbMultiPutS, A1_NbMultiPutV
+ * \see OSP_NbPut, OSP_NbPutV, OSP_NbMultiPut, OSP_NbMultiPutS, OSP_NbMultiPutV
  *
  * \ingroup DATA_TRANSFER
  */
 
-int A1_PutV(int target, A1_iov_t *iov_ar, int ar_len);
+int OSP_PutV(int target, OSP_iov_t *iov_ar, int ar_len);
 
 /**
  * \brief Non-Blocking copy of non-contiguous data from local memory to remote memory.
@@ -1108,14 +1108,14 @@ int A1_PutV(int target, A1_iov_t *iov_ar, int ar_len);
  * \param[in]  target          Rank of the remote process.
  * \param[in]  iov_ar          Array of io vectors. Each vector represents a set of chunks of same size.
  * \param[in]  ar_len          Number of elements in the array.
- * \param[out] handle          Opaque A1 handle
+ * \param[out] handle          Opaque OSP handle
  *
- * \see A1_NbPut, A1_NbPutV, A1_NbMultiPut, A1_NbMultiPutS, A1_NbMultiPutV
+ * \see OSP_NbPut, OSP_NbPutV, OSP_NbMultiPut, OSP_NbMultiPutS, OSP_NbMultiPutV
  *
  * \ingroup DATA_TRANSFER
  */
 
-int A1_NbPutV(int target, A1_iov_t *iov_ar, int ar_len, A1_handle_t handle);
+int OSP_NbPutV(int target, OSP_iov_t *iov_ar, int ar_len, OSP_handle_t handle);
 
 /**
  * \brief Blocking accumulate of contiguous data from local memory onto remote memory.
@@ -1125,19 +1125,19 @@ int A1_NbPutV(int target, A1_iov_t *iov_ar, int ar_len, A1_handle_t handle);
  * \param[in]  source_ptr    Starting address in the (local) source memory.
  * \param[in]  target_ptr    Starting address in the (remote) target memory.
  * \param[in]  bytes         Amount of data to transfer in bytes.
- * \param[in]  a1_type       Datatype of buffer and scaling factor.
+ * \param[in]  osp_type       Datatype of buffer and scaling factor.
  * \param[in]  scaling       Factor for scaling source.
  *
- * \see A1_Put, A1_Copy, A1_CopyAcc
+ * \see OSP_Put, OSP_Copy, OSP_CopyAcc
  *
  * \ingroup DATA_TRANSFER
  */
 
-int A1_PutAcc(int target,
+int OSP_PutAcc(int target,
               void* source_ptr,
               void* target_ptr,
               int bytes,
-              A1_datatype_t a1_type,
+              OSP_datatype_t osp_type,
               void* scaling);
 
 /**
@@ -1148,29 +1148,29 @@ int A1_PutAcc(int target,
  * \param[in]  source_ptr    Starting address in the (local) source memory.
  * \param[in]  target_ptr    Starting address in the (remote) target memory.
  * \param[in]  bytes         Amount of data to transfer in bytes.
- * \param[in]  a1_type       Datatype of buffer and scaling factor.
+ * \param[in]  osp_type       Datatype of buffer and scaling factor.
  * \param[in]  scaling       Factor for scaling source
- * \param[out] handle        Opaque A1 handle 
+ * \param[out] handle        Opaque OSP handle 
  *
- * \see A1_Put, A1_Copy, A1_CopyAcc
+ * \see OSP_Put, OSP_Copy, OSP_CopyAcc
  *
  * \ingroup DATA_TRANSFER
  */
 
-int A1_NbPutAcc(int target,
+int OSP_NbPutAcc(int target,
                 void* source_ptr,
                 void* target_ptr,
                 int bytes,
-                A1_datatype_t a1_type,
+                OSP_datatype_t osp_type,
                 void* scaling,
-                A1_handle_t handle);
+                OSP_handle_t handle);
 
 /**
  * \brief Blocking accumulate of contiguous data from local memory to remote memory.
  *
- * \note A1_MultiPut can be used for single-target non-contiguous put as well,
- *       but the implementation may be far from optimal relative to A1_PutS
- *       and A1_PutV.
+ * \note OSP_MultiPut can be used for single-target non-contiguous put as well,
+ *       but the implementation may be far from optimal relative to OSP_PutS
+ *       and OSP_PutV.
  *
  * \param[out] rc            The error code.
  * \param[in]  count         Number of operations to be performed
@@ -1178,28 +1178,28 @@ int A1_NbPutAcc(int target,
  * \param[in]  source_ptr    Vector of starting addresses in the (local) source memory.
  * \param[in]  target_ptr    Vector of starting addresses in the (remote) target memory.
  * \param[in]  bytes         Vector of quantity of data to transfer in bytes.
- * \param[in]  a1_type       Datatype of buffer and scaling factor.
+ * \param[in]  osp_type       Datatype of buffer and scaling factor.
  * \param[in]  scaling       Factor for scaling source.
  *
- * \see A1_Put
+ * \see OSP_Put
  *
  * \ingroup DATA_TRANSFER
  */
 
-int A1_MultiPutAcc(int count,
+int OSP_MultiPutAcc(int count,
                    int *targets,
                    void* *source_ptr,
                    void* *target_ptr,
                    int *bytes,
-                   A1_datatype_t a1_type,
+                   OSP_datatype_t osp_type,
                    void* scaling);
 
 /**
  * \brief Nonblocking accumulate of contiguous data from local memory to remote memory.
  *
- * \note A1_MultiPut can be used for single-target non-contiguous put as well,
- *       but the implementation may be far from optimal relative to A1_PutS
- *       and A1_PutV.
+ * \note OSP_MultiPut can be used for single-target non-contiguous put as well,
+ *       but the implementation may be far from optimal relative to OSP_PutS
+ *       and OSP_PutV.
  *
  * \param[out] rc            The error code.
  * \param[in]  count         Number of operations to be performed
@@ -1207,23 +1207,23 @@ int A1_MultiPutAcc(int count,
  * \param[in]  source_ptr    Vector of starting addresses in the (local) source memory.
  * \param[in]  target_ptr    Vector of starting addresses in the (remote) target memory.
  * \param[in]  bytes         Vector of quantity of data to transfer in bytes.
- * \param[in]  a1_type       Datatype of buffer and scaling factor.
+ * \param[in]  osp_type       Datatype of buffer and scaling factor.
  * \param[in]  scaling       Factor for scaling source.
- * \param[out] handle        Opaque A1 handle
+ * \param[out] handle        Opaque OSP handle
  *
- * \see A1_NbPut, A1_MultiPut
+ * \see OSP_NbPut, OSP_MultiPut
  *
  * \ingroup DATA_TRANSFER
  */
 
-int A1_NbMultiPutAcc(int count,
+int OSP_NbMultiPutAcc(int count,
                      int *targets,
                      void* *source_ptr,
                      void* *target_ptr,
                      int *bytes,
-                     A1_datatype_t a1_type,
+                     OSP_datatype_t osp_type,
                      void* scaling,
-                     A1_handle_t handle);
+                     OSP_handle_t handle);
 
 /**
  * \brief Blocking accumulate of strided data from local memory to remote memory.
@@ -1236,22 +1236,22 @@ int A1_NbMultiPutAcc(int count,
  * \param[in]  src_stride_ar   Array of stride distances at source in bytes.
  * \param[in]  target_ptr      Starting address in the (remote) target memory.
  * \param[in]  trg_stride_ar   Array of stride distances at target in bytes.
- * \param[in]  a1_type         Type of data and scaling factor
+ * \param[in]  osp_type         Type of data and scaling factor
  * \param[in]  *scaling        Scaling factor in the accumulate operation. 
  *
- * \see A1_Put, A1_PutS, A1_PutAcc
+ * \see OSP_Put, OSP_PutS, OSP_PutAcc
  *
  * \ingroup DATA_TRANSFER
  */
 
-int A1_PutAccS(int target,
+int OSP_PutAccS(int target,
                int stride_levels,
                int *block_sizes,
                void* source_ptr,
                int *src_stride_ar,
                void* target_ptr,
                int *trg_stride_ar,
-               A1_datatype_t a1_type,
+               OSP_datatype_t osp_type,
                void* scaling);
 
 /**
@@ -1265,25 +1265,25 @@ int A1_PutAccS(int target,
  * \param[in]  src_stride_ar   Array of stride distances at source in bytes.
  * \param[in]  target_ptr      Starting address in the (remote) target memory.
  * \param[in]  trg_stride_ar   Array of stride distances at target in bytes.
- * \param[in]  a1_type         Type of data and scaling factor
+ * \param[in]  osp_type         Type of data and scaling factor
  * \param[in]  *scaling        Scaling factor in the accumulate operation. 
- * \param[out] handle          Opaque A1 handle
+ * \param[out] handle          Opaque OSP handle
  *
- * \see A1_Put, A1_PutS, A1_PutAcc
+ * \see OSP_Put, OSP_PutS, OSP_PutAcc
  *
  * \ingroup DATA_TRANSFER
  */
 
-int A1_NbPutAccS(int target,
+int OSP_NbPutAccS(int target,
                  int stride_levels,
                  int *block_sizes,
                  void* source_ptr,
                  int *src_stride_ar,
                  void* target_ptr,
                  int *trg_stride_ar,
-                 A1_datatype_t a1_type,
+                 OSP_datatype_t osp_type,
                  void* scaling,
-                 A1_handle_t handle);
+                 OSP_handle_t handle);
 
 /**
  * \brief Blocking copy of contiguous data from local memory to remote memory.
@@ -1299,15 +1299,15 @@ int A1_NbPutAccS(int target,
  * \param[in]  src_stride_ar   Vector of arrays of stride distances at source in bytes.
  * \param[in]  target_ptr      Vector of starting in the (remote) target memory.
  * \param[in]  trg_stride_ar   Vector of arrays of stride distances at target in bytes.
- * \param[in]  a1_type         Type of data and scaling factor
+ * \param[in]  osp_type         Type of data and scaling factor
  * \param[in]  *scaling        Scaling factor in the accumulate operation.
  *
- * \see A1_Put, A1_Get, A1_Copy, A1_PutAcc
+ * \see OSP_Put, OSP_Get, OSP_Copy, OSP_PutAcc
  *
  * \ingroup DATA_TRANSFER
  */
 
-int A1_MultiPutAccS(int count,
+int OSP_MultiPutAccS(int count,
                     int *targets,
                     int stride_levels,
                     int* *block_sizes,
@@ -1315,7 +1315,7 @@ int A1_MultiPutAccS(int count,
                     int *src_stride_ar,
                     void* target_ptr,
                     int *trg_stride_ar,
-                    A1_datatype_t a1_type,
+                    OSP_datatype_t osp_type,
                     void* scaling);
 
 /**
@@ -1332,16 +1332,16 @@ int A1_MultiPutAccS(int count,
  * \param[in]  src_stride_ar   Vector of arrays of stride distances at source in bytes.
  * \param[in]  target_ptr      Vector of starting in the (remote) target memory.
  * \param[in]  trg_stride_ar   Vector of arrays of stride distances at target in bytes.
- * \param[in]  a1_type         Type of data and scaling factor
+ * \param[in]  osp_type         Type of data and scaling factor
  * \param[in]  *scaling        Scaling factor in the accumulate operation.
- * \param[out] handle          Opaque A1 handle
+ * \param[out] handle          Opaque OSP handle
  *
- * \see A1_Put, A1_Get, A1_Copy, A1_PutAcc
+ * \see OSP_Put, OSP_Get, OSP_Copy, OSP_PutAcc
  *
  * \ingroup DATA_TRANSFER
  */
 
-int A1_NbMultiPutAccS(int count,
+int OSP_NbMultiPutAccS(int count,
                       int *targets,
                       int stride_levels,
                       int* *block_sizes,
@@ -1349,9 +1349,9 @@ int A1_NbMultiPutAccS(int count,
                       int *src_stride_ar,
                       void* target_ptr,
                       int *trg_stride_ar,
-                      A1_datatype_t a1_type,
+                      OSP_datatype_t osp_type,
                       void* scaling,
-                      A1_handle_t handle);
+                      OSP_handle_t handle);
 
 /**
  * \brief Blocking accumulate of non-contiguous data from local memory to remote memory.
@@ -1361,18 +1361,18 @@ int A1_NbMultiPutAccS(int count,
  * \param[in]  iov_ar          Array of io vectors. Each vector represents a set of
  *                             chunks of same size.
  * \param[in]  ar_len          Number of elements in the array.
- * \param[in]  a1_type         Type of data and scaling factor
+ * \param[in]  osp_type         Type of data and scaling factor
  * \param[in]  *scaling        Scaling factor in the accumulate operation. 
  * 
- * \see A1_NbPut, A1_NbPutV, A1_NbMultiPut, A1_NbMultiPutS, A1_NbMultiPutV
+ * \see OSP_NbPut, OSP_NbPutV, OSP_NbMultiPut, OSP_NbMultiPutS, OSP_NbMultiPutV
  * 
  * \ingroup DATA_TRANSFER
  */
 
-int A1_PutAccV(int target,
-               A1_iov_t *iov_ar,
+int OSP_PutAccV(int target,
+               OSP_iov_t *iov_ar,
                int ar_len,
-               A1_datatype_t a1_type,
+               OSP_datatype_t osp_type,
                void* scaling);
 
 /**
@@ -1383,21 +1383,21 @@ int A1_PutAccV(int target,
  * \param[in]  iov_ar          Array of io vectors. Each vector represents a set of
  *                             chunks of same size.
  * \param[in]  ar_len          Number of elements in the array.
- * \param[in]  a1_type         Type of data and scaling factor
+ * \param[in]  osp_type         Type of data and scaling factor
  * \param[in]  *scaling        Scaling factor in the accumulate operation.
- * \param[out] handle          Opaque A1 handle
+ * \param[out] handle          Opaque OSP handle
  *
- * \see A1_NbPut, A1_NbPutV, A1_NbMultiPut, A1_NbMultiPutS, A1_NbMultiPutV
+ * \see OSP_NbPut, OSP_NbPutV, OSP_NbMultiPut, OSP_NbMultiPutS, OSP_NbMultiPutV
  *
  * \ingroup DATA_TRANSFER
  */
 
-int A1_NbPutAccV(int target,
-                 A1_iov_t *iov_ar,
+int OSP_NbPutAccV(int target,
+                 OSP_iov_t *iov_ar,
                  int ar_len,
-                 A1_datatype_t a1_type,
+                 OSP_datatype_t osp_type,
                  void* scaling,
-                 A1_handle_t handle);
+                 OSP_handle_t handle);
 
 /**
  * \brief Blocking remote modify of non-contiguous data from local memory to remote memory.
@@ -1407,19 +1407,19 @@ int A1_NbPutAccV(int target,
  * \param[in]  iov_ar          Array of io vectors. Each vector represents a set of
  *                             chunks of same size.
  * \param[in]  ar_len          Number of elements in the array.
- * \param[in]  a1_op           Reduce operation
- * \param[in]  a1_type         Type of data and scaling factor
+ * \param[in]  osp_op           Reduce operation
+ * \param[in]  osp_type         Type of data and scaling factor
  *
- * \see A1_NbPut, A1_NbPutV, A1_NbMultiPut, A1_NbMultiPutS, A1_NbMultiPutV
+ * \see OSP_NbPut, OSP_NbPutV, OSP_NbMultiPut, OSP_NbMultiPutS, OSP_NbMultiPutV
  *
  * \ingroup DATA_TRANSFER
  */
 
-int A1_PutModV(int target,
-               A1_iov_t *iov_ar,
+int OSP_PutModV(int target,
+               OSP_iov_t *iov_ar,
                int ar_len,
-               A1_reduce_op_t a1_op,
-               A1_datatype_t a1_type);
+               OSP_reduce_op_t osp_op,
+               OSP_datatype_t osp_type);
 
 /**
  * \brief Blocking copy of contiguous data from remote memory to local memory.
@@ -1430,12 +1430,12 @@ int A1_PutModV(int target,
  * \param[in]  target_ptr    Starting address in the (local) target memory.
  * \param[in]  bytes         Amount of data to transfer in bytes.
  *
- * \see A1_NbGet, A1_Put, A1_Copy
+ * \see OSP_NbGet, OSP_Put, OSP_Copy
  *
  * \ingroup DATA_TRANSFER
  */
 
-int A1_Get(int target, void* source_ptr, void* target_ptr, int bytes);
+int OSP_Get(int target, void* source_ptr, void* target_ptr, int bytes);
 
 /**
  * \brief Non-Blocking copy of contiguous data from remote memory to local memory.
@@ -1447,16 +1447,16 @@ int A1_Get(int target, void* source_ptr, void* target_ptr, int bytes);
  * \param[in]  bytes         Amount of data to transfer in bytes.
  * \param[out] handle        Opaque handle for the request
  *
- * \see A1_Get, A1_Put, A1_Copy
+ * \see OSP_Get, OSP_Put, OSP_Copy
  *
  * \ingroup DATA_TRANSFER
  */
 
-int A1_NbGet(int target,
+int OSP_NbGet(int target,
              void* source_ptr,
              void* target_ptr,
              int bytes,
-             A1_handle_t handle);
+             OSP_handle_t handle);
 
 /**
  * \brief Blocking copy of contiguous data from remote memory onto local memory.
@@ -1468,12 +1468,12 @@ int A1_NbGet(int target,
  * \param[in]  target_ptr    Vector of starting address in the (local) target memory.
  * \param[in]  bytes         Vector of data to transfer from each target in bytes.
  *
- * \see A1_Get, A1_MultiPut, A1_Copy
+ * \see OSP_Get, OSP_MultiPut, OSP_Copy
  *
  * \ingroup DATA_TRANSFER
  */
 
-int A1_MultiGet(int count,
+int OSP_MultiGet(int count,
                 int *target,
                 void* *source_ptr,
                 void* *target_ptr,
@@ -1488,19 +1488,19 @@ int A1_MultiGet(int count,
  * \param[in]  source_ptr    Vector of starting address in the (remote) source memory.
  * \param[in]  target_ptr    Vector of starting address in the (local) target memory.
  * \param[in]  bytes         Vector of data to transfer from each target in bytes.
- * \param[out] handle        Opaque A1 handle
+ * \param[out] handle        Opaque OSP handle
  *
- * \see A1_Get, A1_MultiPut, A1_Copy
+ * \see OSP_Get, OSP_MultiPut, OSP_Copy
  *
  * \ingroup DATA_TRANSFER
  */
 
-int A1_NbMultiGet(int count,
+int OSP_NbMultiGet(int count,
                   int *target,
                   void* *source_ptr,
                   void* *target_ptr,
                   int *bytes,
-                  A1_handle_t handle);
+                  OSP_handle_t handle);
 
 /**
  * \brief Blocking copy of strided data from remote memory to local memory.
@@ -1514,12 +1514,12 @@ int A1_NbMultiGet(int count,
  * \param[in]  count           Block size in each dimension in bytes.
  * \param[in]  stride_levels   The number of levels of stride.
  *
- * \see A1_Put, A1_Get, A1_Copy, A1_PutAcc
+ * \see OSP_Put, OSP_Get, OSP_Copy, OSP_PutAcc
  *
  * \ingroup DATA_TRANSFER
  */
 
-int A1_GetS(int target,
+int OSP_GetS(int target,
             int stride_levels,
             int *block_sizes,
             void* source_ptr,
@@ -1538,21 +1538,21 @@ int A1_GetS(int target,
  * \param[in]  trg_stride_ar   Array of stride distances at (local process) target in bytes.
  * \param[in]  count           Block size in each dimension in bytes.
  * \param[in]  stride_levels   The number of levels of stride.
- * \param[out] handle          Opaque A1 handle
+ * \param[out] handle          Opaque OSP handle
  *
- * \see A1_Put, A1_Get, A1_Copy, A1_PutAcc
+ * \see OSP_Put, OSP_Get, OSP_Copy, OSP_PutAcc
  *
  * \ingroup DATA_TRANSFER
  */
 
-int A1_NbGetS(int target,
+int OSP_NbGetS(int target,
               int stride_levels,
               int *block_sizes,
               void* source_ptr,
               int *src_stride_ar,
               void* target_ptr,
               int *trg_stride_ar,
-              A1_handle_t handle);
+              OSP_handle_t handle);
 
 /**
  * \brief Blocking copy of stided data from remote memory to local memory.
@@ -1567,12 +1567,12 @@ int A1_NbGetS(int target,
  * \param[in]  count           Block size in each dimension in bytes.
  * \param[in]  stride_levels   The number of levels of stride.
  *
- * \see A1_Put, A1_Get, A1_Copy, A1_PutAcc
+ * \see OSP_Put, OSP_Get, OSP_Copy, OSP_PutAcc
  *
  * \ingroup DATA_TRANSFER
  */
 
-int A1_MultiGetS(int target_count,
+int OSP_MultiGetS(int target_count,
                  int *target,
                  int stride_levels,
                  int **count,
@@ -1593,14 +1593,14 @@ int A1_MultiGetS(int target_count,
  * \param[in]  trg_stride_ar   Array of stride distances at (local process) target in bytes.
  * \param[in]  count           Block size in each dimension in bytes.
  * \param[in]  stride_levels   The number of levels of stride.
- * \param[out] handle          Opaque A1 handle
+ * \param[out] handle          Opaque OSP handle
  *
- * \see A1_Put, A1_Get, A1_Copy, A1_PutAcc
+ * \see OSP_Put, OSP_Get, OSP_Copy, OSP_PutAcc
  *
  * \ingroup DATA_TRANSFER
  */
 
-int A1_NbMultiGetS(int target_count,
+int OSP_NbMultiGetS(int target_count,
                    int *target,
                    int stride_levels,
                    int **count,
@@ -1608,7 +1608,7 @@ int A1_NbMultiGetS(int target_count,
                    int **src_stride_ar,
                    void* *target_ptr,
                    int **trg_stride_ar,
-                   A1_handle_t handle);
+                   OSP_handle_t handle);
 
 /**
  * \brief Blocking copy of non-contiguous data from remote memory to local memory.
@@ -1619,12 +1619,12 @@ int A1_NbMultiGetS(int target_count,
  *                             chunks of same size.
  * \param[in]  ar_len          Number of elements in the array.
  *
- * \see A1_NbPut, A1_NbPutV, A1_NbMultiPut, A1_NbMultiPutS, A1_NbMultiPutV
+ * \see OSP_NbPut, OSP_NbPutV, OSP_NbMultiPut, OSP_NbMultiPutS, OSP_NbMultiPutV
  *
  * \ingroup DATA_TRANSFER
  */
 
-int A1_GetV(int target, A1_iov_t *iov_ar, int ar_len);
+int OSP_GetV(int target, OSP_iov_t *iov_ar, int ar_len);
 
 /**
  * \brief Non-Blocking copy of non-contiguous data from remote memory to local memory.
@@ -1634,14 +1634,14 @@ int A1_GetV(int target, A1_iov_t *iov_ar, int ar_len);
  * \param[in]  iov_ar          Array of io vectors. Each vector represents a set of
  *                             chunks of same size.
  * \param[in]  ar_len          Number of elements in the array.
- * \param[out] handle          Opaque A1 handle
+ * \param[out] handle          Opaque OSP handle
  *
- * \see A1_NbPut, A1_NbPutV, A1_NbMultiPut, A1_NbMultiPutS, A1_NbMultiPutV
+ * \see OSP_NbPut, OSP_NbPutV, OSP_NbMultiPut, OSP_NbMultiPutS, OSP_NbMultiPutV
  *
  * \ingroup DATA_TRANSFER
  */
 
-int A1_NbGetV(int target, A1_iov_t *iov_ar, int ar_len, A1_handle_t handle);
+int OSP_NbGetV(int target, OSP_iov_t *iov_ar, int ar_len, OSP_handle_t handle);
 
 /**
  * \brief Blocking get-and-accumulate operation (aka RMW) on arbitrary data.
@@ -1657,18 +1657,18 @@ int A1_NbGetV(int target, A1_iov_t *iov_ar, int ar_len, A1_handle_t handle);
  * \param[in]  target_ptr       Pointer of modified data at target process.
  * \param[in]  bytes            Number of bytes to update.
  * \param[in]  op               Operation to be performed.
- * \param[in]  a1_type          Type of data and value.
+ * \param[in]  osp_type          Type of data and value.
  *
  * \ingroup DATA_TRANSFER
  */
 
-int A1_Rmw(int target,
+int OSP_Rmw(int target,
            void* source_ptr_in,
            void* source_ptr_out,
            void* target_ptr,
            int bytes,
-           A1_atomic_op_t op,
-           A1_datatype_t a1_type);
+           OSP_atomic_op_t op,
+           OSP_datatype_t osp_type);
 
 /**
  * \brief Non-blocking get-and-accumulate operation (aka RMW) on arbitrary data.
@@ -1684,20 +1684,20 @@ int A1_Rmw(int target,
  * \param[in]  target_ptr       Pointer of modified data at target process.
  * \param[in]  bytes            Number of bytes to update.
  * \param[in]  op               Operation to be performed.
- * \param[in]  a1_type          Type of data and value.
- * \param[out] handle          Opaque A1 handle
+ * \param[in]  osp_type          Type of data and value.
+ * \param[out] handle          Opaque OSP handle
  *
  * \ingroup DATA_TRANSFER
  */
 
-int A1_NbRmw(int target,
+int OSP_NbRmw(int target,
              void* source_ptr_in,
              void* source_ptr_out,
              void* target_ptr,
              int bytes,
-             A1_atomic_op_t op,
-             A1_datatype_t a1_type,
-             A1_handle_t handle);
+             OSP_atomic_op_t op,
+             OSP_datatype_t osp_type,
+             OSP_handle_t handle);
 
 /**
  * \brief Blocking copy of contiguous data from remote memory to remote memory.
@@ -1709,12 +1709,12 @@ int A1_NbRmw(int target,
  * \param[in]  target_ptr    Starting address in the (remote) target memory.
  * \param[in]  bytes         Amount of data to transfer in bytes.
  *
- * \see A1_Put, A1_Get
+ * \see OSP_Put, OSP_Get
  *
  * \ingroup DATA_TRANSFER
  */
 
-int A1_Copy(int source,
+int OSP_Copy(int source,
             int target,
             void* source_ptr,
             void* target_ptr,
@@ -1729,27 +1729,27 @@ int A1_Copy(int source,
  * \param[in]  source_ptr    Starting address in the (remote) source memory.
  * \param[in]  target_ptr    Starting address in the (remote) target memory.
  * \param[in]  bytes         Amount of data to transfer in bytes.
- * \param[in]  a1_type       Amount of data to transfer in bytes.
+ * \param[in]  osp_type       Amount of data to transfer in bytes.
  * \param[in]  scaling       Factor for scaling source
  *
- * \see A1_Put, A1_Get
+ * \see OSP_Put, OSP_Get
  *
  * \ingroup DATA_TRANSFER
  */
 
-int A1_CopyAcc(int source,
+int OSP_CopyAcc(int source,
                int target,
                void* source_ptr,
                void* target_ptr,
                int bytes,
-               A1_datatype_t a1_type,
+               OSP_datatype_t osp_type,
                void* scaling);
 
 /* FIXME: More API functions to come */
 
 /* ********************************************************************** */
 /*                                                                        */
-/*               A1 external API - synchronization and completion         */
+/*               OSP external API - synchronization and completion         */
 /*                                                                        */
 /* ********************************************************************** */
 
@@ -1762,15 +1762,15 @@ int A1_CopyAcc(int source,
  * \param[out] rc            The error code.
  * \param[in] group          Group of processes to synchronize.
  *
- * \see A1_Flush, A1_AllFlush, A1_Sync.
+ * \see OSP_Flush, OSP_AllFlush, OSP_Sync.
  *
  * \ingroup SYNCHRONIZATION
  */
 
-int A1_Barrier_group(A1_group_t* group);
+int OSP_Barrier_group(OSP_group_t* group);
 
 /**
- * \brief When the handle state is A1_TRUE, all processes within the entire group
+ * \brief When the handle state is OSP_TRUE, all processes within the entire group
  *        have reached this point in the program.
  *
  *        This operation is collective and non-blocking.
@@ -1778,46 +1778,46 @@ int A1_Barrier_group(A1_group_t* group);
  * \param[out] rc            The error code.
  * \param[in] group          Group of processes to synchronize.
  *
- * \see A1_Flush, A1_AllFlush, A1_Sync.
+ * \see OSP_Flush, OSP_AllFlush, OSP_Sync.
  *
  * \ingroup SYNCHRONIZATION
  */
 
-int A1_NbBarrier_group(A1_group_t* group, A1_handle_t handle);
+int OSP_NbBarrier_group(OSP_group_t* group, OSP_handle_t handle);
 
 /**
  * \brief On return, this call ensures that all outstanding put or accumulate
  *        operations are complete remotely within the entire group.
  *
  *        This operation is collective and blocking.  It has the effect of
- *        A1_Flush_group called from every process in the group followed by A1_Barrier_group.
+ *        OSP_Flush_group called from every process in the group followed by OSP_Barrier_group.
  *
  * \param[out] rc            The error code.
  * \param[in] group          Group of processes to synchronize.
  *
- * \see A1_GlobalSync, A1_GroupBarrier, A1_Flush_group.
+ * \see OSP_GlobalSync, OSP_GroupBarrier, OSP_Flush_group.
  *
  * \ingroup SYNCHRONIZATION
  */
 
-int A1_Sync_group(A1_group_t* group);
+int OSP_Sync_group(OSP_group_t* group);
 
 /**
- * \brief When the handle state is A1_TRUE, all outstanding put or accumulate
+ * \brief When the handle state is OSP_TRUE, all outstanding put or accumulate
  *        operations are complete remotely within the entire group.
  *
  *        This operation is collective and blocking.  It has the effect of
- *        A1_NbFlush_group called from every process in the group followed by A1_NbBarrier_group.
+ *        OSP_NbFlush_group called from every process in the group followed by OSP_NbBarrier_group.
  *
  * \param[out] rc            The error code.
  * \param[in] group          Group of processes to synchronize.
  *
- * \see A1_GlobalSync, A1_GroupBarrier, A1_Flush_group.
+ * \see OSP_GlobalSync, OSP_GroupBarrier, OSP_Flush_group.
  *
  * \ingroup SYNCHRONIZATION
  */
 
-int A1_NbSync_group(A1_group_t* group, A1_handle_t handle);
+int OSP_NbSync_group(OSP_group_t* group, OSP_handle_t handle);
 
 /**
  * \brief On return, this call ensures that all blocking and non-blocking put
@@ -1828,15 +1828,15 @@ int A1_NbSync_group(A1_group_t* group, A1_handle_t handle);
  * \param[out] rc            The error code.
  * \param[in]  proc          Rank of the remote process.
  *
- * \see A1_Flush_group, A1_Sync
+ * \see OSP_Flush_group, OSP_Sync
  *
  * \ingroup COMPLETION
  */
 
-int A1_Flush(int proc);
+int OSP_Flush(int proc);
 
 /**
- * \brief When the handle state is A1_TRUE, all blocking and non-blocking put
+ * \brief When the handle state is OSP_TRUE, all blocking and non-blocking put
  *        and accumulate operations sent to the target process have completed remotely.
  *
  *        This operation is local and non-blocking.
@@ -1844,12 +1844,12 @@ int A1_Flush(int proc);
  * \param[out] rc            The error code.
  * \param[in]  proc          Rank of the remote process.
  *
- * \see A1_Flush_group, A1_Sync
+ * \see OSP_Flush_group, OSP_Sync
  *
  * \ingroup COMPLETION
  */
 
-int A1_NbFlush(int proc, A1_handle_t handle);
+int OSP_NbFlush(int proc, OSP_handle_t handle);
 
 /**
  * \brief On return, this call ensures that all blocking and non-blocking put
@@ -1861,15 +1861,15 @@ int A1_NbFlush(int proc, A1_handle_t handle);
  * \param[in] count              Number of processes in vector.
  * \param[in] proc_list          Vector of processes to flush against.
  *
- * \see A1_Flush, A1_Flush_group
+ * \see OSP_Flush, OSP_Flush_group
  *
  * \ingroup COMPLETION
  */
 
-int A1_Flush_list(int count, int *proc_list);
+int OSP_Flush_list(int count, int *proc_list);
 
 /**
- * \brief When the handle state is A1_TRUE, all blocking and non-blocking put
+ * \brief When the handle state is OSP_TRUE, all blocking and non-blocking put
  *        and accumulate operations have completed remotely at the processes given in the list.
  *
  *        This operation is local and blocking.
@@ -1878,12 +1878,12 @@ int A1_Flush_list(int count, int *proc_list);
  * \param[in] count              Number of processes in vector.
  * \param[in] proc_list          Vector of processes to flush against.
  *
- * \see A1_Flush, A1_Flush_group
+ * \see OSP_Flush, OSP_Flush_group
  *
  * \ingroup COMPLETION
  */
 
-int A1_NbFlush_list(int count, int *proc_list, A1_handle_t handle);
+int OSP_NbFlush_list(int count, int *proc_list, OSP_handle_t handle);
 
 /**
  * \brief On return, this call ensures that all blocking and non-blocking put
@@ -1895,15 +1895,15 @@ int A1_NbFlush_list(int count, int *proc_list, A1_handle_t handle);
  * \param[in] count              Number of processes in vector.
  * \param[in] proc_list          List of processes to flush against.
  *
- * \see A1_Flush, A1_Sync
+ * \see OSP_Flush, OSP_Sync
  *
  * \ingroup COMPLETION
  */
 
-int A1_Flush_group(A1_group_t* group);
+int OSP_Flush_group(OSP_group_t* group);
 
 /**
- * \brief When the handle state is A1_TRUE, all blocking and non-blocking put
+ * \brief When the handle state is OSP_TRUE, all blocking and non-blocking put
  *        and accumulate operations have completed remotely at the processes in the group.
  *
  *        This operation is local and blocking.
@@ -1912,36 +1912,36 @@ int A1_Flush_group(A1_group_t* group);
  * \param[in] count              Number of processes in vector.
  * \param[in] proc_list          List of processes to flush against.
  *
- * \see A1_Flush, A1_Sync
+ * \see OSP_Flush, OSP_Sync
  *
  * \ingroup COMPLETION
  */
 
-int A1_NbFlush_group(A1_group_t* group, A1_handle_t handle);
+int OSP_NbFlush_group(OSP_group_t* group, OSP_handle_t handle);
 
 /**
  * \brief Blocks on completion of all non-blocking handles.
  *
  * \param[out] rc                The error code.
  *
- * \see A1_handle_t, A1_Wait_handle_list, A1_Test_handle
+ * \see OSP_handle_t, OSP_Wait_handle_list, OSP_Test_handle
  *
  * \ingroup SYNCHRONIZATION
  */
 
-int A1_Wait_handle_all(void);
+int OSP_Wait_handle_all(void);
 
 /**
  * \brief Blocks on completion of a non-blocking handle.
  *
  * \param[in] handle      Non-blocking handle upon which to be waited.
  *
- * \see A1_handle_t, A1_Wait_handle_list, A1_Test_handle
+ * \see OSP_handle_t, OSP_Wait_handle_list, OSP_Test_handle
  *
  * \ingroup SYNCHRONIZATION
  */
 
-int A1_Wait_handle(A1_handle_t handle);
+int OSP_Wait_handle(OSP_handle_t handle);
 
 /**
  * \brief Blocks on completion of all elements in a vector of non-blocking handles.
@@ -1949,12 +1949,12 @@ int A1_Wait_handle(A1_handle_t handle);
  * \param[in] count        Number of handles in vector.
  * \param[in] handles      Vector of non-blocking handles upon which to be waited.
  *
- * \see A1_handle_t, A1_Wait_handle, A1_Test_handle_list
+ * \see OSP_handle_t, OSP_Wait_handle, OSP_Test_handle_list
  *
  * \ingroup SYNCHRONIZATION
  */
 
-int A1_Wait_handle_list(int count, A1_handle_t* handles);
+int OSP_Wait_handle_list(int count, OSP_handle_t* handles);
 
 /**
  * \brief Blocks on completion of a non-blocking handle.
@@ -1962,12 +1962,12 @@ int A1_Wait_handle_list(int count, A1_handle_t* handles);
  * \param[in]  handle        Non-blocking handle upon which to be waited.
  * \param[out] completed     Handle status.
  *
- * \see A1_handle_t, A1_Wait_handle, A1_Test_handle_list
+ * \see OSP_handle_t, OSP_Wait_handle, OSP_Test_handle_list
  *
  * \ingroup SYNCHRONIZATION
  */
 
-int A1_Test_handle(A1_handle_t handle, A1_bool_t* completed);
+int OSP_Test_handle(OSP_handle_t handle, OSP_bool_t* completed);
 
 /**
  * \brief Blocks on completion of all elements in a vector of non-blocking handles.
@@ -1976,24 +1976,24 @@ int A1_Test_handle(A1_handle_t handle, A1_bool_t* completed);
  * \param[in]  handles      Vector of non-blocking handles upon which to be waited.
  * \param[out] completed    Vector of handle statuses.
  *
- * \see A1_handle_t, A1_Test_handle, A1_Wait_handle_list
+ * \see OSP_handle_t, OSP_Test_handle, OSP_Wait_handle_list
  *
  * \ingroup SYNCHRONIZATION
  */
 
-int A1_Test_handle_list(int count, A1_handle_t *handles, A1_bool_t* *completed);
+int OSP_Test_handle_list(int count, OSP_handle_t *handles, OSP_bool_t* *completed);
 
 /**
  * \brief Resets a non-blocking handle.
  *
  * \param[in] handle      Non-blocking handle to be reset.
  *
- * \see A1_handle_t, A1_Reset_handle_list
+ * \see OSP_handle_t, OSP_Reset_handle_list
  *
  * \ingroup SYNCHRONIZATION
  */
 
-int A1_Reset_handle(A1_handle_t* handle);
+int OSP_Reset_handle(OSP_handle_t* handle);
 
 /**
  * \brief Resets a non-blocking handle.
@@ -2001,16 +2001,16 @@ int A1_Reset_handle(A1_handle_t* handle);
  * \param[in]  count        Number of handles in vector.
  * \param[in] handle      Non-blocking handle to be reset.
  *
- * \see A1_handle_t, A1_Reset_handle
+ * \see OSP_handle_t, OSP_Reset_handle
  *
  * \ingroup SYNCHRONIZATION
  */
 
-int A1_Reset_handle_list(int count, A1_handle_t* handle);
+int OSP_Reset_handle_list(int count, OSP_handle_t* handle);
 
 /* ********************************************************************** */
 /*                                                                        */
-/*               A1 external API - many-to-many operations                */
+/*               OSP external API - many-to-many operations                */
 /*                                                                        */
 /* ********************************************************************** */
 
@@ -2024,10 +2024,10 @@ int A1_Reset_handle_list(int count, A1_handle_t* handle);
  * \ingroup MANYTOMANY
  */
 
-int A1_Multicast_group(A1_group_t* group,
+int OSP_Multicast_group(OSP_group_t* group,
                        int root,
                        int count,
-                       A1_datatype_t a1_type,
+                       OSP_datatype_t osp_type,
                        void* buffer);
 
 /**
@@ -2040,12 +2040,12 @@ int A1_Multicast_group(A1_group_t* group,
  * \ingroup MANYTOMANY
  */
 
-int A1_NbMulticast_group(A1_group_t* group,
+int OSP_NbMulticast_group(OSP_group_t* group,
                          int root,
                          int count,
-                         A1_datatype_t a1_type,
+                         OSP_datatype_t osp_type,
                          void* buffer,
-                         A1_handle_t a1_handle);
+                         OSP_handle_t osp_handle);
 
 /**
  * \brief
@@ -2057,11 +2057,11 @@ int A1_NbMulticast_group(A1_group_t* group,
  * \ingroup MANYTOMANY
  */
 
-int A1_Reduce_group(A1_group_t* group,
+int OSP_Reduce_group(OSP_group_t* group,
                     int root,
                     int count,
-                    A1_reduce_op_t a1_op,
-                    A1_datatype_t a1_type,
+                    OSP_reduce_op_t osp_op,
+                    OSP_datatype_t osp_type,
                     void* in,
                     void* out);
 
@@ -2075,14 +2075,14 @@ int A1_Reduce_group(A1_group_t* group,
  * \ingroup MANYTOMANY
  */
 
-int A1_NbReduce_group(A1_group_t* group,
+int OSP_NbReduce_group(OSP_group_t* group,
                       int root,
                       int count,
-                      A1_reduce_op_t a1_op,
-                      A1_datatype_t a1_type,
+                      OSP_reduce_op_t osp_op,
+                      OSP_datatype_t osp_type,
                       void* in,
                       void* out,
-                      A1_handle_t a1_handle);
+                      OSP_handle_t osp_handle);
 
 /**
  * \brief
@@ -2094,10 +2094,10 @@ int A1_NbReduce_group(A1_group_t* group,
  * \ingroup MANYTOMANY
  */
 
-int A1_Allreduce_group(A1_group_t* group,
+int OSP_Allreduce_group(OSP_group_t* group,
                        int count,
-                       A1_reduce_op_t a1_op,
-                       A1_datatype_t a1_type,
+                       OSP_reduce_op_t osp_op,
+                       OSP_datatype_t osp_type,
                        void* in,
                        void* out);
 
@@ -2111,13 +2111,13 @@ int A1_Allreduce_group(A1_group_t* group,
  * \ingroup MANYTOMANY
  */
 
-int A1_NbAllreduce_group(A1_group_t* group,
+int OSP_NbAllreduce_group(OSP_group_t* group,
                          int count,
-                         A1_reduce_op_t a1_op,
-                         A1_datatype_t a1_type,
+                         OSP_reduce_op_t osp_op,
+                         OSP_datatype_t osp_type,
                          void* in,
                          void* out,
-                         A1_handle_t a1_handle);
+                         OSP_handle_t osp_handle);
 
 /**
  * \brief
@@ -2129,7 +2129,7 @@ int A1_NbAllreduce_group(A1_group_t* group,
  * \ingroup MANYTOMANY
  */
 
-int A1_Bcast_group(A1_group_t* group,
+int OSP_Bcast_group(OSP_group_t* group,
                    int root,
                    int bytes,
                    void* buffer);
@@ -2144,11 +2144,11 @@ int A1_Bcast_group(A1_group_t* group,
  * \ingroup MANYTOMANY
  */
 
-int A1_NbBcast_group(A1_group_t* group,
+int OSP_NbBcast_group(OSP_group_t* group,
                      int root,
                      int count,
                      void* buffer,
-                     A1_handle_t a1_handle);
+                     OSP_handle_t osp_handle);
 
 /**
  * \brief
@@ -2160,10 +2160,10 @@ int A1_NbBcast_group(A1_group_t* group,
  * \ingroup MANYTOMANY
  */
 
-int A1_Manytomany_group(A1_group_t* in_group,
-                        A1_group_t* out_group,
+int OSP_Manytomany_group(OSP_group_t* in_group,
+                        OSP_group_t* out_group,
                         int count,
-                        A1_datatype_t a1_type,
+                        OSP_datatype_t osp_type,
                         void* in,
                         void* out);
 
@@ -2177,13 +2177,13 @@ int A1_Manytomany_group(A1_group_t* in_group,
  * \ingroup MANYTOMANY
  */
 
-int A1_NbManytomany_group(A1_group_t* in_group,
-                          A1_group_t* out_group,
+int OSP_NbManytomany_group(OSP_group_t* in_group,
+                          OSP_group_t* out_group,
                           int count,
-                          A1_datatype_t a1_type,
+                          OSP_datatype_t osp_type,
                           void* in,
                           void* out,
-                          A1_handle_t a1_handle);
+                          OSP_handle_t osp_handle);
 
 /* FIXME: More API functions to come */
 
@@ -2191,14 +2191,14 @@ int A1_NbManytomany_group(A1_group_t* in_group,
 
 /* ********************************************************************** */
 /*                                                                        */
-/*               A1 version information                                   */
+/*               OSP version information                                   */
 /*                                                                        */
 /* ********************************************************************** */
 
-/* A1_VERSION is the version string. A1_NUMVERSION is the
+/* OSP_VERSION is the version string. OSP_NUMVERSION is the
  * numeric version that can be used in numeric comparisons.
  *
- * A1_VERSION uses the following format:
+ * OSP_VERSION uses the following format:
  * Version: [MAJ].[MIN].[REV][EXT][EXT_NUMBER]
  * Example: 1.0.7rc1 has
  *          MAJ = 1
@@ -2207,7 +2207,7 @@ int A1_NbManytomany_group(A1_group_t* in_group,
  *          EXT = rc
  *          EXT_NUMBER = 1
  *
- * A1_NUMVERSION will convert EXT to a format number:
+ * OSP_NUMVERSION will convert EXT to a format number:
  *          ALPHA (a) = 0
  *          BETA (b)  = 1
  *          RC (rc)   = 2
@@ -2218,19 +2218,19 @@ int A1_NbManytomany_group(A1_group_t* in_group,
  * digits for REV, 1 digit for EXT and 2 digits for EXT_NUMBER. So,
  * 1.0.7rc1 will have the numeric version 10007201.
  */
-#define A1_VERSION "@A1_VERSION@"
-#define A1_NUMVERSION @A1_NUMVERSION@
+#define OSP_VERSION "@OSP_VERSION@"
+#define OSP_NUMVERSION @OSP_NUMVERSION@
 
-#define A1_RELEASE_TYPE_ALPHA  0
-#define A1_RELEASE_TYPE_BETA   1
-#define A1_RELEASE_TYPE_RC     2
-#define A1_RELEASE_TYPE_PATCH  3
+#define OSP_RELEASE_TYPE_ALPHA  0
+#define OSP_RELEASE_TYPE_BETA   1
+#define OSP_RELEASE_TYPE_RC     2
+#define OSP_RELEASE_TYPE_PATCH  3
 
-#define A1_CALC_VERSION(MAJOR, MINOR, REVISION, TYPE, PATCH) \
+#define OSP_CALC_VERSION(MAJOR, MINOR, REVISION, TYPE, PATCH) \
     (((MAJOR) * 10000000) + ((MINOR) * 100000) + ((REVISION) * 1000) + ((TYPE) * 100) + (PATCH))
 
 #if defined(__cplusplus)
 }
 #endif /* __cplusplus */
 
-#endif /* A1_H_INCLUDED */
+#endif /* OSP_H_INCLUDED */

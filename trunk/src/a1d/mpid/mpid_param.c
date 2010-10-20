@@ -6,19 +6,19 @@
 
 #include "mpi2rmadimpl.h"
 
-int A1DI_Read_parameters() {
+int OSPDI_Read_parameters() {
 
-    int result = A1_SUCCESS;
+    int result = OSP_SUCCESS;
     char* value = NULL;
 
-    A1U_FUNC_ENTER();
+    OSPU_FUNC_ENTER();
 
-//    if ((value = getenv("A1_ALIGNMENT")) != NULL) {
-//        a1_alignment = atoi(value);
+//    if ((value = getenv("OSP_ALIGNMENT")) != NULL) {
+//        osp_alignment = atoi(value);
 //    }
 
   fn_exit:
-    A1U_FUNC_EXIT();
+    OSPU_FUNC_EXIT();
     return result;
 
   fn_fail:

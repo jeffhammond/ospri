@@ -50,7 +50,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <a1.h>
+#include <osp.h>
 
 #define MAX_MSG_SIZE 1024*1024
 #define ITERATIONS 100
@@ -65,19 +65,19 @@ int main()
     double scaling;
     double t_start, t_stop, t_latency;
 
-    A1_Initialize(A1_THREAD_SINGLE);
+    OSP_Initialize(OSP_THREAD_SINGLE);
 
-    rank = A1_Process_id(A1_GROUP_WORLD);
-    nranks = A1_Process_total(A1_GROUP_WORLD);
+    rank = OSP_Process_id(OSP_GROUP_WORLD);
+    nranks = OSP_Process_total(OSP_GROUP_WORLD);
 
     bufsize = MAX_MSG_SIZE * (ITERATIONS + SKIP);
     buffer = (double **) malloc(sizeof(double *) * nranks);
-    A1_Alloc_segment((void **) &(buffer[rank]), bufsize);
-    A1_Exchange_segments(A1_GROUP_WORLD, (void **) buffer);
+    OSP_Alloc_segment((void **) &(buffer[rank]), bufsize);
+    OSP_Exchange_segments(OSP_GROUP_WORLD, (void **) buffer);
 
     if (rank == 0)
     {
-        printf("A1_PutAcc Latency in usec \n");
+        printf("OSP_PutAcc Latency in usec \n");
         printf("%20s %22s %22s\n",
                "Message Size",
                "Local Completion",
@@ -91,7 +91,7 @@ int main()
     }
     scaling = 2.0;
 
-    A1_Barrier_group(A1_GROUP_WORLD);
+    OSP_Barrier_group(OSP_GROUP_WORLD);
 
     for (msgsize = sizeof(double); msgsize < MAX_MSG_SIZE; msgsize *= 2)
     {
@@ -105,46 +105,46 @@ int main()
             for (i = 0; i < ITERATIONS + SKIP; i++)
             {
 
-                if (i == SKIP) t_start = A1_Time_seconds();
+                if (i == SKIP) t_start = OSP_Time_seconds();
 
-                A1_PutAcc(peer,
+                OSP_PutAcc(peer,
                           (void *) ((size_t) buffer[rank] + (size_t)(i
                                   * msgsize)),
                           (void *) ((size_t) buffer[peer] + (size_t)(i
                                   * msgsize)),
                           msgsize,
-                          A1_DOUBLE,
+                          OSP_DOUBLE,
                           (void *) &scaling);
 
             }
-            t_stop = A1_Time_seconds();
-            A1_Flush(1);
+            t_stop = OSP_Time_seconds();
+            OSP_Flush(1);
             printf("%20d %20.2f ", msgsize, ((t_stop - t_start) * 1000000)
                     / ITERATIONS);
             fflush(stdout);
 
-            A1_Barrier_group(A1_GROUP_WORLD);
+            OSP_Barrier_group(OSP_GROUP_WORLD);
 
-            A1_Barrier_group(A1_GROUP_WORLD);
+            OSP_Barrier_group(OSP_GROUP_WORLD);
 
             for (i = 0; i < ITERATIONS + SKIP; i++)
             {
 
-                if (i == SKIP) t_start = A1_Time_seconds();
+                if (i == SKIP) t_start = OSP_Time_seconds();
 
-                A1_PutAcc(1, (void *) ((size_t) buffer[0] + (size_t)(i
+                OSP_PutAcc(1, (void *) ((size_t) buffer[0] + (size_t)(i
                         * msgsize)), (void *) ((size_t) buffer[1] + (size_t)(i
-                        * msgsize)), msgsize, A1_DOUBLE, (void *) &scaling);
-                A1_Flush(1);
+                        * msgsize)), msgsize, OSP_DOUBLE, (void *) &scaling);
+                OSP_Flush(1);
 
             }
-            t_stop = A1_Time_seconds();
+            t_stop = OSP_Time_seconds();
             printf("%20.2f \n", ((t_stop - t_start) * 1000000) / ITERATIONS);
             fflush(stdout);
 
-            A1_Barrier_group(A1_GROUP_WORLD);
+            OSP_Barrier_group(OSP_GROUP_WORLD);
 
-            A1_Barrier_group(A1_GROUP_WORLD);
+            OSP_Barrier_group(OSP_GROUP_WORLD);
 
         }
         else
@@ -152,7 +152,7 @@ int main()
 
             peer = 0;
 
-            A1_Barrier_group(A1_GROUP_WORLD);
+            OSP_Barrier_group(OSP_GROUP_WORLD);
 
             /** Data Validation **/
             for (i = 0; i < (((ITERATIONS + SKIP) * msgsize) / sizeof(double)); i++)
@@ -175,9 +175,9 @@ int main()
                 *(buffer[rank] + i) = 1.0 + rank;
             }
 
-            A1_Barrier_group(A1_GROUP_WORLD);
+            OSP_Barrier_group(OSP_GROUP_WORLD);
 
-            A1_Barrier_group(A1_GROUP_WORLD);
+            OSP_Barrier_group(OSP_GROUP_WORLD);
 
             /** Data Validation **/
             for (i = 0; i < (((ITERATIONS + SKIP) * msgsize) / sizeof(double)); i++)
@@ -200,15 +200,15 @@ int main()
                 *(buffer[rank] + i) = 1.0 + rank;
             }
 
-            A1_Barrier_group(A1_GROUP_WORLD);
+            OSP_Barrier_group(OSP_GROUP_WORLD);
 
         }
 
     }
 
-    A1_Release_segments(A1_GROUP_WORLD, buffer[rank]);
+    OSP_Release_segments(OSP_GROUP_WORLD, buffer[rank]);
 
-    A1_Finalize();
+    OSP_Finalize();
 
     return 0;
 }

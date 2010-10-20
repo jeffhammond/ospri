@@ -50,7 +50,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <a1.h>
+#include <osp.h>
 
 #define MAX_MSG_SIZE 1024*1024
 #define ITERATIONS 100
@@ -64,26 +64,26 @@ int main(int argc, char **argv)
     double **buffer;
     double t_start, t_stop, t_latency = 0;
 
-    A1_Initialize(A1_THREAD_SINGLE);
+    OSP_Initialize(OSP_THREAD_SINGLE);
 
-    rank = A1_Process_id(A1_GROUP_WORLD);
-    nranks = A1_Process_total(A1_GROUP_WORLD);
+    rank = OSP_Process_id(OSP_GROUP_WORLD);
+    nranks = OSP_Process_total(OSP_GROUP_WORLD);
 
     buffer = (double **) malloc(sizeof(double *) * nranks);
 
     bufsize = MAX_MSG_SIZE * (ITERATIONS + SKIP);
-    A1_Alloc_segment((void**)&(buffer[rank]), bufsize);
-    A1_Exchange_segments(A1_GROUP_WORLD, (void **) buffer);
+    OSP_Alloc_segment((void**)&(buffer[rank]), bufsize);
+    OSP_Exchange_segments(OSP_GROUP_WORLD, (void **) buffer);
 
     for (i = 0; i < bufsize / sizeof(double); i++)
         *(buffer[rank] + i) = 1.0 + rank;
 
-    A1_Barrier_group(A1_GROUP_WORLD);
+    OSP_Barrier_group(OSP_GROUP_WORLD);
 
     if (rank == 0)
     {
 
-        printf("A1_Put + FlushAll Latency - in usec \n");
+        printf("OSP_Put + FlushAll Latency - in usec \n");
         printf("%20s %22s\n", "Message Size", "Latency");
         fflush(stdout);
 
@@ -96,16 +96,16 @@ int main(int argc, char **argv)
                 for (j = 0; j < nranks; j++)
                 {
 
-                    A1_Put(j, (void *) ((size_t) buffer[rank] + (size_t)(i
+                    OSP_Put(j, (void *) ((size_t) buffer[rank] + (size_t)(i
                             * msgsize)), (void *) ((size_t) buffer[j]
                             + (size_t)(i * msgsize)), msgsize);
                 }
 
-                t_start = A1_Time_seconds();
+                t_start = OSP_Time_seconds();
 
-                A1_Flush_group(A1_GROUP_WORLD);
+                OSP_Flush_group(OSP_GROUP_WORLD);
 
-                t_stop = A1_Time_seconds();
+                t_stop = OSP_Time_seconds();
                 if (i >= SKIP) t_latency = t_latency + (t_stop - t_start);
 
             }
@@ -117,11 +117,11 @@ int main(int argc, char **argv)
 
     }
 
-    A1_Barrier_group(A1_GROUP_WORLD);
+    OSP_Barrier_group(OSP_GROUP_WORLD);
 
-    A1_Release_segments(A1_GROUP_WORLD, buffer[rank]);
+    OSP_Release_segments(OSP_GROUP_WORLD, buffer[rank]);
 
-    A1_Finalize();
+    OSP_Finalize();
 
     return 0;
 }

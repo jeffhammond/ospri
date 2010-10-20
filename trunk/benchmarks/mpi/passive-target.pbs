@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name="a1-mpi-bench"
+#SBATCH --job-name="osp-mpi-bench"
 #SBATCH --nodes=2
 #SBATCH --time-min=0:30:00
 

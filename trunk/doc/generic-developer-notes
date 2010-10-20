@@ -12,6 +12,6 @@ ADL level:
 - Handle same-process copies using memcpy
 - Implement Multi ops using nonblocking operations
 
-A1U level:
+OSPU level:
 
 - implement same-address-space version of all calls with memcpy etc.

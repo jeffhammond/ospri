@@ -6,36 +6,36 @@
 
 #include "mpidimpl.h"
 
-int A1D_Rank()
+int OSPD_Rank()
 {
-    A1U_FUNC_ENTER();
+    OSPU_FUNC_ENTER();
 
   fn_exit:
-    A1U_FUNC_EXIT();
-    return A1D_Process_info.my_rank;
+    OSPU_FUNC_EXIT();
+    return OSPD_Process_info.my_rank;
 
   fn_fail:
     goto fn_exit;
 }
 
-int A1D_Size()
+int OSPD_Size()
 {
-    A1U_FUNC_ENTER();
+    OSPU_FUNC_ENTER();
 
   fn_exit:
-    A1U_FUNC_EXIT();
-    return A1D_Process_info.num_ranks;
+    OSPU_FUNC_EXIT();
+    return OSPD_Process_info.num_ranks;
 
   fn_fail:
     goto fn_exit;
 }
 
-double A1D_Time_seconds()
+double OSPD_Time_seconds()
 {
     double time;
 
   fn_exit:
-    A1U_FUNC_EXIT();
+    OSPU_FUNC_EXIT();
     return MPI_Wtime();
 
   fn_fail:
@@ -43,16 +43,16 @@ double A1D_Time_seconds()
 } 
 
 
-unsigned long long A1D_Time_cycles()
+unsigned long long OSPD_Time_cycles()
 {
-    A1U_FUNC_ENTER();
+    OSPU_FUNC_ENTER();
 
     /* FIXME: implement this function using Kaz's ASM */
 
-    A1U_error_printf("A1D_Time_cycles not implemented.\n");
+    OSPU_error_printf("OSPD_Time_cycles not implemented.\n");
 
   fn_exit:
-    A1U_FUNC_EXIT();
+    OSPU_FUNC_EXIT();
     return 0;
 
   fn_fail:

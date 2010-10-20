@@ -50,7 +50,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <a1.h>
+#include <osp.h>
 
 #define MAX_DIM 1024 
 #define ITERATIONS 100
@@ -66,25 +66,25 @@ int main() {
    int count[2], src_stride, trg_stride, stride_level, peer;
    double expected, actual;
    
-   A1_Initialize(A1_THREAD_SINGLE); 
+   OSP_Initialize(OSP_THREAD_SINGLE); 
 
-   rank = A1_Process_id(A1_GROUP_WORLD);
-   nranks = A1_Process_total(A1_GROUP_WORLD);
+   rank = OSP_Process_id(OSP_GROUP_WORLD);
+   nranks = OSP_Process_total(OSP_GROUP_WORLD);
 
    buffer = (double **) malloc (sizeof(double *) * nranks); 
 
-   A1_Barrier_group(A1_GROUP_WORLD);
+   OSP_Barrier_group(OSP_GROUP_WORLD);
 
    bufsize = MAX_DIM * MAX_DIM * sizeof(double);
-   A1_Alloc_segment((void **) &(buffer[rank]), bufsize);
-   A1_Exchange_segments(A1_GROUP_WORLD, (void **) buffer);
+   OSP_Alloc_segment((void **) &(buffer[rank]), bufsize);
+   OSP_Exchange_segments(OSP_GROUP_WORLD, (void **) buffer);
 
    for(i=0; i< bufsize/sizeof(double); i++) {
        *(buffer[rank] + i) = 1.0 + rank;
    }
 
    if(rank == 0) {
-     printf("A1_PutS Latency - local and remote completions - in usec \n");
+     printf("OSP_PutS Latency - local and remote completions - in usec \n");
      printf("%30s %22s \n", "Dimensions(array of doubles)", "Latency-LocalCompeltion", "Latency-RemoteCompletion");
      fflush(stdout);
    }
@@ -105,38 +105,38 @@ int main() {
           for(i=0; i<ITERATIONS+SKIP; i++) { 
 
              if(i == SKIP)
-                 t_start = A1_Time_seconds();              
+                 t_start = OSP_Time_seconds();              
 
-             A1_PutS(peer, stride_level, count, (void *) buffer[rank], &src_stride, (void *) buffer[peer], &trg_stride); 
+             OSP_PutS(peer, stride_level, count, (void *) buffer[rank], &src_stride, (void *) buffer[peer], &trg_stride); 
  
           }
-          t_stop = A1_Time_seconds();
-          A1_Flush(peer);
+          t_stop = OSP_Time_seconds();
+          OSP_Flush(peer);
           char temp[10]; 
           sprintf(temp,"%dX%d", dim, dim);
           printf("%30s %20.2f", temp, ((t_stop-t_start)*1000000)/ITERATIONS);
           fflush(stdout);
 
-          A1_Barrier_group(A1_GROUP_WORLD);
+          OSP_Barrier_group(OSP_GROUP_WORLD);
 
-          A1_Barrier_group(A1_GROUP_WORLD);
+          OSP_Barrier_group(OSP_GROUP_WORLD);
 
           for(i=0; i<ITERATIONS+SKIP; i++) {
   
              if(i == SKIP)
-                t_start = A1_Time_seconds();
+                t_start = OSP_Time_seconds();
 
-             A1_PutS(peer, stride_level, count, (void *) buffer[rank], &src_stride, (void *) buffer[peer], &trg_stride);
-             A1_Flush(peer);
+             OSP_PutS(peer, stride_level, count, (void *) buffer[rank], &src_stride, (void *) buffer[peer], &trg_stride);
+             OSP_Flush(peer);
 
           }
-          t_stop = A1_Time_seconds();
+          t_stop = OSP_Time_seconds();
           printf("%20.2f \n", ((t_stop-t_start)*1000000)/ITERATIONS);
           fflush(stdout);
 
-          A1_Barrier_group(A1_GROUP_WORLD);
+          OSP_Barrier_group(OSP_GROUP_WORLD);
 
-          A1_Barrier_group(A1_GROUP_WORLD);
+          OSP_Barrier_group(OSP_GROUP_WORLD);
         }
         else
         {
@@ -144,7 +144,7 @@ int main() {
 
             expected = (1.0 + (double) peer);
 
-            A1_Barrier_group(A1_GROUP_WORLD);
+            OSP_Barrier_group(OSP_GROUP_WORLD);
 
             for(i=0; i<dim; i++)
             {
@@ -165,9 +165,9 @@ int main() {
                 *(buffer[rank] + i) = 1.0 + rank;
             }
 
-            A1_Barrier_group(A1_GROUP_WORLD);
+            OSP_Barrier_group(OSP_GROUP_WORLD);
 
-            A1_Barrier_group(A1_GROUP_WORLD);
+            OSP_Barrier_group(OSP_GROUP_WORLD);
 
             for(i=0; i<dim; i++)
             {
@@ -188,16 +188,16 @@ int main() {
                 *(buffer[rank] + i) = 1.0 + rank;
             }
 
-            A1_Barrier_group(A1_GROUP_WORLD);
+            OSP_Barrier_group(OSP_GROUP_WORLD);
 
       }
 
    }
 
-   A1_Release_segments(A1_GROUP_WORLD, (void *) buffer[rank]);
-   A1_Free_segment((void *) buffer[rank]);
+   OSP_Release_segments(OSP_GROUP_WORLD, (void *) buffer[rank]);
+   OSP_Free_segment((void *) buffer[rank]);
 
-   A1_Finalize();
+   OSP_Finalize();
 
    return 0;
 }

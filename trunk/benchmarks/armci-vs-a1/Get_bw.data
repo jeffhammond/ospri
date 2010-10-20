@@ -1,5 +1,5 @@
 # Get Bandwidth in MBPS
-#Message Size             A1 	             ARMCI 
+#Message Size             OSP 	             ARMCI 
       8               3.0516 	            2.9336 
      16               6.0937 	            5.8547 
      32              12.1711 	           11.7099 

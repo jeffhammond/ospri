@@ -4,72 +4,72 @@
  *      See COPYRIGHT in top-level directory.
  */
 
-#include "a1.h"
-#include "a1d.h"
-#include "a1u.h"
+#include "osp.h"
+#include "ospd.h"
+#include "ospu.h"
 
-int A1_Create_counter(A1_group_t* group,
-                      A1_counter_t *counter)
+int OSP_Create_counter(OSP_group_t* group,
+                      OSP_counter_t *counter)
 {
-    int status = A1_SUCCESS;
+    int status = OSP_SUCCESS;
 
-    A1U_FUNC_ENTER();
+    OSPU_FUNC_ENTER();
 
 #   ifdef HAVE_ERROR_CHECKING
 #   endif
 
-    status = A1D_Create_counter(group,
+    status = OSPD_Create_counter(group,
                                 counter);
-    A1U_ERR_POP(status != A1_SUCCESS, "A1D_Create_counter returned an error\n");
+    OSPU_ERR_POP(status != OSP_SUCCESS, "OSPD_Create_counter returned an error\n");
 
   fn_exit:
-    A1U_FUNC_EXIT();
+    OSPU_FUNC_EXIT();
     return status;
 
   fn_fail:
     goto fn_exit;
 }
 
-int A1_Destroy_counter(A1_group_t* group,
-                       A1_counter_t *counter)
+int OSP_Destroy_counter(OSP_group_t* group,
+                       OSP_counter_t *counter)
 {
-    int status = A1_SUCCESS;
+    int status = OSP_SUCCESS;
 
-    A1U_FUNC_ENTER();
+    OSPU_FUNC_ENTER();
 
 #   ifdef HAVE_ERROR_CHECKING
 #   endif
 
-    status = A1D_Destroy_counter(group,
+    status = OSPD_Destroy_counter(group,
                                  counter);
-    A1U_ERR_POP(status != A1_SUCCESS, "A1D_Destroy_counter returned an error\n");
+    OSPU_ERR_POP(status != OSP_SUCCESS, "OSPD_Destroy_counter returned an error\n");
 
   fn_exit:
-    A1U_FUNC_EXIT();
+    OSPU_FUNC_EXIT();
     return status;
 
   fn_fail:
     goto fn_exit;
 }
 
-int A1_Incr_counter(A1_counter_t counter,
+int OSP_Incr_counter(OSP_counter_t counter,
                     long increment,
                     long* original)
 {
-    int status = A1_SUCCESS;
+    int status = OSP_SUCCESS;
 
-    A1U_FUNC_ENTER();
+    OSPU_FUNC_ENTER();
 
 #   ifdef HAVE_ERROR_CHECKING
 #   endif
 
-    status = A1D_Incr_counter(counter,
+    status = OSPD_Incr_counter(counter,
                               increment,
                               original);
-    A1U_ERR_POP(status != A1_SUCCESS, "A1D_Incr_counter returned an error\n");
+    OSPU_ERR_POP(status != OSP_SUCCESS, "OSPD_Incr_counter returned an error\n");
 
   fn_exit:
-    A1U_FUNC_EXIT();
+    OSPU_FUNC_EXIT();
     return status;
 
   fn_fail:

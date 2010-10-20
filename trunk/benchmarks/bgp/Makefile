@@ -1,4 +1,4 @@
-# Environment variable A1_INSTALL should point to the install directory of A1 
+# Environment variable OSP_INSTALL should point to the install directory of OSP 
 
 FC      = mpixlf77_r 
 CC      = mpixlc_r 

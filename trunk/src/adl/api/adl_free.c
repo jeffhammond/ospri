@@ -4,15 +4,15 @@
  *      See COPYRIGHT in top-level directory.
  */
 
-#include "a1.h"
-#include "a1d.h"
-#include "a1u.h"
+#include "osp.h"
+#include "ospd.h"
+#include "ospu.h"
 
-int A1_Release_segments(A1_group_t* group, void* ptr)
+int OSP_Release_segments(OSP_group_t* group, void* ptr)
 {
-    int status = A1_SUCCESS;
+    int status = OSP_SUCCESS;
 
-    A1U_FUNC_ENTER();
+    OSPU_FUNC_ENTER();
 
     /* FIXME: The profiling interface needs to go here */
 
@@ -21,22 +21,22 @@ int A1_Release_segments(A1_group_t* group, void* ptr)
 #   ifdef HAVE_ERROR_CHECKING
 #   endif
 
-    status = A1D_Release_segments(group, ptr);
-    A1U_ERR_POP(status, "A1D_Release_segments returned an error\n");
+    status = OSPD_Release_segments(group, ptr);
+    OSPU_ERR_POP(status, "OSPD_Release_segments returned an error\n");
 
   fn_exit: 
-    A1U_FUNC_EXIT();
+    OSPU_FUNC_EXIT();
     return status;
 
   fn_fail: 
     goto fn_exit;
 }
 
-int A1_Free_segment(void* ptr)
+int OSP_Free_segment(void* ptr)
 {
-    int status = A1_SUCCESS;
+    int status = OSP_SUCCESS;
 
-    A1U_FUNC_ENTER();
+    OSPU_FUNC_ENTER();
 
     /* FIXME: The profiling interface needs to go here */
 
@@ -45,11 +45,11 @@ int A1_Free_segment(void* ptr)
 #   ifdef HAVE_ERROR_CHECKING
 #   endif
 
-    status = A1D_Free_segment(ptr);
-    A1U_ERR_POP(status, "A1D_Free_segment returned an error\n");
+    status = OSPD_Free_segment(ptr);
+    OSPU_ERR_POP(status, "OSPD_Free_segment returned an error\n");
 
   fn_exit: 
-    A1U_FUNC_EXIT();
+    OSPU_FUNC_EXIT();
     return status;
 
   fn_fail: 

@@ -4,10 +4,10 @@
  *      See COPYRIGHT in top-level directory.
  */
 
-#if !defined A1U_H_INCLUDED
-#define A1U_H_INCLUDED
+#if !defined OSPU_H_INCLUDED
+#define OSPU_H_INCLUDED
 
-#include "a1conf.h"
+#include "ospconf.h"
 
 #if defined HAVE_STDIO_H
 #include <stdio.h>
@@ -63,162 +63,162 @@
 
 /* FIXME: FUNC_ENTER/EXIT can be used for profiling in the future */
 
-#define A1U_FUNC_ENTER(...)
-#define A1U_FUNC_EXIT(...)
+#define OSPU_FUNC_ENTER(...)
+#define OSPU_FUNC_EXIT(...)
 
 #if defined HAVE__FUNC__
-#define A1U_FUNC __func__
+#define OSPU_FUNC __func__
 #elif defined HAVE_CAP__FUNC__
-#define A1U_FUNC __FUNC__
+#define OSPU_FUNC __FUNC__
 #elif defined HAVE__FUNCTION__
-#define A1U_FUNC __FUNCTION__
+#define OSPU_FUNC __FUNCTION__
 #endif
 
-#if defined __FILE__ && defined A1U_FUNC
-    #define A1U_error_printf(...)                                          \
+#if defined __FILE__ && defined OSPU_FUNC
+    #define OSPU_error_printf(...)                                          \
         {                                                                   \
-            fprintf(stderr, "%s (%s:%d): ", A1U_FUNC, __FILE__, __LINE__);  \
+            fprintf(stderr, "%s (%s:%d): ", OSPU_FUNC, __FILE__, __LINE__);  \
             fprintf(stderr, __VA_ARGS__);                                   \
             fflush(stderr);                                                 \
         }
 #elif defined __FILE__
-    #define A1U_error_printf(...)                               \
+    #define OSPU_error_printf(...)                               \
         {                                                        \
             fprintf(stderr, "%s (%d): ", __FILE__, __LINE__);    \
             fprintf(stderr, __VA_ARGS__);                        \
             fflush(stderr);                                      \
         }
 #else
-    #define A1U_error_printf(...)                                          \
+    #define OSPU_error_printf(...)                                          \
         {                                                                   \
             fprintf(stderr, __VA_ARGS__);                                   \
             fflush(stderr);                                                 \
         }
 #endif
 
-#define A1U_output_printf(...)                                         \
+#define OSPU_output_printf(...)                                         \
     {                                                                   \
         fprintf(stdout, __VA_ARGS__);                                   \
         fflush(stdout);                                                 \
     }
 
-#define A1U_ASSERT_ABORT(x, ...)                                        \
+#define OSPU_ASSERT_ABORT(x, ...)                                        \
     {                                                                   \
         if (!(x)) {                                                     \
-            A1U_error_printf(__VA_ARGS__);                              \
+            OSPU_error_printf(__VA_ARGS__);                              \
             assert(0);                                                  \
         }                                                               \
     }
 
-#define A1U_ASSERT(x, status)                                           \
+#define OSPU_ASSERT(x, status)                                           \
     {                                                                   \
         if (!(x)) {                                                     \
-            A1U_ERR_SETANDJUMP(status, A1_ERROR,                        \
+            OSPU_ERR_SETANDJUMP(status, OSP_ERROR,                        \
                                "assert (%s) failed\n", #x);             \
         }                                                               \
     }
 
-#define A1U_WARNING(status, ...)                                      \
+#define OSPU_WARNING(status, ...)                                      \
     {                                                                   \
         if (status) {                                                   \
-            A1U_error_printf(__VA_ARGS__);                              \
+            OSPU_error_printf(__VA_ARGS__);                              \
         }                                                               \
     }
 
-#define A1U_ERR_ABORT(status, ...)                                      \
+#define OSPU_ERR_ABORT(status, ...)                                      \
     {                                                                   \
         if (status) {                                                   \
-            A1U_error_printf(__VA_ARGS__);                              \
+            OSPU_error_printf(__VA_ARGS__);                              \
             assert(0);                                                  \
         }                                                               \
     }
 
-#define A1U_ERR_POP(status, ...)                                        \
+#define OSPU_ERR_POP(status, ...)                                        \
     {                                                                   \
         if (status) {                                                   \
-            A1U_error_printf(__VA_ARGS__);                              \
+            OSPU_error_printf(__VA_ARGS__);                              \
             goto fn_fail;                                               \
         }                                                               \
     }
 
-#define A1U_ERR_SETANDJUMP(status, error, ...)                          \
+#define OSPU_ERR_SETANDJUMP(status, error, ...)                          \
     {                                                                   \
         status = error;                                                 \
-        A1U_ERR_POP(status, __VA_ARGS__);                               \
+        OSPU_ERR_POP(status, __VA_ARGS__);                               \
     }
 
-#define A1U_ERR_CHKANDJUMP(status, chk, error, ...)                     \
+#define OSPU_ERR_CHKANDJUMP(status, chk, error, ...)                     \
     {                                                                   \
         if ((chk))                                                      \
-            A1U_ERR_SETANDJUMP(status, error, __VA_ARGS__);             \
+            OSPU_ERR_SETANDJUMP(status, error, __VA_ARGS__);             \
     }
 
-#define A1U_ERR_POPANDSTMT(status, stmt, ... )                          \
+#define OSPU_ERR_POPANDSTMT(status, stmt, ... )                          \
     {                                                                   \
         if (status) {                                                   \
-            A1U_error_printf(__VA_ARGS__);                              \
+            OSPU_error_printf(__VA_ARGS__);                              \
             stmt;                                                       \
         }                                                               \
     }
 
-#ifdef A1_DEBUG
-#define A1U_DEBUG_PRINT(args...)                                  \
+#ifdef OSP_DEBUG
+#define OSPU_DEBUG_PRINT(args...)                                  \
 do {                                                              \
     int __my_rank;                                                \
-    __my_rank = A1_Process_rank(A1_GROUP_WORLD);                  \
+    __my_rank = OSP_Process_rank(OSP_GROUP_WORLD);                  \
     fprintf(stderr, "Debug Message from [%d] :", __my_rank);      \
     fprintf(stderr, args);                                        \
     fflush(stderr);                                               \
 } while (0)
 #else
-#define A1U_DEBUG_PRINT(args...)
+#define OSPU_DEBUG_PRINT(args...)
 #endif
 
-int A1U_Put_memcpy(void* src,
+int OSPU_Put_memcpy(void* src,
                    void* dst,
                    int bytes);
 
-int A1U_PutS_memcpy(int stride_level,
+int OSPU_PutS_memcpy(int stride_level,
                     int *block_sizes,
                     void* source_ptr,
                     int *src_stride_ar,
                     void* target_ptr,
                     int *trg_stride_ar);
 
-int A1U_PutV_memcpy(A1_iov_t *iov_ar,
+int OSPU_PutV_memcpy(OSP_iov_t *iov_ar,
                     int ar_len);
 
-int A1U_Get_memcpy(void* src,
+int OSPU_Get_memcpy(void* src,
                    void* dst,
                    int bytes);
 
-int A1U_GetS_memcpy(int stride_level,
+int OSPU_GetS_memcpy(int stride_level,
                     int *block_sizes,
                     void* source_ptr,
                     int *src_stride_ar,
                     void* target_ptr,
                     int *trg_stride_ar);
 
-int A1U_GetV_memcpy(A1_iov_t *iov_ar, int ar_len);
+int OSPU_GetV_memcpy(OSP_iov_t *iov_ar, int ar_len);
 
-int A1U_Acc_memcpy(void* source_ptr,
+int OSPU_Acc_memcpy(void* source_ptr,
                    void* target_ptr,
                    int bytes,
-                   A1_datatype_t a1_type,
+                   OSP_datatype_t osp_type,
                    void* scaling);
 
-int A1U_AccS_memcpy(int stride_level,
+int OSPU_AccS_memcpy(int stride_level,
                     int *block_sizes,
                     void* source_ptr,
                     int *src_stride_ar,
                     void* target_ptr,
                     int *trg_stride_ar,
-                    A1_datatype_t a1_type,
+                    OSP_datatype_t osp_type,
                     void* scaling);
 
-int A1U_AccV_memcpy(A1_iov_t *iov_ar,
+int OSPU_AccV_memcpy(OSP_iov_t *iov_ar,
                     int ar_len,
-                    A1_datatype_t a1_type,
+                    OSP_datatype_t osp_type,
                     void* scaling);
 
-#endif /* A1U_H_INCLUDED */
+#endif /* OSPU_H_INCLUDED */
