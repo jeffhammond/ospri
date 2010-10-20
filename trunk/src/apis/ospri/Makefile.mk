@@ -3,26 +3,26 @@
 #     See COPYRIGHT in top-level directory.
 #
 
-libosp_la_SOURCES += $(top_srcdir)/src/adl/api/adl_initialize.c \
-                    $(top_srcdir)/src/adl/api/adl_finalize.c \
-                    $(top_srcdir)/src/adl/api/adl_malloc.c \
-                    $(top_srcdir)/src/adl/api/adl_free.c \
-                    $(top_srcdir)/src/adl/api/adl_flush.c \
-                    $(top_srcdir)/src/adl/api/adl_flush_group.c \
-                    $(top_srcdir)/src/adl/api/adl_put.c \
-                    $(top_srcdir)/src/adl/api/adl_puts.c \
-                    $(top_srcdir)/src/adl/api/adl_putv.c \
-                    $(top_srcdir)/src/adl/api/adl_get.c \
-                    $(top_srcdir)/src/adl/api/adl_gets.c \
-                    $(top_srcdir)/src/adl/api/adl_getv.c \
-                    $(top_srcdir)/src/adl/api/adl_putacc.c \
-                    $(top_srcdir)/src/adl/api/adl_putaccs.c \
-                    $(top_srcdir)/src/adl/api/adl_putaccv.c \
-                    $(top_srcdir)/src/adl/api/adl_putmodv.c \
-                    $(top_srcdir)/src/adl/api/adl_rmw.c \
-                    $(top_srcdir)/src/adl/api/adl_wait.c \
-                    $(top_srcdir)/src/adl/api/adl_collectives.c \
-                    $(top_srcdir)/src/adl/api/adl_misc.c \
-                    $(top_srcdir)/src/adl/api/adl_counter.c \
-                    $(top_srcdir)/src/adl/api/adl_mutex.c \
-                    $(top_srcdir)/src/adl/api/adl_handle.c
+libosp_la_SOURCES += $(top_srcdir)/src/apis/ospri/osp_initialize.c \
+                     $(top_srcdir)/src/apis/ospri/osp_finalize.c \
+                     $(top_srcdir)/src/apis/ospri/osp_malloc.c \
+                     $(top_srcdir)/src/apis/ospri/osp_free.c \
+                     $(top_srcdir)/src/apis/ospri/osp_flush.c \
+                     $(top_srcdir)/src/apis/ospri/osp_flush_group.c \
+                     $(top_srcdir)/src/apis/ospri/osp_put.c \
+                     $(top_srcdir)/src/apis/ospri/osp_puts.c \
+                     $(top_srcdir)/src/apis/ospri/osp_putv.c \
+                     $(top_srcdir)/src/apis/ospri/osp_get.c \
+                     $(top_srcdir)/src/apis/ospri/osp_gets.c \
+                     $(top_srcdir)/src/apis/ospri/osp_getv.c \
+                     $(top_srcdir)/src/apis/ospri/osp_putacc.c \
+                     $(top_srcdir)/src/apis/ospri/osp_putaccs.c \
+                     $(top_srcdir)/src/apis/ospri/osp_putaccv.c \
+                     $(top_srcdir)/src/apis/ospri/osp_putmodv.c \
+                     $(top_srcdir)/src/apis/ospri/osp_rmw.c \
+                     $(top_srcdir)/src/apis/ospri/osp_wait.c \
+                     $(top_srcdir)/src/apis/ospri/osp_collectives.c \
+                     $(top_srcdir)/src/apis/ospri/osp_misc.c \
+                     $(top_srcdir)/src/apis/ospri/osp_counter.c \
+                     $(top_srcdir)/src/apis/ospri/osp_mutex.c \
+                     $(top_srcdir)/src/apis/ospri/osp_handle.c

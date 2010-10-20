@@ -3,4 +3,4 @@
 #     See COPYRIGHT in top-level directory.
 #
 
-libosp_la_SOURCES += $(top_srcdir)/src/adl/interfaces/armci/armci_osp.c
+libosp_la_SOURCES += $(top_srcdir)/src/apis/armci/armci_osp.c
