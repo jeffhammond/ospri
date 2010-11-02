@@ -360,7 +360,9 @@ unsigned long long OSP_Time_cycles(void);
 double OSP_Time_seconds(void);
 
 /**
- * \brief Prints a translation of the error code enum.
+ * \brief Prints a translation of the error code enum.  Silent for OSP_SUCCESS.
+ *
+ * This function can be implemented as a macro instead.
  *
  * \param[int] result   Return code to translate.
  *
@@ -369,7 +371,7 @@ double OSP_Time_seconds(void);
  * \ingroup INFORMATION
  */
 
-void OSP_Translate_result(osp_result_t result);
+void OSP_Translate_errors(osp_result_t result);
 
 /* ********************************************************************* */
 /*                                                                       */
