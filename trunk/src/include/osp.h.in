@@ -46,7 +46,8 @@ typedef enum
     OSP_THREAD_SERIALIZED, /**< There are multiple threads present and each can make OSP calls,
                                 but never simultaneously. */
     OSP_THREAD_MULTIPLE    /**< There are multiple threads present and each can make OSP calls. */
-} osp_thread_level;
+}
+osp_thread_level;
 
 /**
  * \brief Datatype support within OSP.
@@ -88,14 +89,20 @@ osp_bool_t;
  *
  * \ingroup ENUMS
  *
+ * \see OSP_Translate_result
+ *
  */
 
 typedef enum
 {
-    OSP_SUCCESS,
-    OSP_MEMORY_ERROR,
-    OSP_NETWORK_ERROR,
+    OSP_SUCCESS = 0,
     OSP_UNKNOWN_ERROR,
+    OSP_OUT_OF_MEMORY_ERROR,
+    OSP_OTHER_ALLOCATION_ERROR,
+    OSP_FATAL_NETWORK_ERROR,
+    OSP_RECOVERABLE_NETWORK_ERROR,
+    OSP_INVALID_GROUP,
+    OSP_INVALID_HANDLE,
 }
 osp_result_t;
 
@@ -317,23 +324,6 @@ typedef struct osp_acc_descr
 }
 osp_acc_descr_t;
 
-///**
-// * \brief OSP io vector type.
-// *
-// * \see OSP_PutV, OSP_GetV, OSP_PutAccV
-// *
-// * \ingroup TYPEDEFS
-// *
-// */
-//
-//typedef struct osp_iov_t
-//{
-//    void **source_ptr_ar;
-//    void **target_ptr_ar;
-//    int size; /*In bytes*/
-//    int ptr_ar_len;
-//} osp_iov_t;
-
 /* ********************************************************************* */
 /*                                                                       */
 /*               OSP external API - Helper Functions                      */
@@ -369,6 +359,18 @@ unsigned long long OSP_Time_cycles(void);
 
 double OSP_Time_seconds(void);
 
+/**
+ * \brief Prints a translation of the error code enum.
+ *
+ * \param[int] result   Return code to translate.
+ *
+ * \see osp_result_t
+ *
+ * \ingroup INFORMATION
+ */
+
+void OSP_Translate_result(osp_result_t result);
+
 /* ********************************************************************* */
 /*                                                                       */
 /*               OSP external API - Process Information                   */
@@ -388,7 +390,7 @@ double OSP_Time_seconds(void);
  * \ingroup INFORMATION
  */
 
-int OSP_Process_id(osp_group_t* group);
+osp_result_t OSP_Process_id(osp_group_t* group);
 
 /**
  * \brief Returns total number of processes in a group or -1 in the case of an error.
@@ -402,7 +404,7 @@ int OSP_Process_id(osp_group_t* group);
  * \ingroup INFORMATION
  */
 
-int OSP_Process_total(osp_group_t* group);
+osp_result_t OSP_Process_total(osp_group_t* group);
 
 /**
  * \brief Returns node rank relative to the group base of the process calling it,
@@ -416,7 +418,7 @@ int OSP_Process_total(osp_group_t* group);
  * \ingroup INFORMATION
  */
 
-int OSP_Node_id(osp_group_t* group);
+osp_result_t OSP_Node_id(osp_group_t* group);
 
 /**
  * \brief Returns total number of nodes in a group, or -1 in the case of an error.
@@ -429,7 +431,7 @@ int OSP_Node_id(osp_group_t* group);
  * \ingroup INFORMATION
  */
 
-int OSP_Node_total(osp_group_t* group);
+osp_result_t OSP_Node_total(osp_group_t* group);
 
 /* ********************************************************************* */
 /*                                                                       */
@@ -461,7 +463,7 @@ int OSP_Node_total(osp_group_t* group);
  * \ingroup MANAGEMENT
  */
 
-int OSP_Initialize(int osp_thread_level);
+osp_result_t OSP_Initialize(int osp_thread_level);
 
 /**
  * \brief Terminates the OSP environment normally.
@@ -483,7 +485,7 @@ int OSP_Initialize(int osp_thread_level);
  * \ingroup MANAGEMENT
  */
 
-int OSP_Finalize(void);
+osp_result_t OSP_Finalize(void);
 
 /**
  * \brief Terminates the OSP environment abnormally.
@@ -524,10 +526,10 @@ void OSP_Abort(int error_code, char error_message[]);
  * \ingroup MEMORY
  */
 
-int OSP_Allocate_global_memregion(osp_group_t* group,
-                                  int bytes,
-                                  osp_device_t device,
-                                  osp_global_memregion_t* memregion);
+osp_result_t OSP_Allocate_global_memregion(osp_group_t* group,
+                                           int bytes,
+                                           osp_device_t device,
+                                           osp_global_memregion_t* memregion);
 
 /**
  * \brief A collective operation to allocate memory to be used in context of OSP copy operations.
@@ -547,10 +549,10 @@ int OSP_Allocate_global_memregion(osp_group_t* group,
  * \ingroup MEMORY
  */
 
-int OSP_Create_global_memregion(osp_group_t* group,
-                                int bytes,
-                                void* ptr,
-                                osp_global_memregion_t* memregion);
+osp_result_t OSP_Create_global_memregion(osp_group_t* group,
+                                         int bytes,
+                                         void* ptr,
+                                         osp_global_memregion_t* memregion);
 
 /**
  * \brief A collective operation to free memory allocated by OSP_Create_global_memregion.
@@ -564,8 +566,8 @@ int OSP_Create_global_memregion(osp_group_t* group,
  * \ingroup MEMORY
  */
 
-int OSP_Destroy_global_memregion(osp_group_t* group,
-                                 osp_global_memregion_t* memregion);
+osp_result_t OSP_Destroy_global_memregion(osp_group_t* group,
+                                          osp_global_memregion_t* memregion);
 
 /**
  * \brief Initializes the give non-blocking handle.
@@ -577,7 +579,7 @@ int OSP_Destroy_global_memregion(osp_group_t* group,
  * \ingroup MEMORY
  */
 
-int OSP_Allocate_handle(osp_handle_t *handle);
+osp_result_t OSP_Allocate_handle(osp_handle_t *handle);
 
 /**
  * \brief Initializes the give non-blocking handle.
@@ -589,7 +591,7 @@ int OSP_Allocate_handle(osp_handle_t *handle);
  * \ingroup MEMORY
  */
 
-int OSP_Release_handle(osp_handle_t handle);
+osp_result_t OSP_Release_handle(osp_handle_t handle);
 
 /* ********************************************************************** */
 /*                                                                        */
@@ -611,8 +613,8 @@ int OSP_Release_handle(osp_handle_t handle);
  * \ingroup Atomics
  */
 
-int OSP_Create_counter(osp_group_t* group,
-                       osp_counter_t* counter);
+osp_result_t OSP_Create_counter(osp_group_t* group,
+                                osp_counter_t* counter);
 
 /**
  * \brief Collective operation to deallocate and deregister a counter.
@@ -626,8 +628,8 @@ int OSP_Create_counter(osp_group_t* group,
  * \ingroup Atomics
  */
 
-int OSP_Destroy_counter(osp_group_t* group,
-                        osp_counter_t* counter);
+osp_result_t OSP_Destroy_counter(osp_group_t* group,
+                                 osp_counter_t* counter);
 
 /**
  * \brief Atomically updates a shared counter and returns the current value.
@@ -643,10 +645,10 @@ int OSP_Destroy_counter(osp_group_t* group,
  * \ingroup Atomics
  */
 
-int OSP_Incr_counter(osp_group_t* group,
-                     osp_counter_t* counter,
-                     long  increment,
-                     long* original);
+osp_result_t OSP_Incr_counter(osp_group_t* group,
+                              osp_counter_t* counter,
+                              long  increment,
+                              long* original);
 
 /**
  * \brief Non-blocking atomic RMW update of a shared counter.
@@ -663,11 +665,11 @@ int OSP_Incr_counter(osp_group_t* group,
  * \ingroup Atomics
  */
 
-int OSP_NbIncr_counter(osp_group_t* group,,
-                       OSP_counter_t counter,
-                       long  increment,
-                       long* original,
-                       osp_handle_t handle);
+osp_result_t OSP_NbIncr_counter(osp_group_t* group,,
+                                OSP_counter_t counter,
+                                long  increment,
+                                long* original,
+                                osp_handle_t handle);
 
 /**
  * \brief Collective operation to initialize a list of mutexes.
@@ -684,9 +686,9 @@ int OSP_NbIncr_counter(osp_group_t* group,,
  * \ingroup Atomics
  */
 
-int OSP_Create_mutexes(osp_group_t* group,
-                       int mutex_count,
-                       osp_mutex_t* *mutex_array);
+osp_result_t OSP_Create_mutexes(osp_group_t* group,
+                                int mutex_count,
+                                osp_mutex_t* *mutex_array);
 
 /**
  * \brief Collective operation to uninitialize a list of mutexes
@@ -703,9 +705,9 @@ int OSP_Create_mutexes(osp_group_t* group,
  * \ingroup Atomics
  */
 
-int OSP_Destroy_mutexes(osp_group_t* group,
-                        int mutex_count,
-                        osp_mutex_t* *mutex_array);
+osp_result_t OSP_Destroy_mutexes(osp_group_t* group,
+                                 int mutex_count,
+                                 osp_mutex_t* *mutex_array);
 
 /**
  * \brief Local operation to lock a mutex.  This call blocks until the mutex has been locked.
@@ -720,8 +722,8 @@ int OSP_Destroy_mutexes(osp_group_t* group,
  * \ingroup Atomics
  */
 
-int OSP_Lock_mutex(osp_group_t* group,
-                   osp_mutex_t* mutex);
+osp_result_t OSP_Lock_mutex(osp_group_t* group,
+                            osp_mutex_t* mutex);
 
 /**
  * \brief Local operation to trylock a mutex.
@@ -736,9 +738,9 @@ int OSP_Lock_mutex(osp_group_t* group,
  * \ingroup Atomics
  */
 
-int OSP_Trylock_mutex(osp_group_t* group,
-                      osp_mutex_t* mutex,
-                      osp_bool_t *acquired);
+osp_result_t OSP_Trylock_mutex(osp_group_t* group,
+                               osp_mutex_t* mutex,
+                               osp_bool_t *acquired);
 
 /**
  * \brief Local operation to unlock a mutex.  This call blocks until the mutex has been unlocked.
@@ -753,8 +755,8 @@ int OSP_Trylock_mutex(osp_group_t* group,
  * \ingroup Atomics
  */
 
-int OSP_Unlock_mutex(osp_group_t* group,
-                     osp_mutex_t* mutex);
+osp_result_t OSP_Unlock_mutex(osp_group_t* group,
+                              osp_mutex_t* mutex);
 
 /**
  * \brief Local operation to lock a list of mutexes.  This call blocks until ALL
@@ -771,9 +773,9 @@ int OSP_Unlock_mutex(osp_group_t* group,
  * \ingroup Atomics
  */
 
-int OSP_Lock_mutexes(osp_group_t* group,
-                     int count,
-                     osp_mutex_t* *mutex_array);
+osp_result_t OSP_Lock_mutexes(osp_group_t* group,
+                              int count,
+                              osp_mutex_t* *mutex_array);
 
 /**
  * \brief Local operation to trylock a list of mutexes.  This call attempts to acquire all the
@@ -791,10 +793,10 @@ int OSP_Lock_mutexes(osp_group_t* group,
  * \ingroup Atomics
  */
 
-int OSP_Trylock_mutexes(osp_group_t* group,
-                        int count,
-                        osp_mutex_t* *mutex_array,
-                        osp_bool_t* *acquired);
+osp_result_t OSP_Trylock_mutexes(osp_group_t* group,
+                                 int count,
+                                 osp_mutex_t* *mutex_array,
+                                 osp_bool_t* *acquired);
 
 /**
  * \brief Local operation to unlock a list of mutexes
@@ -809,9 +811,9 @@ int OSP_Trylock_mutexes(osp_group_t* group,
  * \ingroup Atomics
  */
 
-int OSP_Unlock_mutexes(osp_group_t* group,
-                       int count,
-                       osp_mutex_t* *mutex_array);
+osp_result_t OSP_Unlock_mutexes(osp_group_t* group,
+                                int count,
+                                osp_mutex_t* *mutex_array);
 
 /* ********************************************************************** */
 /*                                                                        */
@@ -837,11 +839,11 @@ int OSP_Unlock_mutexes(osp_group_t* group,
  * \ingroup DATA_TRANSFER
  */
 
-int OSP_Put(int                      bytes,
-            void*                    source_ptr,
-            osp_global_memregion_t*  memregion,
-            int                      target_rank,
-            osp_offset_t             target_offset);
+osp_result_t OSP_Put(int                      bytes,
+                     void*                    source_ptr,
+                     osp_global_memregion_t*  memregion,
+                     int                      target_rank,
+                     osp_offset_t             target_offset);
 
 /**
  * \brief Non-Blocking copy of contiguous data from local memory to remote memory.
@@ -861,12 +863,12 @@ int OSP_Put(int                      bytes,
  * \ingroup DATA_TRANSFER
  */
 
-int OSP_NbPut(int                      bytes,
-              void*                    source_ptr,
-              osp_global_memregion_t*  memregion,
-              int                      target_rank,
-              osp_offset_t             target_offset
-              osp_handle_t             handle);
+osp_result_t OSP_NbPut(int                      bytes,
+                       void*                    source_ptr,
+                       osp_global_memregion_t*  memregion,
+                       int                      target_rank,
+                       osp_offset_t             target_offset
+                       osp_handle_t             handle);
 
 /**
  * \brief Blocking multiple-copy of contiguous data from local memory to remote memory.
@@ -883,11 +885,11 @@ int OSP_NbPut(int                      bytes,
  * \ingroup DATA_TRANSFER
  */
 
-int OSP_MultiPut(int*                     bytes,
-                 void**                   source_ptr,
-                 osp_global_memregion_t*  memregion,
-                 int*                     target_rank,
-                 osp_offset_t*            target_offset);
+osp_result_t OSP_MultiPut(int*                     bytes,
+                          void**                   source_ptr,
+                          osp_global_memregion_t*  memregion,
+                          int*                     target_rank,
+                          osp_offset_t*            target_offset);
 
 /**
  * \brief Non-Blocking multiple-copy of contiguous data from local memory to remote memory.
@@ -905,12 +907,12 @@ int OSP_MultiPut(int*                     bytes,
  * \ingroup DATA_TRANSFER
  */
 
-int OSP_NbMultiPut(int*                      bytes,
-                    void**                   source_ptr,
-                    osp_global_memregion_t*  memregion,
-                    int*                     target_rank,
-                    osp_offset_t*            target_offset,
-                    osp_handle_t             handle);
+osp_result_t OSP_NbMultiPut(int*                      bytes,
+                            void**                   source_ptr,
+                            osp_global_memregion_t*  memregion,
+                            int*                     target_rank,
+                            osp_offset_t*            target_offset,
+                            osp_handle_t             handle);
 
 /**
  * \brief Blocking copy of strided data from local memory to remote memory.
@@ -927,11 +929,11 @@ int OSP_NbMultiPut(int*                      bytes,
  * \ingroup DATA_TRANSFER
  */
 
-int OSP_PutS(osp_stride_descr_t        stride_descr,
-             void*                     source_ptr,
-             osp_global_memregion_t*   memregion,
-             int                       target_rank,
-             osp_offset_t              target_offset);
+osp_result_t OSP_PutS(osp_stride_descr_t        stride_descr,
+                      void*                     source_ptr,
+                      osp_global_memregion_t*   memregion,
+                      int                       target_rank,
+                      osp_offset_t              target_offset);
 
 /**
  * \brief Non-Blocking copy of strided data from local memory to remote memory.
@@ -949,12 +951,12 @@ int OSP_PutS(osp_stride_descr_t        stride_descr,
  * \ingroup DATA_TRANSFER
  */
 
-int OSP_NbPutS(osp_stride_descr_t        stride_descr,
-               void*                     source_ptr,
-               osp_global_memregion_t*   memregion,
-               int                       target_rank,
-               osp_offset_t              target_offset,
-               osp_handle_t              handle);
+osp_result_t OSP_NbPutS(osp_stride_descr_t        stride_descr,
+                        void*                     source_ptr,
+                        osp_global_memregion_t*   memregion,
+                        int                       target_rank,
+                        osp_offset_t              target_offset,
+                        osp_handle_t              handle);
 
 /**
  * \brief Blocking multiple-copy of strided data from local memory to remote memory.
@@ -971,11 +973,11 @@ int OSP_NbPutS(osp_stride_descr_t        stride_descr,
  * \ingroup DATA_TRANSFER
  */
 
-int OSP_MultiPutS(osp_stride_descr_t*       stride_descr,
-                  void**                    source_ptr,
-                  osp_global_memregion_t*   memregion,
-                  int*                      target_rank,
-                  osp_offset_t*             target_offset);
+osp_result_t OSP_MultiPutS(osp_stride_descr_t*       stride_descr,
+                           void**                    source_ptr,
+                           osp_global_memregion_t*   memregion,
+                           int*                      target_rank,
+                           osp_offset_t*             target_offset);
 
 /**
  * \brief Non-Blocking multiple-copy of strided data from local memory to remote memory.
@@ -993,12 +995,12 @@ int OSP_MultiPutS(osp_stride_descr_t*       stride_descr,
  * \ingroup DATA_TRANSFER
  */
 
-int OSP_NbMultiPutS(osp_stride_descr_t*       stride_descr,
-                    void**                    source_ptr,
-                    osp_global_memregion_t*   memregion,
-                    int*                      target_rank,
-                    osp_offset_t*             target_offset,
-                    osp_handle_t              handle);
+osp_result_t OSP_NbMultiPutS(osp_stride_descr_t*       stride_descr,
+                             void**                    source_ptr,
+                             osp_global_memregion_t*   memregion,
+                             int*                      target_rank,
+                             osp_offset_t*             target_offset,
+                             osp_handle_t              handle);
 
 /**
  * \brief Blocking accumulate of contiguous data from local memory to remote memory.
@@ -1018,12 +1020,12 @@ int OSP_NbMultiPutS(osp_stride_descr_t*       stride_descr,
  * \ingroup DATA_TRANSFER
  */
 
-int OSP_Acc(osp_acc_descr_t acc_descr,
-            int bytes,
-            void* source_ptr,
-            osp_global_memregion_t* memregion,
-            int target_rank,
-            osp_offset_t target_offset);
+osp_result_t OSP_Acc(osp_acc_descr_t acc_descr,
+                     int bytes,
+                     void* source_ptr,
+                     osp_global_memregion_t* memregion,
+                     int target_rank,
+                     osp_offset_t target_offset);
 
 /**
  * \brief Non-Blocking accumulate of contiguous data from local memory to remote memory.
@@ -1045,13 +1047,13 @@ int OSP_Acc(osp_acc_descr_t acc_descr,
  * \ingroup DATA_TRANSFER
  */
 
-int OSP_NbAcc(osp_acc_descr_t acc_descr,
-              int bytes,
-              void* source_ptr,
-              osp_global_memregion_t* memregion,
-              int target_rank,
-              osp_offset_t target_offset,
-              osp_handle_t handle);
+osp_result_t OSP_NbAcc(osp_acc_descr_t acc_descr,
+                       int bytes,
+                       void* source_ptr,
+                       osp_global_memregion_t* memregion,
+                       int target_rank,
+                       osp_offset_t target_offset,
+                       osp_handle_t handle);
 
 /**
  * \brief Blocking multiple-accumulate of contiguous data from local memory to remote memory.
@@ -1069,12 +1071,12 @@ int OSP_NbAcc(osp_acc_descr_t acc_descr,
  * \ingroup DATA_TRANSFER
  */
 
-int OSP_MultiAcc(osp_acc_descr_t* acc_descr,
-                 int* bytes,
-                 void** source_ptr,
-                 osp_global_memregion_t* memregion,
-                 int* target_rank,
-                 osp_offset_t* target_offset);
+osp_result_t OSP_MultiAcc(osp_acc_descr_t* acc_descr,
+                          int* bytes,
+                          void** source_ptr,
+                          osp_global_memregion_t* memregion,
+                          int* target_rank,
+                          osp_offset_t* target_offset);
 
 /**
  * \brief Non-Blocking multiple-accumulate of contiguous data from local memory to remote memory.
@@ -1093,13 +1095,13 @@ int OSP_MultiAcc(osp_acc_descr_t* acc_descr,
  * \ingroup DATA_TRANSFER
  */
 
-int OSP_NbMultiAcc(osp_acc_descr_t* acc_descr,
-                   int* bytes,
-                    void** source_ptr,
-                    osp_global_memregion_t* memregion,
-                    int* target_rank,
-                    osp_offset_t* target_offset,
-                    osp_handle_t handle);
+osp_result_t OSP_NbMultiAcc(osp_acc_descr_t* acc_descr,
+                            int* bytes,
+                            void** source_ptr,
+                            osp_global_memregion_t* memregion,
+                            int* target_rank,
+                            osp_offset_t* target_offset,
+                            osp_handle_t handle);
 
 /**
  * \brief Blocking accumulate of strided data from local memory to remote memory.
@@ -1117,12 +1119,12 @@ int OSP_NbMultiAcc(osp_acc_descr_t* acc_descr,
  * \ingroup DATA_TRANSFER
  */
 
-int OSP_AccS(osp_acc_descr_t acc_descr,
-             osp_stride_descr_t stride_descr,
-             void* source_ptr,
-             osp_global_memregion_t* memregion,
-             int target_rank,
-             osp_offset_t target_offset);
+osp_result_t OSP_AccS(osp_acc_descr_t acc_descr,
+                      osp_stride_descr_t stride_descr,
+                      void* source_ptr,
+                      osp_global_memregion_t* memregion,
+                      int target_rank,
+                      osp_offset_t target_offset);
 
 /**
  * \brief Non-Blocking accumulate of strided data from local memory to remote memory.
@@ -1141,13 +1143,13 @@ int OSP_AccS(osp_acc_descr_t acc_descr,
  * \ingroup DATA_TRANSFER
  */
 
-int OSP_NbAccS(osp_acc_descr_t acc_descr,
-               osp_stride_descr_t stride_descr,
-               void* source_ptr,
-               osp_global_memregion_t* memregion,
-               int target_rank,
-               osp_offset_t target_offset,
-               osp_handle_t handle);
+osp_result_t OSP_NbAccS(osp_acc_descr_t acc_descr,
+                        osp_stride_descr_t stride_descr,
+                        void* source_ptr,
+                        osp_global_memregion_t* memregion,
+                        int target_rank,
+                        osp_offset_t target_offset,
+                        osp_handle_t handle);
 
 /**
  * \brief Blocking multiple-accumulate of strided data from local memory to remote memory.
@@ -1165,12 +1167,12 @@ int OSP_NbAccS(osp_acc_descr_t acc_descr,
  * \ingroup DATA_TRANSFER
  */
 
-int OSP_MultiAccS(osp_acc_descr_t* acc_descr,
-                  osp_stride_descr_t* stride_descr,
-                  void** source_ptr,
-                  osp_global_memregion_t* memregion,
-                  int* target_rank,
-                  osp_offset_t* target_offset);
+osp_result_t OSP_MultiAccS(osp_acc_descr_t* acc_descr,
+                           osp_stride_descr_t* stride_descr,
+                           void** source_ptr,
+                           osp_global_memregion_t* memregion,
+                           int* target_rank,
+                           osp_offset_t* target_offset);
 
 /**
  * \brief Non-Blocking multiple-accumulate of strided data from local memory to remote memory.
@@ -1189,13 +1191,13 @@ int OSP_MultiAccS(osp_acc_descr_t* acc_descr,
  * \ingroup DATA_TRANSFER
  */
 
-int OSP_NbMultiAccS(osp_acc_descr_t* acc_descr,
-                    osp_stride_descr_t* stride_descr,
-                    void** source_ptr,
-                    osp_global_memregion_t* memregion,
-                    int* target_rank,
-                    osp_offset_t* target_offset,
-                    osp_handle_t handle);
+osp_result_t OSP_NbMultiAccS(osp_acc_descr_t* acc_descr,
+                             osp_stride_descr_t* stride_descr,
+                             void** source_ptr,
+                             osp_global_memregion_t* memregion,
+                             int* target_rank,
+                             osp_offset_t* target_offset,
+                             osp_handle_t handle);
 
 /**
  * \brief Blocking copy of contiguous data from remote memory to local memory.
@@ -1214,11 +1216,11 @@ int OSP_NbMultiAccS(osp_acc_descr_t* acc_descr,
  * \ingroup DATA_TRANSFER
  */
 
-int OSP_Get(int bytes,
-            void* source_ptr,
-            osp_global_memregion_t* memregion,
-            int target_rank,
-            osp_offset_t target_offset);
+osp_result_t OSP_Get(int bytes,
+                     void* source_ptr,
+                     osp_global_memregion_t* memregion,
+                     int target_rank,
+                     osp_offset_t target_offset);
 
 /**
  * \brief Non-Blocking copy of contiguous data from remote memory to local memory.
@@ -1238,12 +1240,12 @@ int OSP_Get(int bytes,
  * \ingroup DATA_TRANSFER
  */
 
-int OSP_NbGet(int bytes,
-              void* source_ptr,
-              osp_global_memregion_t* memregion,
-              int target_rank,
-              osp_offset_t target_offset,
-              osp_handle_t handle);
+osp_result_t OSP_NbGet(int bytes,
+                       void* source_ptr,
+                       osp_global_memregion_t* memregion,
+                       int target_rank,
+                       osp_offset_t target_offset,
+                       osp_handle_t handle);
 
 /**
  * \brief Blocking multiple-copy of contiguous data from remote memory to local memory.
@@ -1260,11 +1262,11 @@ int OSP_NbGet(int bytes,
  * \ingroup DATA_TRANSFER
  */
 
-int OSP_MultiGet(int* bytes,
-                 void** source_ptr,
-                 osp_global_memregion_t* memregion,
-                 int* target_rank,
-                 osp_offset_t* target_offset);
+osp_result_t OSP_MultiGet(int* bytes,
+                          void** source_ptr,
+                          osp_global_memregion_t* memregion,
+                          int* target_rank,
+                          osp_offset_t* target_offset);
 
 /**
  * \brief Non-Blocking multiple-copy of contiguous data from remote memory to local memory.
@@ -1282,12 +1284,12 @@ int OSP_MultiGet(int* bytes,
  * \ingroup DATA_TRANSFER
  */
 
-int OSP_NbMultiGet(int* bytes,
-                    void** source_ptr,
-                    osp_global_memregion_t* memregion,
-                    int* target_rank,
-                    osp_offset_t* target_offset,
-                    osp_handle_t handle);
+osp_result_t OSP_NbMultiGet(int* bytes,
+                            void** source_ptr,
+                            osp_global_memregion_t* memregion,
+                            int* target_rank,
+                            osp_offset_t* target_offset,
+                            osp_handle_t handle);
 
 /**
  * \brief Blocking copy of strided data from remote memory to local memory.
@@ -1304,11 +1306,11 @@ int OSP_NbMultiGet(int* bytes,
  * \ingroup DATA_TRANSFER
  */
 
-int OSP_GetS(osp_stride_descr_t stride_descr,
-             void* source_ptr,
-             osp_global_memregion_t* memregion,
-             int target_rank,
-             osp_offset_t target_offset);
+osp_result_t OSP_GetS(osp_stride_descr_t stride_descr,
+                      void* source_ptr,
+                      osp_global_memregion_t* memregion,
+                      int target_rank,
+                      osp_offset_t target_offset);
 
 /**
  * \brief Non-Blocking copy of strided data from remote memory to local memory.
@@ -1326,12 +1328,12 @@ int OSP_GetS(osp_stride_descr_t stride_descr,
  * \ingroup DATA_TRANSFER
  */
 
-int OSP_NbGetS(osp_stride_descr_t stride_descr,
-               void* source_ptr,
-               osp_global_memregion_t* memregion,
-               int target_rank,
-               osp_offset_t target_offset,
-               osp_handle_t handle);
+osp_result_t OSP_NbGetS(osp_stride_descr_t stride_descr,
+                        void* source_ptr,
+                        osp_global_memregion_t* memregion,
+                        int target_rank,
+                        osp_offset_t target_offset,
+                        osp_handle_t handle);
 
 /**
  * \brief Blocking multiple-copy of strided data from remote memory to local memory.
@@ -1348,11 +1350,11 @@ int OSP_NbGetS(osp_stride_descr_t stride_descr,
  * \ingroup DATA_TRANSFER
  */
 
-int OSP_MultiGetS(osp_stride_descr_t* stride_descr,
-                  void** source_ptr,
-                  osp_global_memregion_t* memregion,
-                  int* target_rank,
-                  osp_offset_t* target_offset);
+osp_result_t OSP_MultiGetS(osp_stride_descr_t* stride_descr,
+                           void** source_ptr,
+                           osp_global_memregion_t* memregion,
+                           int* target_rank,
+                           osp_offset_t* target_offset);
 
 /**
  * \brief Non-Blocking multiple-copy of strided data from remote memory to local memory.
@@ -1370,12 +1372,12 @@ int OSP_MultiGetS(osp_stride_descr_t* stride_descr,
  * \ingroup DATA_TRANSFER
  */
 
-int OSP_NbMultiGetS(osp_stride_descr_t* stride_descr,
-                    void** source_ptr,
-                    osp_global_memregion_t* memregion,
-                    int* target_rank,
-                    osp_offset_t* target_offset,
-                    osp_handle_t handle);
+osp_result_t OSP_NbMultiGetS(osp_stride_descr_t* stride_descr,
+                             void** source_ptr,
+                             osp_global_memregion_t* memregion,
+                             int* target_rank,
+                             osp_offset_t* target_offset,
+                             osp_handle_t handle);
 
 /**
  * \brief Blocking get-and-accumulate operation (aka RMW) on arbitrary data.
@@ -1403,13 +1405,13 @@ int OSP_NbMultiGetS(osp_stride_descr_t* stride_descr,
  * \ingroup DATA_TRANSFER
  */
 
-int OSP_Rmw(osp_acc_descr_t acc_descr,
-            int bytes,
-            void* in_ptr,
-            osp_global_memregion_t* memregion,
-            int target_rank,
-            osp_offset_t target_offset,
-            void* out_ptr);
+osp_result_t OSP_Rmw(osp_acc_descr_t acc_descr,
+                     int bytes,
+                     void* in_ptr,
+                     osp_global_memregion_t* memregion,
+                     int target_rank,
+                     osp_offset_t target_offset,
+                     void* out_ptr);
 
 /**
  * \brief Non-Blocking read-modify-write of contiguous data from local memory to remote memory.
@@ -1432,14 +1434,14 @@ int OSP_Rmw(osp_acc_descr_t acc_descr,
  * \ingroup DATA_TRANSFER
  */
 
-int OSP_NbRmw(osp_rmw_descr_t rmw_descr,
-              int bytes,
-              void* source_ptr,
-              osp_global_memregion_t* memregion,
-              int target_rank,
-              osp_offset_t target_offset,
-              void* out_ptr,
-              osp_handle_t handle);
+osp_result_t OSP_NbRmw(osp_rmw_descr_t rmw_descr,
+                       int bytes,
+                       void* source_ptr,
+                       osp_global_memregion_t* memregion,
+                       int target_rank,
+                       osp_offset_t target_offset,
+                       void* out_ptr,
+                       osp_handle_t handle);
 
 /**
  * \brief Blocking copy of contiguous data from remote memory to remote memory.
@@ -1461,13 +1463,13 @@ int OSP_NbRmw(osp_rmw_descr_t rmw_descr,
  * \ingroup DATA_TRANSFER
  */
 
-int OSP_Copy(int bytes,
-             osp_global_memregion_t* src_memregion,
-             int src_rank,
-             osp_offset_t src_offset,
-             osp_global_memregion_t* dest_memregion,
-             int dest_rank,
-             osp_offset_t dest_offset);
+osp_result_t OSP_Copy(int bytes,
+                      osp_global_memregion_t* src_memregion,
+                      int src_rank,
+                      osp_offset_t src_offset,
+                      osp_global_memregion_t* dest_memregion,
+                      int dest_rank,
+                      osp_offset_t dest_offset);
 
 /**
  * \brief Non-Blocking copy of contiguous data from remote memory to remote memory.
@@ -1490,14 +1492,14 @@ int OSP_Copy(int bytes,
  * \ingroup DATA_TRANSFER
  */
 
-int OSP_NbCopy(int bytes,
-                osp_global_memregion_t* src_memregion,
-                int src_rank,
-                osp_offset_t src_offset,
-                osp_global_memregion_t* dest_memregion,
-                int dest_rank,
-                osp_offset_t dest_offset,
-                osp_handle_t handle);
+osp_result_t OSP_NbCopy(int bytes,
+                        osp_global_memregion_t* src_memregion,
+                        int src_rank,
+                        osp_offset_t src_offset,
+                        osp_global_memregion_t* dest_memregion,
+                        int dest_rank,
+                        osp_offset_t dest_offset,
+                        osp_handle_t handle);
 
 /* ********************************************************************** */
 /*                                                                        */
@@ -1520,7 +1522,7 @@ int OSP_NbCopy(int bytes,
  * \ingroup SYNCHRONIZATION
  */
 
-int OSP_Sync_group(osp_group_t* group);
+osp_result_t OSP_Sync_group(osp_group_t* group);
 
 /**
  * \brief When the handle state is OSP_TRUE, all outstanding put or accumulate
@@ -1537,7 +1539,8 @@ int OSP_Sync_group(osp_group_t* group);
  * \ingroup SYNCHRONIZATION
  */
 
-int OSP_NbSync_group(osp_group_t* group, osp_handle_t handle);
+osp_result_t OSP_NbSync_group(osp_group_t* group,
+                              osp_handle_t handle);
 
 /**
  * \brief On return, this call ensures that all blocking and non-blocking put
@@ -1553,7 +1556,7 @@ int OSP_NbSync_group(osp_group_t* group, osp_handle_t handle);
  * \ingroup COMPLETION
  */
 
-int OSP_Flush(int proc);
+osp_result_t OSP_Flush(int proc);
 
 /**
  * \brief When the handle state is OSP_TRUE, all blocking and non-blocking put
@@ -1569,7 +1572,8 @@ int OSP_Flush(int proc);
  * \ingroup COMPLETION
  */
 
-int OSP_NbFlush(int proc, osp_handle_t handle);
+osp_result_t OSP_NbFlush(int proc,
+                         osp_handle_t handle);
 
 /**
  * \brief On return, this call ensures that all blocking and non-blocking put
@@ -1586,7 +1590,8 @@ int OSP_NbFlush(int proc, osp_handle_t handle);
  * \ingroup COMPLETION
  */
 
-int OSP_Flush_list(int count, int *proc_list);
+osp_result_t OSP_Flush_list(int count,
+                            int *proc_list);
 
 /**
  * \brief When the handle state is OSP_TRUE, all blocking and non-blocking put
@@ -1603,7 +1608,9 @@ int OSP_Flush_list(int count, int *proc_list);
  * \ingroup COMPLETION
  */
 
-int OSP_NbFlush_list(int count, int *proc_list, osp_handle_t handle);
+osp_result_t OSP_NbFlush_list(int count,
+                              int *proc_list,
+                              osp_handle_t handle);
 
 /**
  * \brief On return, this call ensures that all blocking and non-blocking put
@@ -1620,7 +1627,7 @@ int OSP_NbFlush_list(int count, int *proc_list, osp_handle_t handle);
  * \ingroup COMPLETION
  */
 
-int OSP_Flush_group(osp_group_t* group);
+osp_result_t OSP_Flush_group(osp_group_t* group);
 
 /**
  * \brief When the handle state is OSP_TRUE, all blocking and non-blocking put
@@ -1637,7 +1644,8 @@ int OSP_Flush_group(osp_group_t* group);
  * \ingroup COMPLETION
  */
 
-int OSP_NbFlush_group(osp_group_t* group, osp_handle_t handle);
+osp_result_t OSP_NbFlush_group(osp_group_t* group,
+                               osp_handle_t handle);
 
 /**
  * \brief Blocks on completion of all non-blocking handles.
@@ -1649,7 +1657,7 @@ int OSP_NbFlush_group(osp_group_t* group, osp_handle_t handle);
  * \ingroup SYNCHRONIZATION
  */
 
-int OSP_Wait_handle_all(void);
+osp_result_t OSP_Wait_handle_all(void);
 
 /**
  * \brief Blocks on completion of a non-blocking handle.
@@ -1661,7 +1669,7 @@ int OSP_Wait_handle_all(void);
  * \ingroup SYNCHRONIZATION
  */
 
-int OSP_Wait_handle(osp_handle_t handle);
+osp_result_t OSP_Wait_handle(osp_handle_t handle);
 
 /**
  * \brief Blocks on completion of all elements in a vector of non-blocking handles.
@@ -1674,7 +1682,8 @@ int OSP_Wait_handle(osp_handle_t handle);
  * \ingroup SYNCHRONIZATION
  */
 
-int OSP_Wait_handle_list(int count, osp_handle_t* handles);
+osp_result_t OSP_Wait_handle_list(int count,
+                                  osp_handle_t* handles);
 
 /**
  * \brief Blocks on completion of a non-blocking handle.
@@ -1687,7 +1696,8 @@ int OSP_Wait_handle_list(int count, osp_handle_t* handles);
  * \ingroup SYNCHRONIZATION
  */
 
-int OSP_Test_handle(osp_handle_t handle, osp_bool_t* completed);
+osp_result_t OSP_Test_handle(osp_handle_t handle,
+                             osp_bool_t* completed);
 
 /**
  * \brief Blocks on completion of all elements in a vector of non-blocking handles.
@@ -1701,7 +1711,9 @@ int OSP_Test_handle(osp_handle_t handle, osp_bool_t* completed);
  * \ingroup SYNCHRONIZATION
  */
 
-int OSP_Test_handle_list(int count, osp_handle_t *handles, osp_bool_t* *completed);
+osp_result_t OSP_Test_handle_list(int count,
+                                  osp_handle_t *handles,
+                                  osp_bool_t* *completed);
 
 /**
  * \brief Resets a non-blocking handle.
@@ -1713,7 +1725,7 @@ int OSP_Test_handle_list(int count, osp_handle_t *handles, osp_bool_t* *complete
  * \ingroup SYNCHRONIZATION
  */
 
-int OSP_Reset_handle(osp_handle_t* handle);
+osp_result_t OSP_Reset_handle(osp_handle_t* handle);
 
 /**
  * \brief Resets a non-blocking handle.
@@ -1726,7 +1738,7 @@ int OSP_Reset_handle(osp_handle_t* handle);
  * \ingroup SYNCHRONIZATION
  */
 
-int OSP_Reset_handle_list(int count, osp_handle_t* handle);
+osp_result_t OSP_Reset_handle_list(int count, osp_handle_t* handle);
 
 /*! @} */
 
