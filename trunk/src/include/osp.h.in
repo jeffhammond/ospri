@@ -13,9 +13,6 @@ extern "C"
 {
 #endif /* __cplusplus */
 
-#define OSP_SUCCESS 0
-#define OSP_ERROR   1
-
 /** @file osp.h.in */
 
 /*! \addtogroup osp OSP Public Interface
@@ -45,11 +42,11 @@ typedef enum
 {
     OSP_THREAD_SINGLE,     /**< There is only one thread present. */
     OSP_THREAD_FUNNELED,   /**< There are multiple threads present
-                               but only the main thread makes OSP calls. */
+                                but only the main thread makes OSP calls. */
     OSP_THREAD_SERIALIZED, /**< There are multiple threads present and each can make OSP calls,
-                               but never simultaneously. */
+                                but never simultaneously. */
     OSP_THREAD_MULTIPLE    /**< There are multiple threads present and each can make OSP calls. */
-} OSP_thread_level;
+} osp_thread_level;
 
 /**
  * \brief Datatype support within OSP.
@@ -69,7 +66,8 @@ typedef enum
     OSP_UINT64, /**< uint64 */
     OSP_FLOAT,  /**< single-precision */
     OSP_DOUBLE, /**< double-precision */
-} OSP_datatype_t;
+}
+osp_datatype_t;
 
 /**
  * \brief OSP boolean.
@@ -82,7 +80,8 @@ typedef enum
 {
     OSP_TRUE = 1,
     OSP_FALSE = 0,
-} OSP_bool_t;
+}
+osp_bool_t;
 
 /**
  * \brief OSP result (error code).
@@ -93,11 +92,12 @@ typedef enum
 
 typedef enum
 {
-    OSP_NO_ERROR = 0, /* Can't use OSP_SUCCESS since we're already using that.  Should fix this. */
+    OSP_SUCCESS,
     OSP_MEMORY_ERROR,
     OSP_NETWORK_ERROR,
     OSP_UNKNOWN_ERROR,
-} OSP_result_t;
+}
+osp_result_t;
 
 /**
  * \brief OSP reduction operations
@@ -114,12 +114,15 @@ typedef enum
     OSP_MIN,
     OSP_MAXABS, /* Returns MAX(ABS(buffer)) */
     OSP_MINABS, /* Returns MIN(ABS(buffer)) */
-    OSP_OR,     /* should be only for integer types but I don't know if we check */
+    OSP_OR,     /* OR - only for integer types */
+    OSP_XOR,    /* XOR - only for integer types */
+    OSP_BOR,    /* bit-wise OR - only for integer types */
     OSP_BXOR,   /* bit-wise XOR - only for integer types */
     OSP_SAME,   /* Sets the return value if the buffer (element) is the same across all nodes.
                   This operation is equivalent to doing MAX(buffer) and MIN(-buffer) simultaneously
                   and testing for equality element-wise. */
-} OSP_reduce_op_t;
+}
+osp_reduce_op_t;
 
 /**
  * \brief OSP RMW operations
@@ -130,33 +133,26 @@ typedef enum
 
 typedef enum
 {
-    OSP_FETCH_AND_ADD,
+    OSP_INC, /* x += 1 */
+    OSP_ADD, /* x += y */
+    OSP_AND, /* x &= y */
+    OSP_OR,  /* x |= y */
+    OSP_XOR, /* x ^= y */
+    OSP_FETCH_AND_INC, /* get x; x += 1 */
+    OSP_FETCH_AND_ADD, /* get x; x += y */
+    OSP_FETCH_AND_AND, /* get x; x &= y */
+    OSP_FETCH_AND_OR,  /* get x; x |= y */
+    OSP_FETCH_AND_XOR, /* get x; x ^= y */
+    OSP_COMPARE_AND_SWAP,
     OSP_SWAP,
-} OSP_atomic_op_t;
+}
+osp_atomic_op_t;
 
 /* ********************************************************************* */
 /*                                                                       */
 /*               OSP data structures                                      */
 /*                                                                       */
 /* ********************************************************************* */
-
-/**
- * \brief OSP memregion type.
- *
- * \see OSP_Allocate_memregion, OSP_Free_memregion, OSP_Bind_memregion
- *
- * \ingroup TYPEDEFS
- *
- */
-
-typedef struct OSP_memregion
-{
-    void* base_address;
-    unsigned size;           /* Size in elements of type not bytes (unless bytes is type). */
-    OSP_datatype_t type;      /* Not sure if this is the right idea but one can always use bytes. */
-    void* memregion_options; /* This is a pointer to the device-specific memregion options that
-                                 are the motivation for creating this struct in the first place. */
-} OSP_memregion_t;
 
 /**
  * \brief OSP offset type.
@@ -167,7 +163,56 @@ typedef struct OSP_memregion
  *
  */
 
-typedef unsigned int OSP_offset_t;
+typedef unsigned long osp_offset_t;
+
+/**
+ * \brief OSP device type.
+ *
+ * A device which has its own address space.
+ *
+ * \see OSP_Allocate_global_memregion, OSP_Destroy_global_memregion
+ *
+ * \ingroup TYPEDEFS
+ *
+ */
+
+typedef struct osp_device
+{
+    char* name;
+    void* ospd_device_info;
+}
+osp_device_t;
+
+/**
+ * \brief OSP global memregion type.
+ *
+ * A global memregion is like an MPI-2 RMA Window or a stripped-down GA global array.
+ * It is an opaque object which holds all the necessary information required to
+ * perform RMA operations.
+ *
+ * The contents of the this type are the local and global info.
+ * ospd_local_memregion_info contains either the native aka CPU info,
+ * meaning the base pointer and total size, or it contains the
+ * device pointer and total size if referring to GPU memory.
+ * Obviously, whether the memory is in the same address space
+ * or an attached address space must be specified.
+ *
+ * The global memregion info is where we hide the details of remote registration.
+ * For symmetric allocation, it can be O(1) elements whereas the more common
+ * case requires O(N) elements.
+ *
+ * \see OSP_Create_global_memregion, OSP_Allocate_global_memregion, OSP_Destroy_global_memregion
+ *
+ * \ingroup TYPEDEFS
+ *
+ */
+
+typedef struct osp_global_memregion
+{
+    void* ospd_local_memregion_info;  /**/
+    void* ospd_global_memregion_info; /**/
+}
+osp_global_memregion_t;
 
 /**
  * \brief OSP group type.
@@ -188,36 +233,15 @@ typedef unsigned int OSP_offset_t;
  *         where the group is confined to a single node.  There will also
  *         be quirks arising in the GPU context I want to deal with directly.
  */
-typedef struct OSP_group
+typedef struct osp_group
 {
     int* rank_list;
-} OSP_group_t;
+}
+osp_group_t;
 
-OSP_group_t osp_group_world;
+osp_group_t osp_group_world;
 
 #define OSP_GROUP_WORLD &osp_group_world
-
-/**
- * \brief OSP endpoint type.
- *
- * \see OSP_PutMR
- *
- * \ingroup TYPEDEFS
- *
- */
-
-typedef unsigned int OSP_endpoint_t;
-
-/**
- * \brief OSP size type.
- *
- * \see OSP_PutMR
- *
- * \ingroup TYPEDEFS
- *
- */
-
-typedef unsigned int OSP_size_t;
 
 /**
  * \brief OSP non-blocking handle type.
@@ -230,7 +254,7 @@ typedef unsigned int OSP_size_t;
  *
  */
 
-typedef void* OSP_handle_t;
+typedef void* osp_handle_t;
 
 /**
  * \brief OSP shared counter.
@@ -239,24 +263,76 @@ typedef void* OSP_handle_t;
  *
  */
 
-typedef void* OSP_counter_t;
+typedef struct osp_counter
+{
+    int host_rank;
+    void* ospd_counter_info;
+}
+osp_counter_t;
 
 /**
- * \brief OSP io vector type.
- *
- * \see OSP_PutV, OSP_GetV, OSP_PutAccV
+ * \brief OSP mutex.
  *
  * \ingroup TYPEDEFS
  *
  */
 
-typedef struct OSP_iov_t
+typedef struct osp_mutex
 {
-    void **source_ptr_ar;
-    void **target_ptr_ar;
-    int size; /*In bytes*/
-    int ptr_ar_len;
-} OSP_iov_t;
+    int host_rank;
+    void* ospd_mutex_info;
+}
+osp_mutex_t;
+
+/**
+ * \brief OSP stride descriptor type.
+ *
+ * \see OSP_PutS, OSP_GetS, OSP_AccS, etc.
+ *
+ * \ingroup TYPEDEFS
+ *
+ */
+
+typedef struct osp_stride_descr
+{
+    int num_strides;
+    int* stride_offset;
+    int* block_size;
+}
+osp_stride_descr_t;
+
+/**
+ * \brief OSP accumulate descriptor type.
+ *
+ * \see OSP_PutS, OSP_GetS, OSP_AccS, etc.
+ *
+ * \ingroup TYPEDEFS
+ *
+ */
+
+typedef struct osp_acc_descr
+{
+    osp_datatype_t type;
+    void* scaling_factor;
+}
+osp_acc_descr_t;
+
+///**
+// * \brief OSP io vector type.
+// *
+// * \see OSP_PutV, OSP_GetV, OSP_PutAccV
+// *
+// * \ingroup TYPEDEFS
+// *
+// */
+//
+//typedef struct osp_iov_t
+//{
+//    void **source_ptr_ar;
+//    void **target_ptr_ar;
+//    int size; /*In bytes*/
+//    int ptr_ar_len;
+//} osp_iov_t;
 
 /* ********************************************************************* */
 /*                                                                       */
@@ -312,7 +388,7 @@ double OSP_Time_seconds(void);
  * \ingroup INFORMATION
  */
 
-int OSP_Process_id(OSP_group_t* group);
+int OSP_Process_id(osp_group_t* group);
 
 /**
  * \brief Returns total number of processes in a group or -1 in the case of an error.
@@ -326,7 +402,7 @@ int OSP_Process_id(OSP_group_t* group);
  * \ingroup INFORMATION
  */
 
-int OSP_Process_total(OSP_group_t* group);
+int OSP_Process_total(osp_group_t* group);
 
 /**
  * \brief Returns node rank relative to the group base of the process calling it,
@@ -340,7 +416,7 @@ int OSP_Process_total(OSP_group_t* group);
  * \ingroup INFORMATION
  */
 
-int OSP_Node_id(OSP_group_t* group);
+int OSP_Node_id(osp_group_t* group);
 
 /**
  * \brief Returns total number of nodes in a group, or -1 in the case of an error.
@@ -353,7 +429,7 @@ int OSP_Node_id(OSP_group_t* group);
  * \ingroup INFORMATION
  */
 
-int OSP_Node_total(OSP_group_t* group);
+int OSP_Node_total(osp_group_t* group);
 
 /* ********************************************************************* */
 /*                                                                       */
@@ -385,7 +461,7 @@ int OSP_Node_total(OSP_group_t* group);
  * \ingroup MANAGEMENT
  */
 
-int OSP_Initialize(int OSP_thread_level);
+int OSP_Initialize(int osp_thread_level);
 
 /**
  * \brief Terminates the OSP environment normally.
@@ -431,29 +507,56 @@ void OSP_Abort(int error_code, char error_message[]);
 /* ********************************************************************* */
 
 /**
- * \brief A local operation to allocate memory to be used in context of OSP copy operations.
+ * \brief A collective operation to allocate memory to be used in context of OSP copy operations.
  *
  * \note Memory allocated with this function will be properly aligned for the architecture.
  *
  * \warning Memory allocated with this function must be freed by OSP_Free_segment.
  *
  * \param[out] rc            The error code.
- * \param[out] ptr           Pointer to memregion structure to be created.
- * \param[in]  bytes         The amount of memory requested.
+ * \param[in]  group         OSP group over which the memregion is shared.
+ * \param[in]  bytes         The amount of memory provided by ptr.
+ * \param[in]  device        The device address space in which the memregion is created.
+ * \param[out] memregion     Pointer to memregion structure to be created.
  *
  * \see OSP_Free_memregion, OSP_Bind_memregion
  *
  * \ingroup MEMORY
  */
 
-int OSP_Allocate_memregion(OSP_memregion_t* memregion, int bytes);
+int OSP_Allocate_global_memregion(osp_group_t* group,
+                                  int bytes,
+                                  osp_device_t device,
+                                  osp_global_memregion_t* memregion);
 
 /**
- * \brief A local operation to free memory allocated by OSP_Alloc_segment.
+ * \brief A collective operation to allocate memory to be used in context of OSP copy operations.
  *
- * \warning It is erroneous to attempt to free memory not allocated by OSP_Alloc_segment.
+ * \note Memory allocated with this function will be properly aligned for the architecture.
+ *
+ * \warning Memory allocated with this function must be freed by OSP_Free_segment.
  *
  * \param[out] rc            The error code.
+ * \param[in]  group         OSP group over which the memregion is shared.
+ * \param[in]  bytes         The amount of memory provided by ptr.
+ * \param[in]  ptr           Pointer to memory to be included in the memregion .
+ * \param[out] memregion     Pointer to memregion structure to be created.
+ *
+ * \see OSP_Free_memregion, OSP_Bind_memregion
+ *
+ * \ingroup MEMORY
+ */
+
+int OSP_Create_global_memregion(osp_group_t* group,
+                                int bytes,
+                                void* ptr,
+                                osp_global_memregion_t* memregion);
+
+/**
+ * \brief A collective operation to free memory allocated by OSP_Create_global_memregion.
+ *
+ * \param[out] rc            The error code.
+ * \param[in]  group         OSP group over which the memregion is shared.
  * \param[in]  memregion     Pointer to memregion structure to be destroyed.
  *
  * \see OSP_Alloc_segment, OSP_Register_segment
@@ -461,193 +564,32 @@ int OSP_Allocate_memregion(OSP_memregion_t* memregion, int bytes);
  * \ingroup MEMORY
  */
 
-int OSP_Free_memregion(OSP_memregion_t* memregion);
-
-/**
- * \brief A local operation to register memory to be used in context of OSP copy operations.
- *
- * \note This call is not necessary for memory allocated with OSP_Alloc_segment.
- *
- * \note Memory allocated with this function will be tested for proper alignment and return
- *       an error if alignment checking has been disabled and the pointer is not properly aligned.
- *
- * \note OSP_Register_segment will check for valid allocation of the memory provided,
- *       potentially by writing "\0" to all bytes.
- *
- * \note This call may not work in all contexts.  For example, CUDA provides no API call to
- *       register pre-allocated memory.  A truly portable OSP program must not call this
- *       function.
- *
- * \note We can make this call portable if we copy the existing data into the memregion
- *       and free the original buffer, but this is going to have nasty side-effects
- *       if the user doesn't realize this is what is going on.
- *
- * \param[out] rc            The error code.
- * \param[in]  ptr           Pointer to memregion structure to be created.
- * \param[in]  ptr           Pointer to previously-allocated memory.
- * \param[in]  bytes         The amount of memory provided.
- *
- * \see OSP_Alloc_segment, OSP_Free_segment
- *
- * \ingroup MEMORY
- */
-
-int OSP_Bind_memregion(OSP_memregion_t* memregion, void** pointer, int bytes);
-
-/**
- * \brief A collective operation to exchange addresses of segments to be used in context of OSP copy operations.
- *
- * \note There is no local de-registration call because that could lead to erroneous programs.
- *       De-registration can only be effected by a call to OSP_Release_segments, which is collective.
- *
- * \param[out] rc            The error code.
- * \param[in]  group         Group of processes within which the pointer list is exchanged.
- * \param[in]  ptr           Pointer array. Each one points to memory allocated at one process, in order of ranks.
- * \param[in]  bytes         The size of memory allocated at each process.
- *
- * \see OSP_Release_segments
- *
- * \ingroup MEMORY
- */
-
-/* TODO: We should just implement alltoall and eliminate this function from the API. */
-int OSP_Exchange_memregions(OSP_group_t* group, void **ptr);
-
-/**
- * \brief A collective operation to invalidate and de-register memory segments
- *        associated with an OSP_Exchange_segments call.
- *
- * \param[out] rc            The error code.
- * \param[in]  group         Group of processes within which the pointer list was exchanged.
- * \param[in]  ptr           Pointer to the allocated memory.
- *
- * \see OSP_Exchange_segments
- *
- * \ingroup MEMORY
- */
+int OSP_Destroy_global_memregion(osp_group_t* group,
+                                 osp_global_memregion_t* memregion);
 
 /**
  * \brief Initializes the give non-blocking handle.
  *
  * \param[in] handle      Non-blocking handle upon which to be waited.
  *
- * \see OSP_handle_t, OSP_Wait_handle_list, OSP_Test_handle
+ * \see osp_handle_t, OSP_Wait_handle_list, OSP_Test_handle
  *
  * \ingroup MEMORY
  */
 
-int OSP_Allocate_handle(OSP_handle_t *handle);
+int OSP_Allocate_handle(osp_handle_t *handle);
 
 /**
  * \brief Initializes the give non-blocking handle.
  *
  * \param[in] handle      Non-blocking handle upon which to be waited.
  *
- * \see OSP_handle_t, OSP_Wait_handle_list, OSP_Test_handle
+ * \see osp_handle_t, OSP_Wait_handle_list, OSP_Test_handle
  *
  * \ingroup MEMORY
  */
 
-int OSP_Release_handle(OSP_handle_t handle);
-
-/**************************************************************************************/
-/*    WARNING: THIS PART OF THE API IS DEPRECATED AND WILL BE REMOVED EVENTUALLY      */
-/**************************************************************************************/
-
-/**
- * \brief A local operation to allocate memory to be used in context of OSP copy operations.
- *
- * \note Memory allocated with this function will be properly aligned for the architecture.
- *
- * \warning Memory allocated with this function must be freed by OSP_Free_segment.
- *
- * \param[out] rc            The error code.
- * \param[out] ptr           Pointer to memory.
- * \param[in]  bytes         The amount of memory requested.
- *
- * \see OSP_Free_segment, OSP_Register_segment
- *
- * \ingroup MEMORY
- */
-
-int OSP_Alloc_segment(void** pointer, int bytes);
-
-/**
- * \brief A local operation to free memory allocated by OSP_Alloc_segment.
- *
- * \warning It is erroneous to attempt to free memory not allocated by OSP_Alloc_segment.
- *
- * \param[out] rc            The error code.
- * \param[in] ptr           Pointer to memory.
- *
- * \see OSP_Alloc_segment, OSP_Register_segment
- *
- * \ingroup MEMORY
- */
-
-int OSP_Free_segment(void* pointer);
-
-/**
- * \brief A local operation to register memory to be used in context of OSP copy operations.
- *
- * \note This call is not necessary for memory allocated with OSP_Alloc_segment.
- *
- * \note Memory allocated with this function will be tested for proper alignment and return
- *       an error if alignment checking has been disabled and the pointer is not properly aligned.
- *
- * \note OSP_Register_segment will check for valid allocation of the memory provided,
- *       potentially by writing "\0" to all bytes.
- *
- * \note This call may not work in all contexts.  For example, CUDA provides no API call to
- *       register pre-allocated memory.  A truly portable OSP program must not call this
- *       function.
- *
- * \param[out] rc            The error code.
- * \param[in]  ptr           Pointer to memory.
- * \param[in]  bytes         The amount of memory provided.
- *
- * \see OSP_Alloc_segment, OSP_Free_segment
- *
- * \ingroup MEMORY
- */
-
-int OSP_Register_segment(void** pointer, int bytes);
-
-/**
- * \brief A collective operation to exchange addresses of segments to be used in context of OSP copy operations.
- *
- * \note There is no local de-registration call because that could lead to erroneous programs.
- *       De-registration can only be effected by a call to OSP_Release_segments, which is collective.
- *
- * \param[out] rc            The error code.
- * \param[in]  group         Group of processes within which the pointer list is exchanged.
- * \param[in]  ptr           Pointer array. Each one points to memory allocated at one process, in order of ranks.
- * \param[in]  bytes         The size of memory allocated at each process.
- *
- * \see OSP_Release_segments
- *
- * \ingroup MEMORY
- */
-
-/* TODO: We should just implement alltoall and eliminate this function from the API. */
-int OSP_Exchange_segments(OSP_group_t* group, void **ptr);
-
-/**
- * \brief A collective operation to invalidate and de-register memory segments
- *        associated with an OSP_Exchange_segments call.
- *
- * \param[out] rc            The error code.
- * \param[in]  group         Group of processes within which the pointer list was exchanged.
- * \param[in]  ptr           Pointer to the allocated memory.
- *
- * \see OSP_Exchange_segments
- *
- * \ingroup MEMORY
- */
-
-/* TODO: I'm not sure this function is required.  One can get this functionality
- *        by having all processes free their segments and then calling a barrier. */
-int OSP_Release_segments(OSP_group_t* group, void* ptr);
+int OSP_Release_handle(osp_handle_t handle);
 
 /* ********************************************************************** */
 /*                                                                        */
@@ -657,17 +599,20 @@ int OSP_Release_segments(OSP_group_t* group, void* ptr);
 
 /**
  * \brief Collective operation to allocate and register a counter.
+ *        After this operation returns, the shared counter is visible
+ *        from every process in the group.
  *
  * \param[out]    rc            The error code.
  * \param[in]     group         OSP group over which the counter is shared.
  * \param[inout]  counter       OSP shared counter.
  *
- * \see osp_counter_t, OSP_Destroy_counter, OSP_Incr_counter
+ * \see osp_counter_t, OSP_Destroy_counter, OSP_Incr_counter, OSP_NbIncr_counter
  *
  * \ingroup Atomics
  */
 
-int OSP_Create_counter(OSP_group_t* group, OSP_counter_t *counter);
+int OSP_Create_counter(osp_group_t* group,
+                       osp_counter_t* counter);
 
 /**
  * \brief Collective operation to deallocate and deregister a counter.
@@ -681,16 +626,14 @@ int OSP_Create_counter(OSP_group_t* group, OSP_counter_t *counter);
  * \ingroup Atomics
  */
 
-int OSP_Destroy_counter(OSP_group_t* group, OSP_counter_t *counter);
-
-/* TODO: Does PPC32 (or 32-bit processors in general) support hardware atomics for 64-bit integers???
- *       I would like to use int64_t on all platforms if we can use them on Blue Gene/P.
- */
+int OSP_Destroy_counter(osp_group_t* group,
+                        osp_counter_t* counter);
 
 /**
  * \brief Atomically updates a shared counter and returns the current value.
  *
  * \param[out] rc            The error code.
+ * \param[in]  group         OSP group over which the counter is shared.
  * \param[in]  counter       OSP shared counter.
  * \param[in]  increment     The value to add to the counter.
  * \param[in]  original      The remote value of the counter prior to the increment.
@@ -700,12 +643,16 @@ int OSP_Destroy_counter(OSP_group_t* group, OSP_counter_t *counter);
  * \ingroup Atomics
  */
 
-int OSP_Incr_counter(OSP_counter_t counter, long increment, long* original);
+int OSP_Incr_counter(osp_group_t* group,
+                     osp_counter_t* counter,
+                     long  increment,
+                     long* original);
 
 /**
  * \brief Non-blocking atomic RMW update of a shared counter.
  *
  * \param[out] rc            The error code.
+ * \param[in]  group         OSP group over which the counter is shared.
  * \param[in]  counter       OSP shared counter.
  * \param[in]  increment     The value to add to the counter.
  * \param[in]  original      The remote value of the counter prior to the increment.
@@ -716,28 +663,33 @@ int OSP_Incr_counter(OSP_counter_t counter, long increment, long* original);
  * \ingroup Atomics
  */
 
-int OSP_NbIncr_counter(OSP_counter_t counter,
-                      long* increment,
-                      long* original,
-                      OSP_handle_t handle);
+int OSP_NbIncr_counter(osp_group_t* group,,
+                       OSP_counter_t counter,
+                       long  increment,
+                       long* original,
+                       osp_handle_t handle);
 
 /**
- * \brief Collective operation to allocate and register a list of mutexes.
+ * \brief Collective operation to initialize a list of mutexes.
+ *
+ * The allocation of
  *
  * \param[out]    rc            The error code.
  * \param[in]     group         OSP group over which the mutexes are shared.
- * \param[in]     count         Number of mutexes to be created.
- * \param[int]    count_ar      An arrays storing the number of mutexes on each process
+ * \param[in]     mutex_count   Number of mutexes to be created.
+ * \param[int]    mutex_array   An arrays storing the number of mutexes on each process
  *
  * \see osp_mutex_t, OSP_Destroy_mutexes, OSP_Lock_mutex, OSP_Trylock_mutex, OSP_Unlock_mutex
  *
  * \ingroup Atomics
  */
 
-int OSP_Create_mutexes(OSP_group_t* group, int mutex_count, int *mutex_count_ar);
+int OSP_Create_mutexes(osp_group_t* group,
+                       int mutex_count,
+                       osp_mutex_t* *mutex_array);
 
 /**
- * \brief Collective operation to deallocate and deregister a list of mutexes
+ * \brief Collective operation to uninitialize a list of mutexes
  *
  * \note Implementors: OSP_mutex_t cannot be dynamically allocated otherwise this function
  *                     will create a memory leak.
@@ -751,7 +703,9 @@ int OSP_Create_mutexes(OSP_group_t* group, int mutex_count, int *mutex_count_ar)
  * \ingroup Atomics
  */
 
-int OSP_Destroy_mutexes(OSP_group_t* group);
+int OSP_Destroy_mutexes(osp_group_t* group,
+                        int mutex_count,
+                        osp_mutex_t* *mutex_array);
 
 /**
  * \brief Local operation to lock a mutex.  This call blocks until the mutex has been locked.
@@ -766,7 +720,8 @@ int OSP_Destroy_mutexes(OSP_group_t* group);
  * \ingroup Atomics
  */
 
-int OSP_Lock_mutex(OSP_group_t* group, int mutex, int proc);
+int OSP_Lock_mutex(osp_group_t* group,
+                   osp_mutex_t* mutex);
 
 /**
  * \brief Local operation to trylock a mutex.
@@ -781,7 +736,9 @@ int OSP_Lock_mutex(OSP_group_t* group, int mutex, int proc);
  * \ingroup Atomics
  */
 
-int OSP_Trylock_mutex(OSP_group_t* group, int mutex, int proc, OSP_bool_t *acquired);
+int OSP_Trylock_mutex(osp_group_t* group,
+                      osp_mutex_t* mutex,
+                      osp_bool_t *acquired);
 
 /**
  * \brief Local operation to unlock a mutex.  This call blocks until the mutex has been unlocked.
@@ -796,7 +753,8 @@ int OSP_Trylock_mutex(OSP_group_t* group, int mutex, int proc, OSP_bool_t *acqui
  * \ingroup Atomics
  */
 
-int OSP_Unlock_mutex(OSP_group_t* group, int mutex, int proc);
+int OSP_Unlock_mutex(osp_group_t* group,
+                     osp_mutex_t* mutex);
 
 /**
  * \brief Local operation to lock a list of mutexes.  This call blocks until ALL
@@ -813,7 +771,9 @@ int OSP_Unlock_mutex(OSP_group_t* group, int mutex, int proc);
  * \ingroup Atomics
  */
 
-int OSP_Lock_mutexes(OSP_group_t* group, unsigned count, int *mutexes, int *procs);
+int OSP_Lock_mutexes(osp_group_t* group,
+                     int count,
+                     osp_mutex_t* *mutex_array);
 
 /**
  * \brief Local operation to trylock a list of mutexes.  This call attempts to acquire all the
@@ -831,7 +791,10 @@ int OSP_Lock_mutexes(OSP_group_t* group, unsigned count, int *mutexes, int *proc
  * \ingroup Atomics
  */
 
-int OSP_Trylock_mutexes(OSP_group_t* group, unsigned count, int *mutexes, int *procs, OSP_bool_t* *acquired);
+int OSP_Trylock_mutexes(osp_group_t* group,
+                        int count,
+                        osp_mutex_t* *mutex_array,
+                        osp_bool_t* *acquired);
 
 /**
  * \brief Local operation to unlock a list of mutexes
@@ -846,9 +809,9 @@ int OSP_Trylock_mutexes(OSP_group_t* group, unsigned count, int *mutexes, int *p
  * \ingroup Atomics
  */
 
-int OSP_Unlock_mutexes(OSP_group_t* group, unsigned count, int *mutexes, int *procs);
-
-/* FIXME: More API functions to come */
+int OSP_Unlock_mutexes(osp_group_t* group,
+                       int count,
+                       osp_mutex_t* *mutex_array);
 
 /* ********************************************************************** */
 /*                                                                        */
@@ -856,792 +819,563 @@ int OSP_Unlock_mutexes(OSP_group_t* group, unsigned count, int *mutexes, int *pr
 /*                                                                        */
 /* ********************************************************************** */
 
-/**************************************************************************************/
-/*    WARNING: THIS IS THE NEW API AND IS NOT YET IMPLEMENTED                         */
-/**************************************************************************************/
 /**
  * \brief Blocking copy of contiguous data from local memory to remote memory.
  *
- * \param[out] rc               The error code.
- * \param[in]  target           Rank of the remote endpoint.
- * \param[in]  source_mr        Source (local) memory region.
- * \param[in]  source_offset    Offset into source (local) memory region.
- * \param[in]  target_mr        Target (remote) memory region.
- * \param[in]  target_offset    Offset into target (remote) memory region.
- * \param[in]  bytes            Amount of data to transfer in bytes.
- *
- * \see OSP_Put
- *
- * \ingroup DATA_TRANSFER
- */
-
-/* int OSP_PutMR(OSP_endpoint_t target, */
-/*             OSP_memregion_t* source_mr, */
-/*             OSP_offset_t source_offset, */
-/*             OSP_memregion_t* target_mr, */
-/*             OSP_offset_t target_offset, */
-/*             OSP_size_t bytes); */
-
-/**************************************************************************************/
-/*    WARNING: THIS PART OF THE API IS DEPRECATED AND WILL BE REMOVED EVENTUALLY      */
-/**************************************************************************************/
-
-/**
- * \brief Blocking copy of contiguous data from local memory to remote memory.
+ * The mnemonic is PUT BYTES from PTR to MEMREGION at RANK plus OFFSET.
  *
  * \param[out] rc            The error code.
- * \param[in]  target        Rank of the remote process.
- * \param[in]  source_ptr    Starting address in the (local) source memory.
- * \param[in]  target_ptr    Starting address in the (remote) target memory.
  * \param[in]  bytes         Amount of data to transfer in bytes.
+ * \param[in]  source_ptr    Starting address in the (local) source memory.
+ * \param[in]  memregion     Global memregion containing target memory.
+ * \param[in]  target_rank   Rank of the remote process.
+ * \param[in]  target_offset Offset into the memregion at target_rank.
+
  *
  * \see OSP_NbPut, OSP_MultiPut
  *
  * \ingroup DATA_TRANSFER
  */
 
-int OSP_Put(int target, void* source_ptr, void* target_ptr, int bytes);
+int OSP_Put(int                      bytes,
+            void*                    source_ptr,
+            osp_global_memregion_t*  memregion,
+            int                      target_rank,
+            osp_offset_t             target_offset);
 
 /**
  * \brief Non-Blocking copy of contiguous data from local memory to remote memory.
  *
+ * The mnemonic is NBPUT BYTES from PTR to MEMREGION at RANK plus OFFSET and get HANDLE back.
+ *
  * \param[out] rc            The error code.
- * \param[in]  target        Rank of the remote process.
- * \param[in]  source_ptr    Starting address in the (local) source memory.
- * \param[in]  target_ptr    Starting address in the (remote) target memory.
  * \param[in]  bytes         Amount of data to transfer in bytes.
- * \param[out] handle        Opaque handle for the request
- *
- * \see OSP_Put, OSP_NbMultiPut
- *
- * \ingroup DATA_TRANSFER
- */
-
-int OSP_NbPut(int target,
-             void* source_ptr,
-             void* target_ptr,
-             int bytes,
-             OSP_handle_t handle);
-
-/**
- * \brief Blocking copy of contiguous data from local memory to remote memory.
- *
- * \note OSP_MultiPut can be used for single-target non-contiguous put as well,
- *       but the implementation may be far from optimal relative to OSP_PutS
- *       and OSP_PutV.
- *
- * \param[out] rc            The error code.
- * \param[in]  count         Number of operations to be performed
- * \param[in]  targets       Vector of remote process ranks.
- * \param[in]  source_ptr    Vector of starting addresses in the (local) source memory.
- * \param[in]  target_ptr    Vector of starting addresses in the (remote) target memory.
- * \param[in]  bytes         Vector of quantity of data to transfer in bytes.
- *
- * \see OSP_Put
- *
- * \ingroup DATA_TRANSFER
- */
-
-int OSP_MultiPut(int count,
-                int *targets,
-                void* *source_ptr,
-                void* *target_ptr,
-                int *bytes);
-
-/**
- * \brief Nonblocking copy of contiguous data from local memory to remote memory.
- *
- * \note OSP_MultiPut can be used for single-target non-contiguous put as well,
- *       but the implementation may be far from optimal relative to OSP_PutS
- *       and OSP_PutV.
- *
- * \param[out] rc            The error code.
- * \param[in]  count         Number of operations to be performed
- * \param[in]  targets       Vector of remote process ranks.
- * \param[in]  source_ptr    Vector of starting addresses in the (local) source memory.
- * \param[in]  target_ptr    Vector of starting addresses in the (remote) target memory.
- * \param[in]  bytes         Vector of quantity of data to transfer in bytes.
+ * \param[in]  source_ptr    Starting address in the (local) source memory.
+ * \param[in]  memregion     Global memregion containing target memory.
+ * \param[in]  target_rank   Rank of the remote process.
+ * \param[in]  target_offset Offset into the memregion at target_rank.
+ * \param[out] handle        Opaque handle for the request.
  *
  * \see OSP_NbPut, OSP_MultiPut
  *
  * \ingroup DATA_TRANSFER
  */
 
-int OSP_NbMultiPut(int count,
-                  int *targets,
-                  void* *source_ptr,
-                  void* *target_ptr,
-                  int *bytes,
-                  OSP_handle_t handle);
+int OSP_NbPut(int                      bytes,
+              void*                    source_ptr,
+              osp_global_memregion_t*  memregion,
+              int                      target_rank,
+              osp_offset_t             target_offset
+              osp_handle_t             handle);
+
+/**
+ * \brief Blocking multiple-copy of contiguous data from local memory to remote memory.
+ *
+ * \param[out] rc            The error code.
+ * \param[in]  bytes         Vector of amounts of data to transfer in bytes.
+ * \param[in]  source_ptr    Vector of starting addresses in the (local) source memory.
+ * \param[in]  memregion     Global memregion containing target memory.
+ * \param[in]  target_rank   Vector of ranks of the remote process.
+ * \param[in]  target_offset Vector of offsets into the memregion at target_rank.
+ *
+ * \see OSP_NbPut, OSP_MultiPut
+ *
+ * \ingroup DATA_TRANSFER
+ */
+
+int OSP_MultiPut(int*                     bytes,
+                 void**                   source_ptr,
+                 osp_global_memregion_t*  memregion,
+                 int*                     target_rank,
+                 osp_offset_t*            target_offset);
+
+/**
+ * \brief Non-Blocking multiple-copy of contiguous data from local memory to remote memory.
+ *
+ * \param[out] rc            The error code.
+ * \param[in]  bytes         Vector of amounts of data to transfer in bytes.
+ * \param[in]  source_ptr    Vector of starting addresses in the (local) source memory.
+ * \param[in]  memregion     Global memregion containing target memory.
+ * \param[in]  target_rank   Vector of ranks of the remote process.
+ * \param[in]  target_offset Vector of offsets into the memregion at target_rank.
+ * \param[out] handle        Opaque handle for the request.
+ *
+ * \see OSP_NbPut, OSP_MultiPut
+ *
+ * \ingroup DATA_TRANSFER
+ */
+
+int OSP_NbMultiPut(int*                      bytes,
+                    void**                   source_ptr,
+                    osp_global_memregion_t*  memregion,
+                    int*                     target_rank,
+                    osp_offset_t*            target_offset,
+                    osp_handle_t             handle);
 
 /**
  * \brief Blocking copy of strided data from local memory to remote memory.
  *
- * \param[out] rc              The error code.
- * \param[in]  target          Rank of the remote process.
- * \param[in]  count           Block size in each dimension in bytes.
- * \param[in]  stride_levels   The number of levels of stride.
- * \param[in]  source_ptr      Starting address in the (local) source memory.
- * \param[in]  src_stride_ar   Array of stride distances at source in bytes.
- * \param[in]  target_ptr      Starting address in the (remote) target memory.
- * \param[in]  trg_stride_ar   Array of stride distances at target in bytes.
+ * \param[out] rc            The error code.
+ * \param[in]  stride_descr  The striding descriptor.
+ * \param[in]  source_ptr    Starting address in the (local) source memory.
+ * \param[in]  memregion     Global memregion containing target memory.
+ * \param[in]  target_rank   Rank of the remote process.
+ * \param[in]  target_offset Offset into the memregion at target_rank.
  *
  * \see OSP_Put, OSP_PutV, OSP_MultiPut, OSP_MultiPutS, OSP_MultiPutV
  *
  * \ingroup DATA_TRANSFER
  */
 
-int OSP_PutS(int target,
-            int stride_levels,
-            int *block_sizes,
-            void* source_ptr,
-            int *src_stride_ar,
-            void* target_ptr,
-            int *trg_stride_ar);
+int OSP_PutS(osp_stride_descr_t        stride_descr,
+             void*                     source_ptr,
+             osp_global_memregion_t*   memregion,
+             int                       target_rank,
+             osp_offset_t              target_offset);
 
 /**
  * \brief Non-Blocking copy of strided data from local memory to remote memory.
  *
  * \param[out] rc              The error code.
- * \param[in]  target          Rank of the remote process.
- * \param[in]  count           Block size in each dimension in bytes.
- * \param[in]  stride_levels   The number of levels of stride.
+ * \param[in]  stride_descr    The striding descriptor.
  * \param[in]  source_ptr      Starting address in the (local) source memory.
- * \param[in]  src_stride_ar   Array of stride distances at source in bytes.
- * \param[in]  target_ptr      Starting address in the (remote) target memory.
- * \param[in]  trg_stride_ar   Array of stride distances at target in bytes.
- * \param[out] handle          Opaque OSP handle
+ * \param[in]  memregion       Global memregion containing target memory.
+ * \param[in]  target_rank     Rank of the remote process.
+ * \param[in]  target_offset   Offset into the memregion at target_rank.
+ * \param[out] handle          Opaque handle for the request.
  *
- * \see OSP_NbPut, OSP_NbPutV, OSP_NbMultiPut, OSP_NbMultiPutS, OSP_NbMultiPutV
+ * \see OSP_Put, OSP_PutV, OSP_MultiPut, OSP_MultiPutS, OSP_MultiPutV
  *
  * \ingroup DATA_TRANSFER
  */
 
-int OSP_NbPutS(int target,
-              int stride_levels,
-              int *block_sizes,
-              void* source_ptr,
-              int *src_stride_ar,
-              void* target_ptr,
-              int *trg_stride_ar,
-              OSP_handle_t handle);
+int OSP_NbPutS(osp_stride_descr_t        stride_descr,
+               void*                     source_ptr,
+               osp_global_memregion_t*   memregion,
+               int                       target_rank,
+               osp_offset_t              target_offset,
+               osp_handle_t              handle);
 
 /**
- * \brief Blocking copy of contiguous data from local memory to remote memory.
- *
- * \note This call must be use the same stride-level across all targets.
+ * \brief Blocking multiple-copy of strided data from local memory to remote memory.
  *
  * \param[out] rc              The error code.
- * \param[in]  count           Number of operations to be performed
- * \param[in]  targets         Vector of remote process ranks.
- * \param[in]  block_sizes     Vector of block sizes in each dimension in bytes.
- * \param[in]  stride_levels   Number of levels of stride.
- * \param[in]  source_ptr      Vector of starting in the (local) source memory.
- * \param[in]  src_stride_ar   Vector of arrays of stride distances at source in bytes.
- * \param[in]  target_ptr      Vector of starting in the (remote) target memory.
- * \param[in]  trg_stride_ar   Vector of arrays of stride distances at target in bytes.
+ * \param[in]  stride_descr    The striding descriptor.
+ * \param[in]  source_ptr      Starting address in the (local) source memory.
+ * \param[in]  memregion       Global memregion containing target memory.
+ * \param[in]  target_rank     Rank of the remote process.
+ * \param[in]  target_offset   Offset into the memregion at target_rank.
  *
- * \see OSP_Put, OSP_Get, OSP_Copy, OSP_PutAcc
+ * \see OSP_Put, OSP_PutV, OSP_MultiPut, OSP_MultiPutS, OSP_MultiPutV
  *
  * \ingroup DATA_TRANSFER
  */
 
-int OSP_MultiPutS(int count,
-                 int *targets,
-                 int stride_levels,
-                 int* *block_sizes,
-                 void* source_ptr,
-                 int *src_stride_ar,
-                 void* target_ptr,
-                 int *trg_stride_ar);
+int OSP_MultiPutS(osp_stride_descr_t*       stride_descr,
+                  void**                    source_ptr,
+                  osp_global_memregion_t*   memregion,
+                  int*                      target_rank,
+                  osp_offset_t*             target_offset);
 
 /**
- * \brief Nonblocking copy of contiguous data from local memory to remote memory.
- *
- * \note This call must be use the same stride-level across all targets.
+ * \brief Non-Blocking multiple-copy of strided data from local memory to remote memory.
  *
  * \param[out] rc              The error code.
- * \param[in]  count           Number of operations to be performed
- * \param[in]  targets         Vector of remote process ranks.
- * \param[in]  block_sizes     Vector of block sizes in each dimension in bytes.
- * \param[in]  stride_levels   Number of levels of stride.
- * \param[in]  source_ptr      Vector of starting in the (local) source memory.
- * \param[in]  src_stride_ar   Vector of arrays of stride distances at source in bytes.
- * \param[in]  target_ptr      Vector of starting in the (remote) target memory.
- * \param[in]  trg_stride_ar   Vector of arrays of stride distances at target in bytes.
- * \param[out] handle          Opaque OSP handle
+ * \param[in]  stride_descr    The striding descriptor.
+ * \param[in]  source_ptr      Starting address in the (local) source memory.
+ * \param[in]  memregion       Global memregion containing target memory.
+ * \param[in]  target_rank     Rank of the remote process.
+ * \param[in]  target_offset   Offset into the memregion at target_rank.
+ * \param[out] handle          Opaque handle for the request.
  *
- * \see OSP_Put, OSP_Get, OSP_Copy, OSP_PutAcc
+ * \see OSP_Put, OSP_PutV, OSP_MultiPut, OSP_MultiPutS, OSP_MultiPutV
  *
  * \ingroup DATA_TRANSFER
  */
 
-int OSP_NbMultiPutS(int count,
-                   int *targets,
-                   int stride_levels,
-                   int* *block_sizes,
-                   void* source_ptr,
-                   int *src_stride_ar,
-                   void* target_ptr,
-                   int *trg_stride_ar,
-                   OSP_handle_t handle);
-
-/**
- * \brief Blocking copy of non-contiguous data from local memory to remote memory.
- *
- * \param[out] rc              The error code.
- * \param[in]  target          Rank of the remote process.
- * \param[in]  iov_ar          Array of io vectors. Each vector represents a set of chunks of same size.
- * \param[in]  ar_len          Number of elements in the array.
- *
- * \see OSP_NbPut, OSP_NbPutV, OSP_NbMultiPut, OSP_NbMultiPutS, OSP_NbMultiPutV
- *
- * \ingroup DATA_TRANSFER
- */
-
-int OSP_PutV(int target, OSP_iov_t *iov_ar, int ar_len);
-
-/**
- * \brief Non-Blocking copy of non-contiguous data from local memory to remote memory.
- *
- * \param[out] rc              The error code.
- * \param[in]  target          Rank of the remote process.
- * \param[in]  iov_ar          Array of io vectors. Each vector represents a set of chunks of same size.
- * \param[in]  ar_len          Number of elements in the array.
- * \param[out] handle          Opaque OSP handle
- *
- * \see OSP_NbPut, OSP_NbPutV, OSP_NbMultiPut, OSP_NbMultiPutS, OSP_NbMultiPutV
- *
- * \ingroup DATA_TRANSFER
- */
-
-int OSP_NbPutV(int target, OSP_iov_t *iov_ar, int ar_len, OSP_handle_t handle);
-
-/**
- * \brief Blocking accumulate of contiguous data from local memory onto remote memory.
- *
- * \param[out] rc            The error code.
- * \param[in]  target        Rank of the remote process.
- * \param[in]  source_ptr    Starting address in the (local) source memory.
- * \param[in]  target_ptr    Starting address in the (remote) target memory.
- * \param[in]  bytes         Amount of data to transfer in bytes.
- * \param[in]  osp_type       Datatype of buffer and scaling factor.
- * \param[in]  scaling       Factor for scaling source.
- *
- * \see OSP_Put, OSP_Copy, OSP_CopyAcc
- *
- * \ingroup DATA_TRANSFER
- */
-
-int OSP_PutAcc(int target,
-              void* source_ptr,
-              void* target_ptr,
-              int bytes,
-              OSP_datatype_t osp_type,
-              void* scaling);
-
-/**
- * \brief Non-Blocking accumulate of contiguous data from local memory onto remote memory.
- * 
- * \param[out] rc            The error code.
- * \param[in]  target        Rank of the remote process.
- * \param[in]  source_ptr    Starting address in the (local) source memory.
- * \param[in]  target_ptr    Starting address in the (remote) target memory.
- * \param[in]  bytes         Amount of data to transfer in bytes.
- * \param[in]  osp_type       Datatype of buffer and scaling factor.
- * \param[in]  scaling       Factor for scaling source
- * \param[out] handle        Opaque OSP handle 
- *
- * \see OSP_Put, OSP_Copy, OSP_CopyAcc
- *
- * \ingroup DATA_TRANSFER
- */
-
-int OSP_NbPutAcc(int target,
-                void* source_ptr,
-                void* target_ptr,
-                int bytes,
-                OSP_datatype_t osp_type,
-                void* scaling,
-                OSP_handle_t handle);
+int OSP_NbMultiPutS(osp_stride_descr_t*       stride_descr,
+                    void**                    source_ptr,
+                    osp_global_memregion_t*   memregion,
+                    int*                      target_rank,
+                    osp_offset_t*             target_offset,
+                    osp_handle_t              handle);
 
 /**
  * \brief Blocking accumulate of contiguous data from local memory to remote memory.
  *
- * \note OSP_MultiPut can be used for single-target non-contiguous put as well,
- *       but the implementation may be far from optimal relative to OSP_PutS
- *       and OSP_PutV.
+ * The mnemonic is ACC DESCR times BYTES from PTR to MEMREGION at RANK plus OFFSET.
  *
  * \param[out] rc            The error code.
- * \param[in]  count         Number of operations to be performed
- * \param[in]  targets       Vector of remote process ranks.
- * \param[in]  source_ptr    Vector of starting addresses in the (local) source memory.
- * \param[in]  target_ptr    Vector of starting addresses in the (remote) target memory.
- * \param[in]  bytes         Vector of quantity of data to transfer in bytes.
- * \param[in]  osp_type       Datatype of buffer and scaling factor.
- * \param[in]  scaling       Factor for scaling source.
- *
- * \see OSP_Put
- *
- * \ingroup DATA_TRANSFER
- */
-
-int OSP_MultiPutAcc(int count,
-                   int *targets,
-                   void* *source_ptr,
-                   void* *target_ptr,
-                   int *bytes,
-                   OSP_datatype_t osp_type,
-                   void* scaling);
-
-/**
- * \brief Nonblocking accumulate of contiguous data from local memory to remote memory.
- *
- * \note OSP_MultiPut can be used for single-target non-contiguous put as well,
- *       but the implementation may be far from optimal relative to OSP_PutS
- *       and OSP_PutV.
- *
- * \param[out] rc            The error code.
- * \param[in]  count         Number of operations to be performed
- * \param[in]  targets       Vector of remote process ranks.
- * \param[in]  source_ptr    Vector of starting addresses in the (local) source memory.
- * \param[in]  target_ptr    Vector of starting addresses in the (remote) target memory.
- * \param[in]  bytes         Vector of quantity of data to transfer in bytes.
- * \param[in]  osp_type       Datatype of buffer and scaling factor.
- * \param[in]  scaling       Factor for scaling source.
- * \param[out] handle        Opaque OSP handle
+ * \param[in]  acc_descr     The accumulate descriptor.
+ * \param[in]  bytes         Amount of data to transfer in bytes.
+ * \param[in]  source_ptr    Starting address in the (local) source memory.
+ * \param[in]  memregion     Global memregion containing target memory.
+ * \param[in]  target_rank   Rank of the remote process.
+ * \param[in]  target_offset Offset into the memregion at target_rank.
  *
  * \see OSP_NbPut, OSP_MultiPut
  *
  * \ingroup DATA_TRANSFER
  */
 
-int OSP_NbMultiPutAcc(int count,
-                     int *targets,
-                     void* *source_ptr,
-                     void* *target_ptr,
-                     int *bytes,
-                     OSP_datatype_t osp_type,
-                     void* scaling,
-                     OSP_handle_t handle);
+int OSP_Acc(osp_acc_descr_t acc_descr,
+            int bytes,
+            void* source_ptr,
+            osp_global_memregion_t* memregion,
+            int target_rank,
+            osp_offset_t target_offset);
 
 /**
- * \brief Blocking accumulate of strided data from local memory to remote memory.
+ * \brief Non-Blocking accumulate of contiguous data from local memory to remote memory.
  *
- * \param[out] rc              The error code.
- * \param[in]  target          Rank of the remote process.
- * \param[in]  stride_levels   The number of levels of stride.
- * \param[in]  block_sizes     Block size in each dimension in bytes.
- * \param[in]  source_ptr      Starting address in the (local) source memory.
- * \param[in]  src_stride_ar   Array of stride distances at source in bytes.
- * \param[in]  target_ptr      Starting address in the (remote) target memory.
- * \param[in]  trg_stride_ar   Array of stride distances at target in bytes.
- * \param[in]  osp_type         Type of data and scaling factor
- * \param[in]  *scaling        Scaling factor in the accumulate operation. 
+ * The mnemonic is NBACC DESCR times BYTES from PTR to MEMREGION at RANK plus OFFSET
+ * and get HANDLE back.
  *
- * \see OSP_Put, OSP_PutS, OSP_PutAcc
+ * \param[out] rc            The error code.
+ * \param[in]  acc_descr     The accumulate descriptor.
+ * \param[in]  bytes         Amount of data to transfer in bytes.
+ * \param[in]  source_ptr    Starting address in the (local) source memory.
+ * \param[in]  memregion     Global memregion containing target memory.
+ * \param[in]  target_rank   Rank of the remote process.
+ * \param[in]  target_offset Offset into the memregion at target_rank.
+ * \param[out] handle        Opaque handle for the request.
+ *
+ * \see OSP_NbAcc, OSP_MultiAcc
  *
  * \ingroup DATA_TRANSFER
  */
 
-int OSP_PutAccS(int target,
-               int stride_levels,
-               int *block_sizes,
-               void* source_ptr,
-               int *src_stride_ar,
-               void* target_ptr,
-               int *trg_stride_ar,
-               OSP_datatype_t osp_type,
-               void* scaling);
+int OSP_NbAcc(osp_acc_descr_t acc_descr,
+              int bytes,
+              void* source_ptr,
+              osp_global_memregion_t* memregion,
+              int target_rank,
+              osp_offset_t target_offset,
+              osp_handle_t handle);
+
+/**
+ * \brief Blocking multiple-accumulate of contiguous data from local memory to remote memory.
+ *
+ * \param[out] rc            The error code.
+ * \param[in]  acc_descr     The accumulate descriptor.
+ * \param[in]  bytes         Vector of amounts of data to transfer in bytes.
+ * \param[in]  source_ptr    Vector of starting addresses in the (local) source memory.
+ * \param[in]  memregion     Global memregion containing target memory.
+ * \param[in]  target_rank   Vector of ranks of the remote process.
+ * \param[in]  target_offset Vector of offsets into the memregion at target_rank.
+ *
+ * \see OSP_NbAcc, OSP_MultiAcc
+ *
+ * \ingroup DATA_TRANSFER
+ */
+
+int OSP_MultiAcc(osp_acc_descr_t* acc_descr,
+                 int* bytes,
+                 void** source_ptr,
+                 osp_global_memregion_t* memregion,
+                 int* target_rank,
+                 osp_offset_t* target_offset);
+
+/**
+ * \brief Non-Blocking multiple-accumulate of contiguous data from local memory to remote memory.
+ *
+ * \param[out] rc            The error code.
+ * \param[in]  acc_descr     The accumulate descriptor.
+ * \param[in]  bytes         Vector of amounts of data to transfer in bytes.
+ * \param[in]  source_ptr    Vector of starting addresses in the (local) source memory.
+ * \param[in]  memregion     Global memregion containing target memory.
+ * \param[in]  target_rank   Vector of ranks of the remote process.
+ * \param[in]  target_offset Vector of offsets into the memregion at target_rank.
+ * \param[out] handle        Opaque handle for the request.
+ *
+ * \see OSP_NbAcc, OSP_MultiAcc
+ *
+ * \ingroup DATA_TRANSFER
+ */
+
+int OSP_NbMultiAcc(osp_acc_descr_t* acc_descr,
+                   int* bytes,
+                    void** source_ptr,
+                    osp_global_memregion_t* memregion,
+                    int* target_rank,
+                    osp_offset_t* target_offset,
+                    osp_handle_t handle);
+
+/**
+ * \brief Blocking accumulate of strided data from local memory to remote memory.
+ *
+ * \param[out] rc            The error code.
+ * \param[in]  acc_descr     The accumulate descriptor.
+ * \param[in]  stride_descr  The striding descriptor.
+ * \param[in]  source_ptr    Starting address in the (local) source memory.
+ * \param[in]  memregion     Global memregion containing target memory.
+ * \param[in]  target_rank   Rank of the remote process.
+ * \param[in]  target_offset Offset into the memregion at target_rank.
+ *
+ * \see OSP_Acc, OSP_MultiAcc, OSP_MultiAccS
+ *
+ * \ingroup DATA_TRANSFER
+ */
+
+int OSP_AccS(osp_acc_descr_t acc_descr,
+             osp_stride_descr_t stride_descr,
+             void* source_ptr,
+             osp_global_memregion_t* memregion,
+             int target_rank,
+             osp_offset_t target_offset);
 
 /**
  * \brief Non-Blocking accumulate of strided data from local memory to remote memory.
  *
  * \param[out] rc              The error code.
- * \param[in]  target          Rank of the remote process.
- * \param[in]  stride_levels   The number of levels of stride.
- * \param[in]  block_sizes     Block size in each dimension in bytes.
+ * \param[in]  acc_descr       The accumulate descriptor.
+ * \param[in]  stride_descr    The striding descriptor.
  * \param[in]  source_ptr      Starting address in the (local) source memory.
- * \param[in]  src_stride_ar   Array of stride distances at source in bytes.
- * \param[in]  target_ptr      Starting address in the (remote) target memory.
- * \param[in]  trg_stride_ar   Array of stride distances at target in bytes.
- * \param[in]  osp_type         Type of data and scaling factor
- * \param[in]  *scaling        Scaling factor in the accumulate operation. 
- * \param[out] handle          Opaque OSP handle
+ * \param[in]  memregion       Global memregion containing target memory.
+ * \param[in]  target_rank     Rank of the remote process.
+ * \param[in]  target_offset   Offset into the memregion at target_rank.
+ * \param[out] handle          Opaque handle for the request.
  *
- * \see OSP_Put, OSP_PutS, OSP_PutAcc
+ * \see OSP_Acc, OSP_MultiAcc, OSP_MultiAccS
  *
  * \ingroup DATA_TRANSFER
  */
 
-int OSP_NbPutAccS(int target,
-                 int stride_levels,
-                 int *block_sizes,
-                 void* source_ptr,
-                 int *src_stride_ar,
-                 void* target_ptr,
-                 int *trg_stride_ar,
-                 OSP_datatype_t osp_type,
-                 void* scaling,
-                 OSP_handle_t handle);
+int OSP_NbAccS(osp_acc_descr_t acc_descr,
+               osp_stride_descr_t stride_descr,
+               void* source_ptr,
+               osp_global_memregion_t* memregion,
+               int target_rank,
+               osp_offset_t target_offset,
+               osp_handle_t handle);
 
 /**
- * \brief Blocking copy of contiguous data from local memory to remote memory.
- *
- * \note This call must be use the same stride-level across all targets.
+ * \brief Blocking multiple-accumulate of strided data from local memory to remote memory.
  *
  * \param[out] rc              The error code.
- * \param[in]  count           Number of operations to be performed
- * \param[in]  targets         Vector of remote process ranks.
- * \param[in]  block_sizes     Vector of block sizes in each dimension in bytes.
- * \param[in]  stride_levels   Number of levels of stride.
- * \param[in]  source_ptr      Vector of starting in the (local) source memory.
- * \param[in]  src_stride_ar   Vector of arrays of stride distances at source in bytes.
- * \param[in]  target_ptr      Vector of starting in the (remote) target memory.
- * \param[in]  trg_stride_ar   Vector of arrays of stride distances at target in bytes.
- * \param[in]  osp_type         Type of data and scaling factor
- * \param[in]  *scaling        Scaling factor in the accumulate operation.
+ * \param[in]  acc_descr       The accumulate descriptor.
+ * \param[in]  stride_descr    The striding descriptor.
+ * \param[in]  source_ptr      Starting address in the (local) source memory.
+ * \param[in]  memregion       Global memregion containing target memory.
+ * \param[in]  target_rank     Rank of the remote process.
+ * \param[in]  target_offset   Offset into the memregion at target_rank.
  *
- * \see OSP_Put, OSP_Get, OSP_Copy, OSP_PutAcc
+ * \see OSP_Acc, OSP_MultiAcc, OSP_MultiAccS
  *
  * \ingroup DATA_TRANSFER
  */
 
-int OSP_MultiPutAccS(int count,
-                    int *targets,
-                    int stride_levels,
-                    int* *block_sizes,
-                    void* source_ptr,
-                    int *src_stride_ar,
-                    void* target_ptr,
-                    int *trg_stride_ar,
-                    OSP_datatype_t osp_type,
-                    void* scaling);
+int OSP_MultiAccS(osp_acc_descr_t* acc_descr,
+                  osp_stride_descr_t* stride_descr,
+                  void** source_ptr,
+                  osp_global_memregion_t* memregion,
+                  int* target_rank,
+                  osp_offset_t* target_offset);
 
 /**
- * \brief Nonblocking copy of contiguous data from local memory to remote memory.
- *
- * \note This call must be use the same stride-level across all targets.
+ * \brief Non-Blocking multiple-accumulate of strided data from local memory to remote memory.
  *
  * \param[out] rc              The error code.
- * \param[in]  count           Number of operations to be performed
- * \param[in]  targets         Vector of remote process ranks.
- * \param[in]  block_sizes     Vector of block sizes in each dimension in bytes.
- * \param[in]  stride_levels   Number of levels of stride.
- * \param[in]  source_ptr      Vector of starting in the (local) source memory.
- * \param[in]  src_stride_ar   Vector of arrays of stride distances at source in bytes.
- * \param[in]  target_ptr      Vector of starting in the (remote) target memory.
- * \param[in]  trg_stride_ar   Vector of arrays of stride distances at target in bytes.
- * \param[in]  osp_type         Type of data and scaling factor
- * \param[in]  *scaling        Scaling factor in the accumulate operation.
- * \param[out] handle          Opaque OSP handle
+ * \param[in]  acc_descr       The accumulate descriptor.
+ * \param[in]  stride_descr    The striding descriptor.
+ * \param[in]  source_ptr      Starting address in the (local) source memory.
+ * \param[in]  memregion       Global memregion containing target memory.
+ * \param[in]  target_rank     Rank of the remote process.
+ * \param[in]  target_offset   Offset into the memregion at target_rank.
+ * \param[out] handle          Opaque handle for the request.
  *
- * \see OSP_Put, OSP_Get, OSP_Copy, OSP_PutAcc
+ * \see OSP_Acc, OSP_MultiAcc, OSP_MultiAccS
  *
  * \ingroup DATA_TRANSFER
  */
 
-int OSP_NbMultiPutAccS(int count,
-                      int *targets,
-                      int stride_levels,
-                      int* *block_sizes,
-                      void* source_ptr,
-                      int *src_stride_ar,
-                      void* target_ptr,
-                      int *trg_stride_ar,
-                      OSP_datatype_t osp_type,
-                      void* scaling,
-                      OSP_handle_t handle);
-
-/**
- * \brief Blocking accumulate of non-contiguous data from local memory to remote memory.
- *
- * \param[out] rc              The error code.
- * \param[in]  target          Rank of the remote process.
- * \param[in]  iov_ar          Array of io vectors. Each vector represents a set of
- *                             chunks of same size.
- * \param[in]  ar_len          Number of elements in the array.
- * \param[in]  osp_type         Type of data and scaling factor
- * \param[in]  *scaling        Scaling factor in the accumulate operation. 
- * 
- * \see OSP_NbPut, OSP_NbPutV, OSP_NbMultiPut, OSP_NbMultiPutS, OSP_NbMultiPutV
- * 
- * \ingroup DATA_TRANSFER
- */
-
-int OSP_PutAccV(int target,
-               OSP_iov_t *iov_ar,
-               int ar_len,
-               OSP_datatype_t osp_type,
-               void* scaling);
-
-/**
- * \brief Non-Blocking accumulate of non-contiguous data from local memory to remote memory.
- *
- * \param[out] rc              The error code.
- * \param[in]  target          Rank of the remote process.
- * \param[in]  iov_ar          Array of io vectors. Each vector represents a set of
- *                             chunks of same size.
- * \param[in]  ar_len          Number of elements in the array.
- * \param[in]  osp_type         Type of data and scaling factor
- * \param[in]  *scaling        Scaling factor in the accumulate operation.
- * \param[out] handle          Opaque OSP handle
- *
- * \see OSP_NbPut, OSP_NbPutV, OSP_NbMultiPut, OSP_NbMultiPutS, OSP_NbMultiPutV
- *
- * \ingroup DATA_TRANSFER
- */
-
-int OSP_NbPutAccV(int target,
-                 OSP_iov_t *iov_ar,
-                 int ar_len,
-                 OSP_datatype_t osp_type,
-                 void* scaling,
-                 OSP_handle_t handle);
-
-/**
- * \brief Blocking remote modify of non-contiguous data from local memory to remote memory.
- *
- * \param[out] rc              The error code.
- * \param[in]  target          Rank of the remote process.
- * \param[in]  iov_ar          Array of io vectors. Each vector represents a set of
- *                             chunks of same size.
- * \param[in]  ar_len          Number of elements in the array.
- * \param[in]  osp_op           Reduce operation
- * \param[in]  osp_type         Type of data and scaling factor
- *
- * \see OSP_NbPut, OSP_NbPutV, OSP_NbMultiPut, OSP_NbMultiPutS, OSP_NbMultiPutV
- *
- * \ingroup DATA_TRANSFER
- */
-
-int OSP_PutModV(int target,
-               OSP_iov_t *iov_ar,
-               int ar_len,
-               OSP_reduce_op_t osp_op,
-               OSP_datatype_t osp_type);
+int OSP_NbMultiAccS(osp_acc_descr_t* acc_descr,
+                    osp_stride_descr_t* stride_descr,
+                    void** source_ptr,
+                    osp_global_memregion_t* memregion,
+                    int* target_rank,
+                    osp_offset_t* target_offset,
+                    osp_handle_t handle);
 
 /**
  * \brief Blocking copy of contiguous data from remote memory to local memory.
  *
- * \param[out] rc            The error code.
- * \param[in]  target        Rank of the remote process.
- * \param[in]  source_ptr    Starting address in the (remote) source memory.
- * \param[in]  target_ptr    Starting address in the (local) target memory.
- * \param[in]  bytes         Amount of data to transfer in bytes.
+ * The mnemonic is GET BYTES to PTR from MEMREGION at RANK plus OFFSET.
  *
- * \see OSP_NbGet, OSP_Put, OSP_Copy
+ * \param[out] rc            The error code.
+ * \param[in]  bytes         Amount of data to transfer in bytes.
+ * \param[in]  source_ptr    Starting address in the (local) source memory.
+ * \param[in]  memregion     Global memregion containing target memory.
+ * \param[in]  target_rank   Rank of the remote process.
+ * \param[in]  target_offset Offset into the memregion at target_rank.
+ *
+ * \see OSP_NbGet, OSP_MultiGet
  *
  * \ingroup DATA_TRANSFER
  */
 
-int OSP_Get(int target, void* source_ptr, void* target_ptr, int bytes);
+int OSP_Get(int bytes,
+            void* source_ptr,
+            osp_global_memregion_t* memregion,
+            int target_rank,
+            osp_offset_t target_offset);
 
 /**
  * \brief Non-Blocking copy of contiguous data from remote memory to local memory.
  *
+ * The mnemonic is NBGET BYTES to PTR from MEMREGION at RANK plus OFFSET and get HANDLE back.
+ *
  * \param[out] rc            The error code.
- * \param[in]  target        Rank of the remote process.
- * \param[in]  source_ptr    Starting address in the (remote) source memory.
- * \param[in]  target_ptr    Starting address in the (local) target memory.
  * \param[in]  bytes         Amount of data to transfer in bytes.
- * \param[out] handle        Opaque handle for the request
+ * \param[in]  source_ptr    Starting address in the (local) source memory.
+ * \param[in]  memregion     Global memregion containing target memory.
+ * \param[in]  target_rank   Rank of the remote process.
+ * \param[in]  target_offset Offset into the memregion at target_rank.
+ * \param[out] handle        Opaque handle for the request.
  *
- * \see OSP_Get, OSP_Put, OSP_Copy
+ * \see OSP_NbGet, OSP_MultiGet
  *
  * \ingroup DATA_TRANSFER
  */
 
-int OSP_NbGet(int target,
-             void* source_ptr,
-             void* target_ptr,
-             int bytes,
-             OSP_handle_t handle);
+int OSP_NbGet(int bytes,
+              void* source_ptr,
+              osp_global_memregion_t* memregion,
+              int target_rank,
+              osp_offset_t target_offset,
+              osp_handle_t handle);
 
 /**
- * \brief Blocking copy of contiguous data from remote memory onto local memory.
+ * \brief Blocking multiple-copy of contiguous data from remote memory to local memory.
  *
  * \param[out] rc            The error code.
- * \param[in]  count         Number of operations to be performed
- * \param[in]  target        Vector of remote process ranks.
- * \param[in]  source_ptr    Vector of starting address in the (remote) source memory.
- * \param[in]  target_ptr    Vector of starting address in the (local) target memory.
- * \param[in]  bytes         Vector of data to transfer from each target in bytes.
+ * \param[in]  bytes         Vector of amounts of data to transfer in bytes.
+ * \param[in]  source_ptr    Vector of starting addresses in the (local) source memory.
+ * \param[in]  memregion     Global memregion containing target memory.
+ * \param[in]  target_rank   Vector of ranks of the remote process.
+ * \param[in]  target_offset Vector of offsets into the memregion at target_rank.
  *
- * \see OSP_Get, OSP_MultiPut, OSP_Copy
+ * \see OSP_NbGet, OSP_MultiGet
  *
  * \ingroup DATA_TRANSFER
  */
 
-int OSP_MultiGet(int count,
-                int *target,
-                void* *source_ptr,
-                void* *target_ptr,
-                int *bytes);
+int OSP_MultiGet(int* bytes,
+                 void** source_ptr,
+                 osp_global_memregion_t* memregion,
+                 int* target_rank,
+                 osp_offset_t* target_offset);
 
 /**
- * \brief Nonblocking copy of contiguous data from remote memory onto local memory.
+ * \brief Non-Blocking multiple-copy of contiguous data from remote memory to local memory.
  *
  * \param[out] rc            The error code.
- * \param[in]  count         Number of operations to be performed
- * \param[in]  target        Vector of remote process ranks.
- * \param[in]  source_ptr    Vector of starting address in the (remote) source memory.
- * \param[in]  target_ptr    Vector of starting address in the (local) target memory.
- * \param[in]  bytes         Vector of data to transfer from each target in bytes.
- * \param[out] handle        Opaque OSP handle
+ * \param[in]  bytes         Vector of amounts of data to transfer in bytes.
+ * \param[in]  source_ptr    Vector of starting addresses in the (local) source memory.
+ * \param[in]  memregion     Global memregion containing target memory.
+ * \param[in]  target_rank   Vector of ranks of the remote process.
+ * \param[in]  target_offset Vector of offsets into the memregion at target_rank.
+ * \param[out] handle        Opaque handle for the request.
  *
- * \see OSP_Get, OSP_MultiPut, OSP_Copy
+ * \see OSP_NbGet, OSP_MultiGet
  *
  * \ingroup DATA_TRANSFER
  */
 
-int OSP_NbMultiGet(int count,
-                  int *target,
-                  void* *source_ptr,
-                  void* *target_ptr,
-                  int *bytes,
-                  OSP_handle_t handle);
+int OSP_NbMultiGet(int* bytes,
+                    void** source_ptr,
+                    osp_global_memregion_t* memregion,
+                    int* target_rank,
+                    osp_offset_t* target_offset,
+                    osp_handle_t handle);
 
 /**
  * \brief Blocking copy of strided data from remote memory to local memory.
  *
  * \param[out] rc              The error code.
- * \param[in]  target          Rank of the remote process.
- * \param[in]  source_ptr      Starting address in the (remote) source memory.
- * \param[in]  src_stride_ar   Array of stride distances at (remote process) source in bytes.
- * \param[in]  target_ptr      Starting address in the (local) target memory.
- * \param[in]  trg_stride_ar   Array of stride distances at (local process) target in bytes.
- * \param[in]  count           Block size in each dimension in bytes.
- * \param[in]  stride_levels   The number of levels of stride.
+ * \param[in]  stride_descr    The striding descriptor.
+ * \param[in]  source_ptr    Starting address in the (local) source memory.
+ * \param[in]  memregion     Global memregion containing target memory.
+ * \param[in]  target_rank   Rank of the remote process.
+ * \param[in]  target_offset Offset into the memregion at target_rank.
  *
- * \see OSP_Put, OSP_Get, OSP_Copy, OSP_PutAcc
+ * \see OSP_Get, OSP_GetV, OSP_MultiGet, OSP_MultiGetS, OSP_MultiGetV
  *
  * \ingroup DATA_TRANSFER
  */
 
-int OSP_GetS(int target,
-            int stride_levels,
-            int *block_sizes,
-            void* source_ptr,
-            int *src_stride_ar,
-            void* target_ptr,
-            int *trg_stride_ar);
+int OSP_GetS(osp_stride_descr_t stride_descr,
+             void* source_ptr,
+             osp_global_memregion_t* memregion,
+             int target_rank,
+             osp_offset_t target_offset);
 
 /**
  * \brief Non-Blocking copy of strided data from remote memory to local memory.
  *
  * \param[out] rc              The error code.
- * \param[in]  target          Rank of the remote process.
- * \param[in]  source_ptr      Starting address in the (remote) source memory.
- * \param[in]  src_stride_ar   Array of stride distances at (remote process) source in bytes.
- * \param[in]  target_ptr      Starting address in the (local) target memory.
- * \param[in]  trg_stride_ar   Array of stride distances at (local process) target in bytes.
- * \param[in]  count           Block size in each dimension in bytes.
- * \param[in]  stride_levels   The number of levels of stride.
- * \param[out] handle          Opaque OSP handle
+ * \param[in]  stride_descr    The striding descriptor.
+ * \param[in]  source_ptr      Starting address in the (local) source memory.
+ * \param[in]  memregion       Global memregion containing target memory.
+ * \param[in]  target_rank     Rank of the remote process.
+ * \param[in]  target_offset   Offset into the memregion at target_rank.
+ * \param[out] handle          Opaque handle for the request.
  *
- * \see OSP_Put, OSP_Get, OSP_Copy, OSP_PutAcc
+ * \see OSP_Get, OSP_GetV, OSP_MultiGet, OSP_MultiGetS, OSP_MultiGetV
  *
  * \ingroup DATA_TRANSFER
  */
 
-int OSP_NbGetS(int target,
-              int stride_levels,
-              int *block_sizes,
-              void* source_ptr,
-              int *src_stride_ar,
-              void* target_ptr,
-              int *trg_stride_ar,
-              OSP_handle_t handle);
+int OSP_NbGetS(osp_stride_descr_t stride_descr,
+               void* source_ptr,
+               osp_global_memregion_t* memregion,
+               int target_rank,
+               osp_offset_t target_offset,
+               osp_handle_t handle);
 
 /**
- * \brief Blocking copy of stided data from remote memory to local memory.
+ * \brief Blocking multiple-copy of strided data from remote memory to local memory.
  *
  * \param[out] rc              The error code.
- * \param[in]  count           Number of operations to be performed
- * \param[in]  target          Rank of the remote process.
- * \param[in]  source_ptr      Starting address in the (remote) source memory.
- * \param[in]  src_stride_ar   Array of stride distances at (remote process) source in bytes.
- * \param[in]  target_ptr      Starting address in the (local) target memory.
- * \param[in]  trg_stride_ar   Array of stride distances at (local process) target in bytes.
- * \param[in]  count           Block size in each dimension in bytes.
- * \param[in]  stride_levels   The number of levels of stride.
+ * \param[in]  stride_descr    The striding descriptor.
+ * \param[in]  source_ptr      Starting address in the (local) source memory.
+ * \param[in]  memregion       Global memregion containing target memory.
+ * \param[in]  target_rank     Rank of the remote process.
+ * \param[in]  target_offset   Offset into the memregion at target_rank.
  *
- * \see OSP_Put, OSP_Get, OSP_Copy, OSP_PutAcc
+ * \see OSP_Get, OSP_GetV, OSP_MultiGet, OSP_MultiGetS, OSP_MultiGetV
  *
  * \ingroup DATA_TRANSFER
  */
 
-int OSP_MultiGetS(int target_count,
-                 int *target,
-                 int stride_levels,
-                 int **count,
-                 void* *source_ptr,
-                 int **src_stride_ar,
-                 void* *target_ptr,
-                 int **trg_stride_ar);
+int OSP_MultiGetS(osp_stride_descr_t* stride_descr,
+                  void** source_ptr,
+                  osp_global_memregion_t* memregion,
+                  int* target_rank,
+                  osp_offset_t* target_offset);
 
 /**
- * \brief Blocking copy of stided data from remote memory to local memory.
+ * \brief Non-Blocking multiple-copy of strided data from remote memory to local memory.
  *
  * \param[out] rc              The error code.
- * \param[in]  count           Number of operations to be performed
- * \param[in]  target          Rank of the remote process.
- * \param[in]  source_ptr      Starting address in the (remote) source memory.
- * \param[in]  src_stride_ar   Array of stride distances at (remote process) source in bytes.
- * \param[in]  target_ptr      Starting address in the (local) target memory.
- * \param[in]  trg_stride_ar   Array of stride distances at (local process) target in bytes.
- * \param[in]  count           Block size in each dimension in bytes.
- * \param[in]  stride_levels   The number of levels of stride.
- * \param[out] handle          Opaque OSP handle
+ * \param[in]  stride_descr    The striding descriptor.
+ * \param[in]  source_ptr      Starting address in the (local) source memory.
+ * \param[in]  memregion       Global memregion containing target memory.
+ * \param[in]  target_rank     Rank of the remote process.
+ * \param[in]  target_offset   Offset into the memregion at target_rank.
+ * \param[out] handle          Opaque handle for the request.
  *
- * \see OSP_Put, OSP_Get, OSP_Copy, OSP_PutAcc
+ * \see OSP_Get, OSP_GetV, OSP_MultiGet, OSP_MultiGetS, OSP_MultiGetV
  *
  * \ingroup DATA_TRANSFER
  */
 
-int OSP_NbMultiGetS(int target_count,
-                   int *target,
-                   int stride_levels,
-                   int **count,
-                   void* *source_ptr,
-                   int **src_stride_ar,
-                   void* *target_ptr,
-                   int **trg_stride_ar,
-                   OSP_handle_t handle);
-
-/**
- * \brief Blocking copy of non-contiguous data from remote memory to local memory.
- *
- * \param[out] rc              The error code.
- * \param[in]  target          Rank of the remote process.
- * \param[in]  iov_ar          Array of io vectors. Each vector represents a set of
- *                             chunks of same size.
- * \param[in]  ar_len          Number of elements in the array.
- *
- * \see OSP_NbPut, OSP_NbPutV, OSP_NbMultiPut, OSP_NbMultiPutS, OSP_NbMultiPutV
- *
- * \ingroup DATA_TRANSFER
- */
-
-int OSP_GetV(int target, OSP_iov_t *iov_ar, int ar_len);
-
-/**
- * \brief Non-Blocking copy of non-contiguous data from remote memory to local memory.
- *
- * \param[out] rc              The error code.
- * \param[in]  target          Rank of the remote process.
- * \param[in]  iov_ar          Array of io vectors. Each vector represents a set of
- *                             chunks of same size.
- * \param[in]  ar_len          Number of elements in the array.
- * \param[out] handle          Opaque OSP handle
- *
- * \see OSP_NbPut, OSP_NbPutV, OSP_NbMultiPut, OSP_NbMultiPutS, OSP_NbMultiPutV
- *
- * \ingroup DATA_TRANSFER
- */
-
-int OSP_NbGetV(int target, OSP_iov_t *iov_ar, int ar_len, OSP_handle_t handle);
+int OSP_NbMultiGetS(osp_stride_descr_t* stride_descr,
+                    void** source_ptr,
+                    osp_global_memregion_t* memregion,
+                    int* target_rank,
+                    osp_offset_t* target_offset,
+                    osp_handle_t handle);
 
 /**
  * \brief Blocking get-and-accumulate operation (aka RMW) on arbitrary data.
@@ -1650,140 +1384,126 @@ int OSP_NbGetV(int target, OSP_iov_t *iov_ar, int ar_len, OSP_handle_t handle);
  * \warning Obviously, the user cannot mix RMW with other operations without
  *          proper synchronization.
  *
- * \param[out] rc               The error code.
- * \param[in]  target           Rank of the target process.
- * \param[in]  source_ptr_in    Pointer of modification data at source process.
- * \param[in]  source_ptr_out   Pointer of original read data at source process.
- * \param[in]  target_ptr       Pointer of modified data at target process.
- * \param[in]  bytes            Number of bytes to update.
- * \param[in]  op               Operation to be performed.
- * \param[in]  osp_type          Type of data and value.
+ * \brief Blocking read-modify-write of contiguous data from local memory to remote memory.
+ *
+ * The mnemonic is RMW BYTES from PTR1 to MEMREGION at RANK plus OFFSET
+ * and return original at PTR2.
+ *
+ * \param[out] rc            The error code.
+ * \param[in]  rmw_descr     The read-modify-write descriptor.
+ * \param[in]  bytes         Amount of data to transfer in bytes.
+ * \param[in]  in_ptr        Starting address in the (local) input memory.
+ * \param[in]  memregion     Global memregion containing target memory.
+ * \param[in]  target_rank   Rank of the remote process.
+ * \param[in]  target_offset Offset into the memregion at target_rank.
+ * \param[in]  out_ptr       Starting address in the (local) output memory.
+ *
+ * \see OSP_NbRmw
  *
  * \ingroup DATA_TRANSFER
  */
 
-int OSP_Rmw(int target,
-           void* source_ptr_in,
-           void* source_ptr_out,
-           void* target_ptr,
-           int bytes,
-           OSP_atomic_op_t op,
-           OSP_datatype_t osp_type);
+int OSP_Rmw(osp_acc_descr_t acc_descr,
+            int bytes,
+            void* in_ptr,
+            osp_global_memregion_t* memregion,
+            int target_rank,
+            osp_offset_t target_offset,
+            void* out_ptr);
 
 /**
- * \brief Non-blocking get-and-accumulate operation (aka RMW) on arbitrary data.
- *        This operation is message-wise atomic.
+ * \brief Non-Blocking read-modify-write of contiguous data from local memory to remote memory.
  *
- * \warning Obviously, the user cannot mix RMW with other operations without
- *          proper synchronization.
+ * The mnemonic is NBRMW BYTES from PTR1 to MEMREGION at RANK plus OFFSET,
+ * return original at PTR2 and get HANDLE back.
  *
- * \param[out] rc               The error code.
- * \param[in]  target           Rank of the target process.
- * \param[in]  source_ptr_in    Pointer of modification data at source process.
- * \param[in]  source_ptr_out   Pointer of original read data at source process.
- * \param[in]  target_ptr       Pointer of modified data at target process.
- * \param[in]  bytes            Number of bytes to update.
- * \param[in]  op               Operation to be performed.
- * \param[in]  osp_type          Type of data and value.
- * \param[out] handle          Opaque OSP handle
+ * \param[out] rc            The error code.
+ * \param[in]  rmw_descr     The read-modify-write descriptor.
+ * \param[in]  bytes         Amount of data to transfer in bytes.
+ * \param[in]  source_ptr    Starting address in the (local) source memory.
+ * \param[in]  memregion     Global memregion containing target memory.
+ * \param[in]  target_rank   Rank of the remote process.
+ * \param[in]  target_offset Offset into the memregion at target_rank.
+ * \param[in]  out_ptr       Starting address in the (local) output memory.
+ * \param[out] handle        Opaque handle for the request.
+ *
+ * \see OSP_Rmw
  *
  * \ingroup DATA_TRANSFER
  */
 
-int OSP_NbRmw(int target,
-             void* source_ptr_in,
-             void* source_ptr_out,
-             void* target_ptr,
-             int bytes,
-             OSP_atomic_op_t op,
-             OSP_datatype_t osp_type,
-             OSP_handle_t handle);
+int OSP_NbRmw(osp_rmw_descr_t rmw_descr,
+              int bytes,
+              void* source_ptr,
+              osp_global_memregion_t* memregion,
+              int target_rank,
+              osp_offset_t target_offset,
+              void* out_ptr,
+              osp_handle_t handle);
 
 /**
  * \brief Blocking copy of contiguous data from remote memory to remote memory.
  *
- * \param[out] rc            The error code.
- * \param[in]  source        Rank of the (remote) source process.
- * \param[in]  target        Rank of the (remote) target process.
- * \param[in]  source_ptr    Starting address in the (remote) source memory.
- * \param[in]  target_ptr    Starting address in the (remote) target memory.
- * \param[in]  bytes         Amount of data to transfer in bytes.
+ * The mnemonic is COPY BYTES from MEMREGION at RANK plus OFFSET
+ * to MEMREGION at RANK plus OFFSET.
  *
- * \see OSP_Put, OSP_Get
+ * \param[out] rc             The error code.
+ * \param[in]  bytes          Amount of data to transfer in bytes.
+ * \param[in]  src_memregion  Global memregion containing target memory.
+ * \param[in]  src_rank       Rank of the remote process.
+ * \param[in]  src_offset     Offset into the memregion at target_rank.
+ * \param[in]  dest_memregion Global memregion containing target memory.
+ * \param[in]  dest_rank      Rank of the remote process.
+ * \param[in]  dest_offset    Offset into the memregion at target_rank.
+ *
+ * \see OSP_NbGet, OSP_MultiGet
  *
  * \ingroup DATA_TRANSFER
  */
 
-int OSP_Copy(int source,
-            int target,
-            void* source_ptr,
-            void* target_ptr,
-            int bytes);
+int OSP_Copy(int bytes,
+             osp_global_memregion_t* src_memregion,
+             int src_rank,
+             osp_offset_t src_offset,
+             osp_global_memregion_t* dest_memregion,
+             int dest_rank,
+             osp_offset_t dest_offset);
 
 /**
- * \brief Blocking accumulate of contiguous data from remote memory onto remote memory.
+ * \brief Non-Blocking copy of contiguous data from remote memory to remote memory.
  *
- * \param[out] rc            The error code.
- * \param[in]  source        Rank of the (remote) source process.
- * \param[in]  target        Rank of the (remote) target process.
- * \param[in]  source_ptr    Starting address in the (remote) source memory.
- * \param[in]  target_ptr    Starting address in the (remote) target memory.
- * \param[in]  bytes         Amount of data to transfer in bytes.
- * \param[in]  osp_type       Amount of data to transfer in bytes.
- * \param[in]  scaling       Factor for scaling source
+ * The mnemonic is COPY BYTES from MEMREGION at RANK plus OFFSET
+ * to MEMREGION at RANK plus OFFSET and get HANDLE back.
  *
- * \see OSP_Put, OSP_Get
+ * \param[out] rc             The error code.
+ * \param[in]  bytes          Amount of data to transfer in bytes.
+ * \param[in]  src_memregion  Global memregion containing target memory.
+ * \param[in]  src_rank       Rank of the remote process.
+ * \param[in]  src_offset     Offset into the memregion at target_rank.
+ * \param[in]  dest_memregion Global memregion containing target memory.
+ * \param[in]  dest_rank      Rank of the remote process.
+ * \param[in]  dest_offset    Offset into the memregion at target_rank.
+ * \param[out] handle         Opaque handle for the request.
+ *
+ * \see OSP_NbGet, OSP_MultiGet
  *
  * \ingroup DATA_TRANSFER
  */
 
-int OSP_CopyAcc(int source,
-               int target,
-               void* source_ptr,
-               void* target_ptr,
-               int bytes,
-               OSP_datatype_t osp_type,
-               void* scaling);
-
-/* FIXME: More API functions to come */
+int OSP_NbCopy(int bytes,
+                osp_global_memregion_t* src_memregion,
+                int src_rank,
+                osp_offset_t src_offset,
+                osp_global_memregion_t* dest_memregion,
+                int dest_rank,
+                osp_offset_t dest_offset,
+                osp_handle_t handle);
 
 /* ********************************************************************** */
 /*                                                                        */
 /*               OSP external API - synchronization and completion         */
 /*                                                                        */
 /* ********************************************************************** */
-
-/**
- * \brief On return, this call ensures that all processes within the entire group
- *        have reached this point in the program.
- *
- *        This operation is collective and blocking.
- *
- * \param[out] rc            The error code.
- * \param[in] group          Group of processes to synchronize.
- *
- * \see OSP_Flush, OSP_AllFlush, OSP_Sync.
- *
- * \ingroup SYNCHRONIZATION
- */
-
-int OSP_Barrier_group(OSP_group_t* group);
-
-/**
- * \brief When the handle state is OSP_TRUE, all processes within the entire group
- *        have reached this point in the program.
- *
- *        This operation is collective and non-blocking.
- *
- * \param[out] rc            The error code.
- * \param[in] group          Group of processes to synchronize.
- *
- * \see OSP_Flush, OSP_AllFlush, OSP_Sync.
- *
- * \ingroup SYNCHRONIZATION
- */
-
-int OSP_NbBarrier_group(OSP_group_t* group, OSP_handle_t handle);
 
 /**
  * \brief On return, this call ensures that all outstanding put or accumulate
@@ -1795,12 +1515,12 @@ int OSP_NbBarrier_group(OSP_group_t* group, OSP_handle_t handle);
  * \param[out] rc            The error code.
  * \param[in] group          Group of processes to synchronize.
  *
- * \see OSP_GlobalSync, OSP_GroupBarrier, OSP_Flush_group.
+ * \see OSP_NbSync_group, OSP_Flush_group.
  *
  * \ingroup SYNCHRONIZATION
  */
 
-int OSP_Sync_group(OSP_group_t* group);
+int OSP_Sync_group(osp_group_t* group);
 
 /**
  * \brief When the handle state is OSP_TRUE, all outstanding put or accumulate
@@ -1812,12 +1532,12 @@ int OSP_Sync_group(OSP_group_t* group);
  * \param[out] rc            The error code.
  * \param[in] group          Group of processes to synchronize.
  *
- * \see OSP_GlobalSync, OSP_GroupBarrier, OSP_Flush_group.
+ * \see OSP_Sync_group, OSP_NbFlush_group.
  *
  * \ingroup SYNCHRONIZATION
  */
 
-int OSP_NbSync_group(OSP_group_t* group, OSP_handle_t handle);
+int OSP_NbSync_group(osp_group_t* group, osp_handle_t handle);
 
 /**
  * \brief On return, this call ensures that all blocking and non-blocking put
@@ -1828,7 +1548,7 @@ int OSP_NbSync_group(OSP_group_t* group, OSP_handle_t handle);
  * \param[out] rc            The error code.
  * \param[in]  proc          Rank of the remote process.
  *
- * \see OSP_Flush_group, OSP_Sync
+ * \see OSP_NbFlush, OSP_Flush_group, OSP_Flush_list
  *
  * \ingroup COMPLETION
  */
@@ -1844,12 +1564,12 @@ int OSP_Flush(int proc);
  * \param[out] rc            The error code.
  * \param[in]  proc          Rank of the remote process.
  *
- * \see OSP_Flush_group, OSP_Sync
+ * \see OSP_Flush, OSP_NbFlush_group, OSP_NbFlush_list
  *
  * \ingroup COMPLETION
  */
 
-int OSP_NbFlush(int proc, OSP_handle_t handle);
+int OSP_NbFlush(int proc, osp_handle_t handle);
 
 /**
  * \brief On return, this call ensures that all blocking and non-blocking put
@@ -1861,7 +1581,7 @@ int OSP_NbFlush(int proc, OSP_handle_t handle);
  * \param[in] count              Number of processes in vector.
  * \param[in] proc_list          Vector of processes to flush against.
  *
- * \see OSP_Flush, OSP_Flush_group
+ * \see OSP_Flush, OSP_NbFlush_list
  *
  * \ingroup COMPLETION
  */
@@ -1878,12 +1598,12 @@ int OSP_Flush_list(int count, int *proc_list);
  * \param[in] count              Number of processes in vector.
  * \param[in] proc_list          Vector of processes to flush against.
  *
- * \see OSP_Flush, OSP_Flush_group
+ * \see OSP_NbFlush, OSP_Flush_list
  *
  * \ingroup COMPLETION
  */
 
-int OSP_NbFlush_list(int count, int *proc_list, OSP_handle_t handle);
+int OSP_NbFlush_list(int count, int *proc_list, osp_handle_t handle);
 
 /**
  * \brief On return, this call ensures that all blocking and non-blocking put
@@ -1895,12 +1615,12 @@ int OSP_NbFlush_list(int count, int *proc_list, OSP_handle_t handle);
  * \param[in] count              Number of processes in vector.
  * \param[in] proc_list          List of processes to flush against.
  *
- * \see OSP_Flush, OSP_Sync
+ * \see OSP_Flush, OSP_NbFlush_group
  *
  * \ingroup COMPLETION
  */
 
-int OSP_Flush_group(OSP_group_t* group);
+int OSP_Flush_group(osp_group_t* group);
 
 /**
  * \brief When the handle state is OSP_TRUE, all blocking and non-blocking put
@@ -1912,19 +1632,19 @@ int OSP_Flush_group(OSP_group_t* group);
  * \param[in] count              Number of processes in vector.
  * \param[in] proc_list          List of processes to flush against.
  *
- * \see OSP_Flush, OSP_Sync
+ * \see OSP_NbFlush, OSP_Flush_group
  *
  * \ingroup COMPLETION
  */
 
-int OSP_NbFlush_group(OSP_group_t* group, OSP_handle_t handle);
+int OSP_NbFlush_group(osp_group_t* group, osp_handle_t handle);
 
 /**
  * \brief Blocks on completion of all non-blocking handles.
  *
  * \param[out] rc                The error code.
  *
- * \see OSP_handle_t, OSP_Wait_handle_list, OSP_Test_handle
+ * \see osp_handle_t, OSP_Wait_handle_list, OSP_Test_handle
  *
  * \ingroup SYNCHRONIZATION
  */
@@ -1936,12 +1656,12 @@ int OSP_Wait_handle_all(void);
  *
  * \param[in] handle      Non-blocking handle upon which to be waited.
  *
- * \see OSP_handle_t, OSP_Wait_handle_list, OSP_Test_handle
+ * \see osp_handle_t, OSP_Wait_handle_list, OSP_Test_handle
  *
  * \ingroup SYNCHRONIZATION
  */
 
-int OSP_Wait_handle(OSP_handle_t handle);
+int OSP_Wait_handle(osp_handle_t handle);
 
 /**
  * \brief Blocks on completion of all elements in a vector of non-blocking handles.
@@ -1949,12 +1669,12 @@ int OSP_Wait_handle(OSP_handle_t handle);
  * \param[in] count        Number of handles in vector.
  * \param[in] handles      Vector of non-blocking handles upon which to be waited.
  *
- * \see OSP_handle_t, OSP_Wait_handle, OSP_Test_handle_list
+ * \see osp_handle_t, OSP_Wait_handle, OSP_Test_handle_list
  *
  * \ingroup SYNCHRONIZATION
  */
 
-int OSP_Wait_handle_list(int count, OSP_handle_t* handles);
+int OSP_Wait_handle_list(int count, osp_handle_t* handles);
 
 /**
  * \brief Blocks on completion of a non-blocking handle.
@@ -1962,12 +1682,12 @@ int OSP_Wait_handle_list(int count, OSP_handle_t* handles);
  * \param[in]  handle        Non-blocking handle upon which to be waited.
  * \param[out] completed     Handle status.
  *
- * \see OSP_handle_t, OSP_Wait_handle, OSP_Test_handle_list
+ * \see osp_handle_t, OSP_Wait_handle, OSP_Test_handle_list
  *
  * \ingroup SYNCHRONIZATION
  */
 
-int OSP_Test_handle(OSP_handle_t handle, OSP_bool_t* completed);
+int OSP_Test_handle(osp_handle_t handle, osp_bool_t* completed);
 
 /**
  * \brief Blocks on completion of all elements in a vector of non-blocking handles.
@@ -1976,24 +1696,24 @@ int OSP_Test_handle(OSP_handle_t handle, OSP_bool_t* completed);
  * \param[in]  handles      Vector of non-blocking handles upon which to be waited.
  * \param[out] completed    Vector of handle statuses.
  *
- * \see OSP_handle_t, OSP_Test_handle, OSP_Wait_handle_list
+ * \see osp_handle_t, OSP_Test_handle, OSP_Wait_handle_list
  *
  * \ingroup SYNCHRONIZATION
  */
 
-int OSP_Test_handle_list(int count, OSP_handle_t *handles, OSP_bool_t* *completed);
+int OSP_Test_handle_list(int count, osp_handle_t *handles, osp_bool_t* *completed);
 
 /**
  * \brief Resets a non-blocking handle.
  *
  * \param[in] handle      Non-blocking handle to be reset.
  *
- * \see OSP_handle_t, OSP_Reset_handle_list
+ * \see osp_handle_t, OSP_Reset_handle_list
  *
  * \ingroup SYNCHRONIZATION
  */
 
-int OSP_Reset_handle(OSP_handle_t* handle);
+int OSP_Reset_handle(osp_handle_t* handle);
 
 /**
  * \brief Resets a non-blocking handle.
@@ -2001,191 +1721,12 @@ int OSP_Reset_handle(OSP_handle_t* handle);
  * \param[in]  count        Number of handles in vector.
  * \param[in] handle      Non-blocking handle to be reset.
  *
- * \see OSP_handle_t, OSP_Reset_handle
+ * \see osp_handle_t, OSP_Reset_handle
  *
  * \ingroup SYNCHRONIZATION
  */
 
-int OSP_Reset_handle_list(int count, OSP_handle_t* handle);
-
-/* ********************************************************************** */
-/*                                                                        */
-/*               OSP external API - many-to-many operations                */
-/*                                                                        */
-/* ********************************************************************** */
-
-/**
- * \brief
- *
- * \param[in] group          Group of processes.
- *
- * \see
- *
- * \ingroup MANYTOMANY
- */
-
-int OSP_Multicast_group(OSP_group_t* group,
-                       int root,
-                       int count,
-                       OSP_datatype_t osp_type,
-                       void* buffer);
-
-/**
- * \brief
- *
- * \param[in] group          Group of processes.
- *
- * \see
- *
- * \ingroup MANYTOMANY
- */
-
-int OSP_NbMulticast_group(OSP_group_t* group,
-                         int root,
-                         int count,
-                         OSP_datatype_t osp_type,
-                         void* buffer,
-                         OSP_handle_t osp_handle);
-
-/**
- * \brief
- *
- * \param[in] group          Group of processes.
- *
- * \see
- *
- * \ingroup MANYTOMANY
- */
-
-int OSP_Reduce_group(OSP_group_t* group,
-                    int root,
-                    int count,
-                    OSP_reduce_op_t osp_op,
-                    OSP_datatype_t osp_type,
-                    void* in,
-                    void* out);
-
-/**
- * \brief
- *
- * \param[in] group          Group of processes.
- *
- * \see
- *
- * \ingroup MANYTOMANY
- */
-
-int OSP_NbReduce_group(OSP_group_t* group,
-                      int root,
-                      int count,
-                      OSP_reduce_op_t osp_op,
-                      OSP_datatype_t osp_type,
-                      void* in,
-                      void* out,
-                      OSP_handle_t osp_handle);
-
-/**
- * \brief
- *
- * \param[in] group          Group of processes.
- *
- * \see
- *
- * \ingroup MANYTOMANY
- */
-
-int OSP_Allreduce_group(OSP_group_t* group,
-                       int count,
-                       OSP_reduce_op_t osp_op,
-                       OSP_datatype_t osp_type,
-                       void* in,
-                       void* out);
-
-/**
- * \brief
- *
- * \param[in] group          Group of processes.
- *
- * \see
- *
- * \ingroup MANYTOMANY
- */
-
-int OSP_NbAllreduce_group(OSP_group_t* group,
-                         int count,
-                         OSP_reduce_op_t osp_op,
-                         OSP_datatype_t osp_type,
-                         void* in,
-                         void* out,
-                         OSP_handle_t osp_handle);
-
-/**
- * \brief
- *
- * \param[in] group          Group of processes.
- *
- * \see
- *
- * \ingroup MANYTOMANY
- */
-
-int OSP_Bcast_group(OSP_group_t* group,
-                   int root,
-                   int bytes,
-                   void* buffer);
-
-/**
- * \brief
- *
- * \param[in] group          Group of processes.
- *
- * \see
- *
- * \ingroup MANYTOMANY
- */
-
-int OSP_NbBcast_group(OSP_group_t* group,
-                     int root,
-                     int count,
-                     void* buffer,
-                     OSP_handle_t osp_handle);
-
-/**
- * \brief
- *
- * \param[in] group          Group of processes.
- *
- * \see
- *
- * \ingroup MANYTOMANY
- */
-
-int OSP_Manytomany_group(OSP_group_t* in_group,
-                        OSP_group_t* out_group,
-                        int count,
-                        OSP_datatype_t osp_type,
-                        void* in,
-                        void* out);
-
-/**
- * \brief
- *
- * \param[in] group          Group of processes.
- *
- * \see
- *
- * \ingroup MANYTOMANY
- */
-
-int OSP_NbManytomany_group(OSP_group_t* in_group,
-                          OSP_group_t* out_group,
-                          int count,
-                          OSP_datatype_t osp_type,
-                          void* in,
-                          void* out,
-                          OSP_handle_t osp_handle);
-
-/* FIXME: More API functions to come */
+int OSP_Reset_handle_list(int count, osp_handle_t* handle);
 
 /*! @} */
 
