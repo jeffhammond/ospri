@@ -515,7 +515,7 @@ void OSP_Abort(int error_code, char error_message[]);
  *
  * \note Memory allocated with this function will be properly aligned for the architecture.
  *
- * \warning Memory allocated with this function must be freed by OSP_Free_segment.
+ * \warning Memory allocated with this function must be freed by OSP_Destroy_global_memregion.
  *
  * \param[out] rc            The error code.
  * \param[in]  group         OSP group over which the memregion is shared.
@@ -523,7 +523,7 @@ void OSP_Abort(int error_code, char error_message[]);
  * \param[in]  device        The device address space in which the memregion is created.
  * \param[out] memregion     Pointer to memregion structure to be created.
  *
- * \see OSP_Free_memregion, OSP_Bind_memregion
+ * \see OSP_Create_global_memregion, OSP_Destroy_global_memregion
  *
  * \ingroup MEMORY
  */
@@ -538,7 +538,7 @@ osp_result_t OSP_Allocate_global_memregion(osp_group_t* group,
  *
  * \note Memory allocated with this function will be properly aligned for the architecture.
  *
- * \warning Memory allocated with this function must be freed by OSP_Free_segment.
+ * \warning Memory allocated with this function must be freed by OSP_Destroy_global_memregion.
  *
  * \param[out] rc            The error code.
  * \param[in]  group         OSP group over which the memregion is shared.
@@ -546,7 +546,7 @@ osp_result_t OSP_Allocate_global_memregion(osp_group_t* group,
  * \param[in]  ptr           Pointer to memory to be included in the memregion .
  * \param[out] memregion     Pointer to memregion structure to be created.
  *
- * \see OSP_Free_memregion, OSP_Bind_memregion
+ * \see OSP_Allocate_global_memregion, OSP_Destroy_global_memregion
  *
  * \ingroup MEMORY
  */
@@ -557,19 +557,33 @@ osp_result_t OSP_Create_global_memregion(osp_group_t* group,
                                          osp_global_memregion_t* memregion);
 
 /**
+ * \brief A collective operation (over the group associated with the memregion)
+ *        to free memory allocated by OSP_Create_global_memregion.
+ *
+ * \param[out] rc            The error code.
+ * \param[in]  memregion     Pointer to memregion structure to be destroyed.
+ *
+ * \see OSP_Allocate_global_memregion, OSP_Create_global_memregion
+ *
+ * \ingroup MEMORY
+ */
+
+osp_result_t OSP_Destroy_global_memregion(osp_global_memregion_t* memregion);
+
+/**
  * \brief A collective operation to free memory allocated by OSP_Create_global_memregion.
  *
  * \param[out] rc            The error code.
  * \param[in]  group         OSP group over which the memregion is shared.
  * \param[in]  memregion     Pointer to memregion structure to be destroyed.
  *
- * \see OSP_Alloc_segment, OSP_Register_segment
+ * \see OSP_Allocate_global_memregion, OSP_Create_global_memregion
  *
  * \ingroup MEMORY
  */
 
-osp_result_t OSP_Destroy_global_memregion(osp_group_t* group,
-                                          osp_global_memregion_t* memregion);
+osp_result_t OSP__global_memregion(osp_global_memregion_t* memregion);
+
 
 /**
  * \brief Initializes the give non-blocking handle.
