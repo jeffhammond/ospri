@@ -52,13 +52,16 @@
 #include <stdlib.h>
 #include <osp.h>
 
-#define MAX_DIM 1024
+#define MAX_XDIM 1024 
+#define MAX_YDIM 1024
+#define ITERATIONS 1000
+#define SKIP 10
 
 int main()
 {
 
-    int i, j, rank, nranks, msgsize, dest;
-    int dim, iterations;
+    int i, j, rank, nranks, msgsize, peer;
+    int xdim, ydim;
     long bufsize;
     double **buffer;
     double scaling;
@@ -73,7 +76,7 @@ int main()
 
     OSP_Barrier_group(OSP_GROUP_WORLD);
 
-    bufsize = MAX_DIM * MAX_DIM * sizeof(double);
+    bufsize = MAX_XDIM * MAX_YDIM * sizeof(double);
     buffer = (double **) malloc(sizeof(double *) * nranks);
     OSP_Alloc_segment((void **) &(buffer[rank]), bufsize);
     OSP_Exchange_segments(OSP_GROUP_WORLD, (void **) buffer);
@@ -92,32 +95,41 @@ int main()
         printf("OSP_PutAccS Bandwidth in MBPS \n");
         printf("%30s %22s \n", "Dimensions(array of doubles)", "Latency");
         fflush(stdout);
+    }
 
-        dest = 1;
+    src_stride = MAX_YDIM * sizeof(double);
+    trg_stride = MAX_YDIM * sizeof(double);
+    stride_level = 1;
+    scaling = 2.0;
 
-        src_stride = MAX_DIM * sizeof(double);
-        trg_stride = MAX_DIM * sizeof(double);
-        stride_level = 1;
-        scaling = 2.0;
+    for (xdim = 1; xdim <= MAX_XDIM; xdim *= 2)
+    {
 
-        for (dim = 1; dim <= MAX_DIM; dim *= 2)
-        {
+       count[1] = xdim;
 
-            count[0] = dim * sizeof(double);
-            count[1] = dim;
- 
-            iterations = (MAX_DIM * MAX_DIM) / (dim * dim);
+       for (ydim = 1; ydim <= MAX_YDIM; ydim *= 2)
+       {
 
-                t_start = OSP_Time_seconds();
-                for (i = 0; i < iterations; i++)
+            count[0] = ydim * sizeof(double);
+
+            if(rank == 0)
+
+            {
+
+                for (i = 0; i < ITERATIONS + SKIP; i++)
                 {
+ 
+                    peer = 1;                 
+ 
+                    if (i == SKIP) 
+                          t_start = OSP_Time_seconds();
 
-                    OSP_NbPutAccS(dest,
+                    OSP_NbPutAccS(peer,
                                  stride_level,
                                  count,
                                  (void *) buffer[rank],
                                  &src_stride,
-                                 (void *) buffer[dest],
+                                 (void *) buffer[peer],
                                  &trg_stride,
                                  OSP_DOUBLE,
                                  (void *) &scaling,
@@ -129,14 +141,51 @@ int main()
                 OSP_Flush(1);
 
                 char temp[10];
-                sprintf(temp, "%dX%d", dim, dim);
+                sprintf(temp, "%dX%d", xdim, ydim);
                 t_total = t_stop - t_start;
-                d_total = (dim*dim*sizeof(double)*iterations)/(1024*1024);
+                d_total = (xdim*ydim*sizeof(double)*ITERATIONS)/(1024*1024);
                 bw = d_total/t_total;
                 printf("%30s %20.2f \n", temp, bw);
                 fflush(stdout);
 
+                OSP_Barrier_group(OSP_GROUP_WORLD);
+
+                OSP_Barrier_group(OSP_GROUP_WORLD);
+
             }
+            else
+            {
+                peer = 0;    
+
+                OSP_Barrier_group(OSP_GROUP_WORLD);
+
+                for (i = 0; i < xdim; i++)
+                {
+                    for (j = 0; j < ydim; j++)
+                    {
+                        if (*(buffer[rank] + i * MAX_XDIM + j) != ((1.0 + rank) + scaling*(1.0 + peer)*(ITERATIONS + SKIP)))
+                        {
+                            printf("Data validation failed at X: %d Y: %d Expected : %f Actual : %f \n",
+                                   i,
+                                   j,
+                                   (1.0 + rank) + (1.0 + peer)*(ITERATIONS + SKIP),
+                                   *(buffer[rank] + i * MAX_XDIM + j));
+                            fflush(stdout);
+                            return -1;
+                        }
+                    }
+                }
+
+                for (i = 0; i < bufsize / sizeof(double); i++)
+                {
+                    *(buffer[rank] + i) = 1.0 + rank;
+                }
+
+                OSP_Barrier_group(OSP_GROUP_WORLD);
+
+              }
+
+         }
 
     }
 

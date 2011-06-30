@@ -52,7 +52,8 @@
 #include <stdlib.h>
 #include <osp.h>
 
-#define MAX_DIM 1024 
+#define MAX_XDIM 1024 
+#define MAX_YDIM 1024
 #define ITERATIONS 100
 #define SKIP 10
 
@@ -60,7 +61,7 @@ int main()
 {
 
     size_t i, j, rank, nranks, msgsize, peer;
-    size_t dim;
+    size_t xdim, ydim;
     unsigned long bufsize;
     double **buffer;
     double t_start, t_stop, t_latency;
@@ -74,7 +75,7 @@ int main()
 
     buffer = (double **) malloc(sizeof(int32_t *) * nranks);
 
-    bufsize = MAX_DIM * MAX_DIM * sizeof(double);
+    bufsize = MAX_XDIM * MAX_YDIM * sizeof(double);
     OSP_Alloc_segment((void **) &(buffer[rank]), bufsize);
     OSP_Exchange_segments(OSP_GROUP_WORLD, (void **) buffer);
 
@@ -94,17 +95,21 @@ int main()
     }
     scaling = 2.0;
 
-    src_stride = MAX_DIM * sizeof(double);
-    trg_stride = MAX_DIM * sizeof(double);
+    src_stride = MAX_YDIM * sizeof(double);
+    trg_stride = MAX_YDIM * sizeof(double);
     stride_level = 1;
 
     OSP_Barrier_group(OSP_GROUP_WORLD);
 
-    for (dim = 1; dim <= MAX_DIM; dim *= 2)
+    for (xdim = 1; xdim <= MAX_XDIM; xdim *= 2)
     {
 
-        count[0] = dim*sizeof(double);
-        count[1] = dim;
+        count[1] = xdim;
+
+        for (ydim = 1; ydim <= MAX_YDIM; ydim *= 2)
+        {
+
+            count[0] = ydim * sizeof(double);
 
             if (rank == 0)
             {
@@ -131,7 +136,7 @@ int main()
                 OSP_Flush(1);
 
                 char temp[10];
-                sprintf(temp, "%dX%d", dim, dim);
+                sprintf(temp, "%dX%d", xdim, ydim);
                 printf("%30s %20.2f ", temp, ((t_stop - t_start) * 1000000)
                         / ITERATIONS);
                 fflush(stdout);
@@ -173,18 +178,18 @@ int main()
 
                 OSP_Barrier_group(OSP_GROUP_WORLD);
 
-                for (i = 0; i < dim; i++)
+                for (i = 0; i < xdim; i++)
                 {
-                    for (j = 0; j < dim; j++)
+                    for (j = 0; j < ydim; j++)
                     {
-                        if (*(buffer[rank] + i * MAX_DIM + j) != ((1.0 + rank)
+                        if (*(buffer[rank] + i * MAX_XDIM + j) != ((1.0 + rank)
                                 + scaling * (1.0 + peer) * (ITERATIONS + SKIP)))
                         {
                             printf("Data validation failed at X: %d Y: %d Expected : %f Actual : %f \n",
                                    i,
                                    j,
                                    ((1.0 + rank) + scaling * (1.0 + peer)),
-                                   *(buffer[rank] + i * MAX_DIM + j));
+                                   *(buffer[rank] + i * MAX_YDIM + j));
                             fflush(stdout);
                             return -1;
                         }
@@ -200,18 +205,18 @@ int main()
 
                 OSP_Barrier_group(OSP_GROUP_WORLD);
 
-                for (i = 0; i < dim; i++)
+                for (i = 0; i < xdim; i++)
                 {
-                    for (j = 0; j < dim; j++)
+                    for (j = 0; j < ydim; j++)
                     {
-                        if (*(buffer[rank] + i * MAX_DIM + j) != ((1.0 + rank)
+                        if (*(buffer[rank] + i * MAX_XDIM + j) != ((1.0 + rank)
                                 + scaling * (1.0 + peer) * (ITERATIONS + SKIP)))
                         {
                             printf("Data validation failed at X: %d Y: %d Expected : %f Actual : %f \n",
                                    i,
                                    j,
                                    ((1.0 + rank) + scaling * (1.0 + peer)),
-                                   *(buffer[rank] + i * MAX_DIM + j));
+                                   *(buffer[rank] + i * MAX_YDIM + j));
                             fflush(stdout);
                             return -1;
                         }
@@ -226,6 +231,8 @@ int main()
                 OSP_Barrier_group(OSP_GROUP_WORLD);
 
             }
+
+        }
 
     }
 

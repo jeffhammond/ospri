@@ -52,13 +52,16 @@
 #include <stdlib.h>
 #include <osp.h>
 
-#define MAX_DIM 1024 
+#define MAX_XDIM 1024 
+#define MAX_YDIM 1024
+#define ITERATIONS 1000
+#define SKIP 10
 
 int main()
 {
 
     int i, j, rank, nranks, msgsize, dest;
-    int dim, iterations;
+    int xdim, ydim;
     long bufsize;
     double **buffer;
     double t_start, t_stop, t_total, d_total, bw;
@@ -72,7 +75,7 @@ int main()
 
     OSP_Barrier_group(OSP_GROUP_WORLD);
 
-    bufsize = MAX_DIM * MAX_DIM * sizeof(double);
+    bufsize = MAX_XDIM * MAX_YDIM * sizeof(double);
     buffer = (double **) malloc(sizeof(double *) * nranks);
     OSP_Alloc_segment((void **) &(buffer[rank]), bufsize);
     OSP_Exchange_segments(OSP_GROUP_WORLD, (void **) buffer);
@@ -94,22 +97,25 @@ int main()
 
         dest = 1;
 
-        src_stride = MAX_DIM * sizeof(double);
-        trg_stride = MAX_DIM * sizeof(double);
+        src_stride = MAX_YDIM * sizeof(double);
+        trg_stride = MAX_YDIM * sizeof(double);
         stride_level = 1;
 
-        for (dim = 1; dim <= MAX_DIM; dim *= 2)
+        for (xdim = 1; xdim <= MAX_XDIM; xdim *= 2)
         {
 
-            count[0] = dim*sizeof(double);
-            count[1] = dim;
- 
-            iterations = (MAX_DIM * MAX_DIM) / (dim * dim);
+            count[1] = xdim;
 
-                t_start = OSP_Time_seconds();
+            for (ydim = 1; ydim <= MAX_YDIM; ydim *= 2)
+            {
 
-                for (i = 0; i < iterations; i++)
+                count[0] = ydim * sizeof(double);
+
+                for (i = 0; i < ITERATIONS + SKIP; i++)
                 {
+
+                    if (i == SKIP) 
+                          t_start = OSP_Time_seconds();
 
                     OSP_NbPutS(1,
                               stride_level,
@@ -126,12 +132,14 @@ int main()
                 OSP_Flush(1);
 
                 char temp[10];
-                sprintf(temp, "%dX%d", dim, dim);
+                sprintf(temp, "%dX%d", xdim, ydim);
                 t_total = t_stop - t_start;
-                d_total = (dim*dim*sizeof(double)*iterations)/(1024*1024);
+                d_total = (xdim*ydim*sizeof(double)*ITERATIONS)/(1024*1024);
                 bw = d_total/t_total;
                 printf("%30s %20.2f \n", temp, bw);
                 fflush(stdout);
+
+            }
 
         }
 

@@ -52,7 +52,8 @@
 #include <stdlib.h>
 #include <osp.h>
 
-#define MAX_DIM 1024 
+#define MAX_XDIM 1024 
+#define MAX_YDIM 1024
 #define ITERATIONS 100
 #define SKIP 10
 
@@ -60,7 +61,7 @@ int main()
 {
 
     int i, j, rank, nranks, msgsize, dest;
-    int dim;
+    int xdim, ydim;
     long bufsize;
     double **buffer;
     double t_start, t_stop, t_latency;
@@ -73,7 +74,7 @@ int main()
 
     OSP_Barrier_group(OSP_GROUP_WORLD);
 
-    bufsize = MAX_DIM * MAX_DIM * sizeof(double);
+    bufsize = MAX_XDIM * MAX_YDIM * sizeof(double);
     buffer = (double **) malloc(sizeof(double *) * nranks);
     OSP_Alloc_segment((void **) &(buffer[rank]), bufsize);
     OSP_Exchange_segments(OSP_GROUP_WORLD, (void **) buffer);
@@ -91,15 +92,19 @@ int main()
 
         dest = 1;
 
-        src_stride = MAX_DIM * sizeof(double);
-        trg_stride = MAX_DIM * sizeof(double);
+        src_stride = MAX_YDIM * sizeof(double);
+        trg_stride = MAX_YDIM * sizeof(double);
         stride_level = 1;
 
-        for (dim = 1; dim <= MAX_DIM; dim *= 2)
+        for (xdim = 1; xdim <= MAX_XDIM; xdim *= 2)
         {
 
-            count[0] = dim*sizeof(double);
-            count[1] = 512;
+            count[1] = xdim;
+
+            for (ydim = 1; ydim <= MAX_YDIM; ydim *= 2)
+            {
+
+                count[0] = ydim * sizeof(double);
 
                 for (i = 0; i < ITERATIONS + SKIP; i++)
                 {
@@ -118,22 +123,22 @@ int main()
                 t_stop = OSP_Time_seconds();
 
                 char temp[10];
-                sprintf(temp, "%dX%d", count[1], count[0]);
+                sprintf(temp, "%dX%d", xdim, ydim);
                 printf("%30s %20.2f \n", temp, ((t_stop - t_start) * 1000000)
                         / ITERATIONS);
                 fflush(stdout);
 
-                for (i = 0; i < count[1]; i++)
+                for (i = 0; i < xdim; i++)
                 {
-                    for (j = 0; j < count[0]; j++)
+                    for (j = 0; j < ydim; j++)
                     {
-                        if (*(buffer[rank] + i * MAX_DIM + j) != (1.0 + dest))
+                        if (*(buffer[rank] + i * MAX_XDIM + j) != (1.0 + dest))
                         {
                             printf("Data validation failed at X: %d Y: %d Expected : %f Actual : %f \n",
                                    i,
                                    j,
                                    (1.0 + dest),
-                                   *(buffer[rank] + i * MAX_DIM + j));
+                                   *(buffer[rank] + i * MAX_XDIM + j));
                             fflush(stdout);
                             return -1;
                         }
@@ -144,6 +149,8 @@ int main()
                 {
                     *(buffer[rank] + i) = 1.0 + rank;
                 }
+            }
+
         }
 
     }

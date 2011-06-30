@@ -53,7 +53,10 @@
 #include <osp.h>
 
 #define MAX_MSGSIZE 2*1024*1024
-#define ITERATIONS 20 
+#define ITERATIONS_VERYSMALL 20000 
+#define ITERATIONS_SMALL 4000 
+#define ITERATIONS_MEDIUM 1000 
+#define ITERATIONS_LARGE 500 
 
 int main()
 {
@@ -73,7 +76,7 @@ int main()
     rank = OSP_Process_id(OSP_GROUP_WORLD);
     nranks = OSP_Process_total(OSP_GROUP_WORLD);
 
-    bufsize = max_msgsize * ITERATIONS;
+    bufsize = max_msgsize * ITERATIONS_LARGE;
     buffer = (double **) malloc(sizeof(double *) * nranks);
     OSP_Alloc_segment((void **) &(buffer[rank]), bufsize);
     OSP_Exchange_segments(OSP_GROUP_WORLD, (void **) buffer);
@@ -100,7 +103,10 @@ int main()
         for (msgsize = sizeof(double); msgsize <= max_msgsize; msgsize *= 2)
         {
 
-            iterations = bufsize/msgsize;
+            if (msgsize <= 16 * 1024) iterations = ITERATIONS_VERYSMALL;
+            else if (msgsize <= 64 * 1024) iterations = ITERATIONS_SMALL;
+            else if (msgsize <= 512 * 1024) iterations = ITERATIONS_MEDIUM;
+            else iterations = ITERATIONS_LARGE;
 
             t_start = OSP_Time_seconds();
 

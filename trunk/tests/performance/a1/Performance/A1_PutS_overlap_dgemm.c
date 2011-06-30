@@ -92,8 +92,8 @@ int main() {
 
    if(rank == 0) {
 
-      printf("OSP_PutS Overlap - local and remote completions - in usec \n");
-      printf("%30s %30s %22s \n", "Msg Size", "Dimensions(array of doubles)", "Latency-LocalCompeltion", "Overlap-LocalCompletion");
+      printf("OSP_PutS Overlap - NbPutS + DGEMM + Wait. Time in cycles\n");
+      printf("%30s %30s %22s %22s\n", "Msg Size", "Dimensions(array of doubles)", "Base Latency", "Overlaped Latency");
       fflush(stdout);
 
       src_stride = MAX_DIM*sizeof(double);
@@ -102,8 +102,8 @@ int main() {
  
       for(dim=1; dim<=MAX_DIM; dim*=2) {
  
-         count[0] = dim;
-         count[1] = 64;
+         count[0] = dim*sizeof(double);
+         count[1] = 512;
  
          peer = 1;          
   
@@ -127,8 +127,8 @@ int main() {
          t_latency = (t_stop-t_start)/ITERATIONS;
   
          char temp[10];
-         sprintf(temp,"%dX%d", count[1], count[0]);
-         printf("%30d %30s %20lld", count[1]*count[0]*sizeof(double), temp, t_latency);
+         sprintf(temp,"%dX%d", count[1], dim);
+         printf("%30d %30s %20lld", count[1]*count[0], temp, t_latency);
          fflush(stdout);
  
          t_start = OSP_Time_cycles();
