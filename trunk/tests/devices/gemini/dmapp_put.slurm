@@ -1,10 +1,8 @@
 #!/bin/bash
-#PBS -N dmapp_put
-#PBS -l mppwidth=2
-#PBS -l mppnppn=2
-#PBS -l walltime=0:30:00
-#PBS -joe
-#PBS -V
+#SBATCH --job-name="dmapp_put"
+#SBATCH --ntasks=2
+#SBATCH --ntasks-per-node=2
+#SBATCH --time=0:30:00
 
 export XT_SYMMETRIC_HEAP_SIZE=2000M
 
