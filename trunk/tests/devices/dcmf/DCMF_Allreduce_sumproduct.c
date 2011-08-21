@@ -50,7 +50,8 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <osp.h>
+#include <assert.h>
+
 #include <dcmf.h>
 #include "dcmf_collectives.h"
 
@@ -73,16 +74,18 @@ int main()
 
     int i, rank, nranks, msgsize, status, expected;
     long bufsize;
-    int *src_buffer;
-    int *trg_buffer;
+    int * src_buffer;
+    int * trg_buffer;
     unsigned *ranks;
+
+    volatile unsigned allreduce_active = 0;
+
     DCMF_CollectiveProtocol_t barrier_protocol, lbarrier_protocol;
     DCMF_CollectiveProtocol_t allreduce_protocol, allreduce_notree_protocol;
     DCMF_Barrier_Configuration_t barrier_conf;
     DCMF_Allreduce_Configuration_t allreduce_conf;
     DCMF_CollectiveRequest_t crequest, crequest1, crequest2;
     DCMF_Callback_t done_callback;
-    volatile unsigned allreduce_active = 0;
 
     DCMF_Messager_initialize();
 
@@ -101,61 +104,40 @@ int main()
 
     barrier_conf.protocol = DCMF_GI_BARRIER_PROTOCOL;
     barrier_conf.cb_geometry = getGeometry; 
-    status = DCMF_Barrier_register(&barrier_protocol,
-                                   &barrier_conf);
+    status = DCMF_Barrier_register( &barrier_protocol, &barrier_conf);
+    assert( status == DCMF_SUCCESS );
 
     barrier_conf.protocol = DCMF_LOCKBOX_BARRIER_PROTOCOL;
     barrier_conf.cb_geometry = getGeometry;
-    status = DCMF_Barrier_register(&lbarrier_protocol,
-                                   &barrier_conf);
+    status = DCMF_Barrier_register( &lbarrier_protocol, &barrier_conf);
+    assert( status == DCMF_SUCCESS );
 
     DCMF_CollectiveProtocol_t  *barrier_ptr, *lbarrier_ptr;
     barrier_ptr = &barrier_protocol;
     lbarrier_ptr  = &lbarrier_protocol;
-    status = DCMF_Geometry_initialize(&geometry,
-                                      0,
- 				      ranks,
-				      nranks,
-       				      &barrier_ptr,
-                                      1,
-                                      &lbarrier_ptr,
-                                      1,
-       				      &crequest,
-				      0, 
-				      1);
+    status = DCMF_Geometry_initialize(&geometry, 0, ranks, nranks, &barrier_ptr, 1, &lbarrier_ptr, 1, &crequest, 0, 1);
+    assert( status == DCMF_SUCCESS );
        
     allreduce_conf.protocol = DCMF_TREE_ALLREDUCE_PROTOCOL;
     allreduce_conf.cb_geometry = getGeometry;
     allreduce_conf.reuse_storage = 1;
-    status = DCMF_Allreduce_register(&allreduce_protocol,
-                                      &allreduce_conf);
-    if(status != DCMF_SUCCESS)
-    { 
-       printf("DCMF_Allreduce_register returned with error %d \n",
-                 status);
-       exit(-1);
-    }
+    status = DCMF_Allreduce_register( &allreduce_protocol, &allreduce_conf);
+    assert( status == DCMF_SUCCESS );
 
-    allreduce_conf.protocol = DCMF_TORUS_BINOMIAL_ALLREDUCE_PROTOCOL;
-    allreduce_conf.cb_geometry = getGeometry;
-    allreduce_conf.reuse_storage = 1;
-    status = DCMF_Allreduce_register(&allreduce_notree_protocol,
-                                  &allreduce_conf);
-    if(status != DCMF_SUCCESS)
-    { 
-       printf("DCMF_Allreduce_register returned with error %d \n",
-                 status);
-       exit(-1);
-    }
-
-    if(!DCMF_Geometry_analyze(&geometry, &allreduce_protocol))
+    if (!DCMF_Geometry_analyze(&geometry, &allreduce_protocol))
     {
       printf("Not a supported geometry!! \n");
       fflush(stdout);
       return -1;
     }
 
-    if(!DCMF_Geometry_analyze(&geometry, &allreduce_notree_protocol))
+    allreduce_conf.protocol = DCMF_TORUS_BINOMIAL_ALLREDUCE_PROTOCOL;
+    allreduce_conf.cb_geometry = getGeometry;
+    allreduce_conf.reuse_storage = 1;
+    status = DCMF_Allreduce_register( &allreduce_notree_protocol, &allreduce_conf);
+    assert( status == DCMF_SUCCESS );
+
+    if (!DCMF_Geometry_analyze(&geometry, &allreduce_notree_protocol))
     {
       printf("Not a supported geometry!! \n");
       fflush(stdout);
@@ -193,29 +175,30 @@ int main()
                                     msgsize/sizeof(int),
                                     DCMF_SIGNED_INT,
                                     DCMF_SUM);
+            assert( status == DCMF_SUCCESS );
 
-             while(allreduce_active > 0) DCMF_Messager_advance();
+            while(allreduce_active > 0) DCMF_Messager_advance();
 
-             expected = (nranks-1)*(nranks)/2;
-             for (i = 0; i < msgsize/sizeof(int); i++)
-             {
-                if(trg_buffer[i] - expected != 0)
-                {
-                   printf("[%d] Validation has failed Expected: %d, Actual: %d, i: %d \n",
-                               rank, expected, trg_buffer[i], i);
-                   fflush(stdout);
-                   exit(-1);
-                }
-             }
+            expected = (nranks-1)*(nranks)/2;
+            for (i = 0; i < msgsize/sizeof(int); i++)
+            {
+               if (trg_buffer[i] - expected != 0)
+               {
+                  printf("[%d] Validation has failed Expected: %d, Actual: %d, i: %d \n",
+                              rank, expected, trg_buffer[i], i);
+                  fflush(stdout);
+                  exit(-1);
+               }
+            }
 
-             printf("[%d] %d message sum allreduce successful \n", rank, msgsize);
-             fflush(stdout);
+            printf("[%d] %d message sum allreduce successful \n", rank, msgsize);
+            fflush(stdout);
 
-             for (i = 0; i < bufsize/sizeof(int); i++)
-             {
-                   src_buffer[i] = 1;
-                   trg_buffer[i] = 0;
-             }
+            for (i = 0; i < bufsize/sizeof(int); i++)
+            {
+                  src_buffer[i] = 1;
+                  trg_buffer[i] = 0;
+            }
 
             allreduce_active += 1;
 
@@ -224,34 +207,36 @@ int main()
                                     &crequest2,
                                     done_callback,
                                     DCMF_SEQUENTIAL_CONSISTENCY,
-       				    &geometry,
+                                    &geometry,
                                     (char *) src_buffer,
                                     (char *) trg_buffer,
                                     msgsize/sizeof(int),
                                     DCMF_SIGNED_INT,
                                     DCMF_PROD);
+            assert( status == DCMF_SUCCESS );
 
-             while(allreduce_active > 0) DCMF_Messager_advance();
+            while ( allreduce_active > 0 ) DCMF_Messager_advance();
 
-             expected = 1;
-             for (i = 0; i < msgsize/sizeof(int); i++)
-             {
-                if(trg_buffer[i] - expected != 0)
-                {
-                    printf("[%d] Validation has failed Expected: %d, Actual: %d, i: %d \n",
-                                rank, expected, trg_buffer[i], i);
-                    fflush(stdout);
-                    exit(-1);
-                }
-             }
+            expected = 1;
+            for (i = 0; i < msgsize/sizeof(int); i++)
+            {
+               if ( trg_buffer[i] - expected != 0 )
+               {
+                   printf("[%d] Validation has failed Expected: %d, Actual: %d, i: %d \n",
+                               rank, expected, trg_buffer[i], i);
+                   fflush(stdout);
+                   exit(-1);
+               }
+            }
 
-             printf("[%d] %d message product allreduce successful\n", rank, msgsize);
-             fflush(stdout);
+            printf("[%d] %d message product allreduce successful\n", rank, msgsize);
+            fflush(stdout);
 
     }
 
     free(src_buffer);
     free(trg_buffer);
+
     DCMF_Messager_finalize();
 
     return 0;
