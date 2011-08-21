@@ -1,0 +1,25 @@
+We will support three different ordering modes:
+1. strict ordering aka location consistency
+2. partial ordering
+3. no ordering
+
+We want to support different remote completion (flush) implementations:
+1. remote completion happens before returning - this eliminates a lot of 
+   software complexity and is a form of flow-control
+2. bulk remote completion per target, which often requires deterministic routing
+3. individual remote completion (???)
+
+The main mode of remote completion is method 2.  
+This requires either an array of length sizeof(world) or a list.
+We want to explore the latter for scalability reasons.
+
+A device may need to implement all of the following to provide all the aforementioned
+features as well as other ones we know are useful (multi-ops, nonblocking).
+
+1. block-on-remote-completion
+2. block-on-local-completion + individual remote-completion request
+3. block-on-local-completion + bulk remote-completion info (list or array update)  
+4. fully nonblocking + individual local- and remote-completion requests
+5. fully nonblocking + bulk remote-completion info (list or array update)
+
+For noncontiguous operations, we want to support 
