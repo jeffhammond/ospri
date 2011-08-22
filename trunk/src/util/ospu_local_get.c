@@ -116,12 +116,8 @@ int OSPU_GetV_memcpy(OSP_iov_t *iov_ar, int ar_len)
     OSPD_Global_lock_acquire();
 
     for (i=0; i<ar_len; i++)
-    {
         for(j=0; j<iov_ar[i].ptr_ar_len; j++) 
-        {
             memcpy(iov_ar[i].target_ptr_ar[j], iov_ar[i].source_ptr_ar[j], iov_ar[i].size);
-        }
-    }
 
     OSPD_Global_lock_release();
 

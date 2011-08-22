@@ -22,4 +22,5 @@ features as well as other ones we know are useful (multi-ops, nonblocking).
 4. fully nonblocking + individual local- and remote-completion requests
 5. fully nonblocking + bulk remote-completion info (list or array update)
 
-For noncontiguous operations, we want to support 
+For noncontiguous operations, we want to support:
+1. 
