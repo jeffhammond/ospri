@@ -83,90 +83,83 @@ int main()
     buffer = (int *) malloc(bufsize);
 
     ga_conf.protocol = DCMF_DEFAULT_GLOBALALLREDUCE_PROTOCOL;
-    status = DCMF_GlobalAllreduce_register( &ga_protocol, &ga_conf);
-    assert( status == DCMF_SUCCESS )
+    status = DCMF_GlobalAllreduce_register( &ga_protocol, &ga_conf );
+    assert( status == DCMF_SUCCESS );
 
     done_callback.function = done;
     done_callback.clientdata = (void *) &ga_active;
 
-    if (rank == 0)
-    {
-        printf("DCMF_Allreduce Test\n");
-        fflush(stdout);
-    }
+    if (rank == 0) printf("DCMF_GlobalAllreduce Test\n");
 
     for (msgsize = sizeof(int); msgsize < MAX_MSG_SIZE; msgsize *= 2)
     {
-            /*initializing buffer*/
-            for (i = 0; i < bufsize/sizeof(int); i++)
+        /*initializing buffer*/
+        for (i = 0; i < bufsize/sizeof(int); i++) buffer[i] = rank;
+
+        ga_active += 1;
+
+        /*sum reduce operation*/
+        status = DCMF_GlobalAllreduce(&ga_protocol,
+                &request,
+                done_callback,
+                DCMF_SEQUENTIAL_CONSISTENCY,
+                -1,
+                (char *) buffer,
+                (char *) buffer,
+                msgsize/sizeof(int),
+                DCMF_SIGNED_INT,
+                DCMF_SUM);
+        assert( status == DCMF_SUCCESS );
+
+        while(ga_active > 0) DCMF_Messager_advance();
+
+        expected = (size-1)*(size)/2;
+        for (i = 0; i < msgsize/sizeof(int); i++)
+        {
+            if(buffer[i] - expected != 0)
             {
-                 buffer[i] = rank;
+                printf("[%d] Validation has failed Expected: %d, Actual: %d, i: %d \n",
+                        rank, expected, buffer[i], i);
+                fflush(stdout);
+                exit(-1);
             }
+        }
 
-            ga_active += 1;
+        printf("[%d] %d message sum reduce successful \n", rank, msgsize);
+        fflush(stdout);
 
-            /*sum reduce operation*/
-            status = DCMF_GlobalAllreduce(&ga_protocol,
-                                          &request,
-                                          done_callback,
-                                          DCMF_SEQUENTIAL_CONSISTENCY,
-                                          -1,
-                                          (char *) buffer,
-                                          (char *) buffer,
-                                          msgsize/sizeof(int),
-                                          DCMF_SIGNED_INT,
-                                          DCMF_SUM);
-            assert( status == DCMF_SUCCESS )
+        for (i = 0; i < bufsize/sizeof(int); i++) buffer[i] = 1;
 
-            while(ga_active > 0) DCMF_Messager_advance();
+        ga_active += 1;
 
-            expected = (size-1)*(size)/2;
-            for (i = 0; i < msgsize/sizeof(int); i++)
+        status = DCMF_GlobalAllreduce(&ga_protocol,
+                &request,
+                done_callback,
+                DCMF_SEQUENTIAL_CONSISTENCY,
+                -1,
+                (char *) buffer,
+                (char *) buffer,
+                msgsize/sizeof(int),
+                DCMF_SIGNED_INT,
+                DCMF_PROD);
+        assert( status == DCMF_SUCCESS );
+
+        while(ga_active > 0) DCMF_Messager_advance();
+
+        expected = 1;
+        for (i = 0; i < msgsize/sizeof(int); i++)
+        {
+            if(buffer[i] - expected != 0)
             {
-               if(buffer[i] - expected != 0)
-               {
-                  printf("[%d] Validation has failed Expected: %d, Actual: %d, i: %d \n",
-                              rank, expected, buffer[i], i);
-                  fflush(stdout);
-                  exit(-1);
-               }
+                printf("[%d] Validation has failed Expected: %d, Actual: %d, i: %d \n",
+                        rank, expected, buffer[i], i);
+                fflush(stdout);
+                exit(-1);
             }
+        }
 
-            printf("[%d] %d message sum reduce successful \n", rank, msgsize);
-            fflush(stdout);
-
-            for (i = 0; i < bufsize/sizeof(int); i++) buffer[i] = 1;
-
-            ga_active += 1;
-
-            status = DCMF_GlobalAllreduce(&ga_protocol,
-                                          &request,
-                                          done_callback,
-                                          DCMF_SEQUENTIAL_CONSISTENCY,
-                                          -1,
-                                          (char *) buffer,
-                                          (char *) buffer,
-                                          msgsize/sizeof(int),
-                                          DCMF_SIGNED_INT,
-                                          DCMF_PROD);
-            assert( status == DCMF_SUCCESS )
-
-            while(ga_active > 0) DCMF_Messager_advance();
-
-            expected = 1;
-            for (i = 0; i < msgsize/sizeof(int); i++)
-            {
-               if(buffer[i] - expected != 0)
-               {
-                   printf("[%d] Validation has failed Expected: %d, Actual: %d, i: %d \n",
-                               rank, expected, buffer[i], i);
-                   fflush(stdout);
-                   exit(-1);
-               }
-            }
-
-            printf("[%d] %d message product reduce successful\n", rank, msgsize);
-            fflush(stdout);
+        printf("[%d] %d message product reduce successful\n", rank, msgsize);
+        fflush(stdout);
 
     }
 
