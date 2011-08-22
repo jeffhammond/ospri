@@ -62,8 +62,7 @@ void send_remoteadvance()
     unsigned int msgsize, i, dst;
     DCQuad msginfo;
 
-    send_req = (DCMF_Request_t *) malloc(sizeof(DCMF_Request_t)
-            * ITERATIONS_LOCAL);
+    send_req = (DCMF_Request_t *) malloc(sizeof(DCMF_Request_t) * ITERATIONS_LOCAL);
 
     send_done.function = done;
     send_done.clientdata = (void *) &done_count;
@@ -71,23 +70,8 @@ void send_remoteadvance()
     if (myrank == 0)
     {
         printf("Send latency in usec\n");
-        fflush(stdout);
-    }
 
-    if (myrank == 0)
-    {
-        char buffer[100];
-        sprintf(buffer,
-                "%20s  %20s %20s",
-                "Msg Size",
-                "Send-Remote Barrier",
-                "Send-Remote Sleep");
-        printf("%s \n", buffer);
-        fflush(stdout);
-    }
-
-    if (myrank == 0)
-    {
+        printf("%20s  %20s %20s", "Msg Size", "Send-Remote Barrier", "Send-Remote Sleep");
 
         for (msgsize = 1; msgsize < MAX_MSG_SIZE_LOCAL; msgsize *= 2)
         {
@@ -113,8 +97,7 @@ void send_remoteadvance()
                           1);
             }
 
-            while (done_count > 0)
-                DCMF_Messager_advance();
+            while (done_count > 0) DCMF_Messager_advance();
 
             t_stop = DCMF_Timebase();
             t_usec = (t_stop - t_start) / (clockMHz * ITERATIONS_LOCAL);
@@ -123,11 +106,7 @@ void send_remoteadvance()
              * stop timer          *
              ***********************/
 
-            if (myrank == 0)
-            {
-                printf("%20d %20.2f ", msgsize, t_usec);
-                fflush(stdout);
-            }
+            if (myrank == 0) printf("%20d %20.2f ", msgsize, t_usec);
 
             barrier();
 
@@ -152,8 +131,7 @@ void send_remoteadvance()
                           1);
             }
 
-            while (done_count > 0)
-                DCMF_Messager_advance();
+            while (done_count > 0) DCMF_Messager_advance();
 
             t_stop = DCMF_Timebase();
             t_usec = (t_stop - t_start) / (clockMHz * ITERATIONS_LOCAL);
@@ -162,11 +140,7 @@ void send_remoteadvance()
              * stop timer          *
              ***********************/
 
-            if (myrank == 0)
-            {
-                printf("%20.2f \n", t_usec);
-                fflush(stdout);
-            }
+            if (myrank == 0) printf("%20.2f \n", t_usec);
 
             barrier();
 
@@ -214,15 +188,13 @@ int main()
 
     barrier();
 
-    if (myrank == 0)
-    {
-        printf("[%d] Benchmark Complete \n", myrank);
-        fflush(stdout);
-    }
+    if (myrank == 0) printf("[%d] Benchmark Complete \n", myrank);
 
     memregion_finalize();
 
     DCMF_Messager_finalize();
+
+    fflush(stdout);
 
     return 0;
 }
