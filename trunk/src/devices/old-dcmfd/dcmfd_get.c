@@ -18,9 +18,7 @@ int OSPDI_Get_initialize()
     conf.protocol = DCMF_DEFAULT_GET_PROTOCOL;
     conf.network = DCMF_TORUS_NETWORK;
     status = DCMF_Get_register(&OSPD_Generic_get_protocol, &conf);
-    OSPU_ERR_POP(status != DCMF_SUCCESS,
-                "get registartion returned with error %d \n",
-                status);
+    OSPU_ERR_POP(status != DCMF_SUCCESS, "DCMF_Get_register failed");
 
   fn_exit:
     OSPU_FUNC_EXIT();
@@ -60,7 +58,7 @@ int OSPD_Get(int target, void* src, void* dst, int bytes)
                       &OSPD_Memregion_global[OSPD_Process_info.my_rank],
                       src_disp,
                       dst_disp);
-    OSPU_ERR_POP(status, "DCMF_Get returned with an error \n");
+    OSPU_ERR_POP(status, "DCMF_Get returned with an error");
 
     OSPDI_Conditional_advance(active > 0);
 
@@ -91,8 +89,7 @@ int OSPD_NbGet(int target, void* src, void* dst, int bytes, OSP_handle_t osp_han
     ospd_handle->active++;
 
     ospd_request = OSPDI_Get_request(1);
-    OSPU_ERR_POP(status = (ospd_request == NULL),
-                "OSPDI_Get_request returned error.\n");
+    OSPU_ERR_POP(status = (ospd_request == NULL), "OSPDI_Get_request returned error.");
     OSPDI_Set_handle(ospd_request, ospd_handle); 
 
     callback.function = OSPDI_Request_done;
