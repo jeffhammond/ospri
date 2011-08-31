@@ -45,7 +45,7 @@ ensure the MPID implementation of OSP is valid.  The best way to avoid
 self-communication deadlock is to avoid the MPI layer altogether and 
 use direct-access inside of a critical section in the main process. 
 
-We might have increase latency by calling MPI_Prove before the MPI_Recv for
+We might have to increase latency by calling MPI_Probe before the MPI_Recv for
 the control message in order to prevent deadlocking inside of MPI_Recv.  It
 does not seem prudent to use MPI_Irecv since this will lead to even more 
 overhead.
