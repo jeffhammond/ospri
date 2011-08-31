@@ -16,55 +16,7 @@
 /*                                                                       */
 /* ********************************************************************* */
 
-/* FIXME: This should be in another header but we're using ospu.h
- *         already exists for other purposes.  I will deal with all of
- *         this after we submit the IPDPS paper and fix the build system.
- */
 
-/**
- * \brief OSP device-independent settings type.
- *
- * \see OSP_Initialize
- *
- * \ingroup TYPEDEFS
- *
- */
-
-typedef struct
-{
-    uint32_t network_bypass;
-    uint32_t network_bypass_upper_limit_1d;
-    uint32_t network_bypass_upper_limit_Nd;
-    uint32_t armci_strict_ordering;
-} OSPU_Settings_t;
-
-extern OSPU_Settings_t ospu_settings;
-
-/* ********************************************************************* */
-/*                                                                       */
-/*               OSP device-independent internal functions                */
-/*                                                                       */
-/* ********************************************************************* */
-
-/**
- * \brief Parses the device-indpendent parameter information
- *
- * \param[out] rc               The error code
- *
- * \ingroup MANAGEMENT
- */
-
-int OSPU_Read_parameters(void);
-
-/**
- * \brief Prints the device-indpendent parameter information
- *
- * \param[out] rc               The error code
- *
- * \ingroup MANAGEMENT
- */
-
-int OSPU_Print_parameters(void);
 
 /* ********************************************************************* */
 /*                                                                       */
@@ -90,6 +42,8 @@ int OSPD_Initialize(int OSP_thread_level);
  * \ingroup MANAGEMENT
  */
 int OSPD_Finalize(void);
+
+#if 0
 
 /**
  * \brief Device level implementation of OSP_Abort.
@@ -307,6 +261,8 @@ int OSPD_Sync_group(OSP_group_t* group);
  */
 int OSPD_NbSync_group(OSP_group_t* group, OSP_handle_t handle);
 
+#endif
+
 /**
  * \brief Device level implementation of OSP_Put.
  *
@@ -321,6 +277,8 @@ int OSPD_NbSync_group(OSP_group_t* group, OSP_handle_t handle);
  * \ingroup  COPY OPERATIONS
  */
 int OSPD_Put(int target, void* src, void* dst, int bytes);
+
+#if 0
 
 /**
  * \brief Device level implementation of OSP_NbPut.
@@ -431,6 +389,8 @@ int OSPD_NbPutV(int target,
                int ar_len,
                OSP_handle_t osp_handle);
 
+#endif
+
 /**
  * \brief Device level implementation of OSP_Get.
  *
@@ -445,6 +405,8 @@ int OSPD_NbPutV(int target,
  * \ingroup  COPY OPERATIONS
  */
 int OSPD_Get(int target, void* src, void* dst, int bytes);
+
+#if 0
 
 /**
  * \brief Device level implementation of OSP_Get.
@@ -1038,5 +1000,7 @@ unsigned long long OSPD_Time_cycles(void);
 void OSPD_Global_lock_acquire(void);
 
 void OSPD_Global_lock_release(void);
+
+#endif
 
 #endif /* OSPD_H_INCLUDED */
