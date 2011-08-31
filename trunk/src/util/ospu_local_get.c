@@ -16,11 +16,7 @@ int OSPU_Get_memcpy(void* src,
 
     OSPU_FUNC_ENTER();
 
-    OSPD_Global_lock_acquire();
-
     memcpy(dst, src, bytes);
-
-    OSPD_Global_lock_release();
 
     fn_exit:
     OSPU_FUNC_EXIT();
@@ -43,8 +39,6 @@ int OSPU_GetS_memcpy(int stride_level,
     int i, y;
 
     OSPU_FUNC_ENTER();
-
-    OSPD_Global_lock_acquire();
 
     block_sizes_w = malloc(sizeof(int) * (stride_level + 1));
     OSPU_ERR_POP((status = (NULL == block_sizes_w)),
@@ -97,8 +91,6 @@ int OSPU_GetS_memcpy(int stride_level,
         }
     }
 
-    OSPD_Global_lock_release();
-
     fn_exit:
     OSPU_FUNC_EXIT();
     return status;
@@ -107,24 +99,3 @@ int OSPU_GetS_memcpy(int stride_level,
     goto fn_exit;
 }
 
-int OSPU_GetV_memcpy(OSP_iov_t *iov_ar, int ar_len)
-{
-    int i, j, status = OSP_SUCCESS;
-
-    OSPU_FUNC_ENTER();
-
-    OSPD_Global_lock_acquire();
-
-    for (i=0; i<ar_len; i++)
-        for(j=0; j<iov_ar[i].ptr_ar_len; j++) 
-            memcpy(iov_ar[i].target_ptr_ar[j], iov_ar[i].source_ptr_ar[j], iov_ar[i].size);
-
-    OSPD_Global_lock_release();
-
-    fn_exit:
-    OSPU_FUNC_EXIT();
-    return status;
-
-    fn_fail:
-    goto fn_exit;
-}
