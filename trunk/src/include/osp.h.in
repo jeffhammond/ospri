@@ -326,6 +326,22 @@ typedef struct osp_acc_descr
 }
 osp_acc_descr_t;
 
+/**
+ * \brief OSP accumulate descriptor type.
+ *
+ * \see OSP_PutS, OSP_GetS, OSP_AccS, etc.
+ *
+ * \ingroup TYPEDEFS
+ *
+ */
+
+typedef struct osp_rmw_descr
+{
+    osp_datatype_t type;
+    void* scaling_factor;
+}
+osp_rmw_descr_t;
+
 /* ********************************************************************* */
 /*                                                                       */
 /*               OSP external API - Helper Functions                      */
