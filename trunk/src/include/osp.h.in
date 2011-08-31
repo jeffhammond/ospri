@@ -140,18 +140,18 @@ osp_reduce_op_t;
 
 typedef enum
 {
-    OSP_INC, /* x += 1 */
-    OSP_ADD, /* x += y */
-    OSP_AND, /* x &= y */
-    OSP_OR,  /* x |= y */
-    OSP_XOR, /* x ^= y */
-    OSP_FETCH_AND_INC, /* get x; x += 1 */
-    OSP_FETCH_AND_ADD, /* get x; x += y */
-    OSP_FETCH_AND_AND, /* get x; x &= y */
-    OSP_FETCH_AND_OR,  /* get x; x |= y */
-    OSP_FETCH_AND_XOR, /* get x; x ^= y */
-    OSP_COMPARE_AND_SWAP,
-    OSP_SWAP,
+    OSP_ATOMIC_INC, /* x += 1 */
+    OSP_ATOMIC_ADD, /* x += y */
+    OSP_ATOMIC_AND, /* x &= y */
+    OSP_ATOMIC_OR,  /* x |= y */
+    OSP_ATOMIC_XOR, /* x ^= y */
+    OSP_ATOMIC_FETCH_AND_INC, /* get x; x += 1 */
+    OSP_ATOMIC_FETCH_AND_ADD, /* get x; x += y */
+    OSP_ATOMIC_FETCH_AND_AND, /* get x; x &= y */
+    OSP_ATOMIC_FETCH_AND_OR,  /* get x; x |= y */
+    OSP_ATOMIC_FETCH_AND_XOR, /* get x; x ^= y */
+    OSP_ATOMIC_COMPARE_AND_SWAP,
+    OSP_ATOMIC_SWAP,
 }
 osp_atomic_op_t;
 
