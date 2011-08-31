@@ -216,9 +216,4 @@ int OSPU_AccS_memcpy(int stride_level,
                     osp_datatype_t osp_type,
                     void* scaling);
 
-int OSPU_AccV_memcpy(OSP_iov_t *iov_ar,
-                    int ar_len,
-                    osp_datatype_t osp_type,
-                    void* scaling);
-
 #endif /* OSPU_H_INCLUDED */
