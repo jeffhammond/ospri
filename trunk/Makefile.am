@@ -12,14 +12,11 @@ libosp_la_LDFLAGS = -version-info $(libosp_abi_version)
 
 include_HEADERS = $(top_builddir)/src/include/osp.h $(top_builddir)/src/include/armci.h
 
-include src/adl/util/Makefile.mk
-include src/adl/api/Makefile.mk
-include src/adl/interfaces/armci/Makefile.mk
-#TODO# include src/adl/interfaces/global-arrays/Makefile.mk
-include src/adl/interfaces/armci/Makefile.mk
+include src/util/Makefile.mk
+include src/apis/ospri/Makefile.mk
 
 if osp_device_dcmfd
-include src/ospd/dcmfd/Makefile.mk
+include src/devices/dcmfd/Makefile.mk
 endif
 
 #if osp_device_pthreadd

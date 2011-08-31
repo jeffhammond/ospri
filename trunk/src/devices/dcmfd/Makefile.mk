@@ -8,5 +8,5 @@ libosp_la_SOURCES += $(top_srcdir)/src/devices/dcmfd/dcmfd_callbacks.c \
                      $(top_srcdir)/src/devices/dcmfd/dcmfd_initialize.c \
                      $(top_srcdir)/src/devices/dcmfd/dcmfd_finalize.c \
                      $(top_srcdir)/src/devices/dcmfd/dcmfd_put.c \
-                     $(top_srcdir)/src/devices/dcmfd/dcmfd_get.c \
+                     $(top_srcdir)/src/devices/dcmfd/dcmfd_get.c 
 

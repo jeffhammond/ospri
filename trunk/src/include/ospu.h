@@ -190,9 +190,6 @@ int OSPU_PutS_memcpy(int stride_level,
                     void* target_ptr,
                     int *trg_stride_ar);
 
-int OSPU_PutV_memcpy(OSP_iov_t *iov_ar,
-                    int ar_len);
-
 int OSPU_Get_memcpy(void* src,
                    void* dst,
                    int bytes);
@@ -204,12 +201,10 @@ int OSPU_GetS_memcpy(int stride_level,
                     void* target_ptr,
                     int *trg_stride_ar);
 
-int OSPU_GetV_memcpy(OSP_iov_t *iov_ar, int ar_len);
-
 int OSPU_Acc_memcpy(void* source_ptr,
                    void* target_ptr,
                    int bytes,
-                   OSP_datatype_t osp_type,
+                   osp_datatype_t osp_type,
                    void* scaling);
 
 int OSPU_AccS_memcpy(int stride_level,
@@ -218,12 +213,12 @@ int OSPU_AccS_memcpy(int stride_level,
                     int *src_stride_ar,
                     void* target_ptr,
                     int *trg_stride_ar,
-                    OSP_datatype_t osp_type,
+                    osp_datatype_t osp_type,
                     void* scaling);
 
 int OSPU_AccV_memcpy(OSP_iov_t *iov_ar,
                     int ar_len,
-                    OSP_datatype_t osp_type,
+                    osp_datatype_t osp_type,
                     void* scaling);
 
 #endif /* OSPU_H_INCLUDED */

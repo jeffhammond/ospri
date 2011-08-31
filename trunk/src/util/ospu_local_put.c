@@ -107,8 +107,7 @@ int OSPU_PutS_memcpy(int stride_level,
     goto fn_exit;
 }
 
-int OSPU_PutV_memcpy(OSP_iov_t *iov_ar,
-                    int ar_len)
+int OSPU_PutV_memcpy(OSP_iov_t *iov_ar, int ar_len)
 {
     int i, j, status = OSP_SUCCESS;
 
