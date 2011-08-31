@@ -684,7 +684,7 @@ osp_result_t OSP_Incr_counter(osp_group_t* group,
  */
 
 osp_result_t OSP_NbIncr_counter(osp_group_t* group,,
-                                OSP_counter_t counter,
+                                osp_counter_t counter,
                                 long  increment,
                                 long* original,
                                 osp_handle_t handle);
@@ -885,7 +885,7 @@ osp_result_t OSP_NbPut(int                      bytes,
                        void*                    source_ptr,
                        osp_global_memregion_t*  memregion,
                        int                      target_rank,
-                       osp_offset_t             target_offset
+                       osp_offset_t             target_offset,
                        osp_handle_t             handle);
 
 /**
