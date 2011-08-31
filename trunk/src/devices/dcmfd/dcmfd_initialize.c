@@ -8,7 +8,10 @@
 
 MPI_Comm OSP_COMM_WORLD;
 
-OSPD_Process_info_t OSPD_Process_info;
+int my_mpi_rank = -1;
+int mpi_world_size = -1;
+int my_dcmf_rank = -1;
+int dcmf_world_size = -1;
 
 int OSPD_Initialize(int thread_level)
 {
@@ -42,10 +45,10 @@ int OSPD_Initialize(int thread_level)
     OSPU_ERR_POP(status != DCMF_SUCCESS, "DCMF_Messager_configure returned with error \n");
 
     /* cache these even though they should be fast */
-    MPI_Comm_rank(OSP_COMM_WORLD,OSPD_Process_info->my_mpi_rank);
-    MPI_Comm_size(OSP_COMM_WORLD,OSPD_Process_info->mpi_world_size);
-    OSPD_Process_info.my_dcmf_rank    = DCMF_Messager_rank();
-    OSPD_Process_info.dcmf_world_size = DCMF_Messager_size();
+    MPI_Comm_rank(OSP_COMM_WORLD,&my_mpi_rank);
+    MPI_Comm_size(OSP_COMM_WORLD,&mpi_world_size);
+    my_dcmf_rank    = DCMF_Messager_rank();
+    dcmf_world_size = DCMF_Messager_size();
     OSPU_WARNING( my_dcmf_rank != my_mpi_rank , "WARNING: DCMF and MPI ranks not the same!");
     OSPU_WARNING( dcmf_world_size != mpi_world_size , "WARNING: DCMF and MPI world sizes are not the same!");
 

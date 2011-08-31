@@ -17,25 +17,35 @@
 #define OSPC_ALIGNMENT 16
 
 /*************************************************
+ *               Enumerations                    *
+ ************************************************/
+
+//typedef enum
+//{
+//  OSPD_END2END = 0,
+//  OSPD_MUTEX_TRYLOCK,
+//  OSPD_MUTEX_UNLOCK
+//} ospd_flush_t;
+
+/*************************************************
  *             Data Structures                   *
  *************************************************/
 
 typedef struct
 {
-    int my_mpi_rank = -1;
-    int mpi_world_size = -1;
-    int my_dcmf_rank = -1;
-    int dcmf_world_size = -1;
-    DCMF_Hardware_t hw;
-} OSPD_Process_info_t;
+    int x;
+}
+ospd_window_properties_t;
 
 typedef struct
 {
-    int num_ranks;            /* length of vectors below */
-    int * bytes_per_rank;     /* how many bytes does each rank have (may be zero) */
-    int * world_ranks = NULL; /* world_ranks[my_rank_in_window_communicator] = my_rank_in_mpi_comm_world */
-    DCMF_Memregion_t * memregions = NULL;
-} ospd_window_t;
+    ospd_window_properties_t properties;
+    int num_ranks;                        /* length of vectors below */
+    int * bytes_per_rank = NULL;          /* how many bytes does each rank have (may be zero) */
+    int * world_ranks = NULL;             /* world_ranks[my_rank_in_window_communicator] = my_rank_in_mpi_comm_world */
+    DCMF_Memregion_t * memregions = NULL; /*   */
+}
+ospd_window_t;
 
 typedef struct
 {

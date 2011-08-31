@@ -14,6 +14,11 @@
  *             Global variables                  *
  ************************************************/
 
+/* it seems silly to put this into a struct */
+extern int my_mpi_rank;
+extern int mpi_world_size;
+extern int my_dcmf_rank;
+extern int dcmf_world_size;
 extern MPI_Comm OSP_COMM_WORLD
 
 extern DCMF_Callback_t OSPD_Nocallback;
