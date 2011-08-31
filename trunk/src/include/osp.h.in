@@ -683,7 +683,7 @@ osp_result_t OSP_Incr_counter(osp_group_t* group,
  * \ingroup Atomics
  */
 
-osp_result_t OSP_NbIncr_counter(osp_group_t* group,,
+osp_result_t OSP_NbIncr_counter(osp_group_t* group,
                                 osp_counter_t counter,
                                 long  increment,
                                 long* original,
