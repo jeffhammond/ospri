@@ -10,7 +10,7 @@
 
 #define OSPUI_ACC(datatype, source, target, scaling, count)                  \
         do {                                                                     \
-            int w;                                                                 \
+            unsigned w;                                                                 \
             datatype *s = (datatype *) source;                                     \
             datatype *t = (datatype *) target;                                     \
             datatype c = (datatype) scaling;                                       \
@@ -20,7 +20,7 @@
 
 int OSPU_Acc_memcpy(void* source_ptr,
         void* target_ptr,
-        int bytes,
+        unsigned bytes,
         osp_datatype_t osp_type,
         void* scaling)
 {

@@ -10,7 +10,7 @@
 
 int OSPU_Get_memcpy(void* src,
                    void* dst,
-                   int bytes)
+                   unsigned bytes)
 {
     int status = OSP_SUCCESS;
 

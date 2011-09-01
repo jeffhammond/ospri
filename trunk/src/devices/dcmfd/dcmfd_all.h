@@ -4,7 +4,10 @@
  *      See COPYRIGHT in top-level directory.
  */
 
-/** @file dcmfdimpl.h */
+#if !defined DCMFD_ALL_H_INCLUDED
+#define DCMFD_ALL_H_INCLUDED
+
+/** @file dcmfd_all.h */
 
 /*! \addtogroup osp OSPD dcmfd device interface
  * @{
@@ -21,7 +24,15 @@
 #include <dcmf_collectives.h>
 #include <dcmf_globalcollectives.h>
 
+#include <mpi.h>
+
 #include "dcmfd_definitions.h"
 #include "dcmfd_globals.h"
 
+#include "osp.h"
+#include "ospu.h"
+#include "ospd.h"
+
 /*! @} */
+
+#endif

@@ -186,39 +186,10 @@ do {                                                              \
 
 int OSPU_Put_memcpy(void* src,
                    void* dst,
-                   int bytes);
-
-int OSPU_PutS_memcpy(int stride_level,
-                    int *block_sizes,
-                    void* source_ptr,
-                    int *src_stride_ar,
-                    void* target_ptr,
-                    int *trg_stride_ar);
+                   unsigned bytes);
 
 int OSPU_Get_memcpy(void* src,
                    void* dst,
-                   int bytes);
-
-int OSPU_GetS_memcpy(int stride_level,
-                    int *block_sizes,
-                    void* source_ptr,
-                    int *src_stride_ar,
-                    void* target_ptr,
-                    int *trg_stride_ar);
-
-int OSPU_Acc_memcpy(void* source_ptr,
-                   void* target_ptr,
-                   int bytes,
-                   osp_datatype_t osp_type,
-                   void* scaling);
-
-int OSPU_AccS_memcpy(int stride_level,
-                    int *block_sizes,
-                    void* source_ptr,
-                    int *src_stride_ar,
-                    void* target_ptr,
-                    int *trg_stride_ar,
-                    osp_datatype_t osp_type,
-                    void* scaling);
+                   unsigned bytes);
 
 #endif /* OSPU_H_INCLUDED */

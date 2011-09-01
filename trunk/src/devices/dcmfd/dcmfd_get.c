@@ -77,10 +77,10 @@ int OSPDI_Get_end2end(ospd_window_t * window,
                       &request,
                       completion_cb,
                       DCMF_RELAXED_CONSISTENCY,
-                      target_rank,
+                      source_rank,
                       bytes,
-                      window->memregions[target_rank],
-                      &output_mr,
+                      &(window->memregions[source_rank]),
+                      target_mr,
                       source_window_offset,
                       0); /* no offset because source memregion registered for each call */
     OSPU_ERR_POP( status != DCMF_SUCCESS , "DCMF_Get returned with an error");
@@ -94,6 +94,8 @@ int OSPDI_Get_end2end(ospd_window_t * window,
     fn_fail:
     goto fn_exit;
 }
+
+#if 0
 
 int OSPDI_iGet_handle(ospd_window_t * window,
                       int source_rank, /* rank relative to window NOT world */
@@ -117,9 +119,9 @@ int OSPDI_iGet_handle(ospd_window_t * window,
                       handle->request,
                       completion_cb,
                       DCMF_RELAXED_CONSISTENCY,
-                      target_rank,
+                      source_rank,
                       bytes,
-                      window->memregions[target_rank],
+                      window->memregions[source_rank],
                       &output_mr,
                       source_window_offset,
                       0); /* no offset because source memregion registered for each call */
@@ -135,5 +137,7 @@ int OSPDI_iGet_handle(ospd_window_t * window,
     fn_fail:
     goto fn_exit;
 }
+
+#endif
 
 /*! @} */

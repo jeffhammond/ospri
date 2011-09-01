@@ -261,8 +261,6 @@ int OSPD_Sync_group(OSP_group_t* group);
  */
 int OSPD_NbSync_group(OSP_group_t* group, OSP_handle_t handle);
 
-#endif
-
 /**
  * \brief Device level implementation of OSP_Put.
  *
@@ -277,8 +275,6 @@ int OSPD_NbSync_group(OSP_group_t* group, OSP_handle_t handle);
  * \ingroup  COPY OPERATIONS
  */
 int OSPD_Put(int target, void* src, void* dst, int bytes);
-
-#if 0
 
 /**
  * \brief Device level implementation of OSP_NbPut.
@@ -389,8 +385,6 @@ int OSPD_NbPutV(int target,
                int ar_len,
                OSP_handle_t osp_handle);
 
-#endif
-
 /**
  * \brief Device level implementation of OSP_Get.
  *
@@ -405,8 +399,6 @@ int OSPD_NbPutV(int target,
  * \ingroup  COPY OPERATIONS
  */
 int OSPD_Get(int target, void* src, void* dst, int bytes);
-
-#if 0
 
 /**
  * \brief Device level implementation of OSP_Get.

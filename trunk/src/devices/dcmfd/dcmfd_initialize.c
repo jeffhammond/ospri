@@ -15,7 +15,7 @@ int dcmf_world_size = -1;
 
 int OSPD_Initialize(int thread_level)
 {
-    int status = OSP_SUCCESS;
+    osp_result_t status = OSP_SUCCESS;
 
     DCMF_Configure_t OSPD_Messager_info;
 
@@ -29,7 +29,7 @@ int OSPD_Initialize(int thread_level)
       OSPU_ERR_POP( !mpi_is_init || mpi_is_fin , "MPI must be initialized and not finalized!");
 
       MPI_Query_thread(&mpi_provided);
-      OSPU_ERR_POP( provided!=MPI_THREAD_MULTIPLE , "MPI_THREAD_MULTIPLE is required for now.");
+      OSPU_ERR_POP( mpi_provided != MPI_THREAD_MULTIPLE , "MPI_THREAD_MULTIPLE is required for now.");
     }
 
     MPI_Comm_dup(MPI_COMM_WORLD, &OSP_COMM_WORLD);

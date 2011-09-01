@@ -73,7 +73,7 @@ int OSPDI_Put_end2end(ospd_window_t * window,
 
     status = DCMF_Put(&OSPD_Put_protocol,
                       &request,
-                      OSPD_Nocallback
+                      OSPD_Nocallback,
                       DCMF_RELAXED_CONSISTENCY,
                       target_rank,
                       bytes,
@@ -181,7 +181,7 @@ int OSPDI_Put_handle(ospd_window_t * window,
     handle->active = 1;
 
     status = DCMF_Put(&OSPD_Put_protocol,
-                      handle->request, /* must keep request in handle; cannot be deallocated until remote_cb is invoked */
+                      &(handle->request), /* must keep request in handle; cannot be deallocated until remote_cb is invoked */
                       local_completion_cb,
                       DCMF_RELAXED_CONSISTENCY, /* DCMF will drop into sequential internally */
                       target_rank,
@@ -212,15 +212,15 @@ int OSPDI_Put_handle(ospd_window_t * window,
  */
 
 int OSPD_Put(ospd_window_t * window,
-             int target_rank, /* rank relative to window NOT world */
-             int target_window_offset,
+             unsigned target_rank, /* rank relative to window NOT world */
+             unsigned target_window_offset,
              void * source_ptr,
-             int bytes,
-             int protocol
+             unsigned bytes,
              ospd_handle_t * handle,
-             int hint)
+             ospd_put_hint_t hint)
 {
     int status = OSP_SUCCESS;
+    unsigned bytes_out = 0;
 
     DCMF_Memregion_t source_mr;
 
