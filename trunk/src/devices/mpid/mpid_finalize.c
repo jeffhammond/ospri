@@ -12,8 +12,6 @@ int OSPD_Finalize(void)
 
     OSPU_FUNC_ENTER();
 
-    MPI_Finalize();
-
   fn_exit:
     OSPU_FUNC_EXIT();
     return status;
