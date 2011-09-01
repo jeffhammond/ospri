@@ -8,10 +8,9 @@
 #include "ospd.h"
 #include "ospu.h"
 
-int OSP_Initialize(int thread_level)
+osp_result_t OSP_Initialize(int thread_level)
 {
     int status = OSP_SUCCESS;
-    static int osp_active = 0;
 
     OSPU_FUNC_ENTER();
 

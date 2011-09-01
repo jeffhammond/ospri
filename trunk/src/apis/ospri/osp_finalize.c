@@ -8,7 +8,7 @@
 #include "ospd.h"
 #include "ospu.h"
 
-int OSP_Finalize(void)
+osp_result_t OSP_Finalize(void)
 {
     int status = OSP_SUCCESS;
 
@@ -29,20 +29,3 @@ int OSP_Finalize(void)
     goto fn_exit;
 }
 
-void OSP_Abort(int error_code, char error_message[])
-{
-    OSPU_FUNC_ENTER();
-
-    /* FIXME: The profiling interface needs to go here */
-
-    /* FIXME: Locking functionality needs to go here */
-
-    OSPD_Abort(error_code,  error_message);
-
-  fn_exit: 
-    OSPU_FUNC_EXIT();
-    return;
-
-  fn_fail: 
-    goto fn_exit;
-}
