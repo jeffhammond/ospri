@@ -8,7 +8,7 @@
 #include "ospd.h"
 #include "ospu.h"
 
-int OSP_Put(int target, void* src, void* dst, int bytes)
+osp_result_t OSP_Put(int target, void* src, void* dst, int bytes)
 {
     int status = OSP_SUCCESS;
     int my_rank = OSPD_Process_id(OSP_GROUP_WORLD);
@@ -43,7 +43,7 @@ int OSP_Put(int target, void* src, void* dst, int bytes)
     goto fn_exit;
 }
 
-int OSP_NbPut(int target, void* src, void* dst, int bytes, OSP_handle_t osp_handle)
+osp_result_t OSP_NbPut(int target, void* src, void* dst, int bytes, OSP_handle_t osp_handle)
 {
     int status = OSP_SUCCESS;
     int my_rank = OSPD_Process_id(OSP_GROUP_WORLD);
