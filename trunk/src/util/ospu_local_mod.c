@@ -8,6 +8,7 @@
 #include "ospu.h"
 #include "ospd.h"
 
+/*
 #define OSPUI_MOD_BXOR(datatype, source, target, count)                             \
         do {                                                                       \
             int w;                                                                 \
@@ -80,3 +81,4 @@ int OSPU_ModV_memcpy(OSP_iov_t *iov_ar,
     fn_fail:
     goto fn_exit;
 }
+*/
