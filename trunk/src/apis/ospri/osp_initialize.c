@@ -22,21 +22,8 @@ int OSP_Initialize(int thread_level)
 #   ifdef HAVE_ERROR_CHECKING
 #   endif
 
-    /* we only want this function to run once */
-    if(osp_active == 1)
-    {
-        return status;
-    }
-    osp_active = 1;
-
     status = OSPD_Initialize(thread_level);
     OSPU_ERR_POP(status!=OSP_SUCCESS, "OSPD_Initialize returned error\n");
-
-    status = OSPU_Read_parameters();
-    OSPU_ERR_POP(status!=OSP_SUCCESS, "OSPU_Read_parameters returned error\n");
-
-    status = OSPU_Print_parameters();
-    OSPU_ERR_POP(status!=OSP_SUCCESS, "OSPU_Print_parameters returned error\n");
 
   fn_exit: 
     OSPU_FUNC_EXIT();
