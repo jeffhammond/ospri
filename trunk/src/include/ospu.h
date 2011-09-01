@@ -179,6 +179,11 @@ do {                                                              \
 #define OSPU_DEBUG_PRINT(args...)
 #endif
 
+#define OSPU_Malloc(ptr, num) posix_memalign(ptr, OSPC_ALIGNMENT, num)
+#define OSPU_Free(ptr) free(ptr)
+#define OSPU_Memset(ptr, val, num)  memset(ptr, val, num)
+#define OSPU_Memcpy(trg, src, num)  memcpy(trg, src, num)
+
 int OSPU_Put_memcpy(void* src,
                    void* dst,
                    int bytes);

@@ -115,44 +115,36 @@ for dev in `echo $osp_device | sed -e 's/:/ /g' -e 's/,/ /g'` ; do
     case "$dev" in
     	 dcmfd)
 		PAC_SET_HEADER_LIB_PATH(dcmf)
-                PAC_SET_HEADER_LIB_PATH(spi)
-		PAC_CHECK_HEADER_LIB(spi,spi/DMA_Addressing.h,SPI.cna,DMA_AddressingGetHandle,
-				got_spi=yes,got_spi=no)
 		got_dcmf=no
-		if test "$got_spi" = "yes" ; then
-			PAC_CHECK_HEADER_LIB(dcmf,dcmf.h,dcmf-fast.cnk,DCMF_Messager_initialize,
-				got_dcmf=yes,got_dcmf=no)
-		fi
+		PAC_CHECK_HEADER_LIB(dcmf,dcmf.h,dcmf-fast.cnk,DCMF_Messager_initialize,got_dcmf=yes,got_dcmf=no)
 		if test "$got_dcmf" = "yes" ; then
 		   got_device=yes
-                   osp_device_dcmfd=true
+           osp_device_dcmfd=true
 		fi
-                got_device=yes
-                osp_device_dcmfd=true
+           got_device=yes
+           osp_device_dcmfd=true
 		;;
          pthreadd)
         PAC_SET_HEADER_LIB_PATH(pthread)
         got_pthread=no
-        PAC_CHECK_HEADER_LIB(pthread,pthread.h,pthread,pthread_create,
-                got_pthread=yes,got_pthread=no)
+        PAC_CHECK_HEADER_LIB(pthread,pthread.h,pthread,pthread_create,got_pthread=yes,got_pthread=no)
         if test "$got_pthread" = "yes" ; then
            got_device=yes
-                   osp_device_pthreadd=true
+           osp_device_pthreadd=true
         fi
-                got_device=yes
-                osp_device_pthreadd=true
+           got_device=yes
+           osp_device_pthreadd=true
         ;;
     	 mpid)
 		PAC_SET_HEADER_LIB_PATH(mpi)
 		got_mpi=no
-		PAC_CHECK_HEADER_LIB(mpich,mpi.h,mpich,MPI_Init_thread,
-			got_mpi=yes,got_mpi=no)
+		PAC_CHECK_HEADER_LIB(mpich,mpi.h,mpich,MPI_Init_thread,got_mpi=yes,got_mpi=no)
 		if test "$got_mpi" = "yes" ; then
 		   got_device=yes
-                   osp_device_mpid=true
+           osp_device_mpid=true
 		fi
-                got_device=yes
-                osp_device_mpid=true
+           got_device=yes
+           osp_device_mpid=true
 		;;
 	 *)
 		;;

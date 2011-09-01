@@ -14,8 +14,8 @@
 #include <math.h>
 #include <pthread.h>
 
-#include <bpcore/bgp_atomic_ops.h>
-#include <spi/bgp_SPI.h>
+//#include <bpcore/bgp_atomic_ops.h>
+//#include <spi/bgp_SPI.h>
 
 #include <dcmf.h>
 #include <dcmf_collectives.h>

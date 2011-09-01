@@ -10,10 +10,10 @@ lib_LTLIBRARIES = libosp.la
 libosp_la_SOURCES =
 libosp_la_LDFLAGS = -version-info $(libosp_abi_version)
 
-include_HEADERS = $(top_builddir)/src/include/osp.h $(top_builddir)/src/include/armci.h
+include_HEADERS = $(top_builddir)/src/include/osp.h
 
 include src/util/Makefile.mk
-include src/apis/ospri/Makefile.mk
+#include src/apis/ospri/Makefile.mk
 
 if osp_device_dcmfd
 include src/devices/dcmfd/Makefile.mk

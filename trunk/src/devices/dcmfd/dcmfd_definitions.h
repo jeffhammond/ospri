@@ -10,6 +10,8 @@
  * @{
  */
 
+#include <dcmf.h>
+
 /*************************************************
  *                 Constants                     *
  ************************************************/
@@ -41,16 +43,16 @@ typedef struct
 {
     ospd_window_properties_t properties;
     int num_ranks;                        /* length of vectors below */
-    int * bytes_per_rank = NULL;          /* how many bytes does each rank have (may be zero) */
-    int * world_ranks = NULL;             /* world_ranks[my_rank_in_window_communicator] = my_rank_in_mpi_comm_world */
-    DCMF_Memregion_t * memregions = NULL; /*   */
+    int * bytes_per_rank;          /* how many bytes does each rank have (may be zero) */
+    int * world_ranks;             /* world_ranks[my_rank_in_window_communicator] = my_rank_in_mpi_comm_world */
+    DCMF_Memregion_t * memregions; /*   */
 }
 ospd_window_t;
 
 typedef struct
 {
     DCMF_Request_t request;
-    volatile int active = 0;
+    volatile int active;
 }
 ospd_handle_t
 
@@ -58,9 +60,7 @@ ospd_handle_t
  *             Function Prototypes               *
  ************************************************/
 
-void OSPDI_Generic_done(void *, DCMF_Error_t *);
-
-void OSPDI_Request_done(void *, DCMF_Error_t *);
+void OSPDI_Generic_done(void * clientdata, DCMF_Error_t * error);
 
 int OSPDI_Put_initialize();
 
