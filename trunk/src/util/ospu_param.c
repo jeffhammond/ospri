@@ -8,6 +8,8 @@
 #include "ospd.h"
 #include "ospu.h"
 
+#if 0
+
 /* FIXME: move this to a more appropriate place once all
  *         this OSPU/OSPD settings crap is sorted out */
 
@@ -118,3 +120,4 @@ int OSPU_Print_parameters(void)
   fn_fail:
     goto fn_exit;
 }
+#endif
