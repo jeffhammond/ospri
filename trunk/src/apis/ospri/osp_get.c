@@ -16,12 +16,6 @@ int OSP_Get(int target, void* src, void* dst, int bytes)
 #   ifdef HAVE_ERROR_CHECKING
 #   endif
 
-#   ifdef OSP_TAU_PROFILING
-    {
-        TAU_TRACE_SENDMSG (OSP_TAU_TAG_GET, target, bytes);
-    }
-#   endif
-
     if(target == my_rank && (bytes < ospu_settings.network_bypass_upper_limit_1d) )
     {
        status = OSPU_Get_memcpy(src, dst, bytes);
@@ -50,12 +44,6 @@ int OSP_NbGet(int target, void* src, void* dst, int bytes, OSP_handle_t osp_hand
     OSPU_FUNC_ENTER();
 
 #   ifdef HAVE_ERROR_CHECKING
-#   endif
-
-#   ifdef OSP_TAU_PROFILING
-    {
-        TAU_TRACE_SENDMSG (OSP_TAU_TAG_NBGET, target, bytes);
-    }
 #   endif
 
     if(target == my_rank && (bytes < ospu_settings.network_bypass_upper_limit_1d) )

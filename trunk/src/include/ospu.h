@@ -80,101 +80,101 @@
 #endif
 
 #if defined __FILE__ && defined OSPU_FUNC
-    #define OSPU_error_printf(...)                                          \
+#define OSPU_error_printf(...)                                          \
         {                                                                   \
-            fprintf(stderr, "%s (%s:%d): ", OSPU_FUNC, __FILE__, __LINE__);  \
-            fprintf(stderr, __VA_ARGS__);                                   \
-            fflush(stderr);                                                 \
+    fprintf(stderr, "%s (%s:%d): ", OSPU_FUNC, __FILE__, __LINE__);  \
+    fprintf(stderr, __VA_ARGS__);                                   \
+    fflush(stderr);                                                 \
         }
 #elif defined __FILE__
-    #define OSPU_error_printf(...)                               \
+#define OSPU_error_printf(...)                               \
         {                                                        \
-            fprintf(stderr, "%s (%d): ", __FILE__, __LINE__);    \
-            fprintf(stderr, __VA_ARGS__);                        \
-            fflush(stderr);                                      \
+    fprintf(stderr, "%s (%d): ", __FILE__, __LINE__);    \
+    fprintf(stderr, __VA_ARGS__);                        \
+    fflush(stderr);                                      \
         }
 #else
-    #define OSPU_error_printf(...)                                          \
+#define OSPU_error_printf(...)                                          \
         {                                                                   \
-            fprintf(stderr, __VA_ARGS__);                                   \
-            fflush(stderr);                                                 \
+    fprintf(stderr, __VA_ARGS__);                                   \
+    fflush(stderr);                                                 \
         }
 #endif
 
 #define OSPU_output_printf(...)                                         \
-    {                                                                   \
-        fprintf(stdout, __VA_ARGS__);                                   \
-        fflush(stdout);                                                 \
-    }
+        {                                                                   \
+    fprintf(stdout, __VA_ARGS__);                                   \
+    fflush(stdout);                                                 \
+        }
 
 #define OSPU_ASSERT_ABORT(x, ...)                                        \
-    {                                                                   \
-        unlikely_if (!(x)) {                                                     \
+        {                                                                   \
+    unlikely_if (!(x)) {                                                     \
             OSPU_error_printf(__VA_ARGS__);                              \
             assert(0);                                                  \
         }                                                               \
-    }
+        }
 
 #define OSPU_ASSERT(x, status)                                           \
-    {                                                                   \
-        unlikely_if (!(x)) {                                                     \
+        {                                                                   \
+    unlikely_if (!(x)) {                                                     \
             OSPU_ERR_SETANDJUMP(status, OSP_ERROR,                        \
-                               "assert (%s) failed\n", #x);             \
+                                "assert (%s) failed\n", #x);             \
         }                                                               \
-    }
+        }
 
 #define OSPU_WARNING(status, ...)                                      \
-    {                                                                   \
-        unlikely_if (status) {                                                   \
+        {                                                                   \
+    unlikely_if (status) {                                                   \
             OSPU_error_printf(__VA_ARGS__);                              \
         }                                                               \
-    }
+        }
 
 #define OSPU_ERR_ABORT(status, ...)                                      \
-    {                                                                   \
-        unlikely_if (status) {                                                   \
+        {                                                                   \
+    unlikely_if (status) {                                                   \
             OSPU_error_printf(__VA_ARGS__);                              \
             assert(0);                                                  \
         }                                                               \
-    }
+        }
 
 #define OSPU_ERR_POP(status, ...)                                        \
-    {                                                                   \
-        unlikely_if (status) {                                                   \
+        {                                                                   \
+    unlikely_if (status) {                                                   \
             OSPU_error_printf(__VA_ARGS__);                              \
             goto fn_fail;                                               \
         }                                                               \
-    }
+        }
 
 #define OSPU_ERR_SETANDJUMP(status, error, ...)                          \
-    {                                                                   \
-        status = error;                                                 \
-        OSPU_ERR_POP(status, __VA_ARGS__);                               \
-    }
+        {                                                                   \
+    status = error;                                                 \
+    OSPU_ERR_POP(status, __VA_ARGS__);                               \
+        }
 
 #define OSPU_ERR_CHKANDJUMP(status, chk, error, ...)                     \
-    {                                                                   \
-        unlikely_if ((chk))                                                      \
-            OSPU_ERR_SETANDJUMP(status, error, __VA_ARGS__);             \
-    }
+        {                                                                   \
+    unlikely_if ((chk))                                                      \
+    OSPU_ERR_SETANDJUMP(status, error, __VA_ARGS__);             \
+        }
 
 #define OSPU_ERR_POPANDSTMT(status, stmt, ... )                          \
-    {                                                                   \
-        unlikely_if (status) {                                                   \
+        {                                                                   \
+    unlikely_if (status) {                                                   \
             OSPU_error_printf(__VA_ARGS__);                              \
             stmt;                                                       \
         }                                                               \
-    }
+        }
 
 #ifdef OSP_DEBUG
 #define OSPU_DEBUG_PRINT(args...)                                  \
-do {                                                              \
-    int __my_rank;                                                \
-    __my_rank = MPI_Comm_rank(OSP_COMM_WORLD);                  \
-    fprintf(stderr, "Debug Message from [%d] :", __my_rank);      \
-    fprintf(stderr, args);                                        \
-    fflush(stderr);                                               \
-} while (0)
+        do {                                                              \
+            int __my_rank;                                                \
+            __my_rank = MPI_Comm_rank(OSP_COMM_WORLD);                  \
+            fprintf(stderr, "Debug Message from [%d] :", __my_rank);      \
+            fprintf(stderr, args);                                        \
+            fflush(stderr);                                               \
+        } while (0)
 #else
 #define OSPU_DEBUG_PRINT(args...)
 #endif
@@ -185,11 +185,11 @@ do {                                                              \
 #define OSPU_Memcpy(trg, src, num)  memcpy(trg, src, num)
 
 int OSPU_Put_memcpy(void* src,
-                   void* dst,
-                   unsigned bytes);
+                    void* dst,
+                    unsigned bytes);
 
 int OSPU_Get_memcpy(void* src,
-                   void* dst,
-                   unsigned bytes);
+                    void* dst,
+                    unsigned bytes);
 
 #endif /* OSPU_H_INCLUDED */
