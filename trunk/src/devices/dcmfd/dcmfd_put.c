@@ -78,7 +78,7 @@ int OSPDI_Put_end2end(ospd_window_t * window,
                       target_rank,
                       bytes,
                       source_mr,
-                      window->memregions[target_rank],
+                      &(window->memregions[target_rank]),
                       0, /* no offset because source memregion registered for each call */
                       target_window_offset,
                       remote_completion_cb);
@@ -131,7 +131,7 @@ int OSPDI_Put_bulk(ospd_window_t * window,
                       target_rank,
                       bytes,
                       source_mr,
-                      window->memregions[target_rank],
+                      &(window->memregions[target_rank]),
                       0, /* no offset because source memregion registered for each call */
                       target_window_offset,
                       OSPD_Nocallback);
@@ -187,7 +187,7 @@ int OSPDI_Put_handle(ospd_window_t * window,
                       target_rank,
                       bytes,
                       source_mr,
-                      window->memregions[target_rank],
+                      &(window->memregions[target_rank]),
                       0, /* no offset because source memregion registered for each call */
                       target_window_offset,
                       remote_completion_cb);
