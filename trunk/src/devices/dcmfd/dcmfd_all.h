@@ -24,6 +24,4 @@
 #include "dcmfd_definitions.h"
 #include "dcmfd_globals.h"
 
-#include "ospu_memory.h"
-
 /*! @} */
