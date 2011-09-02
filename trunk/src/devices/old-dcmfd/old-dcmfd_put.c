@@ -94,7 +94,7 @@ int OSPD_NbPut(int target,
     ospd_handle = (OSPD_Handle_t *) osp_handle;
 
     ospd_request = OSPDI_Get_request(1);
-    OSPU_ERR_POP(status = (ospd_request == NULL),
+    OSPU_ERR_POP(status = (ospd_request == NULL)),
                 "OSPDI_Get_request returned error \n");
     OSPDI_Set_handle(ospd_request, ospd_handle);
 
