@@ -20,46 +20,22 @@ void OSPDI_RecvDone_putacc_callback(void *clientdata, DCMF_Error_t *error)
     switch (header->datatype)
     {
         case OSP_DOUBLE:
-            OSPDI_ACC(double,
-                    source_ptr,
-                    header->target_ptr,
-                    (header->scaling).double_value,
-                    data_size/sizeof(double));
+            OSPDI_ACC(double, source_ptr, header->target_ptr, (header->scaling).double_value, data_size/sizeof(double));
             break;
         case OSP_INT32:
-            OSPDI_ACC(int32_t,
-                    source_ptr,
-                    header->target_ptr,
-                    (header->scaling).int32_value,
-                    data_size / sizeof(int32_t));
+            OSPDI_ACC(int32_t, source_ptr, header->target_ptr, (header->scaling).int32_value, data_size / sizeof(int32_t));
             break;
         case OSP_INT64:
-            OSPDI_ACC(int64_t,
-                    source_ptr,
-                    header->target_ptr,
-                    (header->scaling).int64_value,
-                    data_size / sizeof(int64_t));
+            OSPDI_ACC(int64_t, source_ptr, header->target_ptr, (header->scaling).int64_value, data_size / sizeof(int64_t));
             break;
         case OSP_UINT32:
-            OSPDI_ACC(uint32_t,
-                    source_ptr,
-                    header->target_ptr,
-                    (header->scaling).uint32_value,
-                    data_size / sizeof(uint32_t));
+            OSPDI_ACC(uint32_t, source_ptr, header->target_ptr, (header->scaling).uint32_value, data_size / sizeof(uint32_t));
             break;
         case OSP_UINT64:
-            OSPDI_ACC(uint64_t,
-                    source_ptr,
-                    header->target_ptr,
-                    (header->scaling).uint64_value,
-                    data_size / sizeof(uint64_t));
+            OSPDI_ACC(uint64_t, source_ptr, header->target_ptr, (header->scaling).uint64_value, data_size / sizeof(uint64_t));
             break;
         case OSP_FLOAT:
-            OSPDI_ACC(float,
-                    source_ptr,
-                    header->target_ptr,
-                    (header->scaling).float_value,
-                    data_size / sizeof(float));
+            OSPDI_ACC(float, source_ptr, header->target_ptr, (header->scaling).float_value, data_size / sizeof(float));
             break;
         default:
             OSPU_ERR_ABORT(status, "Invalid datatype received in Putacc operation\n");
@@ -82,17 +58,13 @@ DCMF_Request_t* OSPDI_RecvSend_putacc_callback(void *clientdata,
     OSPD_Request_t *ospd_request;
 
     ospd_request = OSPDI_Get_request(0);
-    OSPU_ERR_ABORT(status = (ospd_request == NULL),
-            "OSPDI_Get_request returned NULL in OSPDI_RecvSend_putacc_callback\n");
+    OSPU_ERR_ABORT(status = (ospd_request == NULL), "OSPDI_Get_request returned NULL in OSPDI_RecvSend_putacc_callback\n");
 
-    OSPU_ASSERT_ABORT(sizeof(OSPD_Putacc_header_t) == count*sizeof(DCQuad),
-            "Header of invalid size received in OSPDI_RecvSend_putacc_callback\n")
+    OSPU_ASSERT_ABORT(sizeof(OSPD_Putacc_header_t) == count*sizeof(DCQuad), "Header of invalid size received in OSPDI_RecvSend_putacc_callback\n")
 
     ospd_request->buffer_size = sndlen + sizeof(OSPD_Putacc_header_t);
-    status = OSPDI_Malloc((void **) &(ospd_request->buffer_ptr),
-                         sndlen + sizeof(OSPD_Putacc_header_t));
-    OSPU_ERR_ABORT(status != 0,
-            "OSPDI_Malloc failed in OSPDI_RecvSend_packedputs_callback\n");
+    status = OSPDI_Malloc((void **) &(ospd_request->buffer_ptr), sndlen + sizeof(OSPD_Putacc_header_t));
+    OSPU_ERR_ABORT(status != 0, "OSPDI_Malloc failed in OSPDI_RecvSend_packedputs_callback\n");
 
     OSPDI_Memcpy(ospd_request->buffer_ptr,(void *) msginfo,sizeof(OSPD_Putacc_header_t));
 
@@ -119,50 +91,25 @@ void OSPDI_RecvSendShort_putacc_callback(void *clientdata,
     switch (header->datatype)
     {
         case OSP_DOUBLE:
-            OSPDI_ACC(double,
-                    source_ptr,
-                    header->target_ptr,
-                    (header->scaling).double_value,
-                    bytes/sizeof(double));
+            OSPDI_ACC(double, source_ptr, header->target_ptr, (header->scaling).double_value, bytes/sizeof(double));
             break;
         case OSP_INT32:
-            OSPDI_ACC(int32_t,
-                    source_ptr,
-                    header->target_ptr,
-                    (header->scaling).int32_value,
-                    bytes / sizeof(int32_t));
+            OSPDI_ACC(int32_t, source_ptr, header->target_ptr, (header->scaling).int32_value, bytes / sizeof(int32_t));
             break;
         case OSP_INT64:
-            OSPDI_ACC(int64_t,
-                    source_ptr,
-                    header->target_ptr,
-                    (header->scaling).int64_value,
-                    bytes / sizeof(int64_t));
+            OSPDI_ACC(int64_t, source_ptr, header->target_ptr, (header->scaling).int64_value, bytes / sizeof(int64_t));
             break;
         case OSP_UINT32:
-            OSPDI_ACC(uint32_t,
-                    source_ptr,
-                    header->target_ptr,
-                    (header->scaling).uint32_value,
-                    bytes / sizeof(uint32_t));
+            OSPDI_ACC(uint32_t, source_ptr, header->target_ptr, (header->scaling).uint32_value, bytes / sizeof(uint32_t));
             break;
         case OSP_UINT64:
-            OSPDI_ACC(uint64_t,
-                    source_ptr,
-                    header->target_ptr,
-                    (header->scaling).uint64_value,
-                    bytes / sizeof(uint64_t));
+            OSPDI_ACC(uint64_t, source_ptr, header->target_ptr, (header->scaling).uint64_value, bytes / sizeof(uint64_t));
             break;
         case OSP_FLOAT:
-            OSPDI_ACC(float,
-                    source_ptr,
-                    header->target_ptr,
-                    (header->scaling).float_value,
-                    bytes/sizeof(float));
+            OSPDI_ACC(float, source_ptr, header->target_ptr, (header->scaling).float_value, bytes/sizeof(float));
             break;
         default:
-            OSPU_ERR_ABORT(status, "Invalid datatype received in Putacc operation \n")
-            ;
+            OSPU_ERR_ABORT(status, "Invalid datatype received in Putacc operation \n") ;
             break;
     }
 }
@@ -287,8 +234,7 @@ int OSPD_NbPutAcc(int target,
     ospd_handle->active++;
 
     ospd_request = OSPDI_Get_request(1);
-    OSPU_ERR_POP(status = (ospd_request == NULL),
-            "OSPDI_Get_request returned NULL request \n");
+    OSPU_ERR_POP(status = (ospd_request == NULL), "OSPDI_Get_request returned NULL request \n");
     OSPDI_Set_handle(ospd_request, ospd_handle);
 
     done_callback.function = OSPDI_Request_done;
