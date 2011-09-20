@@ -42,10 +42,8 @@ int main(int argc, char* argv[])
         char * n0 = "reference - direct copy";
         char * n1 = "basic w/ stride-1 stores";
         char * n2 = "basic w/ stride-1 loads";
-        char * n3 = "pragma unroll 4x4 + s1 stores";
-        char * n4 = "pragma unroll 4x4 + s1 loads";
-        char * n5 = "manual unroll 4x4 + s1 stores";
-        char * n6 = "manual unroll 4x4 + s1 loads";
+        char * n3 = "pragma unroll 4x4 + s1 loads";
+        char * n4 = "manual unroll 4x4 + s1 loads";
 
         printf( "starting test... \n" );
         fprintf( stderr , "%4s %32s %32s %32s %32s %32s \n" , "n" , n0 , n1 , n2 , n3 , n4);
@@ -63,8 +61,11 @@ int main(int argc, char* argv[])
             A = safemalloc( N * sizeof(double) );
             B = safemalloc( N * sizeof(double) );
      
-            for ( int i=0 ; i<N ; i++ ) A[i] = (double)i;
-            for ( int i=0 ; i<N ; i++ ) B[i] = 0.0;
+            for ( int i=0 ; i<N ; i++ )
+            { 
+                A[i] = (double)i;
+                B[i] = 0.0;
+            }
      
             /* reference - direct copy */
             t0 = getticks();        
@@ -99,19 +100,6 @@ int main(int argc, char* argv[])
             t1 = getticks();        
             d2[n] = (t1-t0)/REPEAT;
      
-            /* pragma unroll 4x4 + s1 stores */
-            t0 = getticks();        
-            for ( int t=0 ; t<REPEAT ; t++ )
-            {
-                #pragma unroll(4)
-                for ( int i=0 ; i<n ; i++ )
-                    #pragma unroll(4)
-                    for ( int j=0 ; j<n ; j++ )
-                        B[i*n+j] = A[j*n+i];
-            }
-            t1 = getticks();        
-            d3[n] = (t1-t0)/REPEAT;
-     
             /* pragma unroll 4x4 + s1 loads */
             t0 = getticks();        
             for ( int t=0 ; t<REPEAT ; t++ )
@@ -123,9 +111,59 @@ int main(int argc, char* argv[])
                         B[i*n+j] = A[j*n+i];
             }
             t1 = getticks();        
+            d3[n] = (t1-t0)/REPEAT;
+
+            /* manual unroll 4x4 + s1 loads */
+            t0 = getticks();        
+            for ( int t=0 ; t<REPEAT ; t++ )
+            {
+                int nr = n%4; /* remainder */
+                int n4 = n-nr;    /* divisible-by-4 part */
+                for ( int j=0 ; j<n4 ; j+=4 )
+                {
+                    for ( int i=0 ; i<n4 ; i+=4 )
+                    {
+                        B[(i  )*n+j  ] = A[(j  )*n+i  ];
+                        B[(i  )*n+j+1] = A[(j+1)*n+i  ];
+                        B[(i  )*n+j+2] = A[(j+2)*n+i  ];
+                        B[(i  )*n+j+3] = A[(j+3)*n+i  ];
+                        B[(i+1)*n+j  ] = A[(j  )*n+i+1];
+                        B[(i+1)*n+j+1] = A[(j+1)*n+i+1];
+                        B[(i+1)*n+j+2] = A[(j+2)*n+i+1];
+                        B[(i+1)*n+j+3] = A[(j+3)*n+i+1];
+                        B[(i+2)*n+j  ] = A[(j  )*n+i+2];
+                        B[(i+2)*n+j+1] = A[(j+1)*n+i+2];
+                        B[(i+2)*n+j+2] = A[(j+2)*n+i+2];
+                        B[(i+2)*n+j+3] = A[(j+3)*n+i+2];
+                        B[(i+3)*n+j  ] = A[(j  )*n+i+3];
+                        B[(i+3)*n+j+1] = A[(j+1)*n+i+3];
+                        B[(i+3)*n+j+2] = A[(j+2)*n+i+3];
+                        B[(i+3)*n+j+3] = A[(j+3)*n+i+3];
+                    }
+                    for ( int i=n4 ; i<n ; i++ )
+                        B[i*n+j] = A[j*n+i];
+                }
+                for ( int j=n4 ; j<n ; j++ )
+                {
+                    for ( int i=0 ; i<n4 ; i+=4 )
+                    {
+                        B[(i  )*n+j] = A[j*n+i  ];
+                        B[(i+1)*n+j] = A[j*n+i+1];
+                        B[(i+2)*n+j] = A[j*n+i+2];
+                        B[(i+3)*n+j] = A[j*n+i+3];
+                    }
+                    for ( int i=n4 ; i<n ; i++ )
+                        B[i*n+j] = A[j*n+i];
+                }
+            }
+            t1 = getticks();        
             d4[n] = (t1-t0)/REPEAT;
 
-            if ( n<7 )
+            for ( int j=0 ; j<n ; j++ ) 
+                for ( int i=0 ; i<n ; i++ )
+                    assert( B[i*n+j] == A[j*n+i] );
+
+            if ( n<11 )
             {
                 printf( "A: \n" );
                 for ( int i=0 ; i<n ; i++ )
@@ -143,7 +181,9 @@ int main(int argc, char* argv[])
             }
 
             /* this is just for the neurotic person who cannot wait until the end for data */
-            fprintf( stderr , "%4d %32llu %32llu %32llu %32llu %32llu \n" , n , d0[n] , d1[n] , d2[n] , d3[n] , d4[n] );
+            double c = 1.0 / d0[n];
+            fprintf( stderr , "%4d %15llu (%13lf) %15llu (%13lf) %15llu (%13lf) %15llu (%13lf) %15llu (%13lf) \n" , 
+                                n , d0[n] , 1.0 , d1[n] , c*d1[n] , d2[n] , c*d2[n] , d3[n] , c*d3[n] , d4[n] , c*d4[n] );
  
             free(B);
             free(A);
@@ -151,17 +191,13 @@ int main(int argc, char* argv[])
         fflush( stderr );
 
         /* print analysis */
-        printf( "timing in cycles \n" );
-        printf( "%4s %32s %32s %32s %32s %32s \n" , "n" , n0 , n1 , n2 , n3 , n4);
-        for ( int n=min ; n<max ; n+=inc)
-            printf( "%4d %32llu %32llu %32llu %32llu %32llu \n" , n , d0[n] , d1[n] , d2[n] , d3[n] , d4[n] );
-
-        printf( "ratio relative to direct copy \n" );
+        printf( "timing in cycles (ratio relative to direct copy)\n" );
         printf( "%4s %32s %32s %32s %32s %32s \n" , "n" , n0 , n1 , n2 , n3 , n4);
         for ( int n=min ; n<max ; n+=inc)
         {
             double c = 1.0 / d0[n];
-            printf( "%4d %32lf %32lf %32lf %32lf %32lf \n" , n , 1.0 , c*d1[n] , c*d2[n] , c*d3[n] , c*d4[n] );
+            printf( "%4d %15llu (%13lf) %15llu (%13lf) %15llu (%13lf) %15llu (%13lf) %15llu (%13lf) \n" , 
+                       n , d0[n] , c*d0[n] , d1[n] , c*d1[n] , d2[n] , c*d2[n] , d3[n] , c*d3[n] , d4[n] , c*d4[n] );
         }
 
         printf( "...the end \n" );
