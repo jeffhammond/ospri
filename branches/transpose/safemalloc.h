@@ -1,1 +1,4 @@
-#define safemalloc((a)) malloc((a)); assert( (a) != NULL );
+#include <stdlib.h>
+#include <assert.h>
+
+void * safemalloc(size_t n);
