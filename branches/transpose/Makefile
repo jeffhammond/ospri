@@ -1,9 +1,9 @@
 CC=mpixlc_r
 CFLAGS=-g -O5 -qnoipa -qtune=450 -qarch=450d -qsmp=omp -qlanglvl=stdc99
 HPM=-L/soft/apps/UPC/lib -lhpm
-LIBS=$(HPM)
+LIBS=$(HPM) safemalloc.o
 
-all: transpose.x
+all: safemalloc.o transpose.x
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
