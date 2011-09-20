@@ -1,14 +1,14 @@
 #include "safemalloc.h"
 
-void * safemalloc(size_t n) 
+void * safemalloc(int n) 
 {
-    void * ptr;
-    ptr = malloc( n );
+    void * ptr = malloc( n );
 
-    assert( ptr != NULL );
+    if ( ptr == NULL )
+    {
+        fprintf( stderr , "%d bytes could not be allocated \n" , n );
+        exit(1);
+    }
 
-    /* in case assertions are disabled */
-    if ( ptr != NULL ) exit(911);
-
-    return ( ptr != NULL ? ptr : NULL);
+    return ptr;
 }
