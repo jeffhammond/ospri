@@ -4,7 +4,7 @@ ifdef FRONTEND
     LIBS=safemalloc.o
 else
     CC=mpixlc_r
-    CFLAGS=-g -O5 -qnoipa -qtune=450 -qarch=450d -qsmp=omp -qlanglvl=stdc99 -DMPI
+    CFLAGS=-g -O3 -qstrict -qtune=450 -qarch=450d -qsmp=omp -qlanglvl=stdc99 -DMPI
     HPM=-L/soft/apps/UPC/lib -lhpm
     LIBS=$(HPM) safemalloc.o
 endif
