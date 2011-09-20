@@ -71,9 +71,8 @@ int main(int argc, char* argv[])
             t0 = getticks();        
             for ( int t=0 ; t<REPEAT ; t++ )
             {
-                for ( int i=0 ; i<n ; i++ )
-                    for ( int j=0 ; j<n ; j++ )
-                        B[i*n+j] = A[i*n+j];
+                #pragma unroll
+                for ( int i=0 ; i<N ; i++ ) B[i] = A[i];
             }
             t1 = getticks();        
             d0[n] = (t1-t0)/REPEAT;

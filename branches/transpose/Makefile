@@ -22,7 +22,7 @@ submit: all
 	OMP_NUM_THREADS=4 ./transpose.x
 else
 submit: all
-	qsub --mode smp -n 1 -t 55 --env OMP_NUM_THREADS=4 $< 16 3072 16
+	qsub --mode smp -n 1 -t 55 --env OMP_NUM_THREADS=4 ./transpose.x 16 3072 16
 endif
 
 clean:
