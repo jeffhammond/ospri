@@ -2,7 +2,10 @@
 
 void * safemalloc(int n) 
 {
-    void * ptr = malloc( n );
+    //void * ptr = malloc( n );
+    int rc;
+    void * ptr;
+    rc = posix_memalign( &ptr , ALIGNMENT , n );
 
     if ( ptr == NULL )
     {
