@@ -23,6 +23,8 @@ int main(int argc, char* argv[])
     int provided;
     rc = MPI_Init_thread( &argc , &argv , MPI_THREAD_FUNNELED , &provided ); assert( rc == MPI_SUCCESS );
     rc = MPI_Comm_rank( MPI_COMM_WORLD , &rank ); assert( rc == MPI_SUCCESS );
+
+    HPM_Init();
 #endif
 
     int min = ( argc>1 ? atoi(argv[1]) : 2 );
@@ -40,15 +42,16 @@ int main(int argc, char* argv[])
         unsigned long long * d6 = safemalloc( max * sizeof(unsigned long long) );
 
         /*           12345678901234567890123456789012 */
-        char * n0 = "references - memcpy and loop copy";
-        char * n1 = "basic w/ stride-1 stores";
-        char * n2 = "basic w/ stride-1 loads";
-        char * n3 = "pragma unroll 4x4 + s1 loads";
-        char * n4 = "manual unroll 4x4 + s1 loads";
-        char * n5 = "manual un+vec 4x4  + s1 loads";
+        char * n0 = "memcpy";
+        char * n1 = "loop copy";
+        char * n2 = "basic w/ stride-1 stores";
+        char * n3 = "basic w/ stride-1 loads";
+        char * n4 = "pragma unroll 4x4 + s1 loads";
+        char * n5 = "manual unroll 4x4 + s1 loads";
+        char * n6 = "manual un+vec 4x4  + s1 loads";
 
         printf( "starting test... \n" );
-        fprintf( stderr , "%4s %43s %32s %32s %32s %32s \n" , "n" , n0 , n1 , n2 , n3 , n4);
+        fprintf( stderr , "%4s %21s %21s %32s %32s %32s %32s %32s \n" , "n" , n0 , n1 , n2 , n3 , n4 , n5 , n6);
         fflush( stderr );
 
         for ( int n=min ; n<max ; n+=inc )
@@ -70,15 +73,18 @@ int main(int argc, char* argv[])
             }
      
             /* reference - memcpy */ 
+            HPM_Start(n0);
             t0 = getticks();        
             for ( int t=0 ; t<REPEAT ; t++ )
             {
                 memcpy( B , A , N );
             }
             t1 = getticks();        
+            HPM_Stop(n0);
             d0[n] = (t1-t0)/REPEAT;
 
             /* reference - direct copy */
+            HPM_Start(n1);
             t0 = getticks();        
             for ( int t=0 ; t<REPEAT ; t++ )
             {
@@ -89,9 +95,11 @@ int main(int argc, char* argv[])
                         B[i*n+j] = A[i*n+j];
             }
             t1 = getticks();        
+            HPM_Stop(n1);
             d1[n] = (t1-t0)/REPEAT;
 
             /* basic w/ stride-1 stores */
+            HPM_Start(n2);
             t0 = getticks();        
             for ( int t=0 ; t<REPEAT ; t++ )
             {
@@ -100,9 +108,11 @@ int main(int argc, char* argv[])
                         B[i*n+j] = A[j*n+i];
             }
             t1 = getticks();        
+            HPM_Stop(n2);
             d2[n] = (t1-t0)/REPEAT;
      
             /* basic w/ stride-1 loads */
+            HPM_Start(n3);
             t0 = getticks();        
             for ( int t=0 ; t<REPEAT ; t++ )
             {
@@ -111,9 +121,11 @@ int main(int argc, char* argv[])
                         B[i*n+j] = A[j*n+i];
             }
             t1 = getticks();        
+            HPM_Stop(n3);
             d3[n] = (t1-t0)/REPEAT;
      
             /* pragma unroll 4x4 + s1 loads */
+            HPM_Start(n4);
             t0 = getticks();        
             for ( int t=0 ; t<REPEAT ; t++ )
             {
@@ -124,9 +136,11 @@ int main(int argc, char* argv[])
                         B[i*n+j] = A[j*n+i];
             }
             t1 = getticks();        
+            HPM_Stop(n4);
             d4[n] = (t1-t0)/REPEAT;
 
             /* manual unroll 4x4 + s1 loads */
+            HPM_Start(n5);
             t0 = getticks();        
             for ( int t=0 ; t<REPEAT ; t++ )
             {
@@ -170,9 +184,11 @@ int main(int argc, char* argv[])
                 }
             }
             t1 = getticks();        
+            HPM_Stop(n5);
             d5[n] = (t1-t0)/REPEAT;
 
             /* manual unroll 4x4 and vectorize + s1 loads */
+            HPM_Start(n6);
             t0 = getticks();        
             for ( int t=0 ; t<REPEAT ; t++ )
             {
@@ -261,6 +277,7 @@ int main(int argc, char* argv[])
                 }
             }
             t1 = getticks();        
+            HPM_Stop(n6);
             d6[n] = (t1-t0)/REPEAT;
 
             for ( int j=0 ; j<n ; j++ ) 
@@ -296,7 +313,7 @@ int main(int argc, char* argv[])
 
         /* print analysis */
         printf( "timing in cycles (ratio relative to memcpy) \n" );
-        printf( "%4s %43s %32s %32s %32s %32s %32s \n" , "n" , n0 , n1 , n2 , n3 , n4 , n5);
+        printf( "%4s %21s %21s %32s %32s %32s %32s %32s \n" , "n" , n0 , n1 , n2 , n3 , n4 , n5 , n6);
         for ( int n=min ; n<max ; n+=inc)
         {
             double c = 1.0 / d0[n];
@@ -317,6 +334,9 @@ int main(int argc, char* argv[])
     }
  
 #ifdef MPI
+    HPM_Print_Flops();
+    HPM_Print();
+
     rc = MPI_Finalize();
     assert( rc == MPI_SUCCESS );
 #endif
