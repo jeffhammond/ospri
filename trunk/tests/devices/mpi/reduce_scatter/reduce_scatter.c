@@ -47,11 +47,9 @@ int main(int argc, char *argv[])
         assert( buffer != NULL );
 
         if ( rank == dst_rank ) 
-            for ( i = 0 ; i < count ; i++) 
-                buffer[i] = 0;
+            for ( i = 0 ; i < count ; i++) buffer[i] = 0;
         if ( rank == src_rank ) 
-            for ( i = 0 ; i < count ; i++) 
-                buffer[i] = i;
+            for ( i = 0 ; i < count ; i++) buffer[i] = i;
 
         MPI_Barrier( MPI_COMM_WORLD );
 
@@ -70,8 +68,7 @@ int main(int argc, char *argv[])
 
         /* check for correctness */
         if ( rank == dst_rank ) 
-            for ( i = 0 ; i < count ; i++) 
-                assert( buffer[i] == i );
+            for ( i = 0 ; i < count ; i++) assert( buffer[i] == i );
 
         /* i agree this is overkill */
         MPI_Barrier( MPI_COMM_WORLD );
@@ -94,11 +91,8 @@ int main(int argc, char *argv[])
         buffer = malloc( size * count * sizeof(int) );
         assert( buffer != NULL );
         
-        for ( i = 0 ; i < ( size * count ) ; i++ ) 
-            buffer[i] = 0;
-
-        for ( i = 0 ; i < count ; i++ ) 
-            buffer[ rank * count + i ] = rank;
+        for ( i = 0 ; i < ( size * count ) ; i++ ) buffer[i] = 0; 
+        for ( i = 0 ; i < count ; i++ ) buffer[ rank * count + i ] = rank;
 
         MPI_Barrier( MPI_COMM_WORLD );
 
@@ -111,7 +105,6 @@ int main(int argc, char *argv[])
         if ( rank == root ) 
             for ( r = 0 ; r < size ; r++ ) 
                 for ( i = 0 ; i < count ; i++ )
-                    //printf( "reduced: r=%d i=%d r*c+i=%d buffer[.]=%d\n", r, i, r * count + i , buffer[ r * count + i ] );
                     assert( buffer[ r * count + i ] == r );
 
         if ( rank == 0 ) printf( "MPI_Reduce(MPI_SUM): %u bytes transferred in %lf seconds (%lf MB/s)\n", 
@@ -131,11 +124,8 @@ int main(int argc, char *argv[])
         buffer = malloc( size * count * sizeof(int) );
         assert( buffer != NULL );
 
-        for ( i = 0 ; i < ( size * count ) ; i++ ) 
-            buffer[i] = 0;
-
-        for ( i = 0 ; i < count ; i++ ) 
-            buffer[ rank * count + i ] = rank;
+        for ( i = 0 ; i < ( size * count ) ; i++ ) buffer[i] = 0; 
+        for ( i = 0 ; i < count ; i++ ) buffer[ rank * count + i ] = rank;
 
         MPI_Barrier( MPI_COMM_WORLD );
 
@@ -183,8 +173,7 @@ int main(int argc, char *argv[])
                     snd_buffer[ r * count + i ] = -1;
         }
 
-        for ( i = 0 ; i < count ; i++) 
-            rcv_buffer[i] = 0;
+        for ( i = 0 ; i < count ; i++) rcv_buffer[i] = 0;
 
         MPI_Barrier( MPI_COMM_WORLD );
 
@@ -193,8 +182,7 @@ int main(int argc, char *argv[])
         t1 = MPI_Wtime();
         assert ( rc == MPI_SUCCESS );
 
-        for ( i = 0 ; i < count ; i++ ) 
-            assert( rcv_buffer[i] == rank );
+        for ( i = 0 ; i < count ; i++ ) assert( rcv_buffer[i] == rank );
 
         if ( rank == 0 ) printf( "MPI_Scatter: %u bytes transferred in %lf seconds (%lf MB/s)\n", 
                                  count * (int) sizeof(int), t1 - t0, 1e-6 * count * sizeof(int) / (t1-t0) );
@@ -219,14 +207,9 @@ int main(int argc, char *argv[])
         rcv_buffer = malloc( count * sizeof(int) );
         assert( rcv_buffer != NULL );
 
-        for ( i = 0 ; i < ( size * count ) ; i++ ) 
-            snd_buffer[i] = 0;
-
-        for ( i = 0 ; i < count ; i++ ) 
-            snd_buffer[ rank * count + i ] = rank;
-
-        for ( i = 0 ; i < count ; i++) 
-            rcv_buffer[i] = 0;
+        for ( i = 0 ; i < ( size * count ) ; i++ ) snd_buffer[i] = 0; 
+        for ( i = 0 ; i < count ; i++ ) snd_buffer[ rank * count + i ] = rank; 
+        for ( i = 0 ; i < count ; i++) rcv_buffer[i] = 0;
 
         MPI_Barrier( MPI_COMM_WORLD );
 
@@ -238,8 +221,7 @@ int main(int argc, char *argv[])
         t1 = MPI_Wtime();
         assert ( rc == MPI_SUCCESS );
 
-        for ( i = 0 ; i < count ; i++ ) 
-            assert( rcv_buffer[i] == rank );
+        for ( i = 0 ; i < count ; i++ ) assert( rcv_buffer[i] == rank );
 
         if ( rank == 0 ) printf( "MPI_Reduce(MPI_SUM)+Scatter: %u bytes transferred in %lf seconds (%lf MB/s)\n", 
                                  count * (int) sizeof(int), t1 - t0, 1e-6 * count * (int) sizeof(int) / (t1-t0) );
@@ -267,7 +249,7 @@ int main(int argc, char *argv[])
         counts = malloc( size * sizeof(int) );
         assert( counts != NULL );
 
-        for ( i = 0 ; i < size ; i++ ) snd_buffer[i] = 0;
+        for ( i = 0 ; i < ( size * count ) ; i++ ) snd_buffer[i] = 0;
         for ( i = 0 ; i < count ; i++ ) snd_buffer[ rank * count + i] = rank;
         for ( i = 0 ; i < count ; i++ ) rcv_buffer[i] = 0;
         for ( i = 0 ; i < size ; i++) counts[i] = count;
@@ -305,14 +287,9 @@ int main(int argc, char *argv[])
         rcv_buffer = malloc( count * sizeof(int) );
         assert( rcv_buffer != NULL );
 
-        for ( i = 0 ; i < ( size * count ) ; i++ ) 
-            snd_buffer[i] = 0;
-
-        for ( i = 0 ; i < count ; i++ ) 
-            snd_buffer[ rank * count + i ] = rank;
-
-        for ( i = 0 ; i < count ; i++) 
-            rcv_buffer[i] = 0;
+        for ( i = 0 ; i < ( size * count ) ; i++ ) snd_buffer[i] = 0;
+        for ( i = 0 ; i < count ; i++ ) snd_buffer[ rank * count + i ] = rank;
+        for ( i = 0 ; i < count ; i++) rcv_buffer[i] = 0;
 
         MPI_Barrier( MPI_COMM_WORLD );
 
@@ -321,8 +298,7 @@ int main(int argc, char *argv[])
         t1 = MPI_Wtime();
         assert ( rc == MPI_SUCCESS );
 
-        for ( i = 0 ; i < count ; i++ ) 
-            assert( rcv_buffer[i] == rank );
+        for ( i = 0 ; i < count ; i++ ) assert( rcv_buffer[i] == rank );
 
         if ( rank == 0 ) printf( "MPI_Reduce_scatter_block(MPI_SUM): %u bytes transferred in %lf seconds (%lf MB/s)\n", 
                                  count * (int) sizeof(int), t1 - t0, 1e-6 * count * sizeof(int) / (t1-t0) );
@@ -349,14 +325,9 @@ int main(int argc, char *argv[])
         rcv_buffer = malloc( count * sizeof(int) );
         assert( rcv_buffer != NULL );
 
-        for ( i = 0 ; i < ( size * count ) ; i++ ) 
-            snd_buffer[i] = 0;
-
-        for ( i = 0 ; i < count ; i++ ) 
-            snd_buffer[ rank * count + i ] = rank;
-
-        for ( i = 0 ; i < count ; i++) 
-            rcv_buffer[i] = 0;
+        for ( i = 0 ; i < ( size * count ) ; i++ ) snd_buffer[i] = 0; 
+        for ( i = 0 ; i < count ; i++ ) snd_buffer[ rank * count + i ] = rank; 
+        for ( i = 0 ; i < count ; i++) rcv_buffer[i] = 0;
 
         MPI_Barrier( MPI_COMM_WORLD );
 
@@ -366,8 +337,7 @@ int main(int argc, char *argv[])
         t1 = MPI_Wtime();
         assert ( rc == MPI_SUCCESS );
 
-        for ( i = 0 ; i < count ; i++ ) 
-            assert( rcv_buffer[i] == rank );
+        for ( i = 0 ; i < count ; i++ ) assert( rcv_buffer[i] == rank );
 
         if ( rank == 0 ) printf( "MPI_Allreduce(MPI_SUM): %u bytes transferred in %lf seconds (%lf MB/s)\n", 
                                  size * count * (int) sizeof(int), t1 - t0, 1e-6 * count * sizeof(int) / (t1-t0) );
