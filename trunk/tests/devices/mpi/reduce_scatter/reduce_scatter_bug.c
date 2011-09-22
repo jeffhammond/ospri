@@ -23,6 +23,8 @@ int main(int argc, char *argv[])
     //printf( "Hello from %d of %d processors\n", rank, size );
     //fflush( stdout );
 
+    int count = ( argc > 1 ? atoi(argv[1]) : 1 );
+
     MPI_Barrier( MPI_COMM_WORLD );
 
     /* reduce_scatter bandwidth test */
@@ -34,19 +36,19 @@ int main(int argc, char *argv[])
         int * rcv_buffer;
         int * counts;
 
-        snd_buffer = malloc( size * sizeof(int) );
+        snd_buffer = malloc( size * count* sizeof(int) );
         assert( snd_buffer != NULL );
 
-        rcv_buffer = malloc( 1 * sizeof(int) );
+        rcv_buffer = malloc( count * sizeof(int) );
         assert( rcv_buffer != NULL );
 
         counts = malloc( size * sizeof(int) );
         assert( counts != NULL );
 
         for ( i = 0 ; i < size ; i++ ) snd_buffer[i] = 0;
-        snd_buffer[rank] = rank;
-        rcv_buffer[0] = 0;
-        for ( i = 0 ; i < size ; i++) counts[i] = 1;
+        for ( i = 0 ; i < count ; i++ ) snd_buffer[ rank * count + i] = 0;
+        for ( i = 0 ; i < count ; i++ ) rcv_buffer[i] = 0;
+        for ( i = 0 ; i < size ; i++) counts[i] = count;
 
         MPI_Barrier( MPI_COMM_WORLD );
 
@@ -55,7 +57,7 @@ int main(int argc, char *argv[])
         t1 = MPI_Wtime();
         assert ( rc == MPI_SUCCESS );
 
-        assert( rcv_buffer[0] == rank );
+        for ( i = 0 ; i < count ; i++ ) assert( rcv_buffer[i] == rank );
 
         if ( rank == 0 ) printf( "MPI_Reduce_scatter(MPI_SUM): %u bytes transferred in %lf seconds (%lf MB/s)\n", 
                                  (int) sizeof(int), t1 - t0, 1e-6 * (int) sizeof(int) / (t1-t0) );

@@ -53,7 +53,7 @@ int main(int argc, char *argv[])
         double t0 = 0.0, t1 = 0.0;
         int * buffer;
 
-        posix_memalign( (void**) &buffer, ALIGNMENT, count * (int) sizeof(int) );
+        buffer = malloc( count * sizeof(int) );
         assert( buffer != NULL );
 
         if ( rank == dst_rank ) 
@@ -101,7 +101,7 @@ int main(int argc, char *argv[])
         int * buffer;
         int root = 0;
 
-        posix_memalign( (void**) &buffer, ALIGNMENT, size * count * (int) sizeof(int) );
+        buffer = malloc( size * count * sizeof(int) );
         assert( buffer != NULL );
         
         for ( i = 0 ; i < ( size * count ) ; i++ ) 
@@ -138,7 +138,7 @@ int main(int argc, char *argv[])
         double t0, t1;
         int * buffer;
 
-        posix_memalign( (void**) &buffer, ALIGNMENT, size * count * (int) sizeof(int) );
+        buffer = malloc( size * count * sizeof(int) );
         assert( buffer != NULL );
 
         for ( i = 0 ; i < ( size * count ) ; i++ ) 
@@ -174,10 +174,10 @@ int main(int argc, char *argv[])
         int * rcv_buffer;
         int root = 0;
 
-        posix_memalign( (void**) &snd_buffer, ALIGNMENT, size * count * (int) sizeof(int) );
+        snd_buffer = malloc( size * count * sizeof(int) );
         assert( snd_buffer != NULL );
 
-        posix_memalign( (void**) &rcv_buffer, ALIGNMENT, count * (int) sizeof(int) );
+        rcv_buffer = malloc( count * sizeof(int) );
         assert( rcv_buffer != NULL );
 
         if ( rank == root )
@@ -223,10 +223,10 @@ int main(int argc, char *argv[])
         int * rcv_buffer;
         int root = 0;
 
-        posix_memalign( (void**) &snd_buffer, ALIGNMENT, size * count * (int) sizeof(int) );
+        snd_buffer = malloc( size * count * sizeof(int) );
         assert( snd_buffer != NULL );
 
-        posix_memalign( (void**) &rcv_buffer, ALIGNMENT, count * (int) sizeof(int) );
+        rcv_buffer = malloc( count * sizeof(int) );
         assert( rcv_buffer != NULL );
 
         for ( i = 0 ; i < ( size * count ) ; i++ ) 
@@ -268,13 +268,13 @@ int main(int argc, char *argv[])
         int * rcv_buffer;
         int * counts;
 
-        posix_memalign( (void**) &snd_buffer, ALIGNMENT, size * count * (int) sizeof(int) );
+        snd_buffer = malloc( size * count * sizeof(int) );
         assert( snd_buffer != NULL );
 
-        posix_memalign( (void**) &rcv_buffer, ALIGNMENT, count * (int) sizeof(int) );
+        rcv_buffer = malloc( count * sizeof(int) );
         assert( rcv_buffer != NULL );
 
-        posix_memalign( (void**) &counts, ALIGNMENT, count * (int) sizeof(int) );
+        counts = malloc( count * sizeof(int) );
         assert( counts != NULL );
 
         for ( i = 0 ; i < ( size * count ) ; i++ ) 
@@ -325,10 +325,10 @@ int main(int argc, char *argv[])
         int * snd_buffer;
         int * rcv_buffer;
 
-        posix_memalign( (void**) &snd_buffer, ALIGNMENT, size * count * (int) sizeof(int) );
+        snd_buffer = malloc( size * count * sizeof(int) );
         assert( snd_buffer != NULL );
 
-        posix_memalign( (void**) &rcv_buffer, ALIGNMENT, count * (int) sizeof(int) );
+        rcv_buffer = malloc( count * sizeof(int) );
         assert( rcv_buffer != NULL );
 
         for ( i = 0 ; i < ( size * count ) ; i++ ) 
