@@ -72,7 +72,7 @@ int main(int argc, char *argv[])
 
         if ( rank == src_rank ) printf( "MPI_Send(%d->%d): %u bytes transferred in %lf seconds (%lf MB/s)\n", 
                                         src_rank,dst_rank,
-                                        count * sizeof(int), t1 - t0, 1e-6 * count * sizeof(int) / (t1-t0) );
+                                        count * (int) sizeof(int), t1 - t0, 1e-6 * count * (int) sizeof(int) / (t1-t0) );
 
         free(buffer);
     }
@@ -163,11 +163,11 @@ int main(int argc, char *argv[])
 
         if ( rank == src_rank ) printf( "MPI_Isend(%d->%d): %u bytes transferred in %lf seconds (%lf MB/s)\n", 
                                         src_rank,dst_rank,
-                                        count * sizeof(int), t1 - t0, 1e-6 * count * sizeof(int) / (t1-t0) );
+                                        count * (int) sizeof(int), t1 - t0, 1e-6 * count * (int) sizeof(int) / (t1-t0) );
 
         if ( rank == dst_rank ) printf( "MPI_Isend(%d->%d): %u bytes transferred in %lf seconds (%lf MB/s)\n", 
                                         dst_rank,src_rank,
-                                        count * sizeof(int), t1 - t0, 1e-6 * count * sizeof(int) / (t1-t0) );
+                                        count * (int) sizeof(int), t1 - t0, 1e-6 * count * (int) sizeof(int) / (t1-t0) );
 
         free(buf0);
         free(buf1);
@@ -204,7 +204,7 @@ int main(int argc, char *argv[])
             assert( buffer[i] == i );
 
         if ( rank == root ) printf( "MPI_Bcast: %u bytes transferred in %lf seconds (%lf MB/s)\n", 
-                                    count * sizeof(int), t1 - t0, 1e-6 * count * sizeof(int) / (t1-t0) );
+                                    count * (int) sizeof(int), t1 - t0, 1e-6 * count * (int) sizeof(int) / (t1-t0) );
 
         free(buffer);
     }
@@ -238,7 +238,7 @@ int main(int argc, char *argv[])
                 assert( buffer[i] == i*size );
 
         if ( rank == 0 ) printf( "MPI_Reduce(MPI_SUM): %u bytes transferred in %lf seconds (%lf MB/s)\n", 
-                                 count * sizeof(int), t1 - t0, 1e-6 * count * sizeof(int) / (t1-t0) );
+                                 count * (int) sizeof(int), t1 - t0, 1e-6 * count * (int) sizeof(int) / (t1-t0) );
 
         free(buffer);
     }
@@ -269,7 +269,7 @@ int main(int argc, char *argv[])
             assert( buffer[i] == i*size );
 
         if ( rank == 0 ) printf( "MPI_Allreduce(MPI_SUM): %u bytes transferred in %lf seconds (%lf MB/s)\n", 
-                                 count * sizeof(int), t1 - t0, 1e-6 * count * sizeof(int) / (t1-t0) );
+                                 count * (int) sizeof(int), t1 - t0, 1e-6 * count * (int) sizeof(int) / (t1-t0) );
 
         free(buffer);
     }
@@ -309,7 +309,7 @@ int main(int argc, char *argv[])
                 assert( rcv_buffer[i] == size );
 
         if ( rank == 0 ) printf( "MPI_Gather: %u bytes transferred in %lf seconds (%lf MB/s)\n", 
-                                 count * sizeof(int), t1 - t0, 1e-6 * count * sizeof(int) / (t1-t0) );
+                                 count * (int) sizeof(int), t1 - t0, 1e-6 * count * (int) sizeof(int) / (t1-t0) );
 
         free(snd_buffer);
         free(rcv_buffer);
@@ -348,7 +348,7 @@ int main(int argc, char *argv[])
             assert( rcv_buffer[i] == size );
 
         if ( rank == 0 ) printf( "MPI_Allgather: %u bytes transferred in %lf seconds (%lf MB/s)\n", 
-                                 count * sizeof(int), t1 - t0, 1e-6 * count * sizeof(int) / (t1-t0) );
+                                 count * (int) sizeof(int), t1 - t0, 1e-6 * count * (int) sizeof(int) / (t1-t0) );
 
         free(snd_buffer);
         free(rcv_buffer);
