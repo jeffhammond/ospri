@@ -4,20 +4,6 @@
 #include <string.h>
 #include <mpi.h>
 
-/*
-#if MPI_VERSION == 2
-#  if MPI_SUBVERSION == 0
-#     error "I don't know when MPI_Reduce_scatter was added to the MPI standard :-("
-#  elif MPI_SUBVERSION == 1
-#     define MPI21
-#  endif
-#else
-#  error "You need MPI-2!"
-#endif
-*/
-
-#define MPI21
-
 #define ALIGNMENT 64
 
 int main(int argc, char *argv[])
@@ -296,29 +282,65 @@ int main(int argc, char *argv[])
         MPI_Barrier( MPI_COMM_WORLD );
 
         t0 = MPI_Wtime();
-#ifdef MPI21
         rc = MPI_Reduce_scatter( snd_buffer, rcv_buffer, counts, MPI_INT, MPI_SUM, MPI_COMM_WORLD );
-#else
-        rc = MPI_Reduce_scatter_block( snd_buffer, rcv_buffer, count, MPI_INT, MPI_SUM, MPI_COMM_WORLD );
-#endif
         t1 = MPI_Wtime();
         assert ( rc == MPI_SUCCESS );
 
         for ( i = 0 ; i < count ; i++ ) 
             assert( rcv_buffer[i] == rank );
 
-#ifdef MPI21
         if ( rank == 0 ) printf( "MPI_Reduce_scatter(MPI_SUM): %u bytes transferred in %lf seconds (%lf MB/s)\n", 
                                  count * (int) sizeof(int), t1 - t0, 1e-6 * count * sizeof(int) / (t1-t0) );
-#else
-        if ( rank == 0 ) printf( "MPI_Reduce_scatter_block(MPI_SUM): %u bytes transferred in %lf seconds (%lf MB/s)\n", 
-                                 count * (int) sizeof(int), t1 - t0, 1e-6 * count * sizeof(int) / (t1-t0) );
-#endif
 
         free(snd_buffer);
         free(rcv_buffer);
         free(counts);
     }
+
+#if ( MPI_VERSION == 2 && MPI_SUBVERSION == 2 ) || MPI_VERSION >= 3
+    /* reduce_scatter_block bandwidth test */
+    if ( rank == 0 ) printf( "begin reduce_scatter_block bandwidth test\n" );
+    for ( count = min_count; count < max_count ; count *= 2 )
+    {
+        int i;
+        double t0, t1;
+        int * snd_buffer;
+        int * rcv_buffer;
+
+        snd_buffer = malloc( size * count * sizeof(int) );
+        assert( snd_buffer != NULL );
+
+        rcv_buffer = malloc( count * sizeof(int) );
+        assert( rcv_buffer != NULL );
+
+        for ( i = 0 ; i < ( size * count ) ; i++ ) 
+            snd_buffer[i] = 0;
+
+        for ( i = 0 ; i < count ; i++ ) 
+            snd_buffer[ rank * count + i ] = rank;
+
+        for ( i = 0 ; i < count ; i++) 
+            rcv_buffer[i] = 0;
+
+        MPI_Barrier( MPI_COMM_WORLD );
+
+        t0 = MPI_Wtime();
+        rc = MPI_Reduce_scatter_block( snd_buffer, rcv_buffer, count, MPI_INT, MPI_SUM, MPI_COMM_WORLD );
+        t1 = MPI_Wtime();
+        assert ( rc == MPI_SUCCESS );
+
+        for ( i = 0 ; i < count ; i++ ) 
+            assert( rcv_buffer[i] == rank );
+
+        if ( rank == 0 ) printf( "MPI_Reduce_scatter_block(MPI_SUM): %u bytes transferred in %lf seconds (%lf MB/s)\n", 
+                                 count * (int) sizeof(int), t1 - t0, 1e-6 * count * sizeof(int) / (t1-t0) );
+
+        free(snd_buffer);
+        free(rcv_buffer);
+    }
+#else
+#    warning MPI_Reduce_scatter_block requires MPI-2.2
+#endif
 
     /* allreduce bandwidth test */
     if ( rank == 0 ) printf( "begin reduce_scatter via allreduce+memcpy bandwidth test\n" );
