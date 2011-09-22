@@ -3,6 +3,10 @@ COPT    = -g -O2 -Wall
 
 LD      = $(CC)
 CFLAGS  = $(COPT)
+# this is a dirty hack to detect BGP
+ifeq ($(PLATFORM),linux-sles10-ppc64)
+CFLAGS  += -I/bgsys/drivers/ppcfloor/arch/include/
+endif
 LDFLAGS = $(COPT) 
 
 TESTS := $(patsubst %.c,%.x,$(wildcard *.c))

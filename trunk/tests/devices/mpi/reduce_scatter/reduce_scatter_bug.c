@@ -4,10 +4,6 @@
 #include <string.h>
 #include <mpi.h>
 
-#define ALIGNMENT 64
-#define MIN_COUNT 1
-#define MAX_COUNT 1024*1024
-
 int main(int argc, char *argv[])
 {
     int provided;

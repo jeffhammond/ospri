@@ -4,7 +4,12 @@
 #include <string.h>
 #include <mpi.h>
 
-#define ALIGNMENT 64
+#ifdef __bgp__
+#  include <dcmf.h>
+#  include <spi/kernel_interface.h>
+#  include <common/bgp_personality.h>
+#  include <common/bgp_personality_inlines.h>
+#endif
 
 int main(int argc, char *argv[])
 {
@@ -25,7 +30,39 @@ int main(int argc, char *argv[])
     int min_count = (argc > 1 ? atoi(argv[1]) : 1);
     int max_count = (argc > 2 ? atoi(argv[2]) : 1024);
 
-    if ( rank == 0 ) printf( "size=%d min_count=%d max_count=%d\n", size , min_count , max_count );
+    if ( rank == 0 ) printf( "world size=%d min_count=%d max_count=%d\n", size , min_count , max_count );
+#ifdef __bgp__
+    {
+        _BGP_Personality_t pers;
+        char* mode = "WTF ";
+        char* torusX = "?";
+        char* torusY = "?";
+        char* torusZ = "?";
+        int sizeX = -1;
+        int sizeY = -1;
+        int sizeZ = -1;
+
+        if (rank == 0)
+        {
+             Kernel_GetPersonality(&pers, sizeof(pers));
+          
+                  if ( BGP_Personality_processConfig(&pers) == _BGP_PERS_PROCESSCONFIG_SMP ) mode = "SMP ";
+             else if ( BGP_Personality_processConfig(&pers) == _BGP_PERS_PROCESSCONFIG_VNM ) mode = "VNM ";
+             else if ( BGP_Personality_processConfig(&pers) == _BGP_PERS_PROCESSCONFIG_2x2 ) mode = "DUAL";
+          
+             torusX = BGP_Personality_isTorusX(&pers) ? "T" : "F";
+             torusY = BGP_Personality_isTorusY(&pers) ? "T" : "F";
+             torusZ = BGP_Personality_isTorusZ(&pers) ? "T" : "F";
+          
+             sizeX = BGP_Personality_xSize(&pers);
+             sizeY = BGP_Personality_ySize(&pers);
+             sizeZ = BGP_Personality_zSize(&pers);
+          
+             printf("mode %s topology (%2d,%2d,%2d) torus? (%1s,%1s,%1s)\n",
+                     mode, sizeX, sizeY, sizeZ, torusX, torusY, torusZ );
+        }
+    }
+#endif
     fflush( stdout );
 
     MPI_Barrier( MPI_COMM_WORLD );
