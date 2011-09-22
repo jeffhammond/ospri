@@ -2,7 +2,7 @@ CC      = mpicc
 COPT    = -g -O2 -Wall
 
 LD      = $(CC)
-CFLAGS  = $(COPT) $(INCLUDE)
+CFLAGS  = $(COPT)
 LDFLAGS = $(COPT) 
 
 TESTS := $(patsubst %.c,%.x,$(wildcard *.c))
