@@ -4,6 +4,7 @@
 #include <string.h>
 #include <mpi.h>
 
+/*
 #if MPI_VERSION == 2
 #  if MPI_SUBVERSION == 0
 #     error "I don't know when MPI_Reduce_scatter was added to the MPI standard :-("
@@ -13,6 +14,9 @@
 #else
 #  error "You need MPI-2!"
 #endif
+*/
+
+#define MPI21
 
 #define ALIGNMENT 64
 
