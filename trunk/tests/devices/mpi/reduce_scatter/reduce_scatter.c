@@ -242,7 +242,7 @@ int main(int argc, char *argv[])
             assert( rcv_buffer[i] == rank );
 
         if ( rank == 0 ) printf( "MPI_Reduce(MPI_SUM)+Scatter: %u bytes transferred in %lf seconds (%lf MB/s)\n", 
-                                 count * (int) sizeof(int), t1 - t0, 1e-6 * count * sizeof(int) / (t1-t0) );
+                                 count * (int) sizeof(int), t1 - t0, 1e-6 * count * (int) sizeof(int) / (t1-t0) );
 
         free(snd_buffer);
         free(rcv_buffer);
@@ -264,20 +264,13 @@ int main(int argc, char *argv[])
         rcv_buffer = malloc( count * sizeof(int) );
         assert( rcv_buffer != NULL );
 
-        counts = malloc( count * sizeof(int) );
+        counts = malloc( size * sizeof(int) );
         assert( counts != NULL );
 
-        for ( i = 0 ; i < ( size * count ) ; i++ ) 
-            snd_buffer[i] = 0;
-
-        for ( i = 0 ; i < count ; i++ ) 
-            snd_buffer[ rank * count + i ] = rank;
-
-        for ( i = 0 ; i < count ; i++) 
-            rcv_buffer[i] = 0;
-
-        for ( i = 0 ; i < size ; i++) 
-            counts[i] = count;
+        for ( i = 0 ; i < size ; i++ ) snd_buffer[i] = 0;
+        for ( i = 0 ; i < count ; i++ ) snd_buffer[ rank * count + i] = rank;
+        for ( i = 0 ; i < count ; i++ ) rcv_buffer[i] = 0;
+        for ( i = 0 ; i < size ; i++) counts[i] = count;
 
         MPI_Barrier( MPI_COMM_WORLD );
 
@@ -286,11 +279,10 @@ int main(int argc, char *argv[])
         t1 = MPI_Wtime();
         assert ( rc == MPI_SUCCESS );
 
-        for ( i = 0 ; i < count ; i++ ) 
-            assert( rcv_buffer[i] == rank );
+        for ( i = 0 ; i < count ; i++ ) assert( rcv_buffer[i] == rank );
 
         if ( rank == 0 ) printf( "MPI_Reduce_scatter(MPI_SUM): %u bytes transferred in %lf seconds (%lf MB/s)\n", 
-                                 count * (int) sizeof(int), t1 - t0, 1e-6 * count * sizeof(int) / (t1-t0) );
+                                 count * (int) sizeof(int), t1 - t0, 1e-6 * count * (int) sizeof(int) / (t1-t0) );
 
         free(snd_buffer);
         free(rcv_buffer);

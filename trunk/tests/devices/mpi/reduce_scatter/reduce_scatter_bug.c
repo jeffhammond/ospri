@@ -36,7 +36,7 @@ int main(int argc, char *argv[])
         int * rcv_buffer;
         int * counts;
 
-        snd_buffer = malloc( size * count* sizeof(int) );
+        snd_buffer = malloc( size * count * sizeof(int) );
         assert( snd_buffer != NULL );
 
         rcv_buffer = malloc( count * sizeof(int) );
@@ -60,7 +60,7 @@ int main(int argc, char *argv[])
         for ( i = 0 ; i < count ; i++ ) assert( rcv_buffer[i] == rank );
 
         if ( rank == 0 ) printf( "MPI_Reduce_scatter(MPI_SUM): %u bytes transferred in %lf seconds (%lf MB/s)\n", 
-                                 (int) sizeof(int), t1 - t0, 1e-6 * (int) sizeof(int) / (t1-t0) );
+                                 count * (int) sizeof(int), t1 - t0, 1e-6 * count * (int) sizeof(int) / (t1-t0) );
 
         free(snd_buffer);
         free(rcv_buffer);
