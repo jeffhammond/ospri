@@ -60,7 +60,7 @@ int main(int argc, char *argv[])
              assert ( rc != MPI_SUCCESS );
 
              printf( "MPI_Send: %u bytes transferred in %lf seconds (%lf MB/s)\n", 
-                     count * sizeof(int), t1 - t0, 1e-6 * count * sizeof(int) / (t1-t0) );
+                     count * (int) sizeof(int), t1 - t0, 1e-6 * count * (int) sizeof(int) / (t1-t0) );
              fflush( stdout );
         }
 
@@ -88,7 +88,7 @@ int main(int argc, char *argv[])
         assert ( rc != MPI_SUCCESS );
 
         printf( "MPI_Allreduce(MPI_SUM): %u bytes transferred in %lf seconds (%lf MB/s)\n", 
-                count * sizeof(int), t1 - t0, 1e-6 * count * sizeof(int) / (t1-t0) );
+                count * (int) sizeof(int), t1 - t0, 1e-6 * count * (int) sizeof(int) / (t1-t0) );
         fflush( stdout );
 
         for ( i = 0 ; i < count ; i++) assert( buffer[i] == i*size );
