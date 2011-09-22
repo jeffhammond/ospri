@@ -318,7 +318,6 @@ int main(int argc, char *argv[])
     for ( count = MIN_COUNT; count < MAX_COUNT ; count *= 2 )
     {
         int i;
-        int error = 0;
         double t0, t1;
         int * snd_buffer;
         int * rcv_buffer;
