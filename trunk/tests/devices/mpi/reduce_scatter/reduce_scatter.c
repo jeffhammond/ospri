@@ -185,10 +185,68 @@ int main(int argc, char *argv[])
         for ( i = 0 ; i < count ; i++ ) assert( rcv_buffer[i] == rank );
 
         if ( rank == 0 ) printf( "MPI_Scatter: %u bytes transferred in %lf seconds (%lf MB/s)\n", 
-                                 count * (int) sizeof(int), t1 - t0, 1e-6 * count * sizeof(int) / (t1-t0) );
+                                 size * count * (int) sizeof(int), t1 - t0, 1e-6 * size * count * sizeof(int) / (t1-t0) );
 
         free(snd_buffer);
         free(rcv_buffer);
+    }
+
+    /* scatterv bandwidth test */
+    if ( rank == 0 ) printf( "begin scatterv bandwidth test\n" );
+    for ( count = min_count; count < max_count ; count *= 2 )
+    {
+        int i, r;
+        double t0, t1;
+        int * snd_buffer;
+        int * rcv_buffer;
+        int * counts;
+        int * displs;
+        int root = 0;
+
+        snd_buffer = malloc( size * count * sizeof(int) );
+        assert( snd_buffer != NULL );
+
+        rcv_buffer = malloc( count * sizeof(int) );
+        assert( rcv_buffer != NULL );
+
+        counts = malloc( size * sizeof(int) );
+        assert( counts != NULL );
+
+        displs = malloc( size * sizeof(int) );
+        assert( displs != NULL );
+
+        if ( rank == root )
+        {
+            for ( r = 0 ; r < size ; r++ ) 
+                for ( i = 0 ; i < count ; i++ )
+                    snd_buffer[ r * count + i ] = r;
+        }
+        else
+        {
+            for ( r = 0 ; r < size ; r++ ) 
+                for ( i = 0 ; i < count ; i++ )
+                    snd_buffer[ r * count + i ] = -1;
+        }
+        for ( i = 0 ; i < count ; i++) rcv_buffer[i] = 0;
+        for ( i = 0 ; i < size ; i++) counts[i] = count;
+        for ( i = 0 ; i < size ; i++) displs[i] = i*count;
+
+        MPI_Barrier( MPI_COMM_WORLD );
+
+        t0 = MPI_Wtime();
+        rc = MPI_Scatterv( snd_buffer, counts, displs, MPI_INT, rcv_buffer, count , MPI_INT, root, MPI_COMM_WORLD );
+        t1 = MPI_Wtime();
+        assert ( rc == MPI_SUCCESS );
+
+        for ( i = 0 ; i < count ; i++ ) assert( rcv_buffer[i] == rank );
+
+        if ( rank == 0 ) printf( "MPI_Scatterv: %u bytes transferred in %lf seconds (%lf MB/s)\n", 
+                                 size * count * (int) sizeof(int), t1 - t0, 1e-6 * size * count * sizeof(int) / (t1-t0) );
+
+        free(snd_buffer);
+        free(rcv_buffer);
+        free(displs);
+        free(counts);
     }
 
     /* reduce+scatter bandwidth test */
@@ -224,10 +282,61 @@ int main(int argc, char *argv[])
         for ( i = 0 ; i < count ; i++ ) assert( rcv_buffer[i] == rank );
 
         if ( rank == 0 ) printf( "MPI_Reduce(MPI_SUM)+Scatter: %u bytes transferred in %lf seconds (%lf MB/s)\n", 
-                                 count * (int) sizeof(int), t1 - t0, 1e-6 * count * (int) sizeof(int) / (t1-t0) );
+                                 size * count * (int) sizeof(int), t1 - t0, 1e-6 * size * count * (int) sizeof(int) / (t1-t0) );
 
         free(snd_buffer);
         free(rcv_buffer);
+    }
+
+    /* reduce+scatterv bandwidth test */
+    if ( rank == 0 ) printf( "begin reduce+scatterv bandwidth test\n" );
+    for ( count = min_count; count < max_count ; count *= 2 )
+    {
+        int i;
+        double t0, t1;
+        int * snd_buffer;
+        int * rcv_buffer;
+        int * counts;
+        int * displs;
+        int root = 0;
+
+        snd_buffer = malloc( size * count * sizeof(int) );
+        assert( snd_buffer != NULL );
+
+        rcv_buffer = malloc( count * sizeof(int) );
+        assert( rcv_buffer != NULL );
+
+        counts = malloc( size * sizeof(int) );
+        assert( counts != NULL );
+
+        displs = malloc( size * sizeof(int) );
+        assert( displs != NULL );
+
+        for ( i = 0 ; i < ( size * count ) ; i++ ) snd_buffer[i] = 0; 
+        for ( i = 0 ; i < count ; i++ ) snd_buffer[ rank * count + i ] = rank; 
+        for ( i = 0 ; i < count ; i++) rcv_buffer[i] = 0;
+        for ( i = 0 ; i < size ; i++) counts[i] = count;
+        for ( i = 0 ; i < size ; i++) displs[i] = i*count;
+
+        MPI_Barrier( MPI_COMM_WORLD );
+
+        t0 = MPI_Wtime();
+        if ( rank == root ) rc = MPI_Reduce( MPI_IN_PLACE, snd_buffer, size * count, MPI_INT, MPI_SUM, root, MPI_COMM_WORLD );
+        else                rc = MPI_Reduce( snd_buffer      , NULL  , size * count, MPI_INT, MPI_SUM, root, MPI_COMM_WORLD );
+        if ( rc == MPI_SUCCESS )
+                            rc = MPI_Scatterv( snd_buffer, counts, displs, MPI_INT, rcv_buffer, count , MPI_INT, root, MPI_COMM_WORLD );
+        t1 = MPI_Wtime();
+        assert ( rc == MPI_SUCCESS );
+
+        for ( i = 0 ; i < count ; i++ ) assert( rcv_buffer[i] == rank );
+
+        if ( rank == 0 ) printf( "MPI_Reduce(MPI_SUM)+Scatterv: %u bytes transferred in %lf seconds (%lf MB/s)\n", 
+                                 size * count * (int) sizeof(int), t1 - t0, 1e-6 * size * count * (int) sizeof(int) / (t1-t0) );
+
+        free(snd_buffer);
+        free(rcv_buffer);
+        free(counts);
+        free(displs);
     }
 
     /* reduce_scatter bandwidth test */
@@ -264,7 +373,7 @@ int main(int argc, char *argv[])
         for ( i = 0 ; i < count ; i++ ) assert( rcv_buffer[i] == rank );
 
         if ( rank == 0 ) printf( "MPI_Reduce_scatter(MPI_SUM): %u bytes transferred in %lf seconds (%lf MB/s)\n", 
-                                 count * (int) sizeof(int), t1 - t0, 1e-6 * count * (int) sizeof(int) / (t1-t0) );
+                                 size * count * (int) sizeof(int), t1 - t0, 1e-6 * size * count * (int) sizeof(int) / (t1-t0) );
 
         free(snd_buffer);
         free(rcv_buffer);
@@ -301,7 +410,7 @@ int main(int argc, char *argv[])
         for ( i = 0 ; i < count ; i++ ) assert( rcv_buffer[i] == rank );
 
         if ( rank == 0 ) printf( "MPI_Reduce_scatter_block(MPI_SUM): %u bytes transferred in %lf seconds (%lf MB/s)\n", 
-                                 count * (int) sizeof(int), t1 - t0, 1e-6 * count * sizeof(int) / (t1-t0) );
+                                 size * count * (int) sizeof(int), t1 - t0, 1e-6 * size * count * sizeof(int) / (t1-t0) );
 
         free(snd_buffer);
         free(rcv_buffer);
@@ -340,7 +449,7 @@ int main(int argc, char *argv[])
         for ( i = 0 ; i < count ; i++ ) assert( rcv_buffer[i] == rank );
 
         if ( rank == 0 ) printf( "MPI_Allreduce(MPI_SUM): %u bytes transferred in %lf seconds (%lf MB/s)\n", 
-                                 count * (int) sizeof(int), t1 - t0, 1e-6 * count * sizeof(int) / (t1-t0) );
+                                 size * count * (int) sizeof(int), t1 - t0, 1e-6 * size * count * sizeof(int) / (t1-t0) );
 
         free(snd_buffer);
         free(rcv_buffer);
