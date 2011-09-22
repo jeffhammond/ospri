@@ -85,6 +85,11 @@ int main(int argc, char **argv)
 
     /* allocate RMA buffers for windows */
 
+    int bufPow, bufSize;
+    bufPow = (argc > 1 ? atoi(argv[1]) : 25);
+    bufSize = pow(2,bufPow);
+    if (rank == 0) printf("%d: bufSize = %d doubles\n", rank, bufSize);
+
     status = MPI_Alloc_mem(bufSize * sizeof(double), MPI_INFO_NULL, &wmem);
     assert(status==MPI_SUCCESS);
 

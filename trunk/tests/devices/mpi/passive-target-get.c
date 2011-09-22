@@ -61,7 +61,7 @@ int main(int argc, char **argv)
     int size;
     int status;
 
-    double t0, t1, t2, t3, t4, t5;
+    double t0, t1, t2, t3;
 
     int i, j, k;
 

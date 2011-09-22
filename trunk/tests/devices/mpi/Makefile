@@ -1,8 +1,8 @@
 CC      = mpicc
-COPT    = -O2
+COPT    = -g -O2 -Wall -std=c99
 
 LD      = $(CC)
-CFLAGS  = $(COPT) $(INCLUDE)
+CFLAGS  = $(COPT)
 LDFLAGS = $(COPT) -lm
 
 TESTS := $(patsubst %.c,%.x,$(wildcard *.c))

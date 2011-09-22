@@ -58,7 +58,7 @@ int main(int argc, char **argv)
 
     int rank, size;
 
-    int count;
+    int count=0;
 
     int in, out, ans;
 
