@@ -283,7 +283,7 @@ int main(int argc, char *argv[])
         for ( i = 0 ; i < count ; i++) 
             rcv_buffer[i] = 0;
 
-        for ( i = 0 ; i < count ; i++) 
+        for ( i = 0 ; i < size ; i++) 
             counts[i] = count;
 
         MPI_Barrier( MPI_COMM_WORLD );
