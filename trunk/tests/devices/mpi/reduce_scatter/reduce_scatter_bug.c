@@ -46,7 +46,7 @@ int main(int argc, char *argv[])
         assert( counts != NULL );
 
         for ( i = 0 ; i < size ; i++ ) snd_buffer[i] = 0;
-        for ( i = 0 ; i < count ; i++ ) snd_buffer[ rank * count + i] = 0;
+        for ( i = 0 ; i < count ; i++ ) snd_buffer[ rank * count + i] = rank;
         for ( i = 0 ; i < count ; i++ ) rcv_buffer[i] = 0;
         for ( i = 0 ; i < size ; i++) counts[i] = count;
 
