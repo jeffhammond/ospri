@@ -15,8 +15,6 @@
 #endif
 
 #define ALIGNMENT 64
-#define MIN_COUNT 1
-#define MAX_COUNT 1024*1024
 
 int main(int argc, char *argv[])
 {
@@ -33,14 +31,19 @@ int main(int argc, char *argv[])
     //printf( "Hello from %d of %d processors\n", rank, size );
     //fflush( stdout );
 
-    MPI_Barrier( MPI_COMM_WORLD );
-
     int count;
+    int min_count = (argc > 1 ? atoi(argv[1]) : 1);
+    int max_count = (argc > 2 ? atoi(argv[2]) : 1024);
+
+    if ( rank == 0 ) printf( "size=%d min_count=%d max_count=%d\n", size , min_count , max_count );
+    fflush( stdout );
+
+    MPI_Barrier( MPI_COMM_WORLD );
 
     /* send-recv bandwidth test */
     if ( rank == 0 ) printf( "begin send-recv bandwidth test\n" );
     if ( size > 1 )
-    for ( count = MIN_COUNT; count < MAX_COUNT ; count *= 2 )
+    for ( count = min_count; count < max_count ; count *= 2 )
     {
         int src_rank = 0;
         int dst_rank = 1;
@@ -91,7 +94,7 @@ int main(int argc, char *argv[])
 
     /* reduce bandwidth test */
     if ( rank == 0 ) printf( "begin reduce bandwidth test\n" );
-    for ( count = MIN_COUNT; count < MAX_COUNT ; count *= 2 )
+    for ( count = min_count; count < max_count ; count *= 2 )
     {
         int i, r;
         double t0, t1;
@@ -129,7 +132,7 @@ int main(int argc, char *argv[])
 
     /* allreduce bandwidth test */
     if ( rank == 0 ) printf( "begin allreduce bandwidth test\n" );
-    for ( count = MIN_COUNT; count < MAX_COUNT ; count *= 2 )
+    for ( count = min_count; count < max_count ; count *= 2 )
     {
         int i, r;
         double t0, t1;
@@ -163,7 +166,7 @@ int main(int argc, char *argv[])
 
     /* scatter bandwidth test */
     if ( rank == 0 ) printf( "begin scatter bandwidth test\n" );
-    for ( count = MIN_COUNT; count < MAX_COUNT ; count *= 2 )
+    for ( count = min_count; count < max_count ; count *= 2 )
     {
         int i, r;
         double t0, t1;
@@ -212,7 +215,7 @@ int main(int argc, char *argv[])
 
     /* reduce+scatter bandwidth test */
     if ( rank == 0 ) printf( "begin reduce+scatter bandwidth test\n" );
-    for ( count = MIN_COUNT; count < MAX_COUNT ; count *= 2 )
+    for ( count = min_count; count < max_count ; count *= 2 )
     {
         int i;
         double t0, t1;
@@ -257,7 +260,7 @@ int main(int argc, char *argv[])
 
     /* reduce_scatter bandwidth test */
     if ( rank == 0 ) printf( "begin reduce_scatter bandwidth test\n" );
-    for ( count = MIN_COUNT; count < MAX_COUNT ; count *= 2 )
+    for ( count = min_count; count < max_count ; count *= 2 )
     {
         int i;
         double t0, t1;
@@ -315,7 +318,7 @@ int main(int argc, char *argv[])
 
     /* allreduce bandwidth test */
     if ( rank == 0 ) printf( "begin reduce_scatter via allreduce+memcpy bandwidth test\n" );
-    for ( count = MIN_COUNT; count < MAX_COUNT ; count *= 2 )
+    for ( count = min_count; count < max_count ; count *= 2 )
     {
         int i;
         double t0, t1;
