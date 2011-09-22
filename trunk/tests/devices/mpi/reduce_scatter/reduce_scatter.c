@@ -39,6 +39,7 @@ int main(int argc, char *argv[])
 
     /* send-recv bandwidth test */
     if ( rank == 0 ) printf( "begin send-recv bandwidth test\n" );
+    if ( size > 1 )
     for ( count = MIN_COUNT; count < MAX_COUNT ; count *= 2 )
     {
         int src_rank = 0;
@@ -346,20 +347,7 @@ int main(int argc, char *argv[])
         assert ( rc == MPI_SUCCESS );
 
         for ( i = 0 ; i < count ; i++ ) 
-            printf("%d: rcv_buffer[%d] = %d\n",rank,i,rcv_buffer[i]);
-
-        for ( i = 0 ; i < count ; i++ ) 
-            if ( rcv_buffer[i] == rank ) error++;
-
-        rc = MPI_Allreduce( MPI_IN_PLACE, &error, size, MPI_INT, MPI_SUM, MPI_COMM_WORLD );
-        assert ( rc == MPI_SUCCESS );
-
-        if ( error > 0 ) 
-        {
-            if ( rank == 0 ) printf( "error = %d\n", error );
-            fflush( stdout );
-            return 9999;
-        }
+            assert( rcv_buffer[i] == rank );
 
         if ( rank == 0 ) printf( "MPI_Allreduce(MPI_SUM): %u bytes transferred in %lf seconds (%lf MB/s)\n", 
                                  size * count * (int) sizeof(int), t1 - t0, 1e-6 * count * sizeof(int) / (t1-t0) );
