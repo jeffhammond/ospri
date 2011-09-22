@@ -61,12 +61,12 @@ int main(int argc, char **argv)
     int size;
     int status;
 
-    double t0, t1, t2, t3, t4, t5;
+    double t0, t1, t2, t3;
 
     int i, j, k;
 
-    int bufPow, bufSize;
-    int msgPow, msgSize;
+    int bufPow, bufSize=1;
+    int msgPow, msgSize=1;
 
     double* m1;
     double* b1;

@@ -18,7 +18,7 @@ static int num_pthreads;
 
 void* foo(void* dummy)
 {
-    int i, my_pth;
+    int i, my_pth = -1;
     pthread_t my_pthread = pthread_self();
 
     for (i=0 ; i<num_pthreads ; i++)

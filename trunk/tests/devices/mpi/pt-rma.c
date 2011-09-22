@@ -60,8 +60,7 @@ int main(int argc, char **argv)
     MPI_Comm_size(MPI_COMM_WORLD,&nproc);
 
     int status;
-    double t0,t1,t2,t3,t4,t5;
-    double tt0,tt1,tt2,tt3,tt4;
+    double t0,t1;
 
     int bufSize = ( argc>1 ? atoi(argv[1]) : 1000000 );
     if (me==0) printf("%d: bufSize = %d doubles\n",me,bufSize);
@@ -99,7 +98,7 @@ int main(int argc, char **argv)
 
     int target;
     int j;
-    double dt,bw;
+    double dt=0.0,bw=0.0;
     MPI_Barrier(MPI_COMM_WORLD);
     if (me==0){
         printf("MPI_Get performance test for buffer size = %d doubles\n",bufSize);
@@ -113,13 +112,11 @@ int main(int argc, char **argv)
         MPI_Barrier(MPI_COMM_WORLD);
         t0 = MPI_Wtime();
         status = MPI_Win_lock(MPI_LOCK_SHARED, target, MPI_MODE_NOCHECK, w1);
-        t1 = MPI_Wtime();
         status = MPI_Get(b2, bufSize, MPI_DOUBLE, target, 0, bufSize, MPI_DOUBLE, w1);
-        t2 = MPI_Wtime();
         status = MPI_Win_unlock(target, w1);
-        t3 = MPI_Wtime();
+        t1 = MPI_Wtime();
         for (i=0;i<bufSize;i++) assert( b2[i]==(1.0*target) );
-        bw = (double)bufSize*sizeof(double)*(1e-6)/(t3-t0);
+        bw = (double)bufSize*sizeof(double)*(1e-6)/(t1-t0);
         printf("%4d     %4d     %4d       %9.6f     %9.3f\n",j,me,target,dt,bw);
         fflush(stdout);
     }

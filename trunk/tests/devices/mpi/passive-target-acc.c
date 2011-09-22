@@ -67,8 +67,8 @@ int main(int argc, char **argv)
 
     int i, j, k;
 
-    int bufPow, bufSize;
-    int msgPow, msgSize;
+    int bufPow, bufSize=1;
+    int msgPow, msgSize=1;
 
     double* m1;
     double* b1;
