@@ -15,6 +15,26 @@ int size, rank;
 int rc;
 int count, min_count, max_count;
 
+void * allocate_and_initialize_to_zero(MPI_Datatype type, int count)
+{
+
+}
+
+void * allocate_and_initialize_reduce(MPI_Datatype type, int count)
+{
+
+}
+
+void * allocate_and_initialize_scatter(MPI_Datatype type, int count)
+{
+
+}
+
+void verify_result(MPI_Datatype type, void * value, int count)
+{
+
+}
+
 void test_sendrecv(int rank, int size, MPI_Datatype type, MPI_Op op)
 {
     /* send-recv bandwidth test */
