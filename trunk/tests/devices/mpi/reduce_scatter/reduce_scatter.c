@@ -110,8 +110,12 @@ int main(int argc, char *argv[])
         /* i agree this is overkill */
         MPI_Barrier( MPI_COMM_WORLD );
 
-        if ( rank == src_rank ) printf( "MPI_Send: %u bytes transferred in %lf seconds (%lf MB/s)\n", 
-                                        count * (int) sizeof(int), t1 - t0, 1e-6 * count * sizeof(int) / (t1-t0) );
+        if ( rank == src_rank ) printf( "%35s: %10u bytes (%7u per rank) transferred in %12.8lf seconds (%8.2lf MB/s or %8.2lf MB/s per rank)\n",
+                                        "MPI_Send",
+                                        count * (int) sizeof(int), count * (int) sizeof(int), 
+                                        t1 - t0, 
+                                        1e-6 * count * sizeof(int) / (t1-t0),
+                                        1e-6 * count * sizeof(int) / (t1-t0) );
 
         free(buffer);
     }
@@ -144,7 +148,7 @@ int main(int argc, char *argv[])
                 for ( i = 0 ; i < count ; i++ )
                     assert( buffer[ r * count + i ] == r );
 
-        if ( rank == 0 ) printf( "%20s: %10u bytes (%7u per rank) transferred in %12.8lf seconds (%8.2lf MB/s or %8.2lf MB/s per rank)\n",
+        if ( rank == 0 ) printf( "%35s: %10u bytes (%7u per rank) transferred in %12.8lf seconds (%8.2lf MB/s or %8.2lf MB/s per rank)\n",
                                  "MPI_Reduce(MPI_SUM)",
                                  size * count * (int) sizeof(int), count * (int) sizeof(int), 
                                  t1 - t0, 
@@ -179,7 +183,7 @@ int main(int argc, char *argv[])
             for ( i = 0 ; i < count ; i++ )
                 assert( buffer[ r * count + i ] == r );
 
-        if ( rank == 0 ) printf( "%20s: %10u bytes (%7u per rank) transferred in %12.8lf seconds (%8.2lf MB/s or %8.2lf MB/s per rank)\n",
+        if ( rank == 0 ) printf( "%35s: %10u bytes (%7u per rank) transferred in %12.8lf seconds (%8.2lf MB/s or %8.2lf MB/s per rank)\n",
                                  "MPI_Allreduce(MPI_SUM)",
                                  size * count * (int) sizeof(int), count * (int) sizeof(int), 
                                  t1 - t0, 
@@ -229,7 +233,7 @@ int main(int argc, char *argv[])
 
         for ( i = 0 ; i < count ; i++ ) assert( rcv_buffer[i] == rank );
 
-        if ( rank == 0 ) printf( "%20s: %10u bytes (%7u per rank) transferred in %12.8lf seconds (%8.2lf MB/s or %8.2lf MB/s per rank)\n",
+        if ( rank == 0 ) printf( "%35s: %10u bytes (%7u per rank) transferred in %12.8lf seconds (%8.2lf MB/s or %8.2lf MB/s per rank)\n",
                                  "MPI_Scatter",
                                  size * count * (int) sizeof(int), count * (int) sizeof(int), 
                                  t1 - t0, 
@@ -289,7 +293,7 @@ int main(int argc, char *argv[])
 
         for ( i = 0 ; i < count ; i++ ) assert( rcv_buffer[i] == rank );
 
-        if ( rank == 0 ) printf( "%20s: %10u bytes (%7u per rank) transferred in %12.8lf seconds (%8.2lf MB/s or %8.2lf MB/s per rank)\n",
+        if ( rank == 0 ) printf( "%35s: %10u bytes (%7u per rank) transferred in %12.8lf seconds (%8.2lf MB/s or %8.2lf MB/s per rank)\n",
                                  "MPI_Scatterv",
                                  size * count * (int) sizeof(int), count * (int) sizeof(int), 
                                  t1 - t0, 
@@ -334,7 +338,7 @@ int main(int argc, char *argv[])
 
         for ( i = 0 ; i < count ; i++ ) assert( rcv_buffer[i] == rank );
 
-        if ( rank == 0 ) printf( "%20s: %10u bytes (%7u per rank) transferred in %12.8lf seconds (%8.2lf MB/s or %8.2lf MB/s per rank)\n",
+        if ( rank == 0 ) printf( "%35s: %10u bytes (%7u per rank) transferred in %12.8lf seconds (%8.2lf MB/s or %8.2lf MB/s per rank)\n",
                                  "MPI_Reduce(MPI_SUM)+Scatter",
                                  size * count * (int) sizeof(int), count * (int) sizeof(int), 
                                  t1 - t0, 
@@ -387,7 +391,7 @@ int main(int argc, char *argv[])
 
         for ( i = 0 ; i < count ; i++ ) assert( rcv_buffer[i] == rank );
 
-        if ( rank == 0 ) printf( "%20s: %10u bytes (%7u per rank) transferred in %12.8lf seconds (%8.2lf MB/s or %8.2lf MB/s per rank)\n",
+        if ( rank == 0 ) printf( "%35s: %10u bytes (%7u per rank) transferred in %12.8lf seconds (%8.2lf MB/s or %8.2lf MB/s per rank)\n",
                                  "MPI_Reduce(MPI_SUM)+Scatterv",
                                  size * count * (int) sizeof(int), count * (int) sizeof(int), 
                                  t1 - t0, 
@@ -433,7 +437,7 @@ int main(int argc, char *argv[])
 
         for ( i = 0 ; i < count ; i++ ) assert( rcv_buffer[i] == rank );
 
-        if ( rank == 0 ) printf( "%20s: %10u bytes (%7u per rank) transferred in %12.8lf seconds (%8.2lf MB/s or %8.2lf MB/s per rank)\n",
+        if ( rank == 0 ) printf( "%35s: %10u bytes (%7u per rank) transferred in %12.8lf seconds (%8.2lf MB/s or %8.2lf MB/s per rank)\n",
                                  "MPI_Reduce_scatter(MPI_SUM)",
                                  size * count * (int) sizeof(int), count * (int) sizeof(int), 
                                  t1 - t0, 
@@ -474,7 +478,7 @@ int main(int argc, char *argv[])
 
         for ( i = 0 ; i < count ; i++ ) assert( rcv_buffer[i] == rank );
 
-        if ( rank == 0 ) printf( "%20s: %10u bytes (%7u per rank) transferred in %12.8lf seconds (%8.2lf MB/s or %8.2lf MB/s per rank)\n",
+        if ( rank == 0 ) printf( "%35s: %10u bytes (%7u per rank) transferred in %12.8lf seconds (%8.2lf MB/s or %8.2lf MB/s per rank)\n",
                                  "MPI_Reduce_scatter_block(MPI_SUM)",
                                  size * count * (int) sizeof(int), count * (int) sizeof(int), 
                                  t1 - t0, 
@@ -518,7 +522,7 @@ int main(int argc, char *argv[])
 
         for ( i = 0 ; i < count ; i++ ) assert( rcv_buffer[i] == rank );
 
-        if ( rank == 0 ) printf( "%20s: %10u bytes (%7u per rank) transferred in %12.8lf seconds (%8.2lf MB/s or %8.2lf MB/s per rank)\n",
+        if ( rank == 0 ) printf( "%35s: %10u bytes (%7u per rank) transferred in %12.8lf seconds (%8.2lf MB/s or %8.2lf MB/s per rank)\n",
                                  "MPI_Allreduce(MPI_SUM)+memcpy",
                                  size * count * (int) sizeof(int), count * (int) sizeof(int), 
                                  t1 - t0, 
