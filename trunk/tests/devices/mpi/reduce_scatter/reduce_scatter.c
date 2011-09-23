@@ -110,11 +110,10 @@ int main(int argc, char *argv[])
         /* i agree this is overkill */
         MPI_Barrier( MPI_COMM_WORLD );
 
-        if ( rank == src_rank ) printf( "%35s: %10u bytes (%7u bytes per rank) transferred in %6.2e seconds (%6.2e MB/s or %6.2e MB/s bytes per rank)\n",
+        if ( rank == src_rank ) printf( "%35s: %17u bytes transferred in %6.2e seconds (%6.2e MB/s)\n",
                                         "MPI_Send",
-                                        count * (int) sizeof(int), count * (int) sizeof(int), 
+                                        count * (int) sizeof(int),
                                         t1 - t0, 
-                                        1e-6 * count * sizeof(int) / (t1-t0),
                                         1e-6 * count * sizeof(int) / (t1-t0) );
 
         free(buffer);
