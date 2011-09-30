@@ -4,24 +4,24 @@ endif
 
 ifeq	($(COMPILER),GNU)
   CC      = mpicc
-  COPT    = -g -O2 -Wall -fopenmp
+  COPT    = -g -O2 -Wall
   LABEL   = gnu
 endif
 
 ifeq	($(COMPILER),XL)
   CC      = mpixlc_r
-  COPT    = -g -O3 -qstrict -qsmp=omp:noauto
+  COPT    = -g -O3 -qstrict
   LABEL	= xl
 endif
 
 LD      = $(CC)
 CFLAGS  = $(COPT) -I.
-LDFLAGS = $(COPT) -lm -lpthread
+LDFLAGS = $(COPT) -lpthread
 
-all: hello.x query.x barrier.x
+all: hello.x query.x barrier.x allgather.x allreduce.x
 
 %.x: %.o
-	$(LD) $(LDFLAGS) $< -o $@.$(LABEL)
+	$(LD) $(LDFLAGS) $< -o $@
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
