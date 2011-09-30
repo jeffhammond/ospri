@@ -99,39 +99,39 @@ int main(int argc, char* argv[])
                                            fast_barrier_algs, fast_barrier_meta, num_barrier_alg[1] );
   TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Geometry_algorithms_query - barrier");
 
-  pami_xfer_type_t allgather_xfer = PAMI_XFER_ALLGATHER;
-  size_t num_allgather_alg[2];
-  pami_algorithm_t * safe_allgather_algs = NULL;
-  pami_metadata_t  * safe_allgather_meta = NULL;
-  pami_algorithm_t * fast_allgather_algs = NULL;
-  pami_metadata_t  * fast_allgather_meta = NULL;
+  pami_xfer_type_t allreduce_xfer = PAMI_XFER_ALLREDUCE;
+  size_t num_allreduce_alg[2];
+  pami_algorithm_t * safe_allreduce_algs = NULL;
+  pami_metadata_t  * safe_allreduce_meta = NULL;
+  pami_algorithm_t * fast_allreduce_algs = NULL;
+  pami_metadata_t  * fast_allreduce_meta = NULL;
 
-  result = PAMI_Geometry_algorithms_num( world_geometry, allgather_xfer, num_allgather_alg );
-  TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Geometry_algorithms_num - allgather");
-  if ( world_rank == 0 ) printf("number of allgather algorithms = {%ld,%ld} \n", num_allgather_alg[0], num_allgather_alg[1] );
+  result = PAMI_Geometry_algorithms_num( world_geometry, allreduce_xfer, num_allreduce_alg );
+  TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Geometry_algorithms_num - allreduce");
+  if ( world_rank == 0 ) printf("number of allreduce algorithms = {%ld,%ld} \n", num_allreduce_alg[0], num_allreduce_alg[1] );
 
-  safe_allgather_algs = (pami_algorithm_t *) malloc( num_allgather_alg[0] * sizeof(pami_algorithm_t) );
-  safe_allgather_meta = (pami_metadata_t  *) malloc( num_allgather_alg[0] * sizeof(pami_metadata_t)  );
-  fast_allgather_algs = (pami_algorithm_t *) malloc( num_allgather_alg[1] * sizeof(pami_algorithm_t) );
-  fast_allgather_meta = (pami_metadata_t  *) malloc( num_allgather_alg[1] * sizeof(pami_metadata_t)  );
-  result = PAMI_Geometry_algorithms_query( world_geometry, allgather_xfer,
-                                           safe_allgather_algs, safe_allgather_meta, num_allgather_alg[0],
-                                           fast_allgather_algs, fast_allgather_meta, num_allgather_alg[1] );
-  TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Geometry_algorithms_query - allgather");
+  safe_allreduce_algs = (pami_algorithm_t *) malloc( num_allreduce_alg[0] * sizeof(pami_algorithm_t) );
+  safe_allreduce_meta = (pami_metadata_t  *) malloc( num_allreduce_alg[0] * sizeof(pami_metadata_t)  );
+  fast_allreduce_algs = (pami_algorithm_t *) malloc( num_allreduce_alg[1] * sizeof(pami_algorithm_t) );
+  fast_allreduce_meta = (pami_metadata_t  *) malloc( num_allreduce_alg[1] * sizeof(pami_metadata_t)  );
+  result = PAMI_Geometry_algorithms_query( world_geometry, allreduce_xfer,
+                                           safe_allreduce_algs, safe_allreduce_meta, num_allreduce_alg[0],
+                                           fast_allreduce_algs, fast_allreduce_meta, num_allreduce_alg[1] );
+  TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Geometry_algorithms_query - allreduce");
 
-  /* initialize the allgather buffers */
+  /* initialize the allreduce buffers */
   size_t alg     = ( argc > 1 ? atoi(argv[1]) : 0 );
   size_t bufsize = ( argc > 2 ? atoi(argv[2]) : 1000 );
 
-  char * sbuf = NULL;
-  char * rbuf = NULL;
+  int * sbuf = NULL;
+  int * rbuf = NULL;
 
-  sbuf = malloc( bufsize );
-  rbuf = malloc( bufsize * world_size );
+  sbuf = malloc( bufsize * sizeof(int) );
+  rbuf = malloc( bufsize * sizeof(int) );
 
-  size_t i;
-  for ( i = 0 ; i < bufsize ; i++ )                  sbuf[i] = world_rank;
-  for ( i = 0 ; i < ( bufsize * world_size ) ; i++ ) rbuf[i] = -1;
+  size_t i, j;
+  for ( i = 0 ; i < bufsize ; i++ ) sbuf[i] = (int) world_rank;
+  for ( i = 0 ; i < bufsize ; i++ ) rbuf[i] = -1;
 
   /* perform a barrier */
   pami_xfer_t barrier;
@@ -148,24 +148,25 @@ int main(int argc, char* argv[])
     result = PAMI_Context_advance( contexts[0], 1 );
   TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Context_advance");
 
-  /* perform allgather */
-  pami_xfer_t allgather;
+  /* perform allreduce */
+  pami_xfer_t allreduce;
 
-  allgather.cb_done   = cb_done;
-  allgather.cookie    = (void*) &active;
-  allgather.algorithm = safe_allgather_algs[0];
+  allreduce.cb_done   = cb_done;
+  allreduce.cookie    = (void*) &active;
+  allreduce.algorithm = safe_allreduce_algs[0];
 
-  allgather.cmd.xfer_allgather.sndbuf     = sbuf;
-  allgather.cmd.xfer_allgather.stype      = PAMI_TYPE_BYTE;
-  allgather.cmd.xfer_allgather.stypecount = bufsize;
-  allgather.cmd.xfer_allgather.rcvbuf     = rbuf;
-  allgather.cmd.xfer_allgather.rtype      = PAMI_TYPE_BYTE;
-  allgather.cmd.xfer_allgather.rtypecount = bufsize;
+  allreduce.cmd.xfer_allreduce.sndbuf     = (void*) sbuf;
+  allreduce.cmd.xfer_allreduce.stype      = PAMI_TYPE_SIGNED_INT;
+  allreduce.cmd.xfer_allreduce.stypecount = bufsize;
+  allreduce.cmd.xfer_allreduce.rcvbuf     = (void*) rbuf;
+  allreduce.cmd.xfer_allreduce.rtype      = PAMI_TYPE_SIGNED_INT;
+  allreduce.cmd.xfer_allreduce.rtypecount = bufsize;
+  allreduce.cmd.xfer_allreduce.op         = PAMI_DATA_SUM;
 
   active = 1;
-  if ( world_rank == 0 ) printf("trying allgather of %ld bytes with algorithm %ld (%s) \n", bufsize, alg, safe_allgather_meta[alg].name );
-  result = PAMI_Collective( contexts[0], &allgather );
-  TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Collective - allgather");
+  if ( world_rank == 0 ) printf("trying allreduce of %ld bytes with algorithm %ld (%s) \n", bufsize, alg, safe_allreduce_meta[alg].name );
+  result = PAMI_Collective( contexts[0], &allreduce );
+  TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Collective - allreduce");
   while (active)
     result = PAMI_Context_advance( contexts[0], 1 );
   TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Context_advance");
@@ -182,7 +183,11 @@ int main(int argc, char* argv[])
     result = PAMI_Context_advance( contexts[0], 1 );
   TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Context_advance");
 
-  if ( world_rank == 0 ) printf("allgather successful\n");
+  int correct = world_size/2 * ( world_size - 1 ); // world_size should be a multiple of 2
+  for ( j = 0 ; j < bufsize ; j++ ) 
+    if ( rbuf[ j ] != correct )
+        printf("%ld: rbuf[%ld] = %d \n", world_rank, i * bufsize + j, rbuf[ i * bufsize + j ] );
+  if ( world_rank == 0 ) printf("allreduce successful\n");
 
   /* finalize the contexts */
   result = PAMI_Context_destroyv( contexts, num_contexts );

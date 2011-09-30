@@ -18,7 +18,7 @@ LD      = $(CC)
 CFLAGS  = $(COPT) -I.
 LDFLAGS = $(COPT) -lpthread
 
-all: hello.x query.x barrier.x allgather.x allreduce.x
+all: hello.x query.x barrier.x allgather.x allreduce.x rget.x
 
 %.x: %.o
 	$(LD) $(LDFLAGS) $< -o $@
