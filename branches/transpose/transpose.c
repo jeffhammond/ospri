@@ -3,11 +3,19 @@
 #include <assert.h>
 #include <string.h>
 
-#ifdef MPI
-    #include <mpi.h>
+#ifdef OMP
+    #include <omp.h>
+    #ifndef _OPENMP
+        #error You requested OpenMP but the compiler is not providing it.
+    #endif
+    #define OMP_MIN_SIZE 100
 #endif
 
-#include "hpm.h"
+#ifdef MPI
+    #include <mpi.h>
+    #include "hpm.h"
+#endif
+
 #include "getticks.h"
 #include "safemalloc.h"
 
@@ -42,20 +50,37 @@ int main(int argc, char* argv[])
         unsigned long long * d6 = safemalloc( max * sizeof(unsigned long long) );
 
         /*           12345678901234567890123456789012 */
-        char * n0 = "memcpy";
-        char * n1 = "loop copy";
-        char * n2 = "basic w/ stride-1 stores";
-        char * n3 = "basic w/ stride-1 loads";
-        char * n4 = "pragma unroll 4x4 + s1 loads";
-        char * n5 = "manual unroll 4x4 + s1 loads";
-        char * n6 = "manual un+vec 4x4  + s1 loads";
+        char * name0 = "memcpy";
+        char * name1 = "loop copy";
+        char * name2 = "basic + s1S";
+        char * name3 = "basic + s1L";
+        char * name4 = "pur 4x4 + s1L";
+        char * name5 = "mur 4x4 + s1L";
+        char * name6 = "murv 4x4 + s1L";
 
-        printf( "starting test... \n" );
-        fprintf( stderr , "%4s %21s %21s %32s %32s %32s %32s %32s \n" , "n" , n0 , n1 , n2 , n3 , n4 , n5 , n6);
+#ifdef OMP
+        printf( "starting test: OpenMP ON with %d threads... \n", omp_get_max_threads() );
+        fprintf( stderr , "starting test: OpenMP ON with %d threads... \n", omp_get_max_threads() );
+#else
+        printf( "starting test: OpenMP OFF... \n" );
+        fprintf( stderr , "starting test: OpenMP OFF... \n" );
+#endif
+        printf( "sN[S/L] = stride-N [store/load] \n" );
+        printf( "pur  = pragma unroll \n" );
+        printf( "mur  = manual unroll \n" );
+        printf( "murv = manual unroll and vectorize \n" );
+
+        fprintf( stderr , "sN[S/L] = stride-N [store/load] \n" );
+        fprintf( stderr , "pur  = pragma unroll \n" );
+        fprintf( stderr , "mur  = manual unroll \n" );
+        fprintf( stderr , "murv = manual unroll and vectorize \n" );
+        fprintf( stderr , "%4s %8s %16s %16s %16s %16s %16s %16s \n" , "n" , name0 , name1 , name2 , name3 , name4 , name5 , name6);
+
         fflush( stderr );
 
         for ( int n=min ; n<max ; n+=inc )
         {
+            int i, j, n4;
             int N = (n*n);
 
             double * A;
@@ -66,89 +91,128 @@ int main(int argc, char* argv[])
             A = safemalloc( N * sizeof(double) );
             B = safemalloc( N * sizeof(double) );
      
-            for ( int i=0 ; i<N ; i++ )
-            { 
-                A[i] = (double)i;
-                B[i] = 0.0;
-            }
-     
+            int k = 0;
+#ifdef OMP
+#pragma omp parallel for if(n>OMP_MIN_SIZE) private(i,j)
+#endif
+            for ( i=0 ; i<n ; i++ )
+                for ( j=0 ; j<n ; j++ )
+                    A[i*n+j] = (double)(k++);
+
+#ifdef OMP
+#pragma omp parallel for if(n>OMP_MIN_SIZE) private(i,j)
+#endif
+            for ( i=0 ; i<n ; i++ )
+                for ( j=0 ; j<n ; j++ )
+                    B[i*n+j] = 0.0;
+
             /* reference - memcpy */ 
-            HPM_Start(n0);
+            HPM_Start(name0);
             t0 = getticks();        
             for ( int t=0 ; t<REPEAT ; t++ )
-            {
                 memcpy( B , A , N );
-            }
+
             t1 = getticks();        
-            HPM_Stop(n0);
+            HPM_Stop(name0);
             d0[n] = (t1-t0)/REPEAT;
 
             /* reference - direct copy */
-            HPM_Start(n1);
+            HPM_Start(name1);
             t0 = getticks();        
             for ( int t=0 ; t<REPEAT ; t++ )
             {
-                #pragma unroll
-                for ( int i=0 ; i<n ; i++ )
-                    #pragma unroll
-                    for ( int j=0 ; j<n ; j++ )
+#ifdef OMP
+#pragma omp parallel for if(n>OMP_MIN_SIZE) private(i,j)
+#endif
+                for ( i=0 ; i<n ; i++ )
+                    for ( j=0 ; j<n ; j++ )
                         B[i*n+j] = A[i*n+j];
             }
             t1 = getticks();        
-            HPM_Stop(n1);
+            HPM_Stop(name1);
             d1[n] = (t1-t0)/REPEAT;
 
             /* basic w/ stride-1 stores */
-            HPM_Start(n2);
+            HPM_Start(name2);
             t0 = getticks();        
             for ( int t=0 ; t<REPEAT ; t++ )
             {
-                for ( int i=0 ; i<n ; i++ )
-                    for ( int j=0 ; j<n ; j++ )
+#ifdef OMP
+#pragma omp parallel for if(n>OMP_MIN_SIZE) private(i,j)
+#endif
+                for ( i=0 ; i<n ; i++ )
+                    for ( j=0 ; j<n ; j++ )
                         B[i*n+j] = A[j*n+i];
             }
             t1 = getticks();        
-            HPM_Stop(n2);
+            HPM_Stop(name2);
             d2[n] = (t1-t0)/REPEAT;
      
+            /* verify */
+            for ( j=0 ; j<n ; j++ ) 
+                for ( i=0 ; i<n ; i++ )
+                    assert( B[i*n+j] == A[j*n+i] );
+
             /* basic w/ stride-1 loads */
-            HPM_Start(n3);
+            HPM_Start(name3);
             t0 = getticks();        
             for ( int t=0 ; t<REPEAT ; t++ )
             {
-                for ( int j=0 ; j<n ; j++ )
-                    for ( int i=0 ; i<n ; i++ )
+#ifdef OMP
+#pragma omp parallel for if(n>OMP_MIN_SIZE) private(i,j)
+#endif
+                for ( j=0 ; j<n ; j++ )
+                    for ( i=0 ; i<n ; i++ )
                         B[i*n+j] = A[j*n+i];
             }
             t1 = getticks();        
-            HPM_Stop(n3);
+            HPM_Stop(name3);
             d3[n] = (t1-t0)/REPEAT;
      
+            /* verify */
+            for ( j=0 ; j<n ; j++ ) 
+                for ( i=0 ; i<n ; i++ )
+                    assert( B[i*n+j] == A[j*n+i] );
+
             /* pragma unroll 4x4 + s1 loads */
-            HPM_Start(n4);
+            HPM_Start(name4);
             t0 = getticks();        
             for ( int t=0 ; t<REPEAT ; t++ )
             {
+#ifdef OMP
+#pragma omp parallel for if(n>OMP_MIN_SIZE) private(i,j)
+#endif
                 #pragma unroll(4)
-                for ( int j=0 ; j<n ; j++ )
+                for ( j=0 ; j<n ; j++ )
                     #pragma unroll(4)
-                    for ( int i=0 ; i<n ; i++ )
+                    for ( i=0 ; i<n ; i++ )
                         B[i*n+j] = A[j*n+i];
             }
             t1 = getticks();        
-            HPM_Stop(n4);
+            HPM_Stop(name4);
             d4[n] = (t1-t0)/REPEAT;
 
+            /* verify */
+            for ( j=0 ; j<n ; j++ ) 
+                for ( i=0 ; i<n ; i++ )
+                    assert( B[i*n+j] == A[j*n+i] );
+
             /* manual unroll 4x4 + s1 loads */
-            HPM_Start(n5);
+            HPM_Start(name5);
             t0 = getticks();        
             for ( int t=0 ; t<REPEAT ; t++ )
             {
-                int nr = n%4; /* remainder */
-                int n4 = n-nr;    /* divisible-by-4 part */
-                for ( int j=0 ; j<n4 ; j+=4 )
+#ifdef OMP
+#pragma omp parallel if(n>OMP_MIN_SIZE)
+#endif
+              {
+                n4 = n-(n%4);    /* divisible-by-4 part */
+#ifdef OMP
+#pragma omp for private(i,j,n4)
+#endif
+                for ( j=0 ; j<n4 ; j+=4 )
                 {
-                    for ( int i=0 ; i<n4 ; i+=4 )
+                    for ( i=0 ; i<n4 ; i+=4 )
                     {
                         B[(i  )*n+j  ] = A[(j  )*n+i  ];
                         B[(i  )*n+j+1] = A[(j+1)*n+i  ];
@@ -167,36 +231,48 @@ int main(int argc, char* argv[])
                         B[(i+3)*n+j+2] = A[(j+2)*n+i+3];
                         B[(i+3)*n+j+3] = A[(j+3)*n+i+3];
                     }
-                    for ( int i=n4 ; i<n ; i++ )
+                    for ( i=n4 ; i<n ; i++ )
                         B[i*n+j] = A[j*n+i];
                 }
-                for ( int j=n4 ; j<n ; j++ )
+                for ( j=n4 ; j<n ; j++ )
                 {
-                    for ( int i=0 ; i<n4 ; i+=4 )
+                    for ( i=0 ; i<n4 ; i+=4 )
                     {
                         B[(i  )*n+j] = A[j*n+i  ];
                         B[(i+1)*n+j] = A[j*n+i+1];
                         B[(i+2)*n+j] = A[j*n+i+2];
                         B[(i+3)*n+j] = A[j*n+i+3];
                     }
-                    for ( int i=n4 ; i<n ; i++ )
+                    for ( i=n4 ; i<n ; i++ )
                         B[i*n+j] = A[j*n+i];
                 }
+              }
             }
             t1 = getticks();        
-            HPM_Stop(n5);
+            HPM_Stop(name5);
             d5[n] = (t1-t0)/REPEAT;
 
+            /* verify */
+            for ( j=0 ; j<n ; j++ ) 
+                for ( i=0 ; i<n ; i++ )
+                    assert( B[i*n+j] == A[j*n+i] );
+
             /* manual unroll 4x4 and vectorize + s1 loads */
-            HPM_Start(n6);
+            HPM_Start(name6);
             t0 = getticks();        
             for ( int t=0 ; t<REPEAT ; t++ )
             {
-                int nr = n%4; /* remainder */
-                int n4 = n-nr;    /* divisible-by-4 part */
-                for ( int j=0 ; j<n4 ; j+=4 )
+#ifdef OMP
+#pragma omp parallel if(n>OMP_MIN_SIZE)
+#endif
+              {
+                n4 = n-(n%4);    /* divisible-by-4 part */
+#ifdef OMP
+#pragma omp for private(i,j,n4)
+#endif
+                for ( j=0 ; j<n4 ; j+=4 )
                 {
-                    for ( int i=0 ; i<n4 ; i+=4 )
+                    for ( i=0 ; i<n4 ; i+=4 )
                     {
                         double a00, a01, a02, a03;
                         double a10, a11, a12, a13;
@@ -247,63 +323,65 @@ int main(int argc, char* argv[])
                         B[(i+3)*n+j+2] = b32;
                         B[(i+3)*n+j+3] = b33;
                     }
-                    for ( int i=n4 ; i<n ; i++ )
+                    for ( i=n4 ; i<n ; i++ )
                         B[i*n+j] = A[j*n+i];
                 }
-                for ( int j=n4 ; j<n ; j++ )
+                for ( j=n4 ; j<n ; j++ )
                 {
-                    for ( int i=0 ; i<n4 ; i+=4 )
+                    for ( i=0 ; i<n4 ; i+=4 )
                     {
                         int a00, a01, a02, a03;
                         int b00, b10, b20, b30; 
 
-                        a00 = A[(j  )*n+i  ];
-                        a01 = A[(j  )*n+i+1];
-                        a02 = A[(j  )*n+i+2];
-                        a03 = A[(j  )*n+i+3];
+                        a00 = A[j*n+i  ];
+                        a01 = A[j*n+i+1];
+                        a02 = A[j*n+i+2];
+                        a03 = A[j*n+i+3];
 
                         b00=a00;
                         b10=a01;
                         b20=a02;
                         b30=a03;
 
-                        B[(i  )*n+j  ] = b00;
-                        B[(i+1)*n+j  ] = b10;
-                        B[(i+2)*n+j  ] = b20;
-                        B[(i+3)*n+j  ] = b30;
+                        B[(i  )*n+j] = b00;
+                        B[(i+1)*n+j] = b10;
+                        B[(i+2)*n+j] = b20;
+                        B[(i+3)*n+j] = b30;
                     }
-                    for ( int i=n4 ; i<n ; i++ )
+                    for ( i=n4 ; i<n ; i++ )
                         B[i*n+j] = A[j*n+i];
                 }
+              }
             }
             t1 = getticks();        
-            HPM_Stop(n6);
+            HPM_Stop(name6);
             d6[n] = (t1-t0)/REPEAT;
 
-            for ( int j=0 ; j<n ; j++ ) 
-                for ( int i=0 ; i<n ; i++ )
+            /* verify */
+            for ( j=0 ; j<n ; j++ ) 
+                for ( i=0 ; i<n ; i++ )
                     assert( B[i*n+j] == A[j*n+i] );
 
             if ( n<11 )
             {
                 printf( "A: \n" );
-                for ( int i=0 ; i<n ; i++ )
+                for ( i=0 ; i<n ; i++ )
                 {
-                    for ( int j=0 ; j<n ; j++ ) printf( "%12.1lf" , A[i*n+j]);
+                    for ( j=0 ; j<n ; j++ ) printf( "%12.1lf" , A[i*n+j]);
                     printf( "\n" );
                 }
 
                 printf( "B: \n" );
-                for ( int i=0 ; i<n ; i++ )
+                for ( i=0 ; i<n ; i++ )
                 {
-                    for ( int j=0 ; j<n ; j++ ) printf( "%12.1lf" , B[i*n+j]);
+                    for ( j=0 ; j<n ; j++ ) printf( "%12.1lf" , B[i*n+j]);
                     printf( "\n" );
                 }
             }
 
             /* this is just for the neurotic person who cannot wait until the end for data */
             double c = 1.0 / d0[n];
-            fprintf( stderr , "%4d %10llu %15llu (%5.1lf) %15llu (%5.1lf) %15llu (%5.1lf) %15llu (%5.1lf) %15llu (%5.1lf) %15llu (%5.1lf) \n" , 
+            fprintf( stderr , "%4d %8llu %8llu (%5.1lf) %8llu (%5.1lf) %8llu (%5.1lf) %8llu (%5.1lf) %8llu (%5.1lf) %8llu (%5.1lf) \n" , 
                                 n , d0[n] , d1[n] , c*d1[n] , d2[n] , c*d2[n] , d3[n] , c*d3[n] , d4[n] , c*d4[n] , d5[n] , c*d5[n] , d6[n] , c*d6[n] );
  
             free(B);
@@ -313,11 +391,11 @@ int main(int argc, char* argv[])
 
         /* print analysis */
         printf( "timing in cycles (ratio relative to memcpy) \n" );
-        printf( "%4s %21s %21s %32s %32s %32s %32s %32s \n" , "n" , n0 , n1 , n2 , n3 , n4 , n5 , n6);
+        printf( "%4s %8s %16s %16s %16s %16s %16s %16s \n" , "n" , name0 , name1 , name2 , name3 , name4 , name5 , name6);
         for ( int n=min ; n<max ; n+=inc)
         {
             double c = 1.0 / d0[n];
-            printf( "%4d %10llu %15llu (%5.1lf) %15llu (%5.1lf) %15llu (%5.1lf) %15llu (%5.1lf) %15llu (%5.1lf) %15llu (%5.1lf) \n" , 
+            printf( "%4d %8llu %8llu (%5.1lf) %8llu (%5.1lf) %8llu (%5.1lf) %8llu (%5.1lf) %8llu (%5.1lf) %8llu (%5.1lf) \n" , 
                       n , d0[n] , d1[n] , c*d1[n] , d2[n] , c*d2[n] , d3[n] , c*d3[n] , d4[n] , c*d4[n] , d5[n] , c*d5[n] , d6[n] , c*d6[n] );
         }
 
