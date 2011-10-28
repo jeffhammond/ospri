@@ -1,3 +1,4 @@
+#ifdef __bgp__
 inline unsigned long long getticks(void)
 {
   unsigned long long int result=0;
@@ -17,3 +18,4 @@ inline unsigned long long getticks(void)
 
   return(result);
 }
+#endif

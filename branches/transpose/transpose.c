@@ -16,7 +16,11 @@
     #include "hpm.h"
 #endif
 
-#include "getticks.h"
+#ifndef __bgp__
+    #include "hpm.h"
+#endif
+
+#include "getticks.c"
 #include "safemalloc.h"
 
 #define ALIGNMENT 128
