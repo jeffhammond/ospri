@@ -45,14 +45,26 @@ int main(int argc, char **argv)
     npes = job.npes;
     seg = &(job.sheap_seg);
 
+    fprintf(stderr," Hello from PE %d of %d, using seg start %p, seg size 0x%lx \n",
+                                    pe,  npes, seg->addr, (unsigned long)seg->len );
+    fflush(stderr);
+    PMI_Barrier();
+
     /* Allocate and initialize the source and target arrays. */
     long * source = (long *) dmapp_sheap_malloc(nelems * sizeof(long));
     assert(source!=NULL);
+    fprintf(stderr,"dmapp_sheap_malloc returned source = %p \n", source );
+    fflush(stderr);
+    PMI_Barrier();
+
     long * target = (long *) dmapp_sheap_malloc(nelems * sizeof(long));
     assert(target!=NULL);
+    fprintf(stderr,"dmapp_sheap_malloc returned target = %p \n", target );
+    fflush(stderr);
+    PMI_Barrier();
 
-    for (i = 0; i < nelems; i++)source[i] = i;
-    for (i = 0; i < nelems; i++)target[i] = -9L;
+    for (i = 0; i < nelems; i++) source[i] = i;
+    for (i = 0; i < nelems; i++) target[i] = -9L;
 
     /* Wait for all PEs to complete array initialization. */
     PMI_Barrier();
@@ -61,7 +73,6 @@ int main(int argc, char **argv)
     target_pe = npes - pe - 1;
     status = dmapp_put(target, seg, target_pe, source, nelems, DMAPP_QW);
     assert(status==DMAPP_RC_SUCCESS);
-
 
     /* Wait for all PEs to complete their PUT. */
     PMI_Barrier();
@@ -76,7 +87,7 @@ int main(int argc, char **argv)
 
     if (fail_count == 0) fprintf(stderr, " dmapp_put PASSED for PE %04d\n", pe);
     else fprintf(stderr, " dmapp_put FAILED for PE %04d: %d or more wrong values\n", pe, fail_count);
-
+    fflush(stderr);
 
     /* Finalize. */
     status = dmapp_finalize();
