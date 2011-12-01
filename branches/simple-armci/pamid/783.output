@@ -1,0 +1,40 @@
+2011-11-08 13:15:36.399 (INFO ) [0xfff90ba5770] R00-M0-N02-J00-2:24721:ibm.runjob.client.options.Parser: set local socket to runjob_mux from properties file
+2011-11-08 13:15:38.427 (INFO ) [0xfff90ba5770] R00-M0-N02-J00-2:4592:ibm.runjob.client.Job: job 4592 started
+MPIDI_Process.*
+  verbose      : 1
+  statistics   : 0
+MPI_Init_thread SUCCEEDED on rank -1
+  contexts     : 16
+  commthreads  : 1
+  context_post : 1
+  short_limit  : 113
+  eager_limit  : 2049
+  rma_pending  : 1000
+  shmem_pt2pt  : 1
+  optimized.collectives : 0
+  optimized.subcomms    : 1
+The following PAMI_* environment variables were specified:
+  PAMI_CLIENTWEIGHTS=50,50
+  PAMI_NUMCLIENTS=2
+  PAMI_CLIENTNAMES=MPICH2,A1D
+  PAMI_VERBOSE=1
+The following BG_* environment variables were specified:
+  BG_SHAREDMEMSIZE=32MB
+  BG_APPAGENT1=/bgsys/drivers/ppcfloor/agents/bin/comm.elf
+MPI_Init_thread SUCCEEDED on rank -1
+PAMI_Client_create SUCCEEDED on rank -1
+PAMI_Client_create SUCCEEDED on rank -1
+PAMI_Client_query SUCCEEDED on rank -1
+PAMI_Client_query SUCCEEDED on rank -1
+world_size > 1 SUCCEEDED on rank -1
+world_size > 1 SUCCEEDED on rank -1
+PAMI_Client_query SUCCEEDED on rank -1
+PAMI_Client_query SUCCEEDED on rank -1
+hello world from rank 1 of 2 
+PAMI_Client_query SUCCEEDED on rank 1
+hello world from rank 0 of 2 
+PAMI_Client_query SUCCEEDED on rank 0
+malloc( num_contexts * sizeof(pami_context_t) ) SUCCEEDED on rank 1
+malloc( num_contexts * sizeof(pami_context_t) ) SUCCEEDED on rank 0
+2011-11-08 13:15:48.722 (WARN ) [0xfff90ba5770] R00-M0-N02-J00-2:4592:ibm.runjob.client.Job: terminated by signal 6
+2011-11-08 13:15:48.722 (WARN ) [0xfff90ba5770] R00-M0-N02-J00-2:4592:ibm.runjob.client.Job: abnormal termination by signal 6 from rank 0

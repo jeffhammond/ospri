@@ -1,0 +1,4 @@
+2011-11-09 12:25:36.359 (INFO ) [0xfffabe45770] R00-M0-N02-J04-1:7095:ibm.runjob.client.options.Parser: set local socket to runjob_mux from properties file
+2011-11-09 12:25:38.591 (INFO ) [0xfffabe45770] R00-M0-N02-J04-1:4644:ibm.runjob.client.Job: job 4644 started
+2011-11-09 12:25:41.905 (WARN ) [0xfffabe45770] R00-M0-N02-J04-1:4644:ibm.runjob.client.Job: terminated by signal 6
+2011-11-09 12:25:41.905 (WARN ) [0xfffabe45770] R00-M0-N02-J04-1:4644:ibm.runjob.client.Job: abnormal termination by signal 6 from rank 0

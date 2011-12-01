@@ -1,0 +1,2 @@
+/bghome/blocksom/development/bgq/comm/sys/buildtools/pami/components/devices/bgq/mu2/global/ResourceManager.h:3463: 
+BG_APPAGENT1 specifies an agent that has version 1, but version 2 or later is required.  Upgrade to the latest agent.

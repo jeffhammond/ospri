@@ -1,0 +1,393 @@
+GFORTRAN module version '4' created from fmm_mods.f on Fri Nov 11 14:33:59 2011
+MD5:e9a8fb5b5ae629b9c00a904189e1d56d -- If you edit this, you'll get what you deserve.
+
+(() () () () () () () () () () () () () () () () () () () () () () ()
+() () () ())
+
+()
+
+()
+
+()
+
+()
+
+()
+
+(2 '__iso_c_binding' '__iso_c_binding' '__iso_c_binding' 1 ((MODULE
+UNKNOWN-INTENT UNKNOWN-PROC UNKNOWN UNKNOWN 0 0 INTRINSIC) (UNKNOWN 0 0
+0 UNKNOWN ()) 0 0 () () 0 () () () 2 0)
+3 'ajmp' 'fmmjmp' 'ajmp' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN UNKNOWN 0 0) (INTEGER 8 0 0 INTEGER ()) 0 0 () () 0 () () () 0 0)
+4 'bjmp' 'fmmjmp' 'bjmp' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN UNKNOWN 0 0) (INTEGER 8 0 0 INTEGER ()) 0 0 () () 0 () () () 0 0)
+5 'c_alert' '__iso_c_binding' '' 1 ((PARAMETER UNKNOWN-INTENT
+UNKNOWN-PROC UNKNOWN UNKNOWN 0 0 IS_C_INTEROP IS_ISO_C) (CHARACTER 1 1 1
+CHARACTER ((CONSTANT (INTEGER 8 0 0 INTEGER ()) 0 '1'))) 0 0 () (
+CONSTANT (CHARACTER 1 1 1 UNKNOWN (())) 0 1 '\U00000007') () 0 () () ()
+2 32)
+6 'c_associated' '__iso_c_binding' '__iso_c_binding_c_associated' 1 ((
+PROCEDURE UNKNOWN-INTENT MODULE-PROC DECL UNKNOWN 0 0 FUNCTION
+ALWAYS_EXPLICIT IS_ISO_C) (LOGICAL 8 0 0 LOGICAL ()) 7 0 (8 9) () 6 () ()
+() 2 44)
+10 'c_backspace' '__iso_c_binding' '' 1 ((PARAMETER UNKNOWN-INTENT
+UNKNOWN-PROC UNKNOWN UNKNOWN 0 0 IS_C_INTEROP IS_ISO_C) (CHARACTER 1 1 1
+CHARACTER ((CONSTANT (INTEGER 8 0 0 INTEGER ()) 0 '1'))) 0 0 () (
+CONSTANT (CHARACTER 1 1 1 UNKNOWN (())) 0 1 '\U00000008') () 0 () () ()
+2 33)
+11 'c_bool' '__iso_c_binding' '' 1 ((PARAMETER UNKNOWN-INTENT
+UNKNOWN-PROC UNKNOWN UNKNOWN 0 0 IS_C_INTEROP IS_ISO_C) (INTEGER 8 1 1
+LOGICAL ()) 0 0 () (CONSTANT (INTEGER 8 1 1 UNKNOWN ()) 0 '1') () 0 () ()
+() 2 29)
+12 'c_carriage_return' '__iso_c_binding' '' 1 ((PARAMETER UNKNOWN-INTENT
+UNKNOWN-PROC UNKNOWN UNKNOWN 0 0 IS_C_INTEROP IS_ISO_C) (CHARACTER 1 1 1
+CHARACTER ((CONSTANT (INTEGER 8 0 0 INTEGER ()) 0 '1'))) 0 0 () (
+CONSTANT (CHARACTER 1 1 1 UNKNOWN (())) 0 1 '\U0000000d') () 0 () () ()
+2 36)
+13 'c_char' '__iso_c_binding' '' 1 ((PARAMETER UNKNOWN-INTENT
+UNKNOWN-PROC UNKNOWN UNKNOWN 0 0 IS_C_INTEROP IS_ISO_C) (INTEGER 8 1 1
+CHARACTER ()) 0 0 () (CONSTANT (INTEGER 8 1 1 UNKNOWN ()) 0 '1') () 0 ()
+() () 2 30)
+14 'c_double' '__iso_c_binding' '' 1 ((PARAMETER UNKNOWN-INTENT
+UNKNOWN-PROC UNKNOWN UNKNOWN 0 0 IS_C_INTEROP IS_ISO_C) (INTEGER 8 1 1
+REAL ()) 0 0 () (CONSTANT (INTEGER 8 1 1 UNKNOWN ()) 0 '8') () 0 () () ()
+2 24)
+15 'c_double_complex' '__iso_c_binding' '' 1 ((PARAMETER UNKNOWN-INTENT
+UNKNOWN-PROC UNKNOWN UNKNOWN 0 0 IS_C_INTEROP IS_ISO_C) (INTEGER 8 1 1
+COMPLEX ()) 0 0 () (CONSTANT (INTEGER 8 1 1 UNKNOWN ()) 0 '8') () 0 () ()
+() 2 27)
+16 'c_f_pointer' '__iso_c_binding' '__iso_c_binding_c_f_pointer' 1 ((
+PROCEDURE UNKNOWN-INTENT MODULE-PROC DECL UNKNOWN 0 0 SUBROUTINE
+ALWAYS_EXPLICIT IS_ISO_C) (UNKNOWN 0 0 0 UNKNOWN ()) 17 0 (18 19 20) ()
+0 () () () 2 43)
+21 'c_f_procpointer' '__iso_c_binding' '__iso_c_binding_c_f_procpointer'
+1 ((PROCEDURE UNKNOWN-INTENT MODULE-PROC DECL UNKNOWN 0 0 SUBROUTINE
+IS_ISO_C) (UNKNOWN 0 0 0 UNKNOWN ()) 22 0 (23 24) () 0 () () () 2 47)
+25 'c_float' '__iso_c_binding' '' 1 ((PARAMETER UNKNOWN-INTENT
+UNKNOWN-PROC UNKNOWN UNKNOWN 0 0 IS_C_INTEROP IS_ISO_C) (INTEGER 8 1 1
+REAL ()) 0 0 () (CONSTANT (INTEGER 8 1 1 UNKNOWN ()) 0 '4') () 0 () () ()
+2 23)
+26 'c_float_complex' '__iso_c_binding' '' 1 ((PARAMETER UNKNOWN-INTENT
+UNKNOWN-PROC UNKNOWN UNKNOWN 0 0 IS_C_INTEROP IS_ISO_C) (INTEGER 8 1 1
+COMPLEX ()) 0 0 () (CONSTANT (INTEGER 8 1 1 UNKNOWN ()) 0 '4') () 0 () ()
+() 2 26)
+27 'c_form_feed' '__iso_c_binding' '' 1 ((PARAMETER UNKNOWN-INTENT
+UNKNOWN-PROC UNKNOWN UNKNOWN 0 0 IS_C_INTEROP IS_ISO_C) (CHARACTER 1 1 1
+CHARACTER ((CONSTANT (INTEGER 8 0 0 INTEGER ()) 0 '1'))) 0 0 () (
+CONSTANT (CHARACTER 1 1 1 UNKNOWN (())) 0 1 '\U0000000c') () 0 () () ()
+2 34)
+28 'c_funloc' '__iso_c_binding' '__iso_c_binding_c_funloc' 1 ((
+PROCEDURE UNKNOWN-INTENT UNKNOWN-PROC UNKNOWN UNKNOWN 0 0 EXTERNAL
+FUNCTION PURE IS_ISO_C) (DERIVED 29 0 0 DERIVED ()) 0 0 () () 28 () () ()
+2 46)
+29 'c_funptr' '__iso_c_binding' '' 1 ((DERIVED UNKNOWN-INTENT
+UNKNOWN-PROC UNKNOWN UNKNOWN 0 0 IS_BIND_C IS_C_INTEROP IS_ISO_C) (
+DERIVED 29 1 1 UNKNOWN ()) 0 0 () () 0 ((30 '__c_funptr_c_address' (
+INTEGER 8 1 0 INTEGER ()) () (UNKNOWN-FL UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN UNKNOWN 0 0) UNKNOWN-ACCESS ())) UNKNOWN-ACCESS () () 2 41 0)
+31 'c_horizontal_tab' '__iso_c_binding' '' 1 ((PARAMETER UNKNOWN-INTENT
+UNKNOWN-PROC UNKNOWN UNKNOWN 0 0 IS_C_INTEROP IS_ISO_C) (CHARACTER 1 1 1
+CHARACTER ((CONSTANT (INTEGER 8 0 0 INTEGER ()) 0 '1'))) 0 0 () (
+CONSTANT (CHARACTER 1 1 1 UNKNOWN (())) 0 1 '\U00000009') () 0 () () ()
+2 37)
+32 'c_int' '__iso_c_binding' '' 1 ((PARAMETER UNKNOWN-INTENT
+UNKNOWN-PROC UNKNOWN UNKNOWN 0 0 IS_C_INTEROP IS_ISO_C) (INTEGER 8 1 1
+INTEGER ()) 0 0 () (CONSTANT (INTEGER 8 1 1 UNKNOWN ()) 0 '4') () 0 () ()
+() 2 0)
+33 'c_int128_t' '__iso_c_binding' '' 1 ((PARAMETER UNKNOWN-INTENT
+UNKNOWN-PROC UNKNOWN UNKNOWN 0 0 IS_C_INTEROP IS_ISO_C) (INTEGER 8 1 1
+INTEGER ()) 0 0 () (CONSTANT (INTEGER 8 1 1 UNKNOWN ()) 0 '16') () 0 ()
+() () 2 12)
+34 'c_int16_t' '__iso_c_binding' '' 1 ((PARAMETER UNKNOWN-INTENT
+UNKNOWN-PROC UNKNOWN UNKNOWN 0 0 IS_C_INTEROP IS_ISO_C) (INTEGER 8 1 1
+INTEGER ()) 0 0 () (CONSTANT (INTEGER 8 1 1 UNKNOWN ()) 0 '2') () 0 () ()
+() 2 9)
+35 'c_int32_t' '__iso_c_binding' '' 1 ((PARAMETER UNKNOWN-INTENT
+UNKNOWN-PROC UNKNOWN UNKNOWN 0 0 IS_C_INTEROP IS_ISO_C) (INTEGER 8 1 1
+INTEGER ()) 0 0 () (CONSTANT (INTEGER 8 1 1 UNKNOWN ()) 0 '4') () 0 () ()
+() 2 10)
+36 'c_int64_t' '__iso_c_binding' '' 1 ((PARAMETER UNKNOWN-INTENT
+UNKNOWN-PROC UNKNOWN UNKNOWN 0 0 IS_C_INTEROP IS_ISO_C) (INTEGER 8 1 1
+INTEGER ()) 0 0 () (CONSTANT (INTEGER 8 1 1 UNKNOWN ()) 0 '8') () 0 () ()
+() 2 11)
+37 'c_int8_t' '__iso_c_binding' '' 1 ((PARAMETER UNKNOWN-INTENT
+UNKNOWN-PROC UNKNOWN UNKNOWN 0 0 IS_C_INTEROP IS_ISO_C) (INTEGER 8 1 1
+INTEGER ()) 0 0 () (CONSTANT (INTEGER 8 1 1 UNKNOWN ()) 0 '1') () 0 () ()
+() 2 8)
+38 'c_int_fast128_t' '__iso_c_binding' '' 1 ((PARAMETER UNKNOWN-INTENT
+UNKNOWN-PROC UNKNOWN UNKNOWN 0 0 IS_C_INTEROP IS_ISO_C) (INTEGER 8 1 1
+INTEGER ()) 0 0 () (CONSTANT (INTEGER 8 1 1 UNKNOWN ()) 0 '16') () 0 ()
+() () 2 22)
+39 'c_int_fast16_t' '__iso_c_binding' '' 1 ((PARAMETER UNKNOWN-INTENT
+UNKNOWN-PROC UNKNOWN UNKNOWN 0 0 IS_C_INTEROP IS_ISO_C) (INTEGER 8 1 1
+INTEGER ()) 0 0 () (CONSTANT (INTEGER 8 1 1 UNKNOWN ()) 0 '8') () 0 () ()
+() 2 19)
+40 'c_int_fast32_t' '__iso_c_binding' '' 1 ((PARAMETER UNKNOWN-INTENT
+UNKNOWN-PROC UNKNOWN UNKNOWN 0 0 IS_C_INTEROP IS_ISO_C) (INTEGER 8 1 1
+INTEGER ()) 0 0 () (CONSTANT (INTEGER 8 1 1 UNKNOWN ()) 0 '8') () 0 () ()
+() 2 20)
+41 'c_int_fast64_t' '__iso_c_binding' '' 1 ((PARAMETER UNKNOWN-INTENT
+UNKNOWN-PROC UNKNOWN UNKNOWN 0 0 IS_C_INTEROP IS_ISO_C) (INTEGER 8 1 1
+INTEGER ()) 0 0 () (CONSTANT (INTEGER 8 1 1 UNKNOWN ()) 0 '8') () 0 () ()
+() 2 21)
+42 'c_int_fast8_t' '__iso_c_binding' '' 1 ((PARAMETER UNKNOWN-INTENT
+UNKNOWN-PROC UNKNOWN UNKNOWN 0 0 IS_C_INTEROP IS_ISO_C) (INTEGER 8 1 1
+INTEGER ()) 0 0 () (CONSTANT (INTEGER 8 1 1 UNKNOWN ()) 0 '1') () 0 () ()
+() 2 18)
+43 'c_int_least128_t' '__iso_c_binding' '' 1 ((PARAMETER UNKNOWN-INTENT
+UNKNOWN-PROC UNKNOWN UNKNOWN 0 0 IS_C_INTEROP IS_ISO_C) (INTEGER 8 1 1
+INTEGER ()) 0 0 () (CONSTANT (INTEGER 8 1 1 UNKNOWN ()) 0 '16') () 0 ()
+() () 2 17)
+44 'c_int_least16_t' '__iso_c_binding' '' 1 ((PARAMETER UNKNOWN-INTENT
+UNKNOWN-PROC UNKNOWN UNKNOWN 0 0 IS_C_INTEROP IS_ISO_C) (INTEGER 8 1 1
+INTEGER ()) 0 0 () (CONSTANT (INTEGER 8 1 1 UNKNOWN ()) 0 '2') () 0 () ()
+() 2 14)
+45 'c_int_least32_t' '__iso_c_binding' '' 1 ((PARAMETER UNKNOWN-INTENT
+UNKNOWN-PROC UNKNOWN UNKNOWN 0 0 IS_C_INTEROP IS_ISO_C) (INTEGER 8 1 1
+INTEGER ()) 0 0 () (CONSTANT (INTEGER 8 1 1 UNKNOWN ()) 0 '4') () 0 () ()
+() 2 15)
+46 'c_int_least64_t' '__iso_c_binding' '' 1 ((PARAMETER UNKNOWN-INTENT
+UNKNOWN-PROC UNKNOWN UNKNOWN 0 0 IS_C_INTEROP IS_ISO_C) (INTEGER 8 1 1
+INTEGER ()) 0 0 () (CONSTANT (INTEGER 8 1 1 UNKNOWN ()) 0 '8') () 0 () ()
+() 2 16)
+47 'c_int_least8_t' '__iso_c_binding' '' 1 ((PARAMETER UNKNOWN-INTENT
+UNKNOWN-PROC UNKNOWN UNKNOWN 0 0 IS_C_INTEROP IS_ISO_C) (INTEGER 8 1 1
+INTEGER ()) 0 0 () (CONSTANT (INTEGER 8 1 1 UNKNOWN ()) 0 '1') () 0 () ()
+() 2 13)
+48 'c_intmax_t' '__iso_c_binding' '' 1 ((PARAMETER UNKNOWN-INTENT
+UNKNOWN-PROC UNKNOWN UNKNOWN 0 0 IS_C_INTEROP IS_ISO_C) (INTEGER 8 1 1
+INTEGER ()) 0 0 () (CONSTANT (INTEGER 8 1 1 UNKNOWN ()) 0 '8') () 0 () ()
+() 2 4)
+49 'c_intptr_t' '__iso_c_binding' '' 1 ((PARAMETER UNKNOWN-INTENT
+UNKNOWN-PROC UNKNOWN UNKNOWN 0 0 IS_C_INTEROP IS_ISO_C) (INTEGER 8 1 1
+INTEGER ()) 0 0 () (CONSTANT (INTEGER 8 1 1 UNKNOWN ()) 0 '8') () 0 () ()
+() 2 5)
+50 'c_loc' '__iso_c_binding' '__iso_c_binding_c_loc' 1 ((PROCEDURE
+UNKNOWN-INTENT UNKNOWN-PROC UNKNOWN UNKNOWN 0 0 EXTERNAL FUNCTION PURE
+IS_ISO_C) (DERIVED 51 0 0 DERIVED ()) 0 0 () () 50 () () () 2 45)
+52 'c_long' '__iso_c_binding' '' 1 ((PARAMETER UNKNOWN-INTENT
+UNKNOWN-PROC UNKNOWN UNKNOWN 0 0 IS_C_INTEROP IS_ISO_C) (INTEGER 8 1 1
+INTEGER ()) 0 0 () (CONSTANT (INTEGER 8 1 1 UNKNOWN ()) 0 '8') () 0 () ()
+() 2 2)
+53 'c_long_double' '__iso_c_binding' '' 1 ((PARAMETER UNKNOWN-INTENT
+UNKNOWN-PROC UNKNOWN UNKNOWN 0 0 IS_C_INTEROP IS_ISO_C) (INTEGER 8 1 1
+REAL ()) 0 0 () (CONSTANT (INTEGER 8 1 1 UNKNOWN ()) 0 '10') () 0 () ()
+() 2 25)
+54 'c_long_double_complex' '__iso_c_binding' '' 1 ((PARAMETER
+UNKNOWN-INTENT UNKNOWN-PROC UNKNOWN UNKNOWN 0 0 IS_C_INTEROP IS_ISO_C) (
+INTEGER 8 1 1 COMPLEX ()) 0 0 () (CONSTANT (INTEGER 8 1 1 UNKNOWN ()) 0
+'10') () 0 () () () 2 28)
+55 'c_long_long' '__iso_c_binding' '' 1 ((PARAMETER UNKNOWN-INTENT
+UNKNOWN-PROC UNKNOWN UNKNOWN 0 0 IS_C_INTEROP IS_ISO_C) (INTEGER 8 1 1
+INTEGER ()) 0 0 () (CONSTANT (INTEGER 8 1 1 UNKNOWN ()) 0 '8') () 0 () ()
+() 2 3)
+56 'c_new_line' '__iso_c_binding' '' 1 ((PARAMETER UNKNOWN-INTENT
+UNKNOWN-PROC UNKNOWN UNKNOWN 0 0 IS_C_INTEROP IS_ISO_C) (CHARACTER 1 1 1
+CHARACTER ((CONSTANT (INTEGER 8 0 0 INTEGER ()) 0 '1'))) 0 0 () (
+CONSTANT (CHARACTER 1 1 1 UNKNOWN (())) 0 1 '\U0000000a') () 0 () () ()
+2 35)
+57 'c_null_char' '__iso_c_binding' '' 1 ((PARAMETER UNKNOWN-INTENT
+UNKNOWN-PROC UNKNOWN UNKNOWN 0 0 IS_C_INTEROP IS_ISO_C) (CHARACTER 1 1 1
+CHARACTER ((CONSTANT (INTEGER 8 0 0 INTEGER ()) 0 '1'))) 0 0 () (
+CONSTANT (CHARACTER 1 1 1 UNKNOWN (())) 0 1 '\U00000000') () 0 () () ()
+2 31)
+58 'c_null_funptr' '__iso_c_binding' '__iso_c_binding_c_null_funptr' 1 (
+(PARAMETER UNKNOWN-INTENT UNKNOWN-PROC UNKNOWN EXPLICIT-SAVE 0 0
+IS_BIND_C IS_C_INTEROP IS_ISO_C) (DERIVED 29 1 1 UNKNOWN ()) 0 0 () (
+STRUCTURE (DERIVED 29 0 0 DERIVED ()) 0 (((NULL (UNKNOWN 0 0 1 UNKNOWN ())
+0) ())) ()) () 0 () () () 2 42)
+59 'c_null_ptr' '__iso_c_binding' '__iso_c_binding_c_null_ptr' 1 ((
+PARAMETER UNKNOWN-INTENT UNKNOWN-PROC UNKNOWN EXPLICIT-SAVE 0 0
+IS_BIND_C IS_C_INTEROP IS_ISO_C) (DERIVED 51 1 1 UNKNOWN ()) 0 0 () (
+STRUCTURE (DERIVED 51 0 0 DERIVED ()) 0 (((NULL (UNKNOWN 0 0 1 UNKNOWN ())
+0) ())) ()) () 0 () () () 2 40)
+51 'c_ptr' '__iso_c_binding' '' 1 ((DERIVED UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN UNKNOWN 0 0 IS_BIND_C IS_C_INTEROP IS_ISO_C) (DERIVED 51 1 1
+UNKNOWN ()) 0 0 () () 0 ((60 '__c_ptr_c_address' (INTEGER 8 1 0 INTEGER
+()) () (UNKNOWN-FL UNKNOWN-INTENT UNKNOWN-PROC UNKNOWN UNKNOWN 0 0)
+UNKNOWN-ACCESS ())) UNKNOWN-ACCESS () () 2 39 0)
+61 'c_short' '__iso_c_binding' '' 1 ((PARAMETER UNKNOWN-INTENT
+UNKNOWN-PROC UNKNOWN UNKNOWN 0 0 IS_C_INTEROP IS_ISO_C) (INTEGER 8 1 1
+INTEGER ()) 0 0 () (CONSTANT (INTEGER 8 1 1 UNKNOWN ()) 0 '2') () 0 () ()
+() 2 1)
+62 'c_signed_char' '__iso_c_binding' '' 1 ((PARAMETER UNKNOWN-INTENT
+UNKNOWN-PROC UNKNOWN UNKNOWN 0 0 IS_C_INTEROP IS_ISO_C) (INTEGER 8 1 1
+INTEGER ()) 0 0 () (CONSTANT (INTEGER 8 1 1 UNKNOWN ()) 0 '1') () 0 () ()
+() 2 7)
+63 'c_size_t' '__iso_c_binding' '' 1 ((PARAMETER UNKNOWN-INTENT
+UNKNOWN-PROC UNKNOWN UNKNOWN 0 0 IS_C_INTEROP IS_ISO_C) (INTEGER 8 1 1
+INTEGER ()) 0 0 () (CONSTANT (INTEGER 8 1 1 UNKNOWN ()) 0 '8') () 0 () ()
+() 2 6)
+64 'c_vertical_tab' '__iso_c_binding' '' 1 ((PARAMETER UNKNOWN-INTENT
+UNKNOWN-PROC UNKNOWN UNKNOWN 0 0 IS_C_INTEROP IS_ISO_C) (CHARACTER 1 1 1
+CHARACTER ((CONSTANT (INTEGER 8 0 0 INTEGER ()) 0 '1'))) 0 0 () (
+CONSTANT (CHARACTER 1 1 1 UNKNOWN (())) 0 1 '\U0000000b') () 0 () () ()
+2 38)
+65 'cjmp' 'fmmjmp' 'cjmp' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN UNKNOWN 0 0) (INTEGER 8 0 0 INTEGER ()) 0 0 () () 0 () () () 0 0)
+66 'djmp' 'fmmjmp' 'djmp' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN UNKNOWN 0 0) (INTEGER 8 0 0 INTEGER ()) 0 0 () () 0 () () () 0 0)
+67 'ejmp' 'fmmjmp' 'ejmp' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN UNKNOWN 0 0) (INTEGER 8 0 0 INTEGER ()) 0 0 () () 0 () () () 0 0)
+68 'fjmp' 'fmmjmp' 'fjmp' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN UNKNOWN 0 0) (INTEGER 8 0 0 INTEGER ()) 0 0 () () 0 () () () 0 0)
+69 'fmm_c_integer' 'fmmkinds' '' 1 ((PARAMETER UNKNOWN-INTENT
+UNKNOWN-PROC UNKNOWN IMPLICIT-SAVE 0 0 IS_C_INTEROP IS_ISO_C) (INTEGER 8
+1 1 INTEGER ()) 0 0 () (CONSTANT (INTEGER 8 1 1 INTEGER ()) 0 '8') () 0
+() () () 0 0)
+70 'fmm_integer' 'fmmkinds' 'fmm_integer' 1 ((PARAMETER UNKNOWN-INTENT
+UNKNOWN-PROC UNKNOWN IMPLICIT-SAVE 0 0) (INTEGER 8 0 0 INTEGER ()) 0 0 ()
+(CONSTANT (INTEGER 8 0 0 INTEGER ()) 0 '8') () 0 () () () 0 0)
+71 'fmm_logical' 'fmmkinds' 'fmm_logical' 1 ((PARAMETER UNKNOWN-INTENT
+UNKNOWN-PROC UNKNOWN IMPLICIT-SAVE 0 0) (INTEGER 8 0 0 INTEGER ()) 0 0 ()
+(CONSTANT (INTEGER 8 0 0 INTEGER ()) 0 '8') () 0 () () () 0 0)
+72 'fmm_real' 'fmmkinds' 'fmm_real' 1 ((PARAMETER UNKNOWN-INTENT
+UNKNOWN-PROC UNKNOWN IMPLICIT-SAVE 0 0) (INTEGER 8 0 0 INTEGER ()) 0 0 ()
+(CONSTANT (INTEGER 8 0 0 INTEGER ()) 0 '4') () 0 () () () 0 0)
+73 'fmm_real_extended' 'fmmkinds' 'fmm_real_extended' 1 ((PARAMETER
+UNKNOWN-INTENT UNKNOWN-PROC UNKNOWN IMPLICIT-SAVE 0 0) (INTEGER 8 0 0
+INTEGER ()) 0 0 () (CONSTANT (INTEGER 8 0 0 INTEGER ()) 0 '8') () 0 () ()
+() 0 0)
+74 'fmm_real_itor' 'fmmkinds' 'fmm_real_itor' 1 ((PARAMETER
+UNKNOWN-INTENT UNKNOWN-PROC UNKNOWN IMPLICIT-SAVE 0 0) (INTEGER 8 0 0
+INTEGER ()) 0 0 () (CONSTANT (INTEGER 8 0 0 INTEGER ()) 0 '4') () 0 () ()
+() 0 0)
+75 'fmm_testalloc_integer' 'fmmkinds' 'fmm_testalloc_integer' 1 ((
+PARAMETER UNKNOWN-INTENT UNKNOWN-PROC UNKNOWN IMPLICIT-SAVE 0 0) (
+INTEGER 8 0 0 INTEGER ()) 0 0 () (CONSTANT (INTEGER 8 0 0 INTEGER ()) 0
+'8') () 0 () () () 0 0)
+76 'fmmjmp' 'fmmjmp' 'fmmjmp' 1 ((MODULE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN UNKNOWN 0 0) (UNKNOWN 0 0 0 UNKNOWN ()) 0 0 () () 0 () () () 0 0)
+77 'fmmkinds' 'fmmkinds' 'fmmkinds' 1 ((MODULE UNKNOWN-INTENT
+UNKNOWN-PROC UNKNOWN UNKNOWN 0 0) (UNKNOWN 0 0 0 UNKNOWN ()) 0 0 () () 0
+() () () 0 0)
+78 'gjmp' 'fmmjmp' 'gjmp' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN UNKNOWN 0 0) (INTEGER 8 0 0 INTEGER ()) 0 0 () () 0 () () () 0 0)
+79 'hjmp' 'fmmjmp' 'hjmp' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN UNKNOWN 0 0) (INTEGER 8 0 0 INTEGER ()) 0 0 () () 0 () () () 0 0)
+80 'ijmp' 'fmmjmp' 'ijmp' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN UNKNOWN 0 0) (INTEGER 8 0 0 INTEGER ()) 0 0 () () 0 () () () 0 0)
+81 'jjmp' 'fmmjmp' 'jjmp' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN UNKNOWN 0 0) (INTEGER 8 0 0 INTEGER ()) 0 0 () () 0 () () () 0 0)
+82 'jmp' 'fmmjmp' 'jmp' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC UNKNOWN
+UNKNOWN 0 0) (LOGICAL 8 0 0 LOGICAL ()) 0 0 () () 0 () () () 0 0)
+83 'jmpb' 'fmmjmp' 'jmpb' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN UNKNOWN 0 0) (LOGICAL 8 0 0 LOGICAL ()) 0 0 () () 0 () () () 0 0)
+84 'jmpg' 'fmmjmp' 'jmpg' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN UNKNOWN 0 0) (LOGICAL 8 0 0 LOGICAL ()) 0 0 () () 0 () () () 0 0)
+85 'jmph' 'fmmjmp' 'jmph' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN UNKNOWN 0 0) (LOGICAL 8 0 0 LOGICAL ()) 0 0 () () 0 () () () 0 0)
+86 'jmpj' 'fmmjmp' 'jmpj' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN UNKNOWN 0 0) (LOGICAL 8 0 0 LOGICAL ()) 0 0 () () 0 () () () 0 0)
+87 'jmpjp' 'fmmjmp' 'jmpjp' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN UNKNOWN 0 0) (LOGICAL 8 0 0 LOGICAL ()) 0 0 () () 0 () () () 0 0)
+88 'jmpn' 'fmmjmp' 'jmpn' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN UNKNOWN 0 0) (LOGICAL 8 0 0 LOGICAL ()) 0 0 () () 0 () () () 0 0)
+89 'jmpp' 'fmmjmp' 'jmpp' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN UNKNOWN 0 0) (LOGICAL 8 0 0 LOGICAL ()) 0 0 () () 0 () () () 0 0)
+90 'jmpupd' 'fmmjmp' 'jmpupd' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN UNKNOWN 0 0) (LOGICAL 8 0 0 LOGICAL ()) 0 0 () () 0 () () () 0 0)
+91 'kjmp' 'fmmjmp' 'kjmp' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN UNKNOWN 0 0) (INTEGER 8 0 0 INTEGER ()) 0 0 () () 0 () () () 0 0)
+92 'mjmp' 'fmmjmp' 'mjmp' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN UNKNOWN 0 0) (INTEGER 8 0 0 INTEGER ()) 0 0 () () 0 () () () 0 0)
+93 'mp_integer_processes' 'fmmkinds' 'mp_integer_processes' 1 ((
+PARAMETER UNKNOWN-INTENT UNKNOWN-PROC UNKNOWN IMPLICIT-SAVE 0 0) (
+INTEGER 8 0 0 INTEGER ()) 0 0 () (CONSTANT (INTEGER 8 0 0 INTEGER ()) 0
+'4') () 0 () () () 0 0)
+94 'mp_real_max' 'fmmkinds' 'mp_real_max' 1 ((PARAMETER UNKNOWN-INTENT
+UNKNOWN-PROC UNKNOWN IMPLICIT-SAVE 0 0) (INTEGER 8 0 0 INTEGER ()) 0 0 ()
+(CONSTANT (INTEGER 8 0 0 INTEGER ()) 0 '8') () 0 () () () 0 0)
+95 'njmp' 'fmmjmp' 'njmp' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN UNKNOWN 0 0) (INTEGER 8 0 0 INTEGER ()) 0 0 () () 0 () () () 0 0)
+96 'qjmp' 'fmmjmp' 'qjmp' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN UNKNOWN 0 0) (INTEGER 8 0 0 INTEGER ()) 0 0 () () 0 () () () 0 0)
+97 'rjmp' 'fmmjmp' 'rjmp' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN UNKNOWN 0 0) (INTEGER 8 0 0 INTEGER ()) 0 0 () () 0 () () () 0 0)
+98 'sjmp' 'fmmjmp' 'sjmp' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN UNKNOWN 0 0) (INTEGER 8 0 0 INTEGER ()) 0 0 () () 0 () () () 0 0)
+99 'telem' 'fmmkinds' 'telem' 1 ((DERIVED UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN UNKNOWN 0 0 POINTER_COMP) (UNKNOWN 0 0 0 UNKNOWN ()) 0 0 () () 0
+((100 'pos' (INTEGER 8 0 0 INTEGER ()) () (UNKNOWN-FL UNKNOWN-INTENT
+UNKNOWN-PROC UNKNOWN UNKNOWN 0 0) UNKNOWN-ACCESS ()) (101 'val' (
+INTEGER 8 0 0 INTEGER ()) () (UNKNOWN-FL UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN UNKNOWN 0 0) UNKNOWN-ACCESS ()) (102 'prev' (DERIVED 99 0 0
+DERIVED ()) () (UNKNOWN-FL UNKNOWN-INTENT UNKNOWN-PROC UNKNOWN UNKNOWN 0
+0 POINTER) UNKNOWN-ACCESS ()) (103 'next' (DERIVED 99 0 0 DERIVED ()) ()
+(UNKNOWN-FL UNKNOWN-INTENT UNKNOWN-PROC UNKNOWN UNKNOWN 0 0 POINTER)
+UNKNOWN-ACCESS ())) PUBLIC (() () () ()) () 0 0 48666809)
+104 'tjmp' 'fmmjmp' 'tjmp' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN UNKNOWN 0 0) (INTEGER 8 0 0 INTEGER ()) 0 0 () () 0 () () () 0 0)
+105 'tsndibox' 'fmmkinds' 'tsndibox' 1 ((DERIVED UNKNOWN-INTENT
+UNKNOWN-PROC UNKNOWN UNKNOWN 0 0 POINTER_COMP) (UNKNOWN 0 0 0 UNKNOWN ())
+0 0 () () 0 ((106 'sndibox' (INTEGER 8 0 0 INTEGER ()) (1 DEFERRED () ())
+(UNKNOWN-FL UNKNOWN-INTENT UNKNOWN-PROC UNKNOWN UNKNOWN 0 0 DIMENSION
+POINTER) UNKNOWN-ACCESS ())) PUBLIC (() () () ()) () 0 0 23467457)
+107 'tsndomegatree' 'fmmkinds' 'tsndomegatree' 1 ((DERIVED
+UNKNOWN-INTENT UNKNOWN-PROC UNKNOWN UNKNOWN 0 0 POINTER_COMP) (UNKNOWN 0
+0 0 UNKNOWN ()) 0 0 () () 0 ((108 'sndomegatree' (REAL 4 0 0 REAL ()) (
+2 DEFERRED () () () ()) (UNKNOWN-FL UNKNOWN-INTENT UNKNOWN-PROC UNKNOWN
+UNKNOWN 0 0 DIMENSION POINTER) UNKNOWN-ACCESS ())) PUBLIC (() () () ())
+() 0 0 52082976)
+109 'tsndq' 'fmmkinds' 'tsndq' 1 ((DERIVED UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN UNKNOWN 0 0 POINTER_COMP) (UNKNOWN 0 0 0 UNKNOWN ()) 0 0 () () 0
+((110 'sndq' (REAL 4 0 0 REAL ()) (1 DEFERRED () ()) (UNKNOWN-FL
+UNKNOWN-INTENT UNKNOWN-PROC UNKNOWN UNKNOWN 0 0 DIMENSION POINTER)
+UNKNOWN-ACCESS ())) PUBLIC (() () () ()) () 0 0 8443122)
+111 'tsndxyz' 'fmmkinds' 'tsndxyz' 1 ((DERIVED UNKNOWN-INTENT
+UNKNOWN-PROC UNKNOWN UNKNOWN 0 0 POINTER_COMP) (UNKNOWN 0 0 0 UNKNOWN ())
+0 0 () () 0 ((112 'sndxyz' (REAL 4 0 0 REAL ()) (2 DEFERRED () () () ())
+(UNKNOWN-FL UNKNOWN-INTENT UNKNOWN-PROC UNKNOWN UNKNOWN 0 0 DIMENSION
+POINTER) UNKNOWN-ACCESS ())) PUBLIC (() () () ()) () 0 0 65135546)
+113 'vjmp' 'fmmjmp' 'vjmp' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN UNKNOWN 0 0) (INTEGER 8 0 0 INTEGER ()) 0 0 () () 0 () () () 0 0)
+114 'wjmp' 'fmmjmp' 'wjmp' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN UNKNOWN 0 0) (INTEGER 8 0 0 INTEGER ()) 0 0 () () 0 () () () 0 0)
+23 'cptr' '__iso_c_binding' 'cptr' 22 ((DERIVED IN UNKNOWN-PROC UNKNOWN
+UNKNOWN 0 0 VALUE DUMMY) (DERIVED 29 0 0 DERIVED ()) 0 0 () () 0 () () ()
+0 0 0)
+24 'fptr' '__iso_c_binding' 'fptr' 22 ((VARIABLE UNKNOWN-INTENT
+UNKNOWN-PROC UNKNOWN UNKNOWN 0 0 DUMMY PROC_POINTER) (VOID 0 0 0 VOID ())
+0 0 () () 0 () () () 0 0)
+20 'shape' '__iso_c_binding' 'shape' 17 ((VARIABLE IN UNKNOWN-PROC
+UNKNOWN UNKNOWN 0 0 DIMENSION OPTIONAL DUMMY) (VOID 8 0 0 VOID ()) 0 0 ()
+(1 ASSUMED_SHAPE (CONSTANT (INTEGER 8 0 0 INTEGER ()) 0 '1') ()) 0 () ()
+() 0 0)
+8 'c_ptr_1' '__iso_c_binding' 'c_ptr_1' 7 ((DERIVED IN UNKNOWN-PROC
+UNKNOWN UNKNOWN 0 0 VALUE DUMMY) (DERIVED 51 0 0 DERIVED ()) 0 0 () () 0
+() () () 0 0 0)
+9 'c_ptr_2' '__iso_c_binding' 'c_ptr_2' 7 ((DERIVED IN UNKNOWN-PROC
+UNKNOWN UNKNOWN 0 0 OPTIONAL VALUE DUMMY) (DERIVED 51 0 0 DERIVED ()) 0
+0 () () 0 () () () 0 0 0)
+18 'cptr' '__iso_c_binding' 'cptr' 17 ((DERIVED IN UNKNOWN-PROC UNKNOWN
+UNKNOWN 0 0 VALUE DUMMY) (DERIVED 51 0 0 DERIVED ()) 0 0 () () 0 () () ()
+0 0 0)
+19 'fptr' '__iso_c_binding' 'fptr' 17 ((VARIABLE UNKNOWN-INTENT
+UNKNOWN-PROC UNKNOWN UNKNOWN 0 0 POINTER DUMMY) (VOID 0 0 0 VOID ()) 0 0
+() () 0 () () () 0 0)
+)
+
+('__iso_c_binding' 0 2 'ajmp' 0 3 'bjmp' 0 4 'c_alert' 0 5 'c_associated'
+0 6 'c_backspace' 0 10 'c_bool' 0 11 'c_carriage_return' 0 12 'c_char' 0
+13 'c_double' 0 14 'c_double_complex' 0 15 'c_f_pointer' 0 16
+'c_f_procpointer' 0 21 'c_float' 0 25 'c_float_complex' 0 26 'c_form_feed'
+0 27 'c_funloc' 0 28 'c_funptr' 0 29 'c_horizontal_tab' 0 31 'c_int' 0
+32 'c_int128_t' 0 33 'c_int16_t' 0 34 'c_int32_t' 0 35 'c_int64_t' 0 36
+'c_int8_t' 0 37 'c_int_fast128_t' 0 38 'c_int_fast16_t' 0 39
+'c_int_fast32_t' 0 40 'c_int_fast64_t' 0 41 'c_int_fast8_t' 0 42
+'c_int_least128_t' 0 43 'c_int_least16_t' 0 44 'c_int_least32_t' 0 45
+'c_int_least64_t' 0 46 'c_int_least8_t' 0 47 'c_intmax_t' 0 48
+'c_intptr_t' 0 49 'c_loc' 0 50 'c_long' 0 52 'c_long_double' 0 53
+'c_long_double_complex' 0 54 'c_long_long' 0 55 'c_new_line' 0 56
+'c_null_char' 0 57 'c_null_funptr' 0 58 'c_null_ptr' 0 59 'c_ptr' 0 51
+'c_short' 0 61 'c_signed_char' 0 62 'c_size_t' 0 63 'c_vertical_tab' 0
+64 'cjmp' 0 65 'djmp' 0 66 'ejmp' 0 67 'fjmp' 0 68 'fmm_c_integer' 0 69
+'fmm_integer' 0 70 'fmm_logical' 0 71 'fmm_real' 0 72 'fmm_real_extended'
+0 73 'fmm_real_itor' 0 74 'fmm_testalloc_integer' 0 75 'fmmjmp' 0 76
+'fmmkinds' 0 77 'gjmp' 0 78 'hjmp' 0 79 'ijmp' 0 80 'jjmp' 0 81 'jmp' 0
+82 'jmpb' 0 83 'jmpg' 0 84 'jmph' 0 85 'jmpj' 0 86 'jmpjp' 0 87 'jmpn' 0
+88 'jmpp' 0 89 'jmpupd' 0 90 'kjmp' 0 91 'mjmp' 0 92
+'mp_integer_processes' 0 93 'mp_real_max' 0 94 'njmp' 0 95 'qjmp' 0 96
+'rjmp' 0 97 'sjmp' 0 98 'telem' 0 99 'tjmp' 0 104 'tsndibox' 0 105
+'tsndomegatree' 0 107 'tsndq' 0 109 'tsndxyz' 0 111 'vjmp' 0 113 'wjmp'
+0 114)

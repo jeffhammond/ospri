@@ -1,0 +1,82 @@
+2011-11-08 10:45:40.913 (INFO ) [0xfff8fe05770] R00-M0-N01-J07-2:6148:ibm.runjob.client.options.Parser: set local socket to runjob_mux from properties file
+2011-11-08 10:45:42.957 (INFO ) [0xfff8fe05770] R00-M0-N01-J07-2:4555:ibm.runjob.client.Job: job 4555 started
+MPIDI_Process.*
+  verbose      : 1
+  statistics   : 0
+  contexts     : 32
+  commthreads  : 0
+  context_post : 1
+  short_limit  : 113
+  eager_limit  : 2049
+  rma_pending  : 1000
+  shmem_pt2pt  : 1
+  optimized.collectives : 0
+  optimized.subcomms    : 1
+The following PAMI_* environment variables were specified:
+  PAMI_VERBOSE=1
+  PAMI_NUMCLIENTS=1
+The following BG_* environment variables were specified:
+  BG_APPAGENT1=/bgsys/drivers/ppcfloor/agents/bin/comm.elf
+  BG_SHAREDMEMSIZE=32MB
+max = 1000000 doubles, repetitions = 100 
+target =    0 size =          1 put: 8.488654e-05 sec 9.424344e-02 MB/s acc: 1.511312e-04 sec  5.293413e-02 MB/s
+target =    1 size =          1 put: 1.175362e-04 sec 6.806415e-02 MB/s acc: 1.474026e-04 sec  5.427314e-02 MB/s
+target =    0 size =          2 put: 8.455454e-05 sec 1.892270e-01 MB/s acc: 1.502861e-04 sec  1.064636e-01 MB/s
+target =    1 size =          2 put: 1.169002e-04 sec 1.368688e-01 MB/s acc: 1.471451e-04 sec  1.087362e-01 MB/s
+target =    0 size =          4 put: 8.486685e-05 sec 3.770612e-01 MB/s acc: 1.502362e-04 sec  2.129980e-01 MB/s
+target =    1 size =          4 put: 1.168412e-04 sec 2.738760e-01 MB/s acc: 1.468608e-04 sec  2.178934e-01 MB/s
+target =    0 size =          8 put: 8.484957e-05 sec 7.542760e-01 MB/s acc: 1.510451e-04 sec  4.237144e-01 MB/s
+target =    1 size =          8 put: 1.169086e-04 sec 5.474362e-01 MB/s acc: 1.468491e-04 sec  4.358214e-01 MB/s
+target =    0 size =         16 put: 8.512103e-05 sec 1.503741e+00 MB/s acc: 1.517363e-04 sec  8.435687e-01 MB/s
+target =    1 size =         16 put: 1.169683e-04 sec 1.094313e+00 MB/s acc: 1.480304e-04 sec  8.646875e-01 MB/s
+target =    0 size =         32 put: 8.526146e-05 sec 3.002529e+00 MB/s acc: 1.526215e-04 sec  1.677352e+00 MB/s
+target =    1 size =         32 put: 1.169289e-04 sec 2.189365e+00 MB/s acc: 1.484013e-04 sec  1.725052e+00 MB/s
+target =    0 size =         64 put: 8.522349e-05 sec 6.007733e+00 MB/s acc: 1.562124e-04 sec  3.277589e+00 MB/s
+target =    1 size =         64 put: 1.174077e-04 sec 4.360871e+00 MB/s acc: 1.536701e-04 sec  3.331812e+00 MB/s
+target =    0 size =        128 put: 8.601999e-05 sec 1.190421e+01 MB/s acc: 1.615530e-04 sec  6.338478e+00 MB/s
+target =    1 size =        128 put: 1.170382e-04 sec 8.749278e+00 MB/s acc: 1.568300e-04 sec  6.529362e+00 MB/s
+target =    0 size =        256 put: 8.668221e-05 sec 2.362653e+01 MB/s acc: 1.722084e-04 sec  1.189257e+01 MB/s
+target =    1 size =        256 put: 1.170910e-04 sec 1.749066e+01 MB/s acc: 1.671708e-04 sec  1.225095e+01 MB/s
+target =    0 size =        512 put: 8.762525e-05 sec 4.674452e+01 MB/s acc: 2.197144e-04 sec  1.864239e+01 MB/s
+target =    1 size =        512 put: 1.173229e-04 sec 3.491221e+01 MB/s acc: 2.101881e-04 sec  1.948730e+01 MB/s
+target =    0 size =       1024 put: 8.869724e-05 sec 9.235913e+01 MB/s acc: 2.633333e-04 sec  3.110886e+01 MB/s
+target =    1 size =       1024 put: 1.409454e-04 sec 5.812181e+01 MB/s acc: 2.551737e-04 sec  3.210362e+01 MB/s
+target =    0 size =       2048 put: 9.049431e-05 sec 1.810501e+02 MB/s acc: 3.482578e-04 sec  4.704561e+01 MB/s
+target =    1 size =       2048 put: 1.411797e-04 sec 1.160507e+02 MB/s acc: 3.361695e-04 sec  4.873731e+01 MB/s
+target =    0 size =       4096 put: 9.216484e-05 sec 3.555369e+02 MB/s acc: 5.169674e-04 sec  6.338504e+01 MB/s
+target =    1 size =       4096 put: 1.410399e-04 sec 2.323314e+02 MB/s acc: 5.068200e-04 sec  6.465412e+01 MB/s
+target =    0 size =       8192 put: 9.531950e-05 sec 6.875403e+02 MB/s acc: 8.545440e-04 sec  7.669119e+01 MB/s
+target =    1 size =       8192 put: 1.647697e-04 sec 3.977430e+02 MB/s acc: 8.467694e-04 sec  7.739534e+01 MB/s
+target =    0 size =      16384 put: 1.017581e-04 sec 1.288075e+03 MB/s acc: 1.553158e-03 sec  8.439067e+01 MB/s
+target =    1 size =      16384 put: 1.925930e-04 sec 6.805646e+02 MB/s acc: 1.521616e-03 sec  8.613999e+01 MB/s
+target =    0 size =      32768 put: 1.145763e-04 sec 2.287943e+03 MB/s acc: 2.903030e-03 sec  9.030013e+01 MB/s
+target =    1 size =      32768 put: 2.818852e-04 sec 9.299673e+02 MB/s acc: 2.874621e-03 sec  9.119255e+01 MB/s
+target =    0 size =      65536 put: 1.404140e-04 sec 3.733871e+03 MB/s acc: 5.602346e-03 sec  9.358365e+01 MB/s
+target =    1 size =      65536 put: 4.220005e-04 sec 1.242387e+03 MB/s acc: 5.577497e-03 sec  9.400059e+01 MB/s
+target =    0 size =     131072 put: 1.919730e-04 sec 5.462103e+03 MB/s acc: 1.100406e-02 sec  9.528994e+01 MB/s
+target =    1 size =     131072 put: 7.176945e-04 sec 1.461034e+03 MB/s acc: 1.098339e-02 sec  9.546929e+01 MB/s
+target =    0 size =     262144 put: 2.946173e-04 sec 7.118225e+03 MB/s acc: 2.183206e-02 sec  9.605836e+01 MB/s
+target =    1 size =     262144 put: 1.304374e-03 sec 1.607784e+03 MB/s acc: 2.180634e-02 sec  9.617168e+01 MB/s
+target =    0 size =     524288 put: 5.002539e-04 sec 8.384351e+03 MB/s acc: 4.348152e-02 sec  9.646176e+01 MB/s
+target =    1 size =     524288 put: 2.483415e-03 sec 1.688926e+03 MB/s acc: 4.345879e-02 sec  9.651221e+01 MB/s
+target =    0 size =    1048576 put: 9.115136e-04 sec 9.202944e+03 MB/s acc: 8.679346e-02 sec  9.665023e+01 MB/s
+target =    1 size =    1048576 put: 4.844605e-03 sec 1.731536e+03 MB/s acc: 8.674758e-02 sec  9.670135e+01 MB/s
+target =    0 size =    2097152 put: 1.831031e-03 sec 9.162715e+03 MB/s acc: 1.734794e-01 sec  9.671012e+01 MB/s
+target =    1 size =    2097152 put: 9.566395e-03 sec 1.753766e+03 MB/s acc: 1.733286e-01 sec  9.679426e+01 MB/s
+target =    0 size =    4194304 put: 4.483630e-03 sec 7.483765e+03 MB/s acc: 3.467374e-01 sec  9.677188e+01 MB/s
+target =    1 size =    4194304 put: 1.903614e-02 sec 1.762670e+03 MB/s acc: 3.465169e-01 sec  9.683348e+01 MB/s
+target =    0 size =    8388608 put: 8.889003e-03 sec 7.549650e+03 MB/s acc: 6.932332e-01 sec  9.680561e+01 MB/s
+target =    1 size =    8388608 put: 3.791266e-02 sec 1.770091e+03 MB/s acc: 6.928200e-01 sec  9.686334e+01 MB/s
+target =    0 size =   16777216 put: 1.734094e-02 sec 7.739932e+03 MB/s acc: 1.386225e+00 sec  9.682245e+01 MB/s
+target =    1 size =   16777216 put: 7.566064e-02 sec 1.773944e+03 MB/s acc: 1.385422e+00 sec  9.687856e+01 MB/s
+target =    0 size =   33554432 put: 3.439104e-02 sec 7.805389e+03 MB/s acc: 2.772210e+00 sec  9.683084e+01 MB/s
+target =    1 size =   33554432 put: 1.511592e-01 sec 1.775846e+03 MB/s acc: 2.770632e+00 sec  9.688602e+01 MB/s
+target =    0 size =   67108864 put: 6.914391e-02 sec 7.764543e+03 MB/s acc: 5.544116e+00 sec  9.683615e+01 MB/s
+2011-11-08 11:15:45.158 (WARN ) [0xfff8fe05770] R00-M0-N01-J07-2:ibm.runjob.LogSignalInfo: received signal 15
+2011-11-08 11:15:45.158 (WARN ) [0xfff8fe05770] R00-M0-N01-J07-2:ibm.runjob.LogSignalInfo: signal sent from USER
+2011-11-08 11:15:45.158 (WARN ) [0xfff8fe05770] R00-M0-N01-J07-2:ibm.runjob.LogSignalInfo: sent from pid 26792
+2011-11-08 11:15:45.159 (WARN ) [0xfff8fe05770] R00-M0-N01-J07-2:ibm.runjob.LogSignalInfo: could not read /proc/26792/exe
+2011-11-08 11:15:45.159 (WARN ) [0xfff8fe05770] R00-M0-N01-J07-2:ibm.runjob.LogSignalInfo: Permission denied
+2011-11-08 11:15:45.159 (WARN ) [0xfff8fe05770] R00-M0-N01-J07-2:ibm.runjob.LogSignalInfo: sent from uid 0 (root)
+2011-11-08 11:15:48.052 (WARN ) [0xfff8fe05770] R00-M0-N01-J07-2:4555:ibm.runjob.client.Job: terminated by signal 9
+2011-11-08 11:15:48.052 (WARN ) [0xfff8fe05770] R00-M0-N01-J07-2:4555:ibm.runjob.client.Job: abnormal termination by signal 9 from rank 0

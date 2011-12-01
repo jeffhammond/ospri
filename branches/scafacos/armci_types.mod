@@ -1,0 +1,68 @@
+GFORTRAN module version '4' created from mp_wrapper.f on Fri Nov 11 14:33:59 2011
+MD5:c2fa3fa706948b533674a869cd54a93f -- If you edit this, you'll get what you deserve.
+
+(() () () () () () () () () () () () () () () () () () () () () () () ()
+() () ())
+
+()
+
+()
+
+()
+
+()
+
+()
+
+(2 '__iso_c_binding' '__iso_c_binding' '__iso_c_binding' 1 ((MODULE
+UNKNOWN-INTENT UNKNOWN-PROC UNKNOWN UNKNOWN 0 0 INTRINSIC) (UNKNOWN 0 0
+0 UNKNOWN ()) 0 0 () () 0 () () () 2 0)
+3 'armci_giov_t' 'armci_types' '' 1 ((DERIVED UNKNOWN-INTENT
+UNKNOWN-PROC UNKNOWN UNKNOWN 0 0 IS_BIND_C) (UNKNOWN 0 1 0 UNKNOWN ()) 0
+0 () () 0 ((4 'src_ptr_array' (DERIVED 5 0 0 DERIVED ()) () (UNKNOWN-FL
+UNKNOWN-INTENT UNKNOWN-PROC UNKNOWN UNKNOWN 0 0) UNKNOWN-ACCESS ()) (6
+'dst_ptr_array' (DERIVED 5 0 0 DERIVED ()) () (UNKNOWN-FL UNKNOWN-INTENT
+UNKNOWN-PROC UNKNOWN UNKNOWN 0 0) UNKNOWN-ACCESS ()) (7 'ptr_array_length'
+(INTEGER 8 1 0 INTEGER ()) () (UNKNOWN-FL UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN UNKNOWN 0 0) UNKNOWN-ACCESS ()) (8 'bytes' (INTEGER 8 1 0
+INTEGER ()) () (UNKNOWN-FL UNKNOWN-INTENT UNKNOWN-PROC UNKNOWN UNKNOWN 0
+0) UNKNOWN-ACCESS ())) PUBLIC (() () () ()) () 0 0 32960066)
+9 'armci_hdl_t' 'armci_types' '' 1 ((DERIVED UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN UNKNOWN 0 0 IS_BIND_C) (UNKNOWN 0 1 0 UNKNOWN ()) 0 0 () () 0 (
+(10 'mydata' (INTEGER 8 1 0 INTEGER ()) (1 EXPLICIT (CONSTANT (INTEGER 8
+0 0 INTEGER ()) 0 '1') (CONSTANT (INTEGER 8 0 0 INTEGER ()) 0 '4')) (
+UNKNOWN-FL UNKNOWN-INTENT UNKNOWN-PROC UNKNOWN UNKNOWN 0 0 DIMENSION)
+UNKNOWN-ACCESS ()) (11 'dummy' (REAL 8 1 0 REAL ()) (1 EXPLICIT (
+CONSTANT (INTEGER 8 0 0 INTEGER ()) 0 '1') (CONSTANT (INTEGER 8 0 0
+INTEGER ()) 0 '72')) (UNKNOWN-FL UNKNOWN-INTENT UNKNOWN-PROC UNKNOWN
+UNKNOWN 0 0 DIMENSION) UNKNOWN-ACCESS ())) PUBLIC (() () () ()) () 0 0
+18641121)
+12 'armci_size_t' 'armci_types' '' 1 ((PARAMETER UNKNOWN-INTENT
+UNKNOWN-PROC UNKNOWN IMPLICIT-SAVE 0 0 IS_C_INTEROP IS_ISO_C) (INTEGER 8
+1 1 INTEGER ()) 0 0 () (CONSTANT (INTEGER 8 1 1 INTEGER ()) 0 '4') () 0
+() () () 0 0)
+13 'armci_types' 'armci_types' 'armci_types' 1 ((MODULE UNKNOWN-INTENT
+UNKNOWN-PROC UNKNOWN UNKNOWN 0 0) (UNKNOWN 0 0 0 UNKNOWN ()) 0 0 () () 0
+() () () 0 0)
+14 'c_double' '__iso_c_binding' '' 1 ((PARAMETER UNKNOWN-INTENT
+UNKNOWN-PROC UNKNOWN UNKNOWN 0 0 IS_C_INTEROP IS_ISO_C) (INTEGER 8 1 1
+REAL ()) 0 0 () (CONSTANT (INTEGER 8 1 1 UNKNOWN ()) 0 '8') () 0 () () ()
+2 24)
+15 'c_int' '__iso_c_binding' '' 1 ((PARAMETER UNKNOWN-INTENT
+UNKNOWN-PROC UNKNOWN UNKNOWN 0 0 IS_C_INTEROP IS_ISO_C) (INTEGER 8 1 1
+INTEGER ()) 0 0 () (CONSTANT (INTEGER 8 1 1 UNKNOWN ()) 0 '4') () 0 () ()
+() 2 0)
+16 'c_long' '__iso_c_binding' '' 1 ((PARAMETER UNKNOWN-INTENT
+UNKNOWN-PROC UNKNOWN UNKNOWN 0 0 IS_C_INTEROP IS_ISO_C) (INTEGER 8 1 1
+INTEGER ()) 0 0 () (CONSTANT (INTEGER 8 1 1 UNKNOWN ()) 0 '8') () 0 () ()
+() 2 2)
+5 'c_ptr' '__iso_c_binding' '' 1 ((DERIVED UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN UNKNOWN 0 0 IS_BIND_C IS_C_INTEROP IS_ISO_C) (DERIVED 5 1 1
+UNKNOWN ()) 0 0 () () 0 ((17 '__c_ptr_c_address' (INTEGER 8 1 0 INTEGER
+()) () (UNKNOWN-FL UNKNOWN-INTENT UNKNOWN-PROC UNKNOWN UNKNOWN 0 0)
+UNKNOWN-ACCESS ())) UNKNOWN-ACCESS () () 2 39 0)
+)
+
+('__iso_c_binding' 0 2 'armci_giov_t' 0 3 'armci_hdl_t' 0 9 'armci_size_t'
+0 12 'armci_types' 0 13 'c_double' 0 14 'c_int' 0 15 'c_long' 0 16 'c_ptr'
+0 5)
