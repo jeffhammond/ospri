@@ -13,9 +13,9 @@
 #include <mpi.h>
 
 #ifdef __bgp__
-#  include <spi/kernel_interface.h>
-#  include <common/bgp_personality.h>
-#  include <common/bgp_personality_inlines.h>
+#  include </bgsys/drivers/ppcfloor/arch/include/spi/kernel_interface.h>
+#  include </bgsys/drivers/ppcfloor/arch/include/common/bgp_personality.h>
+#  include </bgsys/drivers/ppcfloor/arch/include/common/bgp_personality_inlines.h>
 #endif
 
 #ifdef __bgq__
