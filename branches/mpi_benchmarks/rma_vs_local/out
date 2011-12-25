@@ -1,0 +1,26 @@
+max = 10000000 bytes count = 1000 
+size =          1 time: put = 1.621008e-06 s copy = 2.547026e-06 s get = 4.310608e-07 s BW put = 6.169001e+05 B/s copy = 3.926148e+05 B/s get = 2.319858e+06 B/s 
+size =          2 time: put = 4.329681e-07 s copy = 3.609657e-07 s get = 4.310608e-07 s BW put = 4.619278e+06 B/s copy = 5.540692e+06 B/s get = 4.639717e+06 B/s 
+size =          4 time: put = 4.389286e-07 s copy = 3.550053e-07 s get = 1.446962e-06 s BW put = 9.113099e+06 B/s copy = 1.126744e+07 B/s get = 2.764412e+06 B/s 
+size =          8 time: put = 4.391670e-07 s copy = 3.540516e-07 s get = 4.320145e-07 s BW put = 1.821630e+07 B/s copy = 2.259558e+07 B/s get = 1.851790e+07 B/s 
+size =         16 time: put = 4.439354e-07 s copy = 3.550053e-07 s get = 4.489422e-07 s BW put = 3.604128e+07 B/s copy = 4.506975e+07 B/s get = 3.563933e+07 B/s 
+size =         32 time: put = 4.558563e-07 s copy = 3.681183e-07 s get = 4.470348e-07 s BW put = 7.019756e+07 B/s copy = 8.692858e+07 B/s get = 7.158279e+07 B/s 
+size =         64 time: put = 4.429817e-07 s copy = 3.750324e-07 s get = 4.420280e-07 s BW put = 1.444755e+08 B/s copy = 1.706519e+08 B/s get = 1.447872e+08 B/s 
+size =        128 time: put = 4.439354e-07 s copy = 3.650188e-07 s get = 5.090237e-07 s BW put = 2.883302e+08 B/s copy = 3.506668e+08 B/s get = 2.514618e+08 B/s 
+size =        256 time: put = 6.830692e-07 s copy = 7.100105e-07 s get = 4.820824e-07 s BW put = 3.747790e+08 B/s copy = 3.605580e+08 B/s get = 5.310296e+08 B/s 
+size =        512 time: put = 7.240772e-07 s copy = 3.778934e-07 s get = 4.589558e-07 s BW put = 7.071069e+08 B/s copy = 1.354879e+09 B/s get = 1.115576e+09 B/s 
+size =       1024 time: put = 4.889965e-07 s copy = 4.110336e-07 s get = 4.789829e-07 s BW put = 2.094084e+09 B/s copy = 2.491280e+09 B/s get = 2.137863e+09 B/s 
+size =       2048 time: put = 5.538464e-07 s copy = 4.830360e-07 s get = 5.500317e-07 s BW put = 3.697776e+09 B/s copy = 4.239849e+09 B/s get = 3.723422e+09 B/s 
+size =       4096 time: put = 6.449223e-07 s copy = 5.691051e-07 s get = 6.489754e-07 s BW put = 6.351153e+09 B/s copy = 7.197264e+09 B/s get = 6.311488e+09 B/s 
+size =       8192 time: put = 8.509159e-07 s copy = 7.681847e-07 s get = 9.210110e-07 s BW put = 9.627273e+09 B/s copy = 1.066410e+10 B/s get = 8.894574e+09 B/s 
+size =      16384 time: put = 1.435995e-06 s copy = 1.325130e-06 s get = 1.863956e-06 s BW put = 1.140951e+10 B/s copy = 1.236407e+10 B/s get = 8.789905e+09 B/s 
+size =      32768 time: put = 2.950907e-06 s copy = 2.899170e-06 s get = 4.114866e-06 s BW put = 1.110438e+10 B/s copy = 1.130255e+10 B/s get = 7.963321e+09 B/s 
+size =      65536 time: put = 5.542994e-06 s copy = 5.400181e-06 s get = 9.073019e-06 s BW put = 1.182321e+10 B/s copy = 1.213589e+10 B/s get = 7.223175e+09 B/s 
+size =     131072 time: put = 1.077890e-05 s copy = 1.048589e-05 s get = 1.424909e-05 s BW put = 1.216005e+10 B/s copy = 1.249985e+10 B/s get = 9.198625e+09 B/s 
+size =     262144 time: put = 2.072406e-05 s copy = 2.054811e-05 s get = 2.691793e-05 s BW put = 1.264926e+10 B/s copy = 1.275758e+10 B/s get = 9.738637e+09 B/s 
+size =     524288 time: put = 4.181814e-05 s copy = 4.163790e-05 s get = 5.198288e-05 s BW put = 1.253733e+10 B/s copy = 1.259161e+10 B/s get = 1.008578e+10 B/s 
+size =    1048576 time: put = 9.288907e-05 s copy = 8.373404e-05 s get = 1.042981e-04 s BW put = 1.128848e+10 B/s copy = 1.252270e+10 B/s get = 1.005364e+10 B/s 
+size =    2097152 time: put = 2.196121e-04 s copy = 2.176480e-04 s get = 2.537591e-04 s BW put = 9.549345e+09 B/s copy = 9.635520e+09 B/s get = 8.264341e+09 B/s 
+size =    4194304 time: put = 5.956571e-04 s copy = 5.944650e-04 s get = 9.829159e-04 s BW put = 7.041474e+09 B/s copy = 7.055594e+09 B/s get = 4.267205e+09 B/s 
+size =    8388608 time: put = 1.378231e-03 s copy = 1.379513e-03 s get = 3.286225e-03 s BW put = 6.086504e+09 B/s copy = 6.080847e+09 B/s get = 2.552658e+09 B/s 
+0: all done
