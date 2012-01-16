@@ -1,0 +1,1 @@
+BG_SHAREDMEMPOOLSIZE (units of MB)
