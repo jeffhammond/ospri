@@ -13,8 +13,8 @@
 #include <pthread.h>
 #include <mpi.h>
 
-#define DEV_SHM
-//#define POSIX_SHM
+//#define DEV_SHM
+#define POSIX_SHM
 
 #ifdef __bgp__
 #  include </bgsys/drivers/ppcfloor/arch/include/spi/kernel_interface.h>
@@ -126,6 +126,10 @@ int main(int argc, char* argv[])
     int fd = open("/dev/shm/foo", O_RDWR | O_CREAT, S_IRUSR | S_IWUSR );
     if (fd<0) fprintf(stderr,"%7d: open failed: %d \n", world_rank, fd);
     else      fprintf(stderr,"%7d: open succeeded: %d \n", world_rank, fd);
+#else
+    int fd = -1;
+    fprintf(stderr,"%7d: no file backing \n", world_rank);
+#endif
 
     if (fd>=0 && subcomm_rank==0)
     {
@@ -133,16 +137,8 @@ int main(int argc, char* argv[])
         if (rc==0) fprintf(stderr,"%7d: ftruncate succeeded \n", world_rank);
         else       fprintf(stderr,"%7d: ftruncate failed \n", world_rank);
     }
-#else
-    int fd = -1;
-    fprintf(stderr,"%7d: no file backing \n", world_rank);
-#endif
 
-#if defined(DEV_SHM)
     double * ptr = mmap( NULL, node_shmem_bytes, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0 );
-#else
-    double * ptr = mmap( NULL, node_shmem_bytes, PROT_READ | PROT_WRITE, MAP_SHARED | MAP_ANONYMOUS, fd, 0 );
-#endif
     if (ptr==NULL) fprintf(stderr,"%7d: mmap failed \n", world_rank);
     else           fprintf(stderr,"%7d: mmap succeeded \n", world_rank);
 

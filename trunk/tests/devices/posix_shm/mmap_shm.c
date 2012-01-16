@@ -19,13 +19,17 @@ int main(int argc, char* argv[])
     printf("size = %ld \n", (long)size);
 
 #if defined(POSIX_SHM)
-    int fd = shm_open("/foo", O_RDWR | O_CREAT, S_IRUSR | S_IWUSR );
+    int fd = shm_open("/bar", O_RDWR | O_CREAT, S_IRUSR | S_IWUSR );
     if (fd<0) fprintf(stderr,"shm_open failed: %d \n", fd);
     else      fprintf(stderr,"shm_open succeeded: %d \n", fd);
 #elif defined(DEV_SHM)
     int fd = open("/dev/shm/foo", O_RDWR | O_CREAT, S_IRUSR | S_IWUSR );
     if (fd<0) fprintf(stderr,"open failed: %d \n", fd);
     else      fprintf(stderr,"open succeeded: %d \n", fd);
+#else
+    int fd = -1;
+    fprintf(stderr,"no file backing \n");
+#endif
 
     if (fd>=0)
     {
@@ -33,16 +37,8 @@ int main(int argc, char* argv[])
         if (rc==0) fprintf(stderr,"ftruncate succeeded \n");
         else       fprintf(stderr,"ftruncate failed \n");
     }
-#else
-    int fd = -1;
-    fprintf(stderr,"no file backing \n");
-#endif
 
-#if defined(DEV_SHM)
     void * ptr = mmap( NULL, size, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0 );
-#else
-    void * ptr = mmap( NULL, size, PROT_READ | PROT_WRITE, MAP_SHARED | MAP_ANONYMOUS, fd, 0 );
-#endif
     if (ptr==NULL) fprintf(stderr,"mmap failed \n");
     else           fprintf(stderr,"mmap succeeded \n");
     
@@ -52,7 +48,7 @@ int main(int argc, char* argv[])
 #if defined(POSIX_SHM)
     if (fd>=0)
     {
-        int rc = shm_unlink("/foo");
+        int rc = shm_unlink("/bar");
         if (rc==0) fprintf(stderr,"shm_unlink succeeded \n");
         else       fprintf(stderr,"shm_unlink failed \n");
     }
