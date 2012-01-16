@@ -1,5 +1,5 @@
-CC      = gcc
-COPT    = -g -O0 -Wall
+CC      = mpicc
+COPT    = -g -O0 -Wall #-std=c99
 
 LD      = $(CC)
 CFLAGS  = $(COPT)
