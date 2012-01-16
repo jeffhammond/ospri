@@ -43,7 +43,7 @@ int main(int argc, char* argv[])
     int color = -1, key = -1;
     MPI_Comm IntraNodeComm;
 
-    int node_shmem_size = 10*1000*1000; /* 10 MB by default */
+    int node_shmem_bytes; 
 
     MPI_Init(&argc,&argv);
     mpi_result = MPI_Comm_rank(MPI_COMM_WORLD, &world_rank);
@@ -67,18 +67,19 @@ int main(int argc, char* argv[])
             num_count = strspn(env_char, "0123456789");
             memset( &env_char[num_count], ' ', strlen(env_char)-num_count);
 
-            node_shmem_size = units * atoi(env_char);
-            printf("%7d: NODE_SHARED_MEMORY = %d bytes \n", world_rank, node_shmem_size );
+            node_shmem_bytes = units * atoi(env_char);
+            printf("%7d: NODE_SHARED_MEMORY = %d bytes \n", world_rank, node_shmem_bytes );
         }
         else
         {
-            node_shmem_size = getpagesize();
-            printf("%7d: NODE_SHARED_MEMORY = %d bytes \n", world_rank, node_shmem_size );
+            node_shmem_bytes = getpagesize();
+            printf("%7d: NODE_SHARED_MEMORY = %d bytes \n", world_rank, node_shmem_bytes );
         }
-        node_shmem_size /= sizeof(double);
     }
-    mpi_result = MPI_Bcast( &node_shmem_size, 1, MPI_INT, 0, MPI_COMM_WORLD );
+    mpi_result = MPI_Bcast( &node_shmem_bytes, 1, MPI_INT, 0, MPI_COMM_WORLD );
     assert(mpi_result==MPI_SUCCESS);
+
+    int node_shmem_count = node_shmem_bytes/sizeof(double);
 
     fflush(stdout);
     MPI_Barrier(MPI_COMM_WORLD);
@@ -101,10 +102,10 @@ int main(int argc, char* argv[])
 
     my_node = (world_rank - rank_in_node)/ranks_per_node;
 
-    printf("%7d: rank_in_node = %2d, ranks_per_node = %2d, my_node = %5d, num_nodes = %5d, world_rank = %7d, num_procs = %7d \n",
-            world_rank, rank_in_node, ranks_per_node, my_node, num_nodes, world_rank, num_procs);
-    fflush(stdout);
-    MPI_Barrier(MPI_COMM_WORLD);
+    //printf("%7d: rank_in_node = %2d, ranks_per_node = %2d, my_node = %5d, num_nodes = %5d, world_rank = %7d, num_procs = %7d \n",
+    //        world_rank, rank_in_node, ranks_per_node, my_node, num_nodes, world_rank, num_procs);
+    //fflush(stdout);
+    //MPI_Barrier(MPI_COMM_WORLD);
 
     color = my_node;
     key   = rank_in_node;
@@ -126,9 +127,9 @@ int main(int argc, char* argv[])
     if (fd<0) fprintf(stderr,"%7d: open failed: %d \n", world_rank, fd);
     else      fprintf(stderr,"%7d: open succeeded: %d \n", world_rank, fd);
 
-    if (fd>=0)
+    if (fd>=0 && subcomm_rank==0)
     {
-        int rc = ftruncate(fd, node_shmem_size);
+        int rc = ftruncate(fd, node_shmem_bytes);
         if (rc==0) fprintf(stderr,"%7d: ftruncate succeeded \n", world_rank);
         else       fprintf(stderr,"%7d: ftruncate failed \n", world_rank);
     }
@@ -138,9 +139,9 @@ int main(int argc, char* argv[])
 #endif
 
 #if defined(DEV_SHM)
-    double * ptr = mmap( NULL, node_shmem_size, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0 );
+    double * ptr = mmap( NULL, node_shmem_bytes, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0 );
 #else
-    double * ptr = mmap( NULL, node_shmem_size, PROT_READ | PROT_WRITE, MAP_SHARED | MAP_ANONYMOUS, fd, 0 );
+    double * ptr = mmap( NULL, node_shmem_bytes, PROT_READ | PROT_WRITE, MAP_SHARED | MAP_ANONYMOUS, fd, 0 );
 #endif
     if (ptr==NULL) fprintf(stderr,"%7d: mmap failed \n", world_rank);
     else           fprintf(stderr,"%7d: mmap succeeded \n", world_rank);
@@ -154,10 +155,10 @@ int main(int argc, char* argv[])
         if (i==subcomm_rank)
        {
             printf("%7d: subcomm_rank %d setting the buffer \n", world_rank, subcomm_rank );
-            for (j=0; j<node_shmem_size; j++) ptr[j] = (double)i;
+            for (j=0; j<node_shmem_count; j++ ) ptr[j] = (double)i;
             fprintf(stderr,"%7d: memset succeeded \n", world_rank);
 
-            int rc = msync(ptr, node_shmem_size, MS_INVALIDATE | MS_SYNC);
+            int rc = msync(ptr, node_shmem_bytes, MS_INVALIDATE | MS_SYNC);
             if (rc==0) fprintf(stderr,"%7d: msync succeeded \n", world_rank);
             else       fprintf(stderr,"%7d: msync failed \n", world_rank);
         }
@@ -166,7 +167,7 @@ int main(int argc, char* argv[])
         mpi_result = MPI_Barrier(MPI_COMM_WORLD);
         assert(mpi_result==MPI_SUCCESS);
 
-        printf("%7d: ptr = %lf ... %lf \n", world_rank, ptr[0], ptr[node_shmem_size-1]);
+        printf("%7d: ptr = %lf ... %lf \n", world_rank, ptr[0], ptr[node_shmem_count-1]);
         fflush(stdout);
 
         mpi_result = MPI_Barrier(MPI_COMM_WORLD);
@@ -181,7 +182,7 @@ int main(int argc, char* argv[])
         else       fprintf(stderr,"%7d: shm_unlink failed \n", world_rank);
     }
 #elif defined(DEV_SHM)
-    if (fd>=0)
+    if (fd>=0 && subcomm_rank==0)
     {
         int rc = -1;
 
@@ -197,7 +198,7 @@ int main(int argc, char* argv[])
 
     if (ptr!=NULL)
     {
-        int rc = munmap(ptr, node_shmem_size);
+        int rc = munmap(ptr, node_shmem_bytes);
         if (rc==0) fprintf(stderr,"%7d: munmap succeeded \n", world_rank);
         else       fprintf(stderr,"%7d: munmap failed \n", world_rank);
     }
