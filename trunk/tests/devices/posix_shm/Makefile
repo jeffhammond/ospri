@@ -2,7 +2,7 @@ CC      = mpicc
 COPT    = -g -O0 -Wall #-std=c99
 
 LD      = $(CC)
-CFLAGS  = $(COPT)
+CFLAGS  = $(COPT) -I/bgsys/drivers/ppcfloor/arch/include/
 LDFLAGS = $(COPT)
 LIBS    = -lrt
 
@@ -22,4 +22,5 @@ clean:
 
 realclean: clean
 	$(RM) $(RMFLAGS) $(TESTS)
+	$(RM) $(RMFLAGS) core.*
 
