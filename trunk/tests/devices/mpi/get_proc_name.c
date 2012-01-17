@@ -3,8 +3,6 @@
 #include <assert.h>
 #include <mpi.h>
 
-#define ALIGNMENT 64
-
 int main(int argc, char *argv[])
 {
     int provided;
@@ -18,7 +16,6 @@ int main(int argc, char *argv[])
     MPI_Comm_size( MPI_COMM_WORLD, &size );
     MPI_Comm_rank( MPI_COMM_WORLD, &rank );
     printf( "Hello from %d of %d processors\n", rank, size );
-    fflush( stdout );
 
     MPI_Barrier( MPI_COMM_WORLD );
 
