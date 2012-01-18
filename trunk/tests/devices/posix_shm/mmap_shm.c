@@ -10,6 +10,12 @@
 
 #include <pthread.h>
 
+#ifdef __bgp__
+#  include <spi/kernel_interface.h>
+#  include <common/bgp_personality.h>
+#  include <common/bgp_personality_inlines.h>
+#endif
+
 //#define DEV_SHM
 #define POSIX_SHM
 
@@ -38,7 +44,20 @@ int main(int argc, char* argv[])
         else       printf("ftruncate failed \n");
     }
 
+#ifdef __bgp__
+    void * ptr = NULL;
+    _BGP_Personality_t pers;
+    Kernel_GetPersonality(&pers, sizeof(pers));
+    if( BGP_Personality_processConfig(&pers) == _BGP_PERS_PROCESSCONFIG_SMP )
+    {
+        printf("SMP mode => MAP_PRIVATE | MAP_ANONYMOUS \n");
+        ptr = mmap( NULL, size, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS, fd, 0 );
+    }
+    else
+        ptr = mmap( NULL, size, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0 );
+#else
     void * ptr = mmap( NULL, size, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0 );
+#endif
     if (ptr==NULL) printf("mmap failed \n");
     else           printf("mmap succeeded \n");
     
