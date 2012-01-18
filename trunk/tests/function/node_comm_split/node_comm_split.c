@@ -20,7 +20,7 @@
 
 #define DEBUG
 
-int xstrcmp(const void *a, const void *b) 
+static inline int xstrcmp(const void *a, const void *b) 
 { 
     const char **ia = (const char **)a;
     const char **ib = (const char **)b;
@@ -116,7 +116,7 @@ int main(int argc, char* argv[])
     mpi_result = MPI_Gather( procname, max_namelen, MPI_CHAR, procname_storage, max_namelen, MPI_CHAR, 0, MPI_COMM_WORLD );
     assert(mpi_result==MPI_SUCCESS);
 
-    int  *  procname_colors  = NULL;
+    int * procname_colors  = NULL;
 
     if (world_rank==0)
     {
@@ -129,9 +129,9 @@ int main(int argc, char* argv[])
             for (j=0; j<max_namelen; j++) printf("%c", procname_array[i][j] );
             printf(" in procname_array\n");
 
-            printf("node %d is ", i);
-            for (j=0; j<max_namelen; j++) printf("%c", procname_storage[i*max_namelen+j] );
-            printf(" in procname_storage\n");
+            //printf("node %d is ", i);
+            //for (j=0; j<max_namelen; j++) printf("%c", procname_storage[i*max_namelen+j] );
+            //printf(" in procname_storage\n");
         }
         fflush(stdout);
 
@@ -146,8 +146,16 @@ int main(int argc, char* argv[])
         procname_colors[0] = color;
         for (i=1; i<world_size; i++)
         {
-            if (0==strcmp(procname_array[i], procname_array[i-1])) color++;
+            if (0!=strncmp(procname_array[i], procname_array[i-1], max_namelen)) color++;
             procname_colors[i] = color;
+# ifdef DEBUG
+            int j;
+            printf("procname_array[%d] = ", i);
+            for (j=0; j<max_namelen; j++) printf("%c", procname_array[i][j] );
+            printf(" \n");
+
+            printf("strcmp(procname_array[i], procname_array[i-1])) = %d \n", strncmp( procname_array[i], procname_array[i-1], max_namelen ) );
+# endif
         }
 
 # ifdef DEBUG
@@ -160,10 +168,6 @@ int main(int argc, char* argv[])
             for (j=0; j<max_namelen; j++) printf("%c", procname_array[i][j] );
             printf(" in procname_array \n");
 
-            printf("node %d is ", i);
-            for (j=0; j<max_namelen; j++) printf("%c", procname_storage[i*max_namelen+j] );
-            printf(" in procname_storage \n");
-
             printf("node %d color is %d \n", i, procname_colors[i] );
         }
         fflush(stdout);
@@ -172,9 +176,12 @@ int main(int argc, char* argv[])
         free(procname_storage);
         free(procname_array);
     }
+    mpi_result = MPI_Scatter( procname_colors, 1, MPI_INT, &color, 1, MPI_INT, 0, MPI_COMM_WORLD );
+    assert(mpi_result==MPI_SUCCESS);
 
-    color = 0;
-    key   = 0;
+    if (world_rank==0) free(procname_colors);
+
+    key = 0;
 #endif /* if BG else MPI_Get_proc_name */
     MPI_Comm NodeRankComm;
 

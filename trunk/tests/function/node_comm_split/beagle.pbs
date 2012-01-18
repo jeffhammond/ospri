@@ -1,0 +1,11 @@
+#!/bin/bash
+#PBS -N node_comm_split
+#PBS -l mppwidth=48
+#PBS -l mppnppn=24
+#PBS -l walltime=0:30:00
+#PBS -joe
+#PBS -V
+
+cd ${PBS_O_WORKDIR}
+
+aprun -n 48 -N 24 ./node_comm_split.x
