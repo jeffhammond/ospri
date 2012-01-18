@@ -42,7 +42,7 @@ int main(int argc, char* argv[])
     mpi_result = MPI_Comm_size(MPI_COMM_WORLD, &world_size);
     assert(mpi_result==MPI_SUCCESS);
 
-    if (world_rank==0) printf("world_rank = %d, world_size = %d \n", world_rank, world_size);
+    printf("world_rank = %d, world_size = %d \n", world_rank, world_size);
     fflush(stdout);
     mpi_result = MPI_Barrier(MPI_COMM_WORLD);
     assert(mpi_result==MPI_SUCCESS);
