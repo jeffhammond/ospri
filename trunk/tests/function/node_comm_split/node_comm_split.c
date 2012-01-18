@@ -18,7 +18,7 @@
 #  include <spi/include/kernel/location.h>
 #endif
 
-#define DEBUG
+//#define DEBUG
 
 static inline int xstrcmp(const void *a, const void *b) 
 { 
@@ -72,7 +72,7 @@ int main(int argc, char* argv[])
     color = rank_in_node;
     key   = my_node;
 #else /* not Blue Gene */
-    printf("world_rank = %d, world_size = %d \n", world_rank, world_size);
+    if (world_rank==0) printf("world_rank = %d, world_size = %d \n", world_rank, world_size);
     fflush(stdout);
     mpi_result = MPI_Barrier(MPI_COMM_WORLD);
     assert(mpi_result==MPI_SUCCESS);
@@ -83,10 +83,7 @@ int main(int argc, char* argv[])
     memset(procname, '\0', MPI_MAX_PROCESSOR_NAME);
 
     MPI_Get_processor_name( procname, &namelen );
-    printf("%d: processor name = %s \n" , world_rank, procname );
-    fflush(stdout);
-
-    printf("%d: gethostid = %ld \n", world_rank, gethostid() );
+    printf("%d: processor name = %s gethostid = %ld \n" , world_rank, procname, gethostid() );
     fflush(stdout);
 
     int max_namelen = -1;
@@ -96,6 +93,7 @@ int main(int argc, char* argv[])
 
     char ** procname_array   = NULL;
     char *  procname_storage = NULL;
+    int  *  procname_colors  = NULL;
 
     if (world_rank==0)
     {
@@ -109,14 +107,11 @@ int main(int argc, char* argv[])
 
         int i;
         for (i=0; i<world_size; i++)
-        {
             procname_array[i] = &procname_storage[i*max_namelen];
-        }
     }
+
     mpi_result = MPI_Gather( procname, max_namelen, MPI_CHAR, procname_storage, max_namelen, MPI_CHAR, 0, MPI_COMM_WORLD );
     assert(mpi_result==MPI_SUCCESS);
-
-    int * procname_colors  = NULL;
 
     if (world_rank==0)
     {
@@ -124,18 +119,12 @@ int main(int argc, char* argv[])
 # ifdef DEBUG
         for (i=0; i<world_size; i++)
         {
-            int j;
             printf("node %d is ", i);
+            int j;
             for (j=0; j<max_namelen; j++) printf("%c", procname_array[i][j] );
             printf(" in procname_array\n");
-
-            //printf("node %d is ", i);
-            //for (j=0; j<max_namelen; j++) printf("%c", procname_storage[i*max_namelen+j] );
-            //printf(" in procname_storage\n");
         }
         fflush(stdout);
-
-        printf("before qsort\n");
 # endif
         qsort(procname_array, world_size, sizeof(char *), (void*) &xstrcmp);
 
@@ -149,8 +138,8 @@ int main(int argc, char* argv[])
             if (0!=strncmp(procname_array[i], procname_array[i-1], max_namelen)) color++;
             procname_colors[i] = color;
 # ifdef DEBUG
-            int j;
             printf("procname_array[%d] = ", i);
+            int j;
             for (j=0; j<max_namelen; j++) printf("%c", procname_array[i][j] );
             printf(" \n");
 
@@ -159,12 +148,10 @@ int main(int argc, char* argv[])
         }
 
 # ifdef DEBUG
-        printf("after qsort\n");
-
         for (i=0; i<world_size; i++)
         {
-            int j;
             printf("node %d is ", i);
+            int j;
             for (j=0; j<max_namelen; j++) printf("%c", procname_array[i][j] );
             printf(" in procname_array \n");
 
@@ -179,7 +166,8 @@ int main(int argc, char* argv[])
     mpi_result = MPI_Scatter( procname_colors, 1, MPI_INT, &color, 1, MPI_INT, 0, MPI_COMM_WORLD );
     assert(mpi_result==MPI_SUCCESS);
 
-    if (world_rank==0) free(procname_colors);
+    if (world_rank==0) 
+        free(procname_colors);
 
     key = 0;
 #endif /* if BG else MPI_Get_proc_name */
