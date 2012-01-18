@@ -6,19 +6,26 @@
 
 #include <mpi.h>
 
-#ifdef __bgp__
+#if defined(__bgp__) && defined(NONPORTABLE)
 #  include </bgsys/drivers/ppcfloor/arch/include/spi/kernel_interface.h>
 #  include </bgsys/drivers/ppcfloor/arch/include/common/bgp_personality.h>
 #  include </bgsys/drivers/ppcfloor/arch/include/common/bgp_personality_inlines.h>
 #endif
 
-#ifdef __bgq__
+#if defined(__bgq__) && defined(NONPORTABLE)
 //#  include <firmware/include/personality.h>
 //#  include <spi/include/kernel/process.h>
 #  include <spi/include/kernel/location.h>
 #endif
 
 #define DEBUG
+
+int xstrcmp(const void *a, const void *b) 
+{ 
+    const char **ia = (const char **)a;
+    const char **ib = (const char **)b;
+    return strcmp(*ia, *ib);
+} 
 
 int main(int argc, char* argv[])
 {
@@ -36,7 +43,8 @@ int main(int argc, char* argv[])
 
     int color = -1, key = -1;
 
-#if defined(__bgq__) || defined(__bgp__)
+#if defined(__bgq__) || defined(__bgp__) && defined(NONPORTABLE)
+# warning nonportable
     int num_nodes = 0;
     int ranks_per_node = 0;
     int my_node = -1;
@@ -126,7 +134,7 @@ int main(int argc, char* argv[])
 
         printf("before qsort\n");
 # endif
-        qsort(procname_array, world_size, max_namelen, (void*) &strcmp);
+        qsort(procname_array, world_size, sizeof(char *), (void*) &xstrcmp);
 
         procname_colors = malloc( world_size * sizeof(int) );
         assert( procname_colors != NULL );
