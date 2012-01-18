@@ -171,14 +171,14 @@ int main(int argc, char* argv[])
 
     key = 0;
 #endif /* if BG else MPI_Get_proc_name */
-    MPI_Comm NodeRankComm;
+    MPI_Comm NodeComm;
 
     /* int MPI_Comm_split(MPI_Comm comm, int color, int key, MPI_Comm *newcomm) */
-    mpi_result = MPI_Comm_split(MPI_COMM_WORLD, color, key, &NodeRankComm);
+    mpi_result = MPI_Comm_split(MPI_COMM_WORLD, color, key, &NodeComm);
     assert(mpi_result==MPI_SUCCESS);
 
     int subcomm_rank = -1;
-    mpi_result = MPI_Comm_rank(NodeRankComm, &subcomm_rank);
+    mpi_result = MPI_Comm_rank(NodeComm, &subcomm_rank);
     assert(mpi_result==MPI_SUCCESS);
 
     printf("world_rank %d is subcomm_rank %d \n", world_rank, subcomm_rank);
