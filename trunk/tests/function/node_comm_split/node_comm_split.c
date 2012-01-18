@@ -83,7 +83,10 @@ int main(int argc, char* argv[])
     memset(procname, '\0', MPI_MAX_PROCESSOR_NAME);
 
     MPI_Get_processor_name( procname, &namelen );
-    printf("%d: processor name = %s\n" , world_rank, procname );
+    printf("%d: processor name = %s \n" , world_rank, procname );
+    fflush(stdout);
+
+    printf("%d: gethostid = %ld \n", world_rank, gethostid() );
     fflush(stdout);
 
     int max_namelen = -1;
