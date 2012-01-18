@@ -138,7 +138,20 @@ int main(int argc, char* argv[])
         else       printf("%7d: ftruncate failed \n", world_rank);
     }
 
+#ifdef __bgp__
+    double * ptr = NULL;
+    _BGP_Personality_t pers;
+    Kernel_GetPersonality(&pers, sizeof(pers));
+    if( BGP_Personality_processConfig(&pers) == _BGP_PERS_PROCESSCONFIG_SMP )
+    {
+        printf("SMP mode => MAP_PRIVATE | MAP_ANONYMOUS \n");
+        ptr = mmap( NULL, node_shmem_bytes, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS, fd, 0 );
+    }
+    else
+        ptr = mmap( NULL, node_shmem_bytes, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0 );
+#else
     double * ptr = mmap( NULL, node_shmem_bytes, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0 );
+#endif
     if (ptr==NULL) printf("%7d: mmap failed \n", world_rank);
     else           printf("%7d: mmap succeeded \n", world_rank);
 
