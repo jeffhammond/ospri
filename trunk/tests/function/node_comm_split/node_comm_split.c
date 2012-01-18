@@ -42,42 +42,43 @@ int main(int argc, char* argv[])
     mpi_result = MPI_Comm_size(MPI_COMM_WORLD, &world_size);
     assert(mpi_result==MPI_SUCCESS);
 
-    int color = -1, key = -1;
-
-#if defined(__bgq__) || defined(__bgp__) && defined(NONPORTABLE)
-# warning nonportable
-    int num_nodes = 0;
-    int ranks_per_node = 0;
-    int my_node = -1;
-    int rank_in_node = -1;
-# if defined(__bgq__)
-    rank_in_node = Kernel_MyTcoord();
-# elif defined(__bgp__)
-    rank_in_node = Kernel_PhysicalProcessorID();
-# endif
-    /* int MPI_Allreduce(void *sendbuf, void *recvbuf, int count, MPI_Datatype datatype, MPI_Op op, MPI_Comm comm) */
-    mpi_result = MPI_Allreduce( &rank_in_node, &ranks_per_node, 1, MPI_INT, MPI_MAX, MPI_COMM_WORLD);
-    assert(mpi_result==MPI_SUCCESS);
-    ranks_per_node++; /* change from [0,n-1] to [1,n] */
-
-    num_nodes = world_size/ranks_per_node;
-    my_node = (world_rank - rank_in_node)/ranks_per_node;
-
-# ifdef DEBUG
-    printf("%7d: rank_in_node = %2d, ranks_per_node = %2d, my_node = %5d, num_nodes = %5d, world_rank = %7d, world_size = %7d \n",
-            world_rank, rank_in_node, ranks_per_node, my_node, num_nodes, world_rank, world_size);
-    fflush(stdout);
-    mpi_result = MPI_Barrier(MPI_COMM_WORLD);
-    assert(mpi_result==MPI_SUCCESS);
-# endif
-    color = rank_in_node;
-    key   = my_node;
-#else /* not Blue Gene */
     if (world_rank==0) printf("world_rank = %d, world_size = %d \n", world_rank, world_size);
     fflush(stdout);
     mpi_result = MPI_Barrier(MPI_COMM_WORLD);
     assert(mpi_result==MPI_SUCCESS);
 
+    MPI_Comm NodeComm;
+
+#if MPI_VERSION >= 3
+    mpi_result = MPI_Comm_split_type(MPI_COMM_WORLD, MPIX_COMM_TYPE_SHARED, 0, MPI_INFO_NULL, &NodeComm);
+    assert(mpi_result==MPI_SUCCESS);
+#elif defined(MPICH2) && (MPICH2_NUMVERSION>10500000)
+    mpi_result = MPIX_Comm_split_type(MPI_COMM_WORLD, MPIX_COMM_TYPE_SHARED, 0, MPI_INFO_NULL, &NodeComm);
+    assert(mpi_result==MPI_SUCCESS);
+#else
+    int color = world_rank;
+# if defined(__bgq__) || defined(__bgp__) && defined(NONPORTABLE)
+#  warning nonportable
+    int ranks_per_node = 0;
+    int rank_in_node = -1;
+#  if defined(__bgq__)
+    rank_in_node = Kernel_MyTcoord();
+#  elif defined(__bgp__)
+    rank_in_node = Kernel_PhysicalProcessorID();
+#  endif
+    mpi_result = MPI_Allreduce( &rank_in_node, &ranks_per_node, 1, MPI_INT, MPI_MAX, MPI_COMM_WORLD);
+    assert(mpi_result==MPI_SUCCESS);
+    ranks_per_node++; /* change from [0,n-1] to [1,n] */
+    int my_node = (world_rank - rank_in_node)/ranks_per_node;
+
+#  ifdef DEBUG
+    int num_nodes = world_size/ranks_per_node;
+    printf("%7d: rank_in_node = %2d, ranks_per_node = %2d, my_node = %5d, num_nodes = %5d \n",
+            world_rank, rank_in_node, ranks_per_node, my_node, num_nodes);
+    fflush(stdout);
+#  endif
+    color = my_node;
+# else /* not Blue Gene */
     int namelen = 0;
     char procname[MPI_MAX_PROCESSOR_NAME];
 
@@ -117,7 +118,7 @@ int main(int argc, char* argv[])
     if (world_rank==0)
     {
         int i;
-# ifdef DEBUG
+#  ifdef DEBUG
         for (i=0; i<world_size; i++)
         {
             printf("node %d is ", i);
@@ -126,7 +127,7 @@ int main(int argc, char* argv[])
             printf(" in procname_array\n");
         }
         fflush(stdout);
-# endif
+#  endif
         qsort(procname_array, world_size, sizeof(char *), (void*) &xstrcmp);
 
         procname_colors = malloc( world_size * sizeof(int) );
@@ -138,17 +139,17 @@ int main(int argc, char* argv[])
         {
             if (0!=strncmp(procname_array[i], procname_array[i-1], max_namelen)) color++;
             procname_colors[i] = color;
-# ifdef DEBUG
+#  ifdef DEBUG
             printf("procname_array[%d] = ", i);
             int j;
             for (j=0; j<max_namelen; j++) printf("%c", procname_array[i][j] );
             printf(" \n");
 
             printf("strcmp(procname_array[i], procname_array[i-1])) = %d \n", strncmp( procname_array[i], procname_array[i-1], max_namelen ) );
-# endif
+#  endif
         }
 
-# ifdef DEBUG
+#  ifdef DEBUG
         for (i=0; i<world_size; i++)
         {
             printf("node %d is ", i);
@@ -159,7 +160,7 @@ int main(int argc, char* argv[])
             printf("node %d color is %d \n", i, procname_colors[i] );
         }
         fflush(stdout);
-# endif
+#  endif
 
         free(procname_storage);
         free(procname_array);
@@ -170,13 +171,10 @@ int main(int argc, char* argv[])
     if (world_rank==0) 
         free(procname_colors);
 
-    key = 0;
-#endif /* if BG else MPI_Get_proc_name */
-    MPI_Comm NodeComm;
-
-    /* int MPI_Comm_split(MPI_Comm comm, int color, int key, MPI_Comm *newcomm) */
-    mpi_result = MPI_Comm_split(MPI_COMM_WORLD, color, key, &NodeComm);
+# endif /* if BG else MPI_Get_proc_name */
+    mpi_result = MPI_Comm_split(MPI_COMM_WORLD, color, 0, &NodeComm);
     assert(mpi_result==MPI_SUCCESS);
+#endif /* MPIX_Comm_split_type */
 
     int subcomm_rank = -1;
     mpi_result = MPI_Comm_rank(NodeComm, &subcomm_rank);
