@@ -2,7 +2,7 @@ CC      = mpicc
 COPT    = -g -O0 -Wall
 
 LD      = $(CC)
-CFLAGS  = $(COPT)
+CFLAGS  = $(COPT) -I/bgsys/drivers/ppcfloor/arch/include/
 LDFLAGS = $(COPT)
 LIBS    = -lm
 

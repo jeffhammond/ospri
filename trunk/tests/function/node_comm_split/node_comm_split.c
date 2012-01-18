@@ -6,6 +6,9 @@
 
 #include <mpi.h>
 
+#define NONPORTABLE
+//#define DEBUG
+
 #if defined(__bgp__) && defined(NONPORTABLE)
 #  include </bgsys/drivers/ppcfloor/arch/include/spi/kernel_interface.h>
 #  include </bgsys/drivers/ppcfloor/arch/include/common/bgp_personality.h>
@@ -17,8 +20,6 @@
 //#  include <spi/include/kernel/process.h>
 #  include <spi/include/kernel/location.h>
 #endif
-
-//#define DEBUG
 
 static inline int xstrcmp(const void *a, const void *b) 
 { 
