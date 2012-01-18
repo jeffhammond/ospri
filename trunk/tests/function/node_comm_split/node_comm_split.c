@@ -36,16 +36,16 @@ int main(int argc, char* argv[])
     assert(mpi_result==MPI_SUCCESS);
 
     int world_rank = -1, world_size = -1;
+    int node_rank = -1, node_size = -1;
 
     mpi_result = MPI_Comm_rank(MPI_COMM_WORLD, &world_rank);
     assert(mpi_result==MPI_SUCCESS);
+
     mpi_result = MPI_Comm_size(MPI_COMM_WORLD, &world_size);
     assert(mpi_result==MPI_SUCCESS);
 
-    printf("world_rank = %d, world_size = %d \n", world_rank, world_size);
-    fflush(stdout);
-    mpi_result = MPI_Barrier(MPI_COMM_WORLD);
-    assert(mpi_result==MPI_SUCCESS);
+    int namelen = 0;
+    char procname[MPI_MAX_PROCESSOR_NAME];
 
     MPI_Comm NodeComm;
 
@@ -79,14 +79,13 @@ int main(int argc, char* argv[])
 #  endif
     color = my_node;
 # else /* not Blue Gene */
-    int namelen = 0;
-    char procname[MPI_MAX_PROCESSOR_NAME];
-
     memset(procname, '\0', MPI_MAX_PROCESSOR_NAME);
 
     MPI_Get_processor_name( procname, &namelen );
+#  ifdef DEBUG
     printf("%d: processor name = %s gethostid = %ld \n" , world_rank, procname, gethostid() );
     fflush(stdout);
+#  endif
 
     int max_namelen = -1;
     mpi_result = MPI_Allreduce( &namelen, &max_namelen, 1, MPI_INT, MPI_MAX, MPI_COMM_WORLD);
@@ -140,27 +139,14 @@ int main(int argc, char* argv[])
             if (0!=strncmp(procname_array[i], procname_array[i-1], max_namelen)) color++;
             procname_colors[i] = color;
 #  ifdef DEBUG
-            printf("procname_array[%d] = ", i);
+            printf("procname_array[%d] = \n", i );
             int j;
             for (j=0; j<max_namelen; j++) printf("%c", procname_array[i][j] );
             printf(" \n");
-
-            printf("strcmp(procname_array[i], procname_array[i-1])) = %d \n", strncmp( procname_array[i], procname_array[i-1], max_namelen ) );
+            printf("strcmp(procname_array[%d], procname_array[%d])) = %d \n", i, i-1, strncmp( procname_array[i], procname_array[i-1], max_namelen ) );
+            printf("procname_colors[%d] = %d \n", i, procname_colors[i] );
 #  endif
         }
-
-#  ifdef DEBUG
-        for (i=0; i<world_size; i++)
-        {
-            printf("node %d is ", i);
-            int j;
-            for (j=0; j<max_namelen; j++) printf("%c", procname_array[i][j] );
-            printf(" in procname_array \n");
-
-            printf("node %d color is %d \n", i, procname_colors[i] );
-        }
-        fflush(stdout);
-#  endif
 
         free(procname_storage);
         free(procname_array);
@@ -176,11 +162,17 @@ int main(int argc, char* argv[])
     assert(mpi_result==MPI_SUCCESS);
 #endif /* MPIX_Comm_split_type */
 
-    int subcomm_rank = -1;
-    mpi_result = MPI_Comm_rank(NodeComm, &subcomm_rank);
+    mpi_result = MPI_Get_processor_name( procname, &namelen );
     assert(mpi_result==MPI_SUCCESS);
 
-    printf("world_rank %d is subcomm_rank %d \n", world_rank, subcomm_rank);
+    mpi_result = MPI_Comm_rank(NodeComm, &node_rank);
+    assert(mpi_result==MPI_SUCCESS);
+
+    mpi_result = MPI_Comm_size(NodeComm, &node_size);
+    assert(mpi_result==MPI_SUCCESS);
+
+    printf("%s: %d of %d on node, %d of %d on world \n", procname, node_rank, node_size, world_rank, world_size );
+    fflush(stdout);
 
     mpi_result = MPI_Barrier(MPI_COMM_WORLD);
     assert(mpi_result==MPI_SUCCESS);
