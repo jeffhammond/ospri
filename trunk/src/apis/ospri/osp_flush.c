@@ -17,12 +17,6 @@ int OSP_Flush(int proc)
 #   ifdef HAVE_ERROR_CHECKING
 #   endif
 
-#   ifdef OSP_TAU_PROFILING
-    {
-      TAU_TRACE_SENDMSG (OSP_TAU_TAG_FLUSH, proc, 8);
-    }
-#   endif
-
     status = OSPD_Flush(proc); 
     OSPU_ERR_POP(status!=OSP_SUCCESS, "OSPD_Flush returned an error\n");
 

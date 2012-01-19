@@ -14,12 +14,11 @@ osp_result_t OSP_Finalize(void)
 
     OSPU_FUNC_ENTER();
 
-    /* FIXME: The profiling interface needs to go here */
-
-    /* FIXME: Locking functionality needs to go here */
+#   ifdef HAVE_ERROR_CHECKING
+#   endif
 
     status = OSPD_Finalize();
-    OSPU_ERR_POP(status != OSP_SUCCESS, "OSPD_Finalize returned error\n");
+    OSPU_ERR_POP(status != OSP_SUCCESS, "OSPD_Finalize failed");
 
   fn_exit: 
     OSPU_FUNC_EXIT();

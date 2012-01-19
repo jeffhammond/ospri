@@ -86,76 +86,6 @@ typedef enum
 }
 osp_bool_t;
 
-/**
- * \brief OSP result (error code).
- *
- * \ingroup ENUMS
- *
- * \see OSP_Translate_result
- *
- */
-
-typedef enum
-{
-    OSP_SUCCESS = 0,
-    OSP_UNKNOWN_ERROR,
-    OSP_OUT_OF_MEMORY_ERROR,
-    OSP_OTHER_ALLOCATION_ERROR,
-    OSP_FATAL_NETWORK_ERROR,
-    OSP_RECOVERABLE_NETWORK_ERROR,
-    OSP_INVALID_GROUP,
-    OSP_INVALID_HANDLE,
-}
-osp_result_t;
-
-/**
- * \brief OSP reduction operations
- *
- * \ingroup ENUMS
- *
- */
-
-typedef enum
-{
-    OSP_SUM,
-    OSP_PROD,
-    OSP_MAX,
-    OSP_MIN,
-    OSP_MAXABS, /* Returns MAX(ABS(buffer)) */
-    OSP_MINABS, /* Returns MIN(ABS(buffer)) */
-    OSP_OR,     /* OR - only for integer types */
-    OSP_XOR,    /* XOR - only for integer types */
-    OSP_BOR,    /* bit-wise OR - only for integer types */
-    OSP_BXOR,   /* bit-wise XOR - only for integer types */
-    OSP_SAME,   /* Sets the return value if the buffer (element) is the same across all nodes.
-                  This operation is equivalent to doing MAX(buffer) and MIN(-buffer) simultaneously
-                  and testing for equality element-wise. */
-}
-osp_reduce_op_t;
-
-/**
- * \brief OSP RMW operations
- *
- * \ingroup ENUMS
- *
- */
-
-typedef enum
-{
-    OSP_ATOMIC_INC, /* x += 1 */
-    OSP_ATOMIC_ADD, /* x += y */
-    OSP_ATOMIC_AND, /* x &= y */
-    OSP_ATOMIC_OR,  /* x |= y */
-    OSP_ATOMIC_XOR, /* x ^= y */
-    OSP_ATOMIC_FETCH_AND_INC, /* get x; x += 1 */
-    OSP_ATOMIC_FETCH_AND_ADD, /* get x; x += y */
-    OSP_ATOMIC_FETCH_AND_AND, /* get x; x &= y */
-    OSP_ATOMIC_FETCH_AND_OR,  /* get x; x |= y */
-    OSP_ATOMIC_FETCH_AND_XOR, /* get x; x ^= y */
-    OSP_ATOMIC_COMPARE_AND_SWAP,
-    OSP_ATOMIC_SWAP,
-}
-osp_atomic_op_t;
 
 /* ********************************************************************* */
 /*                                                                       */
@@ -172,25 +102,7 @@ osp_atomic_op_t;
  *
  */
 
-typedef unsigned long osp_offset_t;
-
-/**
- * \brief OSP device type.
- *
- * A device which has its own address space.
- *
- * \see OSP_Allocate_global_memregion, OSP_Destroy_global_memregion
- *
- * \ingroup TYPEDEFS
- *
- */
-
-typedef struct osp_device
-{
-    char* name;
-    void* ospd_device_info;
-}
-osp_device_t;
+typedef size_t osp_offset_t;
 
 /**
  * \brief OSP global memregion type.
@@ -216,41 +128,7 @@ osp_device_t;
  *
  */
 
-typedef struct osp_global_memregion
-{
-    void* ospd_local_memregion_info;  /**/
-    void* ospd_global_memregion_info; /**/
-}
-osp_global_memregion_t;
-
-/**
- * \brief OSP group type.
- *
- * \see OSP_PutMR
- *
- * \ingroup TYPEDEFS
- *
- */
-
-/* TODO: Implement OSP group types.  I wonder if the user-accessible type should be
- *        a pointer to the internal implementation to prevent people from doing
- *        stupid kinds of direct access.
- */
-/* FIXME: I really want to use a device-specific implementation of groups
- *         since this is critical for optimizing collectives on Blue Gene
- *         systems.  This also permits shared-memory optimizations in cases
- *         where the group is confined to a single node.  There will also
- *         be quirks arising in the GPU context I want to deal with directly.
- */
-typedef struct osp_group
-{
-    int* rank_list;
-}
-osp_group_t;
-
-osp_group_t osp_group_world;
-
-#define OSP_GROUP_WORLD &osp_group_world
+typedef ospd_window_t osp_window_t;
 
 /**
  * \brief OSP non-blocking handle type.
@@ -263,7 +141,7 @@ osp_group_t osp_group_world;
  *
  */
 
-typedef void* osp_handle_t;
+typedef ospd_handle_t osp_handle_t;
 
 /**
  * \brief OSP shared counter.
@@ -272,12 +150,7 @@ typedef void* osp_handle_t;
  *
  */
 
-typedef struct osp_counter
-{
-    int host_rank;
-    void* ospd_counter_info;
-}
-osp_counter_t;
+typedef ospd_counter_t osp_counter_t;
 
 /**
  * \brief OSP mutex.
@@ -286,12 +159,7 @@ osp_counter_t;
  *
  */
 
-typedef struct osp_mutex
-{
-    int host_rank;
-    void* ospd_mutex_info;
-}
-osp_mutex_t;
+typedef ospd_mutex_t osp_mutex_t;
 
 /**
  * \brief OSP stride descriptor type.
@@ -302,156 +170,13 @@ osp_mutex_t;
  *
  */
 
-typedef struct osp_stride_descr
+typedef struct osp_iovec_t
 {
-    int num_strides;
-    int* stride_offset;
-    int* block_size;
+    int num;
+    int offsets[];
+    int sizes[];
 }
-osp_stride_descr_t;
-
-/**
- * \brief OSP accumulate descriptor type.
- *
- * \see OSP_PutS, OSP_GetS, OSP_AccS, etc.
- *
- * \ingroup TYPEDEFS
- *
- */
-
-typedef struct osp_acc_descr
-{
-    osp_datatype_t type;
-    void* scaling_factor;
-}
-osp_acc_descr_t;
-
-/**
- * \brief OSP accumulate descriptor type.
- *
- * \see OSP_PutS, OSP_GetS, OSP_AccS, etc.
- *
- * \ingroup TYPEDEFS
- *
- */
-
-typedef struct osp_rmw_descr
-{
-    osp_datatype_t type;
-    void* scaling_factor;
-}
-osp_rmw_descr_t;
-
-/* ********************************************************************* */
-/*                                                                       */
-/*               OSP external API - Helper Functions                      */
-/*                                                                       */
-/* ********************************************************************* */
-
-/**
- * \brief Timer in units of cycles.
- *
- * \warning This function is not guaranteed to produce correct results for
- *          arbitrarily-long durations (e.g. in the case where the underlying
- *          cycle-accurate counter outputs a 32-bit integer).
- *
- * \param[out] rc   Number of cpu clock cycles from an arbitrary time in the past.
- *
- * \see OSP_Time_seconds
- *
- * \ingroup INFORMATION
- */
-
-unsigned long long OSP_Time_cycles(void);
-
-/**
- * \brief Timer in units of seconds.
- *
- *
- * \param[out] rc   Number of seconds from an arbitrary time in the past.
- *
- * \see OSP_Time_cycles
- *
- * \ingroup INFORMATION
- */
-
-double OSP_Time_seconds(void);
-
-/**
- * \brief Prints a translation of the error code enum.  Silent for OSP_SUCCESS.
- *
- * This function can be implemented as a macro instead.
- *
- * \param[int] result   Return code to translate.
- *
- * \see osp_result_t
- *
- * \ingroup INFORMATION
- */
-
-void OSP_Translate_errors(osp_result_t result);
-
-/* ********************************************************************* */
-/*                                                                       */
-/*               OSP external API - Process Information                   */
-/*                                                                       */
-/* ********************************************************************* */
-
-/**
- * \brief Returns process rank relative to the group base of the process calling it,
- *        or -1 in the case of an error.
- *
- * \note Jeff hates MPI-style function style where return value is an
- *       argument passed by reference for the sake of Fortran compatibility
- *       (or whatever their reason is).
- *
- * \see OSP_Node_id, OSP_Process_total
- *
- * \ingroup INFORMATION
- */
-
-osp_result_t OSP_Process_id(osp_group_t* group);
-
-/**
- * \brief Returns total number of processes in a group or -1 in the case of an error.
- *
- * \note Jeff hates MPI-style function style where return value is an
- *       argument passed by reference for the sake of Fortran compatibility
- *       (or whatever their reason is).
- *
- * \see OSP_Process_id, OSP_Node_total
- *
- * \ingroup INFORMATION
- */
-
-osp_result_t OSP_Process_total(osp_group_t* group);
-
-/**
- * \brief Returns node rank relative to the group base of the process calling it,
- *        or -1 in the case of an error.
- *
- * \note Jeff hates MPI-style function style where return value is an argument
- *       passed by reference for the sake of Fortran compatibility.
- *
- * \see OSP_Process_id, OSP_Node_total
- *
- * \ingroup INFORMATION
- */
-
-osp_result_t OSP_Node_id(osp_group_t* group);
-
-/**
- * \brief Returns total number of nodes in a group, or -1 in the case of an error.
- *
- * \note Jeff hates MPI-style function style where return value is an argument
- *       passed by reference for the sake of Fortran compatibility.
- *
- * \see OSP_Node_id, OSP_Process_total
- *
- * \ingroup INFORMATION
- */
-
-osp_result_t OSP_Node_total(osp_group_t* group);
+osp_iovec_t;
 
 /* ********************************************************************* */
 /*                                                                       */
@@ -461,16 +186,6 @@ osp_result_t OSP_Node_total(osp_group_t* group);
 
 /**
  * \brief Initializes the Al environment.
- *
- * \warning If the MPID device is used, one should be careful in using OSP_Initialize and MPI_Init/MPI_Init_thread.
- *
- * \note Unlike MPI, OSP_Initialize may be called many times and but is not thread-safe.
- *       Improper use of OSP_Initialize (calling it more than once) shall be
- *       indicated by a non-zero error code and potentially warnings in
- *       stderr.
- *
- * \note Implementation detail: we need global variable indicated where or not
- *       OSP is alive or not to make this function thread-safe.
  *
  * \note This routine is called OSP_Initialize for syntactic symmetry with
  *       OSP_Finalize and because of Jeff's schadenfreude toward Pavan.
@@ -529,103 +244,41 @@ void OSP_Abort(int error_code, char error_message[]);
 /* ********************************************************************* */
 
 /**
- * \brief A collective operation to allocate memory to be used in context of OSP copy operations.
+ * \brief A collective operation to allocate memory to be used in context of OSP operations.
  *
  * \note Memory allocated with this function will be properly aligned for the architecture.
  *
- * \warning Memory allocated with this function must be freed by OSP_Destroy_global_memregion.
+ * \warning Memory allocated with this function must be freed by OSP_Destroy_window.
  *
  * \param[out] rc            The error code.
- * \param[in]  group         OSP group over which the memregion is shared.
- * \param[in]  bytes         The amount of memory provided by ptr.
- * \param[in]  device        The device address space in which the memregion is created.
- * \param[out] memregion     Pointer to memregion structure to be created.
+ * \param[in]  comm          MPI communicator over which the memregion is shared.
+ * \param[in]  type          MPI datatype of window
+ * \param[in]  count         The number of elements to allocate locally
+ * \param[out] window        Pointer to window to be created.
  *
- * \see OSP_Create_global_memregion, OSP_Destroy_global_memregion
+ * \see OSP_Destroy_window
  *
  * \ingroup MEMORY
  */
 
-osp_result_t OSP_Allocate_global_memregion(osp_group_t* group,
-                                           int bytes,
-                                           osp_device_t device,
-                                           osp_global_memregion_t* memregion);
+osp_result_t OSP_Allocate_window(MPI_Comm comm,
+                                 MPI_Datatype type
+                                 int count,
+                                 osp_window_t * window);
 
 /**
- * \brief A collective operation to allocate memory to be used in context of OSP copy operations.
- *
- * \note Memory allocated with this function will be properly aligned for the architecture.
- *
- * \warning Memory allocated with this function must be freed by OSP_Destroy_global_memregion.
+ * \brief A collective operation (over the communicator associated with the window)
+ *        to free memory allocated by OSP_Allocate_window.
  *
  * \param[out] rc            The error code.
- * \param[in]  group         OSP group over which the memregion is shared.
- * \param[in]  bytes         The amount of memory provided by ptr.
- * \param[in]  ptr           Pointer to memory to be included in the memregion .
- * \param[out] memregion     Pointer to memregion structure to be created.
+ * \param[in]  window        Pointer to window to be destroyed.
  *
- * \see OSP_Allocate_global_memregion, OSP_Destroy_global_memregion
+ * \see OSP_Allocate_window
  *
  * \ingroup MEMORY
  */
 
-osp_result_t OSP_Create_global_memregion(osp_group_t* group,
-                                         int bytes,
-                                         void* ptr,
-                                         osp_global_memregion_t* memregion);
-
-/**
- * \brief A collective operation (over the group associated with the memregion)
- *        to free memory allocated by OSP_Create_global_memregion.
- *
- * \param[out] rc            The error code.
- * \param[in]  memregion     Pointer to memregion structure to be destroyed.
- *
- * \see OSP_Allocate_global_memregion, OSP_Create_global_memregion
- *
- * \ingroup MEMORY
- */
-
-osp_result_t OSP_Destroy_global_memregion(osp_global_memregion_t* memregion);
-
-/**
- * \brief A collective operation to free memory allocated by OSP_Create_global_memregion.
- *
- * \param[out] rc            The error code.
- * \param[in]  group         OSP group over which the memregion is shared.
- * \param[in]  memregion     Pointer to memregion structure to be destroyed.
- *
- * \see OSP_Allocate_global_memregion, OSP_Create_global_memregion
- *
- * \ingroup MEMORY
- */
-
-osp_result_t OSP__global_memregion(osp_global_memregion_t* memregion);
-
-
-/**
- * \brief Initializes the give non-blocking handle.
- *
- * \param[in] handle      Non-blocking handle upon which to be waited.
- *
- * \see osp_handle_t, OSP_Wait_handle_list, OSP_Test_handle
- *
- * \ingroup MEMORY
- */
-
-osp_result_t OSP_Allocate_handle(osp_handle_t *handle);
-
-/**
- * \brief Initializes the give non-blocking handle.
- *
- * \param[in] handle      Non-blocking handle upon which to be waited.
- *
- * \see osp_handle_t, OSP_Wait_handle_list, OSP_Test_handle
- *
- * \ingroup MEMORY
- */
-
-osp_result_t OSP_Release_handle(osp_handle_t handle);
+osp_result_t OSP_Destroy_window(osp_window_t * window);
 
 /* ********************************************************************** */
 /*                                                                        */
@@ -639,7 +292,7 @@ osp_result_t OSP_Release_handle(osp_handle_t handle);
  *        from every process in the group.
  *
  * \param[out]    rc            The error code.
- * \param[in]     group         OSP group over which the counter is shared.
+ * \param[in]     comm          MPI communicator over which the counter is shared.
  * \param[inout]  counter       OSP shared counter.
  *
  * \see osp_counter_t, OSP_Destroy_counter, OSP_Incr_counter, OSP_NbIncr_counter
@@ -647,14 +300,14 @@ osp_result_t OSP_Release_handle(osp_handle_t handle);
  * \ingroup Atomics
  */
 
-osp_result_t OSP_Create_counter(osp_group_t* group,
-                                osp_counter_t* counter);
+osp_result_t OSP_Create_counter(MPI_Comm comm,
+                                osp_counter_t * counter);
 
 /**
  * \brief Collective operation to deallocate and deregister a counter.
  *
  * \param[out]    rc            The error code.
- * \param[in]     group         OSP group over which the counter is shared.
+ * \param[in]     comm          MPI communicator over which the counter is shared.
  * \param[inout]  counter       OSP shared counter.
  *
  * \see osp_counter_t, OSP_Create_counter, OSP_Incr_counter, OSP_NbIncr_counter
@@ -662,14 +315,13 @@ osp_result_t OSP_Create_counter(osp_group_t* group,
  * \ingroup Atomics
  */
 
-osp_result_t OSP_Destroy_counter(osp_group_t* group,
-                                 osp_counter_t* counter);
+osp_result_t OSP_Destroy_counter(osp_counter_t * counter);
 
 /**
  * \brief Atomically updates a shared counter and returns the current value.
  *
  * \param[out] rc            The error code.
- * \param[in]  group         OSP group over which the counter is shared.
+ * \param[in]  comm          MPI communicator over which the counter is shared.
  * \param[in]  counter       OSP shared counter.
  * \param[in]  increment     The value to add to the counter.
  * \param[in]  original      The remote value of the counter prior to the increment.
@@ -679,8 +331,7 @@ osp_result_t OSP_Destroy_counter(osp_group_t* group,
  * \ingroup Atomics
  */
 
-osp_result_t OSP_Incr_counter(osp_group_t* group,
-                              osp_counter_t* counter,
+osp_result_t OSP_Incr_counter(osp_counter_t * counter,
                               long  increment,
                               long* original);
 
@@ -688,7 +339,7 @@ osp_result_t OSP_Incr_counter(osp_group_t* group,
  * \brief Non-blocking atomic RMW update of a shared counter.
  *
  * \param[out] rc            The error code.
- * \param[in]  group         OSP group over which the counter is shared.
+ * \param[in]  comm          MPI communicator over which the counter is shared.
  * \param[in]  counter       OSP shared counter.
  * \param[in]  increment     The value to add to the counter.
  * \param[in]  original      The remote value of the counter prior to the increment.
@@ -699,10 +350,9 @@ osp_result_t OSP_Incr_counter(osp_group_t* group,
  * \ingroup Atomics
  */
 
-osp_result_t OSP_NbIncr_counter(osp_group_t* group,
-                                osp_counter_t counter,
+osp_result_t OSP_NbIncr_counter(osp_counter_t * counter,
                                 long  increment,
-                                long* original,
+                                long * original,
                                 osp_handle_t handle);
 
 /**
@@ -711,7 +361,7 @@ osp_result_t OSP_NbIncr_counter(osp_group_t* group,
  * The allocation of
  *
  * \param[out]    rc            The error code.
- * \param[in]     group         OSP group over which the mutexes are shared.
+ * \param[in]     comm          MPI communicator over which the mutexes are shared.
  * \param[in]     mutex_count   Number of mutexes to be created.
  * \param[int]    mutex_array   An arrays storing the number of mutexes on each process
  *
@@ -720,18 +370,18 @@ osp_result_t OSP_NbIncr_counter(osp_group_t* group,
  * \ingroup Atomics
  */
 
-osp_result_t OSP_Create_mutexes(osp_group_t* group,
+osp_result_t OSP_Create_mutexes(MPI_Comm comm,
                                 int mutex_count,
-                                osp_mutex_t* *mutex_array);
+                                osp_mutex_t * mutexes[]);
 
 /**
  * \brief Collective operation to uninitialize a list of mutexes
  *
- * \note Implementors: OSP_mutex_t cannot be dynamically allocated otherwise this function
+ * \note Implementors: osp_mutex_t cannot be dynamically allocated otherwise this function
  *                     will create a memory leak.
  *
  * \param[out]    rc            The error code.
- * \param[in]     group         OSP group over which the mutexes are shared.
+ * \param[in]     comm          MPI communicator over which the mutexes are shared.
  * \param[in]     mutexes       Pointer to vector OSP mutexes.
  *
  * \see osp_mutex_t, OSP_Create_mutexes, OSP_Lock_mutex, OSP_Trylock_mutex, OSP_Unlock_mutex
@@ -739,15 +389,14 @@ osp_result_t OSP_Create_mutexes(osp_group_t* group,
  * \ingroup Atomics
  */
 
-osp_result_t OSP_Destroy_mutexes(osp_group_t* group,
-                                 int mutex_count,
-                                 osp_mutex_t* *mutex_array);
+osp_result_t OSP_Destroy_mutexes(int mutex_count,
+                                 osp_mutex_t * mutexes[]);
 
 /**
  * \brief Local operation to lock a mutex.  This call blocks until the mutex has been locked.
  *
  * \param[out]    rc            The error code.
- * \param[in]     group         OSP group over which the mutexes are shared.
+ * \param[in]     comm          MPI communicator over which the mutexes are shared.
  * \param[in]     mutex         OSP mutex.
  * \param[in]     proc          Process on which you want to lock mutex on
  *
@@ -756,14 +405,13 @@ osp_result_t OSP_Destroy_mutexes(osp_group_t* group,
  * \ingroup Atomics
  */
 
-osp_result_t OSP_Lock_mutex(osp_group_t* group,
-                            osp_mutex_t* mutex);
+osp_result_t OSP_Lock_mutex(osp_mutex_t * mutex);
 
 /**
  * \brief Local operation to trylock a mutex.
  *
  * \param[out]    rc            The error code.
- * \param[in]     group         OSP group over which the mutexes are shared.
+ * \param[in]     comm          MPI communicator over which the mutexes are shared.
  * \param[in]     mutex         OSP mutex.
  * \param[in]     proc          Process on which you want to lock mutex on
  *
@@ -772,15 +420,14 @@ osp_result_t OSP_Lock_mutex(osp_group_t* group,
  * \ingroup Atomics
  */
 
-osp_result_t OSP_Trylock_mutex(osp_group_t* group,
-                               osp_mutex_t* mutex,
-                               osp_bool_t *acquired);
+osp_result_t OSP_Trylock_mutex(osp_mutex_t * mutex,
+                               osp_bool_t * acquired);
 
 /**
  * \brief Local operation to unlock a mutex.  This call blocks until the mutex has been unlocked.
  *
  * \param[out]    rc            The error code.
- * \param[in]     group         OSP group over which the mutexes are shared.
+ * \param[in]     comm          MPI communicator over which the mutexes are shared.
  * \param[in]     mutex         OSP mutex.
  * \param[in]     proc          Process on which you want to lock mutex on
  *
@@ -789,15 +436,14 @@ osp_result_t OSP_Trylock_mutex(osp_group_t* group,
  * \ingroup Atomics
  */
 
-osp_result_t OSP_Unlock_mutex(osp_group_t* group,
-                              osp_mutex_t* mutex);
+osp_result_t OSP_Unlock_mutex(osp_mutex_t * mutex);
 
 /**
  * \brief Local operation to lock a list of mutexes.  This call blocks until ALL
  *        mutexes have been locked.
  *
  * \param[out]    rc            The error code.
- * \param[in]     group         OSP group over which the mutexes are shared.
+ * \param[in]     comm          MPI communicator over which the mutexes are shared.
  * \param[in]     count         Number of mutexes to be locked.
  * \param[in]     mutexes       Pointer to vector OSP mutexes.
  * \param[in]     proc          Pointer to vector or process ranks.
@@ -807,9 +453,8 @@ osp_result_t OSP_Unlock_mutex(osp_group_t* group,
  * \ingroup Atomics
  */
 
-osp_result_t OSP_Lock_mutexes(osp_group_t* group,
-                              int count,
-                              osp_mutex_t* *mutex_array);
+osp_result_t OSP_Lock_mutexes(int count,
+                              osp_mutex_t * mutexes[]);
 
 /**
  * \brief Local operation to trylock a list of mutexes.  This call attempts to acquire all the
@@ -817,7 +462,7 @@ osp_result_t OSP_Lock_mutexes(osp_group_t* group,
  *        indicating if the lock was acquired or not.
  *
  * \param[out]    rc            The error code.
- * \param[in]     group         OSP group over which the mutexes are shared.
+ * \param[in]     comm          MPI communicator over which the mutexes are shared.
  * \param[in]     count         Number of mutexes to be locked.
  * \param[in]     mutexes       Pointer to vector OSP mutexes.
  * \param[inout]  acquired      Pointer to vector OSP booleans indicating if the lock was acquired.
@@ -827,16 +472,15 @@ osp_result_t OSP_Lock_mutexes(osp_group_t* group,
  * \ingroup Atomics
  */
 
-osp_result_t OSP_Trylock_mutexes(osp_group_t* group,
-                                 int count,
-                                 osp_mutex_t* *mutex_array,
-                                 osp_bool_t* *acquired);
+osp_result_t OSP_Trylock_mutexes(int count,
+                                 osp_mutex_t * mutexes[],
+                                 osp_bool_t * acquired[]);
 
 /**
  * \brief Local operation to unlock a list of mutexes
  *
  * \param[out]    rc            The error code.
- * \param[in]     group         OSP group over which the mutexes are shared.
+ * \param[in]     comm          MPI communicator over which the mutexes are shared.
  * \param[in]     count         Number of mutexes to be locked.
  * \param[in]     mutexes       Pointer to vector OSP mutexes.
  *
@@ -845,9 +489,8 @@ osp_result_t OSP_Trylock_mutexes(osp_group_t* group,
  * \ingroup Atomics
  */
 
-osp_result_t OSP_Unlock_mutexes(osp_group_t* group,
-                                int count,
-                                osp_mutex_t* *mutex_array);
+osp_result_t OSP_Unlock_mutexes(int count,
+                                osp_mutex_t * mutexes[]);
 
 /* ********************************************************************** */
 /*                                                                        */
@@ -858,12 +501,12 @@ osp_result_t OSP_Unlock_mutexes(osp_group_t* group,
 /**
  * \brief Blocking copy of contiguous data from local memory to remote memory.
  *
- * The mnemonic is PUT BYTES from PTR to MEMREGION at RANK plus OFFSET.
+ * The mnemonic is PUT BYTES from PTR to WINDOW at RANK plus OFFSET.
  *
  * \param[out] rc            The error code.
  * \param[in]  bytes         Amount of data to transfer in bytes.
  * \param[in]  source_ptr    Starting address in the (local) source memory.
- * \param[in]  memregion     Global memregion containing target memory.
+ * \param[in]  window        Window containing target memory.
  * \param[in]  target_rank   Rank of the remote process.
  * \param[in]  target_offset Offset into the memregion at target_rank.
 
@@ -875,19 +518,19 @@ osp_result_t OSP_Unlock_mutexes(osp_group_t* group,
 
 osp_result_t OSP_Put(int                      bytes,
                      void*                    source_ptr,
-                     osp_global_memregion_t*  memregion,
+                     osp_window_t * window,
                      int                      target_rank,
                      osp_offset_t             target_offset);
 
 /**
  * \brief Non-Blocking copy of contiguous data from local memory to remote memory.
  *
- * The mnemonic is NBPUT BYTES from PTR to MEMREGION at RANK plus OFFSET and get HANDLE back.
+ * The mnemonic is NBPUT BYTES from PTR to WINDOW at RANK plus OFFSET and get HANDLE back.
  *
  * \param[out] rc            The error code.
  * \param[in]  bytes         Amount of data to transfer in bytes.
  * \param[in]  source_ptr    Starting address in the (local) source memory.
- * \param[in]  memregion     Global memregion containing target memory.
+ * \param[in]  window        Window containing target memory.
  * \param[in]  target_rank   Rank of the remote process.
  * \param[in]  target_offset Offset into the memregion at target_rank.
  * \param[out] handle        Opaque handle for the request.
@@ -899,7 +542,7 @@ osp_result_t OSP_Put(int                      bytes,
 
 osp_result_t OSP_NbPut(int                      bytes,
                        void*                    source_ptr,
-                       osp_global_memregion_t*  memregion,
+                       osp_window_t * window,
                        int                      target_rank,
                        osp_offset_t             target_offset,
                        osp_handle_t             handle);
@@ -921,7 +564,7 @@ osp_result_t OSP_NbPut(int                      bytes,
 
 osp_result_t OSP_MultiPut(int*                     bytes,
                           void**                   source_ptr,
-                          osp_global_memregion_t*  memregion,
+                          osp_window_t * window,
                           int*                     target_rank,
                           osp_offset_t*            target_offset);
 
@@ -943,7 +586,7 @@ osp_result_t OSP_MultiPut(int*                     bytes,
 
 osp_result_t OSP_NbMultiPut(int*                      bytes,
                             void**                   source_ptr,
-                            osp_global_memregion_t*  memregion,
+                            osp_window_t * window,
                             int*                     target_rank,
                             osp_offset_t*            target_offset,
                             osp_handle_t             handle);
@@ -965,7 +608,7 @@ osp_result_t OSP_NbMultiPut(int*                      bytes,
 
 osp_result_t OSP_PutS(osp_stride_descr_t        stride_descr,
                       void*                     source_ptr,
-                      osp_global_memregion_t*   memregion,
+                      osp_window_t *            window,
                       int                       target_rank,
                       osp_offset_t              target_offset);
 
@@ -987,7 +630,7 @@ osp_result_t OSP_PutS(osp_stride_descr_t        stride_descr,
 
 osp_result_t OSP_NbPutS(osp_stride_descr_t        stride_descr,
                         void*                     source_ptr,
-                        osp_global_memregion_t*   memregion,
+                        osp_window_t *            window,
                         int                       target_rank,
                         osp_offset_t              target_offset,
                         osp_handle_t              handle);
@@ -1009,7 +652,7 @@ osp_result_t OSP_NbPutS(osp_stride_descr_t        stride_descr,
 
 osp_result_t OSP_MultiPutS(osp_stride_descr_t*       stride_descr,
                            void**                    source_ptr,
-                           osp_global_memregion_t*   memregion,
+                           osp_window_t *            window,
                            int*                      target_rank,
                            osp_offset_t*             target_offset);
 
@@ -1031,7 +674,7 @@ osp_result_t OSP_MultiPutS(osp_stride_descr_t*       stride_descr,
 
 osp_result_t OSP_NbMultiPutS(osp_stride_descr_t*       stride_descr,
                              void**                    source_ptr,
-                             osp_global_memregion_t*   memregion,
+                             osp_window_t *            window,
                              int*                      target_rank,
                              osp_offset_t*             target_offset,
                              osp_handle_t              handle);
@@ -1057,7 +700,7 @@ osp_result_t OSP_NbMultiPutS(osp_stride_descr_t*       stride_descr,
 osp_result_t OSP_Acc(osp_acc_descr_t acc_descr,
                      int bytes,
                      void* source_ptr,
-                     osp_global_memregion_t* memregion,
+                     osp_window_t *            window,
                      int target_rank,
                      osp_offset_t target_offset);
 
@@ -1084,7 +727,7 @@ osp_result_t OSP_Acc(osp_acc_descr_t acc_descr,
 osp_result_t OSP_NbAcc(osp_acc_descr_t acc_descr,
                        int bytes,
                        void* source_ptr,
-                       osp_global_memregion_t* memregion,
+                       osp_window_t *            window,
                        int target_rank,
                        osp_offset_t target_offset,
                        osp_handle_t handle);
@@ -1108,7 +751,7 @@ osp_result_t OSP_NbAcc(osp_acc_descr_t acc_descr,
 osp_result_t OSP_MultiAcc(osp_acc_descr_t* acc_descr,
                           int* bytes,
                           void** source_ptr,
-                          osp_global_memregion_t* memregion,
+                          osp_window_t *            window,
                           int* target_rank,
                           osp_offset_t* target_offset);
 
@@ -1132,7 +775,7 @@ osp_result_t OSP_MultiAcc(osp_acc_descr_t* acc_descr,
 osp_result_t OSP_NbMultiAcc(osp_acc_descr_t* acc_descr,
                             int* bytes,
                             void** source_ptr,
-                            osp_global_memregion_t* memregion,
+                            osp_window_t *            window,
                             int* target_rank,
                             osp_offset_t* target_offset,
                             osp_handle_t handle);
@@ -1156,7 +799,7 @@ osp_result_t OSP_NbMultiAcc(osp_acc_descr_t* acc_descr,
 osp_result_t OSP_AccS(osp_acc_descr_t acc_descr,
                       osp_stride_descr_t stride_descr,
                       void* source_ptr,
-                      osp_global_memregion_t* memregion,
+                      osp_window_t *            window,
                       int target_rank,
                       osp_offset_t target_offset);
 
@@ -1180,7 +823,7 @@ osp_result_t OSP_AccS(osp_acc_descr_t acc_descr,
 osp_result_t OSP_NbAccS(osp_acc_descr_t acc_descr,
                         osp_stride_descr_t stride_descr,
                         void* source_ptr,
-                        osp_global_memregion_t* memregion,
+                        osp_window_t *            window,
                         int target_rank,
                         osp_offset_t target_offset,
                         osp_handle_t handle);
@@ -1204,7 +847,7 @@ osp_result_t OSP_NbAccS(osp_acc_descr_t acc_descr,
 osp_result_t OSP_MultiAccS(osp_acc_descr_t* acc_descr,
                            osp_stride_descr_t* stride_descr,
                            void** source_ptr,
-                           osp_global_memregion_t* memregion,
+                           osp_window_t *            window,
                            int* target_rank,
                            osp_offset_t* target_offset);
 
@@ -1228,7 +871,7 @@ osp_result_t OSP_MultiAccS(osp_acc_descr_t* acc_descr,
 osp_result_t OSP_NbMultiAccS(osp_acc_descr_t* acc_descr,
                              osp_stride_descr_t* stride_descr,
                              void** source_ptr,
-                             osp_global_memregion_t* memregion,
+                             osp_window_t *            window,
                              int* target_rank,
                              osp_offset_t* target_offset,
                              osp_handle_t handle);
@@ -1252,7 +895,7 @@ osp_result_t OSP_NbMultiAccS(osp_acc_descr_t* acc_descr,
 
 osp_result_t OSP_Get(int bytes,
                      void* source_ptr,
-                     osp_global_memregion_t* memregion,
+                     osp_window_t *            window,
                      int target_rank,
                      osp_offset_t target_offset);
 
@@ -1276,7 +919,7 @@ osp_result_t OSP_Get(int bytes,
 
 osp_result_t OSP_NbGet(int bytes,
                        void* source_ptr,
-                       osp_global_memregion_t* memregion,
+                       osp_window_t *            window,
                        int target_rank,
                        osp_offset_t target_offset,
                        osp_handle_t handle);
@@ -1298,7 +941,7 @@ osp_result_t OSP_NbGet(int bytes,
 
 osp_result_t OSP_MultiGet(int* bytes,
                           void** source_ptr,
-                          osp_global_memregion_t* memregion,
+                          osp_window_t *            window,
                           int* target_rank,
                           osp_offset_t* target_offset);
 
@@ -1320,7 +963,7 @@ osp_result_t OSP_MultiGet(int* bytes,
 
 osp_result_t OSP_NbMultiGet(int* bytes,
                             void** source_ptr,
-                            osp_global_memregion_t* memregion,
+                            osp_window_t *            window,
                             int* target_rank,
                             osp_offset_t* target_offset,
                             osp_handle_t handle);
@@ -1342,7 +985,7 @@ osp_result_t OSP_NbMultiGet(int* bytes,
 
 osp_result_t OSP_GetS(osp_stride_descr_t stride_descr,
                       void* source_ptr,
-                      osp_global_memregion_t* memregion,
+                      osp_window_t *            window,
                       int target_rank,
                       osp_offset_t target_offset);
 
@@ -1364,7 +1007,7 @@ osp_result_t OSP_GetS(osp_stride_descr_t stride_descr,
 
 osp_result_t OSP_NbGetS(osp_stride_descr_t stride_descr,
                         void* source_ptr,
-                        osp_global_memregion_t* memregion,
+                        osp_window_t *            window,
                         int target_rank,
                         osp_offset_t target_offset,
                         osp_handle_t handle);
@@ -1386,7 +1029,7 @@ osp_result_t OSP_NbGetS(osp_stride_descr_t stride_descr,
 
 osp_result_t OSP_MultiGetS(osp_stride_descr_t* stride_descr,
                            void** source_ptr,
-                           osp_global_memregion_t* memregion,
+                           osp_window_t *            window,
                            int* target_rank,
                            osp_offset_t* target_offset);
 
@@ -1408,7 +1051,7 @@ osp_result_t OSP_MultiGetS(osp_stride_descr_t* stride_descr,
 
 osp_result_t OSP_NbMultiGetS(osp_stride_descr_t* stride_descr,
                              void** source_ptr,
-                             osp_global_memregion_t* memregion,
+                             osp_window_t *            window,
                              int* target_rank,
                              osp_offset_t* target_offset,
                              osp_handle_t handle);
@@ -1442,7 +1085,7 @@ osp_result_t OSP_NbMultiGetS(osp_stride_descr_t* stride_descr,
 osp_result_t OSP_Rmw(osp_acc_descr_t acc_descr,
                      int bytes,
                      void* in_ptr,
-                     osp_global_memregion_t* memregion,
+                     osp_window_t *            window,
                      int target_rank,
                      osp_offset_t target_offset,
                      void* out_ptr);
@@ -1471,111 +1114,17 @@ osp_result_t OSP_Rmw(osp_acc_descr_t acc_descr,
 osp_result_t OSP_NbRmw(osp_rmw_descr_t rmw_descr,
                        int bytes,
                        void* source_ptr,
-                       osp_global_memregion_t* memregion,
+                       osp_window_t *            window,
                        int target_rank,
                        osp_offset_t target_offset,
                        void* out_ptr,
                        osp_handle_t handle);
-
-/**
- * \brief Blocking copy of contiguous data from remote memory to remote memory.
- *
- * The mnemonic is COPY BYTES from MEMREGION at RANK plus OFFSET
- * to MEMREGION at RANK plus OFFSET.
- *
- * \param[out] rc             The error code.
- * \param[in]  bytes          Amount of data to transfer in bytes.
- * \param[in]  src_memregion  Global memregion containing target memory.
- * \param[in]  src_rank       Rank of the remote process.
- * \param[in]  src_offset     Offset into the memregion at target_rank.
- * \param[in]  dest_memregion Global memregion containing target memory.
- * \param[in]  dest_rank      Rank of the remote process.
- * \param[in]  dest_offset    Offset into the memregion at target_rank.
- *
- * \see OSP_NbGet, OSP_MultiGet
- *
- * \ingroup DATA_TRANSFER
- */
-
-osp_result_t OSP_Copy(int bytes,
-                      osp_global_memregion_t* src_memregion,
-                      int src_rank,
-                      osp_offset_t src_offset,
-                      osp_global_memregion_t* dest_memregion,
-                      int dest_rank,
-                      osp_offset_t dest_offset);
-
-/**
- * \brief Non-Blocking copy of contiguous data from remote memory to remote memory.
- *
- * The mnemonic is COPY BYTES from MEMREGION at RANK plus OFFSET
- * to MEMREGION at RANK plus OFFSET and get HANDLE back.
- *
- * \param[out] rc             The error code.
- * \param[in]  bytes          Amount of data to transfer in bytes.
- * \param[in]  src_memregion  Global memregion containing target memory.
- * \param[in]  src_rank       Rank of the remote process.
- * \param[in]  src_offset     Offset into the memregion at target_rank.
- * \param[in]  dest_memregion Global memregion containing target memory.
- * \param[in]  dest_rank      Rank of the remote process.
- * \param[in]  dest_offset    Offset into the memregion at target_rank.
- * \param[out] handle         Opaque handle for the request.
- *
- * \see OSP_NbGet, OSP_MultiGet
- *
- * \ingroup DATA_TRANSFER
- */
-
-osp_result_t OSP_NbCopy(int bytes,
-                        osp_global_memregion_t* src_memregion,
-                        int src_rank,
-                        osp_offset_t src_offset,
-                        osp_global_memregion_t* dest_memregion,
-                        int dest_rank,
-                        osp_offset_t dest_offset,
-                        osp_handle_t handle);
 
 /* ********************************************************************** */
 /*                                                                        */
 /*               OSP external API - synchronization and completion         */
 /*                                                                        */
 /* ********************************************************************** */
-
-/**
- * \brief On return, this call ensures that all outstanding put or accumulate
- *        operations are complete remotely within the entire group.
- *
- *        This operation is collective and blocking.  It has the effect of
- *        OSP_Flush_group called from every process in the group followed by OSP_Barrier_group.
- *
- * \param[out] rc            The error code.
- * \param[in] group          Group of processes to synchronize.
- *
- * \see OSP_NbSync_group, OSP_Flush_group.
- *
- * \ingroup SYNCHRONIZATION
- */
-
-osp_result_t OSP_Sync_group(osp_group_t* group);
-
-/**
- * \brief When the handle state is OSP_TRUE, all outstanding put or accumulate
- *        operations are complete remotely within the entire group.
- *
- *        This operation is collective and blocking.  It has the effect of
- *        OSP_NbFlush_group called from every process in the group followed by OSP_NbBarrier_group.
- *
- * \param[out] rc            The error code.
- * \param[in] group          Group of processes to synchronize.
- *
- * \see OSP_Sync_group, OSP_NbFlush_group.
- *
- * \ingroup SYNCHRONIZATION
- */
-
-osp_result_t OSP_NbSync_group(osp_group_t* group,
-                              osp_handle_t handle);
-
 /**
  * \brief On return, this call ensures that all blocking and non-blocking put
  *        and accumulate operations sent to the target process have completed remotely.
@@ -1585,7 +1134,7 @@ osp_result_t OSP_NbSync_group(osp_group_t* group,
  * \param[out] rc            The error code.
  * \param[in]  proc          Rank of the remote process.
  *
- * \see OSP_NbFlush, OSP_Flush_group, OSP_Flush_list
+ * \see OSP_NbFlush, OSP_Flush_list
  *
  * \ingroup COMPLETION
  */
@@ -1601,13 +1150,12 @@ osp_result_t OSP_Flush(int proc);
  * \param[out] rc            The error code.
  * \param[in]  proc          Rank of the remote process.
  *
- * \see OSP_Flush, OSP_NbFlush_group, OSP_NbFlush_list
+ * \see OSP_Flush, OSP_NbFlush_list
  *
  * \ingroup COMPLETION
  */
 
-osp_result_t OSP_NbFlush(int proc,
-                         osp_handle_t handle);
+osp_result_t OSP_NbFlush(int proc, osp_handle_t * handle);
 
 /**
  * \brief On return, this call ensures that all blocking and non-blocking put
@@ -1625,7 +1173,7 @@ osp_result_t OSP_NbFlush(int proc,
  */
 
 osp_result_t OSP_Flush_list(int count,
-                            int *proc_list);
+                            int procs[]);
 
 /**
  * \brief When the handle state is OSP_TRUE, all blocking and non-blocking put
@@ -1643,67 +1191,20 @@ osp_result_t OSP_Flush_list(int count,
  */
 
 osp_result_t OSP_NbFlush_list(int count,
-                              int *proc_list,
-                              osp_handle_t handle);
-
-/**
- * \brief On return, this call ensures that all blocking and non-blocking put
- *        and accumulate operations have completed remotely at the processes in the group.
- *
- *        This operation is local and blocking.
- *
- * \param[out] rc                The error code.
- * \param[in] count              Number of processes in vector.
- * \param[in] proc_list          List of processes to flush against.
- *
- * \see OSP_Flush, OSP_NbFlush_group
- *
- * \ingroup COMPLETION
- */
-
-osp_result_t OSP_Flush_group(osp_group_t* group);
-
-/**
- * \brief When the handle state is OSP_TRUE, all blocking and non-blocking put
- *        and accumulate operations have completed remotely at the processes in the group.
- *
- *        This operation is local and blocking.
- *
- * \param[out] rc                The error code.
- * \param[in] count              Number of processes in vector.
- * \param[in] proc_list          List of processes to flush against.
- *
- * \see OSP_NbFlush, OSP_Flush_group
- *
- * \ingroup COMPLETION
- */
-
-osp_result_t OSP_NbFlush_group(osp_group_t* group,
-                               osp_handle_t handle);
-
-/**
- * \brief Blocks on completion of all non-blocking handles.
- *
- * \param[out] rc                The error code.
- *
- * \see osp_handle_t, OSP_Wait_handle_list, OSP_Test_handle
- *
- * \ingroup SYNCHRONIZATION
- */
-
-osp_result_t OSP_Wait_handle_all(void);
+                              int procs[],
+                              osp_handle_t * handle);
 
 /**
  * \brief Blocks on completion of a non-blocking handle.
  *
  * \param[in] handle      Non-blocking handle upon which to be waited.
  *
- * \see osp_handle_t, OSP_Wait_handle_list, OSP_Test_handle
+ * \see osp_handle_t, OSP_Wait_list, OSP_Test
  *
  * \ingroup SYNCHRONIZATION
  */
 
-osp_result_t OSP_Wait_handle(osp_handle_t handle);
+osp_result_t OSP_Wait(osp_handle_t * handle);
 
 /**
  * \brief Blocks on completion of all elements in a vector of non-blocking handles.
@@ -1711,13 +1212,13 @@ osp_result_t OSP_Wait_handle(osp_handle_t handle);
  * \param[in] count        Number of handles in vector.
  * \param[in] handles      Vector of non-blocking handles upon which to be waited.
  *
- * \see osp_handle_t, OSP_Wait_handle, OSP_Test_handle_list
+ * \see osp_handle_t, OSP_Wait, OSP_Test_list
  *
  * \ingroup SYNCHRONIZATION
  */
 
-osp_result_t OSP_Wait_handle_list(int count,
-                                  osp_handle_t* handles);
+osp_result_t OSP_Wait_list(int count,
+                           osp_handle_t * handles[]);
 
 /**
  * \brief Blocks on completion of a non-blocking handle.
@@ -1725,13 +1226,13 @@ osp_result_t OSP_Wait_handle_list(int count,
  * \param[in]  handle        Non-blocking handle upon which to be waited.
  * \param[out] completed     Handle status.
  *
- * \see osp_handle_t, OSP_Wait_handle, OSP_Test_handle_list
+ * \see osp_handle_t, OSP_Wait, OSP_Test_list
  *
  * \ingroup SYNCHRONIZATION
  */
 
-osp_result_t OSP_Test_handle(osp_handle_t handle,
-                             osp_bool_t* completed);
+osp_result_t OSP_Test(osp_handle_t * handle,
+                      osp_bool_t * completed);
 
 /**
  * \brief Blocks on completion of all elements in a vector of non-blocking handles.
@@ -1740,14 +1241,14 @@ osp_result_t OSP_Test_handle(osp_handle_t handle,
  * \param[in]  handles      Vector of non-blocking handles upon which to be waited.
  * \param[out] completed    Vector of handle statuses.
  *
- * \see osp_handle_t, OSP_Test_handle, OSP_Wait_handle_list
+ * \see osp_handle_t, OSP_Test, OSP_Wait_list
  *
  * \ingroup SYNCHRONIZATION
  */
 
-osp_result_t OSP_Test_handle_list(int count,
-                                  osp_handle_t *handles,
-                                  osp_bool_t* *completed);
+osp_result_t OSP_Test_list(int count,
+                           osp_handle_t * handles[],
+                           osp_bool_t * completed[]);
 
 /**
  * \brief Resets a non-blocking handle.
@@ -1759,7 +1260,7 @@ osp_result_t OSP_Test_handle_list(int count,
  * \ingroup SYNCHRONIZATION
  */
 
-osp_result_t OSP_Reset_handle(osp_handle_t* handle);
+osp_result_t OSP_Reset(osp_handle_t * handle);
 
 /**
  * \brief Resets a non-blocking handle.
@@ -1772,7 +1273,8 @@ osp_result_t OSP_Reset_handle(osp_handle_t* handle);
  * \ingroup SYNCHRONIZATION
  */
 
-osp_result_t OSP_Reset_handle_list(int count, osp_handle_t* handle);
+osp_result_t OSP_Reset_list(int count, 
+                            osp_handle_t * handles[]);
 
 /*! @} */
 

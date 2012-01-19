@@ -23,15 +23,12 @@ int OSPDI_Direct_getv(int target,
         for(j=0; j<iov_ar[i].ptr_ar_len; j++)
         {
 
-              src_disp = (size_t) iov_ar[i].source_ptr_ar[j]
-                      - (size_t) OSPD_Membase_global[OSPD_Process_info.my_rank];
-              dst_disp = (size_t) iov_ar[i].target_ptr_ar[j]
-                      - (size_t) OSPD_Membase_global[target];
+              src_disp = (size_t) iov_ar[i].source_ptr_ar[j] - (size_t) OSPD_Membase_global[OSPD_Process_info.my_rank];
+              dst_disp = (size_t) iov_ar[i].target_ptr_ar[j] - (size_t) OSPD_Membase_global[target];
               size = iov_ar[i].size;
 
               ospd_request = OSPDI_Get_request(1);
-              OSPU_ERR_POP(status = (ospd_request == NULL),
-                    "OSPDI_Get_request returned error.  \n");
+              OSPU_ERR_POP(status = (ospd_request == NULL), "OSPDI_Get_request returned error.  \n");
               OSPDI_Set_handle(ospd_request, ospd_handle);
 
               done_callback.function = OSPDI_Request_done;
@@ -74,13 +71,9 @@ int OSPD_GetV(int target,
     OSPDI_CRITICAL_ENTER();
 
     ospd_handle = OSPDI_Get_handle();
-    OSPU_ERR_POP(status = (ospd_handle == NULL),
-                "OSPDI_Get_handle returned NULL in OSPD_GetV.\n");
+    OSPU_ERR_POP(status = (ospd_handle == NULL), "OSPDI_Get_handle returned NULL in OSPD_GetV.\n");
 
-    status = OSPDI_Direct_getv(target,
-                              iov_ar,
-                              ar_len,
-                              ospd_handle);
+    status = OSPDI_Direct_getv(target, iov_ar, ar_len, ospd_handle);
     OSPU_ERR_POP(status, "OSPDI_Direct_getv returned with an error \n");
 
     OSPDI_Conditional_advance(ospd_handle->active > 0);
@@ -109,10 +102,7 @@ int OSPD_NbGetV(int target,
 
     ospd_handle = (OSPD_Handle_t *) osp_handle;
 
-    status = OSPDI_Direct_getv(target,
-                              iov_ar,
-                              ar_len,
-                              ospd_handle);
+    status = OSPDI_Direct_getv(target, iov_ar, ar_len, ospd_handle);
     OSPU_ERR_POP(status, "OSPDI_Direct_getv returned with an error \n");
 
   fn_exit:

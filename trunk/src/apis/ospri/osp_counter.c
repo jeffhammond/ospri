@@ -8,8 +8,7 @@
 #include "ospd.h"
 #include "ospu.h"
 
-int OSP_Create_counter(OSP_group_t* group,
-                      OSP_counter_t *counter)
+int OSP_Create_counter(MPI_Comm comm, osp_counter_t * counter)
 {
     int status = OSP_SUCCESS;
 
@@ -18,20 +17,18 @@ int OSP_Create_counter(OSP_group_t* group,
 #   ifdef HAVE_ERROR_CHECKING
 #   endif
 
-    status = OSPD_Create_counter(group,
-                                counter);
-    OSPU_ERR_POP(status != OSP_SUCCESS, "OSPD_Create_counter returned an error\n");
+    status = OSPD_Create_counter(comm, counter);
+    OSPU_ERR_POP(status != OSP_SUCCESS, "OSPD_Create_counter failed");
 
-  fn_exit:
+    fn_exit:
     OSPU_FUNC_EXIT();
     return status;
 
-  fn_fail:
+    fn_fail:
     goto fn_exit;
 }
 
-int OSP_Destroy_counter(OSP_group_t* group,
-                       OSP_counter_t *counter)
+int OSP_Destroy_counter(osp_counter_t * counter)
 {
     int status = OSP_SUCCESS;
 
@@ -40,21 +37,20 @@ int OSP_Destroy_counter(OSP_group_t* group,
 #   ifdef HAVE_ERROR_CHECKING
 #   endif
 
-    status = OSPD_Destroy_counter(group,
-                                 counter);
-    OSPU_ERR_POP(status != OSP_SUCCESS, "OSPD_Destroy_counter returned an error\n");
+    status = OSPD_Destroy_counter(counter);
+    OSPU_ERR_POP(status != OSP_SUCCESS, "OSPD_Destroy_counter failed");
 
-  fn_exit:
+    fn_exit:
     OSPU_FUNC_EXIT();
     return status;
 
-  fn_fail:
+    fn_fail:
     goto fn_exit;
 }
 
-int OSP_Incr_counter(OSP_counter_t counter,
-                    long increment,
-                    long* original)
+int OSP_Incr_counter(osp_counter_t * counter,
+                     long increment,
+                     long* original)
 {
     int status = OSP_SUCCESS;
 
@@ -63,15 +59,13 @@ int OSP_Incr_counter(OSP_counter_t counter,
 #   ifdef HAVE_ERROR_CHECKING
 #   endif
 
-    status = OSPD_Incr_counter(counter,
-                              increment,
-                              original);
-    OSPU_ERR_POP(status != OSP_SUCCESS, "OSPD_Incr_counter returned an error\n");
+    status = OSPD_Incr_counter(counter, increment, original);
+    OSPU_ERR_POP(status != OSP_SUCCESS, "OSPD_Incr_counter failed");
 
-  fn_exit:
+    fn_exit:
     OSPU_FUNC_EXIT();
     return status;
 
-  fn_fail:
+    fn_fail:
     goto fn_exit;
 }

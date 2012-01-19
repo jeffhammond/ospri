@@ -46,13 +46,23 @@ ospd_put_hint_t;
 
 typedef struct
 {
-    int bulk_remote_completion_available;
-    int num_ranks;                        /* length of vectors below */
-    int * bytes_per_rank;          /* how many bytes does each rank have (may be zero) */
-    int * world_ranks;             /* world_ranks[my_rank_in_window_communicator] = my_rank_in_mpi_comm_world */
-    DCMF_Memregion_t * memregions; /*   */
+    /* can get both from DCMF_Memregion_query */
+    void * base_ptr;
+    /* unnecessary for correct programs */
+    size_t size;
+    /* not needed if one memregion per node */
+    DCMF_Memregion_t memregions;
 }
-ospd_window_t;
+ospd_local_memregion_t;
+
+typedef struct
+{
+    int bulk_remote_completion_available;
+    int num_ranks;                             /* length of vectors below */
+    int * world_ranks;                         /* world_ranks[my_rank_in_window_communicator] = my_rank_in_mpi_comm_world */
+    ospd_local_memregion_t * local_memregions; /*   */
+}
+ospd_global_memregion_t;
 
 typedef struct
 {

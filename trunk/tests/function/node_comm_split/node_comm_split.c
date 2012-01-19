@@ -50,7 +50,7 @@ int main(int argc, char* argv[])
     MPI_Comm NodeComm;
 
 #if MPI_VERSION >= 3
-    mpi_result = MPI_Comm_split_type(MPI_COMM_WORLD, MPIX_COMM_TYPE_SHARED, 0, MPI_INFO_NULL, &NodeComm);
+    mpi_result = MPI_Comm_split_type(MPI_COMM_WORLD, MPI_COMM_TYPE_SHARED, 0, MPI_INFO_NULL, &NodeComm);
     assert(mpi_result==MPI_SUCCESS);
 #elif defined(MPICH2) && (MPICH2_NUMVERSION>10500000)
     mpi_result = MPIX_Comm_split_type(MPI_COMM_WORLD, MPIX_COMM_TYPE_SHARED, 0, MPI_INFO_NULL, &NodeComm);
