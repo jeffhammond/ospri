@@ -6,13 +6,13 @@ CFLAGS  = $(COPT)
 LDFLAGS = $(COPT)
 LIBS    = -lrt
 
-TESTS   := $(patsubst %.c,%.x,$(wildcard *.c))
+TESTS   := $(patsubst %.c,%.x,$(wildcard test*.c))
 OBJECTS := $(patsubst %.c,%.o,$(wildcard *.c))
 
 all: $(TESTS)
 
-%.x: %.o
-	$(LD) $(LDFLAGS) $< $(LIBS) -o $@
+%.x: %.o ospu_mpi_comm_node.o
+	$(LD) $(LDFLAGS) $< ospu_mpi_comm_node.o $(LIBS) -o $@
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@

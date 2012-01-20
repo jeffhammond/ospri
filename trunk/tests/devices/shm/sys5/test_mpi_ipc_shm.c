@@ -125,7 +125,7 @@ int main(int argc, char* argv[])
         if (i==node_rank)
        {
             printf("%7d: node_rank %d setting the buffer \n", world_rank, node_rank );
-            for (j=0; j<node_shmem_count; j++ ) ptr[j] = (double)i;
+            for (j=0; j<node_shmem_count; j++ ) ptr[j] = (double)world_rank;
             printf("%7d: memset succeeded \n", world_rank);
 
             /* sync shm */
