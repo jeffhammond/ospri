@@ -74,7 +74,7 @@ int OSPU_Comm_split_node(MPI_Comm oldcomm, MPI_Comm * newcomm)
         if (rc!=MPI_SUCCESS) return rc;
     }
 
-    *new_comm = node_comm;
+    *newcomm = node_comm;
 
 #endif
 
