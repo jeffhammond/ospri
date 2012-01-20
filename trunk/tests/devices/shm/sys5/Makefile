@@ -11,8 +11,8 @@ OBJECTS := $(patsubst %.c,%.o,$(wildcard *.c))
 
 all: $(TESTS)
 
-%.x: %.o ospu_mpi_comm_node.o
-	$(LD) $(LDFLAGS) $< ospu_mpi_comm_node.o $(LIBS) -o $@
+%.x: %.o
+	$(LD) $(LDFLAGS) $< $(LIBS) -o $@
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
