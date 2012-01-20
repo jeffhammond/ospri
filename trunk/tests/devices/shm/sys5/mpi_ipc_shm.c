@@ -28,6 +28,11 @@
 #  include <spi/include/kernel/location.h>
 #endif
 
+#if (MPI_VERSION >= 3) || defined(MPICH2) && (MPICH2_NUMVERSION>10500000)
+#else
+int OSPU_Comm_split_node(MPI_Comm oldcomm, MPI_Comm * newcomm);
+#endif
+
 int main(int argc, char* argv[])
 {
     int i,j;
