@@ -84,41 +84,31 @@ int main(int argc, char* argv[])
     fflush(stdout);
     MPI_Barrier(MPI_COMM_WORLD);
 
-#if defined(__bgq__)
-    rank_in_node = Kernel_MyTcoord();
-#elif defined(__bgp__)
-    rank_in_node = Kernel_PhysicalProcessorID();
+#if MPI_VERSION >= 3
+    MPI_Comm_split_type(MPI_COMM_WORLD, MPI_COMM_TYPE_SHARED, 0, MPI_INFO_NULL, &IntraNodeComm);
+#elif defined(MPICH2) && (MPICH2_NUMVERSION>10500000)
+    MPIX_Comm_split_type(MPI_COMM_WORLD, MPIX_COMM_TYPE_SHARED, 0, MPI_INFO_NULL, &IntraNodeComm);
 #else
-    rank_in_node = world_rank;
+#warning need to link against src/devices/common/ospu_mpi_comm_node.c
+    OSPU_Comm_split_node(MPI_COMM_WORLD, &IntraNodeComm);
 #endif
-
-    /* int MPI_Allreduce(void *sendbuf, void *recvbuf, int count, MPI_Datatype datatype, MPI_Op op, MPI_Comm comm) */
-    mpi_result = MPI_Allreduce( &rank_in_node, &ranks_per_node, 1, MPI_INT, MPI_MAX, MPI_COMM_WORLD);
-    assert(mpi_result==MPI_SUCCESS);
-    ranks_per_node++; /* change from [0,n-1] to [1,n] */
-
-    num_nodes = num_procs/ranks_per_node;
-    assert( (num_procs % ranks_per_node)==0 );
-
-    my_node = (world_rank - rank_in_node)/ranks_per_node;
-
-    printf("%7d: rank_in_node = %2d, ranks_per_node = %2d, my_node = %5d, num_nodes = %5d, world_rank = %7d, num_procs = %7d \n",
-            world_rank, rank_in_node, ranks_per_node, my_node, num_nodes, world_rank, num_procs);
-    fflush(stdout);
-    MPI_Barrier(MPI_COMM_WORLD);
-
-    color = my_node;
-    key   = rank_in_node;
-
-    /* int MPI_Comm_split(MPI_Comm comm, int color, int key, MPI_Comm *newcomm) */
-    mpi_result = MPI_Comm_split(MPI_COMM_WORLD, color, key, &IntraNodeComm);
-    assert(mpi_result==MPI_SUCCESS);
 
     int subcomm_rank = -1;
     mpi_result = MPI_Comm_rank(IntraNodeComm, &subcomm_rank);
     assert(mpi_result==MPI_SUCCESS);
 
     /* setup shm */
+
+    int shmtag;
+    if (0==subcomm_rank)
+    {
+        shmtag = shmget(IPC_PRIVATE, size, 0666);
+        if (shmtag<0) printf("shmtag failed: %d \n", shmtag);
+        else          printf("shmtag succeeded: %d \n", shmtag);
+    }
+    mpi_result = MPI_Bcast( &shmtag, 1, MPI_INT, 0, );
+    assert(mpi_result==MPI_SUCCESS);
+
 
     fflush(stdout);
     mpi_result = MPI_Barrier(MPI_COMM_WORLD);
