@@ -1,0 +1,13 @@
+#!/bin/bash
+#PBS -N mpi_shm
+#PBS -l mppwidth=48
+#PBS -l mppnppn=24
+#PBS -l walltime=0:30:00
+#PBS -joe
+#PBS -V
+
+cd ${PBS_O_WORKDIR}
+
+#aprun -n 48 -N 24 ./test_basic.x
+#aprun -n 48 -N 24 ./mmap_shm.x
+aprun -n 48 -N 24 ./mpi_shm.x
