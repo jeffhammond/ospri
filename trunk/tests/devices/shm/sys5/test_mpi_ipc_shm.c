@@ -143,6 +143,9 @@ int main(int argc, char* argv[])
     }
 
     /* delete shm */
+    int rc = shmdt(ptr);
+    if (rc==0) printf("shmdt succeeded: %d \n", rc);
+    else       printf("shmdt failed: %d \n", rc);
 
     mpi_result = MPI_Barrier(MPI_COMM_WORLD);
     assert(mpi_result==MPI_SUCCESS);
