@@ -1,5 +1,5 @@
 #!/bin/bash
-#PBS -N node_comm_split
+#PBS -N mpi_ipc_shm
 #PBS -l mppwidth=48
 #PBS -l mppnppn=24
 #PBS -l walltime=0:30:00
@@ -8,7 +8,4 @@
 
 cd ${PBS_O_WORKDIR}
 
-echo "./node_comm_split.x"
-aprun -n 48 -N 24 ./node_comm_split.x
-echo "./node_comm_dinan.x"
-aprun -n 48 -N 24 ./node_comm_dinan.x
+aprun -n 48 -N 24 ./mpi_ipc_shm.x
