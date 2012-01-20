@@ -35,12 +35,6 @@ int main(int argc, char* argv[])
     int world_rank = -1, num_procs = -1;
     int mpi_result = MPI_SUCCESS;
 
-    int rank_in_node = -1;
-    int ranks_per_node = 0;
-    int num_nodes = 0;
-    int my_node = -1;
-
-    int color = -1, key = -1;
     MPI_Comm IntraNodeComm;
 
     int node_shmem_bytes; 
@@ -93,34 +87,41 @@ int main(int argc, char* argv[])
     OSPU_Comm_split_node(MPI_COMM_WORLD, &IntraNodeComm);
 #endif
 
-    int subcomm_rank = -1;
-    mpi_result = MPI_Comm_rank(IntraNodeComm, &subcomm_rank);
+    int node_rank = -1;
+    mpi_result = MPI_Comm_rank(IntraNodeComm, &node_rank);
+    assert(mpi_result==MPI_SUCCESS);
+
+    int node_size = 0;
+    mpi_result = MPI_Comm_size(MPI_COMM_WORLD, &node_size);
     assert(mpi_result==MPI_SUCCESS);
 
     /* setup shm */
 
     int shmtag;
-    if (0==subcomm_rank)
+    if (0==node_rank)
     {
-        shmtag = shmget(IPC_PRIVATE, size, 0666);
-        if (shmtag<0) printf("shmtag failed: %d \n", shmtag);
-        else          printf("shmtag succeeded: %d \n", shmtag);
+        shmtag = shmget(IPC_PRIVATE, node_shmem_bytes, 0666);
+        if (shmtag<0) printf("shmget failed: %d \n", shmtag);
+        else          printf("shmget succeeded: %d \n", shmtag);
     }
-    mpi_result = MPI_Bcast( &shmtag, 1, MPI_INT, 0, );
+    mpi_result = MPI_Bcast( &shmtag, 1, MPI_INT, 0, IntraNodeComm);
     assert(mpi_result==MPI_SUCCESS);
 
+    double * ptr = shmat(shmtag, NULL, 0);
+    if (ptr==NULL) printf("shmat failed: %d \n", shmtag);
+    else           printf("shmat succeeded: %d \n", shmtag);
 
     fflush(stdout);
     mpi_result = MPI_Barrier(MPI_COMM_WORLD);
     assert(mpi_result==MPI_SUCCESS);
 
-    for (i=0; i<ranks_per_node; i++)
+    for (i=0; i<node_size; i++)
     {
-        if (i==subcomm_rank)
+        if (i==node_rank)
        {
-            printf("%7d: subcomm_rank %d setting the buffer \n", world_rank, subcomm_rank );
+            printf("%7d: node_rank %d setting the buffer \n", world_rank, node_rank );
             for (j=0; j<node_shmem_count; j++ ) ptr[j] = (double)i;
-            fprintf(stderr,"%7d: memset succeeded \n", world_rank);
+            printf("%7d: memset succeeded \n", world_rank);
 
             /* sync shm */
         }
@@ -142,6 +143,7 @@ int main(int argc, char* argv[])
     assert(mpi_result==MPI_SUCCESS);
 
     if (world_rank==0) printf("%7d: all done! \n", world_rank );
+    fflush(stdout);
 
     MPI_Finalize();
 
