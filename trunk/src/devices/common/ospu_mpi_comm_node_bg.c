@@ -23,7 +23,7 @@ int OSPU_Comm_split_node(MPI_Comm oldcomm, MPI_Comm * newcomm)
 {
     int rc;
 
-#if defined(__bgq__)
+#if defined(__bgp__)
 
     _BGP_Personality_t personality;
 
