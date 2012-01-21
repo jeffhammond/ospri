@@ -142,13 +142,24 @@ int main(int argc, char* argv[])
     double * ptr = NULL;
     _BGP_Personality_t pers;
     Kernel_GetPersonality(&pers, sizeof(pers));
+
     if( BGP_Personality_processConfig(&pers) == _BGP_PERS_PROCESSCONFIG_SMP )
     {
         printf("SMP mode => MAP_PRIVATE | MAP_ANONYMOUS \n");
         ptr = mmap( NULL, node_shmem_bytes, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS, fd, 0 );
     }
     else
+    {
+        if (node_shmem_bytes>pers.Kernel_Config.SharedMemMB)
+        {
+            printf("node_shmem_bytes (%d) greater than pers.Kernel_Config.SharedMemMB (%d) - allocating the latter \n", 
+                   node_shmem_bytes, pers.Kernel_Config.SharedMemMB );
+
+            node_shmem_bytes = pers.Kernel_Config.SharedMemMB;
+        }
+
         ptr = mmap( NULL, node_shmem_bytes, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0 );
+    }
 #else
     double * ptr = mmap( NULL, node_shmem_bytes, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0 );
 #endif
