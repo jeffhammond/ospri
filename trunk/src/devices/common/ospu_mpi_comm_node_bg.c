@@ -29,10 +29,8 @@ int OSPU_Comm_split_node(MPI_Comm oldcomm, MPI_Comm * newcomm)
 
     Kernel_GetPersonality( &personality, sizeof(personality) );
 
-    int mode = personality.Kernel_Config.ProcessConfig;
-
     /* SMP mode is trivial */
-    if ( mode == _BGP_PERS_PROCESSCONFIG_SMP )
+    if (personality.Kernel_Config.ProcessConfig == _BGP_PERS_PROCESSCONFIG_SMP )
     {
         *newcomm = MPI_COMM_SELF;
         return rc = MPI_SUCCESS;
