@@ -55,19 +55,21 @@ int main(int argc, char *argv[])
     int rank_zp = MPIX_torus2rank(1,2,1,0);
     int rank_zm = MPIX_torus2rank(1,0,1,0);
 #else
-    int rank_c0 = world_rank;
-    int rank_xp = (world_rank+1)%world_size;
-    int rank_xm = (world_rank+1)%world_size;
-    int rank_yp = (world_rank+1)%world_size;
-    int rank_ym = (world_rank+1)%world_size;
-    int rank_zp = (world_rank+1)%world_size;
-    int rank_zm = (world_rank+1)%world_size;
+    links = 1;
+    int rank_c0 = 0;
+    int rank_xp = 1;
+    int rank_xm = 1;
+    int rank_yp = 1;
+    int rank_ym = 1;
+    int rank_zp = 1;
+    int rank_zm = 1;
 #endif
+    if (world_rank==0) printf("send from %d to %d, %d, %d, %d, %d, %d (%d links) \n", rank_c0, rank_xp, rank_xm, rank_yp, rank_ym, rank_zp, rank_zm, links );
+
+    if ( world_rank == 0 ) printf( "begin nonblocking send-recv 3d halo exchange test\n" );
 
     fflush( stdout );
     MPI_Barrier( MPI_COMM_WORLD );
-
-    if ( world_rank == 0 ) printf( "begin nonblocking send-recv 3d halo exchange test\n" );
 
     for ( int count = 1; count <= max_count ; count *= 2 )
     for ( int links = 1; links <= max_links ; links++ )
