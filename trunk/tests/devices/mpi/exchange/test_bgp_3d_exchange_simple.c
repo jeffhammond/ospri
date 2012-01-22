@@ -52,8 +52,8 @@ int main(int argc, char *argv[])
     int rank_xm = MPIX_torus2rank(0,1,1,0);
     int rank_yp = MPIX_torus2rank(1,2,1,0);
     int rank_ym = MPIX_torus2rank(1,0,1,0);
-    int rank_zp = MPIX_torus2rank(1,2,1,0);
-    int rank_zm = MPIX_torus2rank(1,0,1,0);
+    int rank_zp = MPIX_torus2rank(1,1,2,0);
+    int rank_zm = MPIX_torus2rank(1,1,0,0);
 #else
     max_links = 1;
     int rank_c0 = 0;
@@ -64,7 +64,8 @@ int main(int argc, char *argv[])
     int rank_zp = 1;
     int rank_zm = 1;
 #endif
-    if (world_rank==0) printf("send from %d to %d, %d, %d, %d, %d, %d (%d links) \n", rank_c0, rank_xp, rank_xm, rank_yp, rank_ym, rank_zp, rank_zm, max_links );
+    if (world_rank==0) printf("send from %d (1,1,1) to %d (2,1,1), %d (0,1,1), %d (1,2,1), %d (1,0,1), %d (1,1,2), %d (1,1,0) \n", 
+                              rank_c0, rank_xp, rank_xm, rank_yp, rank_ym, rank_zp, rank_zm );
 
     if (world_rank==0) printf( "begin nonblocking send-recv 3d halo exchange test\n" );
 
@@ -230,11 +231,11 @@ int main(int argc, char *argv[])
         free(sbuf_zp);
         free(sbuf_zm);
 
-        printf("%d: send %d bytes on %d links, BW = %lf MB/s \n", world_rank, count, links, 1e-6*links*count/(t1-t0) );
+        if (world_rank==rank_c0) printf("%d: send %d bytes on %d links, BW = %lf MB/s \n", world_rank, count*sizeof(int), links, 1e-6*links*count*sizeof(int)/(t1-t0) );
         fflush( stdout );
     }
 
-    if ( world_rank == 0 ) printf( "done with all tests\n" );
+    if (world_rank==0) printf( "done with all tests\n" );
     fflush( stdout );
     MPI_Barrier( MPI_COMM_WORLD );
     MPI_Finalize();
