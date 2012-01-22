@@ -32,7 +32,7 @@ int main(int argc, char *argv[])
     assert(world_size>=2);
 #endif
 
-    int max_links = ( argc > 1 ? atoi(argv[1]) : 6 );
+    int max_links = ( argc > 1 ? atoi(argv[1]) : world_size-1 );
     int max_count = ( argc > 2 ? atoi(argv[2]) : 16*1024*1024 );
     int nbrecv    = ( argc > 3 ? atoi(argv[3]) : 0 );
 
@@ -53,14 +53,13 @@ int main(int argc, char *argv[])
     int rank_zp = MPIX_torus2rank(1,1,2,0);
     int rank_zm = MPIX_torus2rank(1,1,0,0);
 #else
-    max_links = 1;
     int rank_c0 = 0;
     int rank_xp = 1;
-    int rank_xm = 1;
-    int rank_yp = 1;
-    int rank_ym = 1;
-    int rank_zp = 1;
-    int rank_zm = 1;
+    int rank_xm = 2;
+    int rank_yp = 3;
+    int rank_ym = 4;
+    int rank_zp = 5;
+    int rank_zm = 6;
 #endif
     if (world_rank==0) printf("send from %d (1,1,1) to %d (2,1,1), %d (0,1,1), %d (1,2,1), %d (1,0,1), %d (1,1,2), %d (1,1,0) \n", 
                               rank_c0, rank_xp, rank_xm, rank_yp, rank_ym, rank_zp, rank_zm );
