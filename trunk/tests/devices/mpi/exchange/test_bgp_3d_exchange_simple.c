@@ -29,7 +29,7 @@ int main(int argc, char *argv[])
 #ifdef __bgp__
     assert(world_size>=27);
 #else
-    assert(world_size>1);
+    assert(world_size>=2);
 #endif
 
     int max_links;
@@ -226,7 +226,7 @@ int main(int argc, char *argv[])
         free(sbuf_zp);
         free(sbuf_zm);
 
-        printf("%d: send %d bytes on 6 links, BW = %lf MB/s \n", world_rank, count, 1e-6*6*count/(t1-t0) );
+        printf("%d: send %d bytes on %d links, BW = %lf MB/s \n", world_rank, count, links, 1e-6*links*count/(t1-t0) );
         fflush( stdout );
         MPI_Barrier( MPI_COMM_WORLD );
     }
