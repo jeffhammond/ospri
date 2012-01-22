@@ -55,7 +55,7 @@ int main(int argc, char *argv[])
     int rank_zp = MPIX_torus2rank(1,2,1,0);
     int rank_zm = MPIX_torus2rank(1,0,1,0);
 #else
-    links = 1;
+    max_links = 1;
     int rank_c0 = 0;
     int rank_xp = 1;
     int rank_xm = 1;
@@ -64,9 +64,9 @@ int main(int argc, char *argv[])
     int rank_zp = 1;
     int rank_zm = 1;
 #endif
-    if (world_rank==0) printf("send from %d to %d, %d, %d, %d, %d, %d (%d links) \n", rank_c0, rank_xp, rank_xm, rank_yp, rank_ym, rank_zp, rank_zm, links );
+    if (world_rank==0) printf("send from %d to %d, %d, %d, %d, %d, %d (%d links) \n", rank_c0, rank_xp, rank_xm, rank_yp, rank_ym, rank_zp, rank_zm, max_links );
 
-    if ( world_rank == 0 ) printf( "begin nonblocking send-recv 3d halo exchange test\n" );
+    if (world_rank==0) printf( "begin nonblocking send-recv 3d halo exchange test\n" );
 
     fflush( stdout );
     MPI_Barrier( MPI_COMM_WORLD );
@@ -74,7 +74,8 @@ int main(int argc, char *argv[])
     for ( int count = 1; count <= max_count ; count *= 2 )
     for ( int links = 1; links <= max_links ; links++ )
     { 
-        int rc[13];
+        int rc[7] = {0,0,0,0,0,0,0};
+        MPI_Request req[6];
 
         int tag_xp = 6*count;
         int tag_xm = 6*count+1;
@@ -82,8 +83,6 @@ int main(int argc, char *argv[])
         int tag_ym = 6*count+3;
         int tag_zp = 6*count+4;
         int tag_zm = 6*count+5;
- 
-        MPI_Request req[7];
  
         int * rbuf_xp = malloc((size_t) count * sizeof(int));
         int * rbuf_xm = malloc((size_t) count * sizeof(int));
@@ -185,35 +184,38 @@ int main(int argc, char *argv[])
         /* check for correctness */
         int error = 0;
 
-        if ( world_rank == rank_xp )
-            for ( int i = 0 ; i < count ; i++) 
-                error += abs( 6*i   - rbuf_xp[i] );
+        if (links>0)
+            if ( world_rank == rank_xp )
+                for ( int i = 0 ; i < count ; i++) 
+                    error += abs( 6*i   - rbuf_xp[i] );
 
-        if ( world_rank == rank_xm )
-            for ( int i = 0 ; i < count ; i++) 
-                error += abs( 6*i+1 - rbuf_xm[i] );
+        if (links>1)
+            if ( world_rank == rank_xm )
+                for ( int i = 0 ; i < count ; i++) 
+                    error += abs( 6*i+1 - rbuf_xm[i] );
 
-        if ( world_rank == rank_yp )
-            for ( int i = 0 ; i < count ; i++) 
-                error += abs( 6*i+2 - rbuf_yp[i] );
+        if (links>2)
+            if ( world_rank == rank_yp )
+                for ( int i = 0 ; i < count ; i++) 
+                    error += abs( 6*i+2 - rbuf_yp[i] );
 
-        if ( world_rank == rank_ym )
-            for ( int i = 0 ; i < count ; i++) 
-                error += abs( 6*i+3 - rbuf_ym[i] );
+        if (links>3)
+            if ( world_rank == rank_ym )
+                for ( int i = 0 ; i < count ; i++) 
+                    error += abs( 6*i+3 - rbuf_ym[i] );
 
-        if ( world_rank == rank_zp )
-            for ( int i = 0 ; i < count ; i++) 
-                error += abs( 6*i+4 - rbuf_zp[i] );
+        if (links>4)
+            if ( world_rank == rank_zp )
+                for ( int i = 0 ; i < count ; i++) 
+                    error += abs( 6*i+4 - rbuf_zp[i] );
 
-        if ( world_rank == rank_zm )
-            for ( int i = 0 ; i < count ; i++) 
-                error += abs( 6*i+5 - rbuf_zm[i] );
+        if (links>5)
+            if ( world_rank == rank_zm )
+                for ( int i = 0 ; i < count ; i++) 
+                    error += abs( 6*i+5 - rbuf_zm[i] );
 
         assert(error==0);
  
-        /* i agree this is overkill */
-        MPI_Barrier( MPI_COMM_WORLD );
-
         free(rbuf_xp);
         free(rbuf_xm);
         free(rbuf_yp);
@@ -230,7 +232,6 @@ int main(int argc, char *argv[])
 
         printf("%d: send %d bytes on %d links, BW = %lf MB/s \n", world_rank, count, links, 1e-6*links*count/(t1-t0) );
         fflush( stdout );
-        MPI_Barrier( MPI_COMM_WORLD );
     }
 
     if ( world_rank == 0 ) printf( "done with all tests\n" );
