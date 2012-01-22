@@ -142,7 +142,7 @@ int main(int argc, char *argv[])
             {
                 if (nbrecv==1)
                 {
-                    rc[0] = MPI_Irecv( rbuf_xp, count, MPI_INT, rank_c0, tag_xp, MPI_COMM_WORLD, &req[1] );
+                    rc[0] = MPI_Irecv( rbuf_xm, count, MPI_INT, rank_c0, tag_xm, MPI_COMM_WORLD, &req[1] );
                     sleep(5);
                     rc[1] = MPI_Wait( &req[1], MPI_STATUSES_IGNORE ); 
                 }
@@ -159,7 +159,7 @@ int main(int argc, char *argv[])
             {
                 if (nbrecv==1)
                 {
-                    rc[0] = MPI_Irecv( rbuf_xp, count, MPI_INT, rank_c0, tag_xp, MPI_COMM_WORLD, &req[2] );
+                    rc[0] = MPI_Irecv( rbuf_yp, count, MPI_INT, rank_c0, tag_yp, MPI_COMM_WORLD, &req[2] );
                     sleep(5);
                     rc[1] = MPI_Wait( &req[2], MPI_STATUSES_IGNORE ); 
                 }
@@ -176,7 +176,7 @@ int main(int argc, char *argv[])
             {
                 if (nbrecv==1)
                 {
-                    rc[0] = MPI_Irecv( rbuf_xp, count, MPI_INT, rank_c0, tag_xp, MPI_COMM_WORLD, &req[3] );
+                    rc[0] = MPI_Irecv( rbuf_ym, count, MPI_INT, rank_c0, tag_ym, MPI_COMM_WORLD, &req[3] );
                     sleep(5);
                     rc[1] = MPI_Wait( &req[3], MPI_STATUSES_IGNORE ); 
                 }
@@ -193,7 +193,7 @@ int main(int argc, char *argv[])
             {
                 if (nbrecv==1)
                 {
-                    rc[0] = MPI_Irecv( rbuf_xp, count, MPI_INT, rank_c0, tag_xp, MPI_COMM_WORLD, &req[4] );
+                    rc[0] = MPI_Irecv( rbuf_zp, count, MPI_INT, rank_c0, tag_zp, MPI_COMM_WORLD, &req[4] );
                     sleep(5);
                     rc[1] = MPI_Wait( &req[4], MPI_STATUSES_IGNORE ); 
                 }
@@ -210,7 +210,7 @@ int main(int argc, char *argv[])
             {
                 if (nbrecv==1)
                 {
-                    rc[0] = MPI_Irecv( rbuf_xp, count, MPI_INT, rank_c0, tag_xp, MPI_COMM_WORLD, &req[5] );
+                    rc[0] = MPI_Irecv( rbuf_zm, count, MPI_INT, rank_c0, tag_zm, MPI_COMM_WORLD, &req[5] );
                     sleep(5);
                     rc[1] = MPI_Wait( &req[5], MPI_STATUSES_IGNORE ); 
                 }
