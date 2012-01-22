@@ -74,228 +74,236 @@ int main(int argc, char *argv[])
     MPI_Barrier( MPI_COMM_WORLD );
 
     for ( int count = 1; count <= max_count ; count *= 2 )
-    for ( int links = 1; links <= max_links ; links++ )
-    { 
-        int rc[7] = {0,0,0,0,0,0,0};
-        MPI_Request req[6];
+    {
+        double dt[6] = {1.0e9,1.0e9,1.0e9,1.0e9,1.0e9,1.0e9};
 
-        int tag_xp = 6*count;
-        int tag_xm = 6*count+1;
-        int tag_yp = 6*count+2;
-        int tag_ym = 6*count+3;
-        int tag_zp = 6*count+4;
-        int tag_zm = 6*count+5;
- 
-        int * rbuf_xp = malloc((size_t) count * sizeof(int));
-        int * rbuf_xm = malloc((size_t) count * sizeof(int));
-        int * rbuf_yp = malloc((size_t) count * sizeof(int));
-        int * rbuf_ym = malloc((size_t) count * sizeof(int));
-        int * rbuf_zp = malloc((size_t) count * sizeof(int));
-        int * rbuf_zm = malloc((size_t) count * sizeof(int));
- 
-        assert( rbuf_xp != NULL && rbuf_xm != NULL && rbuf_yp != NULL && rbuf_ym != NULL && rbuf_zp != NULL && rbuf_zm != NULL);
- 
-        int * sbuf_xp = malloc((size_t) count * sizeof(int));
-        int * sbuf_xm = malloc((size_t) count * sizeof(int));
-        int * sbuf_yp = malloc((size_t) count * sizeof(int));
-        int * sbuf_ym = malloc((size_t) count * sizeof(int));
-        int * sbuf_zp = malloc((size_t) count * sizeof(int));
-        int * sbuf_zm = malloc((size_t) count * sizeof(int));
- 
-        assert( sbuf_xp != NULL && sbuf_xm != NULL && sbuf_yp != NULL && sbuf_ym != NULL && sbuf_zp != NULL && sbuf_zm != NULL);
+        for ( int links = 1; links <= max_links ; links++ )
+        { 
+            int rc[7] = {0,0,0,0,0,0,0};
+            MPI_Request req[6];
 
-        for ( int i = 0 ; i < count ; i++) rbuf_xp[i] = 0;
-        for ( int i = 0 ; i < count ; i++) rbuf_xm[i] = 0;
-        for ( int i = 0 ; i < count ; i++) rbuf_yp[i] = 0;
-        for ( int i = 0 ; i < count ; i++) rbuf_ym[i] = 0;
-        for ( int i = 0 ; i < count ; i++) rbuf_zp[i] = 0;
-        for ( int i = 0 ; i < count ; i++) rbuf_zm[i] = 0;
- 
-        for ( int i = 0 ; i < count ; i++) sbuf_xp[i] = 6*i;
-        for ( int i = 0 ; i < count ; i++) sbuf_xm[i] = 6*i+1;
-        for ( int i = 0 ; i < count ; i++) sbuf_yp[i] = 6*i+2;
-        for ( int i = 0 ; i < count ; i++) sbuf_ym[i] = 6*i+3;
-        for ( int i = 0 ; i < count ; i++) sbuf_zp[i] = 6*i+4;
-        for ( int i = 0 ; i < count ; i++) sbuf_zm[i] = 6*i+5;
- 
-        MPI_Barrier( MPI_COMM_WORLD );
+            int tag_xp = 6*count;
+            int tag_xm = 6*count+1;
+            int tag_yp = 6*count+2;
+            int tag_ym = 6*count+3;
+            int tag_zp = 6*count+4;
+            int tag_zm = 6*count+5;
+     
+            int * rbuf_xp = malloc((size_t) count * sizeof(int));
+            int * rbuf_xm = malloc((size_t) count * sizeof(int));
+            int * rbuf_yp = malloc((size_t) count * sizeof(int));
+            int * rbuf_ym = malloc((size_t) count * sizeof(int));
+            int * rbuf_zp = malloc((size_t) count * sizeof(int));
+            int * rbuf_zm = malloc((size_t) count * sizeof(int));
+     
+            assert( rbuf_xp != NULL && rbuf_xm != NULL && rbuf_yp != NULL && rbuf_ym != NULL && rbuf_zp != NULL && rbuf_zm != NULL);
+     
+            int * sbuf_xp = malloc((size_t) count * sizeof(int));
+            int * sbuf_xm = malloc((size_t) count * sizeof(int));
+            int * sbuf_yp = malloc((size_t) count * sizeof(int));
+            int * sbuf_ym = malloc((size_t) count * sizeof(int));
+            int * sbuf_zp = malloc((size_t) count * sizeof(int));
+            int * sbuf_zm = malloc((size_t) count * sizeof(int));
+     
+            assert( sbuf_xp != NULL && sbuf_xm != NULL && sbuf_yp != NULL && sbuf_ym != NULL && sbuf_zp != NULL && sbuf_zm != NULL);
 
-        double t0 = MPI_Wtime();
+            for ( int i = 0 ; i < count ; i++) rbuf_xp[i] = 0;
+            for ( int i = 0 ; i < count ; i++) rbuf_xm[i] = 0;
+            for ( int i = 0 ; i < count ; i++) rbuf_yp[i] = 0;
+            for ( int i = 0 ; i < count ; i++) rbuf_ym[i] = 0;
+            for ( int i = 0 ; i < count ; i++) rbuf_zp[i] = 0;
+            for ( int i = 0 ; i < count ; i++) rbuf_zm[i] = 0;
+     
+            for ( int i = 0 ; i < count ; i++) sbuf_xp[i] = 6*i;
+            for ( int i = 0 ; i < count ; i++) sbuf_xm[i] = 6*i+1;
+            for ( int i = 0 ; i < count ; i++) sbuf_yp[i] = 6*i+2;
+            for ( int i = 0 ; i < count ; i++) sbuf_ym[i] = 6*i+3;
+            for ( int i = 0 ; i < count ; i++) sbuf_zp[i] = 6*i+4;
+            for ( int i = 0 ; i < count ; i++) sbuf_zm[i] = 6*i+5;
+     
+            MPI_Barrier( MPI_COMM_WORLD );
 
-        if (links>0)
-        {
-            if ( world_rank==rank_xp )
+            double t0 = MPI_Wtime();
+
+            if (links>0)
             {
-                if (nbrecv==1)
+                if ( world_rank==rank_xp )
                 {
-                    rc[0] = MPI_Irecv( rbuf_xp, count, MPI_INT, rank_c0, tag_xp, MPI_COMM_WORLD, &req[0] );
-                    sleep(5);
-                    rc[1] = MPI_Wait( &req[0], MPI_STATUSES_IGNORE ); 
+                    if (nbrecv==1)
+                    {
+                        rc[0] = MPI_Irecv( rbuf_xp, count, MPI_INT, rank_c0, tag_xp, MPI_COMM_WORLD, &req[0] );
+                        sleep(1);
+                        rc[1] = MPI_Wait( &req[0], MPI_STATUSES_IGNORE ); 
+                    }
+                    else
+                        rc[0] = MPI_Recv( rbuf_xp, count, MPI_INT, rank_c0, tag_xp, MPI_COMM_WORLD, MPI_STATUS_IGNORE );
                 }
-                else
-                    rc[0] = MPI_Recv( rbuf_xp, count, MPI_INT, rank_c0, tag_xp, MPI_COMM_WORLD, MPI_STATUS_IGNORE );
+
+                if ( world_rank==rank_c0 )
+                    rc[1] = MPI_Isend( sbuf_xp, count, MPI_INT, rank_xp, tag_xp, MPI_COMM_WORLD, &req[0] );
+            }
+            if (links>1)
+            {
+                if ( world_rank==rank_xm )
+                {
+                    if (nbrecv==1)
+                    {
+                        rc[0] = MPI_Irecv( rbuf_xm, count, MPI_INT, rank_c0, tag_xm, MPI_COMM_WORLD, &req[1] );
+                        sleep(1);
+                        rc[1] = MPI_Wait( &req[1], MPI_STATUSES_IGNORE ); 
+                    }
+                    else
+                        rc[0] = MPI_Recv( rbuf_xm, count, MPI_INT, rank_c0, tag_xm, MPI_COMM_WORLD, MPI_STATUS_IGNORE );
+                }
+
+                if ( world_rank==rank_c0 )
+                    rc[2] = MPI_Isend( sbuf_xm, count, MPI_INT, rank_xm, tag_xm, MPI_COMM_WORLD, &req[1] );
+            }
+            if (links>2)
+            {
+                if ( world_rank==rank_yp )
+                {
+                    if (nbrecv==1)
+                    {
+                        rc[0] = MPI_Irecv( rbuf_yp, count, MPI_INT, rank_c0, tag_yp, MPI_COMM_WORLD, &req[2] );
+                        sleep(1);
+                        rc[1] = MPI_Wait( &req[2], MPI_STATUSES_IGNORE ); 
+                    }
+                    else
+                        rc[0] = MPI_Recv( rbuf_yp, count, MPI_INT, rank_c0, tag_yp, MPI_COMM_WORLD, MPI_STATUS_IGNORE );
+                }
+
+                if ( world_rank==rank_c0 )
+                    rc[3] = MPI_Isend( sbuf_yp, count, MPI_INT, rank_yp, tag_yp, MPI_COMM_WORLD, &req[2] );
+            }
+            if (links>3)
+            {
+                if ( world_rank==rank_ym )
+                {
+                    if (nbrecv==1)
+                    {
+                        rc[0] = MPI_Irecv( rbuf_ym, count, MPI_INT, rank_c0, tag_ym, MPI_COMM_WORLD, &req[3] );
+                        sleep(1);
+                        rc[1] = MPI_Wait( &req[3], MPI_STATUSES_IGNORE ); 
+                    }
+                    else
+                        rc[0] = MPI_Recv( rbuf_ym, count, MPI_INT, rank_c0, tag_ym, MPI_COMM_WORLD, MPI_STATUS_IGNORE );
+                }
+
+                if ( world_rank==rank_c0 )
+                    rc[4] = MPI_Isend( sbuf_ym, count, MPI_INT, rank_ym, tag_ym, MPI_COMM_WORLD, &req[3] );
+            }
+            if (links>4)
+            {
+                if ( world_rank==rank_zp )
+                {
+                    if (nbrecv==1)
+                    {
+                        rc[0] = MPI_Irecv( rbuf_zp, count, MPI_INT, rank_c0, tag_zp, MPI_COMM_WORLD, &req[4] );
+                        sleep(1);
+                        rc[1] = MPI_Wait( &req[4], MPI_STATUSES_IGNORE ); 
+                    }
+                    else
+                        rc[0] = MPI_Recv( rbuf_zp, count, MPI_INT, rank_c0, tag_zp, MPI_COMM_WORLD, MPI_STATUS_IGNORE );
+                }
+
+                if ( world_rank==rank_c0 )
+                    rc[5] = MPI_Isend( sbuf_zp, count, MPI_INT, rank_zp, tag_zp, MPI_COMM_WORLD, &req[4] );
+            }
+            if (links>5)
+            {
+                if ( world_rank==rank_zm )
+                {
+                    if (nbrecv==1)
+                    {
+                        rc[0] = MPI_Irecv( rbuf_zm, count, MPI_INT, rank_c0, tag_zm, MPI_COMM_WORLD, &req[5] );
+                        sleep(1);
+                        rc[1] = MPI_Wait( &req[5], MPI_STATUSES_IGNORE ); 
+                    }
+                    else
+                        rc[0] = MPI_Recv( rbuf_zm, count, MPI_INT, rank_c0, tag_zm, MPI_COMM_WORLD, MPI_STATUS_IGNORE );
+                }
+
+                if ( world_rank==rank_c0 )
+                    rc[6] = MPI_Isend( sbuf_zm, count, MPI_INT, rank_zm, tag_zm, MPI_COMM_WORLD, &req[5] );
             }
 
             if ( world_rank==rank_c0 )
-                rc[1] = MPI_Isend( sbuf_xp, count, MPI_INT, rank_xp, tag_xp, MPI_COMM_WORLD, &req[0] );
-        }
-        if (links>1)
-        {
-            if ( world_rank==rank_xm )
-            {
-                if (nbrecv==1)
-                {
-                    rc[0] = MPI_Irecv( rbuf_xm, count, MPI_INT, rank_c0, tag_xm, MPI_COMM_WORLD, &req[1] );
-                    sleep(5);
-                    rc[1] = MPI_Wait( &req[1], MPI_STATUSES_IGNORE ); 
-                }
-                else
-                    rc[0] = MPI_Recv( rbuf_xm, count, MPI_INT, rank_c0, tag_xm, MPI_COMM_WORLD, MPI_STATUS_IGNORE );
-            }
+                rc[0] = MPI_Waitall( links, req, MPI_STATUSES_IGNORE ); 
+
+            double t1 = MPI_Wtime();
+
+            MPI_Barrier( MPI_COMM_WORLD );
 
             if ( world_rank==rank_c0 )
-                rc[2] = MPI_Isend( sbuf_xm, count, MPI_INT, rank_xm, tag_xm, MPI_COMM_WORLD, &req[1] );
-        }
-        if (links>2)
-        {
-            if ( world_rank==rank_yp )
             {
-                if (nbrecv==1)
-                {
-                    rc[0] = MPI_Irecv( rbuf_yp, count, MPI_INT, rank_c0, tag_yp, MPI_COMM_WORLD, &req[2] );
-                    sleep(5);
-                    rc[1] = MPI_Wait( &req[2], MPI_STATUSES_IGNORE ); 
-                }
-                else
-                    rc[0] = MPI_Recv( rbuf_yp, count, MPI_INT, rank_c0, tag_yp, MPI_COMM_WORLD, MPI_STATUS_IGNORE );
+                assert( rc[0]==MPI_SUCCESS );
+                for ( int i = 1 ; i <= links ; i++ ) 
+                    assert( rc[i]==MPI_SUCCESS );
+            }
+            else if ( world_rank==rank_xp || world_rank==rank_xm || world_rank==rank_yp || world_rank==rank_ym || world_rank==rank_zp || world_rank==rank_zm )
+            {
+                assert( rc[0]==MPI_SUCCESS );
+                if (nbrecv==1) 
+                    assert( rc[1]==MPI_SUCCESS );
             }
 
-            if ( world_rank==rank_c0 )
-                rc[3] = MPI_Isend( sbuf_yp, count, MPI_INT, rank_yp, tag_yp, MPI_COMM_WORLD, &req[2] );
+            /* check for correctness */
+            int error = 0;
+
+            if (links>0)
+                if ( world_rank==rank_xp )
+                    for ( int i = 0 ; i < count ; i++) 
+                        error += abs( 6*i   - rbuf_xp[i] );
+
+            if (links>1)
+                if ( world_rank==rank_xm )
+                    for ( int i = 0 ; i < count ; i++) 
+                        error += abs( 6*i+1 - rbuf_xm[i] );
+
+            if (links>2)
+                if ( world_rank==rank_yp )
+                    for ( int i = 0 ; i < count ; i++) 
+                        error += abs( 6*i+2 - rbuf_yp[i] );
+
+            if (links>3)
+                if ( world_rank==rank_ym )
+                    for ( int i = 0 ; i < count ; i++) 
+                        error += abs( 6*i+3 - rbuf_ym[i] );
+
+            if (links>4)
+                if ( world_rank==rank_zp )
+                    for ( int i = 0 ; i < count ; i++) 
+                        error += abs( 6*i+4 - rbuf_zp[i] );
+
+            if (links>5)
+                if ( world_rank==rank_zm )
+                    for ( int i = 0 ; i < count ; i++) 
+                        error += abs( 6*i+5 - rbuf_zm[i] );
+
+            assert(error==0);
+     
+            free(rbuf_xp);
+            free(rbuf_xm);
+            free(rbuf_yp);
+            free(rbuf_ym);
+            free(rbuf_zp);
+            free(rbuf_zm);
+                   
+            free(sbuf_xp);
+            free(sbuf_xm);
+            free(sbuf_yp);
+            free(sbuf_ym);
+            free(sbuf_zp);
+            free(sbuf_zm);
+
+            dt[links-1] = t1-t0;
         }
-        if (links>3)
-        {
-            if ( world_rank==rank_ym )
-            {
-                if (nbrecv==1)
-                {
-                    rc[0] = MPI_Irecv( rbuf_ym, count, MPI_INT, rank_c0, tag_ym, MPI_COMM_WORLD, &req[3] );
-                    sleep(5);
-                    rc[1] = MPI_Wait( &req[3], MPI_STATUSES_IGNORE ); 
-                }
-                else
-                    rc[0] = MPI_Recv( rbuf_ym, count, MPI_INT, rank_c0, tag_ym, MPI_COMM_WORLD, MPI_STATUS_IGNORE );
-            }
-
-            if ( world_rank==rank_c0 )
-                rc[4] = MPI_Isend( sbuf_ym, count, MPI_INT, rank_ym, tag_ym, MPI_COMM_WORLD, &req[3] );
-        }
-        if (links>4)
-        {
-            if ( world_rank==rank_zp )
-            {
-                if (nbrecv==1)
-                {
-                    rc[0] = MPI_Irecv( rbuf_zp, count, MPI_INT, rank_c0, tag_zp, MPI_COMM_WORLD, &req[4] );
-                    sleep(5);
-                    rc[1] = MPI_Wait( &req[4], MPI_STATUSES_IGNORE ); 
-                }
-                else
-                    rc[0] = MPI_Recv( rbuf_zp, count, MPI_INT, rank_c0, tag_zp, MPI_COMM_WORLD, MPI_STATUS_IGNORE );
-            }
-
-            if ( world_rank==rank_c0 )
-                rc[5] = MPI_Isend( sbuf_zp, count, MPI_INT, rank_zp, tag_zp, MPI_COMM_WORLD, &req[4] );
-        }
-        if (links>5)
-        {
-            if ( world_rank==rank_zm )
-            {
-                if (nbrecv==1)
-                {
-                    rc[0] = MPI_Irecv( rbuf_zm, count, MPI_INT, rank_c0, tag_zm, MPI_COMM_WORLD, &req[5] );
-                    sleep(5);
-                    rc[1] = MPI_Wait( &req[5], MPI_STATUSES_IGNORE ); 
-                }
-                else
-                    rc[0] = MPI_Recv( rbuf_zm, count, MPI_INT, rank_c0, tag_zm, MPI_COMM_WORLD, MPI_STATUS_IGNORE );
-            }
-
-            if ( world_rank==rank_c0 )
-                rc[6] = MPI_Isend( sbuf_zm, count, MPI_INT, rank_zm, tag_zm, MPI_COMM_WORLD, &req[5] );
-        }
-
-        if ( world_rank==rank_c0 )
-            rc[0] = MPI_Waitall( links, req, MPI_STATUSES_IGNORE ); 
-
-        double t1 = MPI_Wtime();
-
-        MPI_Barrier( MPI_COMM_WORLD );
-
-        if ( world_rank==rank_c0 )
-        {
-            assert( rc[0]==MPI_SUCCESS );
-            for ( int i = 1 ; i <= links ; i++ ) 
-                assert( rc[i]==MPI_SUCCESS );
-        }
-        else if ( world_rank==rank_xp || world_rank==rank_xm || world_rank==rank_yp || world_rank==rank_ym || world_rank==rank_zp || world_rank==rank_zm )
-        {
-            assert( rc[0]==MPI_SUCCESS );
-            if (nbrecv==1) 
-                assert( rc[1]==MPI_SUCCESS );
-        }
-
-        /* check for correctness */
-        int error = 0;
-
-        if (links>0)
-            if ( world_rank==rank_xp )
-                for ( int i = 0 ; i < count ; i++) 
-                    error += abs( 6*i   - rbuf_xp[i] );
-
-        if (links>1)
-            if ( world_rank==rank_xm )
-                for ( int i = 0 ; i < count ; i++) 
-                    error += abs( 6*i+1 - rbuf_xm[i] );
-
-        if (links>2)
-            if ( world_rank==rank_yp )
-                for ( int i = 0 ; i < count ; i++) 
-                    error += abs( 6*i+2 - rbuf_yp[i] );
-
-        if (links>3)
-            if ( world_rank==rank_ym )
-                for ( int i = 0 ; i < count ; i++) 
-                    error += abs( 6*i+3 - rbuf_ym[i] );
-
-        if (links>4)
-            if ( world_rank==rank_zp )
-                for ( int i = 0 ; i < count ; i++) 
-                    error += abs( 6*i+4 - rbuf_zp[i] );
-
-        if (links>5)
-            if ( world_rank==rank_zm )
-                for ( int i = 0 ; i < count ; i++) 
-                    error += abs( 6*i+5 - rbuf_zm[i] );
-
-        assert(error==0);
- 
-        free(rbuf_xp);
-        free(rbuf_xm);
-        free(rbuf_yp);
-        free(rbuf_ym);
-        free(rbuf_zp);
-        free(rbuf_zm);
-               
-        free(sbuf_xp);
-        free(sbuf_xm);
-        free(sbuf_yp);
-        free(sbuf_ym);
-        free(sbuf_zp);
-        free(sbuf_zm);
-
-        if (world_rank==rank_c0) printf("%d: send %d bytes on %d links, BW = %lf MB/s \n", 
-                                        world_rank, (int) sizeof(int)*count, links, 1e-6*links*count*sizeof(int)/(t1-t0) );
+        if (world_rank==rank_c0) printf("%d: send %d bytes %lf %lf %lf %lf %lf %lf MB/s (1, 2, 3, 4, 5, 6 links)\n", 
+                                        world_rank, (int) sizeof(int)*count, 
+                                        1e-6*1*count*sizeof(int)/dt[0], 1e-6*2*count*sizeof(int)/dt[1],
+                                        1e-6*3*count*sizeof(int)/dt[2], 1e-6*4*count*sizeof(int)/dt[3],
+                                        1e-6*5*count*sizeof(int)/dt[4], 1e-6*6*count*sizeof(int)/dt[5]);
         fflush( stdout );
     }
 
