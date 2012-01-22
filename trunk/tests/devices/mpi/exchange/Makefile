@@ -1,8 +1,10 @@
+#CC      = mpixlc_r
+#COPT    = -g -O2 -qlanglvl=stdc99
 CC      = mpicc
 COPT    = -g -O2 -Wall -std=c99
 
 LD      = $(CC)
-CFLAGS  = $(COPT)
+CFLAGS  = $(COPT) 
 LDFLAGS = $(COPT) -lm
 
 TESTS := $(patsubst %.c,%.x,$(wildcard *.c))

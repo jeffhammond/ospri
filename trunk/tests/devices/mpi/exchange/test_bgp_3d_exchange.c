@@ -42,12 +42,23 @@ int main(int argc, char *argv[])
     uint32_t my_torus_rank[4];
     MPIX_rank2torus( world_rank, &my_torus_rank[0], &my_torus_rank[1], &my_torus_rank[2], &my_torus_rank[3] );
 
+    uint32_t xSize, ySize, zSize, tSize;
+    MPIX_rank2torus( world_size, &xSize, &ySize, &zSize, &tSize );
+    xSize++;
+    ySize++;
+    zSize++;
+    tSize++;
+
     int rank_xp = MPIX_torus2rank( (my_torus_rank[0]+1)%xSize, my_torus_rank[1],          my_torus_rank[2],          my_torus_rank[3] );
     int rank_xm = MPIX_torus2rank( (my_torus_rank[0]-1)%xSize, my_torus_rank[1],          my_torus_rank[2],          my_torus_rank[3] );
     int rank_yp = MPIX_torus2rank(  my_torus_rank[0],         (my_torus_rank[1]+1)%ySize, my_torus_rank[2],          my_torus_rank[3] );
     int rank_ym = MPIX_torus2rank(  my_torus_rank[0],         (my_torus_rank[1]-1)%ySize, my_torus_rank[2],          my_torus_rank[3] );
     int rank_zp = MPIX_torus2rank(  my_torus_rank[0],          my_torus_rank[1],         (my_torus_rank[2]+1)%zSize, my_torus_rank[3] );
     int rank_zm = MPIX_torus2rank(  my_torus_rank[0],          my_torus_rank[1],         (my_torus_rank[2]-1)%zSize, my_torus_rank[3] );
+
+    printf("I am %d (%d,%d,%d). X+ is %d %(%d,%d,%d). Y+ is %d %(%d,%d,%d). Z+ is %d %(%d,%d,%d). "
+                               "X- is %d %(%d,%d,%d). Y- is %d %(%d,%d,%d). Z- is %d %(%d,%d,%d). ",
+                 world_rank, my_torus_rank[0], my_torus_rank[1], my_torus_rank[2],
 #else
     int rank_xp = (world_rank+1)%world_size;
     int rank_xm = (world_rank+1)%world_size;
