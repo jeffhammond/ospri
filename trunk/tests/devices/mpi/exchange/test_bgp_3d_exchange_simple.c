@@ -52,6 +52,9 @@ int main(int argc, char *argv[])
     int rank_ym = MPIX_torus2rank(1,0,1,0);
     int rank_zp = MPIX_torus2rank(1,1,2,0);
     int rank_zm = MPIX_torus2rank(1,1,0,0);
+
+    if (world_rank==0) printf("send from %d (1,1,1) to %d (2,1,1), %d (0,1,1), %d (1,2,1), %d (1,0,1), %d (1,1,2), %d (1,1,0) \n", 
+                              rank_c0, rank_xp, rank_xm, rank_yp, rank_ym, rank_zp, rank_zm );
 #else
     int rank_c0 = 0;
     int rank_xp = 1;
@@ -60,9 +63,10 @@ int main(int argc, char *argv[])
     int rank_ym = 4;
     int rank_zp = 5;
     int rank_zm = 6;
-#endif
-    if (world_rank==0) printf("send from %d (1,1,1) to %d (2,1,1), %d (0,1,1), %d (1,2,1), %d (1,0,1), %d (1,1,2), %d (1,1,0) \n", 
+
+    if (world_rank==0) printf("send from %d to %d, %d, %d, %d, %d, %d \n", 
                               rank_c0, rank_xp, rank_xm, rank_yp, rank_ym, rank_zp, rank_zm );
+#endif
 
     if (world_rank==0) printf( "begin nonblocking send-recv 3d halo exchange test\n" );
 
