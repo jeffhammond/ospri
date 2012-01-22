@@ -11,9 +11,7 @@ int posix_memalign(void **memptr, size_t alignment, size_t size);
 #define ALIGNMENT 64
 
 #ifdef __bgp__
-#  include <spi/kernel_interface.h>
-#  include <common/bgp_personality.h>
-#  include <common/bgp_personality_inlines.h>
+#  include <mpix.h>
 #else
 #  warning This test should be run on BGP.
 #endif
@@ -40,31 +38,23 @@ int main(int argc, char *argv[])
     int count, max_count;
     max_count = ( argc > 1 ? atoi(argv[1]) : 16*1024*1024 );
 
-    int rank_xp=(world_rank+1)%world_size;
-    int rank_xm=(world_rank+1)%world_size;
-    int rank_yp=(world_rank+1)%world_size;
-    int rank_ym=(world_rank+1)%world_size;
-    int rank_zp=(world_rank+1)%world_size;
-    int rank_zm=(world_rank+1)%world_size;
-
 #ifdef __bgp__
-    _BGP_Personality_t pers;
-    Kernel_GetPersonality(&pers, sizeof(pers));
-
-    uint32_t xSize = BGP_Personality_xSize(&pers);
-    uint32_t ySize = BGP_Personality_ySize(&pers);
-    uint32_t zSize = BGP_Personality_zSize(&pers);
-
     uint32_t my_torus_rank[4];
-    Kernel_Rank2Coord( world_rank, &my_torus_rank[0], &my_torus_rank[1], &my_torus_rank[2], &my_torus_rank[3] );
+    MPIX_rank2torus( world_rank, &my_torus_rank[0], &my_torus_rank[1], &my_torus_rank[2], &my_torus_rank[3] );
 
-    int temp;
-    Kernel_Coord2Rank( (my_torus_rank[0]+1)%xSize, my_torus_rank[1],          my_torus_rank[2],          my_torus_rank[3], &rank_xp, &temp );
-    Kernel_Coord2Rank( (my_torus_rank[0]-1)%xSize, my_torus_rank[1],          my_torus_rank[2],          my_torus_rank[3], &rank_xm, &temp );
-    Kernel_Coord2Rank(  my_torus_rank[0],         (my_torus_rank[1]+1)%ySize, my_torus_rank[2],          my_torus_rank[3], &rank_yp, &temp );
-    Kernel_Coord2Rank(  my_torus_rank[0],         (my_torus_rank[1]-1)%ySize, my_torus_rank[2],          my_torus_rank[3], &rank_ym, &temp );
-    Kernel_Coord2Rank(  my_torus_rank[0],          my_torus_rank[1],         (my_torus_rank[2]+1)%zSize, my_torus_rank[3], &rank_zp, &temp );
-    Kernel_Coord2Rank(  my_torus_rank[0],          my_torus_rank[1],         (my_torus_rank[2]-1)%zSize, my_torus_rank[3], &rank_zm, &temp );
+    int rank_xp = MPIX_torus2rank( (my_torus_rank[0]+1)%xSize, my_torus_rank[1],          my_torus_rank[2],          my_torus_rank[3] );
+    int rank_xm = MPIX_torus2rank( (my_torus_rank[0]-1)%xSize, my_torus_rank[1],          my_torus_rank[2],          my_torus_rank[3] );
+    int rank_yp = MPIX_torus2rank(  my_torus_rank[0],         (my_torus_rank[1]+1)%ySize, my_torus_rank[2],          my_torus_rank[3] );
+    int rank_ym = MPIX_torus2rank(  my_torus_rank[0],         (my_torus_rank[1]-1)%ySize, my_torus_rank[2],          my_torus_rank[3] );
+    int rank_zp = MPIX_torus2rank(  my_torus_rank[0],          my_torus_rank[1],         (my_torus_rank[2]+1)%zSize, my_torus_rank[3] );
+    int rank_zm = MPIX_torus2rank(  my_torus_rank[0],          my_torus_rank[1],         (my_torus_rank[2]-1)%zSize, my_torus_rank[3] );
+#else
+    int rank_xp = (world_rank+1)%world_size;
+    int rank_xm = (world_rank+1)%world_size;
+    int rank_yp = (world_rank+1)%world_size;
+    int rank_ym = (world_rank+1)%world_size;
+    int rank_zp = (world_rank+1)%world_size;
+    int rank_zm = (world_rank+1)%world_size;
 #endif
 
     if ( world_rank == 0 ) printf( "begin nonblocking send-recv 3d halo exchange test\n" );
