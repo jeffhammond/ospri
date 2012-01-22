@@ -231,12 +231,14 @@ int main(int argc, char *argv[])
         free(sbuf_zp);
         free(sbuf_zm);
 
-        if (world_rank==rank_c0) printf("%d: send %d bytes on %d links, BW = %lf MB/s \n", world_rank, count*sizeof(int), links, 1e-6*links*count*sizeof(int)/(t1-t0) );
+        if (world_rank==rank_c0) printf("%d: send %d bytes on %d links, BW = %lf MB/s \n", 
+                                        world_rank, (int) sizeof(int)*count, links, 1e-6*links*count*sizeof(int)/(t1-t0) );
         fflush( stdout );
     }
 
     if (world_rank==0) printf( "done with all tests\n" );
     fflush( stdout );
+
     MPI_Barrier( MPI_COMM_WORLD );
     MPI_Finalize();
 
