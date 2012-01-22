@@ -59,6 +59,12 @@ int main(int argc, char *argv[])
     printf("I am %d (%d,%d,%d). X+ is %d %(%d,%d,%d). Y+ is %d %(%d,%d,%d). Z+ is %d %(%d,%d,%d). "
                                "X- is %d %(%d,%d,%d). Y- is %d %(%d,%d,%d). Z- is %d %(%d,%d,%d). ",
                  world_rank, my_torus_rank[0], my_torus_rank[1], my_torus_rank[2],
+                 rank_xp, (my_torus_rank[0]+1)%xSize, my_torus_rank[1],          my_torus_rank[2],        
+                 rank_xm, (my_torus_rank[0]-1)%xSize, my_torus_rank[1],          my_torus_rank[2],        
+                 rank_yp,  my_torus_rank[0],         (my_torus_rank[1]+1)%ySize, my_torus_rank[2],        
+                 rank_ym,  my_torus_rank[0],         (my_torus_rank[1]-1)%ySize, my_torus_rank[2],        
+                 rank_zp,  my_torus_rank[0],          my_torus_rank[1],         (my_torus_rank[2]+1)%zSize,
+                 rank_zm,  my_torus_rank[0],          my_torus_rank[1],         (my_torus_rank[2]-1)%zSize );
 #else
     int rank_xp = (world_rank+1)%world_size;
     int rank_xm = (world_rank+1)%world_size;
