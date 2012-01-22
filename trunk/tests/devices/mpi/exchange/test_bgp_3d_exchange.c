@@ -27,44 +27,43 @@ int main(int argc, char *argv[])
     MPI_Comm_rank( MPI_COMM_WORLD, &world_rank );
     MPI_Comm_size( MPI_COMM_WORLD, &world_size );
 #ifdef __bgp__
-    assert(world_size==512);
+    assert(world_size>=8);
 #else
     assert(world_size>1);
 #endif
-    printf( "Hello from %d of %d processors\n", world_rank, world_size );
-    fflush( stdout );
-    MPI_Barrier( MPI_COMM_WORLD );
 
-    int count, max_count;
-    max_count = ( argc > 1 ? atoi(argv[1]) : 16*1024*1024 );
+    int max_links;
+    max_links = ( argc > 1 ? atoi(argv[1]) : 6 );
+
+    int max_count;
+    max_count = ( argc > 2 ? atoi(argv[2]) : 16*1024*1024 );
 
 #ifdef __bgp__
-    uint32_t my_torus_rank[4];
-    MPIX_rank2torus( world_rank, &my_torus_rank[0], &my_torus_rank[1], &my_torus_rank[2], &my_torus_rank[3] );
-
     uint32_t xSize, ySize, zSize, tSize;
-    MPIX_rank2torus( world_size, &xSize, &ySize, &zSize, &tSize );
-    xSize++;
-    ySize++;
-    zSize++;
-    tSize++;
+    MPIX_rank2torus( world_size-1, &xSize, &ySize, &zSize, &tSize );
+    if (world_rank==0) printf("torus size = (%d,%d,%d) \n", xSize+1, ySize+1, zSize+1 );
 
-    int rank_xp = MPIX_torus2rank( (my_torus_rank[0]+1)%xSize, my_torus_rank[1],          my_torus_rank[2],          my_torus_rank[3] );
-    int rank_xm = MPIX_torus2rank( (my_torus_rank[0]-1)%xSize, my_torus_rank[1],          my_torus_rank[2],          my_torus_rank[3] );
-    int rank_yp = MPIX_torus2rank(  my_torus_rank[0],         (my_torus_rank[1]+1)%ySize, my_torus_rank[2],          my_torus_rank[3] );
-    int rank_ym = MPIX_torus2rank(  my_torus_rank[0],         (my_torus_rank[1]-1)%ySize, my_torus_rank[2],          my_torus_rank[3] );
-    int rank_zp = MPIX_torus2rank(  my_torus_rank[0],          my_torus_rank[1],         (my_torus_rank[2]+1)%zSize, my_torus_rank[3] );
-    int rank_zm = MPIX_torus2rank(  my_torus_rank[0],          my_torus_rank[1],         (my_torus_rank[2]-1)%zSize, my_torus_rank[3] );
+    uint32_t xRank, yRank, zRank, tRank;
+    MPIX_rank2torus( world_rank, &xRank, &yRank, &zRank, &tRank );
+    //printf("I am %d (%d,%d,%d). \n", world_rank, xRank, yRank, zRank );
 
-    printf("I am %d (%d,%d,%d). X+ is %d %(%d,%d,%d). Y+ is %d %(%d,%d,%d). Z+ is %d %(%d,%d,%d). "
-                               "X- is %d %(%d,%d,%d). Y- is %d %(%d,%d,%d). Z- is %d %(%d,%d,%d). ",
-                 world_rank, my_torus_rank[0], my_torus_rank[1], my_torus_rank[2],
-                 rank_xp, (my_torus_rank[0]+1)%xSize, my_torus_rank[1],          my_torus_rank[2],        
-                 rank_xm, (my_torus_rank[0]-1)%xSize, my_torus_rank[1],          my_torus_rank[2],        
-                 rank_yp,  my_torus_rank[0],         (my_torus_rank[1]+1)%ySize, my_torus_rank[2],        
-                 rank_ym,  my_torus_rank[0],         (my_torus_rank[1]-1)%ySize, my_torus_rank[2],        
-                 rank_zp,  my_torus_rank[0],          my_torus_rank[1],         (my_torus_rank[2]+1)%zSize,
-                 rank_zm,  my_torus_rank[0],          my_torus_rank[1],         (my_torus_rank[2]-1)%zSize );
+    uint32_t xRank_xp = ( xRank==xSize ? 0 : xRank+1 );
+    uint32_t yRank_yp = ( yRank==ySize ? 0 : yRank+1 );
+    uint32_t zRank_zp = ( zRank==zSize ? 0 : zRank+1 );
+
+    uint32_t xRank_xm = ( xRank==0 ? xSize : xRank-1 );
+    uint32_t yRank_ym = ( yRank==0 ? ySize : yRank-1 );
+    uint32_t zRank_zm = ( zRank==0 ? zSize : zRank-1 );
+
+    printf("I am %d (%d,%d,%d). (X+,Y+,Z+) = (%d,%d,%d) \n", world_rank, xRank, yRank, zRank, xRank_xp, yRank_yp, zRank_zp );
+    printf("I am %d (%d,%d,%d). (X-,Y-,Z-) = (%d,%d,%d) \n", world_rank, xRank, yRank, zRank, xRank_xm, yRank_ym, zRank_zm );
+
+    int rank_xp = MPIX_torus2rank( xRank_xp, yRank,    zRank,    tRank );
+    int rank_xm = MPIX_torus2rank( xRank_xm, yRank,    zRank,    tRank );
+    int rank_yp = MPIX_torus2rank( xRank,    yRank_yp, zRank,    tRank );
+    int rank_ym = MPIX_torus2rank( xRank,    yRank_ym, zRank,    tRank );
+    int rank_zp = MPIX_torus2rank( xRank,    yRank,    zRank_zp, tRank );
+    int rank_zm = MPIX_torus2rank( xRank,    yRank,    zRank_zm, tRank );
 #else
     int rank_xp = (world_rank+1)%world_size;
     int rank_xm = (world_rank+1)%world_size;
@@ -74,9 +73,13 @@ int main(int argc, char *argv[])
     int rank_zm = (world_rank+1)%world_size;
 #endif
 
+    fflush( stdout );
+    MPI_Barrier( MPI_COMM_WORLD );
+
     if ( world_rank == 0 ) printf( "begin nonblocking send-recv 3d halo exchange test\n" );
 
-    for ( count = 1; count < max_count ; count *= 2 )
+    for ( int count = 1; count <= max_count ; count *= 2 )
+    for ( int links = 1; links <= max_links ; links++ )
     { 
         int rc[13];
 
@@ -125,25 +128,58 @@ int main(int argc, char *argv[])
 
         double t0 = MPI_Wtime();
 
-        rc[0]  = MPI_Irecv( rbuf_xp, count, MPI_INT, rank_xp, tag_xp, MPI_COMM_WORLD, &req[0] );
-        rc[1]  = MPI_Irecv( rbuf_xm, count, MPI_INT, rank_xm, tag_xm, MPI_COMM_WORLD, &req[1] );
-        rc[2]  = MPI_Irecv( rbuf_yp, count, MPI_INT, rank_yp, tag_yp, MPI_COMM_WORLD, &req[2] );
-        rc[3]  = MPI_Irecv( rbuf_ym, count, MPI_INT, rank_ym, tag_ym, MPI_COMM_WORLD, &req[3] );
-        rc[4]  = MPI_Irecv( rbuf_zp, count, MPI_INT, rank_zp, tag_zp, MPI_COMM_WORLD, &req[4] );
-        rc[5]  = MPI_Irecv( rbuf_zm, count, MPI_INT, rank_zm, tag_zm, MPI_COMM_WORLD, &req[5] );
+        if (links>0)
+        {
+            printf("rank %d recv from rank %d \n", world_rank, rank_xp);
+            printf("rank %d send  to  rank %d \n", world_rank, rank_xm);
+            rc[0]  = MPI_Irecv( rbuf_xp, count, MPI_INT, rank_xp, tag_xp, MPI_COMM_WORLD, &req[0] );
+            rc[1]  = MPI_Isend( sbuf_xm, count, MPI_INT, rank_xm, tag_xp, MPI_COMM_WORLD, &req[1] );
+        }
+        if (links>1)
+        {
+            printf("rank %d recv from rank %d \n", world_rank, rank_xm);
+            printf("rank %d send  to  rank %d \n", world_rank, rank_xp);
+            rc[2]  = MPI_Irecv( rbuf_xm, count, MPI_INT, rank_xm, tag_xm, MPI_COMM_WORLD, &req[2] );
+            rc[3]  = MPI_Isend( sbuf_xp, count, MPI_INT, rank_xp, tag_xm, MPI_COMM_WORLD, &req[3] );
+        }
+        if (links>2)
+        {
+            printf("rank %d recv from rank %d \n", world_rank, rank_yp);
+            printf("rank %d send  to  rank %d \n", world_rank, rank_ym);
+            rc[4]  = MPI_Irecv( rbuf_yp, count, MPI_INT, rank_yp, tag_yp, MPI_COMM_WORLD, &req[4] );
+            rc[5]  = MPI_Isend( sbuf_ym, count, MPI_INT, rank_ym, tag_yp, MPI_COMM_WORLD, &req[5] );
+        }
+        if (links>3)
+        {
+            printf("rank %d recv from rank %d \n", world_rank, rank_ym);
+            printf("rank %d send  to  rank %d \n", world_rank, rank_yp);
+            rc[6]  = MPI_Irecv( rbuf_ym, count, MPI_INT, rank_ym, tag_ym, MPI_COMM_WORLD, &req[6] );
+            rc[7]  = MPI_Isend( sbuf_yp, count, MPI_INT, rank_yp, tag_ym, MPI_COMM_WORLD, &req[7] );
+        }
+        if (links>4)
+        {
+            printf("rank %d recv from rank %d \n", world_rank, rank_zp);
+            printf("rank %d send  to  rank %d \n", world_rank, rank_zm);
+            rc[8]  = MPI_Irecv( rbuf_zp, count, MPI_INT, rank_zp, tag_zp, MPI_COMM_WORLD, &req[8] );
+            rc[9]  = MPI_Isend( sbuf_zm, count, MPI_INT, rank_zm, tag_zp, MPI_COMM_WORLD, &req[9] );
+        }
+        if (links>5)
+        {
+            printf("rank %d recv from rank %d \n", world_rank, rank_zm);
+            printf("rank %d send  to  rank %d \n", world_rank, rank_zp);
+            rc[10] = MPI_Irecv( rbuf_zm, count, MPI_INT, rank_zm, tag_zm, MPI_COMM_WORLD, &req[10] );
+            rc[11] = MPI_Isend( sbuf_zp, count, MPI_INT, rank_zp, tag_zm, MPI_COMM_WORLD, &req[11] );
+        }
 
-        rc[6]  = MPI_Isend( sbuf_xm, count, MPI_INT, rank_xm, tag_xp, MPI_COMM_WORLD, &req[6] );
-        rc[7]  = MPI_Isend( sbuf_xp, count, MPI_INT, rank_xp, tag_xm, MPI_COMM_WORLD, &req[7] );
-        rc[8]  = MPI_Isend( sbuf_ym, count, MPI_INT, rank_ym, tag_yp, MPI_COMM_WORLD, &req[8] );
-        rc[9]  = MPI_Isend( sbuf_yp, count, MPI_INT, rank_yp, tag_ym, MPI_COMM_WORLD, &req[9] );
-        rc[10] = MPI_Isend( sbuf_zm, count, MPI_INT, rank_zm, tag_zp, MPI_COMM_WORLD, &req[10] );
-        rc[11] = MPI_Isend( sbuf_zp, count, MPI_INT, rank_zp, tag_zm, MPI_COMM_WORLD, &req[11] );
-
-        rc[12] = MPI_Waitall( 12, req, MPI_STATUSES_IGNORE ); 
+        printf("%d: waitall on %d requests \n", world_rank, 2*links );
+        rc[12] = MPI_Waitall( 2*links, req, MPI_STATUSES_IGNORE ); 
 
         double t1 = MPI_Wtime();
 
-        for ( int i = 0 ; i < 13 ; i++ ) assert( rc[i]==MPI_SUCCESS );
+        MPI_Barrier( MPI_COMM_WORLD );
+
+        for ( int i = 0 ; i < (2*links) ; i++ ) assert( rc[i]==MPI_SUCCESS );
+        assert( rc[12]==MPI_SUCCESS );
  
 #if 0
         for ( int i = 0 ; i < count ; i++) 
@@ -192,10 +228,9 @@ int main(int argc, char *argv[])
         free(sbuf_zm);
 
         printf("%d: send %d bytes on 6 links, BW = %lf MB/s \n", world_rank, count, 1e-6*6*count/(t1-t0) );
+        fflush( stdout );
+        MPI_Barrier( MPI_COMM_WORLD );
     }
-
-    fflush( stdout );
-    MPI_Barrier( MPI_COMM_WORLD );
 
     if ( world_rank == 0 ) printf( "done with all tests\n" );
     fflush( stdout );
