@@ -213,6 +213,7 @@ int main(int argc, char *argv[])
         fflush(stdout);
 
         DCMF_CriticalSection_enter(0);
+
         dcmf_result = DCMF_Send(&default_proto,
                                 &request,
                                 callback,
