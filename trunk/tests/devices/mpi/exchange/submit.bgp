@@ -1,10 +1,10 @@
 #!/bin/sh
-#qsub -n64 -t30 --mode smp --env DCMF_SENDER_SIDE_MATCHING=0:DCMF_INTERRUPTS=0 ./test_bgp_3d_exchange_simple.x 6 10000000 0
-#qsub -n64 -t30 --mode smp --env DCMF_SENDER_SIDE_MATCHING=0:DCMF_INTERRUPTS=0 ./test_bgp_3d_exchange_simple.x 6 10000000 1
-#qsub -n64 -t30 --mode smp --env DCMF_SENDER_SIDE_MATCHING=0:DCMF_INTERRUPTS=1 ./test_bgp_3d_exchange_simple.x 6 10000000 0
-#qsub -n64 -t30 --mode smp --env DCMF_SENDER_SIDE_MATCHING=0:DCMF_INTERRUPTS=1 ./test_bgp_3d_exchange_simple.x 6 10000000 1
+qsub -n64 -t30 --mode smp --env DCMF_SENDER_SIDE_MATCHING=0:DCMF_INTERRUPTS=0 ./test_bgp_3d_exchange_simple.x 6 10000000 0
+qsub -n64 -t30 --mode smp --env DCMF_SENDER_SIDE_MATCHING=0:DCMF_INTERRUPTS=0 ./test_bgp_3d_exchange_simple.x 6 10000000 1
+qsub -n64 -t30 --mode smp --env DCMF_SENDER_SIDE_MATCHING=0:DCMF_INTERRUPTS=1 ./test_bgp_3d_exchange_simple.x 6 10000000 0
+qsub -n64 -t30 --mode smp --env DCMF_SENDER_SIDE_MATCHING=0:DCMF_INTERRUPTS=1 ./test_bgp_3d_exchange_simple.x 6 10000000 1
 
-qsub -n64 -t30 --mode smp --env DCMF_SENDER_SIDE_MATCHING=1:DCMF_INTERRUPTS=0 ./test_bgp_3d_exchange_simple.x 6 10000000 0
-qsub -n64 -t30 --mode smp --env DCMF_SENDER_SIDE_MATCHING=1:DCMF_INTERRUPTS=0 ./test_bgp_3d_exchange_simple.x 6 10000000 1
-qsub -n64 -t30 --mode smp --env DCMF_SENDER_SIDE_MATCHING=1:DCMF_INTERRUPTS=1 ./test_bgp_3d_exchange_simple.x 6 10000000 0
-qsub -n64 -t30 --mode smp --env DCMF_SENDER_SIDE_MATCHING=1:DCMF_INTERRUPTS=1 ./test_bgp_3d_exchange_simple.x 6 10000000 1
+#qsub -n64 -t30 --mode smp --env DCMF_SENDER_SIDE_MATCHING=1:DCMF_INTERRUPTS=0 ./test_bgp_3d_exchange_simple.x 6 10000000 0
+#qsub -n64 -t30 --mode smp --env DCMF_SENDER_SIDE_MATCHING=1:DCMF_INTERRUPTS=0 ./test_bgp_3d_exchange_simple.x 6 10000000 1
+#qsub -n64 -t30 --mode smp --env DCMF_SENDER_SIDE_MATCHING=1:DCMF_INTERRUPTS=1 ./test_bgp_3d_exchange_simple.x 6 10000000 0
+#qsub -n64 -t30 --mode smp --env DCMF_SENDER_SIDE_MATCHING=1:DCMF_INTERRUPTS=1 ./test_bgp_3d_exchange_simple.x 6 10000000 1

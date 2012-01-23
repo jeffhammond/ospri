@@ -77,36 +77,37 @@ int main(int argc, char *argv[])
     {
         double dt[6] = {1.0e9,1.0e9,1.0e9,1.0e9,1.0e9,1.0e9};
 
-        for ( int links = 1; links <= max_links ; links++ )
+        int rc[7] = {0,0,0,0,0,0,0};
+        MPI_Request req[6];
+
+        int tag_xp = 6*count;
+        int tag_xm = 6*count+1;
+        int tag_yp = 6*count+2;
+        int tag_ym = 6*count+3;
+        int tag_zp = 6*count+4;
+        int tag_zm = 6*count+5;
+     
+        int * rbuf_xp = malloc((size_t) count * sizeof(int));
+        int * rbuf_xm = malloc((size_t) count * sizeof(int));
+        int * rbuf_yp = malloc((size_t) count * sizeof(int));
+        int * rbuf_ym = malloc((size_t) count * sizeof(int));
+        int * rbuf_zp = malloc((size_t) count * sizeof(int));
+        int * rbuf_zm = malloc((size_t) count * sizeof(int));
+     
+        assert( rbuf_xp != NULL && rbuf_xm != NULL && rbuf_yp != NULL && rbuf_ym != NULL && rbuf_zp != NULL && rbuf_zm != NULL);
+     
+        int * sbuf_xp = malloc((size_t) count * sizeof(int));
+        int * sbuf_xm = malloc((size_t) count * sizeof(int));
+        int * sbuf_yp = malloc((size_t) count * sizeof(int));
+        int * sbuf_ym = malloc((size_t) count * sizeof(int));
+        int * sbuf_zp = malloc((size_t) count * sizeof(int));
+        int * sbuf_zm = malloc((size_t) count * sizeof(int));
+     
+        assert( sbuf_xp != NULL && sbuf_xm != NULL && sbuf_yp != NULL && sbuf_ym != NULL && sbuf_zp != NULL && sbuf_zm != NULL);
+
+        /* links = 0 is warmup on all 6 links */
+        for ( int links = 0; links <= max_links ; links++ )
         { 
-            int rc[7] = {0,0,0,0,0,0,0};
-            MPI_Request req[6];
-
-            int tag_xp = 6*count;
-            int tag_xm = 6*count+1;
-            int tag_yp = 6*count+2;
-            int tag_ym = 6*count+3;
-            int tag_zp = 6*count+4;
-            int tag_zm = 6*count+5;
-     
-            int * rbuf_xp = malloc((size_t) count * sizeof(int));
-            int * rbuf_xm = malloc((size_t) count * sizeof(int));
-            int * rbuf_yp = malloc((size_t) count * sizeof(int));
-            int * rbuf_ym = malloc((size_t) count * sizeof(int));
-            int * rbuf_zp = malloc((size_t) count * sizeof(int));
-            int * rbuf_zm = malloc((size_t) count * sizeof(int));
-     
-            assert( rbuf_xp != NULL && rbuf_xm != NULL && rbuf_yp != NULL && rbuf_ym != NULL && rbuf_zp != NULL && rbuf_zm != NULL);
-     
-            int * sbuf_xp = malloc((size_t) count * sizeof(int));
-            int * sbuf_xm = malloc((size_t) count * sizeof(int));
-            int * sbuf_yp = malloc((size_t) count * sizeof(int));
-            int * sbuf_ym = malloc((size_t) count * sizeof(int));
-            int * sbuf_zp = malloc((size_t) count * sizeof(int));
-            int * sbuf_zm = malloc((size_t) count * sizeof(int));
-     
-            assert( sbuf_xp != NULL && sbuf_xm != NULL && sbuf_yp != NULL && sbuf_ym != NULL && sbuf_zp != NULL && sbuf_zm != NULL);
-
             for ( int i = 0 ; i < count ; i++) rbuf_xp[i] = 0;
             for ( int i = 0 ; i < count ; i++) rbuf_xm[i] = 0;
             for ( int i = 0 ; i < count ; i++) rbuf_yp[i] = 0;
@@ -125,7 +126,7 @@ int main(int argc, char *argv[])
 
             double t0 = MPI_Wtime();
 
-            if (links>0)
+            if (links==0 || links>0)
             {
                 if ( world_rank==rank_xp )
                 {
@@ -142,7 +143,7 @@ int main(int argc, char *argv[])
                 if ( world_rank==rank_c0 )
                     rc[1] = MPI_Isend( sbuf_xp, count, MPI_INT, rank_xp, tag_xp, MPI_COMM_WORLD, &req[0] );
             }
-            if (links>1)
+            if (links==0 || links>1)
             {
                 if ( world_rank==rank_xm )
                 {
@@ -159,7 +160,7 @@ int main(int argc, char *argv[])
                 if ( world_rank==rank_c0 )
                     rc[2] = MPI_Isend( sbuf_xm, count, MPI_INT, rank_xm, tag_xm, MPI_COMM_WORLD, &req[1] );
             }
-            if (links>2)
+            if (links==0 || links>2)
             {
                 if ( world_rank==rank_yp )
                 {
@@ -176,7 +177,7 @@ int main(int argc, char *argv[])
                 if ( world_rank==rank_c0 )
                     rc[3] = MPI_Isend( sbuf_yp, count, MPI_INT, rank_yp, tag_yp, MPI_COMM_WORLD, &req[2] );
             }
-            if (links>3)
+            if (links==0 || links>3)
             {
                 if ( world_rank==rank_ym )
                 {
@@ -193,7 +194,7 @@ int main(int argc, char *argv[])
                 if ( world_rank==rank_c0 )
                     rc[4] = MPI_Isend( sbuf_ym, count, MPI_INT, rank_ym, tag_ym, MPI_COMM_WORLD, &req[3] );
             }
-            if (links>4)
+            if (links==0 || links>4)
             {
                 if ( world_rank==rank_zp )
                 {
@@ -210,7 +211,7 @@ int main(int argc, char *argv[])
                 if ( world_rank==rank_c0 )
                     rc[5] = MPI_Isend( sbuf_zp, count, MPI_INT, rank_zp, tag_zp, MPI_COMM_WORLD, &req[4] );
             }
-            if (links>5)
+            if (links==0 || links>5)
             {
                 if ( world_rank==rank_zm )
                 {
@@ -284,21 +285,7 @@ int main(int argc, char *argv[])
             if (error>0) printf( "%d: %d errors \n", world_rank, error );
             assert(error==0);
      
-            free(rbuf_xp);
-            free(rbuf_xm);
-            free(rbuf_yp);
-            free(rbuf_ym);
-            free(rbuf_zp);
-            free(rbuf_zm);
-                   
-            free(sbuf_xp);
-            free(sbuf_xm);
-            free(sbuf_yp);
-            free(sbuf_ym);
-            free(sbuf_zp);
-            free(sbuf_zm);
-
-            dt[links-1] = t1-t0;
+            if (links>0) dt[links-1] = t1-t0;
         }
         if (world_rank==rank_c0) printf("%d: send %10d bytes %12.6lf %12.6lf %12.6lf %12.6lf %12.6lf %12.6lf MB/s (1, 2, 3, 4, 5, 6 links)\n", 
                                         world_rank, (int) sizeof(int)*count, 
@@ -306,7 +293,22 @@ int main(int argc, char *argv[])
                                         1e-6*3*count*sizeof(int)/dt[2], 1e-6*4*count*sizeof(int)/dt[3],
                                         1e-6*5*count*sizeof(int)/dt[4], 1e-6*6*count*sizeof(int)/dt[5]);
         fflush( stdout );
+
+        free(rbuf_xp);
+        free(rbuf_xm);
+        free(rbuf_yp);
+        free(rbuf_ym);
+        free(rbuf_zp);
+        free(rbuf_zm);
+               
+        free(sbuf_xp);
+        free(sbuf_xm);
+        free(sbuf_yp);
+        free(sbuf_ym);
+        free(sbuf_zp);
+        free(sbuf_zm);
     }
+
     MPI_Barrier( MPI_COMM_WORLD );
 
     if (world_rank==0) printf( "done with all tests\n" );
