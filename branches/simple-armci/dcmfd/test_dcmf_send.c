@@ -24,6 +24,14 @@ static volatile int     remote_active;
 
 /***************************************************************/
 
+DCMF_Protocol_t control_proto;
+
+/***************************************************************/
+
+/* This is the function invoked on the sender when DCMF_Send fires locally.
+   Obviously, the purpose is to let the sender know when local completion 
+   has occurred. */
+
 void local_completion_cb(void * clientdata, DCMF_Error_t * error)
 {
     printf("%d: local_completion_cb \n", rank );
@@ -36,7 +44,10 @@ void local_completion_cb(void * clientdata, DCMF_Error_t * error)
 
 /***************************************************************/
 
-DCMF_Protocol_t control_proto;
+/* This is the function invoked on the sender when DCMF_Send fires remotely
+   and the remote site sends back an acknowledgment via DCMF_Control.
+   Obviously, the purpose is to let the sender know when remote completion 
+   has occurred. */
 
 void remote_completion_cb(void * clientdata, const DCMF_Control_t * info, size_t peer)
 {
@@ -49,6 +60,44 @@ void remote_completion_cb(void * clientdata, const DCMF_Control_t * info, size_t
 }
 
 /***************************************************************/
+
+/* This is the function invoked on the receiver when a short message arrives.
+   The payload fits into the DMA (EAGER) buffer and can therefore be processed
+   in-place. */
+
+void default_short_cb(void *clientdata,
+                      const DCQuad *msginfo,
+                      unsigned count,
+                      size_t peer,
+                      const char *src,
+                      size_t bytes)
+{
+    size_t i;
+    DCMF_Result dcmf_result;
+    DCMF_Control_t info;
+
+    printf("%d: default_short_cb peer=%d count=%u \n", rank, peer, count);
+    fflush(stdout);
+    for (i=0;i<bytes;i++)
+        printf("%d: src[%d] = %c \n", rank, i, src[i]);
+
+    fflush(stdout);
+
+    dcmf_result =  DCMF_Control(&control_proto,
+                                DCMF_SEQUENTIAL_CONSISTENCY,
+                                peer,
+                                &info);
+    assert(dcmf_result==DCMF_SUCCESS);
+
+    return;
+}
+
+/***************************************************************/
+
+/* This function is invoked on the receiver after the DMA payload 
+   has arrived in the buffer allocated by the long message callback
+   (default_long_cb).  Its purpose is to process the buffer and
+   free memory allocated by the long callback. */
 
 void default_long_cleanup_cb(void * clientdata, DCMF_Error_t * error)
 {
@@ -78,32 +127,12 @@ void default_long_cleanup_cb(void * clientdata, DCMF_Error_t * error)
     return;
 }
 
-void default_short_cb(void *clientdata,
-                      const DCQuad *msginfo,
-                      unsigned count,
-                      size_t peer,
-                      const char *src,
-                      size_t bytes)
-{
-    size_t i;
-    DCMF_Result dcmf_result;
-    DCMF_Control_t info;
+/***************************************************************/
 
-    printf("%d: default_short_cb peer=%d count=%u \n", rank, peer, count);
-    fflush(stdout);
-    for (i=0;i<bytes;i++)
-        printf("%d: src[%d] = %c \n", rank, i, src[i]);
-
-    fflush(stdout);
-
-    dcmf_result =  DCMF_Control(&control_proto,
-                                DCMF_SEQUENTIAL_CONSISTENCY,
-                                peer,
-                                &info);
-    assert(dcmf_result==DCMF_SUCCESS);
-
-    return;
-}
+/* This is the function invoked on the receiver when a long message arrives.
+   Its purpose is to setup the receiver for the DMA payload.
+   This function sets up the cleanup callback, which fires after the data
+   has been transferred by the DMA with rget packets. */
 
 DCMF_Request_t * default_long_cb(void *clientdata,
                                  const DCQuad *msginfo,
@@ -135,6 +164,8 @@ DCMF_Request_t * default_long_cb(void *clientdata,
     return recv_request;
 }
 
+/***************************************************************/
+
 int main(int argc, char *argv[])
 {
     int rc;
@@ -143,6 +174,9 @@ int main(int argc, char *argv[])
 
     /***************************************************************/
 
+    /* MPI is initialized for multithreaded use because this will
+       assure it is (DCMF-)interrupt-safe. */
+
     int provided;
     MPI_Init_thread( &argc, &argv, MPI_THREAD_MULTIPLE, &provided );
     MPI_Comm_rank( MPI_COMM_WORLD, &rank );
@@ -150,6 +184,9 @@ int main(int argc, char *argv[])
     assert( size > 1 );
 
     /***************************************************************/
+
+    /* Register the control message protocol that will be invoked
+       on the receiver to indicate remote completion. */
 
     DCMF_Control_Configuration_t control_conf;
 
@@ -164,6 +201,9 @@ int main(int argc, char *argv[])
     assert(dcmf_result==DCMF_SUCCESS);
 
     /***************************************************************/
+
+    /* Register the send message protocol that obviously does most
+       of the work in this test. */
 
     DCMF_Protocol_t default_proto;
     DCMF_Send_Configuration_t default_conf;
