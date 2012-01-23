@@ -87,3 +87,4 @@ PAGER=less
 XDG_DATA_DIRS=/usr/local/share/:/usr/share/:/etc/opt/kde3/share/:/opt/kde3/share/:/opt/gnome/share/
 JRE_HOME=/usr/lib/jvm/java/jre
 
+Info: task completed normally with an exit code of 0; initiating job cleanup and removal
