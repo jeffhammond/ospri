@@ -1,10 +1,10 @@
 #!/bin/bash
-for EAGER in 1024 8192 65536 ; do 
-  for OPTRZV in 0 8192 65536 262144 ; do 
+for EAGER in 1200 9600 76800 ; do 
+  for OPTRZV in 0 9600 76800 307200 ; do 
     for INTERRUPTS in 0 1  ; do 
       for NBSLEEP in 0 1  ; do 
         qsub -n 64 -t 12 --mode smp \
-             --env DCMF_SENDER_SIDE_MATCHING=${SSM}:DCMF_EAGER=${EAGER}:DCMF_OPTRVZ=${OPTRZV}:DCMF_INTERRUPTS=${INTERRUPTS} \
+             --env DCMF_EAGER=${EAGER}:DCMF_OPTRVZ=${OPTRZV}:DCMF_INTERRUPTS=${INTERRUPTS} \
              -O test_bgp_3d_exchange_simple.eager${EAGER}.optrzv${OPTRZV}.interrupt${INTERRUPTS}.nbsleep${NBSLEEP}.\$jobid \
              ./test_bgp_3d_exchange_simple.x 6 20000000 ${NBSLEEP}
       done
