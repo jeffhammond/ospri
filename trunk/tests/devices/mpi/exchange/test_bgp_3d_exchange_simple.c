@@ -307,11 +307,11 @@ int main(int argc, char *argv[])
                                         1e-6*5*count*sizeof(int)/dt[4], 1e-6*6*count*sizeof(int)/dt[5]);
         fflush( stdout );
     }
+    MPI_Barrier( MPI_COMM_WORLD );
 
     if (world_rank==0) printf( "done with all tests\n" );
     fflush( stdout );
 
-    MPI_Barrier( MPI_COMM_WORLD );
     MPI_Finalize();
 
     return 0;
