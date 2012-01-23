@@ -1,10 +1,13 @@
-#!/bin/sh
-qsub -n64 -t30 --mode smp --env DCMF_SENDER_SIDE_MATCHING=0:DCMF_INTERRUPTS=0 ./test_bgp_3d_exchange_simple.x 6 10000000 0
-qsub -n64 -t30 --mode smp --env DCMF_SENDER_SIDE_MATCHING=0:DCMF_INTERRUPTS=0 ./test_bgp_3d_exchange_simple.x 6 10000000 1
-qsub -n64 -t30 --mode smp --env DCMF_SENDER_SIDE_MATCHING=0:DCMF_INTERRUPTS=1 ./test_bgp_3d_exchange_simple.x 6 10000000 0
-qsub -n64 -t30 --mode smp --env DCMF_SENDER_SIDE_MATCHING=0:DCMF_INTERRUPTS=1 ./test_bgp_3d_exchange_simple.x 6 10000000 1
+#!/bin/bash
+for SSM in 0 ; do
+  for EAGER in 1024 8192 65536 ; do 
+    for OPTRZV in 0 8192 65536 262144 ; do 
+      for INTERRUPTS in 0 1  ; do 
+        for NBSLEEP in 0 1  ; do 
+          qsub -n 64 -t 12 --mode smp --env DCMF_SENDER_SIDE_MATCHING=${SSM}:DCMF_EAGER=${EAGER}:DCMF_OPTRVZ=${OPTRZV}:DCMF_INTERRUPTS=${INTERRUPTS} ./test_bgp_3d_exchange_simple.x 6 20000000 ${NBSLEEP}
+        done
+      done
+    done
+  done
+done
 
-#qsub -n64 -t30 --mode smp --env DCMF_SENDER_SIDE_MATCHING=1:DCMF_INTERRUPTS=0 ./test_bgp_3d_exchange_simple.x 6 10000000 0
-#qsub -n64 -t30 --mode smp --env DCMF_SENDER_SIDE_MATCHING=1:DCMF_INTERRUPTS=0 ./test_bgp_3d_exchange_simple.x 6 10000000 1
-#qsub -n64 -t30 --mode smp --env DCMF_SENDER_SIDE_MATCHING=1:DCMF_INTERRUPTS=1 ./test_bgp_3d_exchange_simple.x 6 10000000 0
-#qsub -n64 -t30 --mode smp --env DCMF_SENDER_SIDE_MATCHING=1:DCMF_INTERRUPTS=1 ./test_bgp_3d_exchange_simple.x 6 10000000 1

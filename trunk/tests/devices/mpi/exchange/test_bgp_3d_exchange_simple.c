@@ -39,7 +39,7 @@ int main(int argc, char *argv[])
 #ifdef __bgp__
     uint32_t xSize, ySize, zSize, tSize;
     MPIX_rank2torus( world_size-1, &xSize, &ySize, &zSize, &tSize );
-    if (world_rank==0) printf("torus size = (%d,%d,%d) \n", xSize+1, ySize+1, zSize+1 );
+    if (world_rank==0) printf("#torus size = (%d,%d,%d) \n", xSize+1, ySize+1, zSize+1 );
 
     uint32_t xRank, yRank, zRank, tRank;
     MPIX_rank2torus( world_rank, &xRank, &yRank, &zRank, &tRank );
@@ -53,7 +53,7 @@ int main(int argc, char *argv[])
     int rank_zp = MPIX_torus2rank(1,1,2,0);
     int rank_zm = MPIX_torus2rank(1,1,0,0);
 
-    if (world_rank==0) printf("send from %d (1,1,1) to %d (2,1,1), %d (0,1,1), %d (1,2,1), %d (1,0,1), %d (1,1,2), %d (1,1,0) \n", 
+    if (world_rank==0) printf("#send from %d (1,1,1) to %d (2,1,1), %d (0,1,1), %d (1,2,1), %d (1,0,1), %d (1,1,2), %d (1,1,0) \n", 
                               rank_c0, rank_xp, rank_xm, rank_yp, rank_ym, rank_zp, rank_zm );
 #else
     int rank_c0 = 0;
@@ -64,7 +64,7 @@ int main(int argc, char *argv[])
     int rank_zp = 5;
     int rank_zm = 6;
 
-    if (world_rank==0) printf("send from %d to %d, %d, %d, %d, %d, %d \n", 
+    if (world_rank==0) printf("#send from %d to %d, %d, %d, %d, %d, %d \n", 
                               rank_c0, rank_xp, rank_xm, rank_yp, rank_ym, rank_zp, rank_zm );
 #endif
 
@@ -86,7 +86,7 @@ int main(int argc, char *argv[])
     
     assert( sbuf_xp != NULL && sbuf_xm != NULL && sbuf_yp != NULL && sbuf_ym != NULL && sbuf_zp != NULL && sbuf_zm != NULL);
 
-    if (world_rank==0) printf( "begin nonblocking send-recv 3d halo exchange test\n" );
+    if (world_rank==0) printf("#begin nonblocking send-recv 3d halo exchange test\n" );
 
     fflush( stdout );
     MPI_Barrier( MPI_COMM_WORLD );
@@ -299,7 +299,7 @@ int main(int argc, char *argv[])
                     for ( int i = 0 ; i < count ; i++) 
                         error += abs( 6*i+5 - rbuf_zm[i] );
 
-            if (error>0) printf( "%d: %d errors \n", world_rank, error );
+            if (error>0) printf("%d: %d errors \n", world_rank, error );
             assert(error==0);
      
             if (links>0) dt[links-1] = t1-t0;
@@ -328,7 +328,7 @@ int main(int argc, char *argv[])
 
     MPI_Barrier( MPI_COMM_WORLD );
 
-    if (world_rank==0) printf( "done with all tests\n" );
+    if (world_rank==0) printf("#done with all tests\n");
     fflush( stdout );
 
     MPI_Finalize();
