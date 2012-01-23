@@ -281,6 +281,7 @@ int main(int argc, char *argv[])
                     for ( int i = 0 ; i < count ; i++) 
                         error += abs( 6*i+5 - rbuf_zm[i] );
 
+            if (error>0) printf( "%d: %d errors \n", world_rank, error );
             assert(error==0);
      
             free(rbuf_xp);
@@ -299,7 +300,7 @@ int main(int argc, char *argv[])
 
             dt[links-1] = t1-t0;
         }
-        if (world_rank==rank_c0) printf("%d: send %d bytes %lf %lf %lf %lf %lf %lf MB/s (1, 2, 3, 4, 5, 6 links)\n", 
+        if (world_rank==rank_c0) printf("%d: send %10d bytes %12.6lf %12.6lf %12.6lf %12.6lf %12.6lf %12.6lf MB/s (1, 2, 3, 4, 5, 6 links)\n", 
                                         world_rank, (int) sizeof(int)*count, 
                                         1e-6*1*count*sizeof(int)/dt[0], 1e-6*2*count*sizeof(int)/dt[1],
                                         1e-6*3*count*sizeof(int)/dt[2], 1e-6*4*count*sizeof(int)/dt[3],
