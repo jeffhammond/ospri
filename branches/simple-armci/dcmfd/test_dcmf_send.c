@@ -78,9 +78,12 @@ void default_short_cb(void *clientdata,
 
     printf("%d: default_short_cb peer=%d count=%u \n", rank, peer, count);
     fflush(stdout);
-    for (i=0;i<bytes;i++)
-        printf("%d: src[%d] = %c \n", rank, i, src[i]);
 
+    printf("%d: src[%d] = ", rank );
+    for (i=0;i<bytes;i++)
+        printf("%c", src[i]);
+
+    printf("\n");
     fflush(stdout);
 
     dcmf_result =  DCMF_Control(&control_proto,
@@ -110,9 +113,11 @@ void default_long_cleanup_cb(void * clientdata, DCMF_Error_t * error)
     printf("%d: default_long_cleanup_cb peer=%d \n", rank, peer);
     fflush(stdout);
 
+    printf("%d: recv_buffer = ", rank );
     for (i=0;i<recv_bytes;i++)
-        printf("%d: recv_buffer[%d] = %c \n", rank, i, char_buffer[i]);
+        printf("%c", char_buffer[i]);
 
+    printf("\n");
     fflush(stdout);
 
     free(recv_request);
