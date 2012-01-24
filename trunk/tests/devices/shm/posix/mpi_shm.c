@@ -32,15 +32,11 @@ int main(int argc, char* argv[])
 {
     int i,j;
 
-    int world_rank = -1, num_procs = -1;
+    int world_rank = -1, world_size = -1;
     int mpi_result = MPI_SUCCESS;
 
-    int rank_in_node = -1;
-    int ranks_per_node = 0;
-    int num_nodes = 0;
-    int my_node = -1;
-
-    int color = -1, key = -1;
+    int color = -1;
+    int ranks_per_node = -1;
     MPI_Comm IntraNodeComm;
 
     int node_shmem_bytes; 
@@ -48,7 +44,7 @@ int main(int argc, char* argv[])
     MPI_Init(&argc,&argv);
     mpi_result = MPI_Comm_rank(MPI_COMM_WORLD, &world_rank);
     assert(mpi_result==MPI_SUCCESS);
-    mpi_result = MPI_Comm_size(MPI_COMM_WORLD, &num_procs);
+    mpi_result = MPI_Comm_size(MPI_COMM_WORLD, &world_size);
     assert(mpi_result==MPI_SUCCESS);
 
     if (world_rank==0)
@@ -84,34 +80,20 @@ int main(int argc, char* argv[])
     fflush(stdout);
     MPI_Barrier(MPI_COMM_WORLD);
 
-#if defined(__bgq__)
-    rank_in_node = Kernel_MyTcoord();
-#elif defined(__bgp__)
-    rank_in_node = Kernel_PhysicalProcessorID();
+#if defined(__bgp__)
+    uint32_t xSize, ySize, zSize, tSize;
+    uint32_t xRank, yRank, zRank, tRank;
+
+    MPIX_rank2torus( world_size-1, &xSize, &ySize, &zSize, &tSize );
+    xSize++; ySize++; zSize++;
+
+    MPIX_rank2torus( world_rank, &xRank, &yRank, &zRank, &tRank );
+    color = xRank + yRank*xSize + zRank*ySize*xSize;
 #else
-    rank_in_node = world_rank;
+    color = world_rank%2;
 #endif
 
-    /* int MPI_Allreduce(void *sendbuf, void *recvbuf, int count, MPI_Datatype datatype, MPI_Op op, MPI_Comm comm) */
-    mpi_result = MPI_Allreduce( &rank_in_node, &ranks_per_node, 1, MPI_INT, MPI_MAX, MPI_COMM_WORLD);
-    assert(mpi_result==MPI_SUCCESS);
-    ranks_per_node++; /* change from [0,n-1] to [1,n] */
-
-    num_nodes = num_procs/ranks_per_node;
-    assert( (num_procs % ranks_per_node)==0 );
-
-    my_node = (world_rank - rank_in_node)/ranks_per_node;
-
-    printf("%7d: rank_in_node = %2d, ranks_per_node = %2d, my_node = %5d, num_nodes = %5d, world_rank = %7d, num_procs = %7d \n",
-            world_rank, rank_in_node, ranks_per_node, my_node, num_nodes, world_rank, num_procs);
-    fflush(stdout);
-    MPI_Barrier(MPI_COMM_WORLD);
-
-    color = my_node;
-    key   = rank_in_node;
-
-    /* int MPI_Comm_split(MPI_Comm comm, int color, int key, MPI_Comm *newcomm) */
-    mpi_result = MPI_Comm_split(MPI_COMM_WORLD, color, key, &IntraNodeComm);
+    mpi_result = MPI_Comm_split(MPI_COMM_WORLD, color, 0, &IntraNodeComm);
     assert(mpi_result==MPI_SUCCESS);
 
     int subcomm_rank = -1;
@@ -168,6 +150,9 @@ int main(int argc, char* argv[])
 
     fflush(stdout);
     mpi_result = MPI_Barrier(MPI_COMM_WORLD);
+    assert(mpi_result==MPI_SUCCESS);
+
+    mpi_result = MPI_Comm_rank(IntraNodeComm, &ranks_per_node );
     assert(mpi_result==MPI_SUCCESS);
 
     for (i=0; i<ranks_per_node; i++)
