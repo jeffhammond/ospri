@@ -19,6 +19,8 @@
 //#define DEV_SHM
 #define POSIX_SHM
 
+#define BGP_SMP_SHM_BROKEN
+
 int main(int argc, char* argv[])
 {
     size_t size = ( argc>1 ? atoi(argv[1]) : getpagesize() ); 
@@ -44,7 +46,7 @@ int main(int argc, char* argv[])
         else       printf("ftruncate failed \n");
     }
 
-#ifdef __bgp__
+#if defined(__bgp__) && defined(BGP_SMP_SHM_BROKEN)
     void * ptr = NULL;
     _BGP_Personality_t pers;
     Kernel_GetPersonality(&pers, sizeof(pers));
