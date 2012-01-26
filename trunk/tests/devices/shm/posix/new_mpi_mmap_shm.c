@@ -38,7 +38,7 @@ int main(int argc, char* argv[])
     MPI_Barrier(MPI_COMM_WORLD);
 
 #if defined(POSIX_SHM)
-    int fd = shm_open("/bar", O_RDWR | O_CREAT, S_IRUSR | S_IWUSR );
+    int fd = shm_open("bar", O_RDWR | O_CREAT, S_IRUSR | S_IWUSR );
     if (fd<0) printf("%d: shm_open failed: %d \n", world_rank, fd);
     else      printf("%d: shm_open succeeded: %d \n", world_rank, fd);
 #elif defined(DEV_SHM)
@@ -49,6 +49,7 @@ int main(int argc, char* argv[])
     int fd = -1;
     printf("%d: no file backing \n");
 #endif
+    fflush(stdout);
 
     MPI_Barrier(MPI_COMM_WORLD);
 
@@ -57,6 +58,7 @@ int main(int argc, char* argv[])
         int rc = ftruncate(fd, size);
         if (rc==0) printf("%d: ftruncate succeeded \n", world_rank );
         else       printf("%d: ftruncate failed \n", world_rank );
+        fflush(stdout);
     }
 
     MPI_Barrier(MPI_COMM_WORLD);
@@ -68,6 +70,7 @@ int main(int argc, char* argv[])
     if( BGP_Personality_processConfig(&pers) == _BGP_PERS_PROCESSCONFIG_SMP )
     {
         printf("%d: SMP mode => MAP_PRIVATE | MAP_ANONYMOUS \n");
+        fflush(stdout);
         ptr = mmap( NULL, size, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS, fd, 0 );
     }
     else
@@ -77,10 +80,18 @@ int main(int argc, char* argv[])
 #endif
     if (ptr==NULL) printf("%d: mmap failed \n", world_rank );
     else           printf("%d: mmap succeeded \n", world_rank );
+    fflush(stdout);
 
     MPI_Barrier(MPI_COMM_WORLD);
     
-    for (i=0; i<size; i++) printf("%d: ptr[%d] = %c \n", world_rank, i, ptr[i] );
+    if (0==world_rank)
+    {
+        if (size<5000)
+            for (i=0; i<size; i++) printf("%d: ptr[%d] = %c \n", world_rank, i, ptr[i] );
+        else    
+            for (i=0; i<size; i+=(size/100) ) printf("%d: ptr[%d] = %c \n", world_rank, i, ptr[i] );
+        fflush(stdout);
+    }
 
     MPI_Barrier(MPI_COMM_WORLD);
 
@@ -88,15 +99,24 @@ int main(int argc, char* argv[])
     {
         memset(ptr, 'X', size);
         printf("%d: memset succeeded \n", world_rank );
+        fflush(stdout);
 
         int rc = msync(ptr, size, MS_INVALIDATE | MS_SYNC);
         if (rc==0) printf("%d: msync succeeded \n", world_rank);
         else       printf("%d: msync failed \n", world_rank);
+        fflush(stdout);
     }
 
     MPI_Barrier(MPI_COMM_WORLD);
 
-    for (i=0; i<size; i++) printf("%d: ptr[%d] = %c \n", world_rank, i, ptr[i] );
+    if (0==world_rank)
+    {
+        if (size<5000)
+            for (i=0; i<size; i++) printf("%d: ptr[%d] = %c \n", world_rank, i, ptr[i] );
+        else 
+            for (i=0; i<size; i+=(size/100) ) printf("%d: ptr[%d] = %c \n", world_rank, i, ptr[i] );
+        fflush(stdout);
+    }
 
     MPI_Barrier(MPI_COMM_WORLD);
 
@@ -105,6 +125,7 @@ int main(int argc, char* argv[])
         int rc = ftruncate(fd, 0);
         if (rc==0) printf("%d: ftruncate succeeded \n", world_rank );
         else       printf("%d: ftruncate failed \n", world_rank );
+        fflush(stdout);
     }
 
     MPI_Barrier(MPI_COMM_WORLD);
@@ -115,6 +136,7 @@ int main(int argc, char* argv[])
         int rc = shm_unlink("/bar");
         if (rc==0) printf("%d: shm_unlink succeeded \n", world_rank );
         else       printf("%d: shm_unlink failed \n", world_rank );
+        fflush(stdout);
     }
 #elif defined(DEV_SHM)
     if (fd>=0)
@@ -122,6 +144,7 @@ int main(int argc, char* argv[])
         int rc = close(fd);
         if (rc==0) printf("%d: close succeeded \n");
         else       printf("%d: close failed \n");
+        fflush(stdout);
     }
 #endif
 
@@ -132,6 +155,7 @@ int main(int argc, char* argv[])
         int rc = munmap(ptr, size);
         if (rc==0) printf("%d: munmap succeeded \n", world_rank );
         else       printf("%d: munmap failed \n", world_rank );
+        fflush(stdout);
     }
 
     MPI_Barrier(MPI_COMM_WORLD);
