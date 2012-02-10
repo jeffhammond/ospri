@@ -16,13 +16,13 @@ int main(int argc, char * argv[])
     long size = ( argc>1 ? atol(argv[1]) : (long)getpagesize() ); 
     printf("size = %ld \n", size);
 
-    //int fd = shm_open("./bar", O_RDWR | O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR );
-    //if (fd<0) printf("shm_open failed: %d \n", fd);
-    //else      printf("shm_open succeeded: %d \n", fd);
+    int fd = shm_open("./bar", O_RDWR | O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR );
+    if (fd<0) printf("shm_open failed: %d \n", fd);
+    else      printf("shm_open succeeded: %d \n", fd);
 
-    int fd = open("/dev/shm/foo", O_RDWR | O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR );
-    if (fd<0) printf("open failed: %d \n", fd);
-    else      printf("open succeeded: %d \n", fd);
+    //int fd = open("/dev/shm/foo", O_RDWR | O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR );
+    //if (fd<0) printf("open failed: %d \n", fd);
+    //else      printf("open succeeded: %d \n", fd);
 
     int rc = close(fd);
     if (rc==0) printf("close succeeded \n");

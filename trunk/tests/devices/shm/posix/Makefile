@@ -1,5 +1,5 @@
-CC      = mpicc
-COPT    = -g -O0 -Wall #-std=c99
+CC      = mpixlc_r
+COPT    = -g -O0 #-Wall #-std=c99
 
 LD      = $(CC)
 CFLAGS  = $(COPT) -I/bgsys/drivers/ppcfloor/arch/include/
