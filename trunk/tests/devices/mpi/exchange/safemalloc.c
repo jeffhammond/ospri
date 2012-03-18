@@ -1,6 +1,6 @@
 #include "safemalloc.h"
 
-void * safemalloc(int n) 
+void * safemalloc(size_t n)
 {
     //void * ptr = malloc( n );
     int rc;
