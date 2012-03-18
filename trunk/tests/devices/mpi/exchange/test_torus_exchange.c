@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <safemalloc.h>
 #include <assert.h>
 #include <unistd.h>
 #include <math.h>
@@ -12,11 +11,7 @@
 #  warning This test should be run on a Blue Gene.
 #endif
 
-#include "safesafemalloc.h"
-
-int posix_memalign(void **memptr, size_t alignment, size_t size);
-
-#define ALIGNMENT 64
+#include "safemalloc.h"
 
 int main(int argc, char *argv[])
 {
@@ -31,9 +26,9 @@ int main(int argc, char *argv[])
 
     assert(world_size>1);
 
-    int max_links = ( argc > 1 ? atoi(argv[1]) : world_size-1 );
-    int max_count = ( argc > 2 ? atoi(argv[2]) : 110*1024*1024 );
-    int nbrecv    = ( argc > 3 ? atoi(argv[3]) : 0 );
+    int max_links = 1;     //( argc > 1 ? atoi(argv[1]) : world_size-1 );
+    int max_count = 20000; //( argc > 2 ? atoi(argv[2]) : 110*1024*1024 );
+    //int nbrecv    = ( argc > 3 ? atoi(argv[3]) : 0 );
 
     int rank_ap = -1;
     int rank_am = -1;
@@ -45,8 +40,8 @@ int main(int argc, char *argv[])
     int rank_dm = -1;
     int rank_ep = -1;
     int rank_em = -1;
-    int rank_fp = -1; /* f is t on BGQ */
-    int rank_fm = -1;
+    //int rank_fp = -1; /* f is t on BGQ */
+    //int rank_fm = -1;
 
 #if defined (__bgp__)
     uint32_t xSize, ySize, zSize, tSize;
@@ -152,6 +147,28 @@ int main(int argc, char *argv[])
     int * sbuf_ep = safemalloc(max_count * sizeof(int));
     int * sbuf_em = safemalloc(max_count * sizeof(int));
 
+    int tag_ap = 0;
+    int tag_am = 1;
+    int tag_bp = 2;
+    int tag_bm = 3;
+    int tag_cp = 4;
+    int tag_cm = 5;
+    int tag_dp = 6;
+    int tag_dm = 7;
+    int tag_ep = 8;
+    int tag_em = 9;
+
+    for ( int i = 0 ; i < max_count ; i++) sbuf_ap[i] = tag_ap;
+    for ( int i = 0 ; i < max_count ; i++) sbuf_am[i] = tag_am;
+    for ( int i = 0 ; i < max_count ; i++) sbuf_bp[i] = tag_bp;
+    for ( int i = 0 ; i < max_count ; i++) sbuf_bm[i] = tag_bm;
+    for ( int i = 0 ; i < max_count ; i++) sbuf_cp[i] = tag_cp;
+    for ( int i = 0 ; i < max_count ; i++) sbuf_cm[i] = tag_cm;
+    for ( int i = 0 ; i < max_count ; i++) sbuf_dp[i] = tag_dp;
+    for ( int i = 0 ; i < max_count ; i++) sbuf_dm[i] = tag_dm;
+    for ( int i = 0 ; i < max_count ; i++) sbuf_ep[i] = tag_ep;
+    for ( int i = 0 ; i < max_count ; i++) sbuf_em[i] = tag_em;
+
     if (world_rank==0) printf("#begin nonblocking send-recv 5d halo exchange test\n" );
 
     fflush( stdout );
@@ -161,52 +178,21 @@ int main(int argc, char *argv[])
     {
         double dt[10+1] = {1.0e9,1.0e9,1.0e9,1.0e9,1.0e9,1.0e9};
 
-        int rc[11] = {0,0,0,0,0,0,0,0,0,0,0};
         MPI_Request req[20];
-
-        int tag_ap = 10*count;
-        int tag_am = 10*count+1;
-        int tag_bp = 10*count+2;
-        int tag_bm = 10*count+3;
-        int tag_cp = 10*count+4;
-        int tag_cm = 10*count+5;
-        int tag_dp = 10*count+6;
-        int tag_dm = 10*count+7;
-        int tag_ep = 10*count+8;
-        int tag_em = 10*count+9;
 
         /* links = 0 is warmup on all 10 links */
         for ( int links = 0; links <= max_links ; links++ )
         { 
             for ( int i = 0 ; i < count ; i++) rbuf_ap[i] = 0;
-            for ( int i = 0 ; i < count ; i++) sbuf_ap[i] = tag_ap;
-
             for ( int i = 0 ; i < count ; i++) rbuf_am[i] = 0;
-            for ( int i = 0 ; i < count ; i++) sbuf_am[i] = tag_am;
-
             for ( int i = 0 ; i < count ; i++) rbuf_bp[i] = 0;
-            for ( int i = 0 ; i < count ; i++) sbuf_bp[i] = tag_bp;
-
             for ( int i = 0 ; i < count ; i++) rbuf_bm[i] = 0;
-            for ( int i = 0 ; i < count ; i++) sbuf_bm[i] = tag_bm;
-
             for ( int i = 0 ; i < count ; i++) rbuf_cp[i] = 0;
-            for ( int i = 0 ; i < count ; i++) sbuf_cp[i] = tag_cp;
-
             for ( int i = 0 ; i < count ; i++) rbuf_cm[i] = 0;
-            for ( int i = 0 ; i < count ; i++) sbuf_cm[i] = tag_cm;
-
             for ( int i = 0 ; i < count ; i++) rbuf_dp[i] = 0;
-            for ( int i = 0 ; i < count ; i++) sbuf_dp[i] = tag_dp;
-
             for ( int i = 0 ; i < count ; i++) rbuf_dm[i] = 0;
-            for ( int i = 0 ; i < count ; i++) sbuf_dm[i] = tag_dm;
-
             for ( int i = 0 ; i < count ; i++) rbuf_ep[i] = 0;
-            for ( int i = 0 ; i < count ; i++) sbuf_ep[i] = tag_ep;
-
             for ( int i = 0 ; i < count ; i++) rbuf_em[i] = 0;
-            for ( int i = 0 ; i < count ; i++) sbuf_em[i] = tag_em;
 
             MPI_Barrier( MPI_COMM_WORLD );
 

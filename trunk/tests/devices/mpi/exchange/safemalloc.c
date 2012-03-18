@@ -9,7 +9,7 @@ void * safemalloc(size_t n)
 
     if ( ptr == NULL )
     {
-        fprintf( stderr , "%d bytes could not be allocated \n" , n );
+        fprintf( stderr , "%ld bytes could not be allocated \n" , (long)n );
         exit(1);
     }
 
