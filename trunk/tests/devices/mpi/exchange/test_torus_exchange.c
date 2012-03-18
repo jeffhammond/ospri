@@ -71,51 +71,58 @@ int main(int argc, char *argv[])
            rank_cm   , xRank  , yRank  , zRank-1);
 #elif defined(__bgq__)
     MPIX_Hardware_t hw;
-    int tempCoords[MPIX_TORUS_MAX_DIMS];
-    int hopCoord;
-
     MPIX_Hardware(&hw);
 
-    hopCoord = (hw.Coords[0]+1) % (hw.Size[0]);
-    tempCoords = { hopCoord, hw.Coords[1], hw.Coords[2], hw.Coords[3], hw.Coords[4]};
-    MPIX_Torus2rank(&tempCoords, &rank_ap);
-
-    hopCoord = (hw.Coords[0]==0) ? hw.Size[0] : (hw.Coords[0]-1);
-    tempCoords = { hopCoord, hw.Coords[1], hw.Coords[2], hw.Coords[3], hw.Coords[4]};
-    MPIX_Torus2rank(&tempCoords, &rank_am);
-
-    hopCoord = (hw.Coords[1]+1) % (hw.Size[1]);
-    tempCoords = { hw.Coords[0], hopCoord, hw.Coords[2], hw.Coords[3], hw.Coords[4]};
-    MPIX_Torus2rank(&tempCoords, &rank_bp);
-
-    hopCoord = (hw.Coords[1]==0) ? hw.Size[1] : (hw.Coords[1]-1);
-    tempCoords = { hw.Coords[0], hopCoord, hw.Coords[2], hw.Coords[3], hw.Coords[4]};
-    MPIX_Torus2rank(&tempCoords, &rank_bm);
-
-    hopCoord = (hw.Coords[2]+1) % (hw.Size[2]);
-    tempCoords = { hw.Coords[0], hw.Coords[1], hopCoord, hw.Coords[3], hw.Coords[4]};
-    MPIX_Torus2rank(&tempCoords, &rank_cp);
-
-    hopCoord = (hw.Coords[2]==0) ? hw.Size[2] : (hw.Coords[2]-1);
-    tempCoords = { hw.Coords[0], hw.Coords[1], hopCoord, hw.Coords[3], hw.Coords[4]};
-    MPIX_Torus2rank(&tempCoords, &rank_cm);
-
-    hopCoord = (hw.Coords[3]+1) % (hw.Size[3]);
-    tempCoords = { hw.Coords[0], hw.Coords[1], hw.Coords[2], hopCoord, hw.Coords[4]};
-    MPIX_Torus2rank(&tempCoords, &rank_dp);
-
-    hopCoord = (hw.Coords[3]==0) ? hw.Size[3] : (hw.Coords[3]-1);
-    tempCoords = { hw.Coords[0], hw.Coords[1], hw.Coords[2], hopCoord, hw.Coords[4]};
-    MPIX_Torus2rank(&tempCoords, &rank_dm);
-
-    hopCoord = (hw.Coords[4]+1) % (hw.Size[4]);
-    tempCoords = { hw.Coords[0], hw.Coords[1], hw.Coords[2], hopCoord, hw.Coords[4]+1};
-    MPIX_Torus2rank(&tempCoords, &rank_ep);
-
-    hopCoord = (hw.Coords[4]==0) ? hw.Size[4] : (hw.Coords[4]-1);
-    tempCoords = { hw.Coords[0], hw.Coords[1], hw.Coords[2], hopCoord, hw.Coords[4]-1};
-    MPIX_Torus2rank(&tempCoords, &rank_em);
-
+    {
+        int hopCoord = (hw.Coords[0]+1) % (hw.Size[0]);
+        int tempCoords[MPIX_TORUS_MAX_DIMS] = { hopCoord, hw.Coords[1], hw.Coords[2], hw.Coords[3], hw.Coords[4]};
+        MPIX_Torus2rank(&tempCoords, &rank_ap);
+    }
+    {
+        int hopCoord = (hw.Coords[0]==0) ? hw.Size[0] : (hw.Coords[0]-1);
+        int tempCoords[MPIX_TORUS_MAX_DIMS] = { hopCoord, hw.Coords[1], hw.Coords[2], hw.Coords[3], hw.Coords[4]};
+        MPIX_Torus2rank(&tempCoords, &rank_am);
+    }
+    {
+        int hopCoord = (hw.Coords[1]+1) % (hw.Size[1]);
+        int tempCoords[MPIX_TORUS_MAX_DIMS] = { hw.Coords[0], hopCoord, hw.Coords[2], hw.Coords[3], hw.Coords[4]};
+        MPIX_Torus2rank(&tempCoords, &rank_bp);
+    }
+    {
+        int hopCoord = (hw.Coords[1]==0) ? hw.Size[1] : (hw.Coords[1]-1);
+        int tempCoords[MPIX_TORUS_MAX_DIMS] = { hw.Coords[0], hopCoord, hw.Coords[2], hw.Coords[3], hw.Coords[4]};
+        MPIX_Torus2rank(&tempCoords, &rank_bm);
+    }
+    {
+        int hopCoord = (hw.Coords[2]+1) % (hw.Size[2]);
+        int tempCoords[MPIX_TORUS_MAX_DIMS] = { hw.Coords[0], hw.Coords[1], hopCoord, hw.Coords[3], hw.Coords[4]};
+        MPIX_Torus2rank(&tempCoords, &rank_cp);
+    }
+    {
+        int hopCoord = (hw.Coords[2]==0) ? hw.Size[2] : (hw.Coords[2]-1);
+        int tempCoords[MPIX_TORUS_MAX_DIMS] = { hw.Coords[0], hw.Coords[1], hopCoord, hw.Coords[3], hw.Coords[4]};
+        MPIX_Torus2rank(&tempCoords, &rank_cm);
+    }
+    {
+        int hopCoord = (hw.Coords[3]+1) % (hw.Size[3]);
+        int tempCoords[MPIX_TORUS_MAX_DIMS] = { hw.Coords[0], hw.Coords[1], hw.Coords[2], hopCoord, hw.Coords[4]};
+        MPIX_Torus2rank(&tempCoords, &rank_dp);
+    }
+    {
+        int hopCoord = (hw.Coords[3]==0) ? hw.Size[3] : (hw.Coords[3]-1);
+        int tempCoords[MPIX_TORUS_MAX_DIMS] = { hw.Coords[0], hw.Coords[1], hw.Coords[2], hopCoord, hw.Coords[4]};
+        MPIX_Torus2rank(&tempCoords, &rank_dm);
+    }
+    {
+        int hopCoord = (hw.Coords[4]+1) % (hw.Size[4]);
+        int tempCoords[MPIX_TORUS_MAX_DIMS] = { hw.Coords[0], hw.Coords[1], hw.Coords[2], hopCoord, hw.Coords[4]+1};
+        MPIX_Torus2rank(&tempCoords, &rank_ep);
+    }
+    {
+        int hopCoord = (hw.Coords[4]==0) ? hw.Size[4] : (hw.Coords[4]-1);
+        int tempCoords[MPIX_TORUS_MAX_DIMS] = { hw.Coords[0], hw.Coords[1], hw.Coords[2], hopCoord, hw.Coords[4]-1};
+        MPIX_Torus2rank(&tempCoords, &rank_em);
+    }
 #else
     rank_ap = (world_rank+1)%world_size;
 
@@ -128,16 +135,16 @@ int main(int argc, char *argv[])
     int * rbuf_ym = malloc((size_t) max_count * sizeof(int));
     int * rbuf_zp = malloc((size_t) max_count * sizeof(int));
     int * rbuf_zm = malloc((size_t) max_count * sizeof(int));
-    
+
     assert( rbuf_xp != NULL && rbuf_xm != NULL && rbuf_yp != NULL && rbuf_ym != NULL && rbuf_zp != NULL && rbuf_zm != NULL);
-    
+
     int * sbuf_xp = malloc((size_t) max_count * sizeof(int));
     int * sbuf_xm = malloc((size_t) max_count * sizeof(int));
     int * sbuf_yp = malloc((size_t) max_count * sizeof(int));
     int * sbuf_ym = malloc((size_t) max_count * sizeof(int));
     int * sbuf_zp = malloc((size_t) max_count * sizeof(int));
     int * sbuf_zm = malloc((size_t) max_count * sizeof(int));
-    
+
     assert( sbuf_xp != NULL && sbuf_xm != NULL && sbuf_yp != NULL && sbuf_ym != NULL && sbuf_zp != NULL && sbuf_zm != NULL);
 
     if (world_rank==0) printf("#begin nonblocking send-recv 3d halo exchange test\n" );
@@ -158,7 +165,7 @@ int main(int argc, char *argv[])
         int tag_ym = 6*count+3;
         int tag_zp = 6*count+4;
         int tag_zm = 6*count+5;
-     
+
         /* links = 0 is warmup on all 6 links */
         for ( int links = 0; links <= max_links ; links++ )
         { 
@@ -355,7 +362,7 @@ int main(int argc, char *argv[])
 
             if (error>0) printf("%d: %d errors \n", world_rank, error );
             assert(error==0);
-     
+
             if (links>0) dt[links-1] = t1-t0;
         }
         if (world_rank==rank_c0) printf("%d: send %10d bytes %12.6lf %12.6lf %12.6lf %12.6lf %12.6lf %12.6lf MB/s (1, 2, 3, 4, 5, 6 links)\n", 
@@ -372,7 +379,7 @@ int main(int argc, char *argv[])
     free(rbuf_ym);
     free(rbuf_zp);
     free(rbuf_zm);
-           
+
     free(sbuf_xp);
     free(sbuf_xm);
     free(sbuf_yp);
