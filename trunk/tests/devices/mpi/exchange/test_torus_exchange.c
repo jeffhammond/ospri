@@ -22,7 +22,7 @@ int main(int argc, char *argv[])
     int world_size, world_rank;
 
     MPI_Init_thread( &argc, &argv, MPI_THREAD_SINGLE, &provided );
-    assert( provided=>MPI_THREAD_SINGLE );
+    assert( provided>=MPI_THREAD_SINGLE );
 
     MPI_Comm_rank( MPI_COMM_WORLD, &world_rank );
     MPI_Comm_size( MPI_COMM_WORLD, &world_size );
@@ -76,52 +76,52 @@ int main(int argc, char *argv[])
     {
         int hopCoord = (hw.Coords[0]+1) % (hw.Size[0]);
         int tempCoords[MPIX_TORUS_MAX_DIMS] = { hopCoord, hw.Coords[1], hw.Coords[2], hw.Coords[3], hw.Coords[4]};
-        MPIX_Torus2rank(&tempCoords, &rank_ap);
+        MPIX_Torus2rank(tempCoords, &rank_ap);
     }
     {
         int hopCoord = (hw.Coords[0]==0) ? hw.Size[0] : (hw.Coords[0]-1);
         int tempCoords[MPIX_TORUS_MAX_DIMS] = { hopCoord, hw.Coords[1], hw.Coords[2], hw.Coords[3], hw.Coords[4]};
-        MPIX_Torus2rank(&tempCoords, &rank_am);
+        MPIX_Torus2rank(tempCoords, &rank_am);
     }
     {
         int hopCoord = (hw.Coords[1]+1) % (hw.Size[1]);
         int tempCoords[MPIX_TORUS_MAX_DIMS] = { hw.Coords[0], hopCoord, hw.Coords[2], hw.Coords[3], hw.Coords[4]};
-        MPIX_Torus2rank(&tempCoords, &rank_bp);
+        MPIX_Torus2rank(tempCoords, &rank_bp);
     }
     {
         int hopCoord = (hw.Coords[1]==0) ? hw.Size[1] : (hw.Coords[1]-1);
         int tempCoords[MPIX_TORUS_MAX_DIMS] = { hw.Coords[0], hopCoord, hw.Coords[2], hw.Coords[3], hw.Coords[4]};
-        MPIX_Torus2rank(&tempCoords, &rank_bm);
+        MPIX_Torus2rank(tempCoords, &rank_bm);
     }
     {
         int hopCoord = (hw.Coords[2]+1) % (hw.Size[2]);
         int tempCoords[MPIX_TORUS_MAX_DIMS] = { hw.Coords[0], hw.Coords[1], hopCoord, hw.Coords[3], hw.Coords[4]};
-        MPIX_Torus2rank(&tempCoords, &rank_cp);
+        MPIX_Torus2rank(tempCoords, &rank_cp);
     }
     {
         int hopCoord = (hw.Coords[2]==0) ? hw.Size[2] : (hw.Coords[2]-1);
         int tempCoords[MPIX_TORUS_MAX_DIMS] = { hw.Coords[0], hw.Coords[1], hopCoord, hw.Coords[3], hw.Coords[4]};
-        MPIX_Torus2rank(&tempCoords, &rank_cm);
+        MPIX_Torus2rank(tempCoords, &rank_cm);
     }
     {
         int hopCoord = (hw.Coords[3]+1) % (hw.Size[3]);
         int tempCoords[MPIX_TORUS_MAX_DIMS] = { hw.Coords[0], hw.Coords[1], hw.Coords[2], hopCoord, hw.Coords[4]};
-        MPIX_Torus2rank(&tempCoords, &rank_dp);
+        MPIX_Torus2rank(tempCoords, &rank_dp);
     }
     {
         int hopCoord = (hw.Coords[3]==0) ? hw.Size[3] : (hw.Coords[3]-1);
         int tempCoords[MPIX_TORUS_MAX_DIMS] = { hw.Coords[0], hw.Coords[1], hw.Coords[2], hopCoord, hw.Coords[4]};
-        MPIX_Torus2rank(&tempCoords, &rank_dm);
+        MPIX_Torus2rank(tempCoords, &rank_dm);
     }
     {
         int hopCoord = (hw.Coords[4]+1) % (hw.Size[4]);
         int tempCoords[MPIX_TORUS_MAX_DIMS] = { hw.Coords[0], hw.Coords[1], hw.Coords[2], hopCoord, hw.Coords[4]+1};
-        MPIX_Torus2rank(&tempCoords, &rank_ep);
+        MPIX_Torus2rank(tempCoords, &rank_ep);
     }
     {
         int hopCoord = (hw.Coords[4]==0) ? hw.Size[4] : (hw.Coords[4]-1);
         int tempCoords[MPIX_TORUS_MAX_DIMS] = { hw.Coords[0], hw.Coords[1], hw.Coords[2], hopCoord, hw.Coords[4]-1};
-        MPIX_Torus2rank(&tempCoords, &rank_em);
+        MPIX_Torus2rank(tempCoords, &rank_em);
     }
 #else
     rank_ap = (world_rank+1)%world_size;
