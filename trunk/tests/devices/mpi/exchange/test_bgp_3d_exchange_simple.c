@@ -10,10 +10,10 @@ int posix_memalign(void **memptr, size_t alignment, size_t size);
 
 #define ALIGNMENT 64
 
-#ifdef __bgp__
+#if defined(__bgp__) || defined(__bgq__)
 #  include <mpix.h>
 #else
-#  warning This test should be run on BGP.
+#  warning This test should be run on a Blue Gene.
 #endif
 
 int main(int argc, char *argv[])
@@ -26,7 +26,9 @@ int main(int argc, char *argv[])
 
     MPI_Comm_rank( MPI_COMM_WORLD, &world_rank );
     MPI_Comm_size( MPI_COMM_WORLD, &world_size );
-#ifdef __bgp__
+#if defined(__bgp__)
+    assert(world_size>=27);
+#elif defined(__bgq__)
     assert(world_size>=27);
 #else
     assert(world_size>=2);
