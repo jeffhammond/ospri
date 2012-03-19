@@ -26,7 +26,7 @@ int main(int argc, char *argv[])
 
     assert(world_size>1);
 
-    int max_links = 1;     //( argc > 1 ? atoi(argv[1]) : world_size-1 );
+    int max_links = 10;     //( argc > 1 ? atoi(argv[1]) : world_size-1 );
     int max_count = 20000; //( argc > 2 ? atoi(argv[2]) : 110*1024*1024 );
     //int nbrecv    = ( argc > 3 ? atoi(argv[3]) : 0 );
 
@@ -198,29 +198,78 @@ int main(int argc, char *argv[])
 
             double t0 = MPI_Wtime();
 
-            MPI_Irecv( rbuf_ap, count, MPI_INT, rank_ap, tag_ap, MPI_COMM_WORLD, &req[0] );
-            MPI_Isend( sbuf_ap, count, MPI_INT, rank_ap, tag_ap, MPI_COMM_WORLD, &req[1] );
+            if (links==0 || links>0)
+            {
+                printf("%d: recv from %d send to %d \n", world_rank, rank_am, rank_ap);
+                MPI_Irecv( rbuf_ap, count, MPI_INT, rank_am, tag_ap, MPI_COMM_WORLD, &req[0] );
+                MPI_Isend( sbuf_ap, count, MPI_INT, rank_ap, tag_ap, MPI_COMM_WORLD, &req[1] );
+            }
+            if (links==0 || links>1)
+            {
+                MPI_Irecv( rbuf_ap, count, MPI_INT, rank_ap, tag_am, MPI_COMM_WORLD, &req[2] );
+                MPI_Isend( sbuf_ap, count, MPI_INT, rank_am, tag_am, MPI_COMM_WORLD, &req[3] );
+            }
+            if (links==0 || links>2)
+            {
+                MPI_Irecv( rbuf_bp, count, MPI_INT, rank_bm, tag_bp, MPI_COMM_WORLD, &req[4] );
+                MPI_Isend( sbuf_bp, count, MPI_INT, rank_bp, tag_bp, MPI_COMM_WORLD, &req[5] );
+            }
+            if (links==0 || links>3)
+            {
+                MPI_Irecv( rbuf_bp, count, MPI_INT, rank_bp, tag_bm, MPI_COMM_WORLD, &req[6] );
+                MPI_Isend( sbuf_bp, count, MPI_INT, rank_bm, tag_bm, MPI_COMM_WORLD, &req[7] );
+            }
+            if (links==0 || links>4)
+            {
+                MPI_Irecv( rbuf_cp, count, MPI_INT, rank_cm, tag_cp, MPI_COMM_WORLD, &req[8] );
+                MPI_Isend( sbuf_cp, count, MPI_INT, rank_cp, tag_cp, MPI_COMM_WORLD, &req[9] );
+            }
+            if (links==0 || links>5)
+            {
+                MPI_Irecv( rbuf_cp, count, MPI_INT, rank_cp, tag_cm, MPI_COMM_WORLD, &req[10] );
+                MPI_Isend( sbuf_cp, count, MPI_INT, rank_cm, tag_cm, MPI_COMM_WORLD, &req[11] );
+            }
+            if (links==0 || links>6)
+            {
+                MPI_Irecv( rbuf_dp, count, MPI_INT, rank_dm, tag_dp, MPI_COMM_WORLD, &req[12] );
+                MPI_Isend( sbuf_dp, count, MPI_INT, rank_dp, tag_dp, MPI_COMM_WORLD, &req[13] );
+            }
+            if (links==0 || links>7)
+            {
+                MPI_Irecv( rbuf_dp, count, MPI_INT, rank_dp, tag_dm, MPI_COMM_WORLD, &req[14] );
+                MPI_Isend( sbuf_dp, count, MPI_INT, rank_dm, tag_dm, MPI_COMM_WORLD, &req[15] );
+            }
+            if (links==0 || links>8)
+            {
+                MPI_Irecv( rbuf_ep, count, MPI_INT, rank_em, tag_ep, MPI_COMM_WORLD, &req[16] );
+                MPI_Isend( sbuf_ep, count, MPI_INT, rank_ep, tag_ep, MPI_COMM_WORLD, &req[17] );
+            }
+            if (links==0 || links>9)
+            {
+                MPI_Irecv( rbuf_ep, count, MPI_INT, rank_ep, tag_em, MPI_COMM_WORLD, &req[18] );
+                MPI_Isend( sbuf_ep, count, MPI_INT, rank_em, tag_em, MPI_COMM_WORLD, &req[19] );
+            }
 
-            MPI_Waitall( 2, req, MPI_STATUSES_IGNORE );
+            printf("%d: before MPI_Waitall (links = %d) \n", world_rank, links);
+            MPI_Waitall( 2*links, req, MPI_STATUSES_IGNORE );
+            printf("%d: after  MPI_Waitall (links = %d) \n", world_rank, links);
 
             double t1 = MPI_Wtime();
 
-            MPI_Barrier( MPI_COMM_WORLD );
+            dt[links] = t1-t0;
 
             /* check for correctness */
             int error = 0;
-
-            for ( int i = 0 ; i < count ; i++)
-                error += abs( tag_ap - rbuf_ap[i] );
+            for ( int i = 0 ; i < count ; i++) error += abs( tag_ap - rbuf_ap[i] );
 
             if (error>0) printf("%d: %d errors \n", world_rank, error );
             //assert(error==0);
 
-            dt[links] = t1-t0;
+
         }
-        if (world_rank==world_rank) printf("%d: send %10d bytes %12.6lf \n",
+        if (world_rank==world_rank) printf("%d: send %10d bytes in %12.6lf seconds (%12.6lf MB/s) \n",
                                            world_rank, (int) sizeof(int)*count,
-                                           1e-10*1*count*sizeof(int)/dt[1]);
+                                           1e-6 * count * sizeof(int) / dt[1]);
         fflush( stdout );
     }
 
