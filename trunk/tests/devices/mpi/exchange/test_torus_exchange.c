@@ -266,10 +266,9 @@ int main(int argc, char *argv[])
             //assert(error==0);
 
 
+            printf("%d: send %10d bytes along %d links in %12.6lf seconds (%12.6lf MB/s/link) \n",
+                   world_rank, (int) sizeof(int)*count, links, dt[links], 1e-6 * count * sizeof(int) / dt[links]);
         }
-        if (world_rank==world_rank) printf("%d: send %10d bytes in %12.6lf seconds (%12.6lf MB/s) \n",
-                                           world_rank, (int) sizeof(int)*count,
-                                           1e-6 * count * sizeof(int) / dt[1]);
         fflush( stdout );
     }
 
