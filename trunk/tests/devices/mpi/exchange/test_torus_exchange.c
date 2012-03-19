@@ -120,10 +120,15 @@ int main(int argc, char *argv[])
         int tempCoords[MPIX_TORUS_MAX_DIMS] = { hw.Coords[0], hw.Coords[1], hw.Coords[2], hopCoord, hw.Coords[4]-1};
         MPIX_Torus2rank(tempCoords, &rank_em);
     }
+
+    printf("# from %d (%d,%d,%d,%d,%d) to A+/- (%d, %d), B+/- (%d, %d), C+/- (%d, %d), D+/- (%d, %d), E+/- (%d, %d) \n",
+           world_rank, hw.Coords[0], hw.Coords[1], hw.Coords[2], hw.Coords[3], hw.Coords[4],
+           rank_ap, rank_am, rank_bp, rank_bm, rank_cp, rank_cm, rank_dp, rank_dm, rank_ep, rank_em);
 #else
     rank_ap = (world_rank+1)%world_size;
     printf("#send from %d to %d \n", world_rank, rank_ap );
 #endif
+    fflush( stdout );
 
     int * rbuf_ap = safemalloc(max_count * sizeof(int));
     int * rbuf_am = safemalloc(max_count * sizeof(int));
@@ -250,9 +255,7 @@ int main(int argc, char *argv[])
                 MPI_Isend( sbuf_ep, count, MPI_INT, rank_em, tag_em, MPI_COMM_WORLD, &req[19] );
             }
 
-            printf("%d: before MPI_Waitall (links = %d) \n", world_rank, links);
             MPI_Waitall( 2*links, req, MPI_STATUSES_IGNORE );
-            printf("%d: after  MPI_Waitall (links = %d) \n", world_rank, links);
 
             double t1 = MPI_Wtime();
 
