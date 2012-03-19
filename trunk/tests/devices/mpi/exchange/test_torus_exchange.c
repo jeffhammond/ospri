@@ -46,7 +46,6 @@ int main(int argc, char *argv[])
 #if defined (__bgp__)
     uint32_t xSize, ySize, zSize, tSize;
     MPIX_rank2torus( world_size-1, &xSize, &ySize, &zSize, &tSize );
-    if (world_rank==0) printf("# torus size = (%d,%d,%d) \n", xSize+1, ySize+1, zSize+1 );
 
     uint32_t xRank, yRank, zRank, tRank;
     MPIX_rank2torus( world_rank, &xRank, &yRank, &zRank, &tRank );
@@ -58,20 +57,14 @@ int main(int argc, char *argv[])
     rank_cp = MPIX_torus2rank(xRank  , yRank  , zRank+1, 0);
     rank_cm = MPIX_torus2rank(xRank  , yRank  , zRank-1, 0);
 
-    printf("# from %d (%d,%d,%d) to  %d (%d,%d,%d), %d (%d,%d,%d), %d (%d,%d,%d), %d (%d,%d,%d), %d (%d,%d,%d), %d (%d,%d,%d) \n",
-           world_rank, xRank  , yRank  , zRank  ,
-           rank_ap   , xRank+1, yRank  , zRank  ,
-           rank_am   , xRank-1, yRank  , zRank  ,
-           rank_bp   , xRank  , yRank+1, zRank  ,
-           rank_bm   , xRank  , yRank-1, zRank  ,
-           rank_cp   , xRank  , yRank  , zRank+1,
-           rank_cm   , xRank  , yRank  , zRank-1);
+    if (world_rank==0) printf("# torus size %d = (%d,%d,%d) \n", world_size, xSize+1, ySize+1, zSize+1 );
+    printf("# from %d (%d,%d,%d) to A+/- (%d, %d), B+/- (%d, %d), C+/- (%d, %d) \n",
+           world_rank, xRank, yRank, zRank,
+           rank_ap, rank_am, rank_bp, rank_bm, rank_cp, rank_cm);
 #elif defined(__bgq__)
     MPIX_Hardware_t hw;
     MPIX_Hardware(&hw);
 
-    if (world_rank==0) printf("# partition of size %d is (%d,%d,%d,%d,%d) \n", world_size, hw.Size[0], hw.Size[1], hw.Size[2], hw.Size[3], hw.Size[4]);
-    printf("# %d is (%d,%d,%d,%d,%d) \n", world_rank, hw.Coords[0], hw.Coords[1], hw.Coords[2], hw.Coords[3], hw.Coords[4]);
     {
         int hopCoord = (hw.Coords[0]+1) % (hw.Size[0]);
         int tempCoords[MPIX_TORUS_MAX_DIMS] = { hopCoord, hw.Coords[1], hw.Coords[2], hw.Coords[3], hw.Coords[4]};
@@ -132,7 +125,7 @@ int main(int argc, char *argv[])
         MPIX_Torus2rank(tempCoords, &rank_em);
         //printf("%d: tempCoords = (%d,%d,%d,%d,%d) rank_em = %d \n", world_rank, tempCoords[0], tempCoords[1], tempCoords[2], tempCoords[3], tempCoords[4], rank_em);
     }
-
+    if (world_rank==0) printf("# torus size = %d (%d,%d,%d,%d,%d) \n", world_size, hw.Size[0], hw.Size[1], hw.Size[2], hw.Size[3], hw.Size[4]);
     printf("# from %d (%d,%d,%d,%d,%d) to A+/- (%d, %d), B+/- (%d, %d), C+/- (%d, %d), D+/- (%d, %d), E+/- (%d, %d) \n",
            world_rank, hw.Coords[0], hw.Coords[1], hw.Coords[2], hw.Coords[3], hw.Coords[4],
            rank_ap, rank_am, rank_bp, rank_bm, rank_cp, rank_cm, rank_dp, rank_dm, rank_ep, rank_em);
@@ -273,17 +266,18 @@ int main(int argc, char *argv[])
             double t1 = MPI_Wtime();
 
             dt[links] = t1-t0;
+            MPI_Allreduce( MPI_IN_PLACE, &dt[links], 1, MPI_DOUBLE, MPI_SUM, MPI_COMM_WORLD );
+            dt[links] /= world_size;
 
             /* check for correctness */
             int error = 0;
             for ( int i = 0 ; i < count ; i++) error += abs( tag_ap - rbuf_ap[i] );
 
             if (error>0) printf("%d: %d errors \n", world_rank, error );
-            //assert(error==0);
+            assert(error==0);
 
-
-            printf("%d: send %10d bytes along %2d links in %12.6lf seconds (%12.6lf MB/s/link) \n",
-                   world_rank, (int) sizeof(int)*count, links, dt[links], 1e-6 * count * sizeof(int) / dt[links]);
+            if (world_rank==0) printf("%d: send %10d bytes along %2d links in %12.6lf seconds (%12.6lf MB/s/link) \n",
+                                      world_rank, (int) sizeof(int)*count, links, dt[links], 1e-6 * count * sizeof(int) / dt[links]);
         }
         fflush( stdout );
     }
