@@ -26,7 +26,7 @@ int main(int argc, char *argv[])
 
     assert(world_size>1);
 
-    int max_links = 8;     //( argc > 1 ? atoi(argv[1]) : world_size-1 );
+    int max_links = 10;     //( argc > 1 ? atoi(argv[1]) : world_size-1 );
     int max_count = 20000; //( argc > 2 ? atoi(argv[2]) : 110*1024*1024 );
     //int nbrecv    = ( argc > 3 ? atoi(argv[3]) : 0 );
 
@@ -122,13 +122,13 @@ int main(int argc, char *argv[])
     }
     {
         int hopCoord = (hw.Coords[4]+1) % (hw.Size[4]);
-        int tempCoords[MPIX_TORUS_MAX_DIMS] = { hw.Coords[0], hw.Coords[1], hw.Coords[2], hopCoord, hw.Coords[4]};
+        int tempCoords[MPIX_TORUS_MAX_DIMS] = { hw.Coords[0], hw.Coords[1], hw.Coords[2], hw.Coords[3], hopCoord};
         MPIX_Torus2rank(tempCoords, &rank_ep);
         //printf("%d: tempCoords = (%d,%d,%d,%d,%d) rank_ep = %d \n", world_rank, tempCoords[0], tempCoords[1], tempCoords[2], tempCoords[3], tempCoords[4], rank_ep);
     }
     {
         int hopCoord = (hw.Coords[4]==0) ? (hw.Size[4]-1) : (hw.Coords[4]-1);
-        int tempCoords[MPIX_TORUS_MAX_DIMS] = { hw.Coords[0], hw.Coords[1], hw.Coords[2], hopCoord, hw.Coords[4]};
+        int tempCoords[MPIX_TORUS_MAX_DIMS] = { hw.Coords[0], hw.Coords[1], hw.Coords[2], hw.Coords[3], hopCoord};
         MPIX_Torus2rank(tempCoords, &rank_em);
         //printf("%d: tempCoords = (%d,%d,%d,%d,%d) rank_em = %d \n", world_rank, tempCoords[0], tempCoords[1], tempCoords[2], tempCoords[3], tempCoords[4], rank_em);
     }
