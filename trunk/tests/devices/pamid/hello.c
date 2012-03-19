@@ -11,7 +11,7 @@ int main(int argc, char* argv[])
   pami_result_t        result        = PAMI_ERROR;
 
   /* initialize the client */
-  char * clientname = "JEFF";
+  char * clientname = "";
   pami_client_t client;
   result = PAMI_Client_create (clientname, &client, NULL, 0);
   assert(result == PAMI_SUCCESS);
@@ -22,12 +22,12 @@ int main(int argc, char* argv[])
   int num_contexts;
 
   config.name = PAMI_CLIENT_NUM_TASKS;
-  result = PAMI_Client_query(&client, &config,1);
+  result = PAMI_Client_query( client, &config,1);
   assert(result == PAMI_SUCCESS);
   world_size = config.value.intval;
 
   config.name = PAMI_CLIENT_TASK_ID;
-  result = PAMI_Client_query(&client, &config,1);
+  result = PAMI_Client_query( client, &config,1);
   assert(result == PAMI_SUCCESS);
   world_rank = config.value.intval;
   printf("hello world from rank %d of %d \n",world_rank,world_size);
@@ -35,7 +35,7 @@ int main(int argc, char* argv[])
   sleep(1);
 
   config.name = PAMI_CLIENT_NUM_CONTEXTS;
-  result = PAMI_Client_query(&client, &config,1);
+  result = PAMI_Client_query( client, &config,1);
   assert(result == PAMI_SUCCESS);
   num_contexts = config.value.intval;
 

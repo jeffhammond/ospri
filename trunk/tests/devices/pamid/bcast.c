@@ -34,7 +34,7 @@ void cb_done (void *ctxt, void * clientdata, pami_result_t err)
 
 int main(int argc, char* argv[])
 {
-  pami_result_t        result        = PAMI_ERROR;
+  pami_result_t result = PAMI_ERROR;
 
   /* initialize the client */
   char * clientname = "";
@@ -44,7 +44,7 @@ int main(int argc, char* argv[])
 
   /* query properties of the client */
   pami_configuration_t config;
-  size_t num_contexts;
+  size_t num_contexts = -1;
 
   config.name = PAMI_CLIENT_TASK_ID;
   result = PAMI_Client_query( client, &config, 1);
@@ -127,9 +127,9 @@ int main(int argc, char* argv[])
   PAMI_Endpoint_create(client, (pami_task_t)0, 0, &root);
 
   int max = (argc>1 ? atoi(argv[1]) : 1000000);
-  int d = max;
+  //int d = max;
 
-  //for ( int d = 1; d < max ; d*=2 )
+  for ( int d = 1; d < max ; d*=2 )
     for ( size_t b = 0 ; b < 12 /*num_bcast_alg[0]*/ ; b++ )
     {
         pami_xfer_t bcast;
@@ -170,8 +170,8 @@ int main(int argc, char* argv[])
         //sleep(1);
     }
 
-#if 0
-  //for ( int d = 1; d < max ; d*=2 )
+#if 1
+  for ( int d = 1; d < 64 ; d*=2 ) /* fast (shortMU) algorithms fail for >64 bytes */
     for ( size_t b = 0 ; b < num_bcast_alg[1] ; b++ )
     {
         pami_xfer_t bcast;

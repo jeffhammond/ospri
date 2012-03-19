@@ -4,32 +4,30 @@ endif
 
 ifeq	($(COMPILER),GNU)
   CC      = mpicc
-  COPT    = -g -O2 -Wall
-  LABEL   = gnu
+  COPT    = -g -Wall -std=c99 -O2 -mcpu=a2 -mtune=a2
 endif
 
 ifeq	($(COMPILER),XL)
   CC      = mpixlc_r
-  COPT    = -g -O3 -qstrict
-  LABEL	= xl
+  COPT    = -g -qstrict --qlanglvl=stdc99 -O3 -qarch=qp -qtune=qp
 endif
 
 LD      = $(CC)
 CFLAGS  = $(COPT) -I.
 LDFLAGS = $(COPT) -lpthread
 
-all: hello.x query.x barrier.x allgather.x allreduce.x rget.x
-
-%.x: %.o
-	$(LD) $(LDFLAGS) $< -o $@
+all: hello.x query.x clients.x endpoint.x barrier.x bcast.x allreduce.x #allgather.x rget.x
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
+
+%.x: %.o safemalloc.o
+	$(LD) $(LDFLAGS) $< safemalloc.o -o $@
 
 clean:
 	$(RM) $(RMFLAGS) *.o
 	$(RM) $(RMFLAGS) *.lst
 
 realclean: clean
-	$(RM) $(RMFLAGS) *.x.xl *.x.gnu core.*
+	$(RM) $(RMFLAGS) *.x core.*
 

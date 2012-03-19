@@ -21,7 +21,7 @@ static size_t world_size, world_rank = -1;
                     fflush(stdout); \
                   } \
         sleep(1); \
-        /* assert(c);*/ \
+        assert(c); \
         } \
         while(0);
 
@@ -36,9 +36,9 @@ int main(int argc, char* argv[])
   pami_result_t        result        = PAMI_ERROR;
 
   /* initialize the client */
-  char * clientname = "JEFF";
+  char * clientname = "";
   pami_client_t client;
-  result = PAMI_Client_create(clientname, &client, NULL, 0);
+  result = PAMI_Client_create( clientname, &client, NULL, 0 );
   TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Client_create");
 
   /* query properties of the client */
@@ -46,12 +46,12 @@ int main(int argc, char* argv[])
   size_t num_contexts;
 
   config.name = PAMI_CLIENT_TASK_ID;
-  result = PAMI_Client_query( &client, &config,1);
+  result = PAMI_Client_query( client, &config, 1);
   TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Client_query");
   world_rank = config.value.intval;
 
   config.name = PAMI_CLIENT_NUM_TASKS;
-  result = PAMI_Client_query( &client, &config,1);
+  result = PAMI_Client_query( client, &config, 1);
   TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Client_query");
   world_size = config.value.intval;
 
@@ -63,22 +63,22 @@ int main(int argc, char* argv[])
   sleep(1);
 
   config.name = PAMI_CLIENT_PROCESSOR_NAME;
-  result = PAMI_Client_query(&client, &config,1);
+  result = PAMI_Client_query( client, &config, 1);
   assert(result == PAMI_SUCCESS);
   printf("rank %ld is processor %s \n", world_rank, config.value.chararray);
   fflush(stdout);
   sleep(1);
 
   config.name = PAMI_CLIENT_NUM_CONTEXTS;
-  result = PAMI_Client_query( &client, &config, 1);
+  result = PAMI_Client_query( client, &config, 1);
   TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Client_query");
   num_contexts = config.value.intval;
 
   /* initialize the contexts */
   pami_context_t * contexts = NULL;
-  contexts = (pami_context_t *) malloc( num_contexts * sizeof(pami_context_t) );
+  contexts = (pami_context_t *) malloc( num_contexts * sizeof(pami_context_t) ); assert(contexts!=NULL);
 
-  result = PAMI_Context_createv( client, &config, 0, contexts, num_contexts);
+  result = PAMI_Context_createv( client, &config, 0, contexts, num_contexts );
   TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Context_createv");
 
   /* setup the world geometry */
@@ -97,10 +97,10 @@ int main(int argc, char* argv[])
   TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Geometry_algorithms_num");
   if ( world_rank == 0 ) printf("number of barrier algorithms = {%ld,%ld} \n", num_alg[0], num_alg[1] );
 
-  safe_barrier_algs = (pami_algorithm_t *) malloc( num_alg[0] * sizeof(pami_algorithm_t) );
-  safe_barrier_meta = (pami_metadata_t  *) malloc( num_alg[0] * sizeof(pami_metadata_t)  );
-  fast_barrier_algs = (pami_algorithm_t *) malloc( num_alg[1] * sizeof(pami_algorithm_t) );
-  fast_barrier_meta = (pami_metadata_t  *) malloc( num_alg[1] * sizeof(pami_metadata_t)  );
+  safe_barrier_algs = (pami_algorithm_t *) malloc( num_alg[0] * sizeof(pami_algorithm_t) ); assert(safe_barrier_algs!=NULL);
+  safe_barrier_meta = (pami_metadata_t  *) malloc( num_alg[0] * sizeof(pami_metadata_t)  ); assert(safe_barrier_meta!=NULL);
+  fast_barrier_algs = (pami_algorithm_t *) malloc( num_alg[1] * sizeof(pami_algorithm_t) ); assert(fast_barrier_algs!=NULL);
+  fast_barrier_meta = (pami_metadata_t  *) malloc( num_alg[1] * sizeof(pami_metadata_t)  ); assert(fast_barrier_meta!=NULL);
   result = PAMI_Geometry_algorithms_query( world_geometry, barrier_xfer,
                                            safe_barrier_algs, safe_barrier_meta, num_alg[0],
                                            fast_barrier_algs, fast_barrier_meta, num_alg[1] );
@@ -112,14 +112,12 @@ int main(int argc, char* argv[])
   volatile int active = 0;
 
   for ( b = 0 ; b < num_alg[0] ; b++ )
-    /* disable broken algorithms */
-    if ( b != 2 && b != 3 && b != 5 )
-    {
+  {
       barrier.cb_done   = cb_done;
       barrier.cookie    = (void*) &active;
       barrier.algorithm = safe_barrier_algs[b];
 
-      if ( world_rank == 0 ) printf("trying barrier algorithm %ld (%s) \n", b, safe_barrier_meta[b].name );
+      if ( world_rank == 0 ) printf("trying safe barrier algorithm %ld (%s) \n", b, safe_barrier_meta[b].name );
       fflush(stdout);
       sleep(1);
 
@@ -130,10 +128,31 @@ int main(int argc, char* argv[])
         result = PAMI_Context_advance( contexts[0], 1 );
       TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Context_advance - barrier");
 
-      if ( world_rank == 0 ) printf("after barrier algorithm %ld (%s) \n", b, safe_barrier_meta[b].name );
+      if ( world_rank == 0 ) printf("after safe barrier algorithm %ld (%s) \n", b, safe_barrier_meta[b].name );
       fflush(stdout);
       sleep(1);
-    }
+  }
+  for ( b = 0 ; b < num_alg[1] ; b++ )
+  {
+      barrier.cb_done   = cb_done;
+      barrier.cookie    = (void*) &active;
+      barrier.algorithm = fast_barrier_algs[b];
+
+      if ( world_rank == 0 ) printf("trying fast barrier algorithm %ld (%s) \n", b, fast_barrier_meta[b].name );
+      fflush(stdout);
+      sleep(1);
+
+      active = 1;
+      result = PAMI_Collective( contexts[0], &barrier );
+      TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Collective - barrier");
+      while (active)
+        result = PAMI_Context_advance( contexts[0], 1 );
+      TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Context_advance - barrier");
+
+      if ( world_rank == 0 ) printf("after fast barrier algorithm %ld (%s) \n", b, fast_barrier_meta[b].name );
+      fflush(stdout);
+      sleep(1);
+  }
 
   /* finalize the contexts */
   result = PAMI_Context_destroyv( contexts, num_contexts );
