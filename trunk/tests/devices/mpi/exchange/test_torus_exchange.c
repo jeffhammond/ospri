@@ -17,6 +17,7 @@ int main(int argc, char *argv[])
 {
     int provided;
     int world_size, world_rank;
+    int node_size;
 
     MPI_Init_thread( &argc, &argv, MPI_THREAD_SINGLE, &provided );
     assert( provided>=MPI_THREAD_SINGLE );
@@ -26,8 +27,8 @@ int main(int argc, char *argv[])
 
     assert(world_size>1);
 
-    int max_links = 10;     //( argc > 1 ? atoi(argv[1]) : world_size-1 );
-    int max_count = 20000; //( argc > 2 ? atoi(argv[2]) : 110*1024*1024 );
+    int max_links = ( argc > 1 ? atoi(argv[1]) : 10 );
+    int max_count = ( argc > 2 ? atoi(argv[2]) : 11*1024*1024 );
     //int nbrecv    = ( argc > 3 ? atoi(argv[3]) : 0 );
 
     int rank_ap = -1;
@@ -36,98 +37,104 @@ int main(int argc, char *argv[])
     int rank_bm = -1;
     int rank_cp = -1;
     int rank_cm = -1;
-    int rank_dp = -1; /* d is t on BGP */
+    int rank_dp = -1;
     int rank_dm = -1;
     int rank_ep = -1;
     int rank_em = -1;
-    //int rank_fp = -1; /* f is t on BGQ */
-    //int rank_fm = -1;
+    //int rank_tp = -1;
+    //int rank_tm = -1;
 
 #if defined (__bgp__)
     uint32_t xSize, ySize, zSize, tSize;
-    MPIX_rank2torus( world_size-1, &xSize, &ySize, &zSize, &tSize );
-
     uint32_t xRank, yRank, zRank, tRank;
+
+    MPIX_rank2torus( world_size-1, &xSize, &ySize, &zSize, &tSize );
     MPIX_rank2torus( world_rank, &xRank, &yRank, &zRank, &tRank );
 
-    rank_ap = MPIX_torus2rank(xRank+1, yRank  , zRank  , 0);
-    rank_am = MPIX_torus2rank(xRank-1, yRank  , zRank  , 0);
-    rank_bp = MPIX_torus2rank(xRank  , yRank+1, zRank  , 0);
-    rank_bm = MPIX_torus2rank(xRank  , yRank-1, zRank  , 0);
-    rank_cp = MPIX_torus2rank(xRank  , yRank  , zRank+1, 0);
-    rank_cm = MPIX_torus2rank(xRank  , yRank  , zRank-1, 0);
+    node_size = tRank+1;
+    MPI_Allreduce( MPI_IN_PLACE, &node_size, 1, MPI_INT, MPI_MAX, MPI_COMM_WORLD );
+
+    rank_ap = MPIX_torus2rank(xRank+1, yRank  , zRank  , tRank);
+    rank_am = MPIX_torus2rank(xRank-1, yRank  , zRank  , tRank);
+    rank_bp = MPIX_torus2rank(xRank  , yRank+1, zRank  , tRank);
+    rank_bm = MPIX_torus2rank(xRank  , yRank-1, zRank  , tRank);
+    rank_cp = MPIX_torus2rank(xRank  , yRank  , zRank+1, tRank);
+    rank_cm = MPIX_torus2rank(xRank  , yRank  , zRank-1, tRank);
 
     if (world_rank==0) printf("# torus size %d = (%d,%d,%d) \n", world_size, xSize+1, ySize+1, zSize+1 );
-    printf("# from %d (%d,%d,%d) to A+/- (%d, %d), B+/- (%d, %d), C+/- (%d, %d) \n",
-           world_rank, xRank, yRank, zRank,
+    printf("# from %d (%d,%d,%d,%d) to A+/- (%d, %d), B+/- (%d, %d), C+/- (%d, %d) \n",
+           world_rank, xRank, yRank, zRank, tRank,
            rank_ap, rank_am, rank_bp, rank_bm, rank_cp, rank_cm);
 #elif defined(__bgq__)
     MPIX_Hardware_t hw;
     MPIX_Hardware(&hw);
 
+    node_size = hw.ppn;
+
     {
         int hopCoord = (hw.Coords[0]+1) % (hw.Size[0]);
-        int tempCoords[MPIX_TORUS_MAX_DIMS] = { hopCoord, hw.Coords[1], hw.Coords[2], hw.Coords[3], hw.Coords[4]};
+        int tempCoords[MPIX_TORUS_MAX_DIMS+1] = { hopCoord, hw.Coords[1], hw.Coords[2], hw.Coords[3], hw.Coords[4], hw.coreID};
         MPIX_Torus2rank(tempCoords, &rank_ap);
         //printf("%d: tempCoords = (%d,%d,%d,%d,%d) rank_ap = %d \n", world_rank, tempCoords[0], tempCoords[1], tempCoords[2], tempCoords[3], tempCoords[4], rank_ap);
     }
     {
         int hopCoord = (hw.Coords[0]==0) ? (hw.Size[0]-1) : (hw.Coords[0]-1);
-        int tempCoords[MPIX_TORUS_MAX_DIMS] = { hopCoord, hw.Coords[1], hw.Coords[2], hw.Coords[3], hw.Coords[4]};
+        int tempCoords[MPIX_TORUS_MAX_DIMS+1] = { hopCoord, hw.Coords[1], hw.Coords[2], hw.Coords[3], hw.Coords[4], hw.coreID};
         MPIX_Torus2rank(tempCoords, &rank_am);
         //printf("%d: tempCoords = (%d,%d,%d,%d,%d) rank_am = %d \n", world_rank, tempCoords[0], tempCoords[1], tempCoords[2], tempCoords[3], tempCoords[4], rank_am);
     }
     {
         int hopCoord = (hw.Coords[1]+1) % (hw.Size[1]);
-        int tempCoords[MPIX_TORUS_MAX_DIMS] = { hw.Coords[0], hopCoord, hw.Coords[2], hw.Coords[3], hw.Coords[4]};
+        int tempCoords[MPIX_TORUS_MAX_DIMS+1] = { hw.Coords[0], hopCoord, hw.Coords[2], hw.Coords[3], hw.Coords[4], hw.coreID};
         MPIX_Torus2rank(tempCoords, &rank_bp);
         //printf("%d: tempCoords = (%d,%d,%d,%d,%d) rank_bp = %d \n", world_rank, tempCoords[0], tempCoords[1], tempCoords[2], tempCoords[3], tempCoords[4], rank_bp);
     }
     {
         int hopCoord = (hw.Coords[1]==0) ? (hw.Size[1]-1) : (hw.Coords[1]-1);
-        int tempCoords[MPIX_TORUS_MAX_DIMS] = { hw.Coords[0], hopCoord, hw.Coords[2], hw.Coords[3], hw.Coords[4]};
+        int tempCoords[MPIX_TORUS_MAX_DIMS+1] = { hw.Coords[0], hopCoord, hw.Coords[2], hw.Coords[3], hw.Coords[4], hw.coreID};
         MPIX_Torus2rank(tempCoords, &rank_bm);
         //printf("%d: tempCoords = (%d,%d,%d,%d,%d) rank_bm = %d \n", world_rank, tempCoords[0], tempCoords[1], tempCoords[2], tempCoords[3], tempCoords[4], rank_bm);
     }
     {
         int hopCoord = (hw.Coords[2]+1) % (hw.Size[2]);
-        int tempCoords[MPIX_TORUS_MAX_DIMS] = { hw.Coords[0], hw.Coords[1], hopCoord, hw.Coords[3], hw.Coords[4]};
+        int tempCoords[MPIX_TORUS_MAX_DIMS+1] = { hw.Coords[0], hw.Coords[1], hopCoord, hw.Coords[3], hw.Coords[4], hw.coreID};
         MPIX_Torus2rank(tempCoords, &rank_cp);
         //printf("%d: tempCoords = (%d,%d,%d,%d,%d) rank_cp = %d \n", world_rank, tempCoords[0], tempCoords[1], tempCoords[2], tempCoords[3], tempCoords[4], rank_cp);
     }
     {
         int hopCoord = (hw.Coords[2]==0) ? (hw.Size[2]-1) : (hw.Coords[2]-1);
-        int tempCoords[MPIX_TORUS_MAX_DIMS] = { hw.Coords[0], hw.Coords[1], hopCoord, hw.Coords[3], hw.Coords[4]};
+        int tempCoords[MPIX_TORUS_MAX_DIMS+1] = { hw.Coords[0], hw.Coords[1], hopCoord, hw.Coords[3], hw.Coords[4], hw.coreID};
         MPIX_Torus2rank(tempCoords, &rank_cm);
         //printf("%d: tempCoords = (%d,%d,%d,%d,%d) rank_cm = %d \n", world_rank, tempCoords[0], tempCoords[1], tempCoords[2], tempCoords[3], tempCoords[4], rank_cm);
     }
     {
         int hopCoord = (hw.Coords[3]+1) % (hw.Size[3]);
-        int tempCoords[MPIX_TORUS_MAX_DIMS] = { hw.Coords[0], hw.Coords[1], hw.Coords[2], hopCoord, hw.Coords[4]};
+        int tempCoords[MPIX_TORUS_MAX_DIMS+1] = { hw.Coords[0], hw.Coords[1], hw.Coords[2], hopCoord, hw.Coords[4], hw.coreID};
         MPIX_Torus2rank(tempCoords, &rank_dp);
         //printf("%d: tempCoords = (%d,%d,%d,%d,%d) rank_dp = %d \n", world_rank, tempCoords[0], tempCoords[1], tempCoords[2], tempCoords[3], tempCoords[4], rank_dp);
     }
     {
         int hopCoord = (hw.Coords[3]==0) ? (hw.Size[3]-1) : (hw.Coords[3]-1);
-        int tempCoords[MPIX_TORUS_MAX_DIMS] = { hw.Coords[0], hw.Coords[1], hw.Coords[2], hopCoord, hw.Coords[4]};
+        int tempCoords[MPIX_TORUS_MAX_DIMS+1] = { hw.Coords[0], hw.Coords[1], hw.Coords[2], hopCoord, hw.Coords[4], hw.coreID};
         MPIX_Torus2rank(tempCoords, &rank_dm);
         //printf("%d: tempCoords = (%d,%d,%d,%d,%d) rank_dm = %d \n", world_rank, tempCoords[0], tempCoords[1], tempCoords[2], tempCoords[3], tempCoords[4], rank_dm);
     }
     {
         int hopCoord = (hw.Coords[4]+1) % (hw.Size[4]);
-        int tempCoords[MPIX_TORUS_MAX_DIMS] = { hw.Coords[0], hw.Coords[1], hw.Coords[2], hw.Coords[3], hopCoord};
+        int tempCoords[MPIX_TORUS_MAX_DIMS+1] = { hw.Coords[0], hw.Coords[1], hw.Coords[2], hw.Coords[3], hopCoord, hw.coreID};
         MPIX_Torus2rank(tempCoords, &rank_ep);
         //printf("%d: tempCoords = (%d,%d,%d,%d,%d) rank_ep = %d \n", world_rank, tempCoords[0], tempCoords[1], tempCoords[2], tempCoords[3], tempCoords[4], rank_ep);
     }
     {
         int hopCoord = (hw.Coords[4]==0) ? (hw.Size[4]-1) : (hw.Coords[4]-1);
-        int tempCoords[MPIX_TORUS_MAX_DIMS] = { hw.Coords[0], hw.Coords[1], hw.Coords[2], hw.Coords[3], hopCoord};
+        int tempCoords[MPIX_TORUS_MAX_DIMS+1] = { hw.Coords[0], hw.Coords[1], hw.Coords[2], hw.Coords[3], hopCoord, hw.coreID};
         MPIX_Torus2rank(tempCoords, &rank_em);
         //printf("%d: tempCoords = (%d,%d,%d,%d,%d) rank_em = %d \n", world_rank, tempCoords[0], tempCoords[1], tempCoords[2], tempCoords[3], tempCoords[4], rank_em);
     }
-    if (world_rank==0) printf("# torus size = %d (%d,%d,%d,%d,%d) \n", world_size, hw.Size[0], hw.Size[1], hw.Size[2], hw.Size[3], hw.Size[4]);
-    printf("# from %d (%d,%d,%d,%d,%d) to A+/- (%d, %d), B+/- (%d, %d), C+/- (%d, %d), D+/- (%d, %d), E+/- (%d, %d) \n",
-           world_rank, hw.Coords[0], hw.Coords[1], hw.Coords[2], hw.Coords[3], hw.Coords[4],
+
+    if (world_rank==0) printf("# torus size = %d (%d,%d,%d,%d,%d,%d) \n", world_size, hw.Size[0], hw.Size[1], hw.Size[2], hw.Size[3], hw.Size[4], hw.ppn);
+    printf("# from %d (%d,%d,%d,%d,%d,%d) to A+/- (%d, %d), B+/- (%d, %d), C+/- (%d, %d), D+/- (%d, %d), E+/- (%d, %d) \n",
+           world_rank, hw.Coords[0], hw.Coords[1], hw.Coords[2], hw.Coords[3], hw.Coords[4], hw.coreID,
            rank_ap, rank_am, rank_bp, rank_bm, rank_cp, rank_cm, rank_dp, rank_dm, rank_ep, rank_em);
 #else
     rank_ap = (world_rank+1)%world_size;
@@ -261,7 +268,8 @@ int main(int argc, char *argv[])
                 MPI_Isend( sbuf_ep, count, MPI_INT, rank_em, tag_em, MPI_COMM_WORLD, &req[19] );
             }
 
-            MPI_Waitall( 2*links, req, MPI_STATUSES_IGNORE );
+            if (links>0) MPI_Waitall( 2*links, req, MPI_STATUSES_IGNORE );
+            else         MPI_Waitall( 2*10   , req, MPI_STATUSES_IGNORE );
 
             double t1 = MPI_Wtime();
 
@@ -276,8 +284,14 @@ int main(int argc, char *argv[])
             if (error>0) printf("%d: %d errors \n", world_rank, error );
             assert(error==0);
 
-            if (world_rank==0) printf("%d: send %10d bytes along %2d links in %12.6lf seconds (%12.6lf MB/s/link) \n",
-                                      world_rank, (int) sizeof(int)*count, links, dt[links], 1e-6 * count * sizeof(int) / dt[links]);
+            if (world_rank==0 && links>0) 
+            {
+                printf("%d: send %10d bytes along %2d links in %12.6lf seconds (%12.6lf MB/s/link/rpn, %12.6lf MB/s/rpn, %12.6lf MB/s) \n",
+                       world_rank, (int) sizeof(int)*count, links, dt[links], 
+                       1e-6 * count * sizeof(int) / dt[links],
+                       1e-6 * links * count * sizeof(int) / dt[links],
+                       1e-6 * links * node_size * count * sizeof(int) / dt[links]);
+            }
         }
         fflush( stdout );
     }
