@@ -1,6 +1,6 @@
 #gcc gcc.legacy xl xl.legacy xl.legacy.ndebug xl.ndebug
 
-MPICH_CC=powerpc64-bgq-linux-gcc
+#MPICH_CC=powerpc64-bgq-linux-gcc
 
 ifeq ($(MPI_FLAVOR),)
 all:
