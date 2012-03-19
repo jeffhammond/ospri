@@ -3,7 +3,8 @@ COPT    = -g -O2 -Wall -std=c99
 
 LD      = $(CC)
 CFLAGS  = $(COPT)
-LDFLAGS = $(COPT) -lm
+LDFLAGS = $(COPT)
+LIBS    = -lm
 
 TESTS := $(patsubst %.c,%.x,$(wildcard *.c))
 OBJECTS := $(patsubst %.c,%.o,$(wildcard *.c))
