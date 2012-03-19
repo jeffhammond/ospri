@@ -195,7 +195,8 @@ int main(int argc, char *argv[])
 
     for ( int count = 1; count <= max_count ; count *= 2 )
     {
-        double dt[10+1] = {1.0e9,1.0e9,1.0e9,1.0e9,1.0e9,1.0e9};
+        double dt[11];
+        //for (int j=0;j<11;j++) dt[j] = 1.0e9;
 
         MPI_Request req[20];
 

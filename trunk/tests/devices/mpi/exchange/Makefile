@@ -27,13 +27,16 @@ ifeq ($(MPICH_CC),)
   ifeq ($(MPI_FLAVOR),xl.legacy.ndebug)
 	COPT    = -qstrict -O3 -qlanglvl=stdc99
   endif
-   ifeq ($(MPI_FLAVOR),xl.ndebug)
+  ifeq ($(MPI_FLAVOR),xl.ndebug)
 	COPT    = -qstrict -O3 -qlanglvl=stdc99
   endif
 else
   # OVERRIDE FLAGS WHEN WE MESS WITH THINGS
   ifeq ($(MPICH_CC),powerpc64-bgq-linux-gcc)
 	COPT    = -g -O2 -Wall -std=c99
+  endif
+  ifeq ($(MPICH_CC),bbgxlc_r)
+	COPT    = -qstrict -g -O3 -qlanglvl=stdc99
   endif
 endif
 
