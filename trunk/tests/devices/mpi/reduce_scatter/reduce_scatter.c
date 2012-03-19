@@ -70,7 +70,7 @@ int main(int argc, char *argv[])
     /* send-recv bandwidth test */
     if ( rank == 0 ) printf( "begin send-recv bandwidth test\n" );
     if ( size > 1 )
-    for ( count = min_count; count < ( size * max_count ) ; count *= 2 )
+    for ( count = min_count; count < max_count ; count *= 2 )
     {
         int src_rank = 0;
         int dst_rank = 1;
