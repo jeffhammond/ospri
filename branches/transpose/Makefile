@@ -6,7 +6,7 @@ ifdef FRONTEND
 endif
 ifdef BGP
     CC=mpixlc_r
-    CFLAGS=-g -O5 -qhot -qipa=list="transpose.x.lst" -qtune=450 -qarch=450d -qlanglvl=stdc99 -qreport -DMPI
+    CFLAGS=-g -O5 -qhot -qipa=list="transpose.x.lst" -qtune=450 -qarch=450d -qlanglvl=stdc99 -qreport -DMPI -DHPM
     OMPFLAGS=-qsmp=omp -DOMP
     HPM=-L/soft/apps/UPC/lib -lhpm
     LIBS=$(HPM) safemalloc.o
@@ -14,6 +14,8 @@ endif
 ifdef LAPTOP
     CC=gcc
     CFLAGS=-g -O3 -std=c99 -fopenmp -ftree-vectorize -msse -msse2 -msse3 -ffast-math
+#    CC=icc
+#    CFLAGS=-g -std=c99 -O2 -openmp
     OMPFLAGS=-DOMP
     LIBS=safemalloc.o
 endif
@@ -37,8 +39,8 @@ submit: all
 		qsub --mode smp -n 1 -t 55 --env OMP_NUM_THREADS=4 ./transpose-omp.x 16 3072 16
 else
 submit: all
-	OMP_NUM_THREADS=1 ./transpose.x
-	OMP_NUM_THREADS=4 ./transpose-omp.x
+	OMP_NUM_THREADS=1 ./transpose.x     1> transpose.out     2> transpose.err
+	OMP_NUM_THREADS=2 ./transpose-omp.x 1> transpose-omp.out 2> transpose-omp.err
 endif
 
 clean:

@@ -4,20 +4,18 @@
 #include <string.h>
 
 #ifdef OMP
-    #include <omp.h>
-    #ifndef _OPENMP
-        #error You requested OpenMP but the compiler is not providing it.
-    #endif
-    #define OMP_MIN_SIZE 100
+#    include <omp.h>
+#    ifndef _OPENMP
+#        error You requested OpenMP but the compiler is not providing it.
+#    endif
+#    define OMP_MIN_SIZE 100
 #endif
 
 #ifdef MPI
-    #include <mpi.h>
-    #include "hpm.h"
-#endif
-
-#ifndef __bgp__
-    #include "hpm.h"
+#   include <mpi.h>
+#   ifdef HPM
+#      include "hpm.h"
+#   endif
 #endif
 
 #include "getticks.c"
@@ -35,7 +33,8 @@ int main(int argc, char* argv[])
     int provided;
     rc = MPI_Init_thread( &argc , &argv , MPI_THREAD_FUNNELED , &provided ); assert( rc == MPI_SUCCESS );
     rc = MPI_Comm_rank( MPI_COMM_WORLD , &rank ); assert( rc == MPI_SUCCESS );
-
+#endif
+#ifdef HPM
     HPM_Init();
 #endif
 
@@ -53,7 +52,7 @@ int main(int argc, char* argv[])
         unsigned long long * d5 = safemalloc( max * sizeof(unsigned long long) );
         unsigned long long * d6 = safemalloc( max * sizeof(unsigned long long) );
 
-        /*           12345678901234567890123456789012 */
+        /*              12345678901234567890123456789012 */
         char * name0 = "memcpy";
         char * name1 = "loop copy";
         char * name2 = "basic + s1S";
@@ -63,24 +62,25 @@ int main(int argc, char* argv[])
         char * name6 = "murv 4x4 + s1L";
 
 #ifdef OMP
-        printf( "starting test: OpenMP ON with %d threads... \n", omp_get_max_threads() );
+        printf( "# starting test: OpenMP ON with %d threads... \n", omp_get_max_threads() );
         fprintf( stderr , "starting test: OpenMP ON with %d threads... \n", omp_get_max_threads() );
 #else
-        printf( "starting test: OpenMP OFF... \n" );
+        printf( "# starting test: OpenMP OFF... \n" );
         fprintf( stderr , "starting test: OpenMP OFF... \n" );
 #endif
-        printf( "sN[S/L] = stride-N [store/load] \n" );
-        printf( "pur  = pragma unroll \n" );
-        printf( "mur  = manual unroll \n" );
-        printf( "murv = manual unroll and vectorize \n" );
+        printf( "# sN[S/L] = stride-N [store/load] \n" );
+        printf( "# pur  = pragma unroll \n" );
+        printf( "# mur  = manual unroll \n" );
+        printf( "# murv = manual unroll and vectorize \n" );
 
+#ifdef DEBUG
         fprintf( stderr , "sN[S/L] = stride-N [store/load] \n" );
         fprintf( stderr , "pur  = pragma unroll \n" );
         fprintf( stderr , "mur  = manual unroll \n" );
         fprintf( stderr , "murv = manual unroll and vectorize \n" );
         fprintf( stderr , "%4s %8s %16s %16s %16s %16s %16s %16s \n" , "n" , name0 , name1 , name2 , name3 , name4 , name5 , name6);
-
         fflush( stderr );
+#endif
 
         for ( int n=min ; n<max ; n+=inc )
         {
@@ -111,17 +111,23 @@ int main(int argc, char* argv[])
                     B[i*n+j] = 0.0;
 
             /* reference - memcpy */ 
+#ifdef HPM
             HPM_Start(name0);
+#endif
             t0 = getticks();        
             for ( int t=0 ; t<REPEAT ; t++ )
                 memcpy( B , A , N );
 
             t1 = getticks();        
+#ifdef HPM
             HPM_Stop(name0);
+#endif
             d0[n] = (t1-t0)/REPEAT;
 
             /* reference - direct copy */
+#ifdef HPM
             HPM_Start(name1);
+#endif
             t0 = getticks();        
             for ( int t=0 ; t<REPEAT ; t++ )
             {
@@ -133,11 +139,15 @@ int main(int argc, char* argv[])
                         B[i*n+j] = A[i*n+j];
             }
             t1 = getticks();        
+#ifdef HPM
             HPM_Stop(name1);
+#endif
             d1[n] = (t1-t0)/REPEAT;
 
             /* basic w/ stride-1 stores */
+#ifdef HPM
             HPM_Start(name2);
+#endif
             t0 = getticks();        
             for ( int t=0 ; t<REPEAT ; t++ )
             {
@@ -149,7 +159,9 @@ int main(int argc, char* argv[])
                         B[i*n+j] = A[j*n+i];
             }
             t1 = getticks();        
+#ifdef HPM
             HPM_Stop(name2);
+#endif
             d2[n] = (t1-t0)/REPEAT;
      
             /* verify */
@@ -158,7 +170,9 @@ int main(int argc, char* argv[])
                     assert( B[i*n+j] == A[j*n+i] );
 
             /* basic w/ stride-1 loads */
+#ifdef HPM
             HPM_Start(name3);
+#endif
             t0 = getticks();        
             for ( int t=0 ; t<REPEAT ; t++ )
             {
@@ -170,7 +184,9 @@ int main(int argc, char* argv[])
                         B[i*n+j] = A[j*n+i];
             }
             t1 = getticks();        
+#ifdef HPM
             HPM_Stop(name3);
+#endif
             d3[n] = (t1-t0)/REPEAT;
      
             /* verify */
@@ -179,21 +195,27 @@ int main(int argc, char* argv[])
                     assert( B[i*n+j] == A[j*n+i] );
 
             /* pragma unroll 4x4 + s1 loads */
+#ifdef HPM
             HPM_Start(name4);
+#endif
             t0 = getticks();        
             for ( int t=0 ; t<REPEAT ; t++ )
             {
 #ifdef OMP
 #pragma omp parallel for if(n>OMP_MIN_SIZE) private(i,j)
 #endif
-                #pragma unroll(4)
+                //#pragma unroll(4)
+                #pragma unroll_and_jam
                 for ( j=0 ; j<n ; j++ )
-                    #pragma unroll(4)
+                    //#pragma unroll(4)
+                    #pragma unroll_and_jam
                     for ( i=0 ; i<n ; i++ )
                         B[i*n+j] = A[j*n+i];
             }
             t1 = getticks();        
+#ifdef HPM
             HPM_Stop(name4);
+#endif
             d4[n] = (t1-t0)/REPEAT;
 
             /* verify */
@@ -202,7 +224,9 @@ int main(int argc, char* argv[])
                     assert( B[i*n+j] == A[j*n+i] );
 
             /* manual unroll 4x4 + s1 loads */
+#ifdef HPM
             HPM_Start(name5);
+#endif
             t0 = getticks();        
             for ( int t=0 ; t<REPEAT ; t++ )
             {
@@ -253,7 +277,9 @@ int main(int argc, char* argv[])
               }
             }
             t1 = getticks();        
+#ifdef HPM
             HPM_Stop(name5);
+#endif
             d5[n] = (t1-t0)/REPEAT;
 
             /* verify */
@@ -262,7 +288,9 @@ int main(int argc, char* argv[])
                     assert( B[i*n+j] == A[j*n+i] );
 
             /* manual unroll 4x4 and vectorize + s1 loads */
+#ifdef HPM
             HPM_Start(name6);
+#endif
             t0 = getticks();        
             for ( int t=0 ; t<REPEAT ; t++ )
             {
@@ -358,7 +386,9 @@ int main(int argc, char* argv[])
               }
             }
             t1 = getticks();        
+#ifdef HPM
             HPM_Stop(name6);
+#endif
             d6[n] = (t1-t0)/REPEAT;
 
             /* verify */
@@ -366,6 +396,7 @@ int main(int argc, char* argv[])
                 for ( i=0 ; i<n ; i++ )
                     assert( B[i*n+j] == A[j*n+i] );
 
+#ifdef DEBUG
             if ( n<11 )
             {
                 printf( "A: \n" );
@@ -382,7 +413,6 @@ int main(int argc, char* argv[])
                     printf( "\n" );
                 }
             }
-
             /* this is just for the neurotic person who cannot wait until the end for data */
             double c = 1.0 / d0[n];
             fprintf( stderr , "%4d %8llu %8llu (%5.1lf) %8llu (%5.1lf) %8llu (%5.1lf) %8llu (%5.1lf) %8llu (%5.1lf) %8llu (%5.1lf) \n" , 
@@ -390,12 +420,13 @@ int main(int argc, char* argv[])
  
             free(B);
             free(A);
+            fflush( stderr );
+#endif
         }
-        fflush( stderr );
 
         /* print analysis */
-        printf( "timing in cycles (ratio relative to memcpy) \n" );
-        printf( "%4s %8s %16s %16s %16s %16s %16s %16s \n" , "n" , name0 , name1 , name2 , name3 , name4 , name5 , name6);
+        printf( "# timing in cycles (ratio relative to memcpy) \n" );
+        printf( "%4s %8s %16s %16s %16s %16s %16s %16s \n" , "# n" , name0 , name1 , name2 , name3 , name4 , name5 , name6);
         for ( int n=min ; n<max ; n+=inc)
         {
             double c = 1.0 / d0[n];
@@ -403,7 +434,7 @@ int main(int argc, char* argv[])
                       n , d0[n] , d1[n] , c*d1[n] , d2[n] , c*d2[n] , d3[n] , c*d3[n] , d4[n] , c*d4[n] , d5[n] , c*d5[n] , d6[n] , c*d6[n] );
         }
 
-        printf( "...the end \n" );
+        printf( "# ...the end \n" );
         fflush( stdout );
 
         free(d6);
@@ -415,10 +446,12 @@ int main(int argc, char* argv[])
         free(d0);
     }
  
-#ifdef MPI
+#ifdef HPM
     HPM_Print_Flops();
     HPM_Print();
+#endif
 
+#ifdef MPI
     rc = MPI_Finalize();
     assert( rc == MPI_SUCCESS );
 #endif
