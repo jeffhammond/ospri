@@ -13,12 +13,19 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <string.h>
+#include <limits.h>
 #include <math.h>
 #include <time.h>
 #include <assert.h>
 #include <mpi.h>
 
 #define GAL_INLINE inline
+
+#define GAL_USE_ALIGNED_MEMORY 1
+#ifdef GAL_USE_ALIGNED_MEMORY
+#  define GAL_ALIGNMENT 128
+#endif
+
 #define GAL_DEFAULT_BLOCKSIZE 4096
 
 /**************************************************************************
@@ -81,12 +88,12 @@ typedef struct global_array_t
     MPI_Win         window;
     MPI_Comm        comm;
     MPI_Datatype    type;
-    int             type_size;
-    long            local_size;
+    int             type_size; /* needs to be int because of MPI_Type_size arguments */
+    MPI_Aint        local_size; /* needs to be MPI_Aint because of MPI_Win_create arguments */
     void *          local_buffer;
-    long            ndim;
-    long *          dimsize;
-    long *          blocksize;
+    int             ndim;
+    size_t *        dimsize;
+    size_t *        blocksize;
 }
 global_array_t;
 
@@ -121,6 +128,63 @@ int gal_debug_print = 0;
 //    return GAL_SUCCESS;
 //}
 
+void * GALU_Malloc(size_t size)
+{
+    int rc = 0;
+    void * ptr = NULL;
+
+#if GAL_USE_ALIGNED_MEMORY
+    rc = posix_memalign( &ptr, GAL_ALIGNMENT, size);
+#else
+    ptr = malloc(size);
+#endif
+
+    if ( ptr==NULL || rc!=0 )
+    {
+        int comm_rank = -1;
+
+        MPI_Comm_rank(GAL_COMM_WORLD,&comm_rank);
+
+        if (ptr==NULL)
+        {
+            fprintf( stderr, "%d: GALU_Malloc resulted in ptr==NULL \n",
+                     comm_rank);
+        }
+#if defined(EINVAL) && defined(ENOMEM)
+        if ( rc==EINVAL )
+        {
+            fprintf( stderr , "%d: GALU_Malloc returned EINVAL: "
+                     "The alignment argument was not a power of two, or was not a multiple of sizeof(void *). \n",
+                     comm_rank);
+        }
+        else if ( rc==ENOMEM )
+        {
+            fprintf( stderr , "%d: GALU_Malloc returned ENOMEM: "
+                     "There was insufficient memory to fulfill the allocation request. \n",
+                     comm_rank);
+        }
+        else
+#endif
+        if ( rc!=0 )
+        {
+            fprintf( stderr , "%d: GALU_Malloc posix_memalign returned a non-zero value. \n",
+                     comm_rank);
+        }
+
+        fflush(stderr);
+        exit(1);
+    }
+
+    return ptr;
+}
+
+void GALU_Free(void * ptr)
+{
+    free(ptr);
+
+    return;
+}
+
 /**************************************************************************
  * GA-Lite API
  **************************************************************************/
@@ -128,7 +192,7 @@ int gal_debug_print = 0;
 /* collective */
 GAL_Result GAL_Initialize()
 {
-    int mpi_status;
+    int mpi_status = MPI_SUCCESS;
     int mpi_initialized = 0;
 
     /* MPI has to be initialized for this implementation to work */
@@ -139,14 +203,23 @@ GAL_Result GAL_Initialize()
     mpi_status = MPI_Comm_dup(MPI_COMM_WORLD,&GAL_COMM_WORLD);
     assert(mpi_status==MPI_SUCCESS);
 
+#ifdef GAL_COLLECTIVES_HAVE_BARRIER_SEMANTICS
+    mpi_status = MPI_Barrier(GAL_COMM_WORLD);
+    assert(mpi_status==MPI_SUCCESS);
+#endif
+
     return GAL_SUCCESS;
 }
-
 
 /* collective */
 GAL_Result GAL_Terminate()
 {
-    int mpi_status;
+    int mpi_status = MPI_SUCCESS;
+
+#ifdef GAL_COLLECTIVES_HAVE_BARRIER_SEMANTICS
+    mpi_status = MPI_Barrier(GAL_COMM_WORLD);
+    assert(mpi_status==MPI_SUCCESS);
+#endif
 
     /* have to use our own communicator for collectives to be proper */
     mpi_status = MPI_Comm_free(&GAL_COMM_WORLD);
@@ -162,7 +235,7 @@ local
  ***************************************************************************/
 void GAL_Error(char * message, int code)
 {
-    int mpi_status;
+    int mpi_status = MPI_SUCCESS;
     int comm_rank;
 
     mpi_status = MPI_Comm_rank(GAL_COMM_WORLD,&comm_rank);
@@ -179,8 +252,8 @@ void GAL_Error(char * message, int code)
 /* local */
 GAL_INLINE int GAL_Nodeid()
 {
-    int mpi_status;
-    int comm_rank;
+    int mpi_status = MPI_SUCCESS;
+    int comm_rank = -1;
 
     mpi_status = MPI_Comm_rank(GAL_COMM_WORLD,&comm_rank);
     assert(mpi_status==MPI_SUCCESS);
@@ -191,8 +264,8 @@ GAL_INLINE int GAL_Nodeid()
 /* local */
 GAL_INLINE int GAL_Nnodes()
 {
-    int mpi_status;
-    int comm_size;
+    int mpi_status = MPI_SUCCESS;
+    int comm_size = 0;
 
     mpi_status = MPI_Comm_size(GAL_COMM_WORLD,&comm_size);
     assert(mpi_status==MPI_SUCCESS);
@@ -203,7 +276,7 @@ GAL_INLINE int GAL_Nnodes()
 /* collective */
 GAL_Result GAL_Sync()
 {
-    int mpi_status;
+    int mpi_status = MPI_SUCCESS;
 
     mpi_status = MPI_Barrier(GAL_COMM_WORLD);
     assert(mpi_status==MPI_SUCCESS);
@@ -238,17 +311,25 @@ This is a collective operation.
 
 /* collective */
 /* seems thread-safe, but need to verify */
-GAL_Result GAL_Create(MPI_Comm comm, MPI_Datatype type,
-                      long ndim, long dimsize[], long blocksize[],
+GAL_Result GAL_Create(MPI_Comm comm,
+                      MPI_Datatype type,
+                      int ndim,
+                      size_t dimsize[],
+                      size_t blocksize[],
                       global_array_t * ga)
 {
-    int mpi_status;
+    int mpi_status = MPI_SUCCESS;
     int comm_size = 0, comm_rank = -1;
     int type_size = 0;
-    long local_size = 0;
-    long * new_blocksize = NULL;
+    size_t local_size = 0;
+    size_t * new_blocksize = NULL;
 
     assert(ga->active == 0);
+
+#ifdef GAL_COLLECTIVES_HAVE_BARRIER_SEMANTICS
+    mpi_status = MPI_Barrier(comm);
+    assert(mpi_status==MPI_SUCCESS);
+#endif
 
     mpi_status = MPI_Comm_rank( comm, &comm_rank );
     assert(mpi_status==MPI_SUCCESS);
@@ -259,7 +340,7 @@ GAL_Result GAL_Create(MPI_Comm comm, MPI_Datatype type,
     mpi_status = MPI_Type_size( type, &type_size );
     assert(mpi_status==MPI_SUCCESS);
 
-    new_blocksize = (long*) malloc( ndim * sizeof(long) );
+    new_blocksize = (size_t*) GALU_Malloc( ndim * sizeof(size_t) );
     assert( new_blocksize!= NULL );
 
     /* TODO: improve this by determining an optimal blocksize */
@@ -270,8 +351,8 @@ GAL_Result GAL_Create(MPI_Comm comm, MPI_Datatype type,
     /* compute local size */
     if (ndim==1)
     {
-        long remainder = -1;
-        long num_blocks = -1;
+        size_t remainder = -1;
+        size_t num_blocks = -1;
 
         /* bookkeeping multiple blocks per node is a pain  *
          * TODO: make multiple blocks per node work?      */
@@ -300,12 +381,14 @@ GAL_Result GAL_Create(MPI_Comm comm, MPI_Datatype type,
     ga->type_size    = type_size;
     ga->ndim         = ndim;
     ga->local_size   = local_size;
-    ga->dimsize      = (long*) malloc( (ga->ndim) * sizeof(long) );
-    ga->blocksize    = (long*) malloc( (ga->ndim) * sizeof(long) );
-    memcpy( ga->dimsize,   dimsize,       (ga->ndim) * sizeof(long) );
-    memcpy( ga->blocksize, new_blocksize, (ga->ndim) * sizeof(long) );
 
-    free(new_blocksize);
+    ga->dimsize      = (size_t*) GALU_Malloc( ndim * sizeof(size_t) );
+    ga->blocksize    = (size_t*) GALU_Malloc( ndim * sizeof(size_t) );
+
+    memcpy( ga->dimsize,   dimsize,       ndim * sizeof(size_t) );
+    memcpy( ga->blocksize, new_blocksize, ndim * sizeof(size_t) );
+
+    GALU_Free(new_blocksize);
 
     if ( ga->local_size > 0 )
     {
@@ -322,57 +405,19 @@ GAL_Result GAL_Create(MPI_Comm comm, MPI_Datatype type,
 }
 
 /* collective, not thread-safe */
-GAL_Result GAL_Copy(global_array_t * ga, global_array_t * gb)
-{
-    int mpi_status;
-    int comm_rank = -1;
-    int name_len = 0;
-
-    assert(ga->active == 1);
-    assert(gb->active == 0);
-
-    mpi_status = MPI_Comm_rank( ga->comm, &comm_rank );
-    assert(mpi_status==MPI_SUCCESS);
-
-    gb->comm         = ga->comm;
-    gb->type         = ga->type;
-    gb->type_size    = ga->type_size;
-    gb->ndim         = ga->ndim;
-    gb->local_size   = ga->local_size;
-    memcpy( gb->dimsize,   ga->dimsize,   (ga->ndim)*sizeof(long) );
-    memcpy( gb->blocksize, ga->blocksize, (ga->ndim)*sizeof(long) );
-
-    if ( (gb->local_size) > 0 )
-    {
-        mpi_status =  MPI_Alloc_mem( (MPI_Aint) (gb->local_size) * (gb->type_size), MPI_INFO_NULL, &(gb->local_buffer) );
-        assert(mpi_status==MPI_SUCCESS);
-    }
-
-    mpi_status = MPI_Win_lock( MPI_LOCK_EXCLUSIVE, comm_rank, /* assert */ 0, ga->window );
-    assert(mpi_status==MPI_SUCCESS);
-
-    memcpy( &(gb->local_buffer), &(ga->local_buffer), (gb->local_size) * (gb->type_size) );
-
-    mpi_status = MPI_Win_unlock( comm_rank, ga->window );
-    assert(mpi_status==MPI_SUCCESS);
-
-    mpi_status = MPI_Win_create( gb->local_buffer, (MPI_Aint) (gb->local_size), gb->type_size, MPI_INFO_NULL, gb->comm, &(gb->window) );
-    assert(mpi_status==MPI_SUCCESS);
-
-    gb->active = 1;
-
-    return GAL_SUCCESS;
-}
-
-/* collective, not thread-safe */
 GAL_Result GAL_Destroy(global_array_t * ga)
 {
-    int mpi_status;
+    int mpi_status = MPI_SUCCESS;
 
     assert(ga->active == 1);
 
-    free(ga->dimsize);
-    free(ga->blocksize);
+#ifdef GAL_COLLECTIVES_HAVE_BARRIER_SEMANTICS
+    mpi_status = MPI_Barrier(ga->comm);
+    assert(mpi_status==MPI_SUCCESS);
+#endif
+
+    GALU_Free(ga->dimsize);
+    GALU_Free(ga->blocksize);
 
     mpi_status = MPI_Win_free( &(ga->window) );
     assert(mpi_status==MPI_SUCCESS);
@@ -384,7 +429,7 @@ GAL_Result GAL_Destroy(global_array_t * ga)
     }
 
     /* easiest way to annihilate the struct */
-    memset ( ga, '\0', sizeof(global_array_t) );
+    memset( ga, '\0', sizeof(global_array_t) );
 
     /* just in case memset doesn't set this properly */
     ga->active = 0;
@@ -392,13 +437,75 @@ GAL_Result GAL_Destroy(global_array_t * ga)
     return GAL_SUCCESS;
 }
 
-/* collective */
-GAL_Result GAL_Zero(global_array_t * ga)
+/* collective, not thread-safe */
+GAL_Result GAL_Copy(global_array_t * ga,
+                    global_array_t * gb)
 {
-    int mpi_status;
+    int mpi_status = MPI_SUCCESS;
     int comm_rank = -1;
 
     assert(ga->active == 1);
+    assert(gb->active == 0);
+
+#ifdef GAL_COLLECTIVES_HAVE_BARRIER_SEMANTICS
+    mpi_status = MPI_Barrier(ga->comm);
+    assert(mpi_status==MPI_SUCCESS);
+#endif
+
+#if 0
+    gb->comm         = ga->comm;
+    gb->type         = ga->type;
+    gb->type_size    = ga->type_size;
+    gb->ndim         = ga->ndim;
+    gb->local_size   = ga->local_size;
+    memcpy( gb->dimsize,   ga->dimsize,   (ga->ndim)*sizeof(size_t) );
+    memcpy( gb->blocksize, ga->blocksize, (ga->ndim)*sizeof(size_t) );
+#else
+    memcpy( gb, ga, sizeof(global_array_t) );
+#endif
+
+    if ( (gb->local_size) > 0 )
+    {
+        mpi_status =  MPI_Alloc_mem( (MPI_Aint) (gb->local_size) * (gb->type_size), MPI_INFO_NULL, &(gb->local_buffer) );
+        assert(mpi_status==MPI_SUCCESS);
+    }
+
+    mpi_status = MPI_Comm_rank( gb->comm, &comm_rank );
+    assert(mpi_status==MPI_SUCCESS);
+
+    mpi_status = MPI_Win_lock( MPI_LOCK_EXCLUSIVE, comm_rank, /* assert */ 0, ga->window );
+    assert(mpi_status==MPI_SUCCESS);
+
+    memcpy( &(gb->local_buffer), &(ga->local_buffer), (gb->local_size) * (gb->type_size) );
+
+    mpi_status = MPI_Win_unlock( comm_rank, ga->window );
+    assert(mpi_status==MPI_SUCCESS);
+
+    mpi_status = MPI_Win_create( gb->local_buffer,
+                                 (MPI_Aint) (gb->local_size),
+                                 gb->type_size,
+                                 MPI_INFO_NULL,
+                                 gb->comm,
+                                 &(gb->window) );
+    assert(mpi_status==MPI_SUCCESS);
+
+    gb->active = 1;
+
+    return GAL_SUCCESS;
+}
+
+/* collective */
+GAL_Result GAL_Zero(global_array_t * ga)
+{
+    int mpi_status = MPI_SUCCESS;
+    int comm_rank = -1;
+
+    assert(ga->active == 1);
+
+#ifdef GAL_COLLECTIVES_HAVE_BARRIER_SEMANTICS
+    mpi_status = MPI_Barrier(ga->comm);
+    assert(mpi_status==MPI_SUCCESS);
+#endif
 
     mpi_status = MPI_Comm_rank( ga->comm, &comm_rank );
     assert(mpi_status==MPI_SUCCESS);
@@ -429,10 +536,15 @@ GAL_Result GAL_Zero(global_array_t * ga)
 /* collective */
 GAL_Result GAL_Fill(global_array_t * ga, void * value)
 {
-    int mpi_status;
+    int mpi_status = MPI_SUCCESS;
     int comm_rank = -1;
 
     assert(ga->active == 1);
+
+#ifdef GAL_COLLECTIVES_HAVE_BARRIER_SEMANTICS
+    mpi_status = MPI_Barrier(ga->comm);
+    assert(mpi_status==MPI_SUCCESS);
+#endif
 
     mpi_status = MPI_Comm_rank( ga->comm, &comm_rank );
     assert(mpi_status==MPI_SUCCESS);
@@ -463,10 +575,15 @@ GAL_Result GAL_Fill(global_array_t * ga, void * value)
 /* collective */
 GAL_Result GAL_Scale(global_array_t * ga, void *value)
 {
-    int mpi_status;
+    int mpi_status = MPI_SUCCESS;
     int comm_rank = -1;
 
     assert(ga->active == 1);
+
+#ifdef GAL_COLLECTIVES_HAVE_BARRIER_SEMANTICS
+    mpi_status = MPI_Barrier(ga->comm);
+    assert(mpi_status==MPI_SUCCESS);
+#endif
 
     mpi_status = MPI_Comm_rank( ga->comm, &comm_rank );
     assert(mpi_status==MPI_SUCCESS);
@@ -500,26 +617,34 @@ double/complex/int      *alpha       - scale factor        [input]
 double/complex/int      *beta        - scale factor        [input]
 The arrays (which must be the same shape and identically aligned) are added together element-wise
      c = alpha * a  +  beta * b.
+
 This is a collective operation.
  ***************************************************************************/
 GAL_Result GAL_Add(void * alpha, global_array_t * ga, void * beta, global_array_t * gb, global_array_t * gc)
 {
-    int mpi_status;
+    int mpi_status = MPI_SUCCESS;
     int comm_rank = -1;
     int comm_result = -1;
     int unequal = 0;
-
-    mpi_status = MPI_Comm_rank( ga->comm, &comm_rank );
-    assert(mpi_status==MPI_SUCCESS);
 
     assert(ga->active == 1);
     assert(gb->active == 1);
     assert(gc->active == 1);
 
+    /* here we assume this is at least collective over gc->comm,
+     * in the event non-congruent use is supported               */
+    mpi_status = MPI_Comm_rank( gc->comm, &comm_rank );
+    assert(mpi_status==MPI_SUCCESS);
+
+#ifdef GAL_COLLECTIVES_HAVE_BARRIER_SEMANTICS
+    mpi_status = MPI_Barrier(gc->comm);
+    assert(mpi_status==MPI_SUCCESS);
+#endif
+
     MPI_Comm_compare( ga->comm, gb->comm, &comm_result );
-    assert( comm_result==MPI_IDENT || comm_result==MPI_CONGRUENT );
+    unequal += ( comm_result==MPI_IDENT || comm_result==MPI_CONGRUENT );
     MPI_Comm_compare( gb->comm, gc->comm, &comm_result );
-    assert( comm_result==MPI_IDENT || comm_result==MPI_CONGRUENT );
+    unequal += ( comm_result==MPI_IDENT || comm_result==MPI_CONGRUENT );
 
     unequal += ( ga->type != gb->type );
     unequal += ( gb->type != gc->type );
@@ -563,7 +688,8 @@ GAL_Result GAL_Add(void * alpha, global_array_t * ga, void * beta, global_array_
         /* TODO generalize implementation to fall back to crappy communication-based algorithm when unequal */
         if (comm_rank == 0)
             fprintf(stderr, "GAL_Add: not implemented when arrays lack identical layout \n");
-        assert(0);
+
+        return GAL_UNIMPLEMENTED;
     }
 
     return GAL_SUCCESS;
@@ -576,16 +702,25 @@ lo[ndim]   - array of starting indices for global array section                 
 hi[ndim]   - array of ending indices for global array section                     [input]
 buf        - pointer to the local buffer array where the data goes                [output]
 ld[ndim-1] - array specifying leading dimensions/strides/extents for buffer array [input]
-Copies data from global array section to the local array buffer. The local array is assumed to be have the same number of dimensions as the global array. Any detected inconsitencies/errors in the input arguments are fatal.
+
+Copies data from global array section to the local array buffer.
+The local array is assumed to be have the same number of dimensions as the global array.
+Any detected inconsitencies/errors in the input arguments are fatal.
+
 Example:
-For ga_get operation transfering data from the [10:14,0:4] section of 2-dimensional 15x10 global array into local buffer 5x10 array we have:
+For ga_get operation transfering data from the [10:14,0:4] section of
+2-dimensional 15x10 global array into local buffer 5x10 array we have:
 lo={10,0}, hi={14,4}, ld={10}
  ***************************************************************************/
-GAL_Result GAL_Get(global_array_t * ga, long lo[], long hi[], long ld[], void * out_buf)
+GAL_Result GAL_Get(global_array_t * ga, long lo[], long hi[], long ld[], void * buffer )
 {
-    int mpi_status;
-
 #ifdef GAL_GET_DONE
+    int mpi_status = MPI_SUCCESS;
+
+    /* TODO implement lookup for which ranks own data */
+
+    /* TODO implement lookup for offset of data within those ranks */
+
     if ((ga->ndim)==1)
     {
         long origin_count = hi[0] - lo[0];
@@ -593,7 +728,7 @@ GAL_Result GAL_Get(global_array_t * ga, long lo[], long hi[], long ld[], void * 
 
         while (origin_count > 0)
         {
-            mpi_status = MPI_Get( &out_buf,
+            mpi_status = MPI_Get( &buffer,
                                   origin_count,
                                   ga->type,
                                   target_rank,
@@ -620,8 +755,10 @@ lo[ndim]   - array of starting indices for global array section                 
 hi[ndim]   - array of ending indices for global array section                     [input]
 buf        - pointer to the local buffer array where the data is                  [input]
 ld[ndim-1] - array specifying leading dimensions/strides/extents for buffer array [input]
-Copies data from local array buffer to the global array section . The local array is assumed to be have the same number of dimensions as the global array.
-Any detected inconsitencies/errors in input arguments are fatal.
+
+Copies data from local array buffer to the global array section.
+The local array is assumed to be have the same number of dimensions as the global array.
+Any detected inconsistencies/errors in input arguments are fatal.
  ***************************************************************************/
 GAL_Result GAL_Put(global_array_t * ga, int lo[], int hi[], void* buf, int ld[])
 {
@@ -636,7 +773,9 @@ hi[ndim]   - array of ending indices for array section                          
 buf        - pointer to the local buffer array                                    [input]
 ld[ndim-1] - array specifying leading dimensions/strides/extents for buffer array [input]
 double/DoubleComplex/long *alpha     scale factor                                 [input]
-Combines data from local array buffer with data in the global array section. The local array is assumed to be have the same number of dimensions as the global array.
+
+Combines data from local array buffer with data in the global array section.
+The local array is assumed to be have the same number of dimensions as the global array.
 global array section (lo[],hi[]) += *alpha * buffer
  ***************************************************************************/
 GAL_Result GAL_Acc(global_array_t * ga, int lo[], int hi[], void* buf, int ld[], void * alpha)
@@ -647,7 +786,8 @@ GAL_Result GAL_Acc(global_array_t * ga, int lo[], int hi[], void* buf, int ld[],
 /**************************************************************************
 g_a              array handle         [input]
 subscript[ndim]  element subscript    [output]
-Return in owner the GA compute process id that 'owns' the data. If any element of subscript[] is out of bounds "-1" is returned.
+Return in owner the GA compute process id that 'owns' the data.
+If any element of subscript[] is out of bounds "-1" is returned.
 This operation is local.
  ***************************************************************************/
 GAL_Result GAL_Locate(global_array_t * ga, int subscript[], int * rank)
@@ -662,11 +802,16 @@ GAL_Result GAL_Locate(global_array_t * ga, int subscript[], int * rank)
       hi[ndim]      - array of ending indices for array section         [input]
       map[][2*ndim] - array with mapping information                    [output]
       procs[nproc]  - list of processes that own a part of array section[output]
-Return the list of the GA processes id that 'own' the data. Parts of the specified patch might be actually 'owned' by several processes. If lo/hi are out of bounds "0" is returned, otherwise return value is equal to the number of processes that hold the data .
+
+Return the list of the GA processes id that 'own' the data.
+Parts of the specified patch might be actually 'owned' by several processes.
+If lo/hi are out of bounds "0" is returned, otherwise
+return value is equal to the number of processes that hold the data .
 
         map[i][0:ndim-1]         - lo[i]
         map[i][ndim:2*ndim-1]    - hi[i]
         procs[i]                 - processor id that owns data in patch lo[i]:hi[i]
+
 This operation is local.
  ***************************************************************************/
 GAL_Result GAL_Locate_region(global_array_t * ga, int lo[], int hi[], int map[], int procs[])
@@ -680,9 +825,13 @@ type - data type                     [output]
 ndim - number of dimensions          [output]
 dims - array of dimensions           [output]
  ***************************************************************************/
-GAL_Result GAL_Inquire(global_array_t * ga, int *type, int *ndim, int dims[])
+GAL_Result GAL_Inquire(global_array_t * ga, MPI_Datatype * type, int * ndim, size_t dims[])
 {
-    return GAL_UNIMPLEMENTED;
+    (*type) = ga->type;
+    (*ndim) = ga->ndim;
+    memcpy( dims,   ga->dimsize, (*ndim)*sizeof(size_t) );
+
+    return GAL_SUCCESS;
 }
 
 /**************************************************************************
@@ -691,10 +840,12 @@ iproc      - process number                              [input]
 ndim       - number of dimensions of the global array
 lo[ndim]   - array of starting indices for array section [input]
 hi[ndim]   - array of ending indices for array section   [input]
-If no array elements are owned by process iproc, the range is returned as lo[ ]=0 and hi[ ]= -1 for all dimensions.
+If no array elements are owned by process iproc,
+the range is returned as lo[ ]=0 and hi[ ]= -1 for all dimensions.
+
 This operation is local.
  ***************************************************************************/
-GAL_Result GAL_Distribution(global_array_t * ga, int iproc, int lo[], int hi[])
+GAL_Result GAL_Distribution(global_array_t * ga, int proc, int lo[], int hi[])
 {
     return GAL_UNIMPLEMENTED;
 }
