@@ -7,7 +7,7 @@
 #include <location.h>
 #include <personality.h>
 
-struct BGQ_Torus_t
+typedef struct
 {
     int32_t Coords[6];    
     int32_t PartitionSize[6];    
@@ -15,4 +15,5 @@ struct BGQ_Torus_t
     int32_t JobSize[6];    
     int32_t JobTorus[6];    
 } 
-BGQ_Torus_t
+BGQ_Torus_t;
+
