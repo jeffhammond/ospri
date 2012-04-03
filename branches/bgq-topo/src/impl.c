@@ -1,44 +1,9 @@
-#include <stdio.h>
-#include <stdint.h>
-#include <unistd.h>
-#include <mpi.h>
+#include "torus.h"
 
-#ifdef USING_PROPER_INCLUDE_PATHS
-
-/***************************************************************
- * Your Makefile needs something like this:                    *
- * INCLUDE  = -I/bgsys/drivers/ppcfloor                        *
- * INCLUDE += -I/bgsys/drivers/ppcfloor/firmware/include       *
- * INCLUDE += -I/bgsys/drivers/ppcfloor/spi/include/kernel     *
- * INCLUDE += -I/bgsys/drivers/ppcfloor/spi/include/kernel/cnk *
- ***************************************************************/
-
-#include <process.h>
-#include <location.h>
-#include <personality.h>
-
-#else
-
-#include </bgsys/drivers/ppcfloor/spi/include/kernel/process.h>
-#include </bgsys/drivers/ppcfloor/spi/include/kernel/location.h>
-#include </bgsys/drivers/ppcfloor/firmware/include/personality.h>
-
-#endif
-
-int main(int argc, char* argv[])
+void BGQTopo_Init(void)
 {
-    int rank, size;
-
-    MPI_Init(&argc, &argv);
-    MPI_Comm_rank(MPI_COMM_WORLD, &rank);
-    MPI_Comm_size(MPI_COMM_WORLD, &size);
-
-    if (rank==0) printf("0: world size = %d \n", size);
-    fflush(stdout);
-    MPI_Barrier(MPI_COMM_WORLD);
-    sleep(1);
-
     uint32_t rc;
+
     Personality_t pers;
     BG_JobCoords_t jobcoords;
 

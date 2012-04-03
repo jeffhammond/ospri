@@ -11,10 +11,13 @@ LDFLAGS   = -g -O2 -Wall -std=gnu99
 
 all: libbgqtopo.a
 
-libbgqtopo.a: torus.o core.o fortran.o
+libbgqtopo.a: impl.o q5d.o
 
-%.o: %.c %.h
-	$(CC) $(CFLAGS) -c $< -o $@
+impl.o: impl.c impl.h
+	$(CC) $(CFLAGS) -c impl.c -o impl.o
+
+q5d.o: q5d.c q5d.h impl.h
+	$(CC) $(CFLAGS) -c q5d.c -o q5d.o
 
 clean:
 	-rm -f *.o
