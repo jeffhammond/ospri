@@ -50,6 +50,8 @@
 #ifndef A1D_COMM_H
 #define A1D_COMM_H
 
+#include <mpi.h>
+
 typedef enum
 {
     A1D_DOUBLE,
@@ -83,6 +85,7 @@ int A1DI_Acc_Initialize();
 
 int A1D_Flush(int target);
 int A1D_Flush_all(void);
+int A1D_Flush_comm(MPI_Comm comm);
 
 int A1D_Reset(a1d_nbhandle_t * nbhandle);
 int A1D_Test(a1d_nbhandle_t * nbhandle, int * status);

@@ -282,10 +282,11 @@ int A1D_Flush_all(void)
     int temp[DCMF_FLUSH_COUNT_MAX+1];
 
 #ifdef DEBUG_FUNCTION_ENTER_EXIT
-    fprintf(stderr,"entering A1D_Flush(int target) \n");
+    fprintf(stderr,"entering A1D_Flush_all(void) \n");
 #endif
 
 #if defined(FLUSH_IMPLEMENTED)
+
     for ( int i=0 ; i<mpi_size ; i++)
     {
         if ( A1D_Put_flush_list[i] > 0 )
@@ -298,20 +299,80 @@ int A1D_Flush_all(void)
             {
                 /* wait and advance */
             }
+
+            A1D_Put_flush_list[i] = 0;
         }
     }
 #endif
 
-#ifdef FLUSH_IMPLEMENTED
-    for ( int i=0 ; i<mpi_size ; i++) A1D_Put_flush_list[i] = 0;
-#endif
-
 #ifdef DEBUG_FUNCTION_ENTER_EXIT
-    fprintf(stderr,"exiting A1D_Flush(int target) \n");
+    fprintf(stderr,"exiting A1D_Flush_all(void) \n");
 #endif
 
     return(0);
 }
+
+int A1D_Flush_comm(MPI_Comm comm)
+{
+    int count = 0;
+    int temp[DCMF_FLUSH_COUNT_MAX+1];
+    int comm_size = -1;
+    int * ranks_in_comm = NULL;
+    int * ranks_in_world = NULL;
+    MPI_Group group;
+
+#ifdef DEBUG_FUNCTION_ENTER_EXIT
+    fprintf(stderr,"entering A1D_Flush_comm(MPI_Comm comm) \n");
+#endif
+
+    MPI_Comm_size(comm, &comm_size);
+
+    ranks_in_comm = malloc( comm_size * sizeof(int) );
+    assert(ranks_in_comm != NULL);
+
+    ranks_in_world = malloc( comm_size * sizeof(int) );
+    assert(ranks_in_world != NULL);
+
+    MPI_Comm_group(comm, &group);
+
+    for ( int i=0 ; i<comm_size ; i++)
+        ranks_in_comm[i] = i;
+
+    MPI_Group_translate_ranks(group, comm_size, ranks_in_comm, A1D_GROUP_WORLD, ranks_in_world);
+
+#if defined(FLUSH_IMPLEMENTED)
+    for ( int i=0 ; i<comm_size ; i++)
+    {
+        int j = ranks_in_world[i];
+
+        if ( A1D_Put_flush_list[j] > 0 )
+        {
+            /* inject puts */
+
+            count++;
+
+            if ( count > DCMF_FLUSH_COUNT_MAX )
+            {
+                /* wait and advance */
+            }
+
+            A1D_Put_flush_list[j] = 0;
+        }
+    }
+#endif
+
+    MPI_Group_free(&group);
+
+    free(ranks_in_world);
+    free(ranks_in_comm);
+
+#ifdef DEBUG_FUNCTION_ENTER_EXIT
+    fprintf(stderr,"exiting A1D_Flush_comm(MPI_Comm comm) \n");
+#endif
+
+    return(0);
+}
+
 
 /*********************************************************************/
 

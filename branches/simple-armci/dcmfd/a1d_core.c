@@ -56,6 +56,8 @@ int mpi_rank;
 int mpi_size;
 
 MPI_Comm A1D_COMM_WORLD;
+MPI_Group A1D_GROUP_WORLD;
+
 void ** A1D_Baseptr_list;
 
 #ifdef __bgp__
@@ -111,19 +113,22 @@ int A1D_Initialize(void)
 
     /* have to use our own communicator for collectives to be proper */
     mpi_status = MPI_Comm_dup(MPI_COMM_WORLD,&A1D_COMM_WORLD);
-    assert(mpi_status==0);
+    assert(mpi_status==MPI_SUCCESS);
+
+    mpi_status = MPI_Comm_group(A1D_COMM_WORLD, &A1D_GROUP_WORLD);
+    assert(mpi_status==MPI_SUCCESS);
 
     /* get my MPI rank */
     mpi_status = MPI_Comm_rank(A1D_COMM_WORLD,&mpi_rank);
-    assert(mpi_status==0);
+    assert(mpi_status==MPI_SUCCESS);
 
     /* get MPI world size */
     mpi_status = MPI_Comm_size(A1D_COMM_WORLD,&mpi_size);
-    assert(mpi_status==0);
+    assert(mpi_status==MPI_SUCCESS);
 
     /* barrier before DCMF_Messager_configure to make sure MPI is ready everywhere */
     mpi_status = MPI_Barrier(A1D_COMM_WORLD);
-    assert(mpi_status==0);
+    assert(mpi_status==MPI_SUCCESS);
 
     /***************************************************
      *
@@ -153,7 +158,7 @@ int A1D_Initialize(void)
 
     /* barrier after DCMF_Messager_configure to make sure everyone has the new DCMF config */
     mpi_status = MPI_Barrier(A1D_COMM_WORLD);
-    assert(mpi_status==0);
+    assert(mpi_status==MPI_SUCCESS);
 
     /***************************************************
      *
@@ -183,7 +188,7 @@ int A1D_Initialize(void)
     mpi_status = MPI_Allgather(&local_memregion,sizeof(DCMF_Memregion_t),MPI_BYTE,
                                A1D_Memregion_list,sizeof(DCMF_Memregion_t),MPI_BYTE,
                                A1D_COMM_WORLD);
-    assert(mpi_status==0);
+    assert(mpi_status==MPI_SUCCESS);
 
     DCMF_CriticalSection_enter(0);
 
@@ -260,7 +265,7 @@ int A1D_Finalize()
 
     /* barrier so that no one is able to access remote memregions after they are destroyed */
     mpi_status = MPI_Barrier(A1D_COMM_WORLD);
-    assert(mpi_status==0);
+    assert(mpi_status==MPI_SUCCESS);
 
 #ifdef __bgp__
     DCMF_CriticalSection_enter(0);
@@ -290,7 +295,7 @@ int A1D_Finalize()
 
     /* free the A1D communicator */
     mpi_status = MPI_Comm_free(&A1D_COMM_WORLD);
-    assert(mpi_status==0);
+    assert(mpi_status==MPI_SUCCESS);
 
 #ifdef DEBUG_FUNCTION_ENTER_EXIT
     fprintf(stderr,"exiting A1D_Finalize() \n");
@@ -378,7 +383,7 @@ int A1D_Allocate_comm(MPI_Comm comm, void * ptrs[], int bytes)
     mpi_status = MPI_Allgather(&tmp_ptr, sizeof(void *), MPI_BYTE,
                                ptrs,     sizeof(void *), MPI_BYTE,
                                comm);
-    assert(mpi_status==0);
+    assert(mpi_status==MPI_SUCCESS);
 
 #ifdef DEBUG_FUNCTION_ENTER_EXIT
     fprintf(stderr,"exiting A1D_Allocate_comm(MPI_Comm comm, void * ptrs[], int bytes) \n");
@@ -397,7 +402,7 @@ void A1D_Free_comm(MPI_Comm comm, void * ptr)
 
     /* barrier so that no one tries to access memory which is no longer allocated */
     mpi_status = MPI_Barrier(comm);
-    assert(mpi_status==0);
+    assert(mpi_status==MPI_SUCCESS);
 
     A1D_Free_local(ptr);
 
@@ -428,17 +433,17 @@ int A1D_Create_window(const MPI_Comm comm, int bytes, A1D_Window_t* window)
 
     /* save (dup) the communicator into the window object */
     mpi_status = MPI_Comm_dup(comm,&newcomm);
-    assert(mpi_status==0);
+    assert(mpi_status==MPI_SUCCESS);
 
     window->comm = newcomm;
 
     /* need array sizeof(comm) for now */
     mpi_status = MPI_Comm_size(window->comm,&mpi_size);
-    assert(mpi_status==0);
+    assert(mpi_status==MPI_SUCCESS);
 
     /* my rank in this communicator */
     mpi_status = MPI_Comm_rank(window->comm,&mpi_rank);
-    assert(mpi_status==0);
+    assert(mpi_status==MPI_SUCCESS);
 
     /* allocate list of base pointers for this window */
     window->addr_list = malloc( mpi_size * sizeof(void *) );
@@ -451,7 +456,7 @@ int A1D_Create_window(const MPI_Comm comm, int bytes, A1D_Window_t* window)
     mpi_status = MPI_Allgather(&tmp_ptr,          sizeof(void *), MPI_BYTE,
                                window->addr_list, sizeof(void *), MPI_BYTE,
                                window->comm);
-    assert(mpi_status==0);
+    assert(mpi_status==MPI_SUCCESS);
 
 #ifndef NO_WINDOW_BOUNDS_CHECKING
     /* allocate list of sizes */
@@ -462,7 +467,7 @@ int A1D_Create_window(const MPI_Comm comm, int bytes, A1D_Window_t* window)
     mpi_status = MPI_Allgather(&bytes,            sizeof(int), MPI_BYTE,
                                window->size_list, sizeof(int), MPI_BYTE,
                                window->comm);
-    assert(mpi_status==0);
+    assert(mpi_status==MPI_SUCCESS);
 
 #endif
 
@@ -484,11 +489,11 @@ int A1D_Destroy_window(A1D_Window_t* window)
 
     /* barrier so that no one is able to access remote window memory after it is free */
     mpi_status = MPI_Barrier(window->comm);
-    assert(mpi_status==0);
+    assert(mpi_status==MPI_SUCCESS);
 
     /* my rank in this communicator */
     mpi_status = MPI_Comm_rank(window->comm,&mpi_rank);
-    assert(mpi_status==0);
+    assert(mpi_status==MPI_SUCCESS);
 
     /* free the local memory */
     A1D_Free_local(window->addr_list[mpi_rank]);
@@ -503,7 +508,7 @@ int A1D_Destroy_window(A1D_Window_t* window)
 
     /* free the communicator */
     mpi_status = MPI_Comm_free(&(window->comm));
-    assert(mpi_status==0);
+    assert(mpi_status==MPI_SUCCESS);
 
 #ifdef DEBUG_FUNCTION_ENTER_EXIT
     fprintf(stderr,"exiting A1D_Destroy_window(A1D_Window_t* window) \n");

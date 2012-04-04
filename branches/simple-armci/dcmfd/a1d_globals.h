@@ -63,6 +63,7 @@ typedef struct
 A1D_Window_t;
 
 extern MPI_Comm A1D_COMM_WORLD;
+extern MPI_Group A1D_GROUP_WORLD;
 
 extern int mpi_rank;
 extern int mpi_size;

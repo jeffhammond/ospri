@@ -124,7 +124,6 @@ void PARMCI_Memget(size_t bytes, armci_meminfo_t* meminfo, int memflg)
 
 void PARMCI_Barrier(void)
 {
-    /* TODO: implement and use A1D_Flush_comm(MPI_Comm comm) instead */
     A1D_Flush_all();
     MPI_Barrier(MPI_COMM_WORLD);
     return;
@@ -137,23 +136,37 @@ void PARMCI_Fence(int proc)
 }
 void PARMCI_AllFence(void)
 {
-    /* TODO: implement and use A1D_Flush_comm(MPI_Comm comm) instead */
     A1D_Flush_all();
     return;
 }
 
 void PARMCIX_Barrier_comm(MPI_Comm comm)
 {
-    /* TODO: implement and use A1D_Flush_comm(MPI_Comm comm) instead */
-    A1D_Flush_all();
+    int comm_result;
+
+    MPI_Comm_compare( MPI_COMM_WORLD, comm, &comm_result );
+
+    if ( comm_result==MPI_IDENT || comm_result==MPI_CONGRUENT )
+        A1D_Flush_all();
+    else
+        A1D_Flush_comm(comm);
+
     MPI_Barrier(comm);
+
     return;
 }
 
 void PARMCIX_AllFence_comm(MPI_Comm comm)
 {
-    /* TODO: implement and use A1D_Flush_comm(MPI_Comm comm) instead */
-    A1D_Flush_all();
+    int comm_result;
+
+    MPI_Comm_compare( MPI_COMM_WORLD, comm, &comm_result );
+
+    if ( comm_result==MPI_IDENT || comm_result==MPI_CONGRUENT )
+        A1D_Flush_all();
+    else
+        A1D_Flush_comm(comm);
+
     return;
 }
 
