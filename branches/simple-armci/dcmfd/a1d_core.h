@@ -55,11 +55,11 @@
 int A1D_Rank(void);
 int A1D_Size(void);
 
-int A1D_Initialize(MPI_Comm * comm);
-int A1D_Finalize();
+int A1D_Initialize(void);
+int A1D_Finalize(void);
 
-int A1D_Allocate_shared(MPI_Comm comm, void * ptrs[], int bytes);
-void A1D_Free_shared(MPI_Comm comm, void * ptr);
+int A1D_Allocate_comm(MPI_Comm comm, void * ptrs[], int bytes);
+void A1D_Free_comm(MPI_Comm comm, void * ptr);
 
 void * A1D_Allocate_local(int bytes);
 void A1D_Free_local(void * ptr);

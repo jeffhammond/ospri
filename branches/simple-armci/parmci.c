@@ -53,13 +53,13 @@
 
 int PARMCI_Init(void)
 {
-    return A1D_Initialize(&ARMCI_COMM_WORLD);
+    return A1D_Initialize();
 }
 
 int PARMCI_Init_args(int *argc, char ***argv)
 {
     //fprintf(stderr,"PARMCI_Init_args: argc/argv may not be setup properly by device \n");
-    return A1D_Initialize(&ARMCI_COMM_WORLD);
+    return A1D_Initialize();
 }
 
 void PARMCI_Finalize(void)
@@ -83,24 +83,24 @@ int PARMCI_Free_local(void * ptr)
 
 int PARMCI_Malloc(void * ptr_arr[], int bytes)
 {
-    return A1D_Allocate_shared(ARMCI_COMM_WORLD, ptr_arr, bytes);
+    return A1D_Allocate_comm(MPI_COMM_WORLD, ptr_arr, bytes);
 }
 
 int PARMCIX_Malloc_comm(MPI_Comm comm, void * ptr_arr[], int bytes)
 {
-    return A1D_Allocate_shared(comm, ptr_arr, bytes);
+    return A1D_Allocate_comm(comm, ptr_arr, bytes);
 }
 
 
 int PARMCI_Free(void * ptr)
 {
-    A1D_Free_shared(ARMCI_COMM_WORLD, ptr);
+    A1D_Free_comm(MPI_COMM_WORLD, ptr);
     return(0);
 }
 
 int PARMCIX_Free_comm(MPI_Comm comm, void * ptr)
 {
-    A1D_Free_shared(comm, ptr);
+    A1D_Free_comm(comm, ptr);
     return(0);
 }
 
@@ -126,7 +126,7 @@ void PARMCI_Barrier(void)
 {
     /* TODO: implement and use A1D_Flush_comm(MPI_Comm comm) instead */
     A1D_Flush_all();
-    MPI_Barrier(ARMCI_COMM_WORLD);
+    MPI_Barrier(MPI_COMM_WORLD);
     return;
 }
 
@@ -203,12 +203,12 @@ int32_t PARMCI_Rmw(int optype, int32_t * local, int32_t * remote, int32_t incr, 
 int64_t PARMCI_Rmw(int optype, int64_t * local, int64_t * remote, int64_t incr, int proc)
 #endif
 {
-    long temp;
-
 #if defined(USE_32B_ATOMICS)
     int32_t copy;
 #elif defined(USE_64B_ATOMICS)
     int64_t copy;
+#else
+#warning no atomics available
 #endif
 
     switch (optype)
@@ -308,6 +308,7 @@ int PARMCI_Acc(armci_acc_t type, void *scale, void *src, void* dst, int bytes, i
             return A1D_AccC(proc, bytes, src, dst, A1D_INT64, scale);
             break;
     }
+    return -1;
 }
 
 int PARMCI_GetS(void *src_ptr, int *src_stride_arr,

@@ -79,7 +79,7 @@ int A1D_Size()
     return mpi_size;
 }
 
-int A1D_Initialize(MPI_Comm * comm_out)
+int A1D_Initialize(void)
 {
     int mpi_initialized, mpi_provided;
     int mpi_status;
@@ -112,8 +112,6 @@ int A1D_Initialize(MPI_Comm * comm_out)
     /* have to use our own communicator for collectives to be proper */
     mpi_status = MPI_Comm_dup(MPI_COMM_WORLD,&A1D_COMM_WORLD);
     assert(mpi_status==0);
-
-    comm_out = &A1D_COMM_WORLD;
 
     /* get my MPI rank */
     mpi_status = MPI_Comm_rank(A1D_COMM_WORLD,&mpi_rank);
@@ -366,13 +364,13 @@ void A1D_Free_local(void * ptr)
  *
  ***************************************************/
 
-int A1D_Allocate_shared(MPI_Comm comm, void * ptrs[], int bytes)
+int A1D_Allocate_comm(MPI_Comm comm, void * ptrs[], int bytes)
 {
     int mpi_status;
     void * tmp_ptr;
 
 #ifdef DEBUG_FUNCTION_ENTER_EXIT
-    fprintf(stderr,"entering A1D_Allocate_shared_comm(MPI_Comm, comm, void * ptrs[], int bytes) \n");
+    fprintf(stderr,"entering A1D_Allocate_comm(MPI_Comm comm, void * ptrs[], int bytes) \n");
 #endif
 
     tmp_ptr = A1D_Allocate_local(bytes);
@@ -383,18 +381,18 @@ int A1D_Allocate_shared(MPI_Comm comm, void * ptrs[], int bytes)
     assert(mpi_status==0);
 
 #ifdef DEBUG_FUNCTION_ENTER_EXIT
-    fprintf(stderr,"exiting A1D_Allocate_shared_comm(MPI_Comm, comm, void * ptrs[], int bytes) \n");
+    fprintf(stderr,"exiting A1D_Allocate_comm(MPI_Comm comm, void * ptrs[], int bytes) \n");
 #endif
 
     return(0);
 }
 
-void A1D_Free_shared(MPI_Comm comm, void * ptr)
+void A1D_Free_comm(MPI_Comm comm, void * ptr)
 {
     int mpi_status;
 
 #ifdef DEBUG_FUNCTION_ENTER_EXIT
-    fprintf(stderr,"entering A1D_Free_shared_comm(MPI_Comm comm, void * ptr) \n");
+    fprintf(stderr,"entering A1D_Free_comm(MPI_Comm comm, void * ptr) \n");
 #endif
 
     /* barrier so that no one tries to access memory which is no longer allocated */
@@ -404,7 +402,7 @@ void A1D_Free_shared(MPI_Comm comm, void * ptr)
     A1D_Free_local(ptr);
 
 #ifdef DEBUG_FUNCTION_ENTER_EXIT
-    fprintf(stderr,"exiting A1D_Free_shared_comm(MPI_Comm comm, void * ptr) \n");
+    fprintf(stderr,"exiting A1D_Free_comm(MPI_Comm comm, void * ptr) \n");
 #endif
 
     return;

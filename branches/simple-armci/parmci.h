@@ -17,8 +17,6 @@
 #  error No device defined!
 #endif
 
-MPI_Comm ARMCI_COMM_WORLD;
-
 /* to make sure I haven't broken the API */
 /* #include "parmci.h" */
 /* #include "armci.h" */

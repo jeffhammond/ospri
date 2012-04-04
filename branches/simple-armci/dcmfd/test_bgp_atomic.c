@@ -15,7 +15,7 @@ int main()
     int i;
     for (i=0;i<100;i++)
     {
-#ifdef __bgp__
+#if defined(__bgp__) && 0
         _bgp_msync();
         do {
             temp = _bgp_LoadReserved( atomic );
