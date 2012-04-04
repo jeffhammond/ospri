@@ -72,9 +72,6 @@ int main(int argc, char *argv[])
 
     PARMCI_Init_args(&argc, &argv);
 
-    MPI_Comm alt_comm;
-    MPI_Comm_split(MPI_COMM_WORLD, rank%2, 0, &alt_comm);
-
     int w, maxwinsize = ( argc > 1 ? atoi(argv[1]) : 1000000 );
 
     if ( rank == 0 ) printf( "size = %d maxwinsize = %d doubles\n", size, maxwinsize );
@@ -83,13 +80,13 @@ int main(int argc, char *argv[])
     {
         double ** window;
         window  = (double **) PARMCI_Malloc_local( size * sizeof(double *) );
-        PARMCIX_Malloc_comm(alt_comm, (void **) window, w * sizeof(double) );
+        PARMCIX_Malloc_comm(MPI_COMM_WORLD, (void **) window, w * sizeof(double) );
         for (int i = 0; i < w; i++) window[rank][i] = 0.0;
 
         double * buffer;
         buffer = (double *) PARMCI_Malloc_local(  w * sizeof(double) );
 
-        PARMCIX_Barrier_comm(alt_comm);
+        PARMCIX_Barrier_comm(MPI_COMM_WORLD);
 
         if (rank == 0)
             for (int t=1; t<size; t+=2)
@@ -115,7 +112,7 @@ int main(int argc, char *argv[])
                         printf("rank %d buffer[%d] = %lf \n", rank, i, buffer[i] );
             }
 
-        PARMCIX_Barrier_comm(alt_comm);
+        PARMCIX_Barrier_comm(MPI_COMM_WORLD);
 
         if (rank != 0)
         {
@@ -129,7 +126,7 @@ int main(int argc, char *argv[])
                    printf("rank %d window[%d][%d] = %lf \n", rank, rank, i, window[rank][i] );
         }
 
-        PARMCIX_Barrier_comm(alt_comm);
+        PARMCIX_Barrier_comm(MPI_COMM_WORLD);
 
         if (rank == 0)
             for (int t=1; t<size; t++)
@@ -157,11 +154,11 @@ int main(int argc, char *argv[])
                 fflush(stdout);
             }
 
-        PARMCIX_Barrier_comm(alt_comm);
+        PARMCIX_Barrier_comm(MPI_COMM_WORLD);
 
         PARMCI_Free_local( (void *) buffer );
 
-        PARMCIX_Free_comm(alt_comm, (void *) window[rank] );
+        PARMCIX_Free_comm(MPI_COMM_WORLD, (void *) window[rank] );
         PARMCI_Free_local( (void *) window );
     }
 
