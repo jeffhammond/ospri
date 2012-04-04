@@ -138,15 +138,17 @@ int A1D_Flush_all(void)
 
 int A1D_Flush_comm(MPI_Comm comm)
 {
-    int count = 0;
+    int     count = 0;
+    int     gsync = 0;
     int64_t temp[DMAPP_FLUSH_COUNT_MAX+1];
+#ifdef __CRAYXE
+    dmapp_return_t dmapp_status = DMAPP_RC_SUCCESS;
+#endif
+
     int comm_size = -1;
     int * ranks_in_comm = NULL;
     int * ranks_in_world = NULL;
     MPI_Group group;
-#ifdef __CRAYXE
-    dmapp_return_t dmapp_status = DMAPP_RC_SUCCESS;
-#endif
 
 #ifdef DEBUG_FUNCTION_ENTER_EXIT
     fprintf(stderr,"entering A1D_Flush_comm(MPI_Comm comm) \n");
