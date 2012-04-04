@@ -130,15 +130,15 @@ int A1D_Initialize()
     //assert(mpi_provided>MPI_THREAD_SINGLE);
 
     /* have to use our own communicator for collectives to be proper */
-    mpi_status = MPI_Comm_dup(MPI_COMM_WORLD,&A1D_COMM_WORLD);
+    mpi_status = MPI_Comm_dup(MPI_COMM_WORLD, &A1D_COMM_WORLD);
     assert(mpi_status==0);
 
     /* get my MPI rank */
-    mpi_status = MPI_Comm_rank(A1D_COMM_WORLD,&mpi_rank);
+    mpi_status = MPI_Comm_rank(A1D_COMM_WORLD, &mpi_rank);
     assert(mpi_status==0);
 
     /* get MPI world size */
-    mpi_status = MPI_Comm_size(A1D_COMM_WORLD,&mpi_size);
+    mpi_status = MPI_Comm_size(A1D_COMM_WORLD, &mpi_size);
     assert(mpi_status==0);
 
     /* in a perfect world, this would provide topology information like BG */
@@ -229,7 +229,7 @@ int A1D_Initialize()
     A1D_Acc_lock = dmapp_sheap_malloc( sizeof(int64_t) );
 #endif
 
-    A1D_Allreduce_issame64((size_t)A1D_Acc_lock, &sheapflag);
+    A1D_Allreduce_issame64(A1D_COMM_WORLD, (size_t)A1D_Acc_lock, &sheapflag);
     assert(sheapflag==1);
 
 #ifdef DEBUG_FUNCTION_ENTER_EXIT
@@ -291,7 +291,7 @@ int A1D_Allocate_shared(void * ptrs[], int bytes)
     assert(mpi_status==0);
 
 #ifdef __CRAYXE
-    A1D_Allreduce_max32( bytes, &max_bytes );
+    A1D_Allreduce_max32(A1D_COMM_WORLD, bytes, &max_bytes );
 
     /* allocate memory from symmetric heap */
     tmp_ptr = dmapp_sheap_malloc( (size_t)max_bytes );
@@ -299,7 +299,7 @@ int A1D_Allocate_shared(void * ptrs[], int bytes)
 #endif
 
     /* allgather addresses into pointer vector */
-    A1D_Allgather( &tmp_ptr, ptrs, sizeof(void*) );
+    A1D_Allgather(A1D_COMM_WORLD &tmp_ptr, ptrs, sizeof(void*) );
 
 #ifdef DEBUG_FUNCTION_ENTER_EXIT
     fprintf(stderr,"exiting A1D_Allocate_shared(void* ptrs[], int bytes) \n");

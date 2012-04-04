@@ -1,29 +1,29 @@
 DEVICE  = NONE
 
 CC      = mpicc
-COPT    = -g -O0 -std=c99 -Wall
+COPT    = -g -O0 -std=gnu99 -Wall
 
 ifeq ($(TARGET),BGP)
 CC      = mpicc
-COPT    = -g -O0 -std=c99 -Wall -D__bgp__
+COPT    = -g -O0 -std=gnu99 -Wall -D__bgp__
 #CC      = mpixlc_r
-#COPT    = -g -O3 -qstrict -qlanglvl=extc99 -D__bgp__
+#COPT    = -g -O3 -qstrict -qlanglvl=extgnu99 -D__bgp__
 INC     = -I. -DDCMFD
 DEVICE  = dcmfd
 endif
 
 ifeq ($(TARGET),BGQ)
 CC      = mpicc
-COPT    = -g -O0 -std=c99 -Wall -D__bgq__
+COPT    = -g -O0 -std=gnu99 -Wall -D__bgq__
 #CC      = mpixlc_r
-#COPT    = -g -O3 -qstrict -qlanglvl=extc99 -D__bgq__
+#COPT    = -g -O3 -qstrict -qlanglvl=extgnu99 -D__bgq__
 INC     = -I. -DPAMID
 DEVICE  = pamid
 endif
 
 ifeq ($(TARGET),XE)
 CC      = cc
-COPT    = -g -O0 -std=c99
+COPT    = -g -O0 -std=gnu99
 INC     = -I. -DDMAPPD
 DEVICE  = dmappd
 endif
