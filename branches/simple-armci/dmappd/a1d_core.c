@@ -256,7 +256,8 @@ int A1D_Finalize()
 #endif
 
     /* barrier so that no one is able to access remote memregions after they are destroyed */
-    A1D_Barrier();
+    mpi_status = MPI_Barrier(A1D_COMM_WORLD);
+    assert(mpi_status==0);
 
 #ifdef __CRAYXE
     /* shut down DMAPP */
@@ -286,7 +287,8 @@ int A1D_Allocate_shared(void * ptrs[], int bytes)
     fprintf(stderr,"entering A1D_Allocate_shared(void* ptrs[], int bytes) \n");
 #endif
 
-    A1D_Barrier();
+    mpi_status = MPI_Barrier(A1D_COMM_WORLD);
+    assert(mpi_status==0);
 
 #ifdef __CRAYXE
     A1D_Allreduce_max32( bytes, &max_bytes );

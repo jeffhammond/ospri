@@ -53,13 +53,13 @@
 
 int PARMCI_Init(void)
 {
-    return A1D_Initialize();
+    return A1D_Initialize(&ARMCI_COMM_WORLD);
 }
 
 int PARMCI_Init_args(int *argc, char ***argv)
 {
     //fprintf(stderr,"PARMCI_Init_args: argc/argv may not be setup properly by device \n");
-    return A1D_Initialize();
+    return A1D_Initialize(&ARMCI_COMM_WORLD);
 }
 
 void PARMCI_Finalize(void)
@@ -75,20 +75,32 @@ void * PARMCI_Malloc_local(int bytes)
     return A1D_Allocate_local(bytes);
 }
 
-int PARMCI_Malloc(void * ptr_arr[], int bytes)
-{
-    return A1D_Allocate_shared(ptr_arr, bytes);
-}
-
 int PARMCI_Free_local(void * ptr)
 {
     A1D_Free_local(ptr);
     return(0);
 }
 
+int PARMCI_Malloc(void * ptr_arr[], int bytes)
+{
+    return A1D_Allocate_shared(ARMCI_COMM_WORLD, ptr_arr, bytes);
+}
+
+int PARMCIX_Malloc_comm(MPI_Comm comm, void * ptr_arr[], int bytes)
+{
+    return A1D_Allocate_shared(comm, ptr_arr, bytes);
+}
+
+
 int PARMCI_Free(void * ptr)
 {
-    A1D_Free_shared(ptr);
+    A1D_Free_shared(ARMCI_COMM_WORLD, ptr);
+    return(0);
+}
+
+int PARMCIX_Free_comm(MPI_Comm comm, void * ptr)
+{
+    A1D_Free_shared(comm, ptr);
     return(0);
 }
 
@@ -112,8 +124,9 @@ void PARMCI_Memget(size_t bytes, armci_meminfo_t* meminfo, int memflg)
 
 void PARMCI_Barrier(void)
 {
+    /* TODO: implement and use A1D_Flush_comm(MPI_Comm comm) instead */
     A1D_Flush_all();
-    A1D_Barrier();
+    MPI_Barrier(ARMCI_COMM_WORLD);
     return;
 }
 
@@ -124,6 +137,22 @@ void PARMCI_Fence(int proc)
 }
 void PARMCI_AllFence(void)
 {
+    /* TODO: implement and use A1D_Flush_comm(MPI_Comm comm) instead */
+    A1D_Flush_all();
+    return;
+}
+
+void PARMCIX_Barrier_comm(MPI_Comm comm)
+{
+    /* TODO: implement and use A1D_Flush_comm(MPI_Comm comm) instead */
+    A1D_Flush_all();
+    MPI_Barrier(comm);
+    return;
+}
+
+void PARMCIX_AllFence_comm(MPI_Comm comm)
+{
+    /* TODO: implement and use A1D_Flush_comm(MPI_Comm comm) instead */
     A1D_Flush_all();
     return;
 }

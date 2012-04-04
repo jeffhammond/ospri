@@ -50,14 +50,16 @@
 #ifndef A1D_CORE_H
 #define A1D_CORE_H
 
-int A1D_Rank();
-int A1D_Size();
+#include <mpi.h>
 
-int A1D_Initialize();
+int A1D_Rank(void);
+int A1D_Size(void);
+
+int A1D_Initialize(MPI_Comm * comm);
 int A1D_Finalize();
 
-int A1D_Allocate_shared(void * ptrs[], int bytes);
-void A1D_Free_shared(void * ptr);
+int A1D_Allocate_shared(MPI_Comm comm, void * ptrs[], int bytes);
+void A1D_Free_shared(MPI_Comm comm, void * ptr);
 
 void * A1D_Allocate_local(int bytes);
 void A1D_Free_local(void * ptr);

@@ -1,5 +1,9 @@
 #include <stdio.h>
+#include <stdint.h>
+
+#ifdef __bgp__
 #include <bpcore/ppc450_inlines.h>
+#endif
 
 int main()
 {
@@ -11,11 +15,13 @@ int main()
     int i;
     for (i=0;i<100;i++)
     {
+#ifdef __bgp__
         _bgp_msync();
         do {
             temp = _bgp_LoadReserved( atomic );
             --temp;
         } while( !_bgp_StoreConditional( atomic, temp ) );
+#endif
     }
 
     printf(" data        = %u \n", data );

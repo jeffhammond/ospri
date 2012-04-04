@@ -2,6 +2,8 @@
 #include <stdint.h>
 #include <assert.h>
 
+#include <mpi.h>
+
 #if defined(DCMFD)
 #  include "dcmfd/a1d_api.h"
 #  define USE_32B_ATOMICS
@@ -14,6 +16,8 @@
 #else
 #  error No device defined!
 #endif
+
+MPI_Comm ARMCI_COMM_WORLD;
 
 /* to make sure I haven't broken the API */
 /* #include "parmci.h" */

@@ -51,7 +51,7 @@
 
 /*********************************************************************/
 
-int A1D_Barrier(void)
+int A1D_Barrier(MPI_Comm comm)
 {
     int mpi_status = MPI_SUCCESS;
 
@@ -59,7 +59,7 @@ int A1D_Barrier(void)
     fprintf(stderr,"entering A1D_Barrier() \n");
 #endif
 
-    mpi_status = MPI_Barrier(A1D_COMM_WORLD);
+    mpi_status = MPI_Barrier(comm);
     assert(mpi_status==MPI_SUCCESS);
 
 #ifdef DEBUG_FUNCTION_ENTER_EXIT
@@ -69,7 +69,7 @@ int A1D_Barrier(void)
     return(0);
 }
 
-int A1D_Allgather(void * local, void * gout, int local_bytes )
+int A1D_Allgather(MPI_Comm comm, void * local, void * gout, int local_bytes )
 {
     int mpi_status = MPI_SUCCESS;
 
@@ -77,7 +77,7 @@ int A1D_Allgather(void * local, void * gout, int local_bytes )
     fprintf(stderr,"entering A1D_Allgather(void * local, void * gout, int local_bytes ) \n");
 #endif
 
-    mpi_status = MPI_Allgather( local, local_bytes, MPI_BYTE, gout, local_bytes, MPI_BYTE, A1D_COMM_WORLD );
+    mpi_status = MPI_Allgather( local, local_bytes, MPI_BYTE, gout, local_bytes, MPI_BYTE, comm );
     assert(mpi_status==MPI_SUCCESS);
 
 #ifdef DEBUG_FUNCTION_ENTER_EXIT
@@ -87,7 +87,7 @@ int A1D_Allgather(void * local, void * gout, int local_bytes )
     return(0);
 }
 
-int A1D_Allreduce_max32(int32_t in, int32_t * out)
+int A1D_Allreduce_max32(MPI_Comm comm, int32_t in, int32_t * out)
 {
     int mpi_status = MPI_SUCCESS;
 
@@ -96,9 +96,9 @@ int A1D_Allreduce_max32(int32_t in, int32_t * out)
 #endif
 
 #ifdef __bgp__
-    mpi_status = MPI_Allreduce( &in, out, 1, MPI_INT, MPI_MAX, A1D_COMM_WORLD );
+    mpi_status = MPI_Allreduce( &in, out, 1, MPI_INT, MPI_MAX, comm );
 #else
-    mpi_status = MPI_Allreduce( &in, out, 1, MPI_INT32_T, MPI_MAX, A1D_COMM_WORLD );
+    mpi_status = MPI_Allreduce( &in, out, 1, MPI_INT32_T, MPI_MAX, comm );
 #endif
     assert(mpi_status==MPI_SUCCESS);
 
@@ -109,7 +109,7 @@ int A1D_Allreduce_max32(int32_t in, int32_t * out)
     return(0);
 }
 
-int A1D_Allreduce_issame32(int32_t value, int * flag)
+int A1D_Allreduce_issame32(MPI_Comm comm, int32_t value, int * flag)
 {
     int mpi_status = MPI_SUCCESS;
     int32_t in[2], out[2];
@@ -126,9 +126,9 @@ int A1D_Allreduce_issame32(int32_t value, int * flag)
     out[1] = 0;
 
 #ifdef __bgp__
-    mpi_status = MPI_Allreduce( in, out, 2, MPI_INT, MPI_MAX, A1D_COMM_WORLD );
+    mpi_status = MPI_Allreduce( in, out, 2, MPI_INT, MPI_MAX, comm );
 #else
-    mpi_status = MPI_Allreduce( in, out, 2, MPI_INT32_T, MPI_MAX, A1D_COMM_WORLD );
+    mpi_status = MPI_Allreduce( in, out, 2, MPI_INT32_T, MPI_MAX, comm );
 #endif
     assert(mpi_status==MPI_SUCCESS);
 
@@ -142,7 +142,7 @@ int A1D_Allreduce_issame32(int32_t value, int * flag)
     return(0);
 }
 
-int A1D_Allreduce_issame64(int64_t value, int * flag)
+int A1D_Allreduce_issame64(MPI_Comm comm, int64_t value, int * flag)
 {
     int mpi_status = MPI_SUCCESS;
     int64_t in[2], out[2];
@@ -159,9 +159,9 @@ int A1D_Allreduce_issame64(int64_t value, int * flag)
     out[1] = 0;
 
 #ifdef __bgp__
-    mpi_status = MPI_Allreduce( in, out, 2, MPI_LONG, MPI_MAX, A1D_COMM_WORLD );
+    mpi_status = MPI_Allreduce( in, out, 2, MPI_LONG, MPI_MAX, comm );
 #else
-    mpi_status = MPI_Allreduce( in, out, 2, MPI_INT64_T, MPI_MAX, A1D_COMM_WORLD );
+    mpi_status = MPI_Allreduce( in, out, 2, MPI_INT64_T, MPI_MAX, comm );
 #endif
     assert(mpi_status==MPI_SUCCESS);
 

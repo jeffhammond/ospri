@@ -59,13 +59,10 @@
 
 #include <mpi.h>
 
-extern MPI_Comm A1D_COMM_WORLD;
-
-int A1D_Barrier(void);
-int A1D_Allgather(void * local, void * gout, int local_bytes );
-
-int A1D_Allreduce_max32(int32_t in, int32_t * out);
-int A1D_Allreduce_issame32(int32_t value, int * flag);
-int A1D_Allreduce_issame64(int64_t value, int * flag);
+int A1D_Barrier(MPI_Comm comm);
+int A1D_Allgather(MPI_Comm comm, void * local, void * gout, int local_bytes );
+int A1D_Allreduce_max32(MPI_Comm comm, int32_t in, int32_t * out);
+int A1D_Allreduce_issame32(MPI_Comm comm, int32_t value, int * flag);
+int A1D_Allreduce_issame64(MPI_Comm comm, int64_t value, int * flag);
 
 #endif
