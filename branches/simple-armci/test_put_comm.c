@@ -89,7 +89,7 @@ int main(int argc, char *argv[])
         PARMCIX_Barrier_comm(MPI_COMM_WORLD);
 
         if (rank == 0)
-            for (int t=1; t<size; t+=2)
+            for (int t=1; t<size; t++)
             {
                 int bytes = w * sizeof(double);
 
