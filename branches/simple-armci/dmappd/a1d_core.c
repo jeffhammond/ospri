@@ -57,6 +57,7 @@ int mpi_size;
 
 #ifdef DMAPPD_USES_MPI
   MPI_Comm A1D_COMM_WORLD;
+  MPI_Group A1D_GROUP_WORLD;
 #else
 # error DMAPP requires MPI for now.
 #endif
@@ -132,6 +133,9 @@ int A1D_Initialize()
     /* have to use our own communicator for collectives to be proper */
     mpi_status = MPI_Comm_dup(MPI_COMM_WORLD, &A1D_COMM_WORLD);
     assert(mpi_status==0);
+
+    mpi_status = MPI_Comm_group(A1D_COMM_WORLD, &A1D_GROUP_WORLD);
+    assert(mpi_status==MPI_SUCCESS);
 
     /* get my MPI rank */
     mpi_status = MPI_Comm_rank(A1D_COMM_WORLD, &mpi_rank);

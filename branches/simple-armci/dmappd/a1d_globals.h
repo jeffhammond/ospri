@@ -59,6 +59,7 @@ extern int mpi_size;
 
 #ifdef DMAPPD_USES_MPI
   extern MPI_Comm A1D_COMM_WORLD;
+  extern MPI_Group A1D_GROUP_WORLD;
 #else
   extern int A1D_Pset_world_exported;
 # ifdef __CRAYXE
