@@ -85,7 +85,10 @@ void PARMCI_Finalize();
 /* memory management */
 
 int PARMCI_Malloc(void * ptr_arr[], int bytes);
+int PARMCIX_Malloc_comm(MPI_Comm comm, void * ptr_arr[], int bytes);
+
 int PARMCI_Free(void * ptr);
+int PARMCIX_Free_comm(MPI_Comm comm, void * ptr);
 
 void * PARMCI_Malloc_local(int bytes);
 int PARMCI_Free_local(void * ptr);
@@ -98,9 +101,11 @@ void PARMCI_Memget(size_t bytes, armci_meminfo_t * meminfo, int memflg);
 /* synchronization */
 
 void PARMCI_Barrier();
+void PARMCIX_Barrier_comm(MPI_Comm comm);
 
 void PARMCI_Fence(int proc);
 void PARMCI_AllFence();
+void PARMCIX_AllFence_comm(MPI_Comm comm);
 
 int PARMCI_Test(armci_hdl_t * nb_handle);
 int PARMCI_Wait(armci_hdl_t * nb_handle);
