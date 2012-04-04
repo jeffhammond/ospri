@@ -87,7 +87,7 @@ int A1D_Flush_all(void)
 #endif
 
 #ifdef DEBUG_FUNCTION_ENTER_EXIT
-    fprintf(stderr,"entering A1D_Flush(int target) \n");
+    fprintf(stderr,"entering A1D_Flush_all(void) \n");
 #endif
 
 #if defined(FLUSH_IMPLEMENTED) && defined(__CRAYXE)
@@ -130,7 +130,88 @@ int A1D_Flush_all(void)
 #endif
 
 #ifdef DEBUG_FUNCTION_ENTER_EXIT
-    fprintf(stderr,"exiting A1D_Flush(int target) \n");
+    fprintf(stderr,"exiting A1D_Flush_all(void) \n");
+#endif
+
+    return(0);
+}
+
+int A1D_Flush_comm(MPI_Comm comm)
+{
+    int count = 0;
+    int temp[DCMF_FLUSH_COUNT_MAX+1];
+    int comm_size = -1;
+    int * ranks_in_comm = NULL;
+    int * ranks_in_world = NULL;
+    MPI_Group group;
+
+#ifdef DEBUG_FUNCTION_ENTER_EXIT
+    fprintf(stderr,"entering A1D_Flush_comm(MPI_Comm comm) \n");
+#endif
+
+    MPI_Comm_size(comm, &comm_size);
+
+    ranks_in_comm = malloc( comm_size * sizeof(int) );
+    assert(ranks_in_comm != NULL);
+
+    ranks_in_world = malloc( comm_size * sizeof(int) );
+    assert(ranks_in_world != NULL);
+
+    MPI_Comm_group(comm, &group);
+
+    for ( int i=0 ; i<comm_size ; i++)
+        ranks_in_comm[i] = i;
+
+    MPI_Group_translate_ranks(group, comm_size, ranks_in_comm, A1D_GROUP_WORLD, ranks_in_world);
+
+#if defined(FLUSH_IMPLEMENTED) && defined(__CRAYXE)
+    for ( int i=0 ; i<comm_size ; i++)
+    {
+        int j = ranks_in_world[i];
+
+        if ( A1D_Put_flush_list[j] > 0 )
+        {
+            dmapp_status = dmapp_get_nbi( &temp[count], A1D_Acc_lock, &A1D_Sheap_desc, (dmapp_pe_t)j, 1, DMAPP_QW );
+            assert(dmapp_status==DMAPP_RC_SUCCESS);
+
+            count++;
+
+            if ( count > DMAPP_FLUSH_COUNT_MAX )
+            {
+                dmapp_status = dmapp_gsync_wait();
+                assert(dmapp_status==DMAPP_RC_SUCCESS);
+
+                count = 0;
+                gsync++;
+            }
+        }
+    }
+
+    /* in case we never reached count > DMAPP_FLUSH_COUNT_MAX, we must call gsync at least once
+     * to ensure that implicit NB get ops complete remotely, thus ensuring global visability  */
+    if ( gsync == 0 )
+    {
+        dmapp_status = dmapp_gsync_wait();
+        assert(dmapp_status==DMAPP_RC_SUCCESS);
+    }
+#endif
+
+#ifdef FLUSH_IMPLEMENTED
+    /* we really shouldn't reset these to zero until we know that gsync has returned */
+    for ( int i=0 ; i<mpi_size ; i++)
+    {
+        int j = ranks_in_world[i];
+        A1D_Put_flush_list[j] = 0;
+    }
+#endif
+
+    MPI_Group_free(&group);
+
+    free(ranks_in_world);
+    free(ranks_in_comm);
+
+#ifdef DEBUG_FUNCTION_ENTER_EXIT
+    fprintf(stderr,"exiting A1D_Flush_comm(MPI_Comm comm) \n");
 #endif
 
     return(0);

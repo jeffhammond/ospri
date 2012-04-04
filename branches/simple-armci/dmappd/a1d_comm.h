@@ -83,6 +83,7 @@ a1d_nbhandle_t;
 
 int A1D_Flush(int target);
 int A1D_Flush_all(void);
+int A1D_Flush_comm(MPI_Comm comm);
 
 int A1D_Reset(a1d_nbhandle_t * nbhandle);
 int A1D_Test(a1d_nbhandle_t * nbhandle, int * status);
