@@ -241,6 +241,8 @@ int A1D_Initialize()
 
 int A1D_Finalize()
 {
+    int mpi_status = MPI_SUCCESS;
+
 #ifdef __CRAYXE
     dmapp_return_t dmapp_status = DMAPP_RC_SUCCESS;
 #endif
@@ -278,20 +280,22 @@ int A1D_Finalize()
  *
  ***************************************************/
 
-int A1D_Allocate_shared(void * ptrs[], int bytes)
+int A1D_Allocate_comm(MPI_Comm comm, void * ptrs[], int bytes)
 {
+    int mpi_status = MPI_SUCCESS;
+
     void *  tmp_ptr       = NULL;
     int     max_bytes     = 0;
 
 #ifdef DEBUG_FUNCTION_ENTER_EXIT
-    fprintf(stderr,"entering A1D_Allocate_shared(void* ptrs[], int bytes) \n");
+    fprintf(stderr,"entering A1D_Allocate_comm(MPI_Comm comm, void * ptrs[], int bytes)\n");
 #endif
 
-    mpi_status = MPI_Barrier(A1D_COMM_WORLD);
+    mpi_status = MPI_Barrier(comm);
     assert(mpi_status==0);
 
 #ifdef __CRAYXE
-    A1D_Allreduce_max32(A1D_COMM_WORLD, bytes, &max_bytes );
+    A1D_Allreduce_max32(comm, bytes, &max_bytes );
 
     /* allocate memory from symmetric heap */
     tmp_ptr = dmapp_sheap_malloc( (size_t)max_bytes );
@@ -299,24 +303,24 @@ int A1D_Allocate_shared(void * ptrs[], int bytes)
 #endif
 
     /* allgather addresses into pointer vector */
-    A1D_Allgather(A1D_COMM_WORLD &tmp_ptr, ptrs, sizeof(void*) );
+    A1D_Allgather(comm, &tmp_ptr, ptrs, sizeof(void*) );
 
 #ifdef DEBUG_FUNCTION_ENTER_EXIT
-    fprintf(stderr,"exiting A1D_Allocate_shared(void* ptrs[], int bytes) \n");
+    fprintf(stderr,"exiting A1D_Allocate_comm(MPI_Comm comm, void * ptrs[], int bytes)\n");
 #endif
 
     return(0);
 }
 
-void A1D_Free_shared(void * ptr)
+void A1D_Free_comm(MPI_Comm comm, void * ptr)
 {
 #ifdef DEBUG_FUNCTION_ENTER_EXIT
-    fprintf(stderr,"entering A1D_Free_shared(void* ptr) \n");
+    fprintf(stderr,"entering A1D_Free_comm(MPI_Comm comm, void * ptr) \n");
 #endif
 
     /* barrier so that no one tries to access memory which is no longer allocated
      * and to ensure that the user calls this function collectively */
-    A1D_Barrier();
+    A1D_Barrier(comm);
 
 #ifdef __CRAYXE
     if (ptr != NULL)
@@ -331,7 +335,7 @@ void A1D_Free_shared(void * ptr)
 #endif
 
 #ifdef DEBUG_FUNCTION_ENTER_EXIT
-    fprintf(stderr,"exiting A1D_Free_shared(void* ptr) \n");
+    fprintf(stderr,"exiting A1D_Free_comm(MPI_Comm comm, void * ptr) \n");
 #endif
 
     return;
@@ -362,7 +366,7 @@ int A1DI_Acquire_mem_descriptor( dmapp_seg_desc_t * mem_desc )
     }
     else
     {
-        A1D_Memdesc_list = (dmapp_seg_desc_t *) realloc( list, (A1D_Memdesc_list_size+1) * sizeof(dmapp_seg_desc_t) );
+        A1D_Memdesc_list = (dmapp_seg_desc_t *) realloc( A1D_Memdesc_list, (A1D_Memdesc_list_size+1) * sizeof(dmapp_seg_desc_t) );
         assert(A1D_Memdesc_list!=NULL);
 
         A1D_Memdesc_list_size++;
@@ -377,8 +381,6 @@ int A1DI_Acquire_mem_descriptor( dmapp_seg_desc_t * mem_desc )
 
 int A1DI_Release_mem_descriptor( void * address )
 {
-    dmapp_return_t     dmapp_status  = DMAPP_RC_SUCCESS;
-    int                flag          = 0;
     int                offset        = -1;
     dmapp_seg_desc_t * temp_list     = NULL;
 
@@ -409,7 +411,7 @@ int A1DI_Release_mem_descriptor( void * address )
                 temp_list[j++] = A1D_Memdesc_list[i];
 
         /* resize primary, copy temp into it and decrement size */
-        A1D_Memdesc_list = (dmapp_seg_desc_t *) realloc( list, (A1D_Memdesc_list_size-1) * sizeof(dmapp_seg_desc_t) );
+        A1D_Memdesc_list = (dmapp_seg_desc_t *) realloc( A1D_Memdesc_list, (A1D_Memdesc_list_size-1) * sizeof(dmapp_seg_desc_t) );
         memcpy( A1D_Memdesc_list, temp_list,  (A1D_Memdesc_list_size-1) * sizeof(dmapp_seg_desc_t) );
         A1D_Memdesc_list_size--;
 
@@ -439,13 +441,14 @@ void * A1D_Allocate_local(int bytes)
 
     if (bytes>0)
     {
-        posix_memalign( &tmp, (size_t)DMAPP_ALIGNMENT, (size_t)bytes);
+        //posix_memalign( &tmp, (size_t)DMAPP_ALIGNMENT, (size_t)bytes);
+        tmp = malloc(bytes);
         assert(tmp!=NULL);
 
 #ifdef __CRAYXE
-        A1DI_Acquire_mem_descriptor( &mem_desc );
+        A1DI_Acquire_mem_descriptor( mem_desc );
 
-        dmapp_status = dmapp_mem_register( tmp, (uint64_t)bytes, &mem_desc );
+        dmapp_status = dmapp_mem_register( tmp, (uint64_t)bytes, mem_desc );
         assert(dmapp_status==DMAPP_RC_SUCCESS);
 
         /* verify that DMAPP has registered at my address exactly */
