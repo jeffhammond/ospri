@@ -9,12 +9,12 @@ CFLAGS    = -g -O2 -Wall -std=gnu99 $(INCLUDE)
 LD        = powerpc64-bgq-linux-gcc
 LDFLAGS   = -g -O2 -Wall -std=gnu99
 
-all: libbgqtopo.a
+AR        = powerpc64-bgq-linux-ar
 
-libbgqtopo.a: impl.o q5d.o
+all: libq5d.a
 
-impl.o: impl.c impl.h
-	$(CC) $(CFLAGS) -c impl.c -o impl.o
+libq5d.a: q5d.o
+	$(AR) -r libq5d.a q5d.o
 
 q5d.o: q5d.c q5d.h impl.h
 	$(CC) $(CFLAGS) -c q5d.c -o q5d.o
