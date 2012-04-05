@@ -56,7 +56,7 @@
 
 #include "armci.h"
 
-#ifdef __CRAYXE
+#if defined(__CRAYXE)
 #include <dmapp.h>
 void parse_error(dmapp_return_t rc)
 {
@@ -117,27 +117,28 @@ void parse_error(dmapp_return_t rc)
     fflush(stderr);
     return;
 }
-
 #endif
 
 //#define FLUSH_IMPLEMENTED
 
 MPI_Comm A1_COMM_WORLD;
 
-#ifdef __CRAYXE
-dmapp_jobinfo_t dmapp_info;
-dmapp_seg_desc_t * dmapp_sheap_ptr;
-int64_t * flush_qword = NULL;
+#if defined(__CRAYXE)
+ dmapp_jobinfo_t dmapp_info;
+ dmapp_seg_desc_t * dmapp_sheap_ptr;
+ int64_t * flush_qword = NULL;
 #endif
 
 #ifdef FLUSH_IMPLEMENTED
-int * flush_list;
-const int DMAPP_FLUSH_COUNT_MAX = 100;
+ int * flush_list;
+ const int FLUSH_COUNT_MAX = 100;
 #endif
 
+/* This function exists because DMAPP needs to be booted before MPI
+   in some cases for Cray XE6 to work properly.                      */
 void ARMCI_Boot(void)
 {
-#ifdef __CRAYXE
+#if defined(__CRAYXE)
     dmapp_return_t                      dmapp_status = DMAPP_RC_SUCCESS;
     dmapp_rma_attrs_ext_t               dmapp_config_in, dmapp_config_out;
 
@@ -162,10 +163,10 @@ void ARMCI_Boot(void)
     dmapp_status = dmapp_init_ext( &dmapp_config_in, &dmapp_config_out );
     assert(dmapp_status==DMAPP_RC_SUCCESS);
 
-#ifndef FLUSH_IMPLEMENTED
+# ifndef FLUSH_IMPLEMENTED
     /* without strict PI ordering, we have to flush remote stores with a get packet to force global visibility */
     assert( dmapp_config_out.PI_ordering == DMAPP_PI_ORDERING_STRICT);
-#endif
+# endif
 
 #endif
 
@@ -177,55 +178,34 @@ int ARMCI_Init(void)
     int mpi_status = MPI_SUCCESS;
     int mpi_rank = -1;
     int mpi_size = -1;
+    int mpi_initialized = -1;
 
     int64_t in[2], out[2];
 
-#ifdef __CRAYXE
+#if defined(__CRAYXE)
     dmapp_return_t                      dmapp_status = DMAPP_RC_SUCCESS;
     dmapp_rma_attrs_ext_t               dmapp_config_in, dmapp_config_out;
     dmapp_pe_t                          dmapp_rank = -1;
     int                                 dmapp_size = -1;
 #endif
 
+    /* MPI has to be Initialized for this implementation to work */
+    mpi_status = MPI_Initialized(&mpi_initialized);
+    assert(mpi_status==MPI_SUCCESS && mpi_initialized==1);
+
     /* have to use our own communicator for collectives to be proper */
     mpi_status = MPI_Comm_dup(MPI_COMM_WORLD,&A1_COMM_WORLD);
-    assert(mpi_status==0);
+    assert(mpi_status==MPI_SUCCESS);
 
     /* get my MPI rank */
     mpi_status = MPI_Comm_rank(A1_COMM_WORLD,&mpi_rank);
-    assert(mpi_status==0);
+    assert(mpi_status==MPI_SUCCESS);
 
     /* get MPI world size */
     mpi_status = MPI_Comm_size(A1_COMM_WORLD,&mpi_size);
-    assert(mpi_status==0);
+    assert(mpi_status==MPI_SUCCESS);
 
-#ifdef __CRAYXE
-//    dmapp_config_in.max_concurrency      = 1; /* not thread-safe */
-//    dmapp_config_in.max_outstanding_nb   = DMAPP_DEF_OUTSTANDING_NB; /*  512 */
-//    dmapp_config_in.offload_threshold    = DMAPP_OFFLOAD_THRESHOLD;  /* 4096 */
-//
-//#  ifdef DETERMINISTIC_ROUTING
-//    dmapp_config_in.put_relaxed_ordering = DMAPP_ROUTING_DETERMINISTIC;
-//    dmapp_config_in.get_relaxed_ordering = DMAPP_ROUTING_DETERMINISTIC;
-//#  else
-//    dmapp_config_in.put_relaxed_ordering = DMAPP_ROUTING_ADAPTIVE;
-//    dmapp_config_in.get_relaxed_ordering = DMAPP_ROUTING_ADAPTIVE;
-//#  endif
-//
-//#  ifndef FLUSH_IMPLEMENTED
-//    dmapp_config_in.PI_ordering          = DMAPP_PI_ORDERING_STRICT;
-//#  else
-//    dmapp_config_in.PI_ordering          = DMAPP_PI_ORDERING_RELAXED;
-//#  endif
-//
-//    dmapp_status = dmapp_init_ext( &dmapp_config_in, &dmapp_config_out );
-//    assert(dmapp_status==DMAPP_RC_SUCCESS);
-//
-//#ifndef FLUSH_IMPLEMENTED
-//    /* without strict PI ordering, we have to flush remote stores with a get packet to force global visibility */
-//    assert( dmapp_config_out.PI_ordering == DMAPP_PI_ORDERING_STRICT);
-//#endif
-
+#if defined(__CRAYXE)
     dmapp_status = dmapp_get_jobinfo(&dmapp_info);
     assert(dmapp_status==DMAPP_RC_SUCCESS);
 
@@ -262,6 +242,86 @@ int ARMCI_Init(void)
     (*flush_qword) = mpi_rank;
 #endif
 
+#if defined(__bgp__)
+
+    DCMF_CriticalSection_enter(0);
+
+    /* make sure MPI and DCMF agree */
+    assert(mpi_rank==(int)DCMF_Messager_rank());
+    assert(mpi_size==(int)DCMF_Messager_size());
+
+    /* allocate memregion list */
+    A1D_Memregion_list = malloc( mpi_size * sizeof(DCMF_Memregion_t) );
+    assert(A1D_Memregion_list != NULL);
+
+    /* allocate base pointer list */
+    A1D_Baseptr_list = malloc( mpi_size * sizeof(void*) );
+    assert(A1D_Memregion_list != NULL);
+
+    /* create memregions */
+    bytes_in = -1;
+    dcmf_result = DCMF_Memregion_create(&local_memregion,&bytes_out,bytes_in,NULL,0);
+    assert(dcmf_result==DCMF_SUCCESS);
+
+    DCMF_CriticalSection_exit(0);
+
+    /* exchange memregions because we don't use symmetry heap */
+    mpi_status = MPI_Allgather(&local_memregion,sizeof(DCMF_Memregion_t),MPI_BYTE,
+                               A1D_Memregion_list,sizeof(DCMF_Memregion_t),MPI_BYTE,
+                               A1D_COMM_WORLD);
+    assert(mpi_status==0);
+
+    DCMF_CriticalSection_enter(0);
+
+    /* destroy temporary local memregion */
+    dcmf_result = DCMF_Memregion_destroy(&local_memregion);
+    assert(dcmf_result==DCMF_SUCCESS);
+
+    /* check for valid memregions */
+    for (i = 0; i < mpi_size; i++)
+    {
+        dcmf_result = DCMF_Memregion_query(&A1D_Memregion_list[i],
+                                           &bytes_out,
+                                           &A1D_Baseptr_list[i]);
+        assert(dcmf_result==DCMF_SUCCESS);
+    }
+
+    /***************************************************
+     *
+     * setup protocols and flush list(s)
+     *
+     ***************************************************/
+
+    A1DI_Atomic_Initialize();
+
+    A1DI_Get_Initialize();
+
+    A1DI_Put_Initialize();
+#  ifdef FLUSH_IMPLEMENTED
+    /* allocate Put list */
+    A1D_Put_flush_list = malloc( mpi_size * sizeof(int) );
+    assert(A1D_Put_flush_list != NULL);
+#  endif
+
+    A1DI_Acc_Initialize();
+#  ifdef FLUSH_IMPLEMENTED
+    /* allocate Acc list */
+    A1D_Send_flush_list = malloc( mpi_size * sizeof(int) );
+    assert(A1D_Send_flush_list != NULL);
+#  endif
+
+    /***************************************************
+     *
+     * define null callback
+     *
+     ***************************************************/
+
+    A1D_Nocallback.function = NULL;
+    A1D_Nocallback.clientdata = NULL;
+
+    DCMF_CriticalSection_exit(0);
+#endif
+
 #ifdef FLUSH_IMPLEMENTED
     flush_list = malloc( mpi_size * sizeof(int) );
     assert(flush_list != NULL);
@@ -276,7 +336,7 @@ int ARMCI_Init(void)
 void ARMCI_Finalize(void)
 {
     int mpi_status = MPI_SUCCESS;
-#ifdef __CRAYXE
+#if defined(__CRAYXE)
     dmapp_return_t dmapp_status = DMAPP_RC_SUCCESS;
 #endif
 
@@ -287,7 +347,7 @@ void ARMCI_Finalize(void)
     free(flush_list);
 #endif
 
-#ifdef __CRAYXE
+#if defined(__CRAYXE)
     dmapp_status = dmapp_finalize();
     assert(dmapp_status==DMAPP_RC_SUCCESS);
 #endif
@@ -315,7 +375,7 @@ int ARMCI_Malloc(void * ptr_arr[], int bytes)
     int mpi_status = MPI_SUCCESS;
     void * tmp_ptr = NULL;
 
-#ifdef __CRAYXE
+#if defined(__CRAYXE)
     tmp_ptr = dmapp_sheap_malloc( (size_t)bytes );
     assert(tmp_ptr!=NULL);
 #endif
@@ -348,7 +408,7 @@ void ARMCI_Fence(int proc)
     int mpi_status = MPI_SUCCESS;
     int mpi_rank = -1;
 
-#ifdef __CRAYXE
+#if defined(__CRAYXE)
     dmapp_return_t dmapp_status = DMAPP_RC_SUCCESS;
     dmapp_seg_desc_t * remote_sheap_ptr = NULL;
     int64_t temp = -1;
@@ -362,7 +422,7 @@ void ARMCI_Fence(int proc)
     if (temp != proc)
     {
         mpi_status = MPI_Comm_rank(A1_COMM_WORLD, &mpi_rank);
-        assert(mpi_status==0);
+        assert(mpi_status==MPI_SUCCESS);
 
         fprintf(stderr, "flush_qword: expected %d, got %ld \n", mpi_rank, temp);
         fflush(stderr);
@@ -377,36 +437,35 @@ void ARMCI_AllFence(void)
     int mpi_status = MPI_SUCCESS;
     int mpi_size = -1;
 
-#ifdef __CRAYXE
+#if defined(__CRAYXE)
     dmapp_return_t dmapp_status = DMAPP_RC_SUCCESS;
     dmapp_seg_desc_t * remote_sheap_ptr = NULL;
 
     int count = 0;
     int gsync = 0;
+#endif
 
 #ifdef FLUSH_IMPLEMENTED
-    int temp[DMAPP_FLUSH_COUNT_MAX+1];
-#endif
+    int temp[FLUSH_COUNT_MAX+1];
 #endif
 
+
     mpi_status = MPI_Comm_size(A1_COMM_WORLD,&mpi_size);
-    assert(mpi_status==0);
+    assert(mpi_status==MPI_SUCCESS);
 
 #ifdef FLUSH_IMPLEMENTED
     for ( i=0 ; i<mpi_size ; i++)
     {
         if ( flush_list[i] > 0 )
         {
-            ARMCI_Fence(i);
-#if 0
-#ifdef __CRAYXE
+# if defined(__CRAYXE) && 0
             dmapp_status = dmapp_get_nbi( &temp[count], flush_qword, dmapp_sheap_ptr, (dmapp_pe_t)i, 1, DMAPP_QW );
             parse_error(dmapp_status);
             assert(dmapp_status==DMAPP_RC_SUCCESS);
 
             count++;
 
-            if ( count > DMAPP_FLUSH_COUNT_MAX )
+            if ( count > FLUSH_COUNT_MAX )
             {
                 dmapp_status = dmapp_gsync_wait();
                 parse_error(dmapp_status);
@@ -415,14 +474,14 @@ void ARMCI_AllFence(void)
                 count = 0;
                 gsync++;
             }
-#endif
-#endif
+# else
+            ARMCI_Fence(i);
+# endif
         }
     }
 
-#if 0
-#ifdef __CRAYXE
-    /* in case we never reached count > DMAPP_FLUSH_COUNT_MAX, we must call gsync at least once
+# if defined(__CRAYXE) && 0
+    /* in case we never reached count > FLUSH_COUNT_MAX, we must call gsync at least once
      * to ensure that implicit NB get ops complete remotely, thus ensuring global visability  */
     if ( gsync == 0 )
     {
@@ -430,8 +489,7 @@ void ARMCI_AllFence(void)
         parse_error(dmapp_status);
         assert(dmapp_status==DMAPP_RC_SUCCESS);
     }
-#endif
-#endif
+# endif
 
     for ( i=0 ; i<mpi_size ; i++) flush_list[i] = 0;
 #endif
@@ -453,10 +511,10 @@ void ARMCI_Barrier(void)
 
 int ARMCI_Put(void *src, void *dst, int bytes, int proc)
 {
-#ifdef __CRAYXE
+#if defined(__CRAYXE)
     dmapp_return_t dmapp_status = DMAPP_RC_SUCCESS;
 
-#if 1
+# if 1
     dmapp_jobinfo_t    job;
     dmapp_seg_desc_t * seg = NULL;
 
@@ -464,7 +522,7 @@ int ARMCI_Put(void *src, void *dst, int bytes, int proc)
     assert(dmapp_status==DMAPP_RC_SUCCESS);
 
     seg = &(job.sheap_seg);
-#endif
+# endif
 
     /* empirically, DMAPP_DW delivers the best performance.
      * no benefit was observed with DMAPP_QW or DMAPP_DQW; in fact, performance was worse */

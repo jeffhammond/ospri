@@ -1,35 +1,74 @@
 /* -*- Mode: C; c-basic-offset:4 ; -*- */
 /*
- *  Copyright (C) 2010 by Argonne National Laboratory.
- *      See COPYRIGHT in top-level directory.
+ * The following is a notice of limited availability of the code, and disclaimer
+ * which must be included in the prologue of the code and in all source listings
+ * of the code.
  *
- * ga-lite.c
+ * Copyright (c) 2010  Argonne Leadership Computing Facility, Argonne National
+ * Laboratory
  *
+ * Permission is hereby granted to use, reproduce, prepare derivative works, and
+ * to redistribute to others.
+ *
+ *
+ *                          LICENSE
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are
+ * met:
+ *
+ * - Redistributions of source code must retain the above copyright
+ *   notice, this list of conditions and the following disclaimer.
+ *
+ * - Redistributions in binary form must reproduce the above copyright
+ *   notice, this list of conditions and the following disclaimer listed
+ *   in this license in the documentation and/or other materials
+ *   provided with the distribution.
+ *
+ * - Neither the name of the copyright holders nor the names of its
+ *   contributors may be used to endorse or promote products derived from
+ *   this software without specific prior written permission.
+ *
+ * The copyright holders provide no reassurances that the source code
+ * provided does not infringe any patent, copyright, or any other
+ * intellectual property rights of third parties.  The copyright holders
+ * disclaim any liability to any recipient for claims brought against
+ * recipient by any third party for infringement of that parties
+ * intellectual property rights.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+ * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+ * A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+ * OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+ * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+ * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+ * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+/*
  *  Created on: Sep 20, 2010
- *      Author: jeff
+ *      Author: Jeff Hammond
  */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdbool.h>
-#include <string.h>
-#include <limits.h>
-#include <math.h>
-#include <time.h>
-#include <assert.h>
-#include <mpi.h>
+#include "ga-lite.h"
+
+/**************************************************************************
+ * MACRO DEFINITIONS
+ **************************************************************************/
 
 #define GAL_INLINE inline
 
-#define GAL_USE_ALIGNED_MEMORY 1
-#ifdef GAL_USE_ALIGNED_MEMORY
-#  define GAL_ALIGNMENT 128
-#endif
+#define GAL_MALLOC_ALIGNMENT 128
+
+#define GAL_COLLECTIVES_HAVE_BARRIER_SEMANTICS 1
 
 #define GAL_DEFAULT_BLOCKSIZE 4096
 
 /**************************************************************************
- * MACROS
+ * MACRO FUNCTIONS
  **************************************************************************/
 
 #define GALU_ZERO(INOUT,COUNT,DTYPE)                       \
@@ -77,43 +116,11 @@
             for (int i = 0; i < COUNT; i++) io[i] = (*s1)*in1[i]+(*s2)*in2[i];  \
         } while (0)
 
-
-/**************************************************************************
- * TYPES
- **************************************************************************/
-
-typedef struct global_array_t
-{
-    int             active;
-    MPI_Win         window;
-    MPI_Comm        comm;
-    MPI_Datatype    type;
-    int             type_size; /* needs to be int because of MPI_Type_size arguments */
-    MPI_Aint        local_size; /* needs to be MPI_Aint because of MPI_Win_create arguments */
-    void *          local_buffer;
-    int             ndim;
-    size_t *        dimsize;
-    size_t *        blocksize;
-}
-global_array_t;
-
-typedef enum
-{
-    GAL_SUCCESS = 0,
-    GAL_UNKNOWN_ERROR,
-    GAL_MALLOC_ERROR,
-    GAL_ARGUMENT_ERROR,
-    GAL_MPI_ERROR,
-    GAL_UNIMPLEMENTED,
-}
-GAL_Result;
-
 /**************************************************************************
  * GLOBALS
  **************************************************************************/
 
 MPI_Comm GAL_COMM_WORLD;
-int gal_debug_print = 0;
 
 /**************************************************************************
  * HELPER FUNCTIONS
@@ -133,8 +140,8 @@ void * GALU_Malloc(size_t size)
     int rc = 0;
     void * ptr = NULL;
 
-#if GAL_USE_ALIGNED_MEMORY
-    rc = posix_memalign( &ptr, GAL_ALIGNMENT, size);
+#ifdef GAL_MALLOC_ALIGNMENT
+    rc = posix_memalign( &ptr, GAL_MALLOC_ALIGNMENT, size);
 #else
     ptr = malloc(size);
 #endif
@@ -153,22 +160,22 @@ void * GALU_Malloc(size_t size)
 #if defined(EINVAL) && defined(ENOMEM)
         if ( rc==EINVAL )
         {
-            fprintf( stderr , "%d: GALU_Malloc returned EINVAL: "
-                     "The alignment argument was not a power of two, or was not a multiple of sizeof(void *). \n",
+            fprintf( stderr , "%d: GALU_Malloc: posix_memalign returned EINVAL "
+                     "(The alignment argument was not a power of two, or was not a multiple of sizeof(void *).). \n",
                      comm_rank);
         }
         else if ( rc==ENOMEM )
         {
-            fprintf( stderr , "%d: GALU_Malloc returned ENOMEM: "
-                     "There was insufficient memory to fulfill the allocation request. \n",
+            fprintf( stderr , "%d: GALU_Malloc: posix_memalign returned ENOMEM "
+                     "(There was insufficient memory to fulfill the allocation request.). \n",
                      comm_rank);
         }
         else
 #endif
         if ( rc!=0 )
         {
-            fprintf( stderr , "%d: GALU_Malloc posix_memalign returned a non-zero value. \n",
-                     comm_rank);
+            fprintf( stderr , "%d: GALU_Malloc: posix_memalign returned a non-zero value (%d). \n",
+                     comm_rank, rc);
         }
 
         fflush(stderr);
@@ -190,7 +197,7 @@ void GALU_Free(void * ptr)
  **************************************************************************/
 
 /* collective */
-GAL_Result GAL_Initialize()
+GAL_Result GAL_Initialize(void)
 {
     int mpi_status = MPI_SUCCESS;
     int mpi_initialized = 0;
@@ -212,7 +219,7 @@ GAL_Result GAL_Initialize()
 }
 
 /* collective */
-GAL_Result GAL_Terminate()
+GAL_Result GAL_Terminate(void)
 {
     int mpi_status = MPI_SUCCESS;
 
@@ -249,32 +256,8 @@ void GAL_Error(char * message, int code)
     return;
 }
 
-/* local */
-GAL_INLINE int GAL_Nodeid()
-{
-    int mpi_status = MPI_SUCCESS;
-    int comm_rank = -1;
-
-    mpi_status = MPI_Comm_rank(GAL_COMM_WORLD,&comm_rank);
-    assert(mpi_status==MPI_SUCCESS);
-
-    return comm_rank;
-}
-
-/* local */
-GAL_INLINE int GAL_Nnodes()
-{
-    int mpi_status = MPI_SUCCESS;
-    int comm_size = 0;
-
-    mpi_status = MPI_Comm_size(GAL_COMM_WORLD,&comm_size);
-    assert(mpi_status==MPI_SUCCESS);
-
-    return comm_size;
-}
-
 /* collective */
-GAL_Result GAL_Sync()
+GAL_Result GAL_Sync(void)
 {
     int mpi_status = MPI_SUCCESS;
 
@@ -370,6 +353,12 @@ GAL_Result GAL_Create(MPI_Comm comm,
         else /* unnecessary, but pedantic */
             local_size = 0;
 
+#ifdef GAL_DEBUG
+        if (comm_rank==0)
+        {
+
+        }
+#endif
     }
     else
     {

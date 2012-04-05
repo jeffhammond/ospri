@@ -1,3 +1,4 @@
+int ARMCI_Boot();
 int ARMCI_Init();
 void ARMCI_Finalize();
 void ARMCI_Cleanup();
