@@ -16,7 +16,7 @@ all: libq5d.a
 libq5d.a: q5d.o
 	$(AR) -r libq5d.a q5d.o
 
-q5d.o: q5d.c q5d.h impl.h
+q5d.o: q5d.c q5d.h
 	$(CC) $(CFLAGS) -c q5d.c -o q5d.o
 
 clean:

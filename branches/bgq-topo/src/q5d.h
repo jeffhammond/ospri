@@ -2,6 +2,8 @@
 extern "C" {
 #endif
 
+void Q5D_Init(void);
+
 void Q5D_Torus_coords(int32_t coords[]);
 void Q5D_Partition_size(int32_t coords[]);
 void Q5D_Partition_isTorus(int32_t coords[]);

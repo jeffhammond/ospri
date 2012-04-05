@@ -67,7 +67,7 @@ extern "C" {
 
 /**************************************************/
 
-#define F77NAME((lower),(upper)) lower##_
+#define F77NAME(lower,upper) lower##_
 
 /**************************************************/
 
@@ -136,7 +136,7 @@ void Q5D_Init(void)
 
 /* Fortran interface */
 
-void F77NAME(q5d_init,Q5D_INIT)
+void F77NAME(q5d_init,Q5D_INIT)(void)
 {
     Q5D_Init();
     return;
