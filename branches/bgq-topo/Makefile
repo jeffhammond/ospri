@@ -13,15 +13,24 @@ AR        = powerpc64-bgq-linux-ar
 
 all: libq5d.a
 
+check: capi.x
+
 libq5d.a: q5d.o
 	$(AR) -r libq5d.a q5d.o
 
 q5d.o: q5d.c q5d.h
 	$(CC) $(CFLAGS) -c q5d.c -o q5d.o
 
+capi.x: capi.o
+	$(LD) capi.o -lq5d -o capi.x
+
+capi.o: capi.c q5d.h
+	$(CC) $(CFLAGS) -c capi.c -o capi.o
+
 clean:
 	-rm -f *.o
 
 distclean: clean
 	-rm -f *.a
+	-rm -f *.x
 
