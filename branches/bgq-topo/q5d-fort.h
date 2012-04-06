@@ -14,13 +14,21 @@
 
 #if (BITS==32)
   #define F77INT int32_t
-#elif (BITS=64)
+#elif (BITS==64)
   #define F77INT int64_t
 #else
   #error Invalid bits!
 #endif
 
 /**************************************************/
+
+/* Fortran interface */
+
+void F77NAME(q5d_init,Q5D_INIT,)(void)
+{
+    Q5D_Init();
+    return;
+}
 
 void F77NAME(q5d_torus_coords,Q5D_TORUS_COORDS,BITS) (F77INT * coords)
 {

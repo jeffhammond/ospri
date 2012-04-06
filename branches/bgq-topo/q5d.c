@@ -149,14 +149,6 @@ void Q5D_Init(void)
     return;
 }
 
-/* Fortran interface */
-
-void F77NAME(q5d_init,Q5D_INIT)(void)
-{
-    Q5D_Init();
-    return;
-}
-
 /* C implementation */
 
 void Q5D_Torus_coords(int32_t coords[])
@@ -251,17 +243,6 @@ int32_t Q5D_Thread_id(void)
 #define UNDERSCORE 0
 
 #define BITS 32
-#include "q5d-fort.h"
-
-#define BITS 64
-#include "q5d-fort.h"
-
-#define UNDERSCORE 1
-
-#define BITS 32
-#include "q5d-fort.h"
-
-#define BITS 64
 #include "q5d-fort.h"
 
 #if defined(__cplusplus)
