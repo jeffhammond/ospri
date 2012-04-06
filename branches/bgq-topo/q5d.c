@@ -100,12 +100,16 @@ void Q5D_Init(void)
     rc = Kernel_JobCoords(&jobcoords);
     assert(rc==0);
 
+    info.ProcRank = Kernel_GetRank();
+
     info.Coords[0] = pers.Network_Config.Acoord;
     info.Coords[1] = pers.Network_Config.Bcoord;
     info.Coords[2] = pers.Network_Config.Ccoord;
     info.Coords[3] = pers.Network_Config.Dcoord;
     info.Coords[4] = pers.Network_Config.Ecoord;
-    info.Coords[5] = Kernel_ProcessorID();
+    info.Coords[5] = -1;
+
+    info.NodeRank = 
 
     info.PartitionSize[0] = pers.Network_Config.Anodes;
     info.PartitionSize[1] = pers.Network_Config.Bnodes;
@@ -141,17 +145,6 @@ void Q5D_Init(void)
                       info.PartitionSize[3] *
                       info.PartitionSize[4];
     info.TotalProcs = info.PartitionSize[5] * info.TotalNodes;
-
-#if 0
-    info.NodeRank = info.Coords[0] * info.PartitionSize[1] * info.PartitionSize[2] * info.PartitionSize[3] * info.PartitionSize[4] +
-                    info.Coords[1] * info.PartitionSize[2] * info.PartitionSize[3] * info.PartitionSize[4] *  +
-                    info.Coords[2] * info.PartitionSize[3] * info.PartitionSize[4] +
-                    info.Coords[3] * info.PartitionSize[4] +
-                    info.Coords[4];
-#else
-    info.NodeRank = ( Kernel_GetRank() - Kernel_ProcessorID() ) / Kernel_ProcessCount();
-#endif
-    info.ProcRank = Kernel_GetRank();
 
     return;
 }
