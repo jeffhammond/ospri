@@ -140,7 +140,7 @@ void Q5D_Init(void)
                       info.PartitionSize[2] *
                       info.PartitionSize[3] *
                       info.PartitionSize[4];
-    info.TotalProcs = info.PartitionSize[5] * info.NodeSize;
+    info.TotalProcs = info.PartitionSize[5] * info.TotalNodes;
 
     info.NodeRank = info.Coords[0] * info.PartitionSize[1] * info.PartitionSize[2] * info.PartitionSize[3] * info.PartitionSize[4] +
                     info.Coords[1] * info.PartitionSize[2] * info.PartitionSize[3] * info.PartitionSize[4] *  +
