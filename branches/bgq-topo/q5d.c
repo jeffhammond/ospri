@@ -249,7 +249,7 @@ int32_t Q5D_Thread_id(void)
 /* Fortran 64-bit implementation */
 
 void F77NAME(q5d_torus_coords64,Q5D_TORUS_COORDS64) (int64_t * coords)
-                                    {
+{
     coords[0] = (int64_t) info.Coords[0];
     coords[1] = (int64_t) info.Coords[1];
     coords[2] = (int64_t) info.Coords[2];
@@ -257,10 +257,10 @@ void F77NAME(q5d_torus_coords64,Q5D_TORUS_COORDS64) (int64_t * coords)
     coords[4] = (int64_t) info.Coords[4];
     coords[5] = (int64_t) info.Coords[5];
     return;
-                                    }
+}
 
 void F77NAME(q5d_partition_size64,Q5D_PARTITION_SIZE64) (int64_t * coords)
-                                    {
+{
     coords[0] = (int64_t) info.PartitionSize[0];
     coords[1] = (int64_t) info.PartitionSize[1];
     coords[2] = (int64_t) info.PartitionSize[2];
@@ -268,10 +268,10 @@ void F77NAME(q5d_partition_size64,Q5D_PARTITION_SIZE64) (int64_t * coords)
     coords[4] = (int64_t) info.PartitionSize[4];
     coords[5] = (int64_t) info.PartitionSize[5];
     return;
-                                    }
+}
 
 void F77NAME(q5d_partition_torus64,Q5D_PARTITION_TORUS64) (int64_t * coords)
-                                    {
+{
     coords[0] = (int64_t) info.PartitionTorus[0];
     coords[1] = (int64_t) info.PartitionTorus[1];
     coords[2] = (int64_t) info.PartitionTorus[2];
@@ -279,10 +279,10 @@ void F77NAME(q5d_partition_torus64,Q5D_PARTITION_TORUS64) (int64_t * coords)
     coords[4] = (int64_t) info.PartitionTorus[4];
     coords[5] = (int64_t) info.PartitionTorus[5];
     return;
-                                    }
+}
 
 void F77NAME(q5d_job_size64,Q5D_JOB_SIZE64) (int64_t * coords)
-                                    {
+{
     coords[0] = (int64_t) info.JobSize[0];
     coords[1] = (int64_t) info.JobSize[1];
     coords[2] = (int64_t) info.JobSize[2];
@@ -290,10 +290,10 @@ void F77NAME(q5d_job_size64,Q5D_JOB_SIZE64) (int64_t * coords)
     coords[4] = (int64_t) info.JobSize[4];
     coords[5] = (int64_t) info.JobSize[5];
     return;
-                                    }
+}
 
 void F77NAME(q5d_job_torus64,Q5D_JOB_TORUS64) (int64_t * coords)
-                                    {
+{
     coords[0] = (int64_t) info.JobTorus[0];
     coords[1] = (int64_t) info.JobTorus[1];
     coords[2] = (int64_t) info.JobTorus[2];
@@ -301,24 +301,24 @@ void F77NAME(q5d_job_torus64,Q5D_JOB_TORUS64) (int64_t * coords)
     coords[4] = (int64_t) info.JobTorus[4];
     coords[5] = (int64_t) info.JobTorus[5];
     return;
-                                    }
+}
 
 int64_t F77NAME(q5d_core_id64,Q5D_CORE_ID64) (void)
-                                    {
+{
     /* routine to return the BGQ core number (0-15) */
     return (int64_t) Kernel_ProcessorCoreID();
-                                    }
+}
 
 int64_t F77NAME(q5d_thread_id64,Q5D_THREAD_ID64) (void)
-                                    {
+{
     /* routine to return the BGQ virtual core number (0-67) */
     return (int64_t) Kernel_ProcessorID();
-                                    }
+}
 
 /* Fortran 32-bit implementation */
 
 void F77NAME(q5d_torus_coords32,Q5D_TORUS_COORDS32) (int32_t * coords)
-                                    {
+{
     coords[0] = info.Coords[0];
     coords[1] = info.Coords[1];
     coords[2] = info.Coords[2];
@@ -326,10 +326,10 @@ void F77NAME(q5d_torus_coords32,Q5D_TORUS_COORDS32) (int32_t * coords)
     coords[4] = info.Coords[4];
     coords[5] = info.Coords[5];
     return;
-                                    }
+}
 
 void F77NAME(q5d_partition_size32,Q5D_PARTITION_SIZE32) (int32_t * coords)
-                                    {
+{
     coords[0] = info.PartitionSize[0];
     coords[1] = info.PartitionSize[1];
     coords[2] = info.PartitionSize[2];
@@ -337,10 +337,10 @@ void F77NAME(q5d_partition_size32,Q5D_PARTITION_SIZE32) (int32_t * coords)
     coords[4] = info.PartitionSize[4];
     coords[5] = info.PartitionSize[5];
     return;
-                                    }
+}
 
 void F77NAME(q5d_partition_torus32,Q5D_PARTITION_TORUS32) (int32_t * coords)
-                                    {
+{
     coords[0] = info.PartitionTorus[0];
     coords[1] = info.PartitionTorus[1];
     coords[2] = info.PartitionTorus[2];
@@ -348,10 +348,10 @@ void F77NAME(q5d_partition_torus32,Q5D_PARTITION_TORUS32) (int32_t * coords)
     coords[4] = info.PartitionTorus[4];
     coords[5] = info.PartitionTorus[5];
     return;
-                                    }
+}
 
 void F77NAME(q5d_job_size32,Q5D_JOB_SIZE32) (int32_t * coords)
-                                    {
+{
     coords[0] = info.JobSize[0];
     coords[1] = info.JobSize[1];
     coords[2] = info.JobSize[2];
@@ -359,10 +359,10 @@ void F77NAME(q5d_job_size32,Q5D_JOB_SIZE32) (int32_t * coords)
     coords[4] = info.JobSize[4];
     coords[5] = info.JobSize[5];
     return;
-                                    }
+}
 
 void F77NAME(q5d_job_torus32,Q5D_JOB_TORUS32) (int32_t * coords)
-                                    {
+{
     coords[0] = info.JobTorus[0];
     coords[1] = info.JobTorus[1];
     coords[2] = info.JobTorus[2];
@@ -370,19 +370,19 @@ void F77NAME(q5d_job_torus32,Q5D_JOB_TORUS32) (int32_t * coords)
     coords[4] = info.JobTorus[4];
     coords[5] = info.JobTorus[5];
     return;
-                                    }
+}
 
 int32_t F77NAME(q5d_core_id32,Q5D_CORE_ID32) (void)
-                                    {
+{
     /* routine to return the BGQ core number (0-15) */
     return (int32_t) Kernel_ProcessorCoreID();
-                                    }
+}
 
 int32_t F77NAME(q5d_thread_id32,Q5D_THREAD_ID32) (void)
-                                    {
+{
     /* routine to return the BGQ virtual core number (0-67) */
     return (int32_t) Kernel_ProcessorID();
-                                    }
+}
 
 #if defined(__cplusplus)
 }
