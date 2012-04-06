@@ -22,7 +22,7 @@ q5d.o: q5d.c q5d.h
 	$(CC) $(CFLAGS) -c q5d.c -o q5d.o
 
 capi.x: capi.o
-	$(LD) capi.o -lq5d -o capi.x
+	$(LD) capi.o -L. -lq5d -o capi.x
 
 capi.o: capi.c q5d.h
 	$(CC) $(CFLAGS) -c capi.c -o capi.o

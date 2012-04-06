@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdint.h>
 
-#include <../src/q5d.h>
+#include "q5d.h"
 
 int main(int argc, char* argv[])
 {
