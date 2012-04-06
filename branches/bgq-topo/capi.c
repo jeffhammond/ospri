@@ -9,6 +9,9 @@ int main(int argc, char* argv[])
 
 	Q5D_Init();
 
+	printf("Q5D_Total_nodes = %d, Q5D_Node_rank = %d \n", Q5D_Total_nodes(), Q5D_Node_rank() );
+    printf("Q5D_Total_procs = %d, Q5D_Proc_rank = %d \n", Q5D_Total_procs(), Q5D_Proc_rank() );
+
 	Q5D_Torus_coords(coords);
 	printf("Q5D_Torus_coords = %d %d %d %d %d %d \n", coords[0], coords[1], coords[2], coords[3], coords[4], coords[5]);
 
