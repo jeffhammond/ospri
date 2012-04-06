@@ -142,12 +142,16 @@ void Q5D_Init(void)
                       info.PartitionSize[4];
     info.TotalProcs = info.PartitionSize[5] * info.TotalNodes;
 
+#if 0
     info.NodeRank = info.Coords[0] * info.PartitionSize[1] * info.PartitionSize[2] * info.PartitionSize[3] * info.PartitionSize[4] +
                     info.Coords[1] * info.PartitionSize[2] * info.PartitionSize[3] * info.PartitionSize[4] *  +
                     info.Coords[2] * info.PartitionSize[3] * info.PartitionSize[4] +
                     info.Coords[3] * info.PartitionSize[4] +
                     info.Coords[4];
-    info.ProcRank = info.Coords[5] + info.NodeRank * info.PartitionSize[5];
+#else
+    info.NodeRank = ( Kernel_GetRank() - Kernel_ProcessorID() ) / Kernel_ProcessCount();
+#endif
+    info.ProcRank = Kernel_GetRank();
 
     return;
 }
