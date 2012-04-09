@@ -1,0 +1,174 @@
+2012-03-19 18:40:56.856 (INFO ) [0xfff987389e0] EAS-00040-11371-128:25437:ibm.runjob.client.options.Parser: set local socket to runjob_mux from properties file
+2012-03-19 18:40:59.314 (INFO ) [0xfff987389e0] EAS-00040-11371-128:4615:ibm.runjob.client.Job: job 4615 started
+Abort(1) on node 619 (rank 619 in comm 1140850688): Fatal error in PMPI_Reduce: Other MPI error, error stack:
+PMPI_Reduce(1270)..............: MPI_Reduce(sbuf=0x1fc0c01020, rbuf=(nil), count=134217728, MPI_INT, MPI_SUM, root=0, MPI_COMM_WORLD) failed
+MPIR_Reduce_impl(1087).........: 
+MPIR_Reduce_intra(885).........: 
+MPIR_Reduce_redscat_gather(314): Unable to allocate 536870912 bytes of memory for temporary buffer (probably out of memory)
+Abort(1) on node 699 (rank 699 in comm 1140850688): Fatal error in PMPI_Reduce: Other MPI error, error stack:
+PMPI_Reduce(1270)..............: MPI_Reduce(sbuf=0x1fc0c01020, rbuf=(nil), count=134217728, MPI_INT, MPI_SUM, root=0, MPI_COMM_WORLD) failed
+MPIR_Reduce_impl(1087).........: 
+MPIR_Reduce_intra(885).........: 
+MPIR_Reduce_redscat_gather(314): Unable to allocate 536870912 bytes of memory for temporary buffer (probably out of memory)
+Abort(1) on node 603 (rank 603 in comm 1140850688): Fatal error in PMPI_Reduce: Other MPI error, error stack:
+PMPI_Reduce(1270)..............: MPI_Reduce(sbuf=0x1fc0c01020, rbuf=(nil), count=134217728, MPI_INT, MPI_SUM, root=0, MPI_COMM_WORLD) failed
+MPIR_Reduce_impl(1087).........: 
+MPIR_Reduce_intra(885).........: 
+MPIR_Reduce_redscat_gather(314): Unable to allocate 536870912 bytes of memory for temporary buffer (probably out of memory)
+Abort(1) on node 923 (rank 923 in comm 1140850688): Fatal error in PMPI_Reduce: Other MPI error, error stack:
+PMPI_Reduce(1270)..............: MPI_Reduce(sbuf=0x1fc0c01020, rbuf=(nil), count=134217728, MPI_INT, MPI_SUM, root=0, MPI_COMM_WORLD) failed
+MPIR_Reduce_impl(1087).........: 
+MPIR_Reduce_intra(885).........: 
+MPIR_Reduce_redscat_gather(314): Unable to allocate 536870912 bytes of memory for temporary buffer (probably out of memory)
+Abort(1) on node 606 (rank 606 in comm 1140850688): Fatal error in PMPI_Reduce: Other MPI error, error stack:
+PMPI_Reduce(1270)..............: MPI_Reduce(sbuf=0x1fc0c01020, rbuf=(nil), count=134217728, MPI_INT, MPI_SUM, root=0, MPI_COMM_WORLD) failed
+MPIR_Reduce_impl(1087).........: 
+MPIR_Reduce_intra(885).........: 
+MPIR_Reduce_redscat_gather(314): Unable to allocate 536870912 bytes of memory for temporary buffer (probably out of memory)
+Abort(1) on node 926 (rank 926 in comm 1140850688): Fatal error in PMPI_Reduce: Other MPI error, error stack:
+PMPI_Reduce(1270)..............: MPI_Reduce(sbuf=0x1fc0c01020, rbuf=(nil), count=134217728, MPI_INT, MPI_SUM, root=0, MPI_COMM_WORLD) failed
+MPIR_Reduce_impl(1087).........: 
+MPIR_Reduce_intra(885).........: 
+MPIR_Reduce_redscat_gather(314): Unable to allocate 536870912 bytes of memory for temporary buffer (probably out of memory)
+Abort(1) on node 596 (rank 596 in comm 1140850688): Fatal error in PMPI_Reduce: Other MPI error, error stack:
+PMPI_Reduce(1270)..............: MPI_Reduce(sbuf=0x1fc0d01020, rbuf=(nil), count=134217728, MPI_INT, MPI_SUM, root=0, MPI_COMM_WORLD) failed
+MPIR_Reduce_impl(1087).........: 
+MPIR_Reduce_intra(885).........: 
+MPIR_Reduce_redscat_gather(314): Unable to allocate 536870912 bytes of memory for temporary buffer (probably out of memory)
+Abort(1) on node 927 (rank 927 in comm 1140850688): Fatal error in PMPI_Reduce: Other MPI error, error stack:
+PMPI_Reduce(1270)..............: MPI_Reduce(sbuf=0x1fc0c01020, rbuf=(nil), count=134217728, MPI_INT, MPI_SUM, root=0, MPI_COMM_WORLD) failed
+MPIR_Reduce_impl(1087).........: 
+MPIR_Reduce_intra(885).........: 
+MPIR_Reduce_redscat_gather(314): Unable to allocate 536870912 bytes of memory for temporary buffer (probably out of memory)
+Abort(1) on node 600 (rank 600 in comm 1140850688): Fatal error in PMPI_Reduce: Other MPI error, error stack:
+PMPI_Reduce(1270)..............: MPI_Reduce(sbuf=0x1fc0d01020, rbuf=(nil), count=134217728, MPI_INT, MPI_SUM, root=0, MPI_COMM_WORLD) failed
+MPIR_Reduce_impl(1087).........: 
+MPIR_Reduce_intra(885).........: 
+MPIR_Reduce_redscat_gather(314): Unable to allocate 536870912 bytes of memory for temporary buffer (probably out of memory)
+Abort(1) on node 919 (rank 919 in comm 1140850688): Fatal error in PMPI_Reduce: Other MPI error, error stack:
+PMPI_Reduce(1270)..............: MPI_Reduce(sbuf=0x1fc0d01020, rbuf=(nil), count=134217728, MPI_INT, MPI_SUM, root=0, MPI_COMM_WORLD) failed
+MPIR_Reduce_impl(1087).........: 
+MPIR_Reduce_intra(885).........: 
+MPIR_Reduce_redscat_gather(314): Unable to allocate 536870912 bytes of memory for temporary buffer (probably out of memory)
+Abort(1) on node 593 (rank 593 in comm 1140850688): Fatal error in PMPI_Reduce: Other MPI error, error stack:
+PMPI_Reduce(1270)..............: MPI_Reduce(sbuf=0x1fc4b01020, rbuf=(nil), count=134217728, MPI_INT, MPI_SUM, root=0, MPI_COMM_WORLD) failed
+MPIR_Reduce_impl(1087).........: 
+MPIR_Reduce_intra(885).........: 
+MPIR_Reduce_redscat_gather(314): Unable to allocate 536870912 bytes of memory for temporary buffer (probably out of memory)
+Abort(1) on node 925 (rank 925 in comm 1140850688): Fatal error in PMPI_Reduce: Other MPI error, error stack:
+PMPI_Reduce(1270)..............: MPI_Reduce(sbuf=0x1fc0c01020, rbuf=(nil), count=134217728, MPI_INT, MPI_SUM, root=0, MPI_COMM_WORLD) failed
+MPIR_Reduce_impl(1087).........: 
+MPIR_Reduce_intra(885).........: 
+MPIR_Reduce_redscat_gather(314): Unable to allocate 536870912 bytes of memory for temporary buffer (probably out of memory)
+Abort(1) on node 599 (rank 599 in comm 1140850688): Fatal error in PMPI_Reduce: Other MPI error, error stack:
+PMPI_Reduce(1270)..............: MPI_Reduce(sbuf=0x1fc0d01020, rbuf=(nil), count=134217728, MPI_INT, MPI_SUM, root=0, MPI_COMM_WORLD) failed
+MPIR_Reduce_impl(1087).........: 
+MPIR_Reduce_intra(885).........: 
+MPIR_Reduce_redscat_gather(314): Unable to allocate 536870912 bytes of memory for temporary buffer (probably out of memory)
+Abort(1) on node 916 (rank 916 in comm 1140850688): Fatal error in PMPI_Reduce: Other MPI error, error stack:
+PMPI_Reduce(1270)..............: MPI_Reduce(sbuf=0x1fc0d01020, rbuf=(nil), count=134217728, MPI_INT, MPI_SUM, root=0, MPI_COMM_WORLD) failed
+MPIR_Reduce_impl(1087).........: 
+MPIR_Reduce_intra(885).........: 
+MPIR_Reduce_redscat_gather(314): Unable to allocate 536870912 bytes of memory for temporary buffer (probably out of memory)
+Abort(1) on node 601 (rank 601 in comm 1140850688): Fatal error in PMPI_Reduce: Other MPI error, error stack:
+PMPI_Reduce(1270)..............: MPI_Reduce(sbuf=0x1fc0d01020, rbuf=(nil), count=134217728, MPI_INT, MPI_SUM, root=0, MPI_COMM_WORLD) failed
+MPIR_Reduce_impl(1087).........: 
+MPIR_Reduce_intra(885).........: 
+MPIR_Reduce_redscat_gather(314): Unable to allocate 536870912 bytes of memory for temporary buffer (probably out of memory)
+Abort(1) on node 921 (rank 921 in comm 1140850688): Fatal error in PMPI_Reduce: Other MPI error, error stack:
+PMPI_Reduce(1270)..............: MPI_Reduce(sbuf=0x1fc0d01020, rbuf=(nil), count=134217728, MPI_INT, MPI_SUM, root=0, MPI_COMM_WORLD) failed
+MPIR_Reduce_impl(1087).........: 
+MPIR_Reduce_intra(885).........: 
+MPIR_Reduce_redscat_gather(314): Unable to allocate 536870912 bytes of memory for temporary buffer (probably out of memory)
+Abort(1) on node 598 (rank 598 in comm 1140850688): Fatal error in PMPI_Reduce: Other MPI error, error stack:
+PMPI_Reduce(1270)..............: MPI_Reduce(sbuf=0x1fc0d01020, rbuf=(nil), count=134217728, MPI_INT, MPI_SUM, root=0, MPI_COMM_WORLD) failed
+MPIR_Reduce_impl(1087).........: 
+MPIR_Reduce_intra(885).........: 
+MPIR_Reduce_redscat_gather(314): Unable to allocate 536870912 bytes of memory for temporary buffer (probably out of memory)
+Abort(1) on node 914 (rank 914 in comm 1140850688): Fatal error in PMPI_Reduce: Other MPI error, error stack:
+PMPI_Reduce(1270)..............: MPI_Reduce(sbuf=0x1fc1b01020, rbuf=(nil), count=134217728, MPI_INT, MPI_SUM, root=0, MPI_COMM_WORLD) failed
+MPIR_Reduce_impl(1087).........: 
+MPIR_Reduce_intra(885).........: 
+MPIR_Reduce_redscat_gather(314): Unable to allocate 536870912 bytes of memory for temporary buffer (probably out of memory)
+Abort(1) on node 595 (rank 595 in comm 1140850688): Fatal error in PMPI_Reduce: Other MPI error, error stack:
+PMPI_Reduce(1270)..............: MPI_Reduce(sbuf=0x1fc1001020, rbuf=(nil), count=134217728, MPI_INT, MPI_SUM, root=0, MPI_COMM_WORLD) failed
+MPIR_Reduce_impl(1087).........: 
+MPIR_Reduce_intra(885).........: 
+MPIR_Reduce_redscat_gather(314): Unable to allocate 536870912 bytes of memory for temporary buffer (probably out of memory)
+Abort(1) on node 920 (rank 920 in comm 1140850688): Fatal error in PMPI_Reduce: Other MPI error, error stack:
+PMPI_Reduce(1270)..............: MPI_Reduce(sbuf=0x1fc0d01020, rbuf=(nil), count=134217728, MPI_INT, MPI_SUM, root=0, MPI_COMM_WORLD) failed
+MPIR_Reduce_impl(1087).........: 
+MPIR_Reduce_intra(885).........: 
+MPIR_Reduce_redscat_gather(314): Unable to allocate 536870912 bytes of memory for temporary buffer (probably out of memory)
+Abort(1) on node 597 (rank 597 in comm 1140850688): Fatal error in PMPI_Reduce: Other MPI error, error stack:
+PMPI_Reduce(1270)..............: MPI_Reduce(sbuf=0x1fc0d01020, rbuf=(nil), count=134217728, MPI_INT, MPI_SUM, root=0, MPI_COMM_WORLD) failed
+MPIR_Reduce_impl(1087).........: 
+MPIR_Reduce_intra(885).........: 
+MPIR_Reduce_redscat_gather(314): Unable to allocate 536870912 bytes of memory for temporary buffer (probably out of memory)
+Abort(1) on node 922 (rank 922 in comm 1140850688): Fatal error in PMPI_Reduce: Other MPI error, error stack:
+PMPI_Reduce(1270)..............: MPI_Reduce(sbuf=0x1fc0c01020, rbuf=(nil), count=134217728, MPI_INT, MPI_SUM, root=0, MPI_COMM_WORLD) failed
+MPIR_Reduce_impl(1087).........: 
+MPIR_Reduce_intra(885).........: 
+MPIR_Reduce_redscat_gather(314): Unable to allocate 536870912 bytes of memory for temporary buffer (probably out of memory)
+Abort(1) on node 607 (rank 607 in comm 1140850688): Fatal error in PMPI_Reduce: Other MPI error, error stack:
+PMPI_Reduce(1270)..............: MPI_Reduce(sbuf=0x1fc0c01020, rbuf=(nil), count=134217728, MPI_INT, MPI_SUM, root=0, MPI_COMM_WORLD) failed
+MPIR_Reduce_impl(1087).........: 
+MPIR_Reduce_intra(885).........: 
+MPIR_Reduce_redscat_gather(314): Unable to allocate 536870912 bytes of memory for temporary buffer (probably out of memory)
+Abort(1) on node 924 (rank 924 in comm 1140850688): Fatal error in PMPI_Reduce: Other MPI error, error stack:
+PMPI_Reduce(1270)..............: MPI_Reduce(sbuf=0x1fc0c01020, rbuf=(nil), count=134217728, MPI_INT, MPI_SUM, root=0, MPI_COMM_WORLD) failed
+MPIR_Reduce_impl(1087).........: 
+MPIR_Reduce_intra(885).........: 
+MPIR_Reduce_redscat_gather(314): Unable to allocate 536870912 bytes of memory for temporary buffer (probably out of memory)
+Abort(1) on node 592 (rank 592 in comm 1140850688): Fatal error in PMPI_Reduce: Other MPI error, error stack:
+PMPI_Reduce(1270)..............: MPI_Reduce(sbuf=0x1fc1b01020, rbuf=(nil), count=134217728, MPI_INT, MPI_SUM, root=0, MPI_COMM_WORLD) failed
+MPIR_Reduce_impl(1087).........: 
+MPIR_Reduce_intra(885).........: 
+MPIR_Reduce_redscat_gather(314): Unable to allocate 536870912 bytes of memory for temporary buffer (probably out of memory)
+Abort(1) on node 912 (rank 912 in comm 1140850688): Fatal error in PMPI_Reduce: Other MPI error, error stack:
+PMPI_Reduce(1270)..............: MPI_Reduce(sbuf=0x1fc1b01020, rbuf=(nil), count=134217728, MPI_INT, MPI_SUM, root=0, MPI_COMM_WORLD) failed
+MPIR_Reduce_impl(1087).........: 
+MPIR_Reduce_intra(885).........: 
+MPIR_Reduce_redscat_gather(314): Unable to allocate 536870912 bytes of memory for temporary buffer (probably out of memory)
+Abort(1) on node 602 (rank 602 in comm 1140850688): Fatal error in PMPI_Reduce: Other MPI error, error stack:
+PMPI_Reduce(1270)..............: MPI_Reduce(sbuf=0x1fc0c01020, rbuf=(nil), count=134217728, MPI_INT, MPI_SUM, root=0, MPI_COMM_WORLD) failed
+MPIR_Reduce_impl(1087).........: 
+MPIR_Reduce_intra(885).........: 
+MPIR_Reduce_redscat_gather(314): Unable to allocate 536870912 bytes of memory for temporary buffer (probably out of memory)
+Abort(1) on node 917 (rank 917 in comm 1140850688): Fatal error in PMPI_Reduce: Other MPI error, error stack:
+PMPI_Reduce(1270)..............: MPI_Reduce(sbuf=0x1fc0d01020, rbuf=(nil), count=134217728, MPI_INT, MPI_SUM, root=0, MPI_COMM_WORLD) failed
+MPIR_Reduce_impl(1087).........: 
+MPIR_Reduce_intra(885).........: 
+MPIR_Reduce_redscat_gather(314): Unable to allocate 536870912 bytes of memory for temporary buffer (probably out of memory)
+Abort(1) on node 594 (rank 594 in comm 1140850688): Fatal error in PMPI_Reduce: Other MPI error, error stack:
+PMPI_Reduce(1270)..............: MPI_Reduce(sbuf=0x1fc1b01020, rbuf=(nil), count=134217728, MPI_INT, MPI_SUM, root=0, MPI_COMM_WORLD) failed
+MPIR_Reduce_impl(1087).........: 
+MPIR_Reduce_intra(885).........: 
+MPIR_Reduce_redscat_gather(314): Unable to allocate 536870912 bytes of memory for temporary buffer (probably out of memory)
+Abort(1) on node 918 (rank 918 in comm 1140850688): Fatal error in PMPI_Reduce: Other MPI error, error stack:
+PMPI_Reduce(1270)..............: MPI_Reduce(sbuf=0x1fc0d01020, rbuf=(nil), count=134217728, MPI_INT, MPI_SUM, root=0, MPI_COMM_WORLD) failed
+MPIR_Reduce_impl(1087).........: 
+MPIR_Reduce_intra(885).........: 
+MPIR_Reduce_redscat_gather(314): Unable to allocate 536870912 bytes of memory for temporary buffer (probably out of memory)
+Abort(1) on node 605 (rank 605 in comm 1140850688): Fatal error in PMPI_Reduce: Other MPI error, error stack:
+PMPI_Reduce(1270)..............: MPI_Reduce(sbuf=0x1fc0c01020, rbuf=(nil), count=134217728, MPI_INT, MPI_SUM, root=0, MPI_COMM_WORLD) failed
+MPIR_Reduce_impl(1087).........: 
+MPIR_Reduce_intra(885).........: 
+MPIR_Reduce_redscat_gather(314): Unable to allocate 536870912 bytes of memory for temporary buffer (probably out of memory)
+Abort(1) on node 915 (rank 915 in comm 1140850688): Fatal error in PMPI_Reduce: Other MPI error, error stack:
+PMPI_Reduce(1270)..............: MPI_Reduce(sbuf=0x1fc1001020, rbuf=(nil), count=134217728, MPI_INT, MPI_SUM, root=0, MPI_COMM_WORLD) failed
+MPIR_Reduce_impl(1087).........: 
+MPIR_Reduce_intra(885).........: 
+MPIR_Reduce_redscat_gather(314): Unable to allocate 536870912 bytes of memory for temporary buffer (probably out of memory)
+Abort(1) on node 604 (rank 604 in comm 1140850688): Fatal error in PMPI_Reduce: Other MPI error, error stack:
+PMPI_Reduce(1270)..............: MPI_Reduce(sbuf=0x1fc0c01020, rbuf=(nil), count=134217728, MPI_INT, MPI_SUM, root=0, MPI_COMM_WORLD) failed
+MPIR_Reduce_impl(1087).........: 
+MPIR_Reduce_intra(885).........: 
+MPIR_Reduce_redscat_gather(314): Unable to allocate 536870912 bytes of memory for temporary buffer (probably out of memory)
+Abort(1) on node 913 (rank 913 in comm 1140850688): Fatal error in PMPI_Reduce: Other MPI error, error stack:
+PMPI_Reduce(1270)..............: MPI_Reduce(sbuf=0x1fc4b01020, rbuf=(nil), count=134217728, MPI_INT, MPI_SUM, root=0, MPI_COMM_WORLD) failed
+MPIR_Reduce_impl(1087).........: 
+MPIR_Reduce_intra(885).........: 
+MPIR_Reduce_redscat_gather(314): Unable to allocate 536870912 bytes of memory for temporary buffer (probably out of memory)
+2012-03-19 18:41:14.015 (WARN ) [0xfff987389e0] EAS-00040-11371-128:4615:ibm.runjob.client.Job: terminated by signal 6
+2012-03-19 18:41:14.015 (WARN ) [0xfff987389e0] EAS-00040-11371-128:4615:ibm.runjob.client.Job: abnormal termination by signal 6 from rank 699

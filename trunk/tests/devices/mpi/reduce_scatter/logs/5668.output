@@ -1,0 +1,19 @@
+world size=2048 min_count=1 max_count=1100000
+begin send-recv bandwidth test
+begin reduce bandwidth test
+                MPI_Reduce(MPI_SUM):       8192 bytes (      4 bytes per rank) transferred in 4.83e-04 seconds (1.70e+01 MB/s or 8.28e-03 MB/s bytes per rank)
+                MPI_Reduce(MPI_SUM):      16384 bytes (      8 bytes per rank) transferred in 5.09e-04 seconds (3.22e+01 MB/s or 1.57e-02 MB/s bytes per rank)
+                MPI_Reduce(MPI_SUM):      32768 bytes (     16 bytes per rank) transferred in 5.59e-04 seconds (5.86e+01 MB/s or 2.86e-02 MB/s bytes per rank)
+                MPI_Reduce(MPI_SUM):      65536 bytes (     32 bytes per rank) transferred in 6.84e-04 seconds (9.59e+01 MB/s or 4.68e-02 MB/s bytes per rank)
+                MPI_Reduce(MPI_SUM):     131072 bytes (     64 bytes per rank) transferred in 1.07e-03 seconds (1.23e+02 MB/s or 5.99e-02 MB/s bytes per rank)
+                MPI_Reduce(MPI_SUM):     262144 bytes (    128 bytes per rank) transferred in 1.60e-03 seconds (1.64e+02 MB/s or 8.00e-02 MB/s bytes per rank)
+                MPI_Reduce(MPI_SUM):     524288 bytes (    256 bytes per rank) transferred in 2.77e-03 seconds (1.89e+02 MB/s or 9.24e-02 MB/s bytes per rank)
+                MPI_Reduce(MPI_SUM):    1048576 bytes (    512 bytes per rank) transferred in 5.21e-03 seconds (2.01e+02 MB/s or 9.82e-02 MB/s bytes per rank)
+                MPI_Reduce(MPI_SUM):    2097152 bytes (   1024 bytes per rank) transferred in 1.41e-02 seconds (1.49e+02 MB/s or 7.29e-02 MB/s bytes per rank)
+                MPI_Reduce(MPI_SUM):    4194304 bytes (   2048 bytes per rank) transferred in 3.49e-02 seconds (1.20e+02 MB/s or 5.88e-02 MB/s bytes per rank)
+                MPI_Reduce(MPI_SUM):    8388608 bytes (   4096 bytes per rank) transferred in 6.99e-02 seconds (1.20e+02 MB/s or 5.86e-02 MB/s bytes per rank)
+                MPI_Reduce(MPI_SUM):   16777216 bytes (   8192 bytes per rank) transferred in 1.41e-01 seconds (1.19e+02 MB/s or 5.82e-02 MB/s bytes per rank)
+                MPI_Reduce(MPI_SUM):   33554432 bytes (  16384 bytes per rank) transferred in 2.76e-01 seconds (1.21e+02 MB/s or 5.93e-02 MB/s bytes per rank)
+                MPI_Reduce(MPI_SUM):   67108864 bytes (  32768 bytes per rank) transferred in 5.54e-01 seconds (1.21e+02 MB/s or 5.92e-02 MB/s bytes per rank)
+                MPI_Reduce(MPI_SUM):  134217728 bytes (  65536 bytes per rank) transferred in 1.11e+00 seconds (1.21e+02 MB/s or 5.90e-02 MB/s bytes per rank)
+                MPI_Reduce(MPI_SUM):  268435456 bytes ( 131072 bytes per rank) transferred in 2.23e+00 seconds (1.21e+02 MB/s or 5.89e-02 MB/s bytes per rank)

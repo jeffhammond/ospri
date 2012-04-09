@@ -1,0 +1,20 @@
+2012-03-19 18:32:16.933 (INFO ) [0xfffb5dd89e0] EAS-22040-33371-128:9859:ibm.runjob.client.options.Parser: set local socket to runjob_mux from properties file
+2012-03-19 18:32:20.174 (INFO ) [0xfffb5dd89e0] EAS-22040-33371-128:4605:ibm.runjob.client.Job: job 4605 started
+reduce_scatter.x: reduce_scatter.c:84: main: Assertion `buffer != ((void *)0)' failed.
+reduce_scatter.x: reduce_scatter.c:84: main: Assertion `buffer != ((void *)0)' failed.
+reduce_scatter.x: reduce_scatter.c:84: main: Assertion `buffer != ((void *)0)' failed.
+reduce_scatter.x: reduce_scatter.c:84: main: Assertion `buffer != ((void *)0)' failed.
+reduce_scatter.x: reduce_scatter.c:84: main: Assertion `buffer != ((void *)0)' failed.
+reduce_scatter.x: reduce_scatter.c:84: main: Assertion `buffer != ((void *)0)' failed.
+reduce_scatter.x: reduce_scatter.c:84: main: Assertion `buffer != ((void *)0)' failed.
+reduce_scatter.x: reduce_scatter.c:84: main: Assertion `buffer != ((void *)0)' failed.
+reduce_scatter.x: reduce_scatter.c:84: main: Assertion `buffer != ((void *)0)' failed.
+reduce_scatter.x: reduce_scatter.c:84: main: Assertion `buffer != ((void *)0)' failed.
+reduce_scatter.x: reduce_scatter.c:84: main: Assertion `buffer != ((void *)0)' failed.
+reduce_scatter.x: reduce_scatter.c:84: main: Assertion `buffer != ((void *)0)' failed.
+reduce_scatter.x: reduce_scatter.c:84: main: Assertion `buffer != ((void *)0)' failed.
+reduce_scatter.x: reduce_scatter.c:84: main: Assertion `buffer != ((void *)0)' failed.
+reduce_scatter.x: reduce_scatter.c:84: main: Assertion `buffer != ((void *)0)' failed.
+reduce_scatter.x: reduce_scatter.c:84: main: Assertion `buffer != ((void *)0)' failed.
+2012-03-19 18:32:28.201 (WARN ) [0xfffb5dd89e0] EAS-22040-33371-128:4605:ibm.runjob.client.Job: terminated by signal 6
+2012-03-19 18:32:28.201 (WARN ) [0xfffb5dd89e0] EAS-22040-33371-128:4605:ibm.runjob.client.Job: abnormal termination by signal 6 from rank 450
