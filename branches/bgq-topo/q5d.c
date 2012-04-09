@@ -107,9 +107,7 @@ void Q5D_Init(void)
     info.Coords[2] = pers.Network_Config.Ccoord;
     info.Coords[3] = pers.Network_Config.Dcoord;
     info.Coords[4] = pers.Network_Config.Ecoord;
-    info.Coords[5] = -1;
-
-    info.NodeRank = 
+    info.Coords[5] = Kernel_MyTcoord();
 
     info.PartitionSize[0] = pers.Network_Config.Anodes;
     info.PartitionSize[1] = pers.Network_Config.Bnodes;
@@ -117,6 +115,16 @@ void Q5D_Init(void)
     info.PartitionSize[3] = pers.Network_Config.Dnodes;
     info.PartitionSize[4] = pers.Network_Config.Enodes;
     info.PartitionSize[5] = Kernel_ProcessCount();
+
+    /* shift rank back to 0 modulo the node then divide by procs per node to index by 1 */
+    info.NodeRank = ( info.ProcRank - info.Coords[5] ) / info.PartitionSize[5];
+
+    info.TotalNodes = info.PartitionSize[0] *
+                      info.PartitionSize[1] *
+                      info.PartitionSize[2] *
+                      info.PartitionSize[3] *
+                      info.PartitionSize[4];
+    info.TotalProcs = info.PartitionSize[5] * info.TotalNodes;
 
     info.PartitionTorus[0] = ND_GET_TORUS(0,pers.Network_Config.NetFlags);
     info.PartitionTorus[1] = ND_GET_TORUS(1,pers.Network_Config.NetFlags);
@@ -138,13 +146,6 @@ void Q5D_Init(void)
     info.JobTorus[3] = ND_GET_TORUS(3,pers.Network_Config.NetFlags) && jobcoords.shape.d==pers.Network_Config.Dnodes;
     info.JobTorus[4] = ND_GET_TORUS(4,pers.Network_Config.NetFlags) && jobcoords.shape.e==pers.Network_Config.Enodes;
     info.JobTorus[5] = 0;
-
-    info.TotalNodes = info.PartitionSize[0] *
-                      info.PartitionSize[1] *
-                      info.PartitionSize[2] *
-                      info.PartitionSize[3] *
-                      info.PartitionSize[4];
-    info.TotalProcs = info.PartitionSize[5] * info.TotalNodes;
 
     return;
 }

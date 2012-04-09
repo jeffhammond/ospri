@@ -38,6 +38,21 @@ int main(int argc, char* argv[])
     MPI_Barrier(MPI_COMM_WORLD);
     sleep(1);
 
+    if (rank==0) printf("%d: Kernel_GetJobID() = %lu \n", rank, Kernel_GetJobID() );
+
+    printf("%d: Kernel_ProcessCount() = %d \n", rank, Kernel_ProcessCount() );
+    printf("%d: Kernel_ProcessorCount() = %d \n", rank, Kernel_ProcessorCount() );
+    printf("%d: Kernel_ProcessorID() = %d \n", rank, Kernel_ProcessorID() );
+    printf("%d: Kernel_ProcessorCoreID() = %d \n", rank, Kernel_ProcessorCoreID() );
+    printf("%d: Kernel_ProcessorThreadID() = %d \n", rank, Kernel_ProcessorThreadID() );
+    printf("%d: Kernel_BlockThreadId() = %d \n", rank, Kernel_BlockThreadId() );
+    printf("%d: Kernel_MyTcoord() = %d \n", rank, Kernel_MyTcoord() );
+    printf("%d: Kernel_GetRank() = %d \n", rank, Kernel_GetRank() );
+
+    fflush(stdout);
+    MPI_Barrier(MPI_COMM_WORLD);
+    sleep(1);
+
     uint32_t rc;
     Personality_t pers;
     BG_JobCoords_t jobcoords;
@@ -63,11 +78,11 @@ int main(int argc, char* argv[])
         printf("%d: pers.Network_Config.Dnodes = %d \n", rank, pers.Network_Config.Dnodes);
         printf("%d: pers.Network_Config.Enodes = %d \n", rank, pers.Network_Config.Enodes);
 
-        printf("%d: ND_GET_TORUS(0,pers.Network_Config.NetFlags) = %d \n", rank, ND_GET_TORUS(0,pers.Network_Config.NetFlags) );
-        printf("%d: ND_GET_TORUS(1,pers.Network_Config.NetFlags) = %d \n", rank, ND_GET_TORUS(1,pers.Network_Config.NetFlags) );
-        printf("%d: ND_GET_TORUS(2,pers.Network_Config.NetFlags) = %d \n", rank, ND_GET_TORUS(2,pers.Network_Config.NetFlags) );
-        printf("%d: ND_GET_TORUS(3,pers.Network_Config.NetFlags) = %d \n", rank, ND_GET_TORUS(3,pers.Network_Config.NetFlags) );
-        printf("%d: ND_GET_TORUS(4,pers.Network_Config.NetFlags) = %d \n", rank, ND_GET_TORUS(4,pers.Network_Config.NetFlags) );
+        printf("%d: ND_GET_TORUS(0,pers.Network_Config.NetFlags) = %llu \n", rank, ND_GET_TORUS(0,pers.Network_Config.NetFlags) );
+        printf("%d: ND_GET_TORUS(1,pers.Network_Config.NetFlags) = %llu \n", rank, ND_GET_TORUS(1,pers.Network_Config.NetFlags) );
+        printf("%d: ND_GET_TORUS(2,pers.Network_Config.NetFlags) = %llu \n", rank, ND_GET_TORUS(2,pers.Network_Config.NetFlags) );
+        printf("%d: ND_GET_TORUS(3,pers.Network_Config.NetFlags) = %llu \n", rank, ND_GET_TORUS(3,pers.Network_Config.NetFlags) );
+        printf("%d: ND_GET_TORUS(4,pers.Network_Config.NetFlags) = %llu \n", rank, ND_GET_TORUS(4,pers.Network_Config.NetFlags) );
 
         printf("%d: jobcoords.isSubBlock = %d \n", rank, jobcoords.isSubBlock);
 
