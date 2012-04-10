@@ -103,24 +103,24 @@ int main(int argc, char* argv[])
                                            fast_barrier_algs, fast_barrier_meta, num_barrier_alg[1] );
   TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Geometry_algorithms_query");
 
-  /* bcast algs */
-  pami_xfer_type_t bcast_xfer   = PAMI_XFER_BROADCAST;
-  size_t num_bcast_alg[2];
+  /* allreduce algs */
+  pami_xfer_type_t allreduce_xfer   = PAMI_XFER_ALLREDUCE;
+  size_t num_allreduce_alg[2];
 
-  result = PAMI_Geometry_algorithms_num( world_geometry, bcast_xfer, num_bcast_alg );
+  result = PAMI_Geometry_algorithms_num( world_geometry, allreduce_xfer, num_allreduce_alg );
   TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Geometry_algorithms_num");
-  if ( world_rank == 0 ) printf("number of bcast algorithms = {%ld,%ld} \n", num_bcast_alg[0], num_bcast_alg[1] );
+  if ( world_rank == 0 ) printf("number of allreduce algorithms = {%ld,%ld} \n", num_allreduce_alg[0], num_allreduce_alg[1] );
 
-  pami_algorithm_t * safe_bcast_algs = (pami_algorithm_t *) safemalloc( num_bcast_alg[0] * sizeof(pami_algorithm_t) );
-  pami_metadata_t  * safe_bcast_meta = (pami_metadata_t  *) safemalloc( num_bcast_alg[0] * sizeof(pami_metadata_t)  );
-  pami_algorithm_t * fast_bcast_algs = (pami_algorithm_t *) safemalloc( num_bcast_alg[1] * sizeof(pami_algorithm_t) );
-  pami_metadata_t  * fast_bcast_meta = (pami_metadata_t  *) safemalloc( num_bcast_alg[1] * sizeof(pami_metadata_t)  );
-  result = PAMI_Geometry_algorithms_query( world_geometry, bcast_xfer,
-                                           safe_bcast_algs, safe_bcast_meta, num_bcast_alg[0],
-                                           fast_bcast_algs, fast_bcast_meta, num_bcast_alg[1] );
+  pami_algorithm_t * safe_allreduce_algs = (pami_algorithm_t *) safemalloc( num_allreduce_alg[0] * sizeof(pami_algorithm_t) );
+  pami_metadata_t  * safe_allreduce_meta = (pami_metadata_t  *) safemalloc( num_allreduce_alg[0] * sizeof(pami_metadata_t)  );
+  pami_algorithm_t * fast_allreduce_algs = (pami_algorithm_t *) safemalloc( num_allreduce_alg[1] * sizeof(pami_algorithm_t) );
+  pami_metadata_t  * fast_allreduce_meta = (pami_metadata_t  *) safemalloc( num_allreduce_alg[1] * sizeof(pami_metadata_t)  );
+  result = PAMI_Geometry_algorithms_query( world_geometry, allreduce_xfer,
+                                           safe_allreduce_algs, safe_allreduce_meta, num_allreduce_alg[0],
+                                           fast_allreduce_algs, fast_allreduce_meta, num_allreduce_alg[1] );
   TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Geometry_algorithms_query");
 
-  /* perform a bcast */
+  /* perform a reduction */
   volatile int active = 0;
 
   pami_endpoint_t root;
@@ -130,88 +130,48 @@ int main(int argc, char* argv[])
   int d = max;
 
   //for ( int d = 1; d < max ; d*=2 )
-    for ( size_t b = 0 ; b < 12 /*num_bcast_alg[0]*/ ; b++ )
+    for ( size_t b = 0 ; b < 12 /*num_allreduce_alg[0]*/ ; b++ )
     {
-        pami_xfer_t bcast;
+        pami_xfer_t allreduce;
 
-        bcast.cb_done   = cb_done;
-        bcast.cookie    = (void*) &active;
-        bcast.algorithm = safe_bcast_algs[b];
+        allreduce.cb_done   = cb_done;
+        allreduce.cookie    = (void*) &active;
+        allreduce.algorithm = safe_allreduce_algs[b];
 
-        int * buf = safemalloc(d*sizeof(int));
-        for (int k=0; k<d; k++) buf[k]   = world_rank;
+        int * sbuf = safemalloc(d*sizeof(int));
+        int * rbuf = safemalloc(d*sizeof(int));
+        for (int k=0; k<d; k++) sbuf[k]   = 1;
+        for (int k=0; k<d; k++) rbuf[k]   = 0;
 
-        bcast.cmd.xfer_broadcast.root      = root;
-        bcast.cmd.xfer_broadcast.buf       = (void*)buf;
-        bcast.cmd.xfer_broadcast.type      = PAMI_TYPE_SIGNED_INT;
-        bcast.cmd.xfer_broadcast.typecount = d;
+        allreduce.cmd.xfer_allreduce.sndbuf     = (void*)sbuf;
+        allreduce.cmd.xfer_allreduce.rcvbuf     = (void*)rbuf;
+        allreduce.cmd.xfer_allreduce.rtype      = PAMI_TYPE_SIGNED_INT;
+        allreduce.cmd.xfer_allreduce.rtypecount = d;
 
-        if ( world_rank == 0 ) printf("trying safe bcast algorithm %ld (%s) \n", b, safe_bcast_meta[b].name );
+        if ( world_rank == 0 ) printf("trying safe allreduce algorithm %ld (%s) \n", b, safe_allreduce_meta[b].name );
         fflush(stdout);
         //sleep(1);
 
         active = 1;
         double t0 = PAMI_Wtime(client);
-        result = PAMI_Collective( contexts[0], &bcast );
-        TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Collective - bcast");
+        result = PAMI_Collective( contexts[0], &allreduce );
+        TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Collective - allreduce");
         while (active)
           result = PAMI_Context_advance( contexts[0], 1 );
-        TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Context_advance - bcast");
+        TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Context_advance - allreduce");
         double t1 = PAMI_Wtime(client);
 
         for (int k=0; k<d; k++) 
-          if (buf[k]!=0) printf("%4d: buf[%d] = %d \n", (int)world_rank, k, buf[k] );
+          if (rbuf[k]!=world_size) printf("%4d: rbuf[%d] = %d \n", (int)world_size, k, rbuf[k] );
 
-        free(buf);
+        free(sbuf);
+        free(rbuf);
 
-        if ( world_rank == 0 ) printf("after safe bcast algorithm %ld (%s) - %d ints took %lf seconds (%lf MB/s) \n", 
-                                       b, safe_bcast_meta[b].name, d, t1-t0, 1e-6*d*sizeof(int)/(t1-t0) );
+        if ( world_rank == 0 ) printf("after safe allreduce algorithm %ld (%s) - %d ints took %lf seconds (%lf MB/s) \n",
+                                       b, safe_allreduce_meta[b].name, d, t1-t0, 1e-6*d*sizeof(int)/(t1-t0) );
         fflush(stdout);
         //sleep(1);
     }
-
-#if 0
-  //for ( int d = 1; d < max ; d*=2 )
-    for ( size_t b = 0 ; b < num_bcast_alg[1] ; b++ )
-    {
-        pami_xfer_t bcast;
-
-        bcast.cb_done   = cb_done;
-        bcast.cookie    = (void*) &active;
-        bcast.algorithm = fast_bcast_algs[b];
-
-        int * buf = safemalloc(d*sizeof(int));
-        for (int k=0; k<d; k++) buf[k]   = world_rank;
-
-        bcast.cmd.xfer_broadcast.root      = root;
-        bcast.cmd.xfer_broadcast.buf       = (void*)buf;
-        bcast.cmd.xfer_broadcast.type      = PAMI_TYPE_SIGNED_INT;
-        bcast.cmd.xfer_broadcast.typecount = d;
-
-        if ( world_rank == 0 ) printf("trying fast bcast algorithm %ld (%s) \n", b, fast_bcast_meta[b].name );
-        fflush(stdout);
-        //sleep(1);
-
-        active = 1;
-        double t0 = PAMI_Wtime(client);
-        result = PAMI_Collective( contexts[0], &bcast );
-        TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Collective - bcast");
-        while (active)
-          result = PAMI_Context_advance( contexts[0], 1 );
-        TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Context_advance - bcast");
-        double t1 = PAMI_Wtime(client);
-
-        for (int k=0; k<d; k++) 
-          if (buf[k]!=0) printf("%4d: buf[%d] = %d \n", (int)world_rank, k, buf[k] );
-
-        free(buf);
-
-        if ( world_rank == 0 ) printf("after fast bcast algorithm %ld (%s) - %d ints took %lf seconds (%lf MB/s) \n", 
-                                       b, fast_bcast_meta[b].name, d, t1-t0, 1e-6*d*sizeof(int)/(t1-t0) );
-        fflush(stdout);
-        //sleep(1);
-    }
-#endif
 
   /* finalize the contexts */
   result = PAMI_Context_destroyv( contexts, num_contexts );
