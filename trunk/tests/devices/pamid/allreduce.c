@@ -127,10 +127,9 @@ int main(int argc, char* argv[])
   PAMI_Endpoint_create(client, (pami_task_t)0, 0, &root);
 
   int max = (argc>1 ? atoi(argv[1]) : 1000000);
-  int d = max;
 
-  //for ( int d = 1; d < max ; d*=2 )
-    for ( size_t b = 0 ; b < 12 /*num_allreduce_alg[0]*/ ; b++ )
+  for ( int d = 1; d < max ; d*=2 )
+    for ( size_t b = 0 ; b < num_allreduce_alg[0] ; b++ )
     {
         pami_xfer_t allreduce;
 
@@ -143,7 +142,10 @@ int main(int argc, char* argv[])
         for (int k=0; k<d; k++) sbuf[k]   = 1;
         for (int k=0; k<d; k++) rbuf[k]   = 0;
 
+        allreduce.cmd.xfer_allreduce.op         = PAMI_DATA_SUM;
         allreduce.cmd.xfer_allreduce.sndbuf     = (void*)sbuf;
+        allreduce.cmd.xfer_allreduce.stype      = PAMI_TYPE_SIGNED_INT;
+        allreduce.cmd.xfer_allreduce.stypecount = d;
         allreduce.cmd.xfer_allreduce.rcvbuf     = (void*)rbuf;
         allreduce.cmd.xfer_allreduce.rtype      = PAMI_TYPE_SIGNED_INT;
         allreduce.cmd.xfer_allreduce.rtypecount = d;
@@ -162,7 +164,7 @@ int main(int argc, char* argv[])
         double t1 = PAMI_Wtime(client);
 
         for (int k=0; k<d; k++) 
-          if (rbuf[k]!=world_size) printf("%4d: rbuf[%d] = %d \n", (int)world_size, k, rbuf[k] );
+          if (rbuf[k]!=world_size) printf("%4d: rbuf[%d] = %d \n", (int)world_rank, k, rbuf[k] );
 
         free(sbuf);
         free(rbuf);
