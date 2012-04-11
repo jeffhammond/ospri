@@ -171,7 +171,7 @@ int main(int argc, char* argv[])
         free(rbuf);
 
         if ( world_rank == 0 ) printf("after safe allgather algorithm %ld (%s) - %d ints took %lf seconds (%lf MB/s) \n",
-                                       b, safe_allgather_meta[b].name, world_size*d, t1-t0, 1e-6*world_size*d*sizeof(int)/(t1-t0) );
+                                       b, safe_allgather_meta[b].name, (int)world_size*d, t1-t0, 1e-6*world_size*d*sizeof(int)/(t1-t0) );
         fflush(stdout);
         //sleep(1);
     }
