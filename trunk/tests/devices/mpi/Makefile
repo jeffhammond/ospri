@@ -7,15 +7,19 @@ CFLAGS  = $(COPT)
 ifeq ($(PLATFORM),linux-sles10-ppc64)
 CFLAGS  += -I/bgsys/drivers/ppcfloor/arch/include/
 endif
-LDFLAGS = $(COPT)
+LDFLAGS = $(COPT) safemalloc.o
 LIBS    = -lm
 
-TESTS := $(patsubst %.c,%.x,$(wildcard *.c))
+TESTS := allreduce2.x bug.x hello_mpi.x passive-target-get.x reduce_scatter_bug.x rma_pthreads2.x \
+		 test_bgp_3d_exchange.x allreduce.x coll.x mpi_pthreads.x passive-target-put.x \
+		 rma_pthreads.x test_bw.x bcast.x get_proc_name.x passive-target-acc.x \
+		 pt-rma.x reduce_scatter.x test_bgp_3d_exchange_simple.x test_torus_exchange.x
+
 OBJECTS := $(patsubst %.c,%.o,$(wildcard *.c))
 
-all: $(TESTS)
+all: $(TESTS) safemalloc.o
 
-%.x: %.o
+%.x: %.o safemalloc.o
 	$(LD) $(LDFLAGS) $< $(LIBS) -o $@
 
 %.o: %.c
