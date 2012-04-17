@@ -52,7 +52,7 @@ int main(int argc, char **argv)
 {
     int provided;
     MPI_Init_thread(&argc, &argv, MPI_THREAD_SINGLE, &provided);
-    assert(provided==MPI_THREAD_SINGLE);
+    //assert(provided==MPI_THREAD_SINGLE);
 
     int me;
     int nproc;

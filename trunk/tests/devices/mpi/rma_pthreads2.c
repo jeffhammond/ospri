@@ -43,7 +43,7 @@ int main(int argc, char *argv[])
     char procname[MPI_MAX_PROCESSOR_NAME];
  
     MPI_Init_thread(&argc,&argv,MPI_THREAD_MULTIPLE,&provided);
-    assert( provided == MPI_THREAD_MULTIPLE );
+    //assert( provided == MPI_THREAD_MULTIPLE );
  
     MPI_Comm_size(MPI_COMM_WORLD,&size);
     MPI_Comm_rank(MPI_COMM_WORLD,&rank);
