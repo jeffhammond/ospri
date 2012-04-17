@@ -1,8 +1,12 @@
 CC      = mpicc
-COPT    = -g -O2 -Wall -std=c99
+COPT    = -g -O2 -Wall -std=gnu99
 
 LD      = $(CC)
 CFLAGS  = $(COPT)
+# this is a dirty hack to detect BGP
+ifeq ($(PLATFORM),linux-sles10-ppc64)
+CFLAGS  += -I/bgsys/drivers/ppcfloor/arch/include/
+endif
 LDFLAGS = $(COPT)
 LIBS    = -lm
 
