@@ -8,11 +8,13 @@
 
 #include "safemalloc.h"
 
+#define DEBUG YES
+
 #define MPI_THREAD_STRING(level)  \
-        ( level==MPI::THREAD_SERIALIZED ? "THREAD_SERIALIZED" : \
-                ( level==MPI::THREAD_MULTIPLE ? "THREAD_MULTIPLE" : \
-                        ( level==MPI::THREAD_FUNNELED ? "THREAD_FUNNELED" : \
-                                ( level==MPI::THREAD_SINGLE ? "THREAD_SINGLE" : "WTF" ) ) ) )
+        ( level==MPI_THREAD_SERIALIZED ? "THREAD_SERIALIZED" : \
+                ( level==MPI_THREAD_MULTIPLE ? "THREAD_MULTIPLE" : \
+                        ( level==MPI_THREAD_FUNNELED ? "THREAD_FUNNELED" : \
+                                ( level==MPI_THREAD_SINGLE ? "THREAD_SINGLE" : "WTF" ) ) ) )
 
 int main(int argc, char *argv[])
 {
@@ -65,7 +67,7 @@ int main(int argc, char *argv[])
      *                            SETUP MPI COMMUNICATORS
      *********************************************************************************/
 
-    if (world_rank==0) printf("MPI_Barrier on MPI_COMM_WORLD \n");
+    if (world_rank==0) printf("MPI_Barrier on MPI_COMM_WORLD 1 \n");
     MPI_Barrier( MPI_COMM_WORLD );
 
     if (world_rank==0) printf("MPI_Comm_dup of MPI_COMM_WORLD \n");
@@ -82,7 +84,7 @@ int main(int argc, char *argv[])
     if (world_rank==0) printf("MPI_Barrier on comm_world_oddeven \n");
     MPI_Barrier( comm_world_oddeven );
 
-    if (world_rank==0) printf("MPI_Comm_split MPI_COMM_WORLD into world-minus-1 \n");
+    if (world_rank==0) printf("MPI_Comm_split MPI_COMM_WORLD into (world-1) \n");
     MPI_Comm * comm_world_minus_ones = NULL;
     comm_world_minus_ones = (MPI_Comm *) safemalloc( world_size * sizeof(MPI_Comm) );
     for (int i=0; i<world_size; i++)
@@ -105,8 +107,9 @@ int main(int argc, char *argv[])
         geomprog_list[i] = pow(2,i)-1;
 
 #ifdef DEBUG
-    for (int i=0; i<geomprog_size; i++)
-        printf("geomprog_list[%d] = %d \n", i, geomprog_list[i]);
+    if (world_rank==0)
+        for (int i=0; i<geomprog_size; i++)
+            if (world_rank==0) printf("geomprog_list[%d] = %d \n", i, geomprog_list[i]);
 #endif
 
     if (world_rank==0) printf("MPI_Group_incl of group_geomprog (geometric progression) from group_world \n");
@@ -115,51 +118,53 @@ int main(int argc, char *argv[])
 
     if (world_rank==0) printf("MPI_Comm_create of comm_geomprog from group_geomprog on MPI_COMM_WORLD \n");
     MPI_Comm comm_geomprog;
-    MPI_Comm_create(MPI_COMM_WORLD, group_geomprog, comm_geomprog);
+    MPI_Comm_create(MPI_COMM_WORLD, group_geomprog, &comm_geomprog);
 
     if (world_rank==0) printf("MPI_Barrier on comm_geomprog \n");
-    MPI_Barrier( comm_geomprog );
+    for (int i=0; i<geomprog_size; i++)
+        if (geomprog_list[i]==world_rank)
+            MPI_Barrier( comm_geomprog );
 
-    if (world_rank==0) printf("MPI_Barrier on MPI_COMM_WORLD \n");
+    if (world_rank==0) printf("MPI_Barrier on MPI_COMM_WORLD 2 \n");
     MPI_Barrier( MPI_COMM_WORLD );
 
     /*********************************************************************************
      *                            COLLECTIVES
      *********************************************************************************/
 
-//    MPI_Op builtin_types[19] = {    MPI_BYTE,
-//                                    MPI_FLOAT,
-//                                    MPI_DOUBLE,
-//                                    MPI_SHORT,
-//                                    MPI_INT,
-//                                    MPI_LONG,
-//                                    MPI_LONG_LONG_INT,
-//                                    MPI_UNSIGNED_SHORT,
-//                                    MPI_UNSIGNED
-//                                    MPI_UNSIGNED_LONG,
-//                                    MPI_UNSIGNED_LONG_LONG,
-//                                    MPI_INT8_T,
-//                                    MPI_INT16_T,
-//                                    MPI_INT32_T,
-//                                    MPI_INT64_T,
-//                                    MPI_UINT8_T,
-//                                    MPI_UINT16_T,
-//                                    MPI_UINT32_T,
-//                                    MPI_UINT64_T }
-//
-//    MPI_Op builtin_ops[15] = {  MPI_MAX,
-//                                MPI_MIN,
-//                                MPI_SUM,
-//                                MPI_PROD,
-//                                MPI_LAND,
-//                                MPI_BAND,
-//                                MPI_LOR,
-//                                MPI_BOR,
-//                                MPI_LXOR,
-//                                MPI_BXOR,
-//                                MPI_MINLOC,
-//                                MPI_MAXLOC,
-//                                MPI_REPLACE };
+    //    MPI_Op builtin_types[19] = {    MPI_BYTE,
+    //                                    MPI_FLOAT,
+    //                                    MPI_DOUBLE,
+    //                                    MPI_SHORT,
+    //                                    MPI_INT,
+    //                                    MPI_LONG,
+    //                                    MPI_LONG_LONG_INT,
+    //                                    MPI_UNSIGNED_SHORT,
+    //                                    MPI_UNSIGNED
+    //                                    MPI_UNSIGNED_LONG,
+    //                                    MPI_UNSIGNED_LONG_LONG,
+    //                                    MPI_INT8_T,
+    //                                    MPI_INT16_T,
+    //                                    MPI_INT32_T,
+    //                                    MPI_INT64_T,
+    //                                    MPI_UINT8_T,
+    //                                    MPI_UINT16_T,
+    //                                    MPI_UINT32_T,
+    //                                    MPI_UINT64_T }
+    //
+    //    MPI_Op builtin_ops[15] = {  MPI_MAX,
+    //                                MPI_MIN,
+    //                                MPI_SUM,
+    //                                MPI_PROD,
+    //                                MPI_LAND,
+    //                                MPI_BAND,
+    //                                MPI_LOR,
+    //                                MPI_BOR,
+    //                                MPI_LXOR,
+    //                                MPI_BXOR,
+    //                                MPI_MINLOC,
+    //                                MPI_MAXLOC,
+    //                                MPI_REPLACE };
 
 
 

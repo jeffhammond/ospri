@@ -6,6 +6,8 @@
 #include <math.h>
 #include <mpi.h>
 
+#include "safemalloc.h"
+
 void bcast_driver(MPI_Comm comm, int max_mem)
 {
     int comm_rank = -1, comm_size = 0;
@@ -21,7 +23,7 @@ void bcast_driver(MPI_Comm comm, int max_mem)
         int root = 0;
 
         int value = 0;
-        int * buffer = safemalloc(c*sizeof(int));
+        int * buffer = (int *) safemalloc(c*sizeof(int));
 
         if ( comm_rank == root )
             value = comm_size;
@@ -42,7 +44,7 @@ void bcast_driver(MPI_Comm comm, int max_mem)
         if (errors>0)
         {
             printf("MPI_Bcast had %d errors! \n", errors);
-            exit(1)
+            exit(1);
         }
 
         if ( comm_rank == root )
