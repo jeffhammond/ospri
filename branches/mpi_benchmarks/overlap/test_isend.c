@@ -45,10 +45,10 @@ int main(int argc, char * argv[])
                 MPI_Isend(sbuf, c, MPI_DOUBLE, r, tag, MPI_COMM_WORLD, &req[1]);
 
             if (rank==r)
-		MPI_Wait( &req[0], MPI_STATUS_IGNORE );
+                MPI_Wait( &req[0], MPI_STATUS_IGNORE );
 
             if (rank==0)
-		MPI_Wait( &req[1], MPI_STATUS_IGNORE );
+                MPI_Wait( &req[1], MPI_STATUS_IGNORE );
 
             t1 = MPI_Wtime();
 
