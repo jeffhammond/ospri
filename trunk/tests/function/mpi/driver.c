@@ -166,7 +166,8 @@ int main(int argc, char *argv[])
     //                                MPI_MAXLOC,
     //                                MPI_REPLACE };
 
-
+    bcast_only(MPI_COMM_WORLD, 1000000);
+    bcast_vs_scatter_allgather(MPI_COMM_WORLD, 1000000);
 
     /*********************************************************************************
      *                            CLEAN UP AND FINALIZE
