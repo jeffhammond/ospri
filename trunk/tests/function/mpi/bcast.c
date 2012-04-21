@@ -43,7 +43,9 @@ void bcast_only(MPI_Comm comm, int max_mem)
 
         if (errors>0)
         {
-            printf("MPI_Bcast had %d errors! \n", errors);
+            printf("MPI_Bcast had %d errors on rank %d! \n", errors, comm_rank);
+            for (int i=0 ; i<c; i++)
+                printf("rank %d: buffer[%d] = %d (correct is %d) \n", comm_rank, i, buffer[i], comm_size );
             exit(1);
         }
 
@@ -99,6 +101,8 @@ void bcast_vs_scatter_allgather(MPI_Comm comm, int max_mem)
         if (errors>0)
         {
             printf("MPI_Bcast had %d errors on rank %d! \n", errors, comm_rank);
+            for (int i=0 ; i<c; i++)
+                printf("rank %d: buffer[%d] = %d (correct is %d) \n", comm_rank, i, buffer[i], comm_size );
             exit(1);
         }
 

@@ -169,6 +169,8 @@ int main(int argc, char *argv[])
     bcast_only(MPI_COMM_WORLD, 1000000);
     bcast_vs_scatter_allgather(MPI_COMM_WORLD, 1000000);
 
+    alltoall_only(MPI_COMM_WORLD, 1000000);
+
     /*********************************************************************************
      *                            CLEAN UP AND FINALIZE
      *********************************************************************************/

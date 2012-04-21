@@ -16,14 +16,17 @@ endif
 LDFLAGS = $(COPT)
 LIBS    = -lm
 
-TESTS := driver.x
+TESTS := driver.x bcast-zero.x
 
-OBJECTS := $(patsubst %.c,%.o,$(wildcard *.c))
+OBJECTS := alltoall.o bcast.o driver.o reducescatter.o safemalloc.o
 
 all: $(TESTS)
 
 %.x: $(OBJECTS)
 	$(LD) $(LDFLAGS) $(OBJECTS) $(LIBS) -o $@
+
+bcast-zero.x: bcast-zero.c
+	$(CC) $(CFLAGS) $< -o $@
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
