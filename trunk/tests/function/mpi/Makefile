@@ -16,7 +16,7 @@ endif
 LDFLAGS = $(COPT)
 LIBS    = -lm
 
-TESTS := driver.x bcast-zero.x
+TESTS := driver.x bcast-zero.x dtype-zero-vector.x
 
 OBJECTS := alltoall.o bcast.o driver.o reducescatter.o safemalloc.o
 
@@ -26,6 +26,9 @@ all: $(TESTS)
 	$(LD) $(LDFLAGS) $(OBJECTS) $(LIBS) -o $@
 
 bcast-zero.x: bcast-zero.c
+	$(CC) $(CFLAGS) $< -o $@
+
+dtype-zero-vector.x: dtype-zero-vector.c
 	$(CC) $(CFLAGS) $< -o $@
 
 %.o: %.c
