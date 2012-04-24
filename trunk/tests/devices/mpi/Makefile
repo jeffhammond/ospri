@@ -13,7 +13,7 @@ LIBS    = -lm
 TESTS := allreduce2.x bug.x hello_mpi.x passive-target-get.x reduce_scatter_bug.x rma_pthreads2.x \
 		 test_bgp_3d_exchange.x allreduce.x coll.x mpi_pthreads.x passive-target-put.x \
 		 rma_pthreads.x test_bw.x bcast.x get_proc_name.x passive-target-acc.x \
-		 pt-rma.x reduce_scatter.x test_bgp_3d_exchange_simple.x test_torus_exchange.x
+		 pt-rma.x reduce_scatter.x test_bgp_3d_exchange_simple.x test_torus_exchange.x james_allreduce.x
 
 OBJECTS := $(patsubst %.c,%.o,$(wildcard *.c))
 
