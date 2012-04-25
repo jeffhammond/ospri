@@ -208,7 +208,7 @@ int MPI_Finalize(void)
 
 double MPI_Wtime(void)
 {
-    return 0.0;
+    return PAMI_Wtime(client);
 }
 
 int MPI_Comm_rank(MPI_Comm comm, int * rank)
