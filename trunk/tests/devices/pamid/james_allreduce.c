@@ -5,13 +5,16 @@
 #include <pthread.h>
 #include <pami.h>
 
+#include "safemalloc.h"
+
 pami_client_t client;
+size_t num_contexts;
 pami_context_t * contexts = NULL;
 
 typedef struct MPI_Comm
 {
     int is_world;
-    pami_geometry_t geom;
+    pami_geometry_t geometry;
     pami_algorithm_t * safe_barrier_algs;
     pami_algorithm_t * safe_allreduce_algs;
 } 
@@ -66,7 +69,7 @@ static inline void MPI_to_PAMI_dt(int mpi_dt, pami_type_t * pami_dt)
         case MPI_UNSIGNED_SHORT:
             pami_dt = PAMI_TYPE_UNSIGNED_SHORT;
             break;
-        case MPI_UNSIGNED_INT:
+        case MPI_UNSIGNED:
             pami_dt = PAMI_TYPE_UNSIGNED_INT;
             break;
         case MPI_UNSIGNED_LONG:
@@ -87,34 +90,34 @@ static inline void MPI_to_PAMI_op(int mpi_op, pami_data_function * pami_op)
     switch (mpi_op) 
     {
         case MPI_MAX:
-            pami_op = PAMI_DATA_MAX;
+            *pami_op = PAMI_DATA_MAX;
             break;
         case MPI_MIN:
-            pami_op = PAMI_DATA_MIN;
+            *pami_op = PAMI_DATA_MIN;
             break;
         case MPI_SUM:
-            pami_op = PAMI_DATA_SUM;
+            *pami_op = PAMI_DATA_SUM;
             break;
         case MPI_PROD:
-            pami_op = PAMI_DATA_PROD;
+            *pami_op = PAMI_DATA_PROD;
             break;
         case MPI_BAND:
-            pami_op = PAMI_DATA_BAND;
+            *pami_op = PAMI_DATA_BAND;
             break;
         case MPI_BOR:
-            pami_op = PAMI_DATA_BOR;
+            *pami_op = PAMI_DATA_BOR;
             break;
         case MPI_BXOR:
-            pami_op = PAMI_DATA_BXOR;
+            *pami_op = PAMI_DATA_BXOR;
             break;
         case MPI_LAND:
-            pami_op = PAMI_DATA_LAND;
+            *pami_op = PAMI_DATA_LAND;
             break;
         case MPI_LOR:
-            pami_op = PAMI_DATA_LOR;
+            *pami_op = PAMI_DATA_LOR;
             break;
         case MPI_LXOR:
-            pami_op = PAMI_DATA_LXOR;
+            *pami_op = PAMI_DATA_LXOR;
             break;
         default:
             printf("MPI_to_PAMI_op: unsupported or invalid MPI_Op\n");
@@ -129,7 +132,7 @@ void cb_done (void *context , void * clientdata, pami_result_t error)
   (*active)--;
 }
 
-int MPI_Init(int argc, char* argv[])
+int MPI_Init(int * argc, char ** argv[])
 {
     pami_result_t result = PAMI_ERROR;
     char * clientname = "MPI";
@@ -149,7 +152,7 @@ int MPI_Init(int argc, char* argv[])
     if (result!=PAMI_SUCCESS) exit(1); 
  
     /* setup the world geometry */
-    result = PAMI_Geometry_world( client, MPI_COMM_WORLD->world_geometry );
+    result = PAMI_Geometry_world( client, MPI_COMM_WORLD.geometry );
     if (result!=PAMI_SUCCESS) exit(1); 
 
     MPI_COMM_WORLD.is_world = 1;
@@ -158,15 +161,15 @@ int MPI_Init(int argc, char* argv[])
     size_t num_barrier_alg[2];
  
     /* barrier algs */
-    result = PAMI_Geometry_algorithms_num( world_geometry, barrier_xfer, num_barrier_alg );
+    result = PAMI_Geometry_algorithms_num( MPI_COMM_WORLD.geometry, barrier_xfer, num_barrier_alg );
     if (result!=PAMI_SUCCESS) exit(1); 
  
-       MPI_COMM_WORLD->safe_barrier_algs = (pami_algorithm_t *) safemalloc( num_barrier_alg[0] * sizeof(pami_algorithm_t) );
+        MPI_COMM_WORLD.safe_barrier_algs = (pami_algorithm_t *) safemalloc( num_barrier_alg[0] * sizeof(pami_algorithm_t) );
     pami_metadata_t  * safe_barrier_meta = (pami_metadata_t  *) safemalloc( num_barrier_alg[0] * sizeof(pami_metadata_t)  );
     pami_algorithm_t * fast_barrier_algs = (pami_algorithm_t *) safemalloc( num_barrier_alg[1] * sizeof(pami_algorithm_t) );
     pami_metadata_t  * fast_barrier_meta = (pami_metadata_t  *) safemalloc( num_barrier_alg[1] * sizeof(pami_metadata_t)  );
-    result = PAMI_Geometry_algorithms_query( world_geometry, barrier_xfer,
-                                             safe_barrier_algs, safe_barrier_meta, num_barrier_alg[0],
+    result = PAMI_Geometry_algorithms_query( MPI_COMM_WORLD.geometry, barrier_xfer,
+                                             MPI_COMM_WORLD.safe_barrier_algs, safe_barrier_meta, num_barrier_alg[0],
                                              fast_barrier_algs, fast_barrier_meta, num_barrier_alg[1] );
     if (result!=PAMI_SUCCESS) exit(1); 
  
@@ -174,15 +177,15 @@ int MPI_Init(int argc, char* argv[])
     pami_xfer_type_t allreduce_xfer = PAMI_XFER_ALLREDUCE;
     size_t num_allreduce_alg[2];
  
-    result = PAMI_Geometry_algorithms_num( world_geometry, allreduce_xfer, num_allreduce_alg );
+    result = PAMI_Geometry_algorithms_num( MPI_COMM_WORLD.geometry, allreduce_xfer, num_allreduce_alg );
     if (result!=PAMI_SUCCESS) exit(1); 
  
-       MPI_COMM_WORLD->safe_allreduce_algs = (pami_algorithm_t *) safemalloc( num_allreduce_alg[0] * sizeof(pami_algorithm_t) );
+        MPI_COMM_WORLD.safe_allreduce_algs = (pami_algorithm_t *) safemalloc( num_allreduce_alg[0] * sizeof(pami_algorithm_t) );
     pami_metadata_t  * safe_allreduce_meta = (pami_metadata_t  *) safemalloc( num_allreduce_alg[0] * sizeof(pami_metadata_t)  );
     pami_algorithm_t * fast_allreduce_algs = (pami_algorithm_t *) safemalloc( num_allreduce_alg[1] * sizeof(pami_algorithm_t) );
     pami_metadata_t  * fast_allreduce_meta = (pami_metadata_t  *) safemalloc( num_allreduce_alg[1] * sizeof(pami_metadata_t)  );
-    result = PAMI_Geometry_algorithms_query( world_geometry, allreduce_xfer,
-                                             safe_allreduce_algs, safe_allreduce_meta, num_allreduce_alg[0],
+    result = PAMI_Geometry_algorithms_query( MPI_COMM_WORLD.geometry, allreduce_xfer,
+                                             MPI_COMM_WORLD.safe_allreduce_algs, safe_allreduce_meta, num_allreduce_alg[0],
                                              fast_allreduce_algs, fast_allreduce_meta, num_allreduce_alg[1] );
     if (result!=PAMI_SUCCESS) exit(1); 
  
@@ -203,8 +206,14 @@ int MPI_Finalize(void)
     return MPI_SUCCESS;
 }
 
+double MPI_Wtime(void)
+{
+    return 0.0;
+}
+
 int MPI_Comm_rank(MPI_Comm comm, int * rank)
 {
+    pami_result_t result = PAMI_ERROR;
     if (comm.is_world!=1) exit(1); 
     pami_configuration_t config;
     config.name = PAMI_CLIENT_TASK_ID;
@@ -218,6 +227,7 @@ int MPI_Comm_rank(MPI_Comm comm, int * rank)
 
 int MPI_Comm_size(MPI_Comm comm, int * size)
 {
+    pami_result_t result = PAMI_ERROR;
     if (comm.is_world!=1) exit(1); 
     pami_configuration_t config;
     config.name = PAMI_CLIENT_NUM_TASKS;
@@ -231,11 +241,13 @@ const size_t barrier_alg_num = 0;
 
 int MPI_Barrier(MPI_Comm comm)
 {
+    pami_result_t result = PAMI_ERROR;
+
     volatile int active = 0;
     pami_xfer_t barrier;
     barrier.cb_done   = cb_done;
     barrier.cookie    = (void*) &active;
-    barrier.algorithm = safe_barrier_algs[barrier_alg_num];
+    barrier.algorithm = comm.safe_barrier_algs[barrier_alg_num];
 
     active = 1;
     result = PAMI_Collective( contexts[0], &barrier );
@@ -251,9 +263,11 @@ int MPI_Barrier(MPI_Comm comm)
 
 const size_t allreduce_alg_num = 0;
 
-int MPI_Allreduce(void * sendbuf, void * recvbuf, int count, MPI_Datatype datatype, MPI_Op op, MPI_Comm comm)
+int MPI_Allreduce(void * sendbuf, void * recvbuf, int count, int datatype, int op, MPI_Comm comm)
 {
-    pami_type_t pami_dt;
+    pami_result_t result = PAMI_ERROR;
+
+    pami_type_t pami_dt = PAMI_TYPE_BYTE;
     pami_data_function pami_op;
     MPI_to_PAMI_dt(datatype, &pami_dt);
     MPI_to_PAMI_op(op, &pami_op);
@@ -262,7 +276,7 @@ int MPI_Allreduce(void * sendbuf, void * recvbuf, int count, MPI_Datatype dataty
     pami_xfer_t allreduce;
     allreduce.cb_done   = cb_done;
     allreduce.cookie    = (void*) &active;
-    allreduce.algorithm = safe_allreduce_algs[allreduce_alg_num];
+    allreduce.algorithm = comm.safe_allreduce_algs[allreduce_alg_num];
     allreduce.cmd.xfer_allreduce.op         = pami_op;
     allreduce.cmd.xfer_allreduce.sndbuf     = sendbuf;
     allreduce.cmd.xfer_allreduce.stype      = pami_dt;
