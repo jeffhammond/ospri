@@ -31,17 +31,23 @@
 int main(int argc, char* argv[])
 {
   int rank;
+  int namelen;
+  char procname[MPI_MAX_PROCESSOR_NAME];
 
   MPI_Init(&argc, &argv);
 
   MPI_Comm_rank(MPI_COMM_WORLD, &rank);
 
+  MPI_Get_processor_name( procname, &namelen );
+
   MPIX_Hardware_t hw;
   MPIX_Hardware(&hw);
 
-  printf("%d: Size    = {%d,%d,%d,%d,%d} \n", rank, hw.Size[0], hw.Size[1], hw.Size[2], hw.Size[3], hw.Size[4]);
-  printf("%d: Coords  = {%d,%d,%d,%d,%d} \n", rank, hw.Coords[0], hw.Coords[1], hw.Coords[2], hw.Coords[3], hw.Coords[4]);
-  printf("%d: isTorus = {%d,%d,%d,%d,%d} \n", rank, hw.isTorus[0], hw.isTorus[1], hw.isTorus[2], hw.isTorus[3], hw.isTorus[4]);
+  printf("%d: processor name = %s, Size = {%2d,%2d,%2d,%2d,%1d}, Coords = {%2d,%2d,%2d,%2d,%1d}, isTorus = {%1d,%1d,%1d,%1d,%1d} \n",
+         rank, procname,
+         hw.Size[0], hw.Size[1], hw.Size[2], hw.Size[3], hw.Size[4],
+         hw.Coords[0], hw.Coords[1], hw.Coords[2], hw.Coords[3], hw.Coords[4],
+         hw.isTorus[0], hw.isTorus[1], hw.isTorus[2], hw.isTorus[3], hw.isTorus[4]);
 
   fflush(stdout);
 
