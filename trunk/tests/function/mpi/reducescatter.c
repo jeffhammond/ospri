@@ -14,6 +14,9 @@ void reducescatter_only(MPI_Comm comm, int max_mem)
     MPI_Comm_rank(comm, &comm_rank);
     MPI_Comm_size(comm, &comm_size);
 
+    if ( comm_rank == 0 )
+        printf("============== REDUCESCATTER ==============\n");
+
     /* testing only intergers because it really ~shouldn't~ matter */
 
     int max_count = max_mem/sizeof(int);
@@ -22,20 +25,28 @@ void reducescatter_only(MPI_Comm comm, int max_mem)
     {
         int root = 0;
 
-        int value = 0;
-        int * buffer = (int *) safemalloc(c*sizeof(int));
+        int * in  = (int *) safemalloc(c*sizeof(int));
+        int * out = (int *) safemalloc(c*sizeof(int));
 
         if ( comm_rank == root )
             value = comm_size;
         else
             value = 0;
 
-        for (int i=0 ; i< c; i++)
-            buffer[i] = value;
+        for (int i=0 ; i<c; i++)
+            in[i]  = comm_rank;
+
+        for (int i=0 ; i<c; i++)
+            out[i] = -1;
 
         double t0 = MPI_Wtime();
         MPI_Bcast( buffer, c, MPI_INT, root, comm );
+
+        MPI_Reduce(void *sendbuf, void *recvbuf, int count,
+                    MPI_Datatype datatype, MPI_Op op, int root, MPI_Comm comm)
+
         double t1 = MPI_Wtime();
+        double dt_red = t1-t0;
 
         int errors = 0;
         for (int i=0 ; i< c; i++)
@@ -49,9 +60,10 @@ void reducescatter_only(MPI_Comm comm, int max_mem)
 
         if ( comm_rank == root )
             printf("MPI_Bcast %d integers in %lf seconds (%lf MB/s) \n",
-                   c, t1-t0, 1.0e-6*c*sizeof(int)/(t1-t0) );
+                   c, dt_red, 1.0e-6*c*sizeof(int)/dt_red );
 
-        free(buffer);
+        free(out);
+        free(in);
     }
 
     return;

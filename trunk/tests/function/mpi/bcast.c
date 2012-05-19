@@ -14,6 +14,9 @@ void bcast_only(MPI_Comm comm, int max_mem)
     MPI_Comm_rank(comm, &comm_rank);
     MPI_Comm_size(comm, &comm_size);
 
+    if ( comm_rank == 0 )
+        printf("============== BCAST ==============\n");
+
     /* testing only intergers because it really ~shouldn't~ matter */
 
     int max_count = max_mem/sizeof(int);
@@ -65,55 +68,54 @@ void bcast_vs_scatter_allgather(MPI_Comm comm, int max_mem)
     MPI_Comm_rank(comm, &comm_rank);
     MPI_Comm_size(comm, &comm_size);
 
+    if ( comm_rank == 0 )
+        printf("============== BCAST VS SCATTER+ALLGATHER ==============\n");
+
+
     /* testing only intergers because it really ~shouldn't~ matter */
 
     int max_count = max_mem/sizeof(int);
 
     for (int c=1; c<max_count; c*=2)
-    {
-        int root = 0;
-
-        int value;
-        if ( comm_rank == root )
-            value = comm_size;
-        else
-            value = 0;
-
-        double dt_bcast, dt_scalg, t0, t1;
-        int errors;
-
-        int * buffer = (int *) safemalloc(c*sizeof(int));
-
-        /*****************************************************/
-
-        for (int i=0 ; i<c; i++)
-            buffer[i] = value;
-
-        t0 = MPI_Wtime();
-        MPI_Bcast( buffer, c, MPI_INT, root, comm );
-        t1 = MPI_Wtime();
-        dt_bcast = t1-t0;
-
-        errors = 0;
-        for (int i=0 ; i<c; i++)
-            errors += (int) ( buffer[i] != comm_size );
-
-        if (errors>0)
-        {
-            printf("MPI_Bcast had %d errors on rank %d! \n", errors, comm_rank);
-            for (int i=0 ; i<c; i++)
-                printf("rank %d: buffer[%d] = %d (correct is %d) \n", comm_rank, i, buffer[i], comm_size );
-            exit(1);
-        }
-
-        if ( comm_rank == root )
-            printf("MPI_Bcast %d integers in %lf seconds (%lf MB/s) \n",
-                   c, t1-t0, 1.0e-6*c*sizeof(int)/(t1-t0) );
-
-        /*****************************************************/
-
         if (c%comm_size==0)
         {
+            int root = 0;
+
+            int value;
+            if ( comm_rank == root )
+                value = comm_size;
+            else
+                value = 0;
+
+            double dt_bcast, dt_scalg, t0, t1;
+            int errors;
+
+            int * buffer = (int *) safemalloc(c*sizeof(int));
+
+            /*****************************************************/
+
+            for (int i=0 ; i<c; i++)
+                buffer[i] = value;
+
+            t0 = MPI_Wtime();
+            MPI_Bcast( buffer, c, MPI_INT, root, comm );
+            t1 = MPI_Wtime();
+            dt_bcast = t1-t0;
+
+            errors = 0;
+            for (int i=0 ; i<c; i++)
+                errors += (int) ( buffer[i] != comm_size );
+
+            if (errors>0)
+            {
+                printf("MPI_Bcast had %d errors on rank %d! \n", errors, comm_rank);
+                for (int i=0 ; i<c; i++)
+                    printf("rank %d: buffer[%d] = %d (correct is %d) \n", comm_rank, i, buffer[i], comm_size );
+                exit(1);
+            }
+
+            /*****************************************************/
+
             int * temp = (int *) safemalloc((c/comm_size)*sizeof(int));
 
             for (int i=0 ; i<c; i++)
@@ -141,16 +143,15 @@ void bcast_vs_scatter_allgather(MPI_Comm comm, int max_mem)
             }
 
             if ( comm_rank == root )
-                printf("MPI_Scatter+MPI_Allgather %d integers in %lf seconds (%lf MB/s) \n",
-                       c, t1-t0, 1.0e-6*c*sizeof(int)/(t1-t0) );
+                printf("MPI_Bcast vs MPI_Scatter+MPI_Allgather %d integers in %lf vs %lf seconds (%lf vs %lf MB/s) \n",
+                       c, dt_bcast, dt_scalg, 1.0e-6*c*sizeof(int)/dt_bcast, 1.0e-6*c*sizeof(int)/dt_scalg );
 
             free(temp);
+
+            /*****************************************************/
+
+            free(buffer);
         }
-
-        /*****************************************************/
-
-        free(buffer);
-    }
 
     return;
 }
