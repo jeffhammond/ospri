@@ -8,9 +8,11 @@
 
 const size_t poll_continuous = -1;
 
+int world_size, world_rank;
+
 void cb_local_done(pami_context_t context, void * cookie, pami_result_t result)
 {
-    printf("cb_local_done \n");
+    printf("%d: cb_local_done \n", world_rank);
     volatile int64_t * active = (volatile int64_t *) cookie;
     --(active[0]);
     return;
@@ -18,7 +20,7 @@ void cb_local_done(pami_context_t context, void * cookie, pami_result_t result)
 
 void cb_remote_done(pami_context_t context, void * cookie, pami_result_t result)
 {
-    printf("cb_remote_done \n");
+    printf("%d: cb_remote_done \n", world_rank);
     volatile int64_t * active = (volatile int64_t *) cookie;
     --(active[1]);
     return;
@@ -33,7 +35,7 @@ void dispatch_cb(pami_context_t context,
                  pami_endpoint_t origin,
                  pami_recv_t * recv)
 {
-    printf("dispatch_cb \n");
+    printf("%d: dispatch_cb from origin %ld \n", world_rank, (long) origin);
     volatile int64_t * active = (volatile int64_t *) cookie;
     --(*active);
     return;
@@ -51,7 +53,6 @@ int main(int argc, char* argv[])
 
     /* query properties of the client */
     pami_configuration_t config;
-    int world_size, world_rank;
 
     config.name = PAMI_CLIENT_NUM_TASKS;
     result = PAMI_Client_query( client, &config,1);
@@ -110,60 +111,63 @@ int main(int argc, char* argv[])
      * invoke send
      *************************************************************************/
 
-    double * dt_list = malloc(world_size * sizeof(double));
-
-    uint32_t header_len = 4;
-    int64_t header_base[header_len];
-    for ( uint32_t i=0 ; i<header_len ; i++ )
-        header_base[i] = 0;
-
-    uint32_t data_len = 1024;
-    int64_t data_base[data_len];
-    for ( uint32_t i=0 ; i<data_len ; i++ )
-        data_base[i] = i;
-
-    for ( uint32_t j=0 ; j<data_len ; j*=2 )
+    if (world_rank==0)
     {
-        int target;
-        for ( target=0 ; target<world_size ; target++ )
+        double * dt_list = malloc(world_size * sizeof(double));
+
+        uint32_t header_len = 4;
+        int64_t header_base[header_len];
+        for ( uint32_t i=0 ; i<header_len ; i++ )
+            header_base[i] = 0;
+
+        uint32_t data_len = 1024;
+        int64_t data_base[data_len];
+        for ( uint32_t i=0 ; i<data_len ; i++ )
+            data_base[i] = i;
+
+        for ( uint32_t j=0 ; j<data_len ; j*=2 )
         {
-            int64_t active[2]; /* local and remote */
-            active[0] = 1;
-            active[1] = 1;
-
-            pami_send_t parameters;
-            parameters.send.dispatch        = dispatch_id;
-            parameters.send.header.iov_base = header_base;
-            parameters.send.header.iov_len  = header_len;
-            parameters.send.data.iov_base   = data_base;
-            parameters.send.data.iov_len    = data_len;
-            parameters.events.cookie        = (void *) &active;
-            parameters.events.local_fn      = cb_local_done;
-            parameters.events.remote_fn     = cb_remote_done;
-            result = PAMI_Endpoint_create(client, (pami_task_t) target, (size_t) 0, &parameters.send.dest);
-            assert(result == PAMI_SUCCESS);
-            memset(&parameters.send.hints, 0, sizeof(parameters.send.hints));
-
-            double t0 = PAMI_Wtime(client);
+            int target;
+            for ( target=0 ; target<world_size ; target++ )
             {
-                result = PAMI_Send( contexts[0], &parameters);
+                int64_t active[2]; /* local and remote */
+                active[0] = 1;
+                active[1] = 1;
+
+                pami_send_t parameters;
+                parameters.send.dispatch        = dispatch_id;
+                parameters.send.header.iov_base = header_base;
+                parameters.send.header.iov_len  = header_len;
+                parameters.send.data.iov_base   = data_base;
+                parameters.send.data.iov_len    = data_len;
+                parameters.events.cookie        = (void *) &active;
+                parameters.events.local_fn      = cb_local_done;
+                parameters.events.remote_fn     = cb_remote_done;
+                result = PAMI_Endpoint_create(client, (pami_task_t) target, (size_t) 0, &parameters.send.dest);
                 assert(result == PAMI_SUCCESS);
-                while (active[0] || active[1])
+                memset(&parameters.send.hints, 0, sizeof(parameters.send.hints));
+
+                double t0 = PAMI_Wtime(client);
                 {
-                    PAMI_Context_advance( contexts[0], poll_continuous);
+                    result = PAMI_Send( contexts[0], &parameters);
                     assert(result == PAMI_SUCCESS);
+                    while (active[0] || active[1])
+                    {
+                        PAMI_Context_advance( contexts[0], poll_continuous);
+                        assert(result == PAMI_SUCCESS);
+                    }
                 }
+                double t1 = PAMI_Wtime(client);
+                dt_list[target] = t1-t0;
             }
-            double t1 = PAMI_Wtime(client);
-            dt_list[target] = t1-t0;
+
+            for ( target=0 ; target<world_size ; target++ )
+                printf("sent %d bytes to rank %d in %lf seconds = %lf MB/s",
+                       (int) data_len, (int) target, dt_list[target], 1e-6 * data_len/dt_list[target]);
         }
 
-        for ( target=0 ; target<world_size ; target++ )
-            printf("sent %d bytes to rank %d in %lf seconds = %lf MB/s",
-                   (int) data_len, (int) target, dt_list[target], 1e-6 * data_len/dt_list[target]);
+        free(dt_list);
     }
-
-    free(dt_list);
 
     /*************************************************************************/
 
