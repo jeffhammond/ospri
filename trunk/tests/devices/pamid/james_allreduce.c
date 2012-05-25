@@ -7,8 +7,13 @@
 
 #include "safemalloc.h"
 
+#define RESULT_CHECK(result) \
+if (result!=PAMI_SUCCESS) { printf("result!=PAMI_SUCCESS\n"); sleep(1); exit(1); }
+
 pami_client_t client;
 size_t num_contexts;
+size_t task_id;
+size_t num_tasks;
 pami_context_t * contexts = NULL;
 
 typedef struct MPI_Comm
@@ -137,23 +142,36 @@ int MPI_Init(int * argc, char ** argv[])
     pami_result_t result = PAMI_ERROR;
     char * clientname = "MPI";
     result = PAMI_Client_create( clientname, &client, NULL, 0 );
-    if (result!=PAMI_SUCCESS) exit(1); 
+    RESULT_CHECK(result); 
  
     pami_configuration_t config;
+
+    config.name = PAMI_CLIENT_TASK_ID;
+    result = PAMI_Client_query(client, &config, 1);
+    RESULT_CHECK(result); 
+    task_id = config.value.intval;
+
+    config.name = PAMI_CLIENT_NUM_TASKS;
+    result = PAMI_Client_query(client, &config, 1);
+    RESULT_CHECK(result); 
+    num_tasks = config.value.intval;
+
     config.name = PAMI_CLIENT_NUM_CONTEXTS;
     result = PAMI_Client_query( client, &config, 1);
-    if (result!=PAMI_SUCCESS) exit(1); 
+    RESULT_CHECK(result); 
     num_contexts = config.value.intval;
  
+    printf("MPI_Init: rank %ld of %ld, %ld contexts available \n", task_id, num_tasks, num_contexts);
+
     /* initialize the contexts */
     contexts = (pami_context_t *) safemalloc( num_contexts * sizeof(pami_context_t) );
  
     result = PAMI_Context_createv( client, &config, 0, contexts, num_contexts );
-    if (result!=PAMI_SUCCESS) exit(1); 
+    RESULT_CHECK(result); 
  
     /* setup the world geometry */
     result = PAMI_Geometry_world( client, MPI_COMM_WORLD.geometry );
-    if (result!=PAMI_SUCCESS) exit(1); 
+    RESULT_CHECK(result); 
 
     MPI_COMM_WORLD.is_world = 1;
  
@@ -162,7 +180,7 @@ int MPI_Init(int * argc, char ** argv[])
  
     /* barrier algs */
     result = PAMI_Geometry_algorithms_num( MPI_COMM_WORLD.geometry, barrier_xfer, num_barrier_alg );
-    if (result!=PAMI_SUCCESS) exit(1); 
+    RESULT_CHECK(result); 
  
         MPI_COMM_WORLD.safe_barrier_algs = (pami_algorithm_t *) safemalloc( num_barrier_alg[0] * sizeof(pami_algorithm_t) );
     pami_metadata_t  * safe_barrier_meta = (pami_metadata_t  *) safemalloc( num_barrier_alg[0] * sizeof(pami_metadata_t)  );
@@ -171,14 +189,14 @@ int MPI_Init(int * argc, char ** argv[])
     result = PAMI_Geometry_algorithms_query( MPI_COMM_WORLD.geometry, barrier_xfer,
                                              MPI_COMM_WORLD.safe_barrier_algs, safe_barrier_meta, num_barrier_alg[0],
                                              fast_barrier_algs, fast_barrier_meta, num_barrier_alg[1] );
-    if (result!=PAMI_SUCCESS) exit(1); 
+    RESULT_CHECK(result); 
  
     /* allreduce algs */
     pami_xfer_type_t allreduce_xfer = PAMI_XFER_ALLREDUCE;
     size_t num_allreduce_alg[2];
  
     result = PAMI_Geometry_algorithms_num( MPI_COMM_WORLD.geometry, allreduce_xfer, num_allreduce_alg );
-    if (result!=PAMI_SUCCESS) exit(1); 
+    RESULT_CHECK(result); 
  
         MPI_COMM_WORLD.safe_allreduce_algs = (pami_algorithm_t *) safemalloc( num_allreduce_alg[0] * sizeof(pami_algorithm_t) );
     pami_metadata_t  * safe_allreduce_meta = (pami_metadata_t  *) safemalloc( num_allreduce_alg[0] * sizeof(pami_metadata_t)  );
@@ -187,7 +205,7 @@ int MPI_Init(int * argc, char ** argv[])
     result = PAMI_Geometry_algorithms_query( MPI_COMM_WORLD.geometry, allreduce_xfer,
                                              MPI_COMM_WORLD.safe_allreduce_algs, safe_allreduce_meta, num_allreduce_alg[0],
                                              fast_allreduce_algs, fast_allreduce_meta, num_allreduce_alg[1] );
-    if (result!=PAMI_SUCCESS) exit(1); 
+    RESULT_CHECK(result); 
  
     return MPI_SUCCESS;
 }
@@ -196,12 +214,12 @@ int MPI_Finalize(void)
 {
     pami_result_t result = PAMI_ERROR;
     result = PAMI_Context_destroyv( contexts, num_contexts );
-    if (result!=PAMI_SUCCESS) exit(1); 
+    RESULT_CHECK(result); 
    
     free(contexts);
    
     result = PAMI_Client_destroy( &client );
-    if (result!=PAMI_SUCCESS) exit(1); 
+    RESULT_CHECK(result); 
 
     return MPI_SUCCESS;
 }
@@ -213,27 +231,15 @@ double MPI_Wtime(void)
 
 int MPI_Comm_rank(MPI_Comm comm, int * rank)
 {
-    pami_result_t result = PAMI_ERROR;
     if (comm.is_world!=1) exit(1); 
-    pami_configuration_t config;
-    config.name = PAMI_CLIENT_TASK_ID;
-    result = PAMI_Client_query(client, &config, 1);
-    if (result!=PAMI_SUCCESS) exit(1); 
-
-    (*rank) = config.value.intval;
-
+    *rank = (int)task_id;
     return MPI_SUCCESS;
 }
 
 int MPI_Comm_size(MPI_Comm comm, int * size)
 {
-    pami_result_t result = PAMI_ERROR;
     if (comm.is_world!=1) exit(1); 
-    pami_configuration_t config;
-    config.name = PAMI_CLIENT_NUM_TASKS;
-    result = PAMI_Client_query(client, &config, 1);
-    if (result!=PAMI_SUCCESS) exit(1); 
-    (*size) = config.value.intval;
+    *size = (int)num_tasks;
     return MPI_SUCCESS;
 }
 
@@ -251,11 +257,11 @@ int MPI_Barrier(MPI_Comm comm)
 
     active = 1;
     result = PAMI_Collective( contexts[0], &barrier );
-    if (result!=PAMI_SUCCESS) exit(1); 
+    RESULT_CHECK(result); 
     while (active)
     {
         result = PAMI_Context_advance(contexts[0], 1);
-        if (result!=PAMI_SUCCESS) exit(1);
+        RESULT_CHECK(result);
     }
 
     return MPI_SUCCESS;
@@ -290,14 +296,14 @@ int MPI_Allreduce(void * sendbuf, void * recvbuf, int count, int datatype, int o
     while (active)
     {
         result = PAMI_Context_advance(contexts[0], 1);
-        if (result!=PAMI_SUCCESS) exit(1);
+        RESULT_CHECK(result);
     }
 
     return MPI_SUCCESS;
 }
 
-#define MAXLEN (1024*1024)
-#define REPEAT 100
+#define MAXLEN (32*1024)
+#define REPEAT 20
 
 int main(int argc, char *argv[])
 {
