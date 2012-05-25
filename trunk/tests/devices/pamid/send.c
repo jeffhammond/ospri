@@ -8,57 +8,34 @@
 
 const size_t poll_continuous = -1;
 
-//  typedef void (*pami_dispatch_p2p_function) (pami_context_t    context,
-//                                              void            * cookie,
-//                                              const void      * header_addr,
-//                                              size_t            header_size,
-//                                              const void      * pipe_addr,
-//                                              size_t            data_size,
-//                                              pami_endpoint_t   origin,
-//                                              pami_recv_t     * recv);
-
-//void cb_recv_new(pami_context_t context,
-//                 void * clientdata,
-//                 void * header_addr,
-//                 size_t header_size,
-//                 void * pipe_addr,
-//                 size_t pipe_size,
-//                 pami_endpoint_t origin,
-//                 pami_recv_t * recv)
-//{
-//
-//    return;
-//}
-
-void dispatch_foo(pami_context_t    context,
-                  void            * cookie,
-                  const void      * hbase,
-                  size_t            hlen,
-                  const void      * dbase,
-                  size_t            dlen,
-                  pami_endpoint_t   origin,
-                  pami_recv_t     * recv)
+void cb_local_done(pami_context_t context, void * cookie, pami_result_t result)
 {
-    volatile size_t * active = (volatile size_t *) cookie;
-    int64_t * header_base    = (int64_t *) hbase;
-    uint32_t  header_len     = (uint32_t)  hlen;
-    int64_t * data_base      = (int64_t *) dbase;
-    uint32_t  data_len       = (uint32_t)  dlen;
+    printf("cb_local_done \n");
+    volatile int64_t * active = (volatile int64_t *) cookie[0];
+    --(*active);
+    return;
+}
 
-    printf("dispatch_foo from endpoint %ld, header_len = %ld, data_len = %ld",
-           (long) origin, (long) header_len, (long) data_len);
+void cb_remote_done(pami_context_t context, void * cookie, pami_result_t result)
+{
+    printf("cb_remote_done \n");
+    volatile int64_t * active = (volatile int64_t *) cookie[1];
+    --(*active);
+    return;
+}
 
-    size_t i;
-    for ( i=0 ; i<header_len ; i++ )
-        printf("header_base[%ld] = %ld \n", i, header_base[i]);
-
-    for ( i=0 ; i<data_len ; i++ )
-        printf("data_base[%ld] = %ld \n", i, data_base[i]);
-
-    (*active)--;
-
-    fflush(stdout);
-
+void dispatch_cb(pami_context_t context,
+                 void * cookie,
+                 const void * header_addr,
+                 size_t       header_size,
+                 const void * pipe_addr,
+                 size_t       pipe_size,
+                 pami_endpoint_t origin,
+                 pami_recv_t * recv)
+{
+    printf("dispatch_cb \n");
+    volatile int64_t * active = (volatile int64_t *) cookie;
+    --(*active);
     return;
 }
 
@@ -116,36 +93,24 @@ int main(int argc, char* argv[])
      *************************************************************************/
 
     size_t dispatch_id = 1;
+    pami_dispatch_hint_t dispatch_hint = (pami_dispatch_hint_t) {0};
     pami_dispatch_callback_function dispatch_fn;
-    dispatch_fn.p2p = dispatch_foo;
-    int32_t active;
-    pami_dispatch_hint_t dispatch_hint;
-    memset(&dispatch_hint, 0x00, sizeof(pami_dispatch_hint_t));
-//    dispatch_hint.remote_async_progress = PAMI_HINT_ENABLE;
-//    isend_params.dispatch        = dispatch_hint;
+    dispatch_fn.p2p = dispatch_cb;
+    int64_t dispatch_active;
 
-    result = PAMI_Dispatch_set(contexts[0], dispatch_id, dispatch_fn, &active, dispatch_hint);
+    //    memset(&dispatch_hint, 0x00, sizeof(pami_dispatch_hint_t));
+    //    dispatch_hint.remote_async_progress = PAMI_HINT_ENABLE;
+    //    isend_params.dispatch        = dispatch_hint;
+
+    dispatch_active = 1;
+    result = PAMI_Dispatch_set(contexts[0], dispatch_id, dispatch_fn, &dispatch_active, dispatch_hint);
     assert(result == PAMI_SUCCESS);
 
     /*************************************************************************
-     * setup endpoints (and timing array)
+     * invoke send
      *************************************************************************/
-
-    uint32_t i;
-    pami_endpoint_t * ep_list = malloc(world_size * sizeof(pami_endpoint_t));
-    for ( i=0 ; i<world_size ; i++ )
-    {
-        result = PAMI_Endpoint_create(client, (pami_task_t)i, (size_t)0, &ep_list[i]);
-        assert(result == PAMI_SUCCESS);
-    }
 
     double * dt_list = malloc(world_size * sizeof(double));
-
-    /*************************************************************************
-     * invoke isend
-     *************************************************************************/
-
-    pami_send_immediate_t isend_params;
 
     uint32_t header_len = 4;
     int64_t header_base[header_len];
@@ -160,43 +125,45 @@ int main(int argc, char* argv[])
     uint32_t j;
     for ( j=0 ; j<data_len ; j*=2 )
     {
-        isend_params.header.iov_len  = (size_t) header_len;
-        isend_params.header.iov_base = (char *) header_base;
-
-        isend_params.data.iov_len  = (size_t) data_len;
-        isend_params.data.iov_base = (char *) data_base;
-
-        for ( i=0 ; i<world_size ; i++ )
+        int target;
+        for ( target=0 ; target<world_size ; target++ )
         {
-            active = 1;
+            int64_t active[2]; /* local and remote */
+            active[0] = 1;
+            active[1] = 1;
+
+            pami_send_t parameters;
+            parameters.send.dispatch        = dispatch;
+            parameters.send.header.iov_base = header_base;
+            parameters.send.header.iov_len  = header_len;
+            parameters.send.data.iov_base   = data_base;
+            parameters.send.data.iov_len    = data_len;
+            parameters.events.cookie        = (void *) &active;
+            parameters.events.local_fn      = cb_local_done;
+            parameters.events.remote_fn     = cb_remote_done;
+            result = PAMI_Endpoint_create(client, (pami_task_t) target, (size_t) 0, &parameters.send.dest);
+            assert(result == PAMI_SUCCESS);
+            memset(&parameters.send.hints, 0, sizeof(parameters.send.hints));
 
             double t0 = PAMI_Wtime(client);
-
-            isend_params.dest = ep_list[i];
-            result = PAMI_Send(contexts[0], &isend_params);
-            assert(result == PAMI_SUCCESS);
-
-            while (active)
             {
-                result = PAMI_Context_advance(contexts[0], poll_continuous);
+                result = PAMI_Send( contexts[0], &parameters);
                 assert(result == PAMI_SUCCESS);
+                while (active[0] || active[1])
+                {
+                    PAMI_Context_advance( contexts[0], poll_continuous);
+                    assert(result == PAMI_SUCCESS);
+                }
             }
-
             double t1 = PAMI_Wtime(client);
-
             dt_list[i] = t1-t0;
         }
 
-        for ( i=0 ; i<world_size ; i++ )
+        for ( target=0 ; target<world_size ; target++ )
             printf("sent %d bytes to rank %d in %lf seconds = %lf MB/s",
                    (int) data_len, (int) i, dt_list[i], 1e-6 * data_len/dt_list[i]);
     }
 
-    /*************************************************************************
-     * cleanup endpoints (and timing array)
-     *************************************************************************/
-
-    free(ep_list);
     free(dt_list);
 
     /*************************************************************************/
