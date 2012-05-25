@@ -32,14 +32,18 @@ const size_t poll_continuous = -1;
 
 void dispatch_foo(pami_context_t    context,
                   void            * cookie,
-                  const void      * header_base,
-                  size_t            header_len,
-                  const void      * data_base,
-                  size_t            data_len,
+                  const void      * hbase,
+                  size_t            hlen,
+                  const void      * dbase,
+                  size_t            dlen,
                   pami_endpoint_t   origin,
                   pami_recv_t     * recv)
 {
     volatile size_t * active = (volatile size_t *) cookie;
+    int64_t * header_base    = (int64_t *) hbase;
+    uint32_t  header_len     = (uint32_t)  hlen;
+    int64_t * data_base      = (int64_t *) dbase;
+    uint32_t  data_len       = (uint32_t)  dlen;
 
     printf("dispatch_foo from endpoint %ld, header_len = %ld, data_len = %ld",
            (long) origin, (long) header_len, (long) data_len);
@@ -71,7 +75,6 @@ int main(int argc, char* argv[])
     /* query properties of the client */
     pami_configuration_t config;
     int world_size, world_rank;
-    int num_contexts;
 
     config.name = PAMI_CLIENT_NUM_TASKS;
     result = PAMI_Client_query( client, &config,1);
@@ -82,23 +85,29 @@ int main(int argc, char* argv[])
     result = PAMI_Client_query( client, &config,1);
     assert(result == PAMI_SUCCESS);
     world_rank = config.value.intval;
-    printf("hello world from rank %d of %d \n",world_rank,world_size);
+
+    if (world_rank==0)
+        printf("hello world from rank %d of %d \n", world_rank, world_size);
     fflush(stdout);
     sleep(1);
 
+    int num_contexts = 1;
+#ifdef MULTICONTEXT
     config.name = PAMI_CLIENT_NUM_CONTEXTS;
-    result = PAMI_Client_query( client, &config,1);
+    result = PAMI_Client_query( client, &config, 1);
     assert(result == PAMI_SUCCESS);
     num_contexts = config.value.intval;
+#endif
 
     /* initialize the contexts */
-    pami_context_t * contexts;
+    pami_context_t * contexts = NULL;
     contexts = (pami_context_t *) malloc( num_contexts * sizeof(pami_context_t) );
 
-    result = PAMI_Context_createv(client, &config, 0, contexts, num_contexts);
+    result = PAMI_Context_createv( client, &config, 0, contexts, num_contexts);
     assert(result == PAMI_SUCCESS);
 
-    printf("%d contexts were created by rank %d \n",num_contexts,world_rank);
+    if (world_rank==0)
+        printf("%d contexts were created \n", num_contexts);
     fflush(stdout);
     sleep(1);
 
@@ -111,6 +120,9 @@ int main(int argc, char* argv[])
     dispatch_fn.p2p = dispatch_foo;
     int32_t active;
     pami_dispatch_hint_t dispatch_hint;
+    memset(&dispatch_hint, 0x00, sizeof(pami_dispatch_hint_t));
+//    dispatch_hint.remote_async_progress = PAMI_HINT_ENABLE;
+//    isend_params.dispatch        = dispatch_hint;
 
     result = PAMI_Dispatch_set(contexts[0], dispatch_id, dispatch_fn, &active, dispatch_hint);
     assert(result == PAMI_SUCCESS);
@@ -135,11 +147,6 @@ int main(int argc, char* argv[])
 
     pami_send_immediate_t isend_params;
 
-    pami_dispatch_hint_t dispatch_hint;
-    memset(&dispatch_hint, 0x00, sizeof(pami_dispatch_hint_t));
-//    dispatch_hint.remote_async_progress = PAMI_HINT_ENABLE;
-//    isend_params.dispatch        = dispatch_hint;
-
     uint32_t header_len = 4;
     int64_t header_base[header_len];
     for ( i=0 ; i<header_len ; i++ )
@@ -150,8 +157,8 @@ int main(int argc, char* argv[])
     for ( i=0 ; i<data_len ; i++ )
         data_base[i] = i;
 
-    uint32_t data_len;
-    for ( data_len=0 ; data_len<1024 ; data_len*=2 )
+    uint32_t j;
+    for ( j=0 ; j<data_len ; j*=2 )
     {
         isend_params.header.iov_len  = (size_t) header_len;
         isend_params.header.iov_base = (char *) header_base;
@@ -166,7 +173,7 @@ int main(int argc, char* argv[])
             double t0 = PAMI_Wtime(client);
 
             isend_params.dest = ep_list[i];
-            result = PAMI_Send_immediate (contexts[0], &isend_params);
+            result = PAMI_Send_immediate(contexts[0], &isend_params);
             assert(result == PAMI_SUCCESS);
 
             while (active)
