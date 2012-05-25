@@ -11,6 +11,12 @@ ifdef BGP
     HPM=-L/soft/apps/UPC/lib -lhpm
     LIBS=$(HPM) safemalloc.o
 endif
+ifdef BGQ
+    CC=mpixlc_r
+    CFLAGS=-g -O5 -qhot -qipa=list="transpose.x.lst" -qtune=qp -qarch=qp -qlanglvl=stdc99 -qreport -DMPI
+    OMPFLAGS=-qsmp=omp -DOMP
+    LIBS=$(HPM) safemalloc.o
+endif
 ifdef LAPTOP
     CC=gcc
     CFLAGS=-g -O3 -std=c99 -fopenmp -ftree-vectorize -msse -msse2 -msse3 -ffast-math
@@ -38,9 +44,21 @@ submit: all
 		qsub --mode smp -n 1 -t 55 --env OMP_NUM_THREADS=1 ./transpose.x 16 3072 16
 		qsub --mode smp -n 1 -t 55 --env OMP_NUM_THREADS=4 ./transpose-omp.x 16 3072 16
 else
+ifdef BGQ
+submit: all
+		qsub --mode smp -n 1 -t 55 --env OMP_NUM_THREADS=1  ./transpose.x 1 550 1
+		qsub --mode smp -n 1 -t 55 --env OMP_NUM_THREADS=4  ./transpose-omp.x 1 550 1
+		qsub --mode smp -n 1 -t 55 --env OMP_NUM_THREADS=16 ./transpose-omp.x 1 550 1
+		qsub --mode smp -n 1 -t 55 --env OMP_NUM_THREADS=64 ./transpose-omp.x 1 550 1
+		qsub --mode smp -n 1 -t 55 --env OMP_NUM_THREADS=1  ./transpose.x 16 3072 16
+		qsub --mode smp -n 1 -t 55 --env OMP_NUM_THREADS=4  ./transpose-omp.x 16 3072 16
+		qsub --mode smp -n 1 -t 55 --env OMP_NUM_THREADS=16 ./transpose.x 16 3072 16
+		qsub --mode smp -n 1 -t 55 --env OMP_NUM_THREADS=64 ./transpose-omp.x 16 3072 16
+else
 submit: all
 	OMP_NUM_THREADS=1 ./transpose.x     1> transpose.out     2> transpose.err
 	OMP_NUM_THREADS=2 ./transpose-omp.x 1> transpose-omp.out 2> transpose-omp.err
+endif
 endif
 
 clean:

@@ -18,7 +18,7 @@
 #   endif
 #endif
 
-#include "getticks.c"
+#include "getticks.h"
 #include "safemalloc.h"
 
 #define ALIGNMENT 128
@@ -204,11 +204,11 @@ int main(int argc, char* argv[])
 #ifdef OMP
 #pragma omp parallel for if(n>OMP_MIN_SIZE) private(i,j)
 #endif
-                //#pragma unroll(4)
-                #pragma unroll_and_jam
+                /* #pragma unroll(4) */
+                /* #pragma unroll_and_jam */
                 for ( j=0 ; j<n ; j++ )
-                    //#pragma unroll(4)
-                    #pragma unroll_and_jam
+                    /* #pragma unroll(4) */
+                    /* #pragma unroll_and_jam */
                     for ( i=0 ; i<n ; i++ )
                         B[i*n+j] = A[j*n+i];
             }
