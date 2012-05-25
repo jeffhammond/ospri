@@ -170,9 +170,10 @@ int main(int argc, char* argv[])
         {
             active = 1;
 
+            isend_params.dest = ep_list[i];
+
             double t0 = PAMI_Wtime(client);
 
-            isend_params.dest = ep_list[i];
             result = PAMI_Send_immediate(contexts[0], &isend_params);
             assert(result == PAMI_SUCCESS);
 

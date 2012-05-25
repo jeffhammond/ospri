@@ -11,16 +11,16 @@ const size_t poll_continuous = -1;
 void cb_local_done(pami_context_t context, void * cookie, pami_result_t result)
 {
     printf("cb_local_done \n");
-    volatile int64_t * active = (volatile int64_t *) cookie[0];
-    --(*active);
+    volatile int64_t * active = (volatile int64_t *) cookie;
+    --(active[0]);
     return;
 }
 
 void cb_remote_done(pami_context_t context, void * cookie, pami_result_t result)
 {
     printf("cb_remote_done \n");
-    volatile int64_t * active = (volatile int64_t *) cookie[1];
-    --(*active);
+    volatile int64_t * active = (volatile int64_t *) cookie;
+    --(active[1]);
     return;
 }
 
@@ -114,16 +114,15 @@ int main(int argc, char* argv[])
 
     uint32_t header_len = 4;
     int64_t header_base[header_len];
-    for ( i=0 ; i<header_len ; i++ )
+    for ( uint32_t i=0 ; i<header_len ; i++ )
         header_base[i] = 0;
 
     uint32_t data_len = 1024;
     int64_t data_base[data_len];
-    for ( i=0 ; i<data_len ; i++ )
+    for ( uint32_t i=0 ; i<data_len ; i++ )
         data_base[i] = i;
 
-    uint32_t j;
-    for ( j=0 ; j<data_len ; j*=2 )
+    for ( uint32_t j=0 ; j<data_len ; j*=2 )
     {
         int target;
         for ( target=0 ; target<world_size ; target++ )
@@ -133,7 +132,7 @@ int main(int argc, char* argv[])
             active[1] = 1;
 
             pami_send_t parameters;
-            parameters.send.dispatch        = dispatch;
+            parameters.send.dispatch        = dispatch_id;
             parameters.send.header.iov_base = header_base;
             parameters.send.header.iov_len  = header_len;
             parameters.send.data.iov_base   = data_base;
@@ -156,12 +155,12 @@ int main(int argc, char* argv[])
                 }
             }
             double t1 = PAMI_Wtime(client);
-            dt_list[i] = t1-t0;
+            dt_list[target] = t1-t0;
         }
 
         for ( target=0 ; target<world_size ; target++ )
             printf("sent %d bytes to rank %d in %lf seconds = %lf MB/s",
-                   (int) data_len, (int) i, dt_list[i], 1e-6 * data_len/dt_list[i]);
+                   (int) data_len, (int) target, dt_list[target], 1e-6 * data_len/dt_list[target]);
     }
 
     free(dt_list);
