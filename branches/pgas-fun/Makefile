@@ -1,15 +1,18 @@
-UPC=cc -h upc
-UPCFLAGS=-g -O2
-LD=$(UPC)
-LDFLAGS=$(UPCFLAGS)
-LIBS=-lhugetlbfs
+UPC      = cc -h upc
+UPCFLAGS = -g -O2
+LD       = $(UPC)
+LDFLAGS  = $(UPCFLAGS)
+LIBS     = -lhugetlbfs
 
-all: hello.x barrier.x shared.x
+all: hello.x barrier.x shared.x hello-shmem.x
 
 %.x: %.o
 	$(LD) $(LDFLAGS) $< $(LIBS) -o $@
 
 %.o: %.upc
+	$(UPC) $(UPCFLAGS) -c $< -o $@
+
+%.o: %.c
 	$(UPC) $(UPCFLAGS) -c $< -o $@
 
 clean:
