@@ -1,0 +1,3 @@
+module swap PrgEnv-pgi PrgEnv-cray
+cc -g -O2 -h upc hello.upc -lhugetlbfs -o hello.x
+qsub -I -q interactive -l walltime=00:30:00 -l mppwidth=48
