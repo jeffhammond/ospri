@@ -1,5 +1,5 @@
 UPC      = cc -h upc
-UPCFLAGS = -g -O2
+UPCFLAGS = -g -O2 -DRELAXED
 LD       = $(UPC)
 LDFLAGS  = $(UPCFLAGS)
 LIBS     = -lhugetlbfs

@@ -4,7 +4,7 @@ LD       = $(CC)
 LDFLAGS  = $(CFLAGS)
 LIBS     = -lhugetlbfs
 
-all: hello.x
+all: hello.x sheap.x
 
 %.x: %.o
 	$(LD) $(LDFLAGS) $< $(LIBS) -o $@

@@ -1,6 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
+#ifdef RELAXED
+#include <upc_relaxed.h>
+#else
 #include <upc.h>
+#endif
 
 int main(int argc, char* argv[])
 {

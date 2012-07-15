@@ -16,5 +16,6 @@ int main(int argc, char* argv[])
     printf("Hello world: I am PE %d of %d.\n", my_pe(), num_pes());
 #endif
     shmem_barrier_all();
+    shmem_finalize();
     return 0;
 }
