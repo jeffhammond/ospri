@@ -1,5 +1,3 @@
-#include <stdio.h>
-#include <stdlib.h>
 #include "myshmem.h"
 
 int main(int argc, char* argv[])
