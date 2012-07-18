@@ -9,7 +9,7 @@ all: hello.x sheap.x get.x put.x
 %.x: %.o
 	$(LD) $(LDFLAGS) $< $(LIBS) -o $@
 
-%.o: %.c
+%.o: %.c myshmem.h
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:

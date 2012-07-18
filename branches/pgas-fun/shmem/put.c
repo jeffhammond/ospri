@@ -1,11 +1,5 @@
 #include "myshmem.h"
 
-#define CHECK_SHEAP_IS_SYMMETRIC
-
-#ifdef CHECK_SHEAP_IS_SYMMETRIC
-long sheap_base;
-#endif
-
 int main(int argc, char* argv[])
 {
     shmem_init();
@@ -21,26 +15,7 @@ int main(int argc, char* argv[])
     /* apparently Cray SHMEM doesn't call a barrier in shmalloc */
     shmem_barrier_all();
 
-#ifdef CHECK_SHEAP_IS_SYMMETRIC
-    int errors = 0;
-    sheap_base = (long)sheap;
-    long remote_sheap_base;
-    /* this is an inefficient N^2 implementation of what should be a reduction */
-    for (i=0; i<npes; i++)
-    {
-        shmem_long_get(&remote_sheap_base, &sheap_base, (size_t)1, i);
-        if (sheap_base != remote_sheap_base)
-        {
-            printf("PE %d: the symmetric heap is not actually symmetric: my base = %p, PE %d base = %p \n",
-                   mype, sheap_base, i, remote_sheap_base);
-            errors++;
-        }
-    }
-    if (errors==0)
-            printf("PE %d: the symmetric heap is symmetric: my base = %p \n",
-                   mype, sheap_base);
-    shmem_barrier_all();
-#endif
+    sheap_is_symmetric((long)sheap);
 
     int * local = malloc(n*sizeof(int));
     for (i=0; i<n; i++)

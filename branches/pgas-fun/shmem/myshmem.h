@@ -3,24 +3,64 @@
 #include <mpp/shmem.h>
 
 #ifdef OPENSHMEM
-void shmem_init(void)
+static void shmem_init(void)
 {
     start_pes(0);
     return;
 }
 
-void shmem_finalize(void)
+static void shmem_finalize(void)
 {
     return;
 }
 
-int num_pes(void)
+static int num_pes(void)
 {
     return _num_pes();
 }
 
-int my_pe(void)
+static int my_pe(void)
 {
     return _my_pe();
 }
 #endif
+
+#define CHECK_SHEAP_IS_SYMMETRIC
+
+#ifdef CHECK_SHEAP_IS_SYMMETRIC
+static long sheap_base;
+#endif
+
+static int sheap_is_symmetric(long base)
+{
+#ifdef CHECK_SHEAP_IS_SYMMETRIC
+    int mype = my_pe();
+    int npes = num_pes();
+
+    sheap_base = base;
+
+    int i, errors = 0;
+    /* this is an inefficient N^2 implementation of what should be a reduction */
+    for (i=0; i<npes; i++)
+    {
+        long remote_sheap_base;
+        shmem_long_get(&remote_sheap_base, &sheap_base, (size_t)1, i);
+        if (sheap_base != remote_sheap_base)
+        {
+            printf("PE %d: the symmetric heap is not actually symmetric: my base = %p, PE %d base = %p \n",
+                   mype, sheap_base, i, remote_sheap_base);
+            errors++;
+        }
+    }
+    shmem_barrier_all();
+
+    if (errors>0)
+            return 1;
+
+    if (errors==0)
+            printf("PE %d: the symmetric heap is symmetric: my base = %p \n",
+                   mype, sheap_base);
+#endif
+    return 0;
+}
+
