@@ -16,7 +16,7 @@ int main(int argc, char* argv[])
     shmem_barrier_all();
 
     int symm = sheap_is_symmetric((long)sheap);
-    if (symm>0) /* do something else */
+    if (symm>0); /* do something else */
 
     int * local = malloc(n*sizeof(int));
     for (i=0; i<n; i++)

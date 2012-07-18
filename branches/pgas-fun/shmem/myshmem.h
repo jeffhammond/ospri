@@ -27,9 +27,7 @@ static int my_pe(void)
 
 #define CHECK_SHEAP_IS_SYMMETRIC
 
-#ifdef CHECK_SHEAP_IS_SYMMETRIC
 static long sheap_base;
-#endif
 
 static int sheap_is_symmetric(long base)
 {
