@@ -15,7 +15,8 @@ int main(int argc, char* argv[])
     /* apparently Cray SHMEM doesn't call a barrier in shmalloc */
     shmem_barrier_all();
 
-    sheap_is_symmetric((long)sheap);
+    int symm = sheap_is_symmetric((long)sheap);
+    if (symm>0) /* do something else */
 
     int * local = malloc(n*sizeof(int));
     for (i=0; i<n; i++)

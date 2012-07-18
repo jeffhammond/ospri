@@ -33,14 +33,15 @@ static long sheap_base;
 
 static int sheap_is_symmetric(long base)
 {
+    int errors = 0;
 #ifdef CHECK_SHEAP_IS_SYMMETRIC
     int mype = my_pe();
     int npes = num_pes();
 
     sheap_base = base;
 
-    int i, errors = 0;
     /* this is an inefficient N^2 implementation of what should be a reduction */
+    int i;
     for (i=0; i<npes; i++)
     {
         long remote_sheap_base;
@@ -54,13 +55,10 @@ static int sheap_is_symmetric(long base)
     }
     shmem_barrier_all();
 
-    if (errors>0)
-            return 1;
-
     if (errors==0)
             printf("PE %d: the symmetric heap is symmetric: my base = %p \n",
                    mype, sheap_base);
 #endif
-    return 0;
+    return errors; /* returns 0 on success */
 }
 
