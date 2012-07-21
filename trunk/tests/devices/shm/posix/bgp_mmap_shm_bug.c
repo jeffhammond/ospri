@@ -27,7 +27,7 @@ int main(int argc, char* argv[])
     printf("size = %ld \n", (long)size);
 
 #if defined(POSIX_SHM)
-    int fd = shm_open("/bar", O_RDWR | O_CREAT, S_IRUSR | S_IWUSR );
+    int fd = shm_open("./bar", O_RDWR | O_CREAT, S_IRUSR | S_IWUSR );
     if (fd<0) printf("shm_open failed: %d \n", fd);
     else      printf("shm_open succeeded: %d \n", fd);
 #elif defined(DEV_SHM)
@@ -77,7 +77,7 @@ int main(int argc, char* argv[])
 #if defined(POSIX_SHM)
     if (fd>=0)
     {
-        int rc = shm_unlink("/bar");
+        int rc = shm_unlink("./bar");
         if (rc==0) printf("shm_unlink succeeded \n");
         else       printf("shm_unlink failed \n");
     }

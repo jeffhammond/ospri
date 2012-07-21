@@ -23,27 +23,29 @@
 
 int main(int argc, char* argv[])
 {
+    int world_rank = 0;
+
     size_t size = ( argc>1 ? atoi(argv[1]) : getpagesize() ); 
-    printf("size = %ld \n", (long)size);
+    printf("%d: size = %ld \n", world_rank, (long)size);
 
 #if defined(POSIX_SHM)
     int fd = shm_open("/bar", O_RDWR | O_CREAT, S_IRUSR | S_IWUSR );
-    if (fd<0) printf("shm_open failed: %d \n", fd);
-    else      printf("shm_open succeeded: %d \n", fd);
+    if (fd<0) printf("%d: shm_open failed: %d \n", world_rank, fd);
+    else      printf("%d: shm_open succeeded: %d \n", world_rank, fd);
 #elif defined(DEV_SHM)
     int fd = open("/dev/shm/foo", O_RDWR | O_CREAT, S_IRUSR | S_IWUSR );
-    if (fd<0) printf("open failed: %d \n", fd);
-    else      printf("open succeeded: %d \n", fd);
+    if (fd<0) printf("%d: open failed: %d \n", world_rank, fd);
+    else      printf("%d: open succeeded: %d \n", world_rank, fd);
 #else
     int fd = -1;
-    printf("no file backing \n");
+    printf("%d: no file backing \n", world_rank);
 #endif
 
     if (fd>=0)
     {
         int rc = ftruncate(fd, size);
-        if (rc==0) printf("ftruncate succeeded \n");
-        else       printf("ftruncate failed \n");
+        if (rc==0) printf("%d: ftruncate succeeded \n", world_rank);
+        else       printf("%d: ftruncate failed \n", world_rank);
     }
 
 #if defined(__bgp__) && defined(BGP_SMP_SHM_BROKEN)
@@ -52,7 +54,7 @@ int main(int argc, char* argv[])
     Kernel_GetPersonality(&pers, sizeof(pers));
     if( BGP_Personality_processConfig(&pers) == _BGP_PERS_PROCESSCONFIG_SMP )
     {
-        printf("SMP mode => MAP_PRIVATE | MAP_ANONYMOUS \n");
+        printf("%d: SMP mode => MAP_PRIVATE | MAP_ANONYMOUS \n", world_rank);
         ptr = mmap( NULL, size, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS, fd, 0 );
     }
     else
@@ -60,41 +62,41 @@ int main(int argc, char* argv[])
 #else
     void * ptr = mmap( NULL, size, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0 );
 #endif
-    if (ptr==NULL) printf("mmap failed \n");
-    else           printf("mmap succeeded \n");
+    if (ptr==NULL) printf("%d: mmap failed \n", world_rank);
+    else           printf("%d: mmap succeeded \n", world_rank);
     
-    printf("trying memset \n");
+    printf("%d: trying memset \n", world_rank);
     memset(ptr, '\0', size);
-    printf("memset succeeded \n");
+    printf("%d: memset succeeded \n", world_rank);
 
     if (fd>=0)
     {
         int rc = ftruncate(fd, 0);
-        if (rc==0) printf("ftruncate succeeded \n");
-        else       printf("ftruncate failed \n");
+        if (rc==0) printf("%d: ftruncate succeeded \n", world_rank);
+        else       printf("%d: ftruncate failed \n", world_rank);
     }
 
 #if defined(POSIX_SHM)
     if (fd>=0)
     {
         int rc = shm_unlink("/bar");
-        if (rc==0) printf("shm_unlink succeeded \n");
-        else       printf("shm_unlink failed \n");
+        if (rc==0) printf("%d: shm_unlink succeeded \n", world_rank);
+        else       printf("%d: shm_unlink failed \n", world_rank);
     }
 #elif defined(DEV_SHM)
     if (fd>=0)
     {
         int rc = close(fd);
-        if (rc==0) printf("close succeeded \n");
-        else       printf("close failed \n");
+        if (rc==0) printf("%d: close succeeded \n", world_rank);
+        else       printf("%d: close failed \n", world_rank);
     }
 #endif
 
     if (ptr!=NULL)
     {
         int rc = munmap(ptr, size);
-        if (rc==0) printf("munmap succeeded \n");
-        else       printf("munmap failed \n");
+        if (rc==0) printf("%d: munmap succeeded \n", world_rank);
+        else       printf("%d: munmap failed \n", world_rank);
     }
 
     return 0;

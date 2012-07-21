@@ -7,16 +7,15 @@
 #include <sys/mman.h>
 #include <sys/stat.h>
 
-/* BGP only? */
-#include <asm-generic/errno-base.h>
-
 #include <pthread.h>
 #include <mpi.h>
 
-#define DEV_SHM
-//#define POSIX_SHM
+//#define DEV_SHM
+#define POSIX_SHM
 
 #ifdef __bgp__
+/* BGP only? */
+#include <asm-generic/errno-base.h>
 #  include </bgsys/drivers/ppcfloor/arch/include/spi/kernel_interface.h>
 #  include </bgsys/drivers/ppcfloor/arch/include/common/bgp_personality.h>
 #  include </bgsys/drivers/ppcfloor/arch/include/common/bgp_personality_inlines.h>

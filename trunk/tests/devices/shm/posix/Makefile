@@ -1,10 +1,10 @@
-CC      = mpixlc_r
+CC      = mpicc
 COPT    = -g -O0 #-Wall #-std=c99
 
 LD      = $(CC)
-CFLAGS  = $(COPT) -I/bgsys/drivers/ppcfloor/arch/include/
+CFLAGS  = $(COPT) #-I/bgsys/drivers/ppcfloor/arch/include/
 LDFLAGS = $(COPT)
-LIBS    = -lrt
+LIBS    = #-lrt
 
 TESTS   := $(patsubst %.c,%.x,$(wildcard *.c))
 OBJECTS := $(patsubst %.c,%.o,$(wildcard *.c))

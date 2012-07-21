@@ -7,16 +7,15 @@
 #include <sys/mman.h>
 #include <sys/stat.h>
 
-/* BGP only? */
-#include <asm-generic/errno-base.h>
-
 #include <pthread.h>
 #include <mpi.h>
 
-#define DEV_SHM
-//#define POSIX_SHM
+//#define DEV_SHM
+#define POSIX_SHM
 
 #ifdef __bgp__
+/* BGP only? */
+#include <asm-generic/errno-base.h>
 #  include </bgsys/drivers/ppcfloor/arch/include/spi/kernel_interface.h>
 #  include </bgsys/drivers/ppcfloor/arch/include/common/bgp_personality.h>
 #  include </bgsys/drivers/ppcfloor/arch/include/common/bgp_personality_inlines.h>
@@ -90,7 +89,7 @@ int main(int argc, char* argv[])
     MPIX_rank2torus( world_rank, &xRank, &yRank, &zRank, &tRank );
     color = xRank + yRank*xSize + zRank*ySize*xSize;
 #else
-    color = world_rank%2;
+    color = 0;
 #endif
 
     mpi_result = MPI_Comm_split(MPI_COMM_WORLD, color, 0, &IntraNodeComm);
@@ -101,7 +100,16 @@ int main(int argc, char* argv[])
     assert(mpi_result==MPI_SUCCESS);
 
 #if defined(POSIX_SHM)
-    int fd = shm_open("/foo", O_RDWR | O_CREAT, S_IRUSR | S_IWUSR );
+    int fd;
+    if (subcomm_rank==0)
+        fd = shm_open("/foo", O_RDWR | O_CREAT, S_IRUSR | S_IWUSR );
+
+    mpi_result = MPI_Barrier(MPI_COMM_WORLD);
+    assert(mpi_result==MPI_SUCCESS);
+
+    if (subcomm_rank!=0)
+        fd = shm_open("/foo", O_RDWR, S_IRUSR | S_IWUSR );
+
     if (fd<0) printf("%7d: shm_open failed: %d \n", world_rank, fd);
     else      printf("%7d: shm_open succeeded: %d \n", world_rank, fd);
 #elif defined(DEV_SHM)
@@ -112,6 +120,9 @@ int main(int argc, char* argv[])
     int fd = -1;
     printf("%7d: no file backing \n", world_rank);
 #endif
+    fflush(stdout);
+    mpi_result = MPI_Barrier(MPI_COMM_WORLD);
+    assert(mpi_result==MPI_SUCCESS);
 
     if (fd>=0 && subcomm_rank==0)
     {
@@ -119,6 +130,9 @@ int main(int argc, char* argv[])
         if (rc==0) printf("%7d: ftruncate succeeded \n", world_rank);
         else       printf("%7d: ftruncate failed \n", world_rank);
     }
+    fflush(stdout);
+    mpi_result = MPI_Barrier(MPI_COMM_WORLD);
+    assert(mpi_result==MPI_SUCCESS);
 
 #ifdef __bgp__
     double * ptr = NULL;
@@ -136,10 +150,8 @@ int main(int argc, char* argv[])
         {
             printf("node_shmem_bytes (%d) greater than pers.Kernel_Config.SharedMemMB (%d) - allocating the latter \n", 
                    node_shmem_bytes, pers.Kernel_Config.SharedMemMB );
-
             node_shmem_bytes = pers.Kernel_Config.SharedMemMB;
         }
-
         ptr = mmap( NULL, node_shmem_bytes, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0 );
     }
 #else
@@ -147,13 +159,14 @@ int main(int argc, char* argv[])
 #endif
     if (ptr==NULL) printf("%7d: mmap failed \n", world_rank);
     else           printf("%7d: mmap succeeded \n", world_rank);
-
     fflush(stdout);
     mpi_result = MPI_Barrier(MPI_COMM_WORLD);
     assert(mpi_result==MPI_SUCCESS);
 
-    mpi_result = MPI_Comm_rank(IntraNodeComm, &ranks_per_node );
+    mpi_result = MPI_Comm_size(IntraNodeComm, &ranks_per_node );
     assert(mpi_result==MPI_SUCCESS);
+    if (0==subcomm_rank) printf("%7d: ranks_per_node = %d \n", world_rank, ranks_per_node );
+    fflush(stdout);
 
     for (i=0; i<ranks_per_node; i++)
     {
@@ -178,11 +191,22 @@ int main(int argc, char* argv[])
         mpi_result = MPI_Barrier(MPI_COMM_WORLD);
         assert(mpi_result==MPI_SUCCESS);
     }
+    fflush(stdout);
+    mpi_result = MPI_Barrier(MPI_COMM_WORLD);
+    assert(mpi_result==MPI_SUCCESS);
 
 #if defined(POSIX_SHM)
-    if (fd>=0)
+    //if (fd>=0)
+    if (fd>=0 && subcomm_rank==0)
     {
-        int rc = shm_unlink("/foo");
+        int rc = -1;
+
+        // cannot truncate shm files apparently
+        rc = ftruncate(fd, 0);
+        if (rc==0) printf("%7d: ftruncate succeeded \n", world_rank);
+        else       printf("%7d: ftruncate failed \n", world_rank);
+
+        rc = shm_unlink("/foo");
         if (rc==0) printf("%7d: shm_unlink succeeded \n", world_rank);
         else       printf("%7d: shm_unlink failed \n", world_rank);
     }
@@ -200,6 +224,9 @@ int main(int argc, char* argv[])
         else       printf("%7d: close failed \n", world_rank);
     }
 #endif
+    fflush(stdout);
+    mpi_result = MPI_Barrier(MPI_COMM_WORLD);
+    assert(mpi_result==MPI_SUCCESS);
 
     if (ptr!=NULL)
     {
@@ -207,13 +234,15 @@ int main(int argc, char* argv[])
         if (rc==0) printf("%7d: munmap succeeded \n", world_rank);
         else       printf("%7d: munmap failed \n", world_rank);
     }
-
+    fflush(stdout);
     mpi_result = MPI_Barrier(MPI_COMM_WORLD);
     assert(mpi_result==MPI_SUCCESS);
 
     if (world_rank==0) printf("%7d: all done! \n", world_rank );
+    fflush(stdout);
+    mpi_result = MPI_Barrier(MPI_COMM_WORLD);
+    assert(mpi_result==MPI_SUCCESS);
 
     MPI_Finalize();
-
     return 0;
 }

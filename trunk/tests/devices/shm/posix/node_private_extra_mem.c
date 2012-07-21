@@ -35,15 +35,17 @@ int main(int argc, char* argv[])
     int color = world_rank;
 #if defined(__bgp__)
     uint32_t xRank, yRank, zRank, tRank;
+    uint32_t xSize, ySize, zSize, tSize;
     MPIX_rank2torus( world_rank, &xRank, &yRank, &zRank, &tRank );
-    color = xRank + 100*yRank + 10000*zRank;
+    MPIX_rank2torus( world_size, &xSize, &ySize, &zSize, &tSize );
+    color = xRank + xSize*yRank + xSize*ySize*zRank;
 #endif
 
-    MPI_Comm MPI_COMM_NODE;
-    MPI_Comm_split(MPI_COMM_WORLD, color, 0, &MPI_COMM_NODE);
+    MPI_Comm MPI_Comm_node;
+    MPI_Comm_split(MPI_COMM_WORLD, color, 0, &MPI_Comm_node);
 
-    MPI_Comm_rank(MPI_COMM_NODE, &node_rank);
-    MPI_Comm_size(MPI_COMM_NODE, &node_size);
+    MPI_Comm_rank(MPI_Comm_node, &node_rank);
+    MPI_Comm_size(MPI_Comm_node, &node_size);
 
     int rc = -1;
     int fd = -1;
