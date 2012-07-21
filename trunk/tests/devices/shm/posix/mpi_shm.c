@@ -201,11 +201,12 @@ int main(int argc, char* argv[])
     {
         int rc = -1;
 
+#if 0
         // cannot truncate shm files apparently
         rc = ftruncate(fd, 0);
         if (rc==0) printf("%7d: ftruncate succeeded \n", world_rank);
         else       printf("%7d: ftruncate failed \n", world_rank);
-
+#endif
         rc = shm_unlink("/foo");
         if (rc==0) printf("%7d: shm_unlink succeeded \n", world_rank);
         else       printf("%7d: shm_unlink failed \n", world_rank);
