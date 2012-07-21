@@ -14,16 +14,13 @@
 #define POSIX_SHM
 
 #ifdef __bgp__
-/* BGP only? */
-#include <asm-generic/errno-base.h>
+#  include <asm-generic/errno-base.h> /* BGP only? */
 #  include </bgsys/drivers/ppcfloor/arch/include/spi/kernel_interface.h>
 #  include </bgsys/drivers/ppcfloor/arch/include/common/bgp_personality.h>
 #  include </bgsys/drivers/ppcfloor/arch/include/common/bgp_personality_inlines.h>
 #endif
 
 #ifdef __bgq__
-//#  include <firmware/include/personality.h>
-//#  include <spi/include/kernel/process.h>
 #  include <spi/include/kernel/location.h>
 #endif
 
