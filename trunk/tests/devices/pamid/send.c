@@ -10,19 +10,11 @@ const size_t poll_continuous = -1;
 
 int world_size, world_rank;
 
-void cb_local_done(pami_context_t context, void * cookie, pami_result_t result)
+void cb_done(pami_context_t context, void * cookie, pami_result_t result)
 {
-    printf("%d: cb_local_done \n", world_rank);
-    volatile int64_t * active = (volatile int64_t *) cookie;
-    --(active[0]);
-    return;
-}
-
-void cb_remote_done(pami_context_t context, void * cookie, pami_result_t result)
-{
-    printf("%d: cb_remote_done \n", world_rank);
-    volatile int64_t * active = (volatile int64_t *) cookie;
-    --(active[1]);
+    printf("%d: cb_done \n", world_rank);
+    volatile int32_t * active = (volatile int32_t *) cookie;
+    --(active);
     return;
 }
 
@@ -125,14 +117,13 @@ int main(int argc, char* argv[])
         for ( uint32_t i=0 ; i<data_len ; i++ )
             data_base[i] = i;
 
-        for ( uint32_t j=0 ; j<data_len ; j*=2 )
+        for ( uint32_t j=1 ; j<data_len ; j*=2 )
         {
             int target;
-            for ( target=0 ; target<world_size ; target++ )
+            for ( target=1 ; target<world_size ; target++ )
             {
-                int64_t active[2]; /* local and remote */
-                active[0] = 1;
-                active[1] = 1;
+                int32_t active;
+                active = 1;
 
                 pami_send_t parameters;
                 parameters.send.dispatch        = dispatch_id;
@@ -141,8 +132,8 @@ int main(int argc, char* argv[])
                 parameters.send.data.iov_base   = data_base;
                 parameters.send.data.iov_len    = data_len;
                 parameters.events.cookie        = (void *) &active;
-                parameters.events.local_fn      = cb_local_done;
-                parameters.events.remote_fn     = cb_remote_done;
+                parameters.events.local_fn      = cb_done;
+                parameters.events.remote_fn     = NULL;
                 result = PAMI_Endpoint_create(client, (pami_task_t) target, (size_t) 0, &parameters.send.dest);
                 assert(result == PAMI_SUCCESS);
                 memset(&parameters.send.hints, 0, sizeof(parameters.send.hints));
@@ -151,9 +142,9 @@ int main(int argc, char* argv[])
                 {
                     result = PAMI_Send( contexts[0], &parameters);
                     assert(result == PAMI_SUCCESS);
-                    while (active[0] || active[1])
+                    while (active)
                     {
-                        PAMI_Context_advance( contexts[0], poll_continuous);
+                        result = PAMI_Context_advance( contexts[0], poll_continuous);
                         assert(result == PAMI_SUCCESS);
                     }
                 }
@@ -167,6 +158,14 @@ int main(int argc, char* argv[])
         }
 
         free(dt_list);
+    }
+    else
+    {
+        while (1)
+        {
+            result = PAMI_Context_advance( contexts[0], poll_continuous);
+            assert(result == PAMI_SUCCESS);
+        }
     }
 
     /*************************************************************************/

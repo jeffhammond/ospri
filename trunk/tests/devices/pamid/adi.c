@@ -183,7 +183,8 @@ static pami_result_t SendLongHandoff(pami_context_t   context,
   PAMI_Endpoint_create(client, remote_task, remote_context, &dest);
 
   pami_send_t parameters;
-  bzero(&parameters, sizeof(pami_send_t));
+  //bzero(&parameters, sizeof(pami_send_t));
+  memset(&parameters, '\0', sizeof(pami_send_t));
   parameters.send.dispatch        = LONG_DISPATCH;
 /*parameters.send.hints           = {0}; */
   parameters.send.dest            = dest;
@@ -301,7 +302,8 @@ static int init()
 {
   pami_configuration_t query;
   pami_dispatch_hint_t options;
-  bzero(&options, sizeof(pami_dispatch_hint_t));
+  //bzero(&options, sizeof(pami_dispatch_hint_t));
+  memset(&options, '\0', sizeof(pami_dispatch_hint_t));
   options.consistency = PAMI_HINT_ENABLE;
 
   PAMI_Client_create("TEST", &client, NULL, 0);
@@ -316,14 +318,14 @@ static int init()
   if(size <= 1) return 0;
 
   query.name = PAMI_CLIENT_NUM_CONTEXTS;
-  PAMI_Client_query (client, &query,1);
+  PAMI_Client_query(client, &query,1);
   num_contexts = query.value.intval;
-  assert(num_contexts <= MAX_CONTEXTS);
-  assert((num_contexts&(num_contexts-1)) == 0);
+  //assert(num_contexts <= MAX_CONTEXTS);
+  //assert((num_contexts&(num_contexts-1)) == 0);
 
-  query.name = PAMI_CLIENT_CONST_CONTEXTS;
-  PAMI_Client_query (client, &query,1);
-  assert(query.value.intval);
+  //query.name = PAMI_CLIENT_CONST_CONTEXTS;
+  //PAMI_Client_query (client, &query,1);
+  //assert(query.value.intval);
 
   query.value.intval = 1;
   PAMI_Context_createv(client, &query, 1, contexts, num_contexts);
