@@ -8,7 +8,7 @@
 
 int main(int argc, char* argv[])
 {
-    static shared array[THREADS];
+    static shared int array[THREADS];
     array[MYTHREAD] = MYTHREAD;
 
     upc_barrier;

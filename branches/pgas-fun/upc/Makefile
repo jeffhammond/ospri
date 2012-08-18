@@ -1,8 +1,12 @@
+# Cray XE6
 UPC      = cc -h upc
+LIBS     = -lhugetlbfs
+# Jeff's Mac
+#UPC		 = /opt/local/upc/bin/upc 
+
 UPCFLAGS = -g -O2 -DRELAXED
 LD       = $(UPC)
 LDFLAGS  = $(UPCFLAGS)
-LIBS     = -lhugetlbfs
 
 all: hello.x barrier.x shared.x
 
