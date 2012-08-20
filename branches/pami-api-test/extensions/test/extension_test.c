@@ -56,13 +56,14 @@ int main(int argc, char ** argv)
 
   /* ------------------------------------------------------------------------ */
 
+  int rc = 0;
 
   pami_extension_t extension;
   status = PAMI_Extension_open (client, "EXT_test_extension", &extension);
   if(status != PAMI_SUCCESS)
   {
     fprintf (stderr, "Error. The \"EXT_test_extension\" extension is not implemented. result = %d\n", status);
-    return 1;
+    return rc;
   }
 
   pami_extension_test_foo_fn pamix_test_foo =
@@ -70,7 +71,7 @@ int main(int argc, char ** argv)
   if (pamix_test_foo == (void *)NULL)
   {
     fprintf (stderr, "Error. The \"EXT_test_extension\" extension function \"foo\" is not implemented. result = %d\n", status);
-    return 1;
+    return rc;
   }
 
   pamix_test_foo ();
@@ -80,7 +81,7 @@ int main(int argc, char ** argv)
   if (pamix_test_bar == (void *)NULL)
   {
     fprintf (stderr, "Error. The \"EXT_test_extension\" extension function \"bar\" is not implemented. result = %d\n", status);
-    return 1;
+    return rc;
   }
 
   bar_info_t info;
@@ -91,7 +92,7 @@ int main(int argc, char ** argv)
   if(status != PAMI_SUCCESS)
   {
     fprintf (stderr, "Error. The \"EXT_test_extension\" extension could not be closed. result = %d\n", status);
-    return 1;
+    return rc;
   }
 
 
