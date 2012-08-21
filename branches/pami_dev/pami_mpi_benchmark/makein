@@ -1,0 +1,33 @@
+ifndef COMPILER
+  COMPILER = GNU
+endif
+
+ifeq	($(COMPILER),GNU)
+  CC      = mpicc
+  COPT    = -g -Wall -std=c99 -O2 -mcpu=a2 -mtune=a2
+endif
+
+ifeq	($(COMPILER),XL)
+  CC      = mpixlc_r
+  COPT    = -g -qstrict --qlanglvl=stdc99 -O3 -qarch=qp -qtune=qp
+endif
+
+LD      = $(CC)
+CFLAGS  = $(COPT) -I.
+LDFLAGS = $(COPT) -lpthread
+
+all: pami_send_pingpong_perf.x mpi_topo.x mpi_get.x mpi_put.x mpi_send_recv_alltoall.x mpi_send_recv_onetoall.x mpi_send_recv_pair.x
+
+%.o: %.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
+%.x: %.o safemalloc.o
+	$(LD) $(LDFLAGS) $< q5d.o safemalloc.o -o $@
+
+clean:
+	$(RM) $(RMFLAGS) *.o
+	$(RM) $(RMFLAGS) *.lst
+
+realclean: clean
+	$(RM) $(RMFLAGS) *.x core.*
+
