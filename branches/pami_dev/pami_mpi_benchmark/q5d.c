@@ -61,9 +61,9 @@ extern "C" {
 #include <unistd.h>
 #include <assert.h>
 
-#include <process.h>
-#include <location.h>
-#include <personality.h>
+#include <spi/include/kernel/process.h>
+#include <spi/include/kernel/location.h>
+#include <firmware/include/personality.h>
 
 /**************************************************/
 

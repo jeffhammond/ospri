@@ -25,7 +25,7 @@ int main(int argc, char** argv) {
 
 	if(world_size < 2) {
 		fprintf(stderr, "World size must be greater than 1 for %s\n", argv[0]);
-		MPI_ABORT(MPI_COMM_WORLD, 1);
+		MPI_Abort(MPI_COMM_WORLD, 1);
 	}
 
 	//Initialize the buffer to send/receive data
