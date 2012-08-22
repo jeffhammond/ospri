@@ -6,6 +6,9 @@
 #include <pthread.h>
 #include <pami.h>
 
+//#define SLEEP sleep
+#define SLEEP usleep
+
 int main(int argc, char* argv[])
 {
   pami_result_t        result        = PAMI_ERROR;
@@ -32,7 +35,7 @@ int main(int argc, char* argv[])
   world_rank = config.value.intval;
   printf("hello world from rank %d of %d \n",world_rank,world_size);
   fflush(stdout);
-  sleep(1);
+  SLEEP(1);
 
   config.name = PAMI_CLIENT_NUM_CONTEXTS;
   result = PAMI_Client_query( client, &config,1);
@@ -48,7 +51,7 @@ int main(int argc, char* argv[])
 
   printf("%d contexts were created by rank %d \n",num_contexts,world_rank);
   fflush(stdout);
-  sleep(1);
+  SLEEP(1);
 
   result = PAMI_Context_destroyv(contexts, num_contexts);
   assert(result == PAMI_SUCCESS);
@@ -60,7 +63,7 @@ int main(int argc, char* argv[])
 
   printf("end of test \n");
   fflush(stdout);
-  sleep(1);
+  SLEEP(1);
 
   return 0;
 }

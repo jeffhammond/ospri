@@ -6,7 +6,8 @@
 #include <pthread.h>
 #include <pami.h>
 
-static size_t world_size, world_rank = -1;
+//#define SLEEP sleep
+#define SLEEP usleep
 
 #define PRINT_SUCCESS 0
 
@@ -20,10 +21,12 @@ static size_t world_size, world_rank = -1;
                     printf(m" SUCCEEDED on rank %ld\n", world_rank); \
                     fflush(stdout); \
                   } \
-        sleep(1); \
+        SLEEP(1); \
         /*assert(c);*/ \
         } \
         while(0);
+
+static size_t world_size, world_rank = -1;
 
 void cb_done (void *ctxt, void * clientdata, pami_result_t err)
 {
@@ -56,7 +59,7 @@ int main(int argc, char* argv[])
   world_rank = config.value.intval;
   printf("hello world from rank %ld of %ld \n", world_rank, world_size );
   fflush(stdout);
-  sleep(1);
+  SLEEP(1);
 
   config.name = PAMI_CLIENT_NUM_CONTEXTS;
   result = PAMI_Client_query( client, &config, 1);
@@ -72,7 +75,7 @@ int main(int argc, char* argv[])
 
   printf("%ld contexts were created by rank %ld \n", num_contexts, world_rank );
   fflush(stdout);
-  sleep(1);
+  SLEEP(1);
 
   /* setup the world geometry */
   pami_geometry_t world_geometry;
@@ -200,7 +203,7 @@ int main(int argc, char* argv[])
 
   printf("%ld: end of test \n", world_rank );
   fflush(stdout);
-  sleep(1);
+  SLEEP(1);
 
   return 0;
 }

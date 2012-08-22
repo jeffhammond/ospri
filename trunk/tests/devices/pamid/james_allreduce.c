@@ -7,8 +7,11 @@
 
 #include "safemalloc.h"
 
+//#define SLEEP sleep
+#define SLEEP usleep
+
 #define RESULT_CHECK(result) \
-if (result!=PAMI_SUCCESS) { printf("result!=PAMI_SUCCESS\n"); sleep(1); exit(1); }
+if (result!=PAMI_SUCCESS) { printf("result!=PAMI_SUCCESS\n"); SLEEP(1); exit(1); }
 
 pami_client_t client;
 size_t num_contexts;

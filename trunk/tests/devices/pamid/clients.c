@@ -6,6 +6,9 @@
 #include <pthread.h>
 #include <pami.h>
 
+//#define SLEEP sleep
+#define SLEEP usleep
+
 int main(int argc, char* argv[])
 {
   pami_result_t result = PAMI_ERROR;
@@ -30,7 +33,7 @@ int main(int argc, char* argv[])
 
   printf("end of test \n");
   fflush(stdout);
-  sleep(1);
+  SLEEP(1);
 
   return 0;
 }

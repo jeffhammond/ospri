@@ -1,14 +1,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-//#include <assert.h>
+#include <assert.h>
 #include <unistd.h>
 #include <pthread.h>
 #include <pami.h>
 
 #include "safemalloc.h"
 
-static size_t world_size, world_rank = -1;
+//#define SLEEP sleep
+#define SLEEP usleep
 
 #define PRINT_SUCCESS 0
 
@@ -25,6 +26,8 @@ static size_t world_size, world_rank = -1;
                   } \
         } \
         while(0);
+
+static size_t world_size, world_rank = -1;
 
 void cb_done (void *ctxt, void * clientdata, pami_result_t err)
 {
@@ -152,7 +155,7 @@ int main(int argc, char* argv[])
 
         if ( world_rank == 0 ) printf("trying safe allreduce algorithm %ld (%s) \n", b, safe_allreduce_meta[b].name );
         fflush(stdout);
-        //sleep(1);
+        //SLEEP(1);
 
         active = 1;
         double t0 = PAMI_Wtime(client);
@@ -172,7 +175,7 @@ int main(int argc, char* argv[])
         if ( world_rank == 0 ) printf("after safe allreduce algorithm %ld (%s) - %d ints took %lf seconds (%lf MB/s) \n",
                                        b, safe_allreduce_meta[b].name, d, t1-t0, 1e-6*d*sizeof(int)/(t1-t0) );
         fflush(stdout);
-        //sleep(1);
+        //SLEEP(1);
     }
 
   /* finalize the contexts */
@@ -190,7 +193,7 @@ int main(int argc, char* argv[])
     printf("end of test \n");
     fflush(stdout);
   }
-  sleep(1);
+  SLEEP(1);
 
   return 0;
 }

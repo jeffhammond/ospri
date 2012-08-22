@@ -6,9 +6,10 @@
 #include <pthread.h>
 #include <pami.h>
 
-static size_t world_size, world_rank = -1;
-
 #define PRINT_SUCCESS 0
+
+//#define SLEEP sleep
+#define SLEEP usleep
 
 #define TEST_ASSERT(c,m) \
         do { \
@@ -20,10 +21,12 @@ static size_t world_size, world_rank = -1;
                     printf(m" SUCCEEDED on rank %ld\n", world_rank); \
                     fflush(stdout); \
                   } \
-        sleep(1); \
+        SLEEP(1); \
         assert(c); \
         } \
         while(0);
+
+static size_t world_size, world_rank = -1;
 
 void cb_done (void *ctxt, void * clientdata, pami_result_t err)
 {
@@ -60,14 +63,14 @@ int main(int argc, char* argv[])
     printf("starting test on %ld ranks \n", world_size);
     fflush(stdout);
   }
-  sleep(1);
+  SLEEP(1);
 
   config.name = PAMI_CLIENT_PROCESSOR_NAME;
   result = PAMI_Client_query( client, &config, 1);
   assert(result == PAMI_SUCCESS);
   printf("rank %ld is processor %s \n", world_rank, config.value.chararray);
   fflush(stdout);
-  sleep(1);
+  SLEEP(1);
 
   config.name = PAMI_CLIENT_NUM_CONTEXTS;
   result = PAMI_Client_query( client, &config, 1);
@@ -119,7 +122,7 @@ int main(int argc, char* argv[])
 
       if ( world_rank == 0 ) printf("trying safe barrier algorithm %ld (%s) \n", b, safe_barrier_meta[b].name );
       fflush(stdout);
-      sleep(1);
+      SLEEP(1);
 
       active = 1;
       result = PAMI_Collective( contexts[0], &barrier );
@@ -130,7 +133,7 @@ int main(int argc, char* argv[])
 
       if ( world_rank == 0 ) printf("after safe barrier algorithm %ld (%s) \n", b, safe_barrier_meta[b].name );
       fflush(stdout);
-      sleep(1);
+      SLEEP(1);
   }
   for ( b = 0 ; b < num_alg[1] ; b++ )
   {
@@ -140,7 +143,7 @@ int main(int argc, char* argv[])
 
       if ( world_rank == 0 ) printf("trying fast barrier algorithm %ld (%s) \n", b, fast_barrier_meta[b].name );
       fflush(stdout);
-      sleep(1);
+      SLEEP(1);
 
       active = 1;
       result = PAMI_Collective( contexts[0], &barrier );
@@ -151,7 +154,7 @@ int main(int argc, char* argv[])
 
       if ( world_rank == 0 ) printf("after fast barrier algorithm %ld (%s) \n", b, fast_barrier_meta[b].name );
       fflush(stdout);
-      sleep(1);
+      SLEEP(1);
   }
 
   /* finalize the contexts */
@@ -169,7 +172,7 @@ int main(int argc, char* argv[])
     printf("end of test \n");
     fflush(stdout);
   }
-  sleep(1);
+  SLEEP(1);
 
   return 0;
 }

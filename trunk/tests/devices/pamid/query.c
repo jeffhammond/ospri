@@ -6,6 +6,9 @@
 #include <pthread.h>
 #include <pami.h>
 
+//#define SLEEP sleep
+#define SLEEP usleep
+
 int main(int argc, char* argv[])
 {
   pami_result_t        result        = PAMI_ERROR;
@@ -24,28 +27,28 @@ int main(int argc, char* argv[])
   assert(result == PAMI_SUCCESS);
   printf("PAMI_CLIENT_TASK_ID = %ld \n", config.value.intval);
   fflush(stdout);
-  sleep(1);
+  SLEEP(1);
 
   config.name = PAMI_CLIENT_NUM_TASKS;
   result = PAMI_Client_query( client, &config,1);
   assert(result == PAMI_SUCCESS);
   printf("PAMI_CLIENT_NUM_TASKS = %ld \n", config.value.intval);
   fflush(stdout);
-  sleep(1);
+  SLEEP(1);
 
   config.name = PAMI_CLIENT_NUM_CONTEXTS;
   result = PAMI_Client_query( client, &config,1);
   assert(result == PAMI_SUCCESS);
   printf("PAMI_CLIENT_NUM_CONTEXTS = %ld \n", config.value.intval);
   fflush(stdout);
-  sleep(1);
+  SLEEP(1);
 
   config.name = PAMI_CLIENT_CONST_CONTEXTS;
   result = PAMI_Client_query( client, &config,1);
   assert(result == PAMI_SUCCESS);
   printf("PAMI_CLIENT_CONST_CONTEXTS = %ld \n", config.value.intval);
   fflush(stdout);
-  sleep(1);
+  SLEEP(1);
 
   config.name = PAMI_CLIENT_NUM_LOCAL_TASKS;
   result = PAMI_Client_query( client, &config,1);
@@ -53,7 +56,7 @@ int main(int argc, char* argv[])
   size_t num_local_tasks = config.value.intval;
   printf("PAMI_CLIENT_NUM_LOCAL_TASKS = %ld \n", config.value.intval);
   fflush(stdout);
-  sleep(1);
+  SLEEP(1);
 
   config.name = PAMI_CLIENT_LOCAL_TASKS;
   result = PAMI_Client_query( client, &config,1);
@@ -61,56 +64,56 @@ int main(int argc, char* argv[])
   if ( num_local_tasks == 1 ) printf("PAMI_CLIENT_LOCAL_TASKS = %ld \n", config.value.intarray[0] );
   else if ( num_local_tasks > 1  ) printf("PAMI_CLIENT_LOCAL_TASKS = %ld .. %ld \n", config.value.intarray[0], config.value.intarray[num_local_tasks-1] );
   fflush(stdout);
-  sleep(1);
+  SLEEP(1);
 
   config.name = PAMI_CLIENT_HWTHREADS_AVAILABLE;
   result = PAMI_Client_query( client, &config,1);
   assert(result == PAMI_SUCCESS);
   printf("PAMI_CLIENT_HWTHREADS_AVAILABLE = %ld \n", config.value.intval);
   fflush(stdout);
-  sleep(1);
+  SLEEP(1);
 
   config.name = PAMI_CLIENT_MEMREGION_SIZE;
   result = PAMI_Client_query( client, &config,1);
   assert(result == PAMI_SUCCESS);
   printf("PAMI_CLIENT_MEMREGION_SIZE = %ld \n", config.value.intval);
   fflush(stdout);
-  sleep(1);
+  SLEEP(1);
 
   config.name = PAMI_CLIENT_MEM_SIZE;
   result = PAMI_Client_query( client, &config,1);
   assert(result == PAMI_SUCCESS);
   printf("PAMI_CLIENT_MEM_SIZE = %ld \n", config.value.intval);
   fflush(stdout);
-  sleep(1);
+  SLEEP(1);
 
   config.name = PAMI_CLIENT_PROCESSOR_NAME;
   result = PAMI_Client_query( client, &config,1);
   assert(result == PAMI_SUCCESS);
   printf("PAMI_CLIENT_PROCESSOR_NAME = %s \n", config.value.chararray);
   fflush(stdout);
-  sleep(1);
+  SLEEP(1);
 
   config.name = PAMI_CLIENT_WTICK;
   result = PAMI_Client_query( client, &config,1);
   assert(result == PAMI_SUCCESS);
   printf("PAMI_CLIENT_WTICK = %e \n", config.value.doubleval);
   fflush(stdout);
-  sleep(1);
+  SLEEP(1);
 
   config.name = PAMI_CLIENT_WTIMEBASE_MHZ;
   result = PAMI_Client_query( client, &config,1);
   assert(result == PAMI_SUCCESS);
   printf("PAMI_CLIENT_WTIMEBASE_MHZ = %ld \n", config.value.intval);
   fflush(stdout);
-  sleep(1);
+  SLEEP(1);
 
   config.name = PAMI_CLIENT_CLOCK_MHZ;
   result = PAMI_Client_query( client, &config,1);
   assert(result == PAMI_SUCCESS);
   printf("PAMI_CLIENT_CLOCK_MHZ = %ld \n", config.value.intval);
   fflush(stdout);
-  sleep(1);
+  SLEEP(1);
 
   /* finalize the client */
   result = PAMI_Client_destroy(&client);
@@ -118,7 +121,7 @@ int main(int argc, char* argv[])
 
   printf("end of test \n");
   fflush(stdout);
-  sleep(1);
+  SLEEP(1);
 
   return 0;
 }

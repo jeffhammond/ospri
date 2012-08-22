@@ -219,7 +219,8 @@ static void *SendLong(void *c)
   pami_work_t state;
   PAMI_Context_post(contexts[local_context], &state, SendLongHandoff, quad);
   while (!done.slong.send)
-    PAMI_Context_advancev(contexts, num_contexts, 1);
+    //PAMI_Context_advancev(contexts, num_contexts, 1);
+    PAMI_Context_trylock_advancev(contexts, num_contexts, 1);
   return NULL;
 }
 
@@ -268,7 +269,8 @@ static void *SendShort(void *c)
   pami_work_t state;
   PAMI_Context_post(contexts[local_context], &state, SendShortHandoff, NULL);
   while (!done.sshort.send)
-    PAMI_Context_advancev(contexts, num_contexts, 1);
+    //PAMI_Context_advancev(contexts, num_contexts, 1);
+    PAMI_Context_trylock_advancev(contexts, num_contexts, 1);
   return NULL;
 }
 
@@ -286,7 +288,8 @@ static void *advance(void* c)
          )
         )
     /* I'm using "13" for the poll-iterations just because I like the number */
-    PAMI_Context_advancev(contexts, num_contexts, 13);
+    //PAMI_Context_advancev(contexts, num_contexts, 13);
+    PAMI_Context_trylock_advancev(contexts, num_contexts, 13);
 
   return NULL;
 }
