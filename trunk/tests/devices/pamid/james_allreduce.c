@@ -24,7 +24,9 @@ typedef struct MPI_Comm
     int is_world;
     pami_geometry_t geometry;
     pami_algorithm_t * safe_barrier_algs;
+    pami_metadata_t  * safe_barrier_meta
     pami_algorithm_t * safe_allreduce_algs;
+    pami_metadata_t  * safe_barrier_meta
 } 
 MPI_Comm;
 
@@ -185,10 +187,10 @@ int MPI_Init(int * argc, char ** argv[])
     result = PAMI_Geometry_algorithms_num( MPI_COMM_WORLD.geometry, barrier_xfer, num_barrier_alg );
     RESULT_CHECK(result); 
  
-        MPI_COMM_WORLD.safe_barrier_algs = (pami_algorithm_t *) safemalloc( num_barrier_alg[0] * sizeof(pami_algorithm_t) );
-    pami_metadata_t  * safe_barrier_meta = (pami_metadata_t  *) safemalloc( num_barrier_alg[0] * sizeof(pami_metadata_t)  );
-    pami_algorithm_t * fast_barrier_algs = (pami_algorithm_t *) safemalloc( num_barrier_alg[1] * sizeof(pami_algorithm_t) );
-    pami_metadata_t  * fast_barrier_meta = (pami_metadata_t  *) safemalloc( num_barrier_alg[1] * sizeof(pami_metadata_t)  );
+    MPI_COMM_WORLD.safe_barrier_algs = (pami_algorithm_t *) safemalloc( num_barrier_alg[0] * sizeof(pami_algorithm_t) );
+    MPI_COMM_WORLD.safe_barrier_meta = (pami_metadata_t  *) safemalloc( num_barrier_alg[0] * sizeof(pami_metadata_t)  );
+    MPI_COMM_WORLD.fast_barrier_algs = (pami_algorithm_t *) safemalloc( num_barrier_alg[1] * sizeof(pami_algorithm_t) );
+    MPI_COMM_WORLD.fast_barrier_meta = (pami_metadata_t  *) safemalloc( num_barrier_alg[1] * sizeof(pami_metadata_t)  );
     result = PAMI_Geometry_algorithms_query( MPI_COMM_WORLD.geometry, barrier_xfer,
                                              MPI_COMM_WORLD.safe_barrier_algs, safe_barrier_meta, num_barrier_alg[0],
                                              fast_barrier_algs, fast_barrier_meta, num_barrier_alg[1] );
@@ -201,10 +203,10 @@ int MPI_Init(int * argc, char ** argv[])
     result = PAMI_Geometry_algorithms_num( MPI_COMM_WORLD.geometry, allreduce_xfer, num_allreduce_alg );
     RESULT_CHECK(result); 
  
-        MPI_COMM_WORLD.safe_allreduce_algs = (pami_algorithm_t *) safemalloc( num_allreduce_alg[0] * sizeof(pami_algorithm_t) );
-    pami_metadata_t  * safe_allreduce_meta = (pami_metadata_t  *) safemalloc( num_allreduce_alg[0] * sizeof(pami_metadata_t)  );
-    pami_algorithm_t * fast_allreduce_algs = (pami_algorithm_t *) safemalloc( num_allreduce_alg[1] * sizeof(pami_algorithm_t) );
-    pami_metadata_t  * fast_allreduce_meta = (pami_metadata_t  *) safemalloc( num_allreduce_alg[1] * sizeof(pami_metadata_t)  );
+    MPI_COMM_WORLD.safe_allreduce_algs = (pami_algorithm_t *) safemalloc( num_allreduce_alg[0] * sizeof(pami_algorithm_t) );
+    MPI_COMM_WORLD.pami_metadata_t  * safe_allreduce_meta = (pami_metadata_t  *) safemalloc( num_allreduce_alg[0] * sizeof(pami_metadata_t)  );
+    MPI_COMM_WORLD.pami_algorithm_t * fast_allreduce_algs = (pami_algorithm_t *) safemalloc( num_allreduce_alg[1] * sizeof(pami_algorithm_t) );
+    MPI_COMM_WORLD.pami_metadata_t  * fast_allreduce_meta = (pami_metadata_t  *) safemalloc( num_allreduce_alg[1] * sizeof(pami_metadata_t)  );
     result = PAMI_Geometry_algorithms_query( MPI_COMM_WORLD.geometry, allreduce_xfer,
                                              MPI_COMM_WORLD.safe_allreduce_algs, safe_allreduce_meta, num_allreduce_alg[0],
                                              fast_allreduce_algs, fast_allreduce_meta, num_allreduce_alg[1] );

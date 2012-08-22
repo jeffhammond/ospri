@@ -24,11 +24,19 @@ int main(int argc, char* argv[])
   result = PAMI_Client_create(client2name, &client2, NULL, 0);
   assert(result == PAMI_SUCCESS);
 
+  char * client3name = "CLIENT3";
+  pami_client_t client3;
+  result = PAMI_Client_create(client3name, &client3, NULL, 0);
+  assert(result == PAMI_SUCCESS);
+
   /* finalize the client1 */
+  result = PAMI_Client_destroy(&client1);
+  assert(result == PAMI_SUCCESS);
+
   result = PAMI_Client_destroy(&client2);
   assert(result == PAMI_SUCCESS);
 
-  result = PAMI_Client_destroy(&client1);
+  result = PAMI_Client_destroy(&client3);
   assert(result == PAMI_SUCCESS);
 
   printf("end of test \n");

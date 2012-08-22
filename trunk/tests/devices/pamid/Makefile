@@ -4,12 +4,12 @@ endif
 
 ifeq	($(COMPILER),GNU)
   CC      = mpicc
-  COPT    = -g -Wall -std=c99 -O2 -mcpu=a2 -mtune=a2
+  COPT    = -g -Wall -std=gnu99 -O2 -mcpu=a2 -mtune=a2
 endif
 
 ifeq	($(COMPILER),XL)
   CC      = mpixlc_r
-  COPT    = -g -qstrict --qlanglvl=stdc99 -O3 -qarch=qp -qtune=qp
+  COPT    = -g -qstrict --qlanglvl=extc99 -O3 -qarch=qp -qtune=qp
 endif
 
 LD      = $(CC)
@@ -18,11 +18,11 @@ LDFLAGS = $(COPT) -lpthread
 
 all: hello.x query.x clients.x endpoint.x barrier.x bcast.x allreduce.x allgather.x james_allreduce.x isend.x send.x adi.x
 
-%.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@
-
 %.x: %.o safemalloc.o
 	$(LD) $(LDFLAGS) $< safemalloc.o -o $@
+
+%.o: %.c safemalloc.h
+	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
 	$(RM) $(RMFLAGS) *.o

@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <mpi.h>
 
-#define MAXLEN (1024*1024)
-#define REPEAT 100
+#define MAXLEN (32*1024)
+#define REPEAT 20
 
 int
 main(int argc, char *argv[])
