@@ -16,13 +16,13 @@ LD      = $(CC)
 CFLAGS  = $(COPT) -I.
 LDFLAGS = $(COPT) -lpthread
 
-all: hello.x query.x clients.x endpoint.x barrier.x bcast.x allreduce.x allgather.x james_allreduce.x isend.x send.x adi.x
-
-%.x: %.o safemalloc.o
-	$(LD) $(LDFLAGS) $< safemalloc.o -o $@
+all: safemalloc.o hello.x query.x clients.x endpoint.x barrier.x bcast.x allreduce.x allgather.x james_allreduce.x isend.x send.x adi.x
 
 %.o: %.c safemalloc.h
 	$(CC) $(CFLAGS) -c $< -o $@
+
+%.x: %.o safemalloc.o
+	$(LD) $(LDFLAGS) $< safemalloc.o -o $@
 
 clean:
 	$(RM) $(RMFLAGS) *.o

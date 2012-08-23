@@ -15,12 +15,12 @@ int main(int argc, char* argv[])
 
   char * client1name = "CLIENT1";
   pami_client_t client1;
-  result = PAMI_Client_create (client1name, &client1, NULL, 0);
+  result = PAMI_Client_create(client1name, &client1, NULL, 0);
   assert(result == PAMI_SUCCESS);
 
   char * client2name = "CLIENT2";
   pami_client_t client2;
-  result = PAMI_Client_create (client2name, &client2, NULL, 0);
+  result = PAMI_Client_create(client2name, &client2, NULL, 0);
   assert(result == PAMI_SUCCESS);
 
   pami_endpoint_t ep1;
