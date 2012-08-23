@@ -27,3 +27,18 @@ void * typemalloc(MPI_Datatype dt, int n)
 
     return ptr;
 }
+
+FILE * safefopen(const char *path, const char *mode)
+{
+    //void * ptr = malloc( n );
+
+    FILE * fp = safefopen(const char * path, const char * mode)
+
+    if ( fp==NULL )
+    {
+        fprintf( stderr , "file at %s could not be opened \n" , path );
+        exit(1);
+    }
+
+    return fp;
+}

@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
-#include <unistd.h>
 #include <assert.h>
 #include <math.h>
 #include <mpi.h>
@@ -132,44 +131,29 @@ int main(int argc, char *argv[])
      *                            COLLECTIVES
      *********************************************************************************/
 
-    //    MPI_Op builtin_types[19] = {    MPI_BYTE,
-    //                                    MPI_FLOAT,
-    //                                    MPI_DOUBLE,
-    //                                    MPI_SHORT,
-    //                                    MPI_INT,
-    //                                    MPI_LONG,
-    //                                    MPI_LONG_LONG_INT,
-    //                                    MPI_UNSIGNED_SHORT,
-    //                                    MPI_UNSIGNED
-    //                                    MPI_UNSIGNED_LONG,
-    //                                    MPI_UNSIGNED_LONG_LONG,
-    //                                    MPI_INT8_T,
-    //                                    MPI_INT16_T,
-    //                                    MPI_INT32_T,
-    //                                    MPI_INT64_T,
-    //                                    MPI_UINT8_T,
-    //                                    MPI_UINT16_T,
-    //                                    MPI_UINT32_T,
-    //                                    MPI_UINT64_T }
+    bcast_only(stdout, MPI_COMM_WORLD, 1000000);
+    fflush(stdout);
+    MPI_Barrier( MPI_COMM_WORLD );
+
+    bcast_only(stdout, comm_world_dup, 1000000);
+    fflush(stdout);
+    MPI_Barrier( MPI_COMM_WORLD );
+
+    FILE * even_out = safefopen("./even.txt", "w+");
+    FILE * odd_out  = safefopen("./odd.txt", "w+");
+
+    if (world_rank%2==0)
+        bcast_only(even_out, comm_world_oddeven, 1000000);
+    if (world_rank%2==1)
+        bcast_only(odd_out,  comm_world_oddeven, 1000000);
+
+    //    bcast_vs_scatter_allgather(stdout, MPI_COMM_WORLD, 1000000);
+    //    fflush(stdout);
+    //    MPI_Barrier( MPI_COMM_WORLD );
     //
-    //    MPI_Op builtin_ops[15] = {  MPI_MAX,
-    //                                MPI_MIN,
-    //                                MPI_SUM,
-    //                                MPI_PROD,
-    //                                MPI_LAND,
-    //                                MPI_BAND,
-    //                                MPI_LOR,
-    //                                MPI_BOR,
-    //                                MPI_LXOR,
-    //                                MPI_BXOR,
-    //                                MPI_MINLOC,
-    //                                MPI_MAXLOC,
-    //                                MPI_REPLACE };
-
-    bcast_only(MPI_COMM_WORLD, 1000000);
-    bcast_vs_scatter_allgather(MPI_COMM_WORLD, 1000000);
-
-    alltoall_only(MPI_COMM_WORLD, 1000000);
+    //    alltoall_only(stdout, MPI_COMM_WORLD, 1000000);
+    //    fflush(stdout);
+    //    MPI_Barrier( MPI_COMM_WORLD );
 
     /*********************************************************************************
      *                            CLEAN UP AND FINALIZE

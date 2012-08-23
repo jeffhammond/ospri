@@ -8,14 +8,15 @@
 
 #include "safemalloc.h"
 
-void bcast_only(MPI_Comm comm, int max_mem)
+void bcast_only(FILE * output, MPI_Comm comm, int max_mem)
 {
-    int comm_rank = -1, comm_size = 0;
+    int comm_rank = -1, world_rank = -1, comm_size = 0;
     MPI_Comm_rank(comm, &comm_rank);
     MPI_Comm_size(comm, &comm_size);
+    MPI_Comm_rank(MPI_COMM_WORLD, &world_rank);
 
     if ( comm_rank == 0 )
-        printf("============== BCAST ==============\n");
+        fprintf(output, "============== BCAST ==============\n");
 
     /* testing only intergers because it really ~shouldn't~ matter */
 
@@ -46,15 +47,17 @@ void bcast_only(MPI_Comm comm, int max_mem)
 
         if (errors>0)
         {
-            printf("MPI_Bcast had %d errors on rank %d! \n", errors, comm_rank);
+            fprintf(output, "%d: MPI_Bcast had %d errors on rank %d! \n",
+                   world_rank, errors, comm_rank);
             for (int i=0 ; i<c; i++)
-                printf("rank %d: buffer[%d] = %d (correct is %d) \n", comm_rank, i, buffer[i], comm_size );
+                fprintf(output, "%d: buffer[%d] = %d (correct is %d) \n",
+                       world_rank, i, buffer[i], comm_size );
             exit(1);
         }
 
         if ( comm_rank == root )
-            printf("MPI_Bcast %d integers in %lf seconds (%lf MB/s) \n",
-                   c, t1-t0, 1.0e-6*c*sizeof(int)/(t1-t0) );
+            fprintf(output, "%d: MPI_Bcast %d integers in %lf seconds (%lf MB/s) \n",
+                   world_rank, c, t1-t0, 1.0e-6*c*sizeof(int)/(t1-t0) );
 
         free(buffer);
     }
@@ -62,14 +65,15 @@ void bcast_only(MPI_Comm comm, int max_mem)
     return;
 }
 
-void bcast_vs_scatter_allgather(MPI_Comm comm, int max_mem)
+void bcast_vs_scatter_allgather(FILE * output, MPI_Comm comm, int max_mem)
 {
-    int comm_rank = -1, comm_size = 0;
+    int comm_rank = -1, world_rank = -1, comm_size = 0;
     MPI_Comm_rank(comm, &comm_rank);
     MPI_Comm_size(comm, &comm_size);
+    MPI_Comm_rank(MPI_COMM_WORLD, &world_rank);
 
     if ( comm_rank == 0 )
-        printf("============== BCAST VS SCATTER+ALLGATHER ==============\n");
+        fprintf(output, "============== BCAST VS SCATTER+ALLGATHER ==============\n");
 
 
     /* testing only intergers because it really ~shouldn't~ matter */
@@ -108,9 +112,11 @@ void bcast_vs_scatter_allgather(MPI_Comm comm, int max_mem)
 
             if (errors>0)
             {
-                printf("MPI_Bcast had %d errors on rank %d! \n", errors, comm_rank);
+                fprintf(output, "%d: MPI_Bcast had %d errors on rank %d! \n",
+                       world_rank, errors, comm_rank);
                 for (int i=0 ; i<c; i++)
-                    printf("rank %d: buffer[%d] = %d (correct is %d) \n", comm_rank, i, buffer[i], comm_size );
+                    fprintf(output, "%d: buffer[%d] = %d (correct is %d) \n",
+                           world_rank, i, buffer[i], comm_size );
                 exit(1);
             }
 
@@ -136,15 +142,17 @@ void bcast_vs_scatter_allgather(MPI_Comm comm, int max_mem)
 
             if (errors>0)
             {
-                printf("MPI_Scatter+MPI_Allgather had %d errors on rank %d! \n", errors, comm_rank);
+                fprintf(output, "%d: MPI_Scatter+MPI_Allgather had %d errors on rank %d! \n",
+                       world_rank, errors, comm_rank);
                 for (int i=0 ; i<c; i++)
-                    printf("rank %d: buffer[%d] = %d (correct is %d) \n", comm_rank, i, buffer[i], comm_size );
+                    fprintf(output, "%d: buffer[%d] = %d (correct is %d) \n",
+                           world_rank, i, buffer[i], comm_size );
                 exit(1);
             }
 
             if ( comm_rank == root )
-                printf("MPI_Bcast vs MPI_Scatter+MPI_Allgather %d integers in %lf vs %lf seconds (%lf vs %lf MB/s) \n",
-                       c, dt_bcast, dt_scalg, 1.0e-6*c*sizeof(int)/dt_bcast, 1.0e-6*c*sizeof(int)/dt_scalg );
+                fprintf(output, "%d: MPI_Bcast vs MPI_Scatter+MPI_Allgather %d integers in %lf vs %lf seconds (%lf vs %lf MB/s) \n",
+                       world_rank, c, dt_bcast, dt_scalg, 1.0e-6*c*sizeof(int)/dt_bcast, 1.0e-6*c*sizeof(int)/dt_scalg );
 
             free(temp);
 
