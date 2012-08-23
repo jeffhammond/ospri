@@ -27,9 +27,8 @@ int main(int argc, char *argv[])
 
     assert(world_size>1);
 
-    int max_links = ( argc > 1 ? atoi(argv[1]) : 10 );
+    int max_links = ( argc > 1 ? atoi(argv[1]) : 2 );
     int max_count = ( argc > 2 ? atoi(argv[2]) : 11*1024*1024 );
-    //int nbrecv    = ( argc > 3 ? atoi(argv[3]) : 0 );
 
     int rank_ap = -1;
     int rank_am = -1;
@@ -60,6 +59,13 @@ int main(int argc, char *argv[])
     rank_bm = MPIX_torus2rank(xRank  , yRank-1, zRank  , tRank);
     rank_cp = MPIX_torus2rank(xRank  , yRank  , zRank+1, tRank);
     rank_cm = MPIX_torus2rank(xRank  , yRank  , zRank-1, tRank);
+
+    if (max_links>6)
+    {
+        max_links=6;
+        if (world_rank==0) 
+            fprintf(stderr," requested more than 6 links on BG/P! \n");
+    }
 
     if (world_rank==0) printf("# torus size %d = (%d,%d,%d) \n", world_size, xSize+1, ySize+1, zSize+1 );
     printf("# from %d (%d,%d,%d,%d) to A+/- (%d, %d), B+/- (%d, %d), C+/- (%d, %d) \n",
@@ -132,6 +138,13 @@ int main(int argc, char *argv[])
         //printf("%d: tempCoords = (%d,%d,%d,%d,%d) rank_em = %d \n", world_rank, tempCoords[0], tempCoords[1], tempCoords[2], tempCoords[3], tempCoords[4], rank_em);
     }
 
+    if (max_links>10)
+    {
+        max_links=10;
+        if (world_rank==0) 
+            fprintf(stderr," requested more than 10 links on BG/Q! \n");
+    }
+
     if (world_rank==0) printf("# torus size = %d (%d,%d,%d,%d,%d,%d) \n", world_size, hw.Size[0], hw.Size[1], hw.Size[2], hw.Size[3], hw.Size[4], hw.ppn);
     printf("# from %d (%d,%d,%d,%d,%d,%d) to A+/- (%d, %d), B+/- (%d, %d), C+/- (%d, %d), D+/- (%d, %d), E+/- (%d, %d) \n",
            world_rank, hw.Coords[0], hw.Coords[1], hw.Coords[2], hw.Coords[3], hw.Coords[4], hw.coreID,
@@ -141,8 +154,6 @@ int main(int argc, char *argv[])
     printf("#send from %d to %d \n", world_rank, rank_ap );
 #endif
     fflush( stdout );
-    MPI_Barrier( MPI_COMM_WORLD );
-    //MPI_Abort( MPI_COMM_WORLD , 37);
 
     int * rbuf_ap = safemalloc(max_count * sizeof(int));
     int * rbuf_am = safemalloc(max_count * sizeof(int));
@@ -296,6 +307,7 @@ int main(int argc, char *argv[])
         }
         fflush( stdout );
     }
+    MPI_Barrier( MPI_COMM_WORLD );
 
     free(rbuf_ap);
     free(rbuf_am);
