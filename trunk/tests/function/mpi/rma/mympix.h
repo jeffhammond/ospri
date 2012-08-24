@@ -10,11 +10,11 @@
 
 #else
 
-static int MPIX_Win_allocate(MPI_Aint size, int disp_unit, MPI_Info info, MPI_Comm comm, void *baseptr, MPI_Win *win)
+static int MPIX_Win_allocate(MPI_Aint size, int disp_unit, MPI_Info info, MPI_Comm comm, void * baseptr, MPI_Win * win)
 {
 	int rc = MPI_SUCCESS;
 
-	rc = MPI_Alloc_mem(size, MPI_INFO_NULL, baseptr);
+	rc = MPI_Alloc_mem(size, MPI_INFO_NULL, &baseptr);
 	if (rc!=MPI_SUCCESS)
 		return rc;
 
