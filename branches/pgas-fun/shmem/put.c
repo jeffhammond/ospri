@@ -25,7 +25,7 @@ int main(int argc, char* argv[])
 
     int target = (mype+1)%npes;
     shmem_int_put(sheap, local, (size_t)n, target);
-    shmem_quiet();
+    //shmem_quiet();
     shmem_barrier_all();
     target = (mype>0 ? mype-1 : npes-1);
     for (i=0; i<n; i++)
