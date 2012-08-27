@@ -140,7 +140,9 @@ int main(int argc, char* argv[])
 
   uint64_t t1 = GetTimeBase();
   uint64_t dt = t1-t0;
-  printf("%ld: PAMI_Rget of %d bytes achieves %lf MB/s \n", (long)world_rank, n, (double)n/(double)dt );
+  printf("%ld: PAMI_Rget of %d bytes achieves %lf MB/s \n", (long)world_rank, n, (double)bytes/(double)dt );
+  fflush(stdout);
+  SLEEP(1);
 
   int errors = 0;
   
@@ -154,6 +156,8 @@ int main(int argc, char* argv[])
   else
     printf("%ld: no errors :-) \n", (long)world_rank); 
 
+  fflush(stdout);
+  SLEEP(1);
   MPI_Barrier(MPI_COMM_WORLD);
 
   result = PAMI_Memregion_destroy(contexts[0], &shared_mr);

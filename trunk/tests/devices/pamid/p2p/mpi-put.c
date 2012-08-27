@@ -83,11 +83,12 @@ int main(int argc, char* argv[])
 
   int n = (argc>1 ? atoi(argv[1]) : 1000);
 
-  int *  shared = (int *) safemalloc( 1000 * sizeof(int) );
+  size_t bytes = 1000 * sizeof(int);
+  int *  shared = (int *) safemalloc(bytes);
   for (int i=0; i<n; i++)
     shared[i] = -1;
 
-  int *  local  = (int *) safemalloc( 1000 * sizeof(int) );
+  int *  local  = (int *) safemalloc(bytes);
   for (int i=0; i<n; i++)
     local[i] = world_rank;
 
@@ -109,7 +110,7 @@ int main(int argc, char* argv[])
   pami_put_simple_t parameters;
   parameters.rma.dest     = target_ep;
   //parameters.rma.hints    = ;
-  parameters.rma.bytes    = n*sizeof(int);
+  parameters.rma.bytes    = bytes;
   parameters.rma.cookie   = &active;
   parameters.rma.done_fn  = cb_done;
   parameters.addr.local   = local;
@@ -131,7 +132,9 @@ int main(int argc, char* argv[])
 
   uint64_t t1 = GetTimeBase();
   uint64_t dt = t1-t0;
-  printf("%ld: PAMI_Put of %d bytes achieves %lf MB/s \n", (long)world_rank, n, (double)n/(double)dt );
+  printf("%ld: PAMI_Put of %d bytes achieves %lf MB/s \n", (long)world_rank, n, (double)bytes/(double)dt );
+  fflush(stdout);
+  SLEEP(1);
 
   int errors = 0;
   
@@ -146,6 +149,8 @@ int main(int argc, char* argv[])
   else
     printf("%ld: no errors :-) \n", (long)world_rank); 
 
+  fflush(stdout);
+  SLEEP(1);
   MPI_Barrier(MPI_COMM_WORLD);
   free(shptrs);
   free(local);
