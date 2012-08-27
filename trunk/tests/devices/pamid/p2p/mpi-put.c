@@ -83,7 +83,7 @@ int main(int argc, char* argv[])
 
   int n = (argc>1 ? atoi(argv[1]) : 1000);
 
-  size_t bytes = 1000 * sizeof(int);
+  size_t bytes = n * sizeof(int);
   int *  shared = (int *) safemalloc(bytes);
   for (int i=0; i<n; i++)
     shared[i] = -1;

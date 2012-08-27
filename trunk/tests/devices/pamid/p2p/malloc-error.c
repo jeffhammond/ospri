@@ -17,8 +17,6 @@ void * safemalloc(size_t n)
     return ptr;
 }
 
-static size_t world_size, world_rank = -1;
-
 int main(int argc, char* argv[])
 {
   int provided = MPI_THREAD_SINGLE;
@@ -29,15 +27,20 @@ int main(int argc, char* argv[])
   /************************************************************************/
 
   int n = (argc>1 ? atoi(argv[1]) : 1000);
+  printf("%d integers \n", n );
+  fflush(stdout);
 
   size_t bytes = 1000 * sizeof(int);
-  int *  shared = (int *) safemalloc(bytes);
+  printf("%ld bytes \n", bytes );
+  fflush(stdout);
+
+  int * shared = (int *) safemalloc(bytes);
   for (int i=0; i<n; i++)
     shared[i] = -1;
 
-  int *  local  = (int *) safemalloc(bytes);
+  int * local  = (int *) safemalloc(bytes);
   for (int i=0; i<n; i++)
-    local[i] = world_rank;
+    local[i] = 1;
 
   MPI_Barrier(MPI_COMM_WORLD);
 
@@ -50,8 +53,7 @@ int main(int argc, char* argv[])
 
   MPI_Finalize();
 
-  if (world_rank==0)
-    printf("%ld: end of test \n", world_rank );
+  printf("end of test \n");
   fflush(stdout);
 
   return 0;
