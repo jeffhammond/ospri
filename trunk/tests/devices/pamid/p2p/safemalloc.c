@@ -2,7 +2,9 @@
 
 void * safemalloc(size_t n) 
 {
-    //void * ptr = malloc( n );
+#ifdef NO_MEMALIGN
+    void * ptr = malloc( n );
+#else
     int rc;
     void * ptr;
     rc = posix_memalign( &ptr , ALIGNMENT , n );
@@ -12,6 +14,6 @@ void * safemalloc(size_t n)
         fprintf( stderr , "%ld bytes could not be allocated \n" , (long)n );
         exit(n);
     }
-
+#endif
     return ptr;
 }
