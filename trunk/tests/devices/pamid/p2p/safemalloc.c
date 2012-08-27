@@ -1,6 +1,6 @@
 #include "safemalloc.h"
 
-void * safemalloc(int n) 
+void * safemalloc(size_t n) 
 {
     //void * ptr = malloc( n );
     int rc;
@@ -9,7 +9,7 @@ void * safemalloc(int n)
 
     if ( ptr == NULL || n<0 )
     {
-        fprintf( stderr , "%d bytes could not be allocated \n" , n );
+        fprintf( stderr , "%ld bytes could not be allocated \n" , (long)n );
         exit(n);
     }
 
