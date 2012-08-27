@@ -175,7 +175,7 @@ int main(int argc, char* argv[])
 
 #if 1
   for ( int d = 1; d < 64 ; d*=2 ) /* fast (shortMU) algorithms fail for >64 bytes */
-    for ( size_t b = 0 ; b < num_bcast_alg[1] ; b++ )
+    for ( size_t b = 0 ; b < 10 /* num_bcast_alg[1] */ ; b++ )
     {
         pami_xfer_t bcast;
 

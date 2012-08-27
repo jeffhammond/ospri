@@ -8,8 +8,8 @@
 
 #include "safemalloc.h"
 
-//#define SLEEP sleep
-#define SLEEP usleep
+#define SLEEP sleep
+//#define SLEEP usleep
 
 #define PRINT_SUCCESS 0
 
@@ -155,7 +155,7 @@ int main(int argc, char* argv[])
 
         if ( world_rank == 0 ) printf("trying safe allgather algorithm %ld (%s) \n", b, safe_allgather_meta[b].name );
         fflush(stdout);
-        //SLEEP(1);
+        SLEEP(1);
 
         active = 1;
         double t0 = PAMI_Wtime(client);
