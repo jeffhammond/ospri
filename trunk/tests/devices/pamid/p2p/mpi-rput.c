@@ -6,6 +6,7 @@
 #include <pthread.h>
 #include <mpi.h>
 #include <pami.h>
+#include <hwi/include/bqc/A2_inlines.h>
 
 #include "safemalloc.h"
 
@@ -82,21 +83,30 @@ int main(int argc, char* argv[])
 
   int n = (argc>1 ? atoi(argv[1]) : 1000);
 
-  int *  shared = (int *) safemalloc( 1000 * sizeof(int) );
+  size_t bytes = 1000 * sizeof(int), bytes_out;
+  int *  shared = (int *) safemalloc(bytes);
   for (int i=0; i<n; i++)
-    shared[i] = -1;
+    shared[i] = world_rank;
 
-  int *  local  = (int *) safemalloc( 1000 * sizeof(int) );
+  pami_memregion_t shared_mr;
+  result = PAMI_Memregion_create(contexts[0], shared, bytes, &bytes_out, &shared_mr);
+  TEST_ASSERT(result == PAMI_SUCCESS && bytes==bytes_out,"PAMI_Memregion_create");
+
+  int *  local  = (int *) safemalloc(bytes);
   for (int i=0; i<n; i++)
-    local[i] = world_rank;
+    local[i] = -1;
+
+  pami_memregion_t local_mr;
+  result = PAMI_Memregion_create(contexts[0], shared, bytes, &bytes_out, &local_mr);
+  TEST_ASSERT(result == PAMI_SUCCESS && bytes==bytes_out,"PAMI_Memregion_create");
 
   status = MPI_Barrier(MPI_COMM_WORLD);
   TEST_ASSERT(result == MPI_SUCCESS,"MPI_Barrier");
 
-  int ** shptrs = (int **) safemalloc( world_size * sizeof(int *) );
+  pami_memregion_t * shmrs = (pami_memregion_t *) safemalloc( world_size * sizeof(pami_memregion_t) );
 
-  status = MPI_Allgather(&shared, sizeof(int *), MPI_BYTE, 
-                         shptrs,  sizeof(int *), MPI_BYTE, MPI_COMM_WORLD);
+  status = MPI_Allgather(&shared_mr, sizeof(pami_memregion_t), MPI_BYTE, 
+                         shmrs,      sizeof(pami_memregion_t), MPI_BYTE, MPI_COMM_WORLD);
   TEST_ASSERT(result == MPI_SUCCESS,"MPI_Allgather");
 
   int target = (world_rank>0 ? world_rank-1 : world_size-1);
@@ -105,23 +115,33 @@ int main(int argc, char* argv[])
   TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Endpoint_create");
 
   int active = 2;
-  pami_put_simple_t parameters;
-  parameters.rma.dest     = target_ep;
-  //parameters.rma.hints    = ;
-  parameters.rma.bytes    = n*sizeof(int);
-  parameters.rma.cookie   = &active;
-  parameters.rma.done_fn  = cb_done;
-  parameters.addr.local   = local;
-  parameters.addr.remote  = shptrs[target];
-  parameters.put.rdone_fn = cb_done;
-  result = PAMI_Put(contexts[0], &parameters);
-  TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Put");
+  pami_rput_simple_t parameters;
+  parameters.rma.dest           = target_ep;
+  parameters.rma.bytes          = bytes;
+  parameters.rma.cookie         = &active;
+  parameters.rma.done_fn        = cb_done;
+  parameters.rdma.local.mr      = &local_mr;
+  parameters.rdma.local.offset  = 0;
+  parameters.rdma.remote.mr     = &shared_mr;
+  parameters.rdma.remote.offset = 0;
+  parameters.put.rdone_fn       = cb_done;
+
+  uint64_t t0 = GetTimeBase();
+
+  result = PAMI_Rput(contexts[0], &parameters);
+  TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Rput");
 
   while (active)
   {
-    result = PAMI_Context_advance( contexts[0], 100);
-    TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Context_advance");
+    //result = PAMI_Context_advance( contexts[0], 100);
+    //TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Context_advance");
+    result = PAMI_Context_trylock_advancev(contexts, 1, 1000);
+    TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Context_trylock_advancev");
   }
+
+  uint64_t t1 = GetTimeBase();
+  uint64_t dt = t1-t0;
+  printf("%ld: PAMI_Rput of %d bytes achieves %lf MB/s \n", (long)world_rank, n, (double)n/(double)dt );
 
   int errors = 0;
   
@@ -137,7 +157,14 @@ int main(int argc, char* argv[])
     printf("%ld: no errors :-) \n", (long)world_rank); 
 
   MPI_Barrier(MPI_COMM_WORLD);
-  free(shptrs);
+
+  result = PAMI_Memregion_destroy(contexts[0], &shared_mr);
+  TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Memregion_destroy");
+
+  result = PAMI_Memregion_destroy(contexts[0], &local_mr);
+  TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Memregion_destroy");
+
+  free(shmrs);
   free(local);
   free(shared);
 

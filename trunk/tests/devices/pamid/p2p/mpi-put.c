@@ -6,6 +6,7 @@
 #include <pthread.h>
 #include <mpi.h>
 #include <pami.h>
+#include <hwi/include/bqc/A2_inlines.h>
 
 #include "safemalloc.h"
 
@@ -114,14 +115,23 @@ int main(int argc, char* argv[])
   parameters.addr.local   = local;
   parameters.addr.remote  = shptrs[target];
   parameters.put.rdone_fn = cb_done;
+
+  uint64_t t0 = GetTimeBase();
+
   result = PAMI_Put(contexts[0], &parameters);
   TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Put");
 
   while (active)
   {
-    result = PAMI_Context_advance( contexts[0], 100);
-    TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Context_advance");
+    //result = PAMI_Context_advance( contexts[0], 100);
+    //TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Context_advance");
+    result = PAMI_Context_trylock_advancev(contexts, 1, 1000);
+    TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Context_trylock_advancev");
   }
+
+  uint64_t t1 = GetTimeBase();
+  uint64_t dt = t1-t0;
+  printf("%ld: PAMI_Put of %d bytes achieves %lf MB/s \n", (long)world_rank, n, (double)n/(double)dt );
 
   int errors = 0;
   
