@@ -15,9 +15,9 @@ if (result!=PAMI_SUCCESS) { printf("result!=PAMI_SUCCESS\n"); SLEEP(1); exit(1);
 
 pami_client_t client;
 size_t num_contexts;
+pami_context_t * contexts = NULL;
 size_t task_id;
 size_t num_tasks;
-pami_context_t * contexts = NULL;
 
 typedef struct MPI_Comm
 {
