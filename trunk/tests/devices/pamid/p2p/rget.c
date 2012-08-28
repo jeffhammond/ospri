@@ -69,6 +69,7 @@ int main(int argc, char* argv[])
   /* initialize the contexts */
   pami_context_t * contexts;
   contexts = (pami_context_t *) malloc( num_contexts * sizeof(pami_context_t) );
+  TEST_ASSERT(contexts!=NULL,"malloc");
 
   result = PAMI_Context_createv( client, &config, 0, contexts, num_contexts );
   TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Context_createv");
@@ -85,18 +86,15 @@ int main(int argc, char* argv[])
 
   pami_xfer_type_t barrier_xfer   = PAMI_XFER_BARRIER;
   size_t num_barrier_alg[2];
-  pami_algorithm_t * safe_barrier_algs = NULL;
-  pami_metadata_t  * safe_barrier_meta = NULL;
-  pami_algorithm_t * fast_barrier_algs = NULL;
-  pami_metadata_t  * fast_barrier_meta = NULL;
 
   result = PAMI_Geometry_algorithms_num( world_geometry, barrier_xfer, num_barrier_alg );
   TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Geometry_algorithms_num - barrier");
 
-  safe_barrier_algs = (pami_algorithm_t *) malloc( num_barrier_alg[0] * sizeof(pami_algorithm_t) );
-  safe_barrier_meta = (pami_metadata_t  *) malloc( num_barrier_alg[0] * sizeof(pami_metadata_t)  );
-  fast_barrier_algs = (pami_algorithm_t *) malloc( num_barrier_alg[1] * sizeof(pami_algorithm_t) );
-  fast_barrier_meta = (pami_metadata_t  *) malloc( num_barrier_alg[1] * sizeof(pami_metadata_t)  );
+  pami_algorithm_t * safe_barrier_algs = (pami_algorithm_t *) malloc( num_barrier_alg[0] * sizeof(pami_algorithm_t) );
+  pami_metadata_t  * safe_barrier_meta = (pami_metadata_t  *) malloc( num_barrier_alg[0] * sizeof(pami_metadata_t)  );
+  pami_algorithm_t * fast_barrier_algs = (pami_algorithm_t *) malloc( num_barrier_alg[1] * sizeof(pami_algorithm_t) );
+  pami_metadata_t  * fast_barrier_meta = (pami_metadata_t  *) malloc( num_barrier_alg[1] * sizeof(pami_metadata_t)  );
+  TEST_ASSERT(safe_barrier_algs!=NULL && safe_barrier_meta!=NULL && fast_barrier_algs!=NULL && fast_barrier_meta!=NULL,"malloc");
   result = PAMI_Geometry_algorithms_query( world_geometry, barrier_xfer,
                                            safe_barrier_algs, safe_barrier_meta, num_barrier_alg[0],
                                            fast_barrier_algs, fast_barrier_meta, num_barrier_alg[1] );
@@ -104,19 +102,15 @@ int main(int argc, char* argv[])
 
   pami_xfer_type_t allgather_xfer = PAMI_XFER_ALLGATHER;
   size_t num_allgather_alg[2];
-  pami_algorithm_t * safe_allgather_algs = NULL;
-  pami_metadata_t  * safe_allgather_meta = NULL;
-  pami_algorithm_t * fast_allgather_algs = NULL;
-  pami_metadata_t  * fast_allgather_meta = NULL;
 
   result = PAMI_Geometry_algorithms_num( world_geometry, allgather_xfer, num_allgather_alg );
   TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Geometry_algorithms_num - allgather");
-  if ( world_rank == 0 ) printf("number of allgather algorithms = {%ld,%ld} \n", num_allgather_alg[0], num_allgather_alg[1] );
 
-  safe_allgather_algs = (pami_algorithm_t *) malloc( num_allgather_alg[0] * sizeof(pami_algorithm_t) );
-  safe_allgather_meta = (pami_metadata_t  *) malloc( num_allgather_alg[0] * sizeof(pami_metadata_t)  );
-  fast_allgather_algs = (pami_algorithm_t *) malloc( num_allgather_alg[1] * sizeof(pami_algorithm_t) );
-  fast_allgather_meta = (pami_metadata_t  *) malloc( num_allgather_alg[1] * sizeof(pami_metadata_t)  );
+  pami_algorithm_t * safe_allgather_algs = (pami_algorithm_t *) malloc( num_allgather_alg[0] * sizeof(pami_algorithm_t) );
+  pami_metadata_t  * safe_allgather_meta = (pami_metadata_t  *) malloc( num_allgather_alg[0] * sizeof(pami_metadata_t)  );
+  pami_algorithm_t * fast_allgather_algs = (pami_algorithm_t *) malloc( num_allgather_alg[1] * sizeof(pami_algorithm_t) );
+  pami_metadata_t  * fast_allgather_meta = (pami_metadata_t  *) malloc( num_allgather_alg[1] * sizeof(pami_metadata_t)  );
+  TEST_ASSERT(safe_allgather_algs!=NULL && safe_allgather_meta!=NULL && fast_allgather_algs!=NULL && fast_allgather_meta!=NULL,"malloc");
   result = PAMI_Geometry_algorithms_query( world_geometry, allgather_xfer,
                                            safe_allgather_algs, safe_allgather_meta, num_allgather_alg[0],
                                            fast_allgather_algs, fast_allgather_meta, num_allgather_alg[1] );
@@ -131,6 +125,7 @@ int main(int argc, char* argv[])
 
   sbuf = malloc( bufsize * sizeof(int) );
   rbuf = malloc( bufsize * world_size * sizeof(int) );
+  TEST_ASSERT(sbuf!=NULL && rbuf!=NULL,"malloc");
 
   size_t i, j;
   for ( i = 0 ; i < bufsize ; i++ )                  sbuf[i] = (int) world_rank;
