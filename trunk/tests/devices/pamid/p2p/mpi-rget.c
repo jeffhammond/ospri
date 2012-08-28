@@ -97,7 +97,7 @@ int main(int argc, char* argv[])
     local[i] = -1;
 
   pami_memregion_t local_mr;
-  result = PAMI_Memregion_create(contexts[0], shared, bytes, &bytes_out, &local_mr);
+  result = PAMI_Memregion_create(contexts[0], local, bytes, &bytes_out, &local_mr);
   TEST_ASSERT(result == PAMI_SUCCESS && bytes==bytes_out,"PAMI_Memregion_create");
 
   status = MPI_Barrier(MPI_COMM_WORLD);
