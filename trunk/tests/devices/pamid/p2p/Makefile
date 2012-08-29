@@ -16,7 +16,7 @@ LD      = $(CC)
 CFLAGS  = $(COPT) -I.
 LDFLAGS = $(COPT) -lpthread
 
-all: safemalloc.o mpi-get.x mpi-put.x mpi-rget.x mpi-rput.x
+all: safemalloc.o mpi-get.x mpi-put.x mpi-rget.x mpi-rput.x mpi-rput-ibm.x
 
 %.o: %.c safemalloc.h
 	$(CC) $(CFLAGS) -c $< -o $@
