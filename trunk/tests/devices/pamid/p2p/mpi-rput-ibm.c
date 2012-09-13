@@ -142,11 +142,11 @@ int main(int argc, char* argv[])
   /* IBM: Could do a barrier or send/recv a completion message instead ....*/
 
   active = 10; /* IBM: Arbitrary - advance some more - 10*10000 good enough?  */
-  while (--active)                                                      /* IBM*/
-  {                                                                     /* IBM*/
-    result = PAMI_Context_trylock_advancev(contexts, 1, 10000);         /* IBM*/
-  /*TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Context_trylock_advancev");/* IBM*/
-  }                                                                     /* IBM*/
+  while (--active)                                                         /* IBM*/
+  {                                                                        /* IBM*/
+    result = PAMI_Context_trylock_advancev(contexts, 1, 10000);            /* IBM*/
+  /*TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Context_trylock_advancev");*/ /* IBM*/
+  }                                                                        /* IBM*/
 
   int errors = 0;
   
