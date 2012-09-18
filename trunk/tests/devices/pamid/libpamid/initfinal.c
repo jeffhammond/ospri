@@ -8,8 +8,7 @@ int PAMID_Initialize(void)
 
 	/* initialize the client */
 	char * clientname = "";
-	pami_client_t client;
-	rc = PAMI_Client_create(clientname, PAMID_INTERNAL_STATE->pami_client, NULL, 0);
+	rc = PAMI_Client_create(clientname, &(PAMID_INTERNAL_STATE.pami_client), NULL, 0);
 	PAMID_ASSERT(rc==PAMI_SUCCESS,"PAMI_Client_create");
 
 	/* query properties of the client */
@@ -17,7 +16,7 @@ int PAMID_Initialize(void)
 	config[0].name = PAMI_CLIENT_TASK_ID;
 	config[1].name = PAMI_CLIENT_NUM_TASKS;
 	config[2].name = PAMI_CLIENT_NUM_CONTEXTS;
-	rc = PAMI_Client_query( client, &config, 3);
+	rc = PAMI_Client_query(PAMID_INTERNAL_STATE.pami_client, config, 3);
 	PAMID_ASSERT(rc==PAMI_SUCCESS,"PAMI_Client_query");
 	PAMID_INTERNAL_STATE.world_rank   = config[0].value.intval;
 	PAMID_INTERNAL_STATE.world_size   = config[1].value.intval;
@@ -37,13 +36,13 @@ int PAMID_Finalize(void)
 	pami_result_t rc = PAMI_ERROR;
 
 	/* finalize the contexts */
-	result = PAMI_Context_destroyv( PAMID_INTERNAL_STATE.pami_contexts, PAMID_INTERNAL_STATE.num_contexts );
+	rc = PAMI_Context_destroyv( PAMID_INTERNAL_STATE.pami_contexts, PAMID_INTERNAL_STATE.num_contexts );
 	PAMID_ASSERT(rc==PAMI_SUCCESS,"PAMI_Context_destroyv");
 
 	free(PAMID_INTERNAL_STATE.pami_contexts);
 
 	/* finalize the client */
-	rc = PAMI_Client_destroy(PAMID_INTERNAL_STATE->pami_client);
+	rc = PAMI_Client_destroy(&(PAMID_INTERNAL_STATE.pami_client));
 	PAMID_ASSERT(rc==PAMI_SUCCESS,"PAMI_Client_destroy");
 
 	return PAMI_SUCCESS;
