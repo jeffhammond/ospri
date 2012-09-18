@@ -41,15 +41,16 @@ int PAMID_Barrier_doit(pamid_barrier_state_t * barrier)
 {
 	pami_result_t rc = PAMI_ERROR;
 
-	/* perform a barrier */
-	size_t barrier_alg = 0;
+	size_t barrier_alg = 0; /* 0 is not necessarily the best one... */
+
 	pami_xfer_t this;
 	volatile int active = 0;
 
 	this.cb_done   = cb_done;
 	this.cookie    = (void*) &active;
-	this.algorithm = barrier->safe_algs[barrier_alg];
+	this.algorithm = barrier->safe_algs[barrier_alg]; /* safe algs should (must?) work */
 
+	/* perform a barrier */
 	active = 1;
 	rc = PAMI_Collective( PAMID_INTERNAL_STATE.pami_contexts[0], &this );
 	PAMID_ASSERT(rc==PAMI_SUCCESS,"PAMI_Collective - barrier");

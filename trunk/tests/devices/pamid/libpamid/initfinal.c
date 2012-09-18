@@ -27,6 +27,23 @@ int PAMID_Initialize(void)
 	rc = PAMI_Context_createv(PAMID_INTERNAL_STATE.pami_client, config, 0, PAMID_INTERNAL_STATE.pami_contexts, PAMID_INTERNAL_STATE.num_contexts );
 	PAMID_ASSERT(rc==PAMI_SUCCESS,"PAMI_Context_createv");
 
+	if (PAMID_INTERNAL_STATE.num_contexts<2)
+		if (PAMID_INTERNAL_STATE.world_rank==0)
+		{
+			printf("PAMID_Initialize: you need at least 2 contexts for this to work (you have %d) \n",
+					PAMID_INTERNAL_STATE.num_contexts);
+			fflush(stdout);
+			exit(1);
+		}
+
+	PAMID_INTERNAL_STATE.context_roles.local_blocking_context = 0;
+	PAMID_INTERNAL_STATE.context_roles.local_offload_context  = 1;
+	PAMID_INTERNAL_STATE.context_roles.remote_put_context     = (PAMID_INTERNAL_STATE.num_contexts > 2 ? 2 : PAMID_INTERNAL_STATE.context_roles.local_offload_context);
+	PAMID_INTERNAL_STATE.context_roles.remote_acc_context     = (PAMID_INTERNAL_STATE.num_contexts > 3 ? 3 : PAMID_INTERNAL_STATE.context_roles.remote_put_context);
+	PAMID_INTERNAL_STATE.context_roles.remote_rmw_context     = (PAMID_INTERNAL_STATE.num_contexts > 4 ? 4 : PAMID_INTERNAL_STATE.context_roles.remote_acc_context);
+
+	/* TODO: if we want put, acc and/or rmw ordered w.r.t. each other, we need to set remote_put_context=remote_send_context */
+
 	/* setup the world geometry */
 	rc = PAMI_Geometry_world(PAMID_INTERNAL_STATE.pami_client, &(PAMID_INTERNAL_STATE.world_geometry) );
 	PAMID_ASSERT(rc==PAMI_SUCCESS,"PAMI_Geometry_world");
