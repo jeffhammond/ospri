@@ -4,6 +4,8 @@ int PAMID_Barrier_setup(pami_geometry_t geometry, pamid_barrier_state_t * barrie
 {
 	pami_result_t rc = PAMI_ERROR;
 
+	barrier->xfer = PAMI_XFER_BARRIER;
+
 	/* query the geometry */
 	rc = PAMI_Geometry_algorithms_num( geometry, barrier->xfer, barrier->num_alg );
 	PAMID_ASSERT(rc==PAMI_SUCCESS,"PAMI_Geometry_algorithms_num");

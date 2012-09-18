@@ -6,7 +6,7 @@
 /*********** INTERNAL STATE ***********/
 
 typedef struct {
-	pami_xfer_type_t xfer = PAMI_XFER_BARRIER;
+	pami_xfer_type_t xfer;
 	size_t num_alg[2];
 	pami_algorithm_t * safe_algs;
 	pami_algorithm_t * fast_algs;
