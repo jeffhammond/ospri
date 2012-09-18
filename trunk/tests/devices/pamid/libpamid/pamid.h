@@ -18,6 +18,10 @@ void cb_done (void *ctxt, void * clientdata, pami_result_t err)
   (*active)--;
 }
 
+/*********** DECLARATIONS ***********/
 
+int PAMID_Barrier_setup(pami_geometry_t geometry, pamid_barrier_state_t * barrier);
+int PAMID_Barrier_teardown(pamid_barrier_state_t * barrier);
+int PAMID_Barrier_doit(pamid_barrier_state_t * barrier);
 
 #endif /* PAMID_H */
