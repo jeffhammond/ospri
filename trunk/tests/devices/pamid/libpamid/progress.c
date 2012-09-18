@@ -33,7 +33,7 @@ int PAMID_Progess_setup(void)
 	return PAMI_SUCCESS;
 }
 
-int PAMID_Progess_teardown()
+int PAMID_Progess_teardown(void)
 {
   pami_result_t rc = PAMI_ERROR;
   rc = PAMI_Extension_close(async_prog_ext);
