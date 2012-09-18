@@ -14,14 +14,14 @@ endif
 
 CFLAGS  = $(COPT) -I.
 
-OBJECTS = initfinal.o barrier.o bcast.o allreduce.o
+OBJECTS = util.o initfinal.o barrier.o bcast.o allreduce.o
 
 all: libpamid.a
 
 libpamid.a: $(OBJECTS)
 	$(AR) $(ARFLAGS) $@ $(OBJECTS)
 
-%.o: %.c pamid.h
+%.o: %.c pamid.h pamiu.h
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
