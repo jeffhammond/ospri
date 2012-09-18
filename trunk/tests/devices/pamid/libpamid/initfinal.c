@@ -30,8 +30,8 @@ int PAMID_Initialize(void)
 	if (PAMID_INTERNAL_STATE.num_contexts<2)
 		if (PAMID_INTERNAL_STATE.world_rank==0)
 		{
-			printf("PAMID_Initialize: you need at least 2 contexts for this to work (you have %d) \n",
-					PAMID_INTERNAL_STATE.num_contexts);
+			printf("PAMID_Initialize: you need at least 2 contexts for this to work (you have %ld) \n",
+					(long)PAMID_INTERNAL_STATE.num_contexts);
 			fflush(stdout);
 			exit(1);
 		}
