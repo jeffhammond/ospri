@@ -16,7 +16,7 @@ CFLAGS  = $(COPT) -I.
 
 OBJECTS = util.o initfinal.o barrier.o bcast.o allreduce.o
 
-all: libpamid.a
+all: realclean libpamid.a
 
 libpamid.a: $(OBJECTS)
 	$(AR) $(ARFLAGS) $@ $(OBJECTS)
