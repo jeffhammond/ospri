@@ -21,7 +21,7 @@ all: libpamid.a
 libpamid.a: $(OBJECTS)
 	$(AR) $(ARFLAGS) $@ $(OBJECTS)
 
-%.o: %.c
+%.o: %.c pamid.h
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
