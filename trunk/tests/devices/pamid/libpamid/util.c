@@ -7,7 +7,7 @@ void * PAMIU_Malloc(size_t n)
 
     if ( ptr==NULL || rc!=0 || n<0 )
     {
-        fprintf( stderr , "PAMIU_Malloc: %d bytes could not be allocated \n" , n );
+        fprintf( stderr , "PAMIU_Malloc: %ld bytes could not be allocated \n" , (long) n );
         exit(n);
     }
 
