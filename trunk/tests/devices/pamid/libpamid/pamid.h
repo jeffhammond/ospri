@@ -9,6 +9,7 @@
 #include <pthread.h>
 #include <pami.h>
 
+#include "pamiu.h"
 #include "internals.h"
 
 void cb_done (void *ctxt, void * clientdata, pami_result_t err)
@@ -16,5 +17,7 @@ void cb_done (void *ctxt, void * clientdata, pami_result_t err)
   int * active = (int *) clientdata;
   (*active)--;
 }
+
+
 
 #endif /* PAMID_H */

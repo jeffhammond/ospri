@@ -1,6 +1,6 @@
 #include "pamid.h"
 
-global_state_t PAMID_INTERNAL_STATE = {0}; /* Dave or Jim knows why the "{0}" is used */
+pamid_global_state_t PAMID_INTERNAL_STATE = {0}; /* Dave or Jim knows why the "{0}" is used */
 
 int PAMID_Initialize(void)
 {
@@ -23,10 +23,16 @@ int PAMID_Initialize(void)
 	PAMID_INTERNAL_STATE.num_contexts = config[2].value.intval;
 
 	/* initialize the contexts */
-	PAMID_INTERNAL_STATE.pami_contexts = (pami_context_t *) malloc( PAMID_INTERNAL_STATE.num_contexts * sizeof(pami_context_t) );
-	PAMID_ASSERT(PAMID_INTERNAL_STATE.pami_contexts!=NULL,"malloc contexts");
-	rc = PAMI_Context_createv(PAMID_INTERNAL_STATE.pami_client, &config[0], 0, PAMID_INTERNAL_STATE.pami_contexts, PAMID_INTERNAL_STATE.num_contexts );
+	PAMID_INTERNAL_STATE.pami_contexts = (pami_context_t *) PAMIU_Malloc( PAMID_INTERNAL_STATE.num_contexts * sizeof(pami_context_t) );
+	rc = PAMI_Context_createv(PAMID_INTERNAL_STATE.pami_client, config, 0, PAMID_INTERNAL_STATE.pami_contexts, PAMID_INTERNAL_STATE.num_contexts );
 	PAMID_ASSERT(rc==PAMI_SUCCESS,"PAMI_Context_createv");
+
+	/* setup the world geometry */
+	rc = PAMI_Geometry_world(PAMID_INTERNAL_STATE.pami_client, &(PAMID_INTERNAL_STATE.world_geometry) );
+	PAMID_ASSERT(rc==PAMI_SUCCESS,"PAMI_Geometry_world");
+
+	rc = PAMID_Barrier_setup(PAMID_INTERNAL_STATE.world_geometry, &(PAMID_INTERNAL_STATE.world_barrier));
+	PAMID_ASSERT(rc==PAMI_SUCCESS,"PAMID_Barrier_setup");
 
 	return PAMI_SUCCESS;
 }
@@ -35,11 +41,14 @@ int PAMID_Finalize(void)
 {
 	pami_result_t rc = PAMI_ERROR;
 
+	rc = PAMID_Barrier_teardown(&(PAMID_INTERNAL_STATE.world_barrier));
+	PAMID_ASSERT(rc==PAMI_SUCCESS,"PAMID_Barrier_teardown");
+
 	/* finalize the contexts */
 	rc = PAMI_Context_destroyv( PAMID_INTERNAL_STATE.pami_contexts, PAMID_INTERNAL_STATE.num_contexts );
 	PAMID_ASSERT(rc==PAMI_SUCCESS,"PAMI_Context_destroyv");
 
-	free(PAMID_INTERNAL_STATE.pami_contexts);
+	PAMIU_Free(PAMID_INTERNAL_STATE.pami_contexts);
 
 	/* finalize the client */
 	rc = PAMI_Client_destroy(&(PAMID_INTERNAL_STATE.pami_client));
