@@ -24,7 +24,7 @@ typedef struct {
 	pamid_barrier_state_t world_barrier;
 } pamid_global_state_t;
 
-extern global_state_t PAMID_INTERNAL_STATE;
+extern pamid_global_state_t PAMID_INTERNAL_STATE;
 
 /*********** MACROS ***********/
 
