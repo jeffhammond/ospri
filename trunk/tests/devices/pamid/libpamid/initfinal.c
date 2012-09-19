@@ -33,7 +33,8 @@ int PAMID_Initialize(void)
 			printf("PAMID_Initialize: you need at least 2 contexts for this to work (you have %ld) \n",
 					(long)PAMID_INTERNAL_STATE.num_contexts);
 			fflush(stdout);
-			exit(1);
+            sleep(1);
+			exit(51);
 		}
 
 	/* the sync contexts should come before the async ones */

@@ -55,7 +55,7 @@ extern pamid_global_state_t PAMID_INTERNAL_STATE;
 				printf(m" SUCCEEDED \n"); \
 				fflush(stdout); \
 			} \
-			exit(1); \
+			exit(50); \
 		} \
 		while(0);
 
