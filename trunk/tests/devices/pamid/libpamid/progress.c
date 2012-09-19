@@ -10,15 +10,15 @@ typedef enum
 
 typedef void (*async_progress_function) (pami_context_t context, void * cookie);
 
-typedef pami_rc_t (*async_progress_register_function) (pami_context_t context,
+typedef pami_result_t (*async_progress_register_function) (pami_context_t context,
 		async_progress_function progress_fn,
 		async_progress_function suspend_fn,
 		async_progress_function resume_fn,
 		void * cookie);
 
-typedef pami_rc_t (*async_progress_enable_function) (pami_context_t context, async_progress_event_t event);
+typedef pami_result_t (*async_progress_enable_function) (pami_context_t context, async_progress_event_t event);
 
-typedef pami_rc_t (*async_progress_disable_function) (pami_context_t context, async_progress_event_t event);
+typedef pami_result_t (*async_progress_disable_function) (pami_context_t context, async_progress_event_t event);
 
 typedef struct
 {
@@ -30,7 +30,7 @@ typedef struct
 
 void async_progress_open(async_progress_t * async_progress)
 {
-	pami_rc_t rc = PAMI_ERROR;
+	pami_result_t rc = PAMI_ERROR;
 	async_progress_impl_t * async = (async_progress_impl_t *) async_progress;
 
 	/* Sanity check that the opaque object is large enough to contain the internal async progress 'handle' structure. */
@@ -60,7 +60,7 @@ void async_progress_open(async_progress_t * async_progress)
 
 void async_progress_close(async_progress_t * async_progress)
 {
-	pami_rc_t rc = PAMI_ERROR;
+	pami_result_t rc = PAMI_ERROR;
 	async_progress_impl_t * async = (async_progress_impl_t *) async_progress;
 
 	/* Close the async progress extension. */
@@ -72,7 +72,7 @@ void async_progress_close(async_progress_t * async_progress)
 
 void async_progress_enable(async_progress_t * async_progress, pami_context_t context)
 {
-	pami_rc_t rc = PAMI_ERROR;
+	pami_result_t rc = PAMI_ERROR;
 	async_progress_impl_t * async = (async_progress_impl_t *) async_progress;
 
 	/* Register the async progress event handlers for this context. */
@@ -107,7 +107,7 @@ void async_progress_enable(async_progress_t * async_progress, pami_context_t con
 
 void async_progress_disable(async_progress_t * async_progress, pami_context_t context)
 {
-	pami_rc_t rc = PAMI_ERROR;
+	pami_result_t rc = PAMI_ERROR;
 	async_progress_impl_t * async = (async_progress_impl_t *) async_progress;
 
 	/* Sanity check that the context lock is held by the async progress extension. */
@@ -129,7 +129,7 @@ void async_progress_disable(async_progress_t * async_progress, pami_context_t co
 
 int PAMID_Progess_setup(pami_context_t context)
 {
-	pami_rc_t rc = PAMI_ERROR;
+	//pami_result_t rc = PAMI_ERROR;
 
 
 	return PAMI_SUCCESS;
@@ -138,6 +138,6 @@ int PAMID_Progess_setup(pami_context_t context)
 int PAMID_Progess_teardown(void)
 {
 
-	return;
+	return PAMI_SUCCESS;
 }
 
