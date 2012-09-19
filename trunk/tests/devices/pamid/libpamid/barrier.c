@@ -1,6 +1,6 @@
 #include "pamid.h"
 
-int PAMID_Barrier_setup(pami_geometry_t geometry, pamid_barrier_state_t * barrier)
+int PAMID_Barrier_setup(pami_geometry_t geometry, pamid_collective_state_t * barrier)
 {
 	pami_result_t rc = PAMI_ERROR;
 
@@ -27,7 +27,7 @@ int PAMID_Barrier_setup(pami_geometry_t geometry, pamid_barrier_state_t * barrie
 	return PAMI_SUCCESS;
 }
 
-int PAMID_Barrier_teardown(pamid_barrier_state_t * barrier)
+int PAMID_Barrier_teardown(pamid_collective_state_t * barrier)
 {
 	PAMIU_Free(barrier->safe_algs);
 	PAMIU_Free(barrier->fast_algs);
@@ -37,7 +37,7 @@ int PAMID_Barrier_teardown(pamid_barrier_state_t * barrier)
 	return PAMI_SUCCESS;
 }
 
-int PAMID_Barrier_doit(pamid_barrier_state_t * barrier)
+int PAMID_Barrier_doit(pamid_collective_state_t * barrier)
 {
 	pami_result_t rc = PAMI_ERROR;
 
