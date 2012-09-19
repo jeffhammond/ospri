@@ -17,7 +17,12 @@
 typedef struct {
 	pami_geometry_t geometry;
 	pami_memregion_t * memregions;
-} pamid_global_memregion_t;
+} pamid_gmr_t;
+
+typedef struct {
+	pami_geometry_t geometry;
+	void * base;
+} pamid_window_t;
 
 /*********** EXTERNAL DECLARATIONS ***********/
 
