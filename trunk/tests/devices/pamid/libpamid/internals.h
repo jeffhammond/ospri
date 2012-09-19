@@ -3,11 +3,9 @@
 
 #include "pamid.h"
 
-void cb_done (void *ctxt, void * clientdata, pami_result_t err)
-{
-  int * active = (int *) clientdata;
-  (*active)--;
-}
+/*********** PAMI CALLBACKS ***********/
+
+void cb_done(void *ctxt, void * clientdata, pami_result_t err);
 
 /*********** INTERNAL STATE ***********/
 

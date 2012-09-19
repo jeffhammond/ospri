@@ -23,7 +23,7 @@ libpamid.a: $(OBJECTS)
 	$(AR) $(ARFLAGS) $@ $(OBJECTS)
 
 %.x: %.c libpamid.a
-	$(CC) $(CFLAGS) -c $< -L. -lpamid -o $@
+	$(CC) $(CFLAGS) $< -L. -lpamid -o $@
 
 %.o: %.c pamid.h pamiu.h
 	$(CC) $(CFLAGS) -c $< -o $@
