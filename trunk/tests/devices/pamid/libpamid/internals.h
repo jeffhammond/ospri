@@ -3,6 +3,12 @@
 
 #include "pamid.h"
 
+void cb_done (void *ctxt, void * clientdata, pami_result_t err)
+{
+  int * active = (int *) clientdata;
+  (*active)--;
+}
+
 /*********** INTERNAL STATE ***********/
 
 typedef struct {
@@ -12,7 +18,7 @@ typedef struct {
 	pami_algorithm_t * fast_algs;
 	pami_metadata_t  * safe_meta;
 	pami_metadata_t  * fast_meta;
-} pamid_barrier_state_t;
+} pamid_collective_state_t;
 
 typedef struct {
 	int local_blocking_context; /* synchronous:  for outbound/collective calls that block  */
@@ -30,7 +36,9 @@ typedef struct {
 	pami_context_t * pami_contexts;
 	pamid_context_roles_t context_roles;
 	pami_geometry_t world_geometry;
-	pamid_barrier_state_t world_barrier;
+	pamid_collective_state_t world_barrier;
+	pamid_collective_state_t world_bcast;
+	pamid_collective_state_t world_allreduce;
 } pamid_global_state_t;
 
 extern pamid_global_state_t PAMID_INTERNAL_STATE;
