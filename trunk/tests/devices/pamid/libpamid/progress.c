@@ -102,9 +102,11 @@ void async_progress_open(async_progress_t * async_progress)
 	async->enable_fn = (async_progress_enable_function) PAMI_Extension_symbol(async->extension, "enable");
 	PAMID_ASSERT(async->enable_fn!=NULL,"PAMI_Extension_symbol - enable");
 
+#ifdef 0
 	async->disable_fn = NULL;
 	async->disable_fn = (async_progress_disable_function) PAMI_Extension_symbol(async->extension, "disable");
 	PAMID_ASSERT(async->disable_fn=NULL,"PAMI_Extension_symbol - disable");
+#endif
 
 	async->extension = async->extension;
 
@@ -160,6 +162,7 @@ void async_progress_enable(async_progress_t * async_progress, pami_context_t con
 
 void async_progress_disable(async_progress_t * async_progress, pami_context_t context)
 {
+#ifdef 0
 	pami_result_t rc = PAMI_ERROR;
 	async_progress_impl_t * async = (async_progress_impl_t *) async_progress;
 
@@ -176,7 +179,7 @@ void async_progress_disable(async_progress_t * async_progress, pami_context_t co
 	/* Block until the context is no longer under async progress. This occurs when the context lock is released? */
 	rc = PAMI_Context_lock(context);
 	PAMID_ASSERT(rc==PAMI_SUCCESS,"PAMI_Context_trylock");
-
+#endif
 	return;
 }
 
