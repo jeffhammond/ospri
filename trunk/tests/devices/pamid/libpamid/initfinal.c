@@ -51,12 +51,18 @@ int PAMID_Initialize(void)
 	rc = PAMID_Barrier_setup(PAMID_INTERNAL_STATE.world_geometry, &(PAMID_INTERNAL_STATE.world_barrier));
 	PAMID_ASSERT(rc==PAMI_SUCCESS,"PAMID_Barrier_setup");
 
+	rc = PAMID_Progess_setup(PAMID_INTERNAL_STATE.num_contexts-1, &(PAMID_INTERNAL_STATE.pami_contexts[1]) );
+	PAMID_ASSERT(rc==PAMI_SUCCESS,"PAMID_Progess_setup");
+
 	return PAMI_SUCCESS;
 }
 
 int PAMID_Finalize(void)
 {
 	pami_result_t rc = PAMI_ERROR;
+
+	rc = PAMID_Progess_teardown(PAMID_INTERNAL_STATE.num_contexts-1, &(PAMID_INTERNAL_STATE.pami_contexts[1]) );
+	PAMID_ASSERT(rc==PAMI_SUCCESS,"PAMID_Progess_teardown");
 
 	rc = PAMID_Barrier_teardown(&(PAMID_INTERNAL_STATE.world_barrier));
 	PAMID_ASSERT(rc==PAMI_SUCCESS,"PAMID_Barrier_teardown");

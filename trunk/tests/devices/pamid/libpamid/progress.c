@@ -180,16 +180,24 @@ void async_progress_disable(async_progress_t * async_progress, pami_context_t co
 	return;
 }
 
-int PAMID_Progess_setup(pami_context_t context)
-{
-	//pami_result_t rc = PAMI_ERROR;
+async_progress_t pamid_async_progress;
 
+int PAMID_Progess_setup(int num_contexts, pami_context_t * contexts)
+{
+	async_progress_open(&pamid_async_progress);
+
+	for (int i=0; i<num_contexts; i++)
+		async_progress_enable(&pamid_async_progress, contexts[i]);
 
 	return PAMI_SUCCESS;
 }
 
-int PAMID_Progess_teardown(void)
+int PAMID_Progess_teardown(int num_contexts, pami_context_t * contexts)
 {
+	for (int i=0; i<num_contexts; i++)
+		async_progress_enable(&pamid_async_progress, contexts[i]);
+
+	async_progress_close(&pamid_async_progress);
 
 	return PAMI_SUCCESS;
 }
