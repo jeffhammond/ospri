@@ -20,10 +20,9 @@ typedef uintptr_t async_progress_t[8];
  * \param [out] async_progress An async progress 'handle'; defined for
  *                             illustrative purposes
  */
-void async_progress_open (pami_client_t      client,
-                          async_progress_t * async_progress);
+void async_progress_open(async_progress_t * async_progress);
 
-void async_progress_close (async_progress_t * async_progress);
+void async_progress_close(async_progress_t * async_progress);
 
 /**
  * \brief Enable 'async progress' for a communication context
@@ -48,11 +47,9 @@ void async_progress_close (async_progress_t * async_progress);
  * \param [in] context        The communication context to be advanced
  *                            asynchronously
  */
-void async_progress_enable (async_progress_t * async_progress,
-                            pami_context_t     context);
+void async_progress_enable(async_progress_t * async_progress, pami_context_t     context);
 
-void async_progress_disable (async_progress_t * async_progress,
-                             pami_context_t     context);
+void async_progress_disable(async_progress_t * async_progress, pami_context_t     context);
 
 /********************************************************************/
 
@@ -93,23 +90,23 @@ void async_progress_open(async_progress_t * async_progress)
 	PAMID_ASSERT(sizeof(async_progress_impl_t) <= sizeof(async_progress_t),"async_progress_open");
 
 	/* Open the async progress extension. */
-	rc = PAMI_Extension_open(PAMID_INTERNAL_STATE.client, "EXT_async_progress", (pami_extension_t *) &async->extension);
+	rc = PAMI_Extension_open(PAMID_INTERNAL_STATE.pami_client, "EXT_async_progress", (pami_extension_t *) &async->extension);
 	PAMID_ASSERT(rc==PAMI_SUCCESS,"PAMI_Extension_open - EXT_async_progress");
 
 	/* Get the various async progress extension functions.  */
 	async->register_fn = NULL;
-	async->register_fn = (async_progress_register_function) PAMI_Extension_symbol(async_progress_extension, "register");
-	PAMID_ASSERT(async_prog_register!=NULL,"PAMI_Extension_symbol - async_prog_register");
+	async->register_fn = (async_progress_register_function) PAMI_Extension_symbol(async->extension, "register");
+	PAMID_ASSERT(async->register_fn!=NULL,"PAMI_Extension_symbol - register");
 
 	async->enable_fn = NULL;
-	async->enable_fn = (async_progress_enable_function) PAMI_Extension_symbol(async_progress_extension, "enable");
-	PAMID_ASSERT(async_prog_enable!=NULL,"PAMI_Extension_symbol - async_prog_enable");
+	async->enable_fn = (async_progress_enable_function) PAMI_Extension_symbol(async->extension, "enable");
+	PAMID_ASSERT(async->enable_fn!=NULL,"PAMI_Extension_symbol - enable");
 
 	async->disable_fn = NULL;
-	async->disable_fn = (async_progress_disable_function) PAMI_Extension_symbol(async_progress_extension, "disable");
-	PAMID_ASSERT(async_prog_disable!=NULL,"PAMI_Extension_symbol - async_prog_disable");
+	async->disable_fn = (async_progress_disable_function) PAMI_Extension_symbol(async->extension, "disable");
+	PAMID_ASSERT(async->disable_fn=NULL,"PAMI_Extension_symbol - disable");
 
-	async->extension = async_progress_extension;
+	async->extension = async->extension;
 
 	return;
 }
