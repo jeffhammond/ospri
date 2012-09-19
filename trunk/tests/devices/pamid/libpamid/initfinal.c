@@ -7,7 +7,7 @@ int PAMID_Initialize(void)
 	pami_result_t rc = PAMI_ERROR;
 
 	/* initialize the client */
-	char * clientname = "";
+	char * clientname = "PAMID";
 	rc = PAMI_Client_create(clientname, &(PAMID_INTERNAL_STATE.pami_client), NULL, 0);
 	PAMID_ASSERT(rc==PAMI_SUCCESS,"PAMI_Client_create");
 
