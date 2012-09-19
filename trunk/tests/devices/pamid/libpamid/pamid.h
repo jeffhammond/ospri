@@ -19,9 +19,8 @@ void cb_done (void *ctxt, void * clientdata, pami_result_t err)
 }
 
 /*********** DECLARATIONS ***********/
-
-int PAMID_Progess_setup(int num_contexts, pami_context_t * contexts);
-int PAMID_Progess_teardown(int num_contexts, pami_context_t * contexts);
+int PAMID_Progess_setup(int open, pami_context_t context);
+int PAMID_Progess_teardown(int close, pami_context_t context);
 
 int PAMID_Barrier_setup(pami_geometry_t geometry, pamid_barrier_state_t * barrier);
 int PAMID_Barrier_teardown(pamid_barrier_state_t * barrier);
