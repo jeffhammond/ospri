@@ -77,10 +77,10 @@ int PAMID_Broadcast_doit(pamid_collective_state_t * broadcast, int root, size_t 
 
 int PAMID_Allgather_setup(pami_geometry_t geometry, pamid_collective_state_t * allgather);
 int PAMID_Allgather_teardown(pamid_collective_state_t * allgather);
-int PAMID_Allgather_doit(pamid_collective_state_t * allgather, int root, size_t num_bytes, void * sbuf, void * rbuf);
+int PAMID_Allgather_doit(pamid_collective_state_t * allgather, size_t num_bytes, void * sbuf, void * rbuf);
 
 int PAMID_Allreduce_setup(pami_geometry_t geometry, pamid_collective_state_t * allreduce);
 int PAMID_Allreduce_teardown(pamid_collective_state_t * allreduce);
-int PAMID_Allreduce_doit(pamid_collective_state_t * allreduce, int root, size_t count, void * sbuf, void * rbuf, pami_type_t type, pami_data_function op);
+int PAMID_Allreduce_doit(pamid_collective_state_t * allreduce, size_t count, void * sbuf, void * rbuf, pami_type_t type, pami_data_function op);
 
 #endif /* INTERNALS_H */

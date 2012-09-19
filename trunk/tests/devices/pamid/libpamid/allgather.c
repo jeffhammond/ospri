@@ -37,7 +37,7 @@ int PAMID_Allgather_teardown(pamid_collective_state_t * allgather)
 	return PAMI_SUCCESS;
 }
 
-int PAMID_Allgather_doit(pamid_collective_state_t * allgather, int root,
+int PAMID_Allgather_doit(pamid_collective_state_t * allgather,
                          size_t num_bytes, void * sbuf, void * rbuf)
 {
 	pami_result_t rc = PAMI_ERROR;
@@ -71,7 +71,7 @@ int PAMID_Allgather_doit(pamid_collective_state_t * allgather, int root,
 	return PAMI_SUCCESS;
 }
 
-int PAMID_Allgather_world(int root, size_t num_bytes, void * sbuf, void * rbuf)
+int PAMID_Allgather_world(size_t num_bytes, void * sbuf, void * rbuf)
 {
-	return PAMID_Allgather_doit(&(PAMID_INTERNAL_STATE.world_allgather), root, num_bytes, sbuf, rbuf);
+	return PAMID_Allgather_doit(&(PAMID_INTERNAL_STATE.world_allgather), num_bytes, sbuf, rbuf);
 }

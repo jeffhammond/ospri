@@ -37,7 +37,7 @@ int PAMID_Allreduce_teardown(pamid_collective_state_t * allreduce)
 	return PAMI_SUCCESS;
 }
 
-int PAMID_Allreduce_doit(pamid_collective_state_t * allreduce, int root, 
+int PAMID_Allreduce_doit(pamid_collective_state_t * allreduce,
                          size_t count, void * sbuf, void * rbuf, 
                          pami_type_t type, pami_data_function op)
 {
@@ -73,7 +73,7 @@ int PAMID_Allreduce_doit(pamid_collective_state_t * allreduce, int root,
 	return PAMI_SUCCESS;
 }
 
-int PAMID_Allreduce_world(int root, size_t count, void * sbuf, void * rbuf, pami_type_t type, pami_data_function op)
+int PAMID_Allreduce_world(size_t count, void * sbuf, void * rbuf, pami_type_t type, pami_data_function op)
 {
-	return PAMID_Allreduce_doit(&(PAMID_INTERNAL_STATE.world_allreduce), root, count, sbuf, rbuf, type, op);
+	return PAMID_Allreduce_doit(&(PAMID_INTERNAL_STATE.world_allreduce), count, sbuf, rbuf, type, op);
 }
