@@ -22,7 +22,7 @@ all: realclean libpamid.a $(TESTS)
 libpamid.a: $(OBJECTS)
 	$(AR) $(ARFLAGS) $@ $(OBJECTS)
 
-%.x: %.c libpami.a
+%.x: %.c libpamid.a
 	$(CC) $(CFLAGS) -c $< -L. -lpamid -o $@
 
 %.o: %.c pamid.h pamiu.h
@@ -32,5 +32,5 @@ clean:
 	$(RM) $(RMFLAGS) $(OBJECTS)
 
 realclean: clean
-	$(RM) $(RMFLAGS) libpamid.a
+	$(RM) $(RMFLAGS) libpamid.a $(TESTS)
 
