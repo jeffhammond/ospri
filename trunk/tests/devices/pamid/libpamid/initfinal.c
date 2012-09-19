@@ -36,7 +36,10 @@ int PAMID_Initialize(void)
 			exit(1);
 		}
 
+	/* the sync contexts should come before the async ones */
+	/* this is the synchronous context */
 	PAMID_INTERNAL_STATE.context_roles.local_blocking_context = 0;
+	/* these are all asynchronous contexts */
 	PAMID_INTERNAL_STATE.context_roles.local_offload_context  = 1;
 	PAMID_INTERNAL_STATE.context_roles.remote_put_context     = (PAMID_INTERNAL_STATE.num_contexts > 2 ? 2 : PAMID_INTERNAL_STATE.context_roles.local_offload_context);
 	PAMID_INTERNAL_STATE.context_roles.remote_acc_context     = (PAMID_INTERNAL_STATE.num_contexts > 3 ? 3 : PAMID_INTERNAL_STATE.context_roles.remote_put_context);
@@ -48,10 +51,18 @@ int PAMID_Initialize(void)
 	rc = PAMI_Geometry_world(PAMID_INTERNAL_STATE.pami_client, &(PAMID_INTERNAL_STATE.world_geometry) );
 	PAMID_ASSERT(rc==PAMI_SUCCESS,"PAMI_Geometry_world");
 
+	/* setup the world barrier */
 	rc = PAMID_Barrier_setup(PAMID_INTERNAL_STATE.world_geometry, &(PAMID_INTERNAL_STATE.world_barrier));
 	PAMID_ASSERT(rc==PAMI_SUCCESS,"PAMID_Barrier_setup");
 
-	rc = PAMID_Progess_setup(PAMID_INTERNAL_STATE.num_contexts-1, &(PAMID_INTERNAL_STATE.pami_contexts[1]) );
+	/* enable async progress */
+	rc = PAMID_Progess_setup(1,PAMID_INTERNAL_STATE.pami_contexts[1]);
+	if (PAMID_INTERNAL_STATE.num_contexts > 2)
+		rc = PAMID_Progess_setup(0,PAMID_INTERNAL_STATE.pami_contexts[2]);
+	if (PAMID_INTERNAL_STATE.num_contexts > 3)
+		rc = PAMID_Progess_setup(0,PAMID_INTERNAL_STATE.pami_contexts[3]);
+	if (PAMID_INTERNAL_STATE.num_contexts > 4)
+		rc = PAMID_Progess_setup(0,PAMID_INTERNAL_STATE.pami_contexts[4]);
 	PAMID_ASSERT(rc==PAMI_SUCCESS,"PAMID_Progess_setup");
 
 	return PAMI_SUCCESS;
@@ -61,9 +72,17 @@ int PAMID_Finalize(void)
 {
 	pami_result_t rc = PAMI_ERROR;
 
-	rc = PAMID_Progess_teardown(PAMID_INTERNAL_STATE.num_contexts-1, &(PAMID_INTERNAL_STATE.pami_contexts[1]) );
+	/* disable async progress */
+	if (PAMID_INTERNAL_STATE.num_contexts > 4)
+		rc = PAMID_Progess_teardown(0,PAMID_INTERNAL_STATE.pami_contexts[4]);
+	if (PAMID_INTERNAL_STATE.num_contexts > 3)
+		rc = PAMID_Progess_teardown(0,PAMID_INTERNAL_STATE.pami_contexts[3]);
+	if (PAMID_INTERNAL_STATE.num_contexts > 2)
+		rc = PAMID_Progess_teardown(0,PAMID_INTERNAL_STATE.pami_contexts[2]);
+	rc = PAMID_Progess_teardown(1, PAMID_INTERNAL_STATE.pami_contexts[1]);
 	PAMID_ASSERT(rc==PAMI_SUCCESS,"PAMID_Progess_teardown");
 
+	/* teardown the world barrier */
 	rc = PAMID_Barrier_teardown(&(PAMID_INTERNAL_STATE.world_barrier));
 	PAMID_ASSERT(rc==PAMI_SUCCESS,"PAMID_Barrier_teardown");
 
