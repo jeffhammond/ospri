@@ -12,6 +12,13 @@
 #include "pamiu.h"
 #include "internals.h"
 
+/*********** EXTERNAL OBJECTS ***********/
+
+typedef struct {
+	pami_geometry_t geometry;
+	pami_memregion_t * memregions;
+} pamid_global_memregion_t;
+
 /*********** EXTERNAL DECLARATIONS ***********/
 
 int PAMID_Initialize(void);
