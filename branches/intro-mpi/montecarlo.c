@@ -21,18 +21,6 @@
 #define CHECK_MPI(rc)
 #endif
 
-#ifdef CHECK_ERRORS
-#define CHECK_MALLOC(ptr) \
-    do {                                           \
-        if (ptr==NULL) {                           \
-            printf("malloc failed.  Exiting. \n"); \
-            exit(1);                               \
-        }                                          \
-    } while (0) 
-#else
-#define CHECK_MPI(rc)
-#endif
-
 int main(int argc, char ** argv)
 {
     int rc;
