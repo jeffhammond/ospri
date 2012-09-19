@@ -145,7 +145,6 @@ void async_progress_enable(async_progress_t * async_progress, pami_context_t con
 	PAMID_ASSERT(rc==PAMI_SUCCESS,"async->enable_fn");
 
 	/* Async progress is enabled when the async progress extension acquires the context lock. */
-	fprintf (stdout, "(%03d) Waiting for the async progress extension to acquire the context lock.\n", __LINE__);
 	do
 	{
 		rc = PAMI_ERROR;
