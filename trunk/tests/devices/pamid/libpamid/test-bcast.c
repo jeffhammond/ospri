@@ -23,7 +23,8 @@ int main(int argc, char * argv[])
 		if (a[i] != 37373737)
 			errors++;
 
-	printf("rank %ld has %d errors \n", PAMID_World_rank(), errors );
+	if (errors>0)
+		printf("rank %ld has %d errors \n", PAMID_World_rank(), errors );
 
 	free(a);
 
