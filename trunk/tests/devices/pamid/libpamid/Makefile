@@ -15,7 +15,7 @@ endif
 CFLAGS  = $(COPT) -I.
 
 OBJECTS = util.o progress.o barrier.o bcast.o allreduce.o initfinal.o 
-TESTS = test-initfinal.x
+TESTS = test-initfinal.x test-barrier.x
 
 all: realclean libpamid.a $(TESTS)
 
