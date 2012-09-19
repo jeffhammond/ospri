@@ -12,12 +12,12 @@
 #include "pamiu.h"
 #include "internals.h"
 
-/*********** DECLARATIONS ***********/
-int PAMID_Progess_setup(int open, pami_context_t context);
-int PAMID_Progess_teardown(int close, pami_context_t context);
+/*********** EXTERNAL DECLARATIONS ***********/
 
-int PAMID_Barrier_setup(pami_geometry_t geometry, pamid_collective_state_t * barrier);
-int PAMID_Barrier_teardown(pamid_collective_state_t * barrier);
-int PAMID_Barrier_doit(pamid_collective_state_t * barrier);
+int PAMID_Initialize(void);
+int PAMID_Finalize(void);
+
+size_t PAMID_World_rank(void);
+size_t PAMID_World_size(void);
 
 #endif /* PAMID_H */

@@ -99,3 +99,12 @@ int PAMID_Finalize(void)
 	return PAMI_SUCCESS;
 }
 
+size_t PAMID_World_rank(void)
+{
+	return PAMID_INTERNAL_STATE.world_rank;
+}
+
+size_t PAMID_World_size(void)
+{
+	return PAMID_INTERNAL_STATE.world_size;
+}

@@ -9,6 +9,15 @@ void cb_done (void *ctxt, void * clientdata, pami_result_t err)
   (*active)--;
 }
 
+/*********** INTERNAL DECLARATIONS ***********/
+
+int PAMID_Progess_setup(int open, pami_context_t context);
+int PAMID_Progess_teardown(int close, pami_context_t context);
+
+int PAMID_Barrier_setup(pami_geometry_t geometry, pamid_collective_state_t * barrier);
+int PAMID_Barrier_teardown(pamid_collective_state_t * barrier);
+int PAMID_Barrier_doit(pamid_collective_state_t * barrier);
+
 /*********** INTERNAL STATE ***********/
 
 typedef struct {
