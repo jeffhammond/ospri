@@ -8,7 +8,7 @@ int main(int argc, char * argv[])
 	int * a = malloc(n*sizeof(int));
 	int * b = malloc(n*sizeof(int));
 
-	int r = (int)PAMID_World_rank();
+	//int r = (int)PAMID_World_rank();
 	int s = (int)PAMID_World_size();
 
 	for (int i=0; i<n; i++)
