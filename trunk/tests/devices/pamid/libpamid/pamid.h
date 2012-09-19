@@ -20,4 +20,6 @@ int PAMID_Finalize(void);
 size_t PAMID_World_rank(void);
 size_t PAMID_World_size(void);
 
+int PAMID_Barrier_world(void);
+
 #endif /* PAMID_H */

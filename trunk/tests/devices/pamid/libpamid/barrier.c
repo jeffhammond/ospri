@@ -62,3 +62,8 @@ int PAMID_Barrier_doit(pamid_collective_state_t * barrier)
 
 	return PAMI_SUCCESS;
 }
+
+int PAMID_Barrier_world(void)
+{
+	return PAMID_Barrier_doit(&(PAMID_INTERNAL_STATE.world_barrier));
+}
