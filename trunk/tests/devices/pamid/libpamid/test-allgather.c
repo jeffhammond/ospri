@@ -10,7 +10,7 @@ int main(int argc, char * argv[])
 	int * in  = malloc(n*sizeof(int));
 	int * out = malloc(ws*n*sizeof(int));
 
-	int r = (int)PAMID_World_rank();
+	//int r = (int)PAMID_World_rank();
 
 	for (int i=0; i<n; i++)
 		in[i] = 37373737;
