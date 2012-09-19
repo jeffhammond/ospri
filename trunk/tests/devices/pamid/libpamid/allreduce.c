@@ -37,7 +37,9 @@ int PAMID_Allreduce_teardown(pamid_collective_state_t * allreduce)
 	return PAMI_SUCCESS;
 }
 
-int PAMID_Allreduce_doit(pamid_collective_state_t * allreduce, int root, size_t num_bytes, void * buffer)
+int PAMID_Allreduce_doit(pamid_collective_state_t * allreduce, int root, 
+                         size_t count, void * sbuf, void * rbuf, 
+                         pami_type_t type, pami_data_function op)
 {
 	pami_result_t rc = PAMI_ERROR;
 
@@ -50,13 +52,13 @@ int PAMID_Allreduce_doit(pamid_collective_state_t * allreduce, int root, size_t 
 	this.cookie    = (void*) &active;
 	this.algorithm = allreduce->safe_algs[allreduce_alg]; /* safe algs should (must?) work */
 
-    allreduce.cmd.xfer_allreduce.op         = PAMI_DATA_SUM;
-    allreduce.cmd.xfer_allreduce.sndbuf     = (void*)sbuf;
-    allreduce.cmd.xfer_allreduce.stype      = PAMI_TYPE_SIGNED_INT;
-    allreduce.cmd.xfer_allreduce.stypecount = d;
-    allreduce.cmd.xfer_allreduce.rcvbuf     = (void*)rbuf;
-    allreduce.cmd.xfer_allreduce.rtype      = PAMI_TYPE_SIGNED_INT;
-    allreduce.cmd.xfer_allreduce.rtypecount = d;
+    this.cmd.xfer_allreduce.op         = op;
+    this.cmd.xfer_allreduce.sndbuf     = (void*)sbuf;
+    this.cmd.xfer_allreduce.stype      = type;
+    this.cmd.xfer_allreduce.stypecount = count;
+    this.cmd.xfer_allreduce.rcvbuf     = (void*)rbuf;
+    this.cmd.xfer_allreduce.rtype      = type;
+    this.cmd.xfer_allreduce.rtypecount = count;
 
 	/* perform a allreduce */
 	active = 1;
