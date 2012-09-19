@@ -69,27 +69,6 @@ int main(int argc, char ** argv)
     /* seed the RNG with something unique to a rank */
     srand(world_rank);
 
-#if 0
-    double * rx = malloc(n*sizeof(double)); CHECK_MALLOC(rx);
-    double * ry = malloc(n*sizeof(double)); CHECK_MALLOC(ry);
-    for (i=0;i<n;i++)
-    {
-        rx[i] = (double)rand()/(double)RAND_MAX;
-        ry[i] = (double)rand()/(double)RAND_MAX;
-    }
-
-    long in = 0, total = 0;
-    for (i=0;i<n;i++)
-    {
-        register double x = rx[i];
-        register double y = ry[i];
-        register double z = x*x + y*y;
-        if (z<1.0) in++;
-    }
-    free(ry);
-    free(rx);
-#endif
-
     long in = 0, total = 0;
     for (i=0;i<n;i++)
     {
