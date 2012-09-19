@@ -60,13 +60,13 @@ int PAMID_Initialize(void)
 	rc = PAMID_Broadcast_setup(PAMID_INTERNAL_STATE.world_geometry, &(PAMID_INTERNAL_STATE.world_bcast));
 	PAMID_ASSERT(rc==PAMI_SUCCESS,"PAMID_Broadcast_setup");
 
-	/* setup the world allreduce */
-	rc = PAMID_Allreduce_setup(PAMID_INTERNAL_STATE.world_geometry, &(PAMID_INTERNAL_STATE.world_allreduce));
-	PAMID_ASSERT(rc==PAMI_SUCCESS,"PAMID_Allreduce_setup");
-
 	/* setup the world allgather */
 	rc = PAMID_Allgather_setup(PAMID_INTERNAL_STATE.world_geometry, &(PAMID_INTERNAL_STATE.world_allgather));
 	PAMID_ASSERT(rc==PAMI_SUCCESS,"PAMID_Allgather_setup");
+
+	/* setup the world allreduce */
+	rc = PAMID_Allreduce_setup(PAMID_INTERNAL_STATE.world_geometry, &(PAMID_INTERNAL_STATE.world_allreduce));
+	PAMID_ASSERT(rc==PAMI_SUCCESS,"PAMID_Allreduce_setup");
 
 	/* enable async progress */
 	rc = PAMID_Progess_setup(1,PAMID_INTERNAL_STATE.pami_contexts[1]);

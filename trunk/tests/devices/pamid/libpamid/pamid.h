@@ -22,7 +22,7 @@ size_t PAMID_World_size(void);
 
 int PAMID_Barrier_world(void);
 int PAMID_Broadcast_world(int root, size_t num_bytes, void * buffer);
-int PAMID_Allreduce_world(void)
-int PAMID_Allgather_world(void)
+int PAMID_Allgather_world(int root, size_t num_bytes, void * sbuf, void * rbuf);
+int PAMID_Allreduce_world(int root, size_t count, void * sbuf, void * rbuf, pami_type_t type, pami_data_function op);
 
 #endif /* PAMID_H */
