@@ -43,7 +43,7 @@ extern pamid_global_state_t PAMID_INTERNAL_STATE;
 
 /*********** MACROS ***********/
 
-#define PRINT_SUCCESS 1
+#define PRINT_SUCCESS 0
 
 #define PAMID_ASSERT(c,m) \
 		do { \
