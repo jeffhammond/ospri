@@ -37,6 +37,7 @@ typedef struct {
 	pamid_collective_state_t world_barrier;
 	pamid_collective_state_t world_bcast;
 	pamid_collective_state_t world_allreduce;
+	pamid_collective_state_t world_allgather;
 } pamid_global_state_t;
 
 extern pamid_global_state_t PAMID_INTERNAL_STATE;
