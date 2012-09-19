@@ -195,7 +195,7 @@ int PAMID_Progess_setup(int num_contexts, pami_context_t * contexts)
 int PAMID_Progess_teardown(int num_contexts, pami_context_t * contexts)
 {
 	for (int i=0; i<num_contexts; i++)
-		async_progress_enable(&pamid_async_progress, contexts[i]);
+		async_progress_disable(&pamid_async_progress, contexts[i]);
 
 	async_progress_close(&pamid_async_progress);
 
