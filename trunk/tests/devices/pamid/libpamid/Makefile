@@ -15,11 +15,15 @@ endif
 CFLAGS  = $(COPT) -I.
 
 OBJECTS = util.o progress.o barrier.o bcast.o allreduce.o initfinal.o 
+TESTS = test-initfinal.x
 
-all: realclean libpamid.a
+all: realclean libpamid.a $(TESTS)
 
 libpamid.a: $(OBJECTS)
 	$(AR) $(ARFLAGS) $@ $(OBJECTS)
+
+%.x: %.c libpami.a
+	$(CC) $(CFLAGS) -c $< -L. -lpamid -o $@
 
 %.o: %.c pamid.h pamiu.h
 	$(CC) $(CFLAGS) -c $< -o $@
