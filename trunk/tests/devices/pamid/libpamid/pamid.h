@@ -21,5 +21,8 @@ size_t PAMID_World_rank(void);
 size_t PAMID_World_size(void);
 
 int PAMID_Barrier_world(void);
+int PAMID_Broadcast_world(int root, size_t num_bytes, void * buffer);
+int PAMID_Allreduce_world(void)
+int PAMID_Allgather_world(void)
 
 #endif /* PAMID_H */

@@ -56,6 +56,10 @@ int PAMID_Initialize(void)
 	rc = PAMID_Barrier_setup(PAMID_INTERNAL_STATE.world_geometry, &(PAMID_INTERNAL_STATE.world_barrier));
 	PAMID_ASSERT(rc==PAMI_SUCCESS,"PAMID_Barrier_setup");
 
+	/* setup the world broadcast */
+	rc = PAMID_Broadcast_setup(PAMID_INTERNAL_STATE.world_geometry, &(PAMID_INTERNAL_STATE.world_bcast));
+	PAMID_ASSERT(rc==PAMI_SUCCESS,"PAMID_Broadcast_setup");
+
 	/* setup the world allreduce */
 	rc = PAMID_Allreduce_setup(PAMID_INTERNAL_STATE.world_geometry, &(PAMID_INTERNAL_STATE.world_allreduce));
 	PAMID_ASSERT(rc==PAMI_SUCCESS,"PAMID_Allreduce_setup");

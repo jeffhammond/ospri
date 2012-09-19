@@ -38,8 +38,7 @@ int PAMID_Allgather_teardown(pamid_collective_state_t * allgather)
 }
 
 int PAMID_Allgather_doit(pamid_collective_state_t * allgather, int root,
-                         size_t count, void * sbuf, void * rbuf, 
-                         pami_type_t type, pami_data_function op)
+                         size_t num_bytes, void * sbuf, void * rbuf)
 {
 	pami_result_t rc = PAMI_ERROR;
 
@@ -52,13 +51,12 @@ int PAMID_Allgather_doit(pamid_collective_state_t * allgather, int root,
 	this.cookie    = (void*) &active;
 	this.algorithm = allgather->safe_algs[allgather_alg]; /* safe algs should (must?) work */
 
-    this.cmd.xfer_allgather.op         = op;
     this.cmd.xfer_allgather.sndbuf     = (void*)sbuf;
-    this.cmd.xfer_allgather.stype      = type;
-    this.cmd.xfer_allgather.stypecount = count;
+    this.cmd.xfer_allgather.stype      = PAMI_TYPE_BYTE;
+    this.cmd.xfer_allgather.stypecount = num_bytes;
     this.cmd.xfer_allgather.rcvbuf     = (void*)rbuf;
-    this.cmd.xfer_allgather.rtype      = type;
-    this.cmd.xfer_allgather.rtypecount = count;
+    this.cmd.xfer_allgather.rtype      = PAMI_TYPE_BYTE;
+    this.cmd.xfer_allgather.rtypecount = num_bytes;
 
 	/* perform a allgather */
 	active = 1;
@@ -71,4 +69,9 @@ int PAMID_Allgather_doit(pamid_collective_state_t * allgather, int root,
 	PAMID_ASSERT(rc==PAMI_SUCCESS,"PAMI_Context_trylock_advancev - allgather");
 
 	return PAMI_SUCCESS;
+}
+
+int PAMID_Allgather_world(int root, size_t num_bytes, void * sbuf, void * rbuf)
+{
+	return PAMID_Allgather_doit(&(PAMID_INTERNAL_STATE.world_allgather), root, num_bytes, sbuf, rbuf);
 }

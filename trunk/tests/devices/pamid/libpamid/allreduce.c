@@ -72,3 +72,8 @@ int PAMID_Allreduce_doit(pamid_collective_state_t * allreduce, int root,
 
 	return PAMI_SUCCESS;
 }
+
+int PAMID_Allreduce_world(int root, size_t count, void * sbuf, void * rbuf, pami_type_t type, pami_data_function op)
+{
+	return PAMID_Allreduce_doit(&(PAMID_INTERNAL_STATE.world_allreduce), root, count, sbuf, rbuf, type, op);
+}

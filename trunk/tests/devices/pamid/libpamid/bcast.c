@@ -73,3 +73,8 @@ int PAMID_Broadcast_doit(pamid_collective_state_t * broadcast, int root, size_t 
 
 	return PAMI_SUCCESS;
 }
+
+int PAMID_Broadcast_world(int root, size_t num_bytes, void * buffer)
+{
+	return PAMID_Broadcast_doit(&(PAMID_INTERNAL_STATE.world_bcast), root, num_bytes, buffer);
+}
