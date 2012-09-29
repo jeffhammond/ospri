@@ -6,33 +6,8 @@
 #include <pthread.h>
 #include <pami.h>
 
-#define PRINT_SUCCESS 0
-
-//#define SLEEP sleep
-#define SLEEP usleep
-
-#define TEST_ASSERT(c,m) \
-        do { \
-        if (!(c)) { \
-                    printf(m" FAILED on rank %ld\n", world_rank); \
-                    fflush(stdout); \
-                  } \
-        else if (PRINT_SUCCESS) { \
-                    printf(m" SUCCEEDED on rank %ld\n", world_rank); \
-                    fflush(stdout); \
-                  } \
-        SLEEP(1); \
-        assert(c); \
-        } \
-        while(0);
-
-static size_t world_size, world_rank = -1;
-
-void cb_done (void *ctxt, void * clientdata, pami_result_t err)
-{
-  int * active = (int *) clientdata;
-  (*active)--;
-}
+#include "safemalloc.h"
+#include "preamble.h"
 
 int main(int argc, char* argv[])
 {
@@ -124,14 +99,16 @@ int main(int argc, char* argv[])
       fflush(stdout);
       SLEEP(1);
 
+      uint64_t t0 = GetTimeBase();
       active = 1;
       result = PAMI_Collective( contexts[0], &barrier );
       TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Collective - barrier");
       while (active)
         result = PAMI_Context_advance( contexts[0], 1 );
       TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Context_advance - barrier");
+      uint64_t t1 = GetTimeBase();
 
-      if ( world_rank == 0 ) printf("after safe barrier algorithm %ld (%s) \n", b, safe_barrier_meta[b].name );
+      if ( world_rank == 0 ) printf("after safe barrier algorithm %ld (%s) - took %llu cycles \n", b, safe_barrier_meta[b].name, t1-t0 );
       fflush(stdout);
       SLEEP(1);
   }
@@ -145,14 +122,16 @@ int main(int argc, char* argv[])
       fflush(stdout);
       SLEEP(1);
 
+      uint64_t t0 = GetTimeBase();
       active = 1;
       result = PAMI_Collective( contexts[0], &barrier );
       TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Collective - barrier");
       while (active)
         result = PAMI_Context_advance( contexts[0], 1 );
       TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Context_advance - barrier");
+      uint64_t t1 = GetTimeBase();
 
-      if ( world_rank == 0 ) printf("after fast barrier algorithm %ld (%s) \n", b, fast_barrier_meta[b].name );
+      if ( world_rank == 0 ) printf("after fast barrier algorithm %ld (%s) - took %llu cycles \n", b, fast_barrier_meta[b].name, t1-t0 );
       fflush(stdout);
       SLEEP(1);
   }

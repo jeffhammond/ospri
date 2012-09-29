@@ -18,10 +18,10 @@ LDFLAGS = $(COPT) -lpthread
 
 all: safemalloc.o barrier.x bcast.x allreduce.x 
 
-%.o: %.c safemalloc.h
+%.o: %.c safemalloc.h preamble.h Makefile
 	$(CC) $(CFLAGS) -c $< -o $@
 
-%.x: %.o safemalloc.o
+%.x: %.o safemalloc.o Makefile
 	$(LD) $(LDFLAGS) $< safemalloc.o -o $@
 
 clean:

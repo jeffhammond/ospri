@@ -7,33 +7,7 @@
 #include <pami.h>
 
 #include "safemalloc.h"
-
-//#define SLEEP sleep
-#define SLEEP usleep
-
-#define PRINT_SUCCESS 0
-
-#define TEST_ASSERT(c,m) \
-        do { \
-        if (!(c)) { \
-                    printf(m" FAILED on rank %ld\n", world_rank); \
-                    fflush(stdout); \
-                    exit(c); \
-                  } \
-        else if (PRINT_SUCCESS) { \
-                    printf(m" SUCCEEDED on rank %ld\n", world_rank); \
-                    fflush(stdout); \
-                  } \
-        } \
-        while(0);
-
-static size_t world_size, world_rank = -1;
-
-void cb_done (void *ctxt, void * clientdata, pami_result_t err)
-{
-  int * active = (int *) clientdata;
-  (*active)--;
-}
+#include "preamble.h"
 
 int main(int argc, char* argv[])
 {
