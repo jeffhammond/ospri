@@ -1,75 +1,82 @@
-barrier.n128.t1.33300.output:after safe barrier algorithm 0 (I1:Barrier:P2P:P2P) - took 74229 cycles 
-barrier.n128.t4.33301.output:after safe barrier algorithm 0 (I1:Barrier:P2P:P2P) - took 62847 cycles 
-barrier.n128.t8.33302.output:after safe barrier algorithm 0 (I1:Barrier:P2P:P2P) - took 183550 cycles 
-barrier.n128.t16.33303.output:after safe barrier algorithm 0 (I1:Barrier:P2P:P2P) - took 112547 cycles 
-barrier.n256.t1.33304.output:after safe barrier algorithm 0 (I1:Barrier:P2P:P2P) - took 76809 cycles 
-barrier.n256.t4.33305.output:after safe barrier algorithm 0 (I1:Barrier:P2P:P2P) - took 69187 cycles 
-barrier.n256.t8.33306.output:after safe barrier algorithm 0 (I1:Barrier:P2P:P2P) - took 265694 cycles 
-barrier.n256.t16.33307.output:after safe barrier algorithm 0 (I1:Barrier:P2P:P2P) - took 369583 cycles 
-barrier.n512.t1.33308.output:after safe barrier algorithm 0 (I1:Barrier:P2P:P2P) - took 82053 cycles 
-barrier.n512.t4.33309.output:after safe barrier algorithm 0 (I1:Barrier:P2P:P2P) - took 69303 cycles 
-barrier.n512.t8.33310.output:after safe barrier algorithm 0 (I1:Barrier:P2P:P2P) - took 2539902 cycles 
-barrier.n512.t16.33311.output:after safe barrier algorithm 0 (I1:Barrier:P2P:P2P) - took 2448676 cycles 
-barrier.n128.t1.33300.output:after safe barrier algorithm 1 (I0:Binomial:-:MU) - took 105896 cycles 
-barrier.n128.t4.33301.output:after safe barrier algorithm 1 (I0:Binomial:SHMEM:MU) - took 122912 cycles 
-barrier.n128.t8.33302.output:after safe barrier algorithm 1 (I0:Binomial:SHMEM:MU) - took 140536 cycles 
-barrier.n128.t16.33303.output:after safe barrier algorithm 1 (I0:Binomial:SHMEM:MU) - took 183452 cycles 
-barrier.n256.t1.33304.output:after safe barrier algorithm 1 (I0:Binomial:-:MU) - took 112034 cycles 
-barrier.n256.t4.33305.output:after safe barrier algorithm 1 (I0:Binomial:SHMEM:MU) - took 130196 cycles 
-barrier.n256.t8.33306.output:after safe barrier algorithm 1 (I0:Binomial:SHMEM:MU) - took 146824 cycles 
-barrier.n256.t16.33307.output:after safe barrier algorithm 1 (I0:Binomial:SHMEM:MU) - took 191854 cycles 
-barrier.n512.t1.33308.output:after safe barrier algorithm 1 (I0:Binomial:-:MU) - took 117006 cycles 
-barrier.n512.t4.33309.output:after safe barrier algorithm 1 (I0:Binomial:SHMEM:MU) - took 135110 cycles 
-barrier.n512.t8.33310.output:after safe barrier algorithm 1 (I0:Binomial:SHMEM:MU) - took 153398 cycles 
-barrier.n512.t16.33311.output:after safe barrier algorithm 1 (I0:Binomial:SHMEM:MU) - took 196596 cycles 
-barrier.n128.t1.33300.output:after safe barrier algorithm 2 (I0:Binomial:-:ShortMU) - took 34328 cycles 
-barrier.n128.t4.33301.output:after safe barrier algorithm 2 (I0:Binomial:-:ShortMU) - took 35804 cycles 
-barrier.n128.t8.33302.output:after safe barrier algorithm 2 (I0:Binomial:-:ShortMU) - took 31084 cycles 
-barrier.n128.t16.33303.output:after safe barrier algorithm 2 (I0:Binomial:-:ShortMU) - took 34956 cycles 
-barrier.n256.t1.33304.output:after safe barrier algorithm 2 (I0:Binomial:-:ShortMU) - took 31904 cycles 
-barrier.n256.t4.33305.output:after safe barrier algorithm 2 (I0:Binomial:-:ShortMU) - took 30302 cycles 
-barrier.n256.t8.33306.output:after safe barrier algorithm 2 (I0:Binomial:-:ShortMU) - took 37838 cycles 
-barrier.n256.t16.33307.output:after safe barrier algorithm 2 (I0:Binomial:-:ShortMU) - took 36408 cycles 
-barrier.n512.t1.33308.output:after safe barrier algorithm 2 (I0:Binomial:-:ShortMU) - took 37358 cycles 
-barrier.n512.t4.33309.output:after safe barrier algorithm 2 (I0:Binomial:-:ShortMU) - took 43740 cycles 
-barrier.n512.t8.33310.output:after safe barrier algorithm 2 (I0:Binomial:-:ShortMU) - took 35650 cycles 
-barrier.n512.t16.33311.output:after safe barrier algorithm 2 (I0:Binomial:-:ShortMU) - took 48580 cycles 
-barrier.n128.t1.33300.output:after safe barrier algorithm 3 (I0:OptBinomial:P2P:P2P) - took 21860 cycles 
-barrier.n128.t4.33301.output:after safe barrier algorithm 3 (I0:OptBinomial:P2P:P2P) - took 24686 cycles 
-barrier.n128.t8.33302.output:after safe barrier algorithm 3 (I0:OptBinomial:P2P:P2P) - took 24438 cycles 
-barrier.n128.t16.33303.output:after safe barrier algorithm 3 (I0:OptBinomial:P2P:P2P) - took 28782 cycles 
-barrier.n256.t1.33304.output:after safe barrier algorithm 3 (I0:OptBinomial:P2P:P2P) - took 21654 cycles 
-barrier.n256.t4.33305.output:after safe barrier algorithm 3 (I0:OptBinomial:P2P:P2P) - took 24402 cycles 
-barrier.n256.t8.33306.output:after safe barrier algorithm 3 (I0:OptBinomial:P2P:P2P) - took 28272 cycles 
-barrier.n256.t16.33307.output:after safe barrier algorithm 3 (I0:OptBinomial:P2P:P2P) - took 29172 cycles 
-barrier.n512.t1.33308.output:after safe barrier algorithm 3 (I0:OptBinomial:P2P:P2P) - took 25682 cycles 
-barrier.n512.t4.33309.output:after safe barrier algorithm 3 (I0:OptBinomial:P2P:P2P) - took 28114 cycles 
-barrier.n512.t8.33310.output:after safe barrier algorithm 3 (I0:OptBinomial:P2P:P2P) - took 28330 cycles 
-barrier.n512.t16.33311.output:after safe barrier algorithm 3 (I0:OptBinomial:P2P:P2P) - took 32807 cycles 
-barrier.n128.t1.33300.output:after safe barrier algorithm 4 (I0:MultiSync:-:GI) - took 5307 cycles 
-barrier.n128.t4.33301.output:after safe barrier algorithm 4 (I0:MultiSync2Device:SHMEM:GI) - took 27751 cycles 
-barrier.n128.t8.33302.output:after safe barrier algorithm 4 (I0:MultiSync2Device:SHMEM:GI) - took 28127 cycles 
-barrier.n128.t16.33303.output:after safe barrier algorithm 4 (I0:MultiSync2Device:SHMEM:GI) - took 29239 cycles 
-barrier.n256.t1.33304.output:after safe barrier algorithm 4 (I0:MultiSync:-:GI) - took 5495 cycles 
-barrier.n256.t4.33305.output:after safe barrier algorithm 4 (I0:MultiSync2Device:SHMEM:GI) - took 26547 cycles 
-barrier.n256.t8.33306.output:after safe barrier algorithm 4 (I0:MultiSync2Device:SHMEM:GI) - took 27083 cycles 
-barrier.n256.t16.33307.output:after safe barrier algorithm 4 (I0:MultiSync2Device:SHMEM:GI) - took 31243 cycles 
-barrier.n512.t1.33308.output:after safe barrier algorithm 4 (I0:MultiSync:-:GI) - took 5743 cycles 
-barrier.n512.t4.33309.output:after safe barrier algorithm 4 (I0:MultiSync2Device:SHMEM:GI) - took 27895 cycles 
-barrier.n512.t8.33310.output:after safe barrier algorithm 4 (I0:MultiSync2Device:SHMEM:GI) - took 29031 cycles 
-barrier.n512.t16.33311.output:after safe barrier algorithm 4 (I0:MultiSync2Device:SHMEM:GI) - took 32189 cycles 
-barrier.n128.t1.33300.output:after safe barrier algorithm 5 (I0:MultiSync2Device:SHMEM:GI) - took 6561 cycles 
-barrier.n128.t4.33301.output:after safe barrier algorithm 5 (I0:MultiSync2Device:SHMEM:MU) - took 38254 cycles 
-barrier.n128.t8.33302.output:after safe barrier algorithm 5 (I0:MultiSync2Device:SHMEM:MU) - took 39378 cycles 
-barrier.n128.t16.33303.output:after safe barrier algorithm 5 (I0:MultiSync2Device:SHMEM:MU) - took 39514 cycles 
-barrier.n256.t1.33304.output:after safe barrier algorithm 5 (I0:MultiSync2Device:SHMEM:GI) - took 6203 cycles 
-barrier.n256.t4.33305.output:after safe barrier algorithm 5 (I0:MultiSync2Device:SHMEM:MU) - took 38512 cycles 
-barrier.n256.t8.33306.output:after safe barrier algorithm 5 (I0:MultiSync2Device:SHMEM:MU) - took 39544 cycles 
-barrier.n256.t16.33307.output:after safe barrier algorithm 5 (I0:MultiSync2Device:SHMEM:MU) - took 40464 cycles 
-barrier.n512.t1.33308.output:after safe barrier algorithm 5 (I0:MultiSync2Device:SHMEM:GI) - took 6413 cycles 
-barrier.n512.t4.33309.output:after safe barrier algorithm 5 (I0:MultiSync2Device:SHMEM:MU) - took 38552 cycles 
-barrier.n512.t8.33310.output:after safe barrier algorithm 5 (I0:MultiSync2Device:SHMEM:MU) - took 40016 cycles 
-barrier.n512.t16.33311.output:after safe barrier algorithm 5 (I0:MultiSync2Device:SHMEM:MU) - took 40134 cycles 
-barrier.n128.t1.33300.output:after safe barrier algorithm 6 (I0:MultiSync2Device:SHMEM:MU) - took 38988 cycles 
-barrier.n256.t1.33304.output:after safe barrier algorithm 6 (I0:MultiSync2Device:SHMEM:MU) - took 39000 cycles 
-barrier.n512.t1.33308.output:after safe barrier algorithm 6 (I0:MultiSync2Device:SHMEM:MU) - took 39112 cycles 
+
+barrier n128  t1 33300 safe barrier algorithm 0 (I1:Barrier:P2P:P2P) - took 74229 cycles 
+barrier n128  t4 33301 safe barrier algorithm 0 (I1:Barrier:P2P:P2P) - took 62847 cycles 
+barrier n128  t8 33302 safe barrier algorithm 0 (I1:Barrier:P2P:P2P) - took 183550 cycles 
+barrier n128 t16 33303 safe barrier algorithm 0 (I1:Barrier:P2P:P2P) - took 112547 cycles 
+barrier n256  t1 33304 safe barrier algorithm 0 (I1:Barrier:P2P:P2P) - took 76809 cycles 
+barrier n256  t4 33305 safe barrier algorithm 0 (I1:Barrier:P2P:P2P) - took 69187 cycles 
+barrier n256  t8 33306 safe barrier algorithm 0 (I1:Barrier:P2P:P2P) - took 265694 cycles 
+barrier n256 t16 33307 safe barrier algorithm 0 (I1:Barrier:P2P:P2P) - took 369583 cycles 
+barrier n512  t1 33308 safe barrier algorithm 0 (I1:Barrier:P2P:P2P) - took 82053 cycles 
+barrier n512  t4 33309 safe barrier algorithm 0 (I1:Barrier:P2P:P2P) - took 69303 cycles 
+barrier n512  t8 33310 safe barrier algorithm 0 (I1:Barrier:P2P:P2P) - took 2539902 cycles 
+barrier n512 t16 33311 safe barrier algorithm 0 (I1:Barrier:P2P:P2P) - took 2448676 cycles 
+
+barrier n128  t1 33300 safe barrier algorithm 1 (I0:Binomial:-:MU) - took 105896 cycles 
+barrier n128  t4 33301 safe barrier algorithm 1 (I0:Binomial:SHMEM:MU) - took 122912 cycles 
+barrier n128  t8 33302 safe barrier algorithm 1 (I0:Binomial:SHMEM:MU) - took 140536 cycles 
+barrier n128 t16 33303 safe barrier algorithm 1 (I0:Binomial:SHMEM:MU) - took 183452 cycles 
+barrier n256  t1 33304 safe barrier algorithm 1 (I0:Binomial:-:MU) - took 112034 cycles 
+barrier n256  t4 33305 safe barrier algorithm 1 (I0:Binomial:SHMEM:MU) - took 130196 cycles 
+barrier n256  t8 33306 safe barrier algorithm 1 (I0:Binomial:SHMEM:MU) - took 146824 cycles 
+barrier n256 t16 33307 safe barrier algorithm 1 (I0:Binomial:SHMEM:MU) - took 191854 cycles 
+barrier n512  t1 33308 safe barrier algorithm 1 (I0:Binomial:-:MU) - took 117006 cycles 
+barrier n512  t4 33309 safe barrier algorithm 1 (I0:Binomial:SHMEM:MU) - took 135110 cycles 
+barrier n512  t8 33310 safe barrier algorithm 1 (I0:Binomial:SHMEM:MU) - took 153398 cycles 
+barrier n512 t16 33311 safe barrier algorithm 1 (I0:Binomial:SHMEM:MU) - took 196596 cycles 
+
+barrier n128  t1 33300 safe barrier algorithm 2 (I0:Binomial:-:ShortMU) - took 34328 cycles 
+barrier n128  t4 33301 safe barrier algorithm 2 (I0:Binomial:-:ShortMU) - took 35804 cycles 
+barrier n128  t8 33302 safe barrier algorithm 2 (I0:Binomial:-:ShortMU) - took 31084 cycles 
+barrier n128 t16 33303 safe barrier algorithm 2 (I0:Binomial:-:ShortMU) - took 34956 cycles 
+barrier n256  t1 33304 safe barrier algorithm 2 (I0:Binomial:-:ShortMU) - took 31904 cycles 
+barrier n256  t4 33305 safe barrier algorithm 2 (I0:Binomial:-:ShortMU) - took 30302 cycles 
+barrier n256  t8 33306 safe barrier algorithm 2 (I0:Binomial:-:ShortMU) - took 37838 cycles 
+barrier n256 t16 33307 safe barrier algorithm 2 (I0:Binomial:-:ShortMU) - took 36408 cycles 
+barrier n512  t1 33308 safe barrier algorithm 2 (I0:Binomial:-:ShortMU) - took 37358 cycles 
+barrier n512  t4 33309 safe barrier algorithm 2 (I0:Binomial:-:ShortMU) - took 43740 cycles 
+barrier n512  t8 33310 safe barrier algorithm 2 (I0:Binomial:-:ShortMU) - took 35650 cycles 
+barrier n512 t16 33311 safe barrier algorithm 2 (I0:Binomial:-:ShortMU) - took 48580 cycles 
+
+barrier n128  t1 33300 safe barrier algorithm 3 (I0:OptBinomial:P2P:P2P) - took 21860 cycles 
+barrier n128  t4 33301 safe barrier algorithm 3 (I0:OptBinomial:P2P:P2P) - took 24686 cycles 
+barrier n128  t8 33302 safe barrier algorithm 3 (I0:OptBinomial:P2P:P2P) - took 24438 cycles 
+barrier n128 t16 33303 safe barrier algorithm 3 (I0:OptBinomial:P2P:P2P) - took 28782 cycles 
+barrier n256  t1 33304 safe barrier algorithm 3 (I0:OptBinomial:P2P:P2P) - took 21654 cycles 
+barrier n256  t4 33305 safe barrier algorithm 3 (I0:OptBinomial:P2P:P2P) - took 24402 cycles 
+barrier n256  t8 33306 safe barrier algorithm 3 (I0:OptBinomial:P2P:P2P) - took 28272 cycles 
+barrier n256 t16 33307 safe barrier algorithm 3 (I0:OptBinomial:P2P:P2P) - took 29172 cycles 
+barrier n512  t1 33308 safe barrier algorithm 3 (I0:OptBinomial:P2P:P2P) - took 25682 cycles 
+barrier n512  t4 33309 safe barrier algorithm 3 (I0:OptBinomial:P2P:P2P) - took 28114 cycles 
+barrier n512  t8 33310 safe barrier algorithm 3 (I0:OptBinomial:P2P:P2P) - took 28330 cycles 
+barrier n512 t16 33311 safe barrier algorithm 3 (I0:OptBinomial:P2P:P2P) - took 32807 cycles 
+
+barrier n128  t1 33300 safe barrier algorithm 4 (I0:MultiSync:-:GI) - took 5307 cycles 
+barrier n256  t1 33304 safe barrier algorithm 4 (I0:MultiSync:-:GI) - took 5495 cycles 
+barrier n512  t1 33308 safe barrier algorithm 4 (I0:MultiSync:-:GI) - took 5743 cycles 
+
+barrier n128  t1 33300 safe barrier algorithm 5 (I0:MultiSync2Device:SHMEM:GI) - took 6561 cycles 
+barrier n128  t4 33301 safe barrier algorithm 4 (I0:MultiSync2Device:SHMEM:GI) - took 27751 cycles 
+barrier n128  t8 33302 safe barrier algorithm 4 (I0:MultiSync2Device:SHMEM:GI) - took 28127 cycles 
+barrier n128 t16 33303 safe barrier algorithm 4 (I0:MultiSync2Device:SHMEM:GI) - took 29239 cycles 
+barrier n256  t1 33304 safe barrier algorithm 5 (I0:MultiSync2Device:SHMEM:GI) - took 6203 cycles 
+barrier n256  t4 33305 safe barrier algorithm 4 (I0:MultiSync2Device:SHMEM:GI) - took 26547 cycles 
+barrier n256  t8 33306 safe barrier algorithm 4 (I0:MultiSync2Device:SHMEM:GI) - took 27083 cycles 
+barrier n256 t16 33307 safe barrier algorithm 4 (I0:MultiSync2Device:SHMEM:GI) - took 31243 cycles 
+barrier n512  t1 33308 safe barrier algorithm 5 (I0:MultiSync2Device:SHMEM:GI) - took 6413 cycles 
+barrier n512  t4 33309 safe barrier algorithm 4 (I0:MultiSync2Device:SHMEM:GI) - took 27895 cycles 
+barrier n512  t8 33310 safe barrier algorithm 4 (I0:MultiSync2Device:SHMEM:GI) - took 29031 cycles 
+barrier n512 t16 33311 safe barrier algorithm 4 (I0:MultiSync2Device:SHMEM:GI) - took 32189 cycles 
+
+barrier n128  t1 33300 safe barrier algorithm 6 (I0:MultiSync2Device:SHMEM:MU) - took 38988 cycles 
+barrier n128  t4 33301 safe barrier algorithm 5 (I0:MultiSync2Device:SHMEM:MU) - took 38254 cycles 
+barrier n128  t8 33302 safe barrier algorithm 5 (I0:MultiSync2Device:SHMEM:MU) - took 39378 cycles 
+barrier n128 t16 33303 safe barrier algorithm 5 (I0:MultiSync2Device:SHMEM:MU) - took 39514 cycles 
+barrier n256  t1 33304 safe barrier algorithm 6 (I0:MultiSync2Device:SHMEM:MU) - took 39000 cycles 
+barrier n256  t4 33305 safe barrier algorithm 5 (I0:MultiSync2Device:SHMEM:MU) - took 38512 cycles 
+barrier n256  t8 33306 safe barrier algorithm 5 (I0:MultiSync2Device:SHMEM:MU) - took 39544 cycles 
+barrier n256 t16 33307 safe barrier algorithm 5 (I0:MultiSync2Device:SHMEM:MU) - took 40464 cycles 
+barrier n512  t1 33308 safe barrier algorithm 6 (I0:MultiSync2Device:SHMEM:MU) - took 39112 cycles 
+barrier n512  t4 33309 safe barrier algorithm 5 (I0:MultiSync2Device:SHMEM:MU) - took 38552 cycles 
+barrier n512  t8 33310 safe barrier algorithm 5 (I0:MultiSync2Device:SHMEM:MU) - took 40016 cycles 
+barrier n512 t16 33311 safe barrier algorithm 5 (I0:MultiSync2Device:SHMEM:MU) - took 40134 cycles 
