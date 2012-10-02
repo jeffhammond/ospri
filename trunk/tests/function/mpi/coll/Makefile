@@ -33,6 +33,9 @@ bcast-zero.x: bcast-zero.c $(HEADERS)
 dtype-zero-vector.x: dtype-zero-vector.c $(HEADERS)
 	$(CC) $(CFLAGS) $< -o $@
 
+comm_split.x: comm_split.c
+	$(CC) $(CFLAGS) $< -o $@
+
 %.o: %.c $(HEADERS)
 	$(CC) $(CFLAGS) -c $< -o $@
 

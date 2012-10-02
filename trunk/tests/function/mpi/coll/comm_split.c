@@ -5,8 +5,24 @@
 #include <math.h>
 #include <mpi.h>
 
-#include "safemalloc.h"
-#include "driver.h"
+#define ALIGNMENT 128
+
+void * safemalloc(size_t n)
+{
+    //void * ptr = malloc( n );
+
+    int rc = -1;
+    void * ptr = NULL;
+    rc = posix_memalign( &ptr, ALIGNMENT, n);
+
+    if ( ptr==NULL || rc!=0 )
+    {
+        fprintf( stderr , "%ld bytes could not be allocated \n" , (long)n );
+        exit(1);
+    }
+
+    return ptr;
+}
 
 #define DEBUG YES
 
@@ -99,8 +115,10 @@ int main(int argc, char *argv[])
     comm_world_minus_ones = (MPI_Comm *) safemalloc( world_size * sizeof(MPI_Comm) );
     for (int i=0; i<world_size; i++)
     {
+#ifdef DEBUG
         if (world_rank==0) printf("MPI_Comm_split number %d. \n", i);
         fflush(stdout);
+#endif
         MPI_Comm_split(MPI_COMM_WORLD, (int) (world_rank==i), world_rank, &comm_world_minus_ones[i]);
     }
 
