@@ -16,7 +16,7 @@ void allgather_only(FILE * output, MPI_Comm comm, int max_mem)
     MPI_Comm_rank(MPI_COMM_WORLD, &world_rank);
 
     if ( comm_rank == 0 )
-        fprintf(output, "============== ALLTOALL ==============\n");
+        fprintf(output, "============== ALLGATHER ==============\n");
 
     /* testing only integers because it really ~shouldn't~ matter */
 
