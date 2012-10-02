@@ -20,6 +20,8 @@ TESTS := driver.x bcast-zero.x dtype-zero-vector.x
 
 OBJECTS := alltoall.o bcast.o driver.o reducescatter.o safemalloc.o
 
+HEADERS := safemalloc.h driver.h
+
 all: $(TESTS)
 
 %.x: $(OBJECTS)
@@ -31,7 +33,7 @@ bcast-zero.x: bcast-zero.c
 dtype-zero-vector.x: dtype-zero-vector.c
 	$(CC) $(CFLAGS) $< -o $@
 
-%.o: %.c
+%.o: %.c $(HEADERS)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:

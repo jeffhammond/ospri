@@ -6,6 +6,7 @@
 #include <mpi.h>
 
 #include "safemalloc.h"
+#include "driver.h"
 
 #define DEBUG YES
 

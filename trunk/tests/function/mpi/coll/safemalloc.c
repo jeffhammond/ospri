@@ -28,11 +28,11 @@ void * typemalloc(MPI_Datatype dt, int n)
     return ptr;
 }
 
-FILE * safefopen(const char *path, const char *mode)
+FILE * safefopen(const char * path, const char *mode)
 {
     //void * ptr = malloc( n );
 
-    FILE * fp = safefopen(const char * path, const char * mode)
+    FILE * fp = fopen(path, mode);
 
     if ( fp==NULL )
     {
