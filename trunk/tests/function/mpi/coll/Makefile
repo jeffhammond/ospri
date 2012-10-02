@@ -27,10 +27,10 @@ all: $(TESTS)
 %.x: $(OBJECTS)
 	$(LD) $(LDFLAGS) $(OBJECTS) $(LIBS) -o $@
 
-bcast-zero.x: bcast-zero.c
+bcast-zero.x: bcast-zero.c $(HEADERS)
 	$(CC) $(CFLAGS) $< -o $@
 
-dtype-zero-vector.x: dtype-zero-vector.c
+dtype-zero-vector.x: dtype-zero-vector.c $(HEADERS)
 	$(CC) $(CFLAGS) $< -o $@
 
 %.o: %.c $(HEADERS)
