@@ -24,7 +24,7 @@ HEADERS := safemalloc.h driver.h
 
 all: $(TESTS)
 
-%.x: $(OBJECTS)
+%.x: %.c $(OBJECTS)
 	$(LD) $(LDFLAGS) $(OBJECTS) $(LIBS) -o $@
 
 bcast-zero.x: bcast-zero.c $(HEADERS)
