@@ -168,6 +168,11 @@ int main(int argc, char *argv[])
      *                            CLEAN UP AND FINALIZE
      *********************************************************************************/
 
+    for (int i=0; i<world_size; i++)
+        MPI_Comm_free(&comm_world_minus_ones[i]);
+
+    MPI_Comm_free(&comm_world_dup);
+
     free(comm_world_minus_ones);
     free(geomprog_list);
 
