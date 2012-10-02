@@ -18,7 +18,7 @@ LIBS    = -lm
 
 TESTS := driver.x bcast-zero.x dtype-zero-vector.x
 
-OBJECTS := alltoall.o bcast.o driver.o reducescatter.o safemalloc.o
+OBJECTS := allgather.o alltoall.o bcast.o driver.o reducescatter.o safemalloc.o
 
 HEADERS := safemalloc.h driver.h
 

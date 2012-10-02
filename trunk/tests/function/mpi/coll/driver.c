@@ -136,6 +136,7 @@ int main(int argc, char *argv[])
     fflush(stdout);
     MPI_Barrier( MPI_COMM_WORLD );
 
+#if 0
     bcast_only(stdout, comm_world_dup, 1000000);
     fflush(stdout);
     MPI_Barrier( MPI_COMM_WORLD );
@@ -147,14 +148,19 @@ int main(int argc, char *argv[])
         bcast_only(even_out, comm_world_oddeven, 1000000);
     if (world_rank%2==1)
         bcast_only(odd_out,  comm_world_oddeven, 1000000);
+#endif
 
-    //    bcast_vs_scatter_allgather(stdout, MPI_COMM_WORLD, 1000000);
-    //    fflush(stdout);
-    //    MPI_Barrier( MPI_COMM_WORLD );
-    //
-    //    alltoall_only(stdout, MPI_COMM_WORLD, 1000000);
-    //    fflush(stdout);
-    //    MPI_Barrier( MPI_COMM_WORLD );
+    bcast_vs_scatter_allgather(stdout, MPI_COMM_WORLD, 1000000);
+    fflush(stdout);
+    MPI_Barrier( MPI_COMM_WORLD );
+    
+    allgather_only(stdout, MPI_COMM_WORLD, 1000000);
+    fflush(stdout);
+    MPI_Barrier( MPI_COMM_WORLD );
+
+    alltoall_only(stdout, MPI_COMM_WORLD, 1000000);
+    fflush(stdout);
+    MPI_Barrier( MPI_COMM_WORLD );
 
     /*********************************************************************************
      *                            CLEAN UP AND FINALIZE
