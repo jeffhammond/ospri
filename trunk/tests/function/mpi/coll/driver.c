@@ -132,12 +132,14 @@ int main(int argc, char *argv[])
      *                            COLLECTIVES
      *********************************************************************************/
 
-    bcast_only(stdout, MPI_COMM_WORLD, 1000000);
+    int max_mem = (argc>1 ? atoi(argv[1]) : 64*1024*1024);
+
+    bcast_only(stdout, MPI_COMM_WORLD, max_mem);
     fflush(stdout);
     MPI_Barrier( MPI_COMM_WORLD );
 
 #if 0
-    bcast_only(stdout, comm_world_dup, 1000000);
+    bcast_only(stdout, comm_world_dup, max_mem);
     fflush(stdout);
     MPI_Barrier( MPI_COMM_WORLD );
 
@@ -145,20 +147,20 @@ int main(int argc, char *argv[])
     FILE * odd_out  = safefopen("./odd.txt", "w+");
 
     if (world_rank%2==0)
-        bcast_only(even_out, comm_world_oddeven, 1000000);
+        bcast_only(even_out, comm_world_oddeven, max_mem);
     if (world_rank%2==1)
-        bcast_only(odd_out,  comm_world_oddeven, 1000000);
+        bcast_only(odd_out,  comm_world_oddeven, max_mem);
 #endif
 
-    bcast_vs_scatter_allgather(stdout, MPI_COMM_WORLD, 1000000);
+    bcast_vs_scatter_allgather(stdout, MPI_COMM_WORLD, max_mem);
     fflush(stdout);
     MPI_Barrier( MPI_COMM_WORLD );
     
-    allgather_only(stdout, MPI_COMM_WORLD, 1000000);
+    allgather_only(stdout, MPI_COMM_WORLD, max_mem);
     fflush(stdout);
     MPI_Barrier( MPI_COMM_WORLD );
 
-    alltoall_only(stdout, MPI_COMM_WORLD, 1000000);
+    alltoall_only(stdout, MPI_COMM_WORLD, max_mem);
     fflush(stdout);
     MPI_Barrier( MPI_COMM_WORLD );
 
