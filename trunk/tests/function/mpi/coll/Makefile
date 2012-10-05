@@ -36,6 +36,9 @@ dtype-zero-vector.x: dtype-zero-vector.c $(HEADERS)
 comm_split.x: comm_split.c
 	$(CC) $(CFLAGS) $< -o $@
 
+reduce_scatter.x: reduce_scatter.c
+	$(CC) $(CFLAGS) $< -o $@
+
 %.o: %.c $(HEADERS)
 	$(CC) $(CFLAGS) -c $< -o $@
 
