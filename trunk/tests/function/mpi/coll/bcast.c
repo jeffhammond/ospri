@@ -81,7 +81,7 @@ void bcast_vs_scatter_allgather(FILE * output, MPI_Comm comm, int max_mem)
     int max_count = max_mem/sizeof(int);
 
     for (int c=1; c<max_count; c*=2)
-        if (c%comm_size==0)
+        if (1) //(c%comm_size==0)
         {
             int root = 0;
 
