@@ -93,14 +93,11 @@ int main(int argc, char *argv[])
     MPI_Barrier( comm_world_oddeven );
 
     if (world_rank==0) printf("MPI_Comm_split MPI_COMM_WORLD into (world-1) \n");
-    MPI_Comm * comm_world_minus_ones = NULL;
-    comm_world_minus_ones = (MPI_Comm *) safemalloc( world_size * sizeof(MPI_Comm) );
-    for (int i=0; i<world_size; i++)
-        MPI_Comm_split(MPI_COMM_WORLD, (int) (world_rank==i), world_rank, &comm_world_minus_ones[i]);
+    MPI_Comm comm_world_minus_one;
+    MPI_Comm_split(MPI_COMM_WORLD, (int) (world_rank==(world_size/2)), world_rank, &comm_world_minus_one);
 
-    if (world_rank==0) printf("MPI_Barrier on comm_world_minus_ones[] \n");
-    for (int i=0; i<world_size; i++)
-        MPI_Barrier( comm_world_minus_ones[i] );
+    if (world_rank==0) printf("MPI_Barrier on comm_world_minus_one \n");
+    MPI_Barrier( comm_world_minus_one );
 
     if (world_rank==0) printf("MPI_Comm_group of group_world from MPI_COMM_WORLD \n");
     MPI_Group group_world;
@@ -146,6 +143,18 @@ int main(int argc, char *argv[])
     fflush(stdout);
     MPI_Barrier( MPI_COMM_WORLD );
 
+    bcast_vs_scatter_allgather(stdout, MPI_COMM_WORLD, max_mem);
+    fflush(stdout);
+    MPI_Barrier( MPI_COMM_WORLD );
+    
+    allgather_only(stdout, MPI_COMM_WORLD, max_mem);
+    fflush(stdout);
+    MPI_Barrier( MPI_COMM_WORLD );
+
+    alltoall_only(stdout, MPI_COMM_WORLD, max_mem);
+    fflush(stdout);
+    MPI_Barrier( MPI_COMM_WORLD );
+
 #if 0
     bcast_only(stdout, comm_world_dup, max_mem);
     fflush(stdout);
@@ -160,28 +169,14 @@ int main(int argc, char *argv[])
         bcast_only(odd_out,  comm_world_oddeven, max_mem);
 #endif
 
-    bcast_vs_scatter_allgather(stdout, MPI_COMM_WORLD, max_mem);
-    fflush(stdout);
-    MPI_Barrier( MPI_COMM_WORLD );
-    
-    allgather_only(stdout, MPI_COMM_WORLD, max_mem);
-    fflush(stdout);
-    MPI_Barrier( MPI_COMM_WORLD );
-
-    alltoall_only(stdout, MPI_COMM_WORLD, max_mem);
-    fflush(stdout);
-    MPI_Barrier( MPI_COMM_WORLD );
-
     /*********************************************************************************
      *                            CLEAN UP AND FINALIZE
      *********************************************************************************/
 
-    for (int i=0; i<world_size; i++)
-        MPI_Comm_free(&comm_world_minus_ones[i]);
-
+    MPI_Comm_free(&comm_world_minus_one);
+    MPI_Comm_free(&comm_world_oddeven);
     MPI_Comm_free(&comm_world_dup);
 
-    free(comm_world_minus_ones);
     free(geomprog_list);
 
     MPI_Barrier( MPI_COMM_WORLD );
