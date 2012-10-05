@@ -113,10 +113,10 @@ void bcast_vs_scatter_allgather(FILE * output, MPI_Comm comm, int max_mem)
             if (errors>0)
             {
                 fprintf(output, "%d: MPI_Bcast had %d errors on rank %d! \n",
-                       world_rank, errors, comm_rank);
+                        world_rank, errors, comm_rank);
                 for (int i=0 ; i<c; i++)
                     fprintf(output, "%d: buffer[%d] = %d (correct is %d) \n",
-                           world_rank, i, buffer[i], comm_size );
+                            world_rank, i, buffer[i], comm_size );
                 exit(1);
             }
 

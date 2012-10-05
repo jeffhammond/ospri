@@ -155,10 +155,15 @@ int main(int argc, char *argv[])
     fflush(stdout);
     MPI_Barrier( MPI_COMM_WORLD );
 
+    allreduce_only(stdout, MPI_COMM_WORLD, max_mem);
+    fflush(stdout);
+    MPI_Barrier( MPI_COMM_WORLD );
+
     reducescatterblock_only(stdout, MPI_COMM_WORLD, max_mem);
     fflush(stdout);
     MPI_Barrier( MPI_COMM_WORLD );
 
+#if 0
     reducescatterblock_vs_reduceandscatter(stdout, MPI_COMM_WORLD, max_mem);
     fflush(stdout);
     MPI_Barrier( MPI_COMM_WORLD );
@@ -166,6 +171,7 @@ int main(int argc, char *argv[])
     reducescatterblock_vs_allreduce(stdout, MPI_COMM_WORLD, max_mem);
     fflush(stdout);
     MPI_Barrier( MPI_COMM_WORLD );
+#endif
 
 #if 0
     bcast_only(stdout, comm_world_dup, max_mem);

@@ -18,7 +18,7 @@ LIBS    = -lm
 
 TESTS := driver.x bcast-zero.x dtype-zero-vector.x comm_split.x
 
-OBJECTS := allgather.o alltoall.o bcast.o driver.o reducescatter.o safemalloc.o
+OBJECTS := driver.o safemalloc.o bcast.o allreduce.o allgather.o alltoall.o reducescatter.o
 
 HEADERS := safemalloc.h driver.h
 
@@ -34,9 +34,6 @@ dtype-zero-vector.x: dtype-zero-vector.c $(HEADERS)
 	$(CC) $(CFLAGS) $< -o $@
 
 comm_split.x: comm_split.c
-	$(CC) $(CFLAGS) $< -o $@
-
-reduce_scatter.x: reduce_scatter.c
 	$(CC) $(CFLAGS) $< -o $@
 
 %.o: %.c $(HEADERS)
