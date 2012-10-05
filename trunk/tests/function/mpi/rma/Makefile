@@ -1,5 +1,5 @@
 CC      = mpicc
-COPT    = -g -O2 #-Wall -std=gnu99
+COPT    = -g -O2 -Wall -std=gnu99
 
 LD      = $(CC)
 CFLAGS  = $(COPT)
