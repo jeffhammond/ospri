@@ -9,8 +9,8 @@ int main (int argc, char** argv)
   int n = (argc>1 ? atoi(argv[1]) : 1000000);
   printf("n = %d \n", n);
 
-  double * x = malloc(n*sizeof(double));
-  double * y = malloc(n*sizeof(double));
+  double * restrict x = malloc(n*sizeof(double));
+  double * restrict y = malloc(n*sizeof(double));
   if (x==NULL || y==NULL)
   {
     printf("cannot allocate %ld bytes \n", (long) n*sizeof(double) );

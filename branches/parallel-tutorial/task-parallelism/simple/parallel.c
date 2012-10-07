@@ -30,8 +30,8 @@ int main (int argc, char** argv)
 #endif
     printf("n = %d \n", n);
 
-  double * x = malloc(n*sizeof(double));
-  double * y = malloc(n*sizeof(double));
+  double * restrict x = malloc(n*sizeof(double));
+  double * restrict y = malloc(n*sizeof(double));
   if (x==NULL || y==NULL)
   {
     printf("cannot allocate %ld bytes \n", (long) n*sizeof(double) );
