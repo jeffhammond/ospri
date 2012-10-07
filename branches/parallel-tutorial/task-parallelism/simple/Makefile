@@ -6,7 +6,7 @@ LIBS     = -lm
 
 all: serial.x parallel.x
 
-OBJECTS = init.o foo.o bar.o 
+OBJECTS = init.o update.o dot.o foo.o bar.o 
 
 %.x: %.o $(OBJECTS)
 	$(LD) $(LDFLAGS) $< $(OBJECTS) $(LIBS) -o $@
