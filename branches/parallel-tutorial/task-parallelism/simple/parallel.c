@@ -14,10 +14,21 @@ int main (int argc, char** argv)
   int provided = -1;
   /* FUNNELED is the minimum thread support required if OpenMP is used foo and bar */
   MPI_Init_thread(&argc, &argv, MPI_THREAD_FUNNELED, &provided);
+
+  int rank = -1;
+  int size = 0;
+  MPI_Comm_rank(MPI_COMM_WORLD, &rank);
+  MPI_Comm_size(MPI_COMM_WORLD, &size);
+
+  if (rank==0 && size>2)
+    printf("this program only parallelizes over 2 ranks (not %d) \n", size);
 #endif
 
   int n = (argc>1 ? atoi(argv[1]) : 1000000);
-  printf("n = %d \n", n);
+#ifdef PARALLEL
+  if (rank==0)
+#endif
+    printf("n = %d \n", n);
 
   double * x = malloc(n*sizeof(double));
   double * y = malloc(n*sizeof(double));
@@ -28,16 +39,6 @@ int main (int argc, char** argv)
   }
 
   init(n,x);
-
-#ifdef PARALLEL
-  int rank = -1;
-  int size = 0;
-  MPI_Comm_rank(MPI_COMM_WORLD, &rank);
-  MPI_Comm_size(MPI_COMM_WORLD, &size);
-
-  if (rank==0 && size>2)
-    printf("this program only parallelizes over 2 ranks (not %d) \n", size);
-#endif
 
   int iter = 0;
   double norm = 1.0;
