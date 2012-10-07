@@ -20,21 +20,16 @@ int main (int argc, char** argv)
   init(n,x);
 
   int iter = 0;
-  double norm = 1.0;
   double thresh = 1.0e-7;
+  double norm = 1000*thresh;
   while (norm>thresh)
   {
     /* these are two tasks i am trying to extract parallelism from */
     foo(n,x,y);
     bar(n,x,y);
 
-    for (int i=0; i<n; i++)
-      x[i] = y[i];
-
-    norm = 0.0;
-    for (int i=0; i<n; i++)
-      norm += y[i]*y[i];
-
+    update(n,x,y);
+    norm = dot(n,y);
     norm = sqrt(norm);
 
     iter++;
