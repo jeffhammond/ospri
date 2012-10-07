@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-double dot(const int n, double * restrict x)
+double dot(const int n, const double * restrict x)
 {
   double r = 0.0;
 #ifdef _OPENMP

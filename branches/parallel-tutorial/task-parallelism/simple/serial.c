@@ -28,7 +28,9 @@ int main (int argc, char** argv)
     foo(n,x,y);
     bar(n,x,y);
 
+    /* normally this would have a preconditioner in it... */
     update(n,x,y);
+
     norm = dot(n,y);
     norm = sqrt(norm);
 

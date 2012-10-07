@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-void foo(const int n, double * restrict x, double * restrict y)
+void foo(const int n, const double * restrict x, double * restrict y)
 {
 #ifdef _OPENMP
   #pragma omp parallel for private(i) schedule(static,chunk)
