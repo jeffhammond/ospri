@@ -1,7 +1,10 @@
 #include <stdio.h>
 
-void foo(int n, double * x, double * y)
+void foo(const int n, double * restrict x, double * restrict y)
 {
+#ifdef _OPENMP
+  #pragma omp parallel for private(i) schedule(static,chunk)
+#endif
   for (int i=0; i<n; i++)
     y[i] = x[i]*x[i];
 
