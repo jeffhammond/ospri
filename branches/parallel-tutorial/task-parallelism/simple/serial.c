@@ -4,7 +4,7 @@
 
 #include "all.h"
 
-int main (int argc, char* argv[])
+int main (int argc, char** argv)
 {
   int n = (argc>1 ? atoi(argv[1]) : 1000000);
   printf("n = %d \n", n);

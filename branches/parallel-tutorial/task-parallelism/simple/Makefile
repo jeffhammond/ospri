@@ -1,5 +1,5 @@
-CC       = clang
-CFLAGS   = -g -O2
+CC       = mpicc
+CFLAGS   = -g -O2 -DPARALLEL
 LD       = $(CC)
 LDFLAGS  = $(CFLAGS)
 LIBS     = -lm
