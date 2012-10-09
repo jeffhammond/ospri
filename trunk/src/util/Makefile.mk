@@ -3,7 +3,7 @@
 #     See COPYRIGHT in top-level directory.
 #
 
-libosp_la_SOURCES += $(top_srcdir)/src/util/ospu_local_put.c \
-                     $(top_srcdir)/src/util/ospu_local_get.c \
-                     $(top_srcdir)/src/util/ospu_local_acc.c \
+libosp_la_SOURCES += $(top_srcdir)/src/util/ospu_put_local.c \
+                     $(top_srcdir)/src/util/ospu_get_local.c \
+                     $(top_srcdir)/src/util/ospu_acc_local.c \
                      $(top_srcdir)/src/util/ospu_timer.c
