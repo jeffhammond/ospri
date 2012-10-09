@@ -14,6 +14,10 @@ AM_INIT_AUTOMAKE([-Wall -Werror foreign 1.11 silent-rules])
 
 LT_PREREQ([2.2.6])
 
+# automake 1.12 seems to require this, but automake 1.11 doesn't recognize it
+# must come before LT_INIT
+m4_ifdef([AM_PROG_AR],[AM_PROG_AR])
+
 # Bug in libtool adds -O2 and -g by default
 PAC_PUSH_FLAG(CFLAGS)
 LT_INIT(disable-shared)
