@@ -22,7 +22,7 @@ OBJECTS := driver.o safemalloc.o bcast.o allreduce.o allgather.o alltoall.o redu
 
 HEADERS := safemalloc.h driver.h
 
-all: $(TESTS)
+all: $(TESTS) fun
 
 %.x: %.c $(OBJECTS)
 	$(LD) $(LDFLAGS) $(OBJECTS) $(LIBS) -o $@
@@ -44,4 +44,8 @@ clean:
 
 realclean: clean
 	$(RM) $(RMFLAGS) $(TESTS)
+
+fun:
+	say Open M P I sucks
+
 

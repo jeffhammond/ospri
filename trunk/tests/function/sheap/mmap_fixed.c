@@ -21,12 +21,18 @@
 #ifdef __bgq__
 //#  include <firmware/include/personality.h>
 //#  include <spi/include/kernel/process.h>
-#  include <spi/include/kernel/location.h>
+//#  include <spi/include/kernel/location.h>
+#include <mpix.h>
+#endif
+
+#if defined(__CRAYXT) || defined(__CRAYXE)
+#  include <pmi.h> 
+//#  include <rca_lib.h>
 #endif
 
 int main(int argc, char* argv[])
 {
-    int world_rank = -1, num_procs = -1;
+    int world_rank = -1, world_size = -1;
     int mpi_result = MPI_SUCCESS;
 
     int rank_in_node = -1;
@@ -43,10 +49,8 @@ int main(int argc, char* argv[])
     void * addr = NULL;
 
     MPI_Init(&argc,&argv);
-    mpi_result = MPI_Comm_rank(MPI_COMM_WORLD, &world_rank);
-    assert(mpi_result==MPI_SUCCESS);
-    mpi_result = MPI_Comm_size(MPI_COMM_WORLD, &num_procs);
-    assert(mpi_result==MPI_SUCCESS);
+    MPI_Comm_rank(MPI_COMM_WORLD, &world_rank);
+    MPI_Comm_size(MPI_COMM_WORLD, &world_size);
 
     if (world_rank==0)
     {
@@ -73,26 +77,42 @@ int main(int argc, char* argv[])
     fflush(stdout);
     MPI_Barrier(MPI_COMM_WORLD);
 
+    MPI_Comm NodeComm;
 #if defined(__bgq__)
+#warning Use MPIX instead here
     rank_in_node = Kernel_MyTcoord();
 #elif defined(__bgp__)
     rank_in_node = Kernel_PhysicalProcessorID();
-#else
-    rank_in_node = world_rank%2;
-#endif
-
-    /* int MPI_Allreduce(void *sendbuf, void *recvbuf, int count, MPI_Datatype datatype, MPI_Op op, MPI_Comm comm) */
-    mpi_result = MPI_Allreduce( &rank_in_node, &ranks_per_node, 1, MPI_INT, MPI_MAX, MPI_COMM_WORLD);
-    assert(mpi_result==MPI_SUCCESS);
+    MPI_Allreduce( &rank_in_node, &ranks_per_node, 1, MPI_INT, MPI_MAX, MPI_COMM_WORLD);
     ranks_per_node++; /* change from [0,n-1] to [1,n] */
+#else
+#  if defined(__CRAYXT) || defined(__CRAYXE)
+    int cray_nid;
+#    if defined(__CRAYXT)
+    PMI_Portals_get_nid(world_rank, &cray_nid);
+#    elif defined(__CRAYXE)
+    PMI_Get_nid(world_rank, &cray_nid);
+    PMI_Get_clique_size(&ranks_per_node);
+#    endif
+    MPI_Comm_split(MPI_COMM_WORLD, cray_nid, 0, &NodeComm);
+#  elif MPI_VERSION >= 3
+    MPI_Comm_split_type(MPI_COMM_WORLD, MPI_COMM_TYPE_SHARED, 0, MPI_INFO_NULL, &NodeComm);
+#  elif defined(MPICH2) && (MPICH2_NUMVERSION>10500000)
+    MPIX_Comm_split_type(MPI_COMM_WORLD, MPIX_COMM_TYPE_SHARED, 0, MPI_INFO_NULL, &NodeComm);
+#  else
 
-    num_nodes = num_procs/ranks_per_node;
-    assert( (num_procs % ranks_per_node)==0 );
+#  endif
+#endif
+    MPI_Comm_rank(NodeComm, &rank_in_node);
+
+
+    num_nodes = world_size/ranks_per_node;
+    assert( (world_size % ranks_per_node)==0 );
     
     my_node = (world_rank - rank_in_node)/ranks_per_node;
 
-    printf("%7d: rank_in_node = %2d, ranks_per_node = %2d, my_node = %5d, num_nodes = %5d, world_rank = %7d, num_procs = %7d \n",
-            world_rank, rank_in_node, ranks_per_node, my_node, num_nodes, world_rank, num_procs);
+    printf("%7d: rank_in_node = %2d, ranks_per_node = %2d, my_node = %5d, num_nodes = %5d, world_rank = %7d, world_size = %7d \n",
+            world_rank, rank_in_node, ranks_per_node, my_node, num_nodes, world_rank, world_size);
     fflush(stdout);
     MPI_Barrier(MPI_COMM_WORLD);
 
@@ -100,12 +120,10 @@ int main(int argc, char* argv[])
     key   = my_node;
 
     /* int MPI_Comm_split(MPI_Comm comm, int color, int key, MPI_Comm *newcomm) */
-    mpi_result = MPI_Comm_split(MPI_COMM_WORLD, color, key, &NodeRankComm);
-    assert(mpi_result==MPI_SUCCESS);
+    MPI_Comm_split(MPI_COMM_WORLD, color, key, &NodeRankComm);
 
     int subcomm_rank = -1;
-    mpi_result = MPI_Comm_rank(NodeRankComm, &subcomm_rank);
-    assert(mpi_result==MPI_SUCCESS);
+    MPI_Comm_rank(NodeRankComm, &subcomm_rank);
 
     /* void *mmap(void *addr, size_t length, int prot, int flags, int fd, off_t offset); */
     if (subcomm_rank==0) /* on node 0 */
@@ -118,8 +136,7 @@ int main(int argc, char* argv[])
     MPI_Barrier(MPI_COMM_WORLD);
 
     /* int MPI_Bcast(void *buffer, int count, MPI_Datatype datatype, int root, MPI_Comm comm) */
-    mpi_result = MPI_Bcast( &addr, sizeof(void*), MPI_BYTE, 0, NodeRankComm );
-    assert(mpi_result==MPI_SUCCESS);
+    MPI_Bcast( &addr, sizeof(void*), MPI_BYTE, 0, NodeRankComm );
 
     if (subcomm_rank>0) /* not on node 0 */
     {

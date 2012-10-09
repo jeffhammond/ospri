@@ -11,7 +11,7 @@
 
 int main(int argc, char* argv[])
 {
-  pami_result_t        result        = PAMI_ERROR;
+  pami_result_t result = PAMI_ERROR;
 
   char * client1name = "";
   pami_client_t client1;
