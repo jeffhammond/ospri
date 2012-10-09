@@ -8,7 +8,7 @@
 #include "ospu.h"
 #include "ospd.h"
 
-int OSPU_Get_memcpy(void* src,
+int OSPU_Get_local(void* src,
                    void* dst,
                    unsigned bytes)
 {
@@ -26,7 +26,7 @@ int OSPU_Get_memcpy(void* src,
     goto fn_exit;
 }
 
-int OSPU_GetS_memcpy(int stride_level,
+int OSPU_GetS_local(int stride_level,
                     int *block_sizes,
                     void* source_ptr,
                     int *src_stride_ar,
@@ -42,7 +42,7 @@ int OSPU_GetS_memcpy(int stride_level,
 
     block_sizes_w = malloc(sizeof(int) * (stride_level + 1));
     OSPU_ERR_POP((status = (NULL == block_sizes_w)),
-                "malloc failed in OSPU_GetS_memcpy");
+                "malloc failed in OSPU_GetS_local");
 
     memcpy(block_sizes_w, block_sizes, sizeof(int) * (stride_level + 1));
 

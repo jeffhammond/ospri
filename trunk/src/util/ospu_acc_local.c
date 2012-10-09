@@ -18,7 +18,7 @@
             t[w] += s[w]*c;                                                   \
         } while(0)                                                               \
 
-int OSPU_Acc_memcpy(void* source_ptr,
+int OSPU_Acc_local(void* source_ptr,
         void* target_ptr,
         unsigned bytes,
         osp_datatype_t osp_type,
@@ -73,7 +73,7 @@ int OSPU_Acc_memcpy(void* source_ptr,
         break;
     default:
         status = OSP_ERROR;
-        OSPU_ERR_POP((status != OSP_SUCCESS), "Invalid datatype in OSPU_Acc_memcpy \n");
+        OSPU_ERR_POP((status != OSP_SUCCESS), "Invalid datatype in OSPU_Acc_local \n");
         break;
     }
 
@@ -85,7 +85,7 @@ int OSPU_Acc_memcpy(void* source_ptr,
     goto fn_exit;
 }
 
-int OSPU_AccS_memcpy(int stride_level,
+int OSPU_AccS_local(int stride_level,
         int *block_sizes,
         void* source_ptr,
         int *src_stride_ar,
@@ -103,7 +103,7 @@ int OSPU_AccS_memcpy(int stride_level,
 
     block_sizes_w = malloc(sizeof(int) * (stride_level + 1));
     OSPU_ERR_POP((status = (NULL == block_sizes_w)),
-            "malloc failed in OSPU_PutS_memcpy");
+            "malloc failed in OSPU_PutS_local");
 
     memcpy(block_sizes_w, block_sizes, sizeof(int) * (stride_level + 1));
 
