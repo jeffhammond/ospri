@@ -43,8 +43,8 @@ int OSP_PutS(int target,
     {
         if(target == my_rank && (block_sizes[0] < ospu_settings.network_bypass_upper_limit_1d) )
         {
-           status = OSPU_Put_memcpy(source_ptr, target_ptr, block_sizes[0]);
-           OSPU_ERR_POP(status != OSP_SUCCESS, "OSPU_Put_memcpy returned an error\n");
+           status = OSPU_Put_local(source_ptr, target_ptr, block_sizes[0]);
+           OSPU_ERR_POP(status != OSP_SUCCESS, "OSPU_Put_local returned an error\n");
         }
         else
         {
@@ -57,13 +57,13 @@ int OSP_PutS(int target,
     {
         if(target == my_rank && (block_sizes[0] < ospu_settings.network_bypass_upper_limit_Nd) )
         {
-            status = OSPU_PutS_memcpy(stride_level,
+            status = OSPU_PutS_local(stride_level,
                                      block_sizes,
                                      source_ptr,
                                      src_stride_ar,
                                      target_ptr,
                                      trg_stride_ar);
-            OSPU_ERR_POP(status!=OSP_SUCCESS, "OSPU_PutS_memcpy returned error\n");
+            OSPU_ERR_POP(status!=OSP_SUCCESS, "OSPU_PutS_local returned error\n");
         }
         else
         {
@@ -116,8 +116,8 @@ int OSP_NbPutS(int target,
     {
         if(target == my_rank && (block_sizes[0] < ospu_settings.network_bypass_upper_limit_1d) )
         {
-           status = OSPU_Put_memcpy(source_ptr, target_ptr, block_sizes[0]);
-           OSPU_ERR_POP(status != OSP_SUCCESS, "OSPU_Put_memcpy returned an error\n");
+           status = OSPU_Put_local(source_ptr, target_ptr, block_sizes[0]);
+           OSPU_ERR_POP(status != OSP_SUCCESS, "OSPU_Put_local returned an error\n");
         }
         else
         {
@@ -130,13 +130,13 @@ int OSP_NbPutS(int target,
     {
         if(target == my_rank && (block_sizes[0] < ospu_settings.network_bypass_upper_limit_Nd) )
         {
-            status = OSPU_PutS_memcpy(stride_level,
+            status = OSPU_PutS_local(stride_level,
                                      block_sizes,
                                      source_ptr,
                                      src_stride_ar,
                                      target_ptr,
                                      trg_stride_ar);
-            OSPU_ERR_POP(status!=OSP_SUCCESS, "OSPU_PutS_memcpy returned error\n");
+            OSPU_ERR_POP(status!=OSP_SUCCESS, "OSPU_PutS_local returned error\n");
         }
         else
         {
@@ -238,8 +238,8 @@ int OSP_PutS(int target,
     {
         if(target == my_rank && (block_sizes[0] < ospu_settings.network_bypass_upper_limit_1d) )
         {
-           status = OSPU_Put_memcpy(source_ptr, target_ptr, block_sizes[0]);
-           OSPU_ERR_POP(status != OSP_SUCCESS, "OSPU_Put_memcpy returned an error\n");
+           status = OSPU_Put_local(source_ptr, target_ptr, block_sizes[0]);
+           OSPU_ERR_POP(status != OSP_SUCCESS, "OSPU_Put_local returned an error\n");
         }
         else
         {
@@ -252,13 +252,13 @@ int OSP_PutS(int target,
     {
         if(target == my_rank && (block_sizes[0] < ospu_settings.network_bypass_upper_limit_Nd) )
         {
-            status = OSPU_PutS_memcpy(stride_level,
+            status = OSPU_PutS_local(stride_level,
                                      block_sizes,
                                      source_ptr,
                                      src_stride_ar,
                                      target_ptr,
                                      trg_stride_ar);
-            OSPU_ERR_POP(status!=OSP_SUCCESS, "OSPU_PutS_memcpy returned error\n");
+            OSPU_ERR_POP(status!=OSP_SUCCESS, "OSPU_PutS_local returned error\n");
         }
         else
         {
@@ -320,8 +320,8 @@ int OSP_NbPutS(int target,
     {
         if(target == my_rank && (block_sizes[0] < ospu_settings.network_bypass_upper_limit_1d) )
         {
-           status = OSPU_Put_memcpy(source_ptr, target_ptr, block_sizes[0]);
-           OSPU_ERR_POP(status != OSP_SUCCESS, "OSPU_Put_memcpy returned an error\n");
+           status = OSPU_Put_local(source_ptr, target_ptr, block_sizes[0]);
+           OSPU_ERR_POP(status != OSP_SUCCESS, "OSPU_Put_local returned an error\n");
         }
         else
         {
@@ -334,13 +334,13 @@ int OSP_NbPutS(int target,
     {
         if(target == my_rank && (block_sizes[0] < ospu_settings.network_bypass_upper_limit_Nd) )
         {
-            status = OSPU_PutS_memcpy(stride_level,
+            status = OSPU_PutS_local(stride_level,
                                      block_sizes,
                                      source_ptr,
                                      src_stride_ar,
                                      target_ptr,
                                      trg_stride_ar);
-            OSPU_ERR_POP(status!=OSP_SUCCESS, "OSPU_PutS_memcpy returned error\n");
+            OSPU_ERR_POP(status!=OSP_SUCCESS, "OSPU_PutS_local returned error\n");
         }
         else
         {

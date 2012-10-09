@@ -26,8 +26,8 @@ osp_result_t OSP_Put(int target, void* src, void* dst, int bytes)
 
     if(target == my_rank && (bytes < ospu_settings.network_bypass_upper_limit_1d) )
     {
-       status = OSPU_Put_memcpy(src, dst, bytes);
-       OSPU_ERR_POP(status != OSP_SUCCESS, "OSPU_Put_memcpy returned an error\n");
+       status = OSPU_Put_local(src, dst, bytes);
+       OSPU_ERR_POP(status != OSP_SUCCESS, "OSPU_Put_local returned an error\n");
     }
     else
     {
@@ -59,7 +59,7 @@ osp_result_t OSP_NbPut(int target, void* src, void* dst, int bytes, OSP_handle_t
     }
 #   endif
 
-    /* Not sure if what is the right strategy for bypass.  OSPU_*_memcpy are blocking
+    /* Not sure if what is the right strategy for bypass.  OSPU_*_local are blocking
      * but the overhead of going into DCMF_Put is likely not worth the savings
      * from said call being non-blocking.  This is especially true under heavy load
      * since we have determined that DMA vs. memcpy turns over when the NIC is getting
@@ -67,8 +67,8 @@ osp_result_t OSP_NbPut(int target, void* src, void* dst, int bytes, OSP_handle_t
      */
     if(target == my_rank && (bytes < ospu_settings.network_bypass_upper_limit_1d) )
     {
-       status = OSPU_Put_memcpy(src, dst, bytes);
-       OSPU_ERR_POP(status != OSP_SUCCESS, "OSPU_Put_memcpy returned an error\n");
+       status = OSPU_Put_local(src, dst, bytes);
+       OSPU_ERR_POP(status != OSP_SUCCESS, "OSPU_Put_local returned an error\n");
     }
     else
     {

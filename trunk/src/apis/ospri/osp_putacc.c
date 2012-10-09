@@ -32,12 +32,12 @@ int OSP_PutAcc(int target,
     /* Bypass is ALWAYS better for accumulate; we do not test against threshold. */
     if (target == my_rank && ospu_settings.network_bypass)
     {
-        status = OSPU_Acc_memcpy(source_ptr,
+        status = OSPU_Acc_local(source_ptr,
                                 target_ptr,
                                 bytes,
                                 osp_type,
                                 scaling);
-        OSPU_ERR_POP(status != OSP_SUCCESS, "OSPU_Acc_memcpy returned an error\n");
+        OSPU_ERR_POP(status != OSP_SUCCESS, "OSPU_Acc_local returned an error\n");
     }
     else
     {
@@ -81,12 +81,12 @@ int OSP_NbPutAcc(int target,
     /* Bypass is ALWAYS better for accumulate; we do not test against threshold. */
     if (target == my_rank && ospu_settings.network_bypass)
     {
-        status = OSPU_Acc_memcpy(source_ptr,
+        status = OSPU_Acc_local(source_ptr,
                                 target_ptr,
                                 bytes,
                                 osp_type,
                                 scaling);
-        OSPU_ERR_POP(status != OSP_SUCCESS, "OSPU_Acc_memcpy returned an error\n");
+        OSPU_ERR_POP(status != OSP_SUCCESS, "OSPU_Acc_local returned an error\n");
     }
     else
     {

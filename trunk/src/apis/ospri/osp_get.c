@@ -20,8 +20,8 @@ int OSP_Get(int target, void* src, void* dst, int bytes)
 
     if(target == my_rank && (bytes < ospu_settings.network_bypass_upper_limit_1d) )
     {
-       status = OSPU_Get_memcpy(src, dst, bytes);
-       OSPU_ERR_POP(status != OSP_SUCCESS, "OSPU_Get_memcpy returned an error\n");
+       status = OSPU_Get_local(src, dst, bytes);
+       OSPU_ERR_POP(status != OSP_SUCCESS, "OSPU_Get_local returned an error\n");
     }
     else
     {
@@ -50,8 +50,8 @@ int OSP_NbGet(int target, void* src, void* dst, int bytes, OSP_handle_t osp_hand
 
     if(target == my_rank && (bytes < ospu_settings.network_bypass_upper_limit_1d) )
     {
-       status = OSPU_Get_memcpy(src, dst, bytes);
-       OSPU_ERR_POP(status != OSP_SUCCESS, "OSPU_Get_memcpy returned an error\n");
+       status = OSPU_Get_local(src, dst, bytes);
+       OSPU_ERR_POP(status != OSP_SUCCESS, "OSPU_Get_local returned an error\n");
     }
     else
     {

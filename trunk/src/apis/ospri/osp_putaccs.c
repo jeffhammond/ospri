@@ -46,12 +46,12 @@ int OSP_PutAccS(int target,
         /* Bypass is ALWAYS better for accumulate; we do not test against threshold. */
         if (target == my_rank && ospu_settings.network_bypass)
         {
-           status = OSPU_Acc_memcpy(source_ptr,
+           status = OSPU_Acc_local(source_ptr,
                                    target_ptr,
                                    block_sizes[0],
                                    osp_type,
                                    scaling);
-           OSPU_ERR_POP(status != OSP_SUCCESS, "OSPU_Acc_memcpy returned an error\n");
+           OSPU_ERR_POP(status != OSP_SUCCESS, "OSPU_Acc_local returned an error\n");
         }
         else
         { 
@@ -69,7 +69,7 @@ int OSP_PutAccS(int target,
     /* Bypass is ALWAYS better for accumulate; we do not test against threshold. */
     if (target == my_rank && ospu_settings.network_bypass)
     {
-        status = OSPU_AccS_memcpy(stride_level,
+        status = OSPU_AccS_local(stride_level,
                                  block_sizes,
                                  source_ptr,
                                  src_stride_ar,
@@ -77,7 +77,7 @@ int OSP_PutAccS(int target,
                                  trg_stride_ar,
                                  osp_type,
                                  scaling);
-        OSPU_ERR_POP(status != OSP_SUCCESS, "OSPU_AccS_memcpy returned an error\n");
+        OSPU_ERR_POP(status != OSP_SUCCESS, "OSPU_AccS_local returned an error\n");
     }
     else
     {
@@ -134,12 +134,12 @@ int OSP_NbPutAccS(int target,
         /* Bypass is ALWAYS better for accumulate; we do not test against threshold. */
         if (target == my_rank && ospu_settings.network_bypass)
         {
-           status = OSPU_Acc_memcpy(source_ptr,
+           status = OSPU_Acc_local(source_ptr,
                                    target_ptr,
                                    block_sizes[0],
                                    osp_type,
                                    scaling);
-           OSPU_ERR_POP(status != OSP_SUCCESS, "OSPU_Acc_memcpy returned an error\n");
+           OSPU_ERR_POP(status != OSP_SUCCESS, "OSPU_Acc_local returned an error\n");
         }
         else
         {
@@ -158,7 +158,7 @@ int OSP_NbPutAccS(int target,
     /* Bypass is ALWAYS better for accumulate; we do not test against threshold. */
     if (target == my_rank && ospu_settings.network_bypass)
     {
-        status = OSPU_AccS_memcpy(stride_level,
+        status = OSPU_AccS_local(stride_level,
                                  block_sizes,
                                  source_ptr,
                                  src_stride_ar,
@@ -166,7 +166,7 @@ int OSP_NbPutAccS(int target,
                                  trg_stride_ar,
                                  osp_type,
                                  scaling);
-        OSPU_ERR_POP(status != OSP_SUCCESS, "OSPU_AccS_memcpy returned an error\n");
+        OSPU_ERR_POP(status != OSP_SUCCESS, "OSPU_AccS_local returned an error\n");
     }
     else
     {
@@ -276,7 +276,7 @@ int OSP_PutAccS(int target,
     /* Bypass is ALWAYS better for accumulate; we do not test against threshold. */
     if (target == my_rank && ospu_settings.network_bypass)
     {
-        status = OSPU_AccS_memcpy(stride_level,
+        status = OSPU_AccS_local(stride_level,
                                  block_sizes,
                                  source_ptr,
                                  src_stride_ar,
@@ -284,7 +284,7 @@ int OSP_PutAccS(int target,
                                  trg_stride_ar,
                                  osp_type,
                                  scaling);
-        OSPU_ERR_POP(status != OSP_SUCCESS, "OSPU_AccS_memcpy returned an error\n");
+        OSPU_ERR_POP(status != OSP_SUCCESS, "OSPU_AccS_local returned an error\n");
     }
     else
     {
@@ -347,7 +347,7 @@ int OSP_NbPutAccS(int target,
     /* Bypass is ALWAYS better for accumulate; we do not test against threshold. */
     if (target == my_rank && ospu_settings.network_bypass)
     {
-        status = OSPU_AccS_memcpy(stride_level,
+        status = OSPU_AccS_local(stride_level,
                                  block_sizes,
                                  source_ptr,
                                  src_stride_ar,
@@ -355,7 +355,7 @@ int OSP_NbPutAccS(int target,
                                  trg_stride_ar,
                                  osp_type,
                                  scaling);
-        OSPU_ERR_POP(status != OSP_SUCCESS, "OSPU_AccS_memcpy returned an error\n");
+        OSPU_ERR_POP(status != OSP_SUCCESS, "OSPU_AccS_local returned an error\n");
     }
     else
     {
