@@ -12,12 +12,12 @@ int OSP_Process_id(OSP_group_t* group)
 {
     OSPU_FUNC_ENTER();
 
+#   ifdef HAVE_ERROR_CHECKING
+#   endif
+
     /* FIXME: The profiling interface needs to go here */
 
     /* FIXME: Locking functionality needs to go here */
-
-#   ifdef HAVE_ERROR_CHECKING
-#   endif
 
   fn_exit: 
     OSPU_FUNC_EXIT();
@@ -31,12 +31,12 @@ int OSP_Process_total(OSP_group_t* group)
 {
     OSPU_FUNC_ENTER();
 
+#   ifdef HAVE_ERROR_CHECKING
+#   endif
+
     /* FIXME: The profiling interface needs to go here */
 
     /* FIXME: Locking functionality needs to go here */
-
-#   ifdef HAVE_ERROR_CHECKING
-#   endif
 
   fn_exit: 
     OSPU_FUNC_EXIT();
@@ -50,12 +50,12 @@ int OSP_Node_id(OSP_group_t* group)
 {
     OSPU_FUNC_ENTER();
 
+#   ifdef HAVE_ERROR_CHECKING
+#   endif
+
     /* FIXME: The profiling interface needs to go here */
 
     /* FIXME: Locking functionality needs to go here */
-
-#   ifdef HAVE_ERROR_CHECKING
-#   endif
 
   fn_exit: 
     OSPU_FUNC_EXIT();
@@ -69,12 +69,12 @@ int OSP_Node_total(OSP_group_t* group)
 {
     OSPU_FUNC_ENTER();
 
+#   ifdef HAVE_ERROR_CHECKING
+#   endif
+
     /* FIXME: The profiling interface needs to go here */
 
     /* FIXME: Locking functionality needs to go here */
-
-#   ifdef HAVE_ERROR_CHECKING
-#   endif
 
   fn_exit: 
     OSPU_FUNC_EXIT();
@@ -88,12 +88,12 @@ double OSP_Time_seconds(void)
 {
     OSPU_FUNC_ENTER();
 
+#   ifdef HAVE_ERROR_CHECKING
+#   endif
+
     /* FIXME: The profiling interface needs to go here */
 
     /* FIXME: Locking functionality needs to go here */
-
-#   ifdef HAVE_ERROR_CHECKING
-#   endif
 
   fn_exit: 
     OSPU_FUNC_EXIT();
@@ -107,12 +107,12 @@ unsigned long long OSP_Time_cycles(void)
 {
     OSPU_FUNC_ENTER();
 
+#   ifdef HAVE_ERROR_CHECKING
+#   endif
+
     /* FIXME: The profiling interface needs to go here */
 
     /* FIXME: Locking functionality needs to go here */
-
-#   ifdef HAVE_ERROR_CHECKING
-#   endif
 
   fn_exit: 
     OSPU_FUNC_EXIT();

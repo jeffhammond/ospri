@@ -13,6 +13,8 @@ int OSP_Get(int target, void* src, void* dst, int bytes)
     int status = OSP_SUCCESS;
     int my_rank = OSPD_Process_id(OSP_GROUP_WORLD);
 
+    OSPU_FUNC_ENTER();
+
 #   ifdef HAVE_ERROR_CHECKING
 #   endif
 

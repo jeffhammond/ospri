@@ -14,12 +14,12 @@ osp_result_t OSP_Initialize(int thread_level)
 
     OSPU_FUNC_ENTER();
 
+#   ifdef HAVE_ERROR_CHECKING
+#   endif
+
     /* FIXME: The profiling interface needs to go here */
 
     /* FIXME: Locking functionality needs to go here */
-
-#   ifdef HAVE_ERROR_CHECKING
-#   endif
 
     status = OSPD_Initialize(thread_level);
     OSPU_ERR_POP(status!=OSP_SUCCESS, "OSPD_Initialize returned error\n");

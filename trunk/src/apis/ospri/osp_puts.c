@@ -38,7 +38,7 @@ int OSP_PutS(int target,
     }
 #   endif
    
-    /*Check if it is a contiguous transfer, issue a contiguous op*/
+    /* Check if it is a contiguous transfer, issue a contiguous op*/
     if(stride_level == 0)
     {
         if(target == my_rank && (block_sizes[0] < ospu_settings.network_bypass_upper_limit_1d) )
