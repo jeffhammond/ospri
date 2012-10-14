@@ -21,7 +21,7 @@ clean:
 
 realclean: clean
 	-rm -f *.x
-	-rm -f external/
+	-rm -rf external/
 
 distclean: realclean
 
