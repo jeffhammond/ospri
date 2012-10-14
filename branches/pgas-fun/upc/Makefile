@@ -8,7 +8,7 @@ UPCFLAGS = -g -O2 -DRELAXED
 LD       = $(UPC)
 LDFLAGS  = $(UPCFLAGS)
 
-all: hello.x barrier.x shared.x
+all: hello.x barrier.x shared.x example.x matvec.x
 
 %.x: %.o
 	$(LD) $(LDFLAGS) $< $(LIBS) -o $@
@@ -21,6 +21,7 @@ clean:
 
 realclean: clean
 	-rm -f *.x
+	-rm -f external/
 
 distclean: realclean
 
