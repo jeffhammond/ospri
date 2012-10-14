@@ -1,8 +1,8 @@
 # Cray XE6
-#UPC      = cc -h upc
-#LIBS     = -lhugetlbfs
+UPC      = cc -h upc
+LIBS     = -lhugetlbfs
 # Jeff's Mac
-UPC		 = upc 
+#UPC		 = upc 
 
 UPCFLAGS = -g -O2 -DRELAXED
 LD       = $(UPC)
