@@ -9,6 +9,7 @@
 #include <hwi/include/bqc/A2_inlines.h>
 
 #include "safemalloc.h"
+#include "barrier.h"
 
 //#define SLEEP sleep
 #define SLEEP usleep
@@ -79,6 +80,11 @@ int main(int argc, char* argv[])
   result = PAMI_Context_createv( client, NULL, 0, contexts, num_contexts );
   TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Context_createv");
 
+  /* setup the world geometry */
+  pami_geometry_t world_geometry;
+  result = PAMI_Geometry_world(client, &world_geometry );
+  TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Geometry_world");
+
   /************************************************************************/
 
   int n = (argc>1 ? atoi(argv[1]) : 1000);
@@ -135,6 +141,8 @@ int main(int argc, char* argv[])
   printf("%ld: PAMI_Put of %d bytes achieves %lf MB/s \n", (long)world_rank, n, 1.6e9*1e-6*(double)bytes/(double)dt );
   fflush(stdout);
   SLEEP(1);
+
+  barrier(world_geometry, contexts[0]);
 
   int errors = 0;
   

@@ -18,7 +18,7 @@ LDFLAGS = $(COPT) -lpthread
 
 all: safemalloc.o endpoint.x mpi-get.x mpi-put.x mpi-rget.x mpi-rput.x mpi-rput-ibm.x rget.x new-rget.x
 
-%.o: %.c safemalloc.h
+%.o: %.c safemalloc.h barrier.h
 	$(CC) $(CFLAGS) -c $< -o $@
 
 %.x: %.o safemalloc.o
