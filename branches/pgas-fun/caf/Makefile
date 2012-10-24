@@ -6,7 +6,7 @@ FTNFLAGS = -O2
 LD       = $(FTN)
 LDFLAGS  = $(FTNFLAGS)
 
-all: hello.x atomic.x
+all: hello.x atomic.x swap.x
 
 %.x: %.o
 	$(LD) $(LDFLAGS) $< $(LIBS) -o $@
