@@ -14,7 +14,7 @@ int main(int argc, char * argv[])
 	void * ptr = malloc(n);
 	if (ptr==NULL) abort();
 
-	PAMID_Allgather_world(n*sizeof(void*), ptr, (void*) baseptrs);
+	PAMID_Allgather_world(sizeof(void*), (void*) ptr, (void*) baseptrs);
 
 	if (ptr!=baseptrs[rank])
 		abort();
