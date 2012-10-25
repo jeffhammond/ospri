@@ -6,6 +6,8 @@
 /*********** PAMI CALLBACKS ***********/
 
 void cb_done(void *ctxt, void * clientdata, pami_result_t err);
+void cb_local_done (void *ctxt, void * clientdata, pami_result_t err);
+void cb_remote_done (void *ctxt, void * clientdata, pami_result_t err);
 
 /*********** INTERNAL STATE ***********/
 
