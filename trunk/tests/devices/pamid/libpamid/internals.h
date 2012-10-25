@@ -22,6 +22,7 @@ typedef struct {
 	int local_blocking_context; /* synchronous:  for outbound/collective calls that block  */
 	int local_offload_context;  /* asynchronous: for context post nonblocking operations   */
 	int remote_put_context;     /* asynchronous: for PAMI_Rput and PAMI_Put 			   */
+	int remote_get_context;     /* asynchronous: for PAMI_Rput and PAMI_Put 			   */
 	int remote_acc_context;     /* asynchronous: for PAMI_Send doing accumulate            */
 	int remote_rmw_context;     /* asynchronous: for PAMI_Send_immediate doing RMW         */
 } pamid_context_roles_t;
