@@ -19,26 +19,27 @@
 		} \
 		while(0);
 
+void cb_done_barrier (void *ctxt, void * clientdata, pami_result_t err)
+{
+  int * active = (int *) clientdata;
+  (*active)--;
+}
+
 static int barrier(pami_geometry_t geometry, pami_context_t context)
 {
 	pami_result_t rc = PAMI_ERROR;
 
 	pami_xfer_type_t xfer = PAMI_XFER_BARRIER;
 
+	size_t num_alg[2];
 	/* query the geometry */
 	rc = PAMI_Geometry_algorithms_num( geometry, xfer, num_alg );
 	PAMID_ASSERT(rc==PAMI_SUCCESS,"PAMI_Geometry_algorithms_num");
 
-	size_t num_alg[2];
-	pami_algorithm_t * safe_algs;
-	pami_algorithm_t * fast_algs;
-	pami_metadata_t  * safe_meta;
-	pami_metadata_t  * fast_meta;
-
-	safe_algs = (pami_algorithm_t *) PAMIU_Malloc( num_alg[0] * sizeof(pami_algorithm_t) );
-	fast_algs = (pami_algorithm_t *) PAMIU_Malloc( num_alg[1] * sizeof(pami_algorithm_t) );
-	safe_meta = (pami_metadata_t  *) PAMIU_Malloc( num_alg[0] * sizeof(pami_metadata_t)  );
-	fast_meta = (pami_metadata_t  *) PAMIU_Malloc( num_alg[1] * sizeof(pami_metadata_t)  );
+	pami_algorithm_t * safe_algs = (pami_algorithm_t *) safemalloc( num_alg[0] * sizeof(pami_algorithm_t) );
+	pami_algorithm_t * fast_algs = (pami_algorithm_t *) safemalloc( num_alg[1] * sizeof(pami_algorithm_t) );
+	pami_metadata_t  * safe_meta = (pami_metadata_t  *) safemalloc( num_alg[0] * sizeof(pami_metadata_t)  );
+	pami_metadata_t  * fast_meta = (pami_metadata_t  *) safemalloc( num_alg[1] * sizeof(pami_metadata_t)  );
 	rc = PAMI_Geometry_algorithms_query(geometry,
 			xfer,
 			safe_algs,
@@ -54,7 +55,7 @@ static int barrier(pami_geometry_t geometry, pami_context_t context)
 	pami_xfer_t this;
 	volatile int active = 0;
 
-	this.cb_done   = cb_done;
+	this.cb_done   = cb_done_barrier;
 	this.cookie    = (void*) &active;
 	this.algorithm = safe_algs[barrier_alg]; /* safe algs should (must?) work */
 
@@ -68,10 +69,10 @@ static int barrier(pami_geometry_t geometry, pami_context_t context)
 
 	PAMID_ASSERT(rc==PAMI_SUCCESS,"PAMI_Context_trylock_advancev - barrier");
 
-	PAMIU_Free(safe_algs);
-	PAMIU_Free(fast_algs);
-	PAMIU_Free(safe_meta);
-	PAMIU_Free(fast_meta);
+	free(safe_algs);
+	free(fast_algs);
+	free(safe_meta);
+	free(fast_meta);
 
 	return PAMI_SUCCESS;
 }

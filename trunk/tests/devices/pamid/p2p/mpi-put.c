@@ -12,9 +12,8 @@
 #include "barrier.h"
 
 //#define SLEEP sleep
-#define SLEEP usleep
-
-#define PRINT_SUCCESS 1
+//#define SLEEP usleep
+#define SLEEP
 
 #define TEST_ASSERT(c,m) \
         do { \
@@ -87,7 +86,7 @@ int main(int argc, char* argv[])
 
   /************************************************************************/
 
-  int n = (argc>1 ? atoi(argv[1]) : 1000);
+  int n = (argc>1 ? atoi(argv[1]) : 1000000);
 
   size_t bytes = n * sizeof(int);
   int *  shared = (int *) safemalloc(bytes);
@@ -123,6 +122,8 @@ int main(int argc, char* argv[])
   parameters.addr.remote  = shptrs[target];
   parameters.put.rdone_fn = cb_done;
 
+  barrier(world_geometry, contexts[0]);
+
   uint64_t t0 = GetTimeBase();
 
   result = PAMI_Put(contexts[0], &parameters);
@@ -133,16 +134,17 @@ int main(int argc, char* argv[])
     //result = PAMI_Context_advance( contexts[0], 100);
     //TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Context_advance");
     result = PAMI_Context_trylock_advancev(contexts, 1, 1000);
-    TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Context_trylock_advancev");
+    //TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Context_trylock_advancev");
   }
 
   uint64_t t1 = GetTimeBase();
   uint64_t dt = t1-t0;
+
+  barrier(world_geometry, contexts[0]);
+
   printf("%ld: PAMI_Put of %d bytes achieves %lf MB/s \n", (long)world_rank, n, 1.6e9*1e-6*(double)bytes/(double)dt );
   fflush(stdout);
   SLEEP(1);
-
-  barrier(world_geometry, contexts[0]);
 
   int errors = 0;
   
