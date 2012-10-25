@@ -51,10 +51,11 @@ int PAMID_Broadcast_doit(pamid_collective_state_t * broadcast, int root, size_t 
 	this.algorithm = broadcast->safe_algs[broadcast_alg]; /* safe algs should (must?) work */
 
 	pami_endpoint_t root_ep;
-	PAMI_Endpoint_create(PAMID_INTERNAL_STATE.pami_client,
-			(pami_task_t)0,
-			PAMID_INTERNAL_STATE.context_roles.local_blocking_context,
-			&root_ep);
+	rc = PAMI_Endpoint_create(PAMID_INTERNAL_STATE.pami_client,
+                (pami_task_t)0,
+                PAMID_INTERNAL_STATE.context_roles.local_blocking_context,
+                &root_ep);
+	PAMID_ASSERT(rc==PAMI_SUCCESS,"PAMI_Endpoint_create");
 
 	this.cmd.xfer_broadcast.root      = root_ep;
 	this.cmd.xfer_broadcast.buf       = buffer;
