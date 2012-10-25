@@ -7,6 +7,18 @@ void cb_done (void *ctxt, void * clientdata, pami_result_t err)
   (*active)--;
 }
 
+void cb_local_done (void *ctxt, void * clientdata, pami_result_t err)
+{
+  int * active = (int *) clientdata;
+  (*active)--;
+}
+
+void cb_remote_done (void *ctxt, void * clientdata, pami_result_t err)
+{
+  int * active = (int *) clientdata;
+  (*active)--;
+}
+
 void * PAMIU_Malloc(size_t n)
 {
     void * ptr = NULL;
