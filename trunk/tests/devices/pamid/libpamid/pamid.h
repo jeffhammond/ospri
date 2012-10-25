@@ -15,14 +15,10 @@
 /*********** EXTERNAL OBJECTS ***********/
 
 typedef struct {
-	pami_geometry_t geometry;
-	pami_memregion_t * memregions;
-} pamid_gmr_t;
-
-typedef struct {
-	pami_geometry_t geometry;
-	void * base;
-} pamid_window_t;
+	int local;
+	int remote;
+	/* may need extra state for other ops */
+} pamid_request_t;
 
 /*********** EXTERNAL DECLARATIONS ***********/
 
