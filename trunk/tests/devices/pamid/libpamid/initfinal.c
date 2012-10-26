@@ -88,9 +88,6 @@ int PAMID_Initialize(void)
 	PAMID_ASSERT(rc==0,"pthread_create");
 #endif
 
-	rc = PAMI_Context_lock(PAMID_INTERNAL_STATE.pami_contexts[PAMID_INTERNAL_STATE.context_roles.local_blocking_context]);
-	PAMID_ASSERT(rc==PAMI_SUCCESS,"PAMI_Context_lock");
-
 	/* setup the world geometry */
 	rc = PAMI_Geometry_world(PAMID_INTERNAL_STATE.pami_client, &(PAMID_INTERNAL_STATE.world_geometry) );
 	PAMID_ASSERT(rc==PAMI_SUCCESS,"PAMI_Geometry_world");
@@ -133,10 +130,6 @@ int PAMID_Finalize(void)
 	/* teardown the world barrier */
 	rc = PAMID_Barrier_teardown(&(PAMID_INTERNAL_STATE.world_barrier));
 	PAMID_ASSERT(rc==PAMI_SUCCESS,"PAMID_Barrier_teardown");
-
-	/* release the lock on the main context */
-	rc = PAMI_Context_unlock(PAMID_INTERNAL_STATE.pami_contexts[PAMID_INTERNAL_STATE.context_roles.local_blocking_context]);
-	PAMID_ASSERT(rc==PAMI_SUCCESS,"PAMI_Context_unlock");
 
 	/* finalize the contexts */
 	rc = PAMI_Context_destroyv( PAMID_INTERNAL_STATE.pami_contexts, PAMID_INTERNAL_STATE.num_contexts );
