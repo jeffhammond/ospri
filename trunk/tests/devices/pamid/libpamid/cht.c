@@ -4,6 +4,8 @@ pthread_t PAMID_Progress_thread;
 
 void * PAMID_Progress_function(void * dummy)
 {
+	pami_result_t rc = PAMI_ERROR;
+
 	if (PAMID_INTERNAL_STATE.num_contexts>1)
 		while (1)
 		{
