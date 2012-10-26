@@ -38,6 +38,7 @@ typedef struct {
 	pamid_context_roles_t context_roles;
 	pami_geometry_t world_geometry;
 	pamid_collective_state_t world_barrier;
+	pamid_collective_state_t world_sync;
 	pamid_collective_state_t world_bcast;
 	pamid_collective_state_t world_allreduce;
 	pamid_collective_state_t world_allgather;
