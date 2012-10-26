@@ -11,7 +11,7 @@ void * PAMID_Progress_function(void * dummy)
 	while (1)
 	{
 		/* advance all contexts except the local blocking one */
-		for (int context = 1; context < PAMID_INTERNAL_STATE.num_contexts; i++)
+		for (int context = 1; context < PAMID_INTERNAL_STATE.num_contexts; context++)
 		{
 			rc = PAMI_Context_lock(PAMID_INTERNAL_STATE.pami_contexts[context]);
 			PAMID_ASSERT(rc==PAMI_SUCCESS,"PAMI_Context_lock");

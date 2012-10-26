@@ -105,7 +105,7 @@ int PAMID_Initialize(void)
 			NULL,
 			&PAMID_Progress_function,
 			NULL);
-	PAMID_ASSERT(rc==0,"pthread_create");
+	PAMID_ASSERT(rc2==0,"pthread_create");
 #endif
 
 	return PAMI_SUCCESS;

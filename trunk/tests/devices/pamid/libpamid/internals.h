@@ -58,7 +58,7 @@ extern pamid_global_state_t PAMID_INTERNAL_STATE;
 				printf(m" FAILED\n"); \
 				fflush(stdout); \
                 sleep(1);\
-			    abort()); \
+			    abort(); \
 			} \
 			else if (PRINT_SUCCESS) { \
 				printf(m" SUCCEEDED \n"); \
