@@ -1,4 +1,5 @@
 #include "pamid.h"
+#include <hwi/include/bqc/A2_inlines.h>
 
 int main(int argc, char * argv[])
 {
@@ -23,8 +24,15 @@ int main(int argc, char * argv[])
 	memset(src, '\2', n);
 
 	if (rank==0)
-		for (int i=0; i<size; i++)
+		for (size_t i=0; i<size; i++)
+        {
+            uint64_t t0 = GetTimeBase();
 			PAMID_Put_endtoend(n, src, i, baseptrs[i]);
+            uint64_t t1 = GetTimeBase();
+            uint64_t dt = t1-t0;
+            printf("PAMID_Put_endtoend from rank %ld to %ld of %ld bytes took %llu cycles (%lf MB/s) \n",
+                    rank, i, n, (unsigned long long)dt, 1.0e-6 * n / dt);
+        }
 
 	PAMID_Barrier_world();
 

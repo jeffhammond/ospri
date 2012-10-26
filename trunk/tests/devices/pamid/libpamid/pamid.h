@@ -7,6 +7,8 @@
 #include <assert.h>
 #include <unistd.h>
 #include <pthread.h>
+
+/* Blue Gene/Q headers */
 #include <pami.h>
 
 #include "pamiu.h"
