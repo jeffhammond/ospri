@@ -20,7 +20,7 @@ int main(int argc, char * argv[])
 
 	void * src = malloc(n);
 	if (src==NULL) abort();
-	memset(src, '\X', n);
+	memset(src, '\2', n);
 
 	if (rank==0)
 		for (int i=0; i<size; i++)
