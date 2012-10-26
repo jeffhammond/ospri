@@ -70,6 +70,8 @@ extern pamid_global_state_t PAMID_INTERNAL_STATE;
 
 /*********** INTERNAL DECLARATIONS ***********/
 
+void * PAMID_Progress_function(void * dummy)
+
 int PAMID_Progess_setup(int open, pami_context_t context);
 int PAMID_Progess_teardown(int close, pami_context_t context);
 
