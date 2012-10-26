@@ -6,6 +6,8 @@ void * PAMID_Progress_function(void * dummy)
 {
 	pami_result_t rc = PAMI_ERROR;
 
+	printf("PAMID_Progress_function started");
+
 	if (PAMID_INTERNAL_STATE.num_contexts>1)
 		while (1)
 		{
