@@ -16,8 +16,22 @@ int main(int argc, char * argv[])
 
 	PAMID_Allgather_world(sizeof(void*), &ptr, baseptrs);
 
-    printf("%ld: ptr = %p baseptrs[%ld] = %p \n", rank, ptr, rank, baseptrs[rank] );
+	printf("%ld: ptr = %p baseptrs[%ld] = %p \n", rank, ptr, rank, baseptrs[rank] );
 
+	void * src = malloc(n);
+	if (src==NULL) abort();
+	memset(src, '\X', n);
+
+	if (rank==0)
+		for (int i=0; i<size; i++)
+			PAMID_Put_endtoend(n, src, i, baseptrs[i]);
+
+	PAMID_Barrier_world();
+
+	int same = memcmp( src, baseptrs[rank], n);
+	printf("%ld: same = %d", rank, same);
+
+	free(src);
 	free(ptr);
 	free(baseptrs);
 
