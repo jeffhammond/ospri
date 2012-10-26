@@ -1,5 +1,6 @@
 #include "pamid.h"
 
+#ifdef IBM_ASYNC_PROGRESS
 /********************************************************************/
 
 /**
@@ -203,4 +204,15 @@ int PAMID_Progess_teardown(int close, pami_context_t context)
 
 	return PAMI_SUCCESS;
 }
+#else
 
+int PAMID_Progess_setup(int open, pami_context_t context)
+{
+	return PAMI_SUCCESS;
+}
+
+int PAMID_Progess_teardown(int close, pami_context_t context)
+{
+	return PAMI_SUCCESS;
+}
+#endif

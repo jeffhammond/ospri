@@ -56,8 +56,7 @@ int PAMID_Barrier_doit(pamid_collective_state_t * barrier)
 	PAMID_ASSERT(rc==PAMI_SUCCESS,"PAMI_Collective - barrier");
 
 	while (active)
-		rc = PAMI_Context_trylock_advancev( &(PAMID_INTERNAL_STATE.pami_contexts[PAMID_INTERNAL_STATE.context_roles.local_blocking_context]),
-				PAMID_INTERNAL_STATE.num_contexts, 1000 );
+		rc = PAMI_Context_trylock_advancev( &(PAMID_INTERNAL_STATE.pami_contexts[PAMID_INTERNAL_STATE.context_roles.local_blocking_context]), 1, 1000 );
 
 	PAMID_ASSERT(rc==PAMI_SUCCESS,"PAMI_Context_trylock_advancev - barrier");
 

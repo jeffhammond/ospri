@@ -47,6 +47,7 @@ int PAMID_Initialize(void)
 
 	/* TODO: if we want put, acc and/or rmw ordered w.r.t. each other, we need to set remote_put_context=remote_send_context */
 
+#ifdef IBM_ASYNC_PROGRESS
 	/* enable async progress */
 	if (PAMID_INTERNAL_STATE.num_contexts == 1)
 	{
@@ -78,6 +79,13 @@ int PAMID_Initialize(void)
 		rc = PAMID_Progess_setup(0,PAMID_INTERNAL_STATE.pami_contexts[5]);
 		PAMID_ASSERT(rc==PAMI_SUCCESS,"PAMID_Progess_setup");
 	}
+#else
+	int rc2 = pthread_create(&PAMID_Progress_thread,
+	                        NULL,
+	                        &PAMID_Progress_function,
+	                        NULL);
+	PAMID_ASSERT(rc==0,"pthread_create");
+#endif
 
 	/* setup the world geometry */
 	rc = PAMI_Geometry_world(PAMID_INTERNAL_STATE.pami_client, &(PAMID_INTERNAL_STATE.world_geometry) );

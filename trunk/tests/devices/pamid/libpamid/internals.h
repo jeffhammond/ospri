@@ -11,6 +11,8 @@ void cb_remote_done (void *ctxt, void * clientdata, pami_result_t err);
 
 /*********** INTERNAL STATE ***********/
 
+extern pthread_t PAMID_Progress_thread;
+
 typedef struct {
 	pami_xfer_type_t xfer;
 	size_t num_alg[2];
