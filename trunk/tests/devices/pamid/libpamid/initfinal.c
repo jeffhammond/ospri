@@ -22,6 +22,26 @@ int PAMID_Initialize(void)
 	PAMID_INTERNAL_STATE.world_size   = config[1].value.intval;
 	PAMID_INTERNAL_STATE.num_contexts = config[2].value.intval;
 
+	/* setup the world geometry */
+	rc = PAMI_Geometry_world(PAMID_INTERNAL_STATE.pami_client, &(PAMID_INTERNAL_STATE.world_geometry) );
+	PAMID_ASSERT(rc==PAMI_SUCCESS,"PAMI_Geometry_world");
+
+	/* setup the world barrier */
+	rc = PAMID_Barrier_setup(PAMID_INTERNAL_STATE.world_geometry, &(PAMID_INTERNAL_STATE.world_barrier));
+	PAMID_ASSERT(rc==PAMI_SUCCESS,"PAMID_Barrier_setup");
+
+	/* setup the world broadcast */
+	rc = PAMID_Broadcast_setup(PAMID_INTERNAL_STATE.world_geometry, &(PAMID_INTERNAL_STATE.world_bcast));
+	PAMID_ASSERT(rc==PAMI_SUCCESS,"PAMID_Broadcast_setup");
+
+	/* setup the world allgather */
+	rc = PAMID_Allgather_setup(PAMID_INTERNAL_STATE.world_geometry, &(PAMID_INTERNAL_STATE.world_allgather));
+	PAMID_ASSERT(rc==PAMI_SUCCESS,"PAMID_Allgather_setup");
+
+	/* setup the world allreduce */
+	rc = PAMID_Allreduce_setup(PAMID_INTERNAL_STATE.world_geometry, &(PAMID_INTERNAL_STATE.world_allreduce));
+	PAMID_ASSERT(rc==PAMI_SUCCESS,"PAMID_Allreduce_setup");
+
 	/* initialize the contexts */
 	PAMID_INTERNAL_STATE.pami_contexts = (pami_context_t *) PAMIU_Malloc( PAMID_INTERNAL_STATE.num_contexts * sizeof(pami_context_t) );
 	rc = PAMI_Context_createv(PAMID_INTERNAL_STATE.pami_client, config, 0, PAMID_INTERNAL_STATE.pami_contexts, PAMID_INTERNAL_STATE.num_contexts );
@@ -87,26 +107,6 @@ int PAMID_Initialize(void)
 			NULL);
 	PAMID_ASSERT(rc==0,"pthread_create");
 #endif
-
-	/* setup the world geometry */
-	rc = PAMI_Geometry_world(PAMID_INTERNAL_STATE.pami_client, &(PAMID_INTERNAL_STATE.world_geometry) );
-	PAMID_ASSERT(rc==PAMI_SUCCESS,"PAMI_Geometry_world");
-
-	/* setup the world barrier */
-	rc = PAMID_Barrier_setup(PAMID_INTERNAL_STATE.world_geometry, &(PAMID_INTERNAL_STATE.world_barrier));
-	PAMID_ASSERT(rc==PAMI_SUCCESS,"PAMID_Barrier_setup");
-
-	/* setup the world broadcast */
-	rc = PAMID_Broadcast_setup(PAMID_INTERNAL_STATE.world_geometry, &(PAMID_INTERNAL_STATE.world_bcast));
-	PAMID_ASSERT(rc==PAMI_SUCCESS,"PAMID_Broadcast_setup");
-
-	/* setup the world allgather */
-	rc = PAMID_Allgather_setup(PAMID_INTERNAL_STATE.world_geometry, &(PAMID_INTERNAL_STATE.world_allgather));
-	PAMID_ASSERT(rc==PAMI_SUCCESS,"PAMID_Allgather_setup");
-
-	/* setup the world allreduce */
-	rc = PAMID_Allreduce_setup(PAMID_INTERNAL_STATE.world_geometry, &(PAMID_INTERNAL_STATE.world_allreduce));
-	PAMID_ASSERT(rc==PAMI_SUCCESS,"PAMID_Allreduce_setup");
 
 	return PAMI_SUCCESS;
 }
