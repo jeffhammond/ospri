@@ -30,16 +30,17 @@ int PAMID_Initialize(void)
 	if (PAMID_INTERNAL_STATE.num_contexts<2)
 		if (PAMID_INTERNAL_STATE.world_rank==0)
 		{
-			printf("PAMID_Initialize: you need at least 2 contexts for this to work well (you have %ld) \n",
+			printf("PAMID_Initialize: you need at least 2 contexts for this to work (you have %ld) \n",
 					(long)PAMID_INTERNAL_STATE.num_contexts);
 			fflush(stdout);
+			abort();
 		}
 
 	/* the sync contexts should come before the async ones */
 	/* this is the synchronous context */
 	PAMID_INTERNAL_STATE.context_roles.local_blocking_context = 0;
 	/* these are all asynchronous contexts */
-	PAMID_INTERNAL_STATE.context_roles.local_offload_context  = (PAMID_INTERNAL_STATE.num_contexts > 2 ? 2 : PAMID_INTERNAL_STATE.context_roles.local_blocking_context);
+	PAMID_INTERNAL_STATE.context_roles.local_offload_context  = 1;
 	PAMID_INTERNAL_STATE.context_roles.remote_put_context     = (PAMID_INTERNAL_STATE.num_contexts > 2 ? 2 : PAMID_INTERNAL_STATE.context_roles.local_offload_context);
 	PAMID_INTERNAL_STATE.context_roles.remote_get_context     = (PAMID_INTERNAL_STATE.num_contexts > 3 ? 3 : PAMID_INTERNAL_STATE.context_roles.remote_put_context);
 	PAMID_INTERNAL_STATE.context_roles.remote_acc_context     = (PAMID_INTERNAL_STATE.num_contexts > 4 ? 4 : PAMID_INTERNAL_STATE.context_roles.remote_get_context);
@@ -81,11 +82,14 @@ int PAMID_Initialize(void)
 	}
 #else
 	int rc2 = pthread_create(&PAMID_Progress_thread,
-	                        NULL,
-	                        &PAMID_Progress_function,
-	                        NULL);
+			NULL,
+			&PAMID_Progress_function,
+			NULL);
 	PAMID_ASSERT(rc==0,"pthread_create");
 #endif
+
+	rc = PAMI_Context_lock(PAMID_INTERNAL_STATE.pami_contexts[PAMID_INTERNAL_STATE.context_roles.local_blocking_context]);
+	PAMID_ASSERT(rc==PAMI_SUCCESS,"PAMI_Context_lock");
 
 	/* setup the world geometry */
 	rc = PAMI_Geometry_world(PAMID_INTERNAL_STATE.pami_client, &(PAMID_INTERNAL_STATE.world_geometry) );
@@ -129,6 +133,10 @@ int PAMID_Finalize(void)
 	/* teardown the world barrier */
 	rc = PAMID_Barrier_teardown(&(PAMID_INTERNAL_STATE.world_barrier));
 	PAMID_ASSERT(rc==PAMI_SUCCESS,"PAMID_Barrier_teardown");
+
+	/* release the lock on the main context */
+	rc = PAMI_Context_unlock(PAMID_INTERNAL_STATE.pami_contexts[PAMID_INTERNAL_STATE.context_roles.local_blocking_context]);
+	PAMID_ASSERT(rc==PAMI_SUCCESS,"PAMI_Context_unlock");
 
 	/* finalize the contexts */
 	rc = PAMI_Context_destroyv( PAMID_INTERNAL_STATE.pami_contexts, PAMID_INTERNAL_STATE.num_contexts );
