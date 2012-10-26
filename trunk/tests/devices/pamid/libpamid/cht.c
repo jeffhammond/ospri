@@ -1,5 +1,7 @@
 #include "pamid.h"
 
+pthread_t PAMID_Progress_thread;
+
 void * PAMID_Progress_function(void * dummy)
 {
 	if (PAMID_INTERNAL_STATE.num_contexts>1)
