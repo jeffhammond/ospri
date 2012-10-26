@@ -30,24 +30,54 @@ int PAMID_Initialize(void)
 	if (PAMID_INTERNAL_STATE.num_contexts<2)
 		if (PAMID_INTERNAL_STATE.world_rank==0)
 		{
-			printf("PAMID_Initialize: you need at least 2 contexts for this to work (you have %ld) \n",
+			printf("PAMID_Initialize: you need at least 2 contexts for this to work well (you have %ld) \n",
 					(long)PAMID_INTERNAL_STATE.num_contexts);
 			fflush(stdout);
-            sleep(1);
-			exit(51);
 		}
 
 	/* the sync contexts should come before the async ones */
 	/* this is the synchronous context */
 	PAMID_INTERNAL_STATE.context_roles.local_blocking_context = 0;
 	/* these are all asynchronous contexts */
-	PAMID_INTERNAL_STATE.context_roles.local_offload_context  = 1;
+	PAMID_INTERNAL_STATE.context_roles.local_offload_context  = (PAMID_INTERNAL_STATE.num_contexts > 2 ? 2 : PAMID_INTERNAL_STATE.context_roles.local_blocking_context);
 	PAMID_INTERNAL_STATE.context_roles.remote_put_context     = (PAMID_INTERNAL_STATE.num_contexts > 2 ? 2 : PAMID_INTERNAL_STATE.context_roles.local_offload_context);
 	PAMID_INTERNAL_STATE.context_roles.remote_get_context     = (PAMID_INTERNAL_STATE.num_contexts > 3 ? 3 : PAMID_INTERNAL_STATE.context_roles.remote_put_context);
 	PAMID_INTERNAL_STATE.context_roles.remote_acc_context     = (PAMID_INTERNAL_STATE.num_contexts > 4 ? 4 : PAMID_INTERNAL_STATE.context_roles.remote_get_context);
 	PAMID_INTERNAL_STATE.context_roles.remote_rmw_context     = (PAMID_INTERNAL_STATE.num_contexts > 5 ? 5 : PAMID_INTERNAL_STATE.context_roles.remote_acc_context);
 
 	/* TODO: if we want put, acc and/or rmw ordered w.r.t. each other, we need to set remote_put_context=remote_send_context */
+
+	/* enable async progress */
+	if (PAMID_INTERNAL_STATE.num_contexts == 1)
+	{
+		rc = PAMID_Progess_setup(0,PAMID_INTERNAL_STATE.pami_contexts[0]);
+		PAMID_ASSERT(rc==PAMI_SUCCESS,"PAMID_Progess_setup");
+	}
+	if (PAMID_INTERNAL_STATE.num_contexts > 1)
+	{
+		rc = PAMID_Progess_setup(0,PAMID_INTERNAL_STATE.pami_contexts[1]);
+		PAMID_ASSERT(rc==PAMI_SUCCESS,"PAMID_Progess_setup");
+	}
+	if (PAMID_INTERNAL_STATE.num_contexts > 2)
+	{
+		rc = PAMID_Progess_setup(0,PAMID_INTERNAL_STATE.pami_contexts[2]);
+		PAMID_ASSERT(rc==PAMI_SUCCESS,"PAMID_Progess_setup");
+	}
+	if (PAMID_INTERNAL_STATE.num_contexts > 3)
+	{
+		rc = PAMID_Progess_setup(0,PAMID_INTERNAL_STATE.pami_contexts[3]);
+		PAMID_ASSERT(rc==PAMI_SUCCESS,"PAMID_Progess_setup");
+	}
+	if (PAMID_INTERNAL_STATE.num_contexts > 4)
+	{
+		rc = PAMID_Progess_setup(0,PAMID_INTERNAL_STATE.pami_contexts[4]);
+		PAMID_ASSERT(rc==PAMI_SUCCESS,"PAMID_Progess_setup");
+	}
+	if (PAMID_INTERNAL_STATE.num_contexts > 5)
+	{
+		rc = PAMID_Progess_setup(0,PAMID_INTERNAL_STATE.pami_contexts[5]);
+		PAMID_ASSERT(rc==PAMI_SUCCESS,"PAMID_Progess_setup");
+	}
 
 	/* setup the world geometry */
 	rc = PAMI_Geometry_world(PAMID_INTERNAL_STATE.pami_client, &(PAMID_INTERNAL_STATE.world_geometry) );
@@ -69,16 +99,6 @@ int PAMID_Initialize(void)
 	rc = PAMID_Allreduce_setup(PAMID_INTERNAL_STATE.world_geometry, &(PAMID_INTERNAL_STATE.world_allreduce));
 	PAMID_ASSERT(rc==PAMI_SUCCESS,"PAMID_Allreduce_setup");
 
-	/* enable async progress */
-	rc = PAMID_Progess_setup(1,PAMID_INTERNAL_STATE.pami_contexts[1]);
-	if (PAMID_INTERNAL_STATE.num_contexts > 2)
-		rc = PAMID_Progess_setup(0,PAMID_INTERNAL_STATE.pami_contexts[2]);
-	if (PAMID_INTERNAL_STATE.num_contexts > 3)
-		rc = PAMID_Progess_setup(0,PAMID_INTERNAL_STATE.pami_contexts[3]);
-	if (PAMID_INTERNAL_STATE.num_contexts > 4)
-		rc = PAMID_Progess_setup(0,PAMID_INTERNAL_STATE.pami_contexts[4]);
-	PAMID_ASSERT(rc==PAMI_SUCCESS,"PAMID_Progess_setup");
-
 	return PAMI_SUCCESS;
 }
 
@@ -86,6 +106,7 @@ int PAMID_Finalize(void)
 {
 	pami_result_t rc = PAMI_ERROR;
 
+#if 0
 	/* disable async progress */
 	if (PAMID_INTERNAL_STATE.num_contexts > 4)
 		rc = PAMID_Progess_teardown(0,PAMID_INTERNAL_STATE.pami_contexts[4]);
@@ -95,6 +116,7 @@ int PAMID_Finalize(void)
 		rc = PAMID_Progess_teardown(0,PAMID_INTERNAL_STATE.pami_contexts[2]);
 	rc = PAMID_Progess_teardown(1, PAMID_INTERNAL_STATE.pami_contexts[1]);
 	PAMID_ASSERT(rc==PAMI_SUCCESS,"PAMID_Progess_teardown");
+#endif
 
 	/* teardown the world barrier */
 	rc = PAMID_Barrier_teardown(&(PAMID_INTERNAL_STATE.world_barrier));
