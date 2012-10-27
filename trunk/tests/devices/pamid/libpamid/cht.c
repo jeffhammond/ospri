@@ -29,7 +29,7 @@ void * PAMID_Progress_function(void * dummy)
 			//PAMID_ASSERT(rc==PAMI_SUCCESS,"CHT: PAMI_Context_unlock");
 			if (rc!=PAMI_SUCCESS) abort();
 
-			usleep(1000);
+			usleep(1);
 		}
 	}
 	return NULL;

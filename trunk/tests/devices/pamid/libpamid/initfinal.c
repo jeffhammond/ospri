@@ -43,7 +43,6 @@ int PAMID_Initialize(void)
 	PAMID_ASSERT(rc==PAMI_SUCCESS,"PAMID_Allreduce_setup");
 
 	/* initialize the contexts */
-	PAMID_INTERNAL_STATE.num_contexts = 2; /* <<<< OVERRIDE */
 	PAMID_INTERNAL_STATE.pami_contexts = (pami_context_t *) PAMIU_Malloc( PAMID_INTERNAL_STATE.num_contexts * sizeof(pami_context_t) );
 	rc = PAMI_Context_createv(PAMID_INTERNAL_STATE.pami_client, config, 0, PAMID_INTERNAL_STATE.pami_contexts, PAMID_INTERNAL_STATE.num_contexts );
 	PAMID_ASSERT(rc==PAMI_SUCCESS,"PAMI_Context_createv");
@@ -53,7 +52,7 @@ int PAMID_Initialize(void)
 		{
 			printf("PAMID_Initialize: you need at least 2 contexts for this to work (you have %ld) \n",
 					(long)PAMID_INTERNAL_STATE.num_contexts);
-			fflush(stdout);
+			fflush(stderr);
 			abort();
 		}
 
@@ -68,46 +67,12 @@ int PAMID_Initialize(void)
 	PAMID_INTERNAL_STATE.context_roles.remote_rmw_context     = 1;//(PAMID_INTERNAL_STATE.num_contexts > 5 ? 5 : PAMID_INTERNAL_STATE.context_roles.remote_acc_context);
 	/* TODO: if we want put, acc and/or rmw ordered w.r.t. each other, we need to set remote_put_context=remote_send_context */
 
-#ifdef IBM_ASYNC_PROGRESS
-	/* enable async progress */
-	if (PAMID_INTERNAL_STATE.num_contexts == 1)
-	{
-		rc = PAMID_Progess_setup(0,PAMID_INTERNAL_STATE.pami_contexts[0]);
-		PAMID_ASSERT(rc==PAMI_SUCCESS,"PAMID_Progess_setup");
-	}
-	if (PAMID_INTERNAL_STATE.num_contexts > 1)
-	{
-		rc = PAMID_Progess_setup(0,PAMID_INTERNAL_STATE.pami_contexts[1]);
-		PAMID_ASSERT(rc==PAMI_SUCCESS,"PAMID_Progess_setup");
-	}
-	if (PAMID_INTERNAL_STATE.num_contexts > 2)
-	{
-		rc = PAMID_Progess_setup(0,PAMID_INTERNAL_STATE.pami_contexts[2]);
-		PAMID_ASSERT(rc==PAMI_SUCCESS,"PAMID_Progess_setup");
-	}
-	if (PAMID_INTERNAL_STATE.num_contexts > 3)
-	{
-		rc = PAMID_Progess_setup(0,PAMID_INTERNAL_STATE.pami_contexts[3]);
-		PAMID_ASSERT(rc==PAMI_SUCCESS,"PAMID_Progess_setup");
-	}
-	if (PAMID_INTERNAL_STATE.num_contexts > 4)
-	{
-		rc = PAMID_Progess_setup(0,PAMID_INTERNAL_STATE.pami_contexts[4]);
-		PAMID_ASSERT(rc==PAMI_SUCCESS,"PAMID_Progess_setup");
-	}
-	if (PAMID_INTERNAL_STATE.num_contexts > 5)
-	{
-		rc = PAMID_Progess_setup(0,PAMID_INTERNAL_STATE.pami_contexts[5]);
-		PAMID_ASSERT(rc==PAMI_SUCCESS,"PAMID_Progess_setup");
-	}
-#elif JEFF_ASYNC_PROGRESS
+#if 0
 	int rc2 = pthread_create(&PAMID_Progress_thread,
 			NULL,
 			&PAMID_Progress_function,
 			NULL);
 	PAMID_ASSERT(rc2==0,"pthread_create");
-#else
-#warning ASYNC PROGRESS DISABLED
 #endif
 
 	return PAMI_SUCCESS;
@@ -117,17 +82,17 @@ int PAMID_Finalize(void)
 {
 	pami_result_t rc = PAMI_ERROR;
 
-#if 0
-	/* disable async progress */
-	if (PAMID_INTERNAL_STATE.num_contexts > 4)
-		rc = PAMID_Progess_teardown(0,PAMID_INTERNAL_STATE.pami_contexts[4]);
-	if (PAMID_INTERNAL_STATE.num_contexts > 3)
-		rc = PAMID_Progess_teardown(0,PAMID_INTERNAL_STATE.pami_contexts[3]);
-	if (PAMID_INTERNAL_STATE.num_contexts > 2)
-		rc = PAMID_Progess_teardown(0,PAMID_INTERNAL_STATE.pami_contexts[2]);
-	rc = PAMID_Progess_teardown(1, PAMID_INTERNAL_STATE.pami_contexts[1]);
-	PAMID_ASSERT(rc==PAMI_SUCCESS,"PAMID_Progess_teardown");
-#endif
+	/* setup the world allreduce */
+	rc = PAMID_Allreduce_teardown(&(PAMID_INTERNAL_STATE.world_allreduce));
+	PAMID_ASSERT(rc==PAMI_SUCCESS,"PAMID_Allreduce_teardown");
+
+	/* setup the world allgather */
+	rc = PAMID_Allgather_teardown(&(PAMID_INTERNAL_STATE.world_allgather));
+	PAMID_ASSERT(rc==PAMI_SUCCESS,"PAMID_Allgather_teardown");
+
+	/* setup the world broadcast */
+	rc = PAMID_Broadcast_teardown(&(PAMID_INTERNAL_STATE.world_bcast));
+	PAMID_ASSERT(rc==PAMI_SUCCESS,"PAMID_Broadcast_teardown");
 
 	/* teardown the world barrier */
 	rc = PAMID_Barrier_teardown(&(PAMID_INTERNAL_STATE.world_barrier));
