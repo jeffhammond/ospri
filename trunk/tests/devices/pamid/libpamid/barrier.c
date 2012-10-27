@@ -52,6 +52,8 @@ int PAMID_Barrier_doit(pamid_collective_state_t * barrier)
 
 	int context = PAMID_INTERNAL_STATE.context_roles.local_blocking_context;
 
+	fprintf(stderr,"attempting to lock context %d \n", context);
+
 	rc = PAMI_Context_lock(PAMID_INTERNAL_STATE.pami_contexts[context]);
 	PAMID_ASSERT(rc==PAMI_SUCCESS,"PAMI_Context_lock");
 
