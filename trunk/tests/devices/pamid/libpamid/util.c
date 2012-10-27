@@ -1,19 +1,19 @@
 #include "pamid.h"
 #include "pamiu.h"
 
-void cb_done (void *ctxt, void * clientdata, pami_result_t err)
+void cb_done (void * ctxt, void * clientdata, pami_result_t err)
 {
 	int * active = (int *) clientdata;
 	(*active)--;
 }
 
-void cb_local_done (void *ctxt, void * clientdata, pami_result_t err)
+void cb_local_done (void * ctxt, void * clientdata, pami_result_t err)
 {
 	pamid_request_t * request = (pamid_request_t*) clientdata;
 	((*request).local)--;
 }
 
-void cb_remote_done (void *ctxt, void * clientdata, pami_result_t err)
+void cb_remote_done (void * ctxt, void * clientdata, pami_result_t err)
 {
 	pamid_request_t * request = (pamid_request_t*) clientdata;
 	((*request).remote)--;
