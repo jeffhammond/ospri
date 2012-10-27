@@ -44,7 +44,7 @@ int PAMID_Barrier_doit(pamid_collective_state_t * barrier)
 	size_t barrier_alg = 0; /* 0 is not necessarily the best one... */
 
 	pami_xfer_t this;
-	volatile int active = 0;
+	volatile int active = 1;
 
 	this.cb_done   = cb_done;
 	this.cookie    = (void*) &active;
@@ -52,7 +52,6 @@ int PAMID_Barrier_doit(pamid_collective_state_t * barrier)
 
 	int context = PAMID_INTERNAL_STATE.context_roles.local_blocking_context;
 
-	active = 1;
 	rc = PAMI_Collective( PAMID_INTERNAL_STATE.pami_contexts[context], &this );
 	PAMID_ASSERT(rc==PAMI_SUCCESS,"PAMI_Collective");
 
