@@ -100,12 +100,14 @@ int PAMID_Initialize(void)
 		rc = PAMID_Progess_setup(0,PAMID_INTERNAL_STATE.pami_contexts[5]);
 		PAMID_ASSERT(rc==PAMI_SUCCESS,"PAMID_Progess_setup");
 	}
-#else
+#elif JEFF_ASYNC_PROGRESS
 	int rc2 = pthread_create(&PAMID_Progress_thread,
 			NULL,
 			&PAMID_Progress_function,
 			NULL);
 	PAMID_ASSERT(rc2==0,"pthread_create");
+#else
+#warning ASYNC PROGRESS DISABLED
 #endif
 
 	return PAMI_SUCCESS;
