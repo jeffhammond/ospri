@@ -32,5 +32,5 @@ clean:
 	$(RM) $(RMFLAGS) $(OBJECTS)
 
 realclean: clean
-	$(RM) $(RMFLAGS) libpamid.a $(TESTS)
+	$(RM) $(RMFLAGS) libpamid.a $(TESTS) core.*
 
