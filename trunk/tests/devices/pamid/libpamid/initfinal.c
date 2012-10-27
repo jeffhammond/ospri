@@ -42,11 +42,6 @@ int PAMID_Initialize(void)
 	rc = PAMID_Allreduce_setup(PAMID_INTERNAL_STATE.world_geometry, &(PAMID_INTERNAL_STATE.world_allreduce));
 	PAMID_ASSERT(rc==PAMI_SUCCESS,"PAMID_Allreduce_setup");
 
-	/* initialize the contexts */
-	PAMID_INTERNAL_STATE.pami_contexts = (pami_context_t *) PAMIU_Malloc( PAMID_INTERNAL_STATE.num_contexts * sizeof(pami_context_t) );
-	rc = PAMI_Context_createv(PAMID_INTERNAL_STATE.pami_client, config, 0, PAMID_INTERNAL_STATE.pami_contexts, PAMID_INTERNAL_STATE.num_contexts );
-	PAMID_ASSERT(rc==PAMI_SUCCESS,"PAMI_Context_createv");
-
 	if (PAMID_INTERNAL_STATE.num_contexts<2)
 		if (PAMID_INTERNAL_STATE.world_rank==0)
 		{
@@ -82,21 +77,21 @@ int PAMID_Finalize(void)
 {
 	pami_result_t rc = PAMI_ERROR;
 
-	/* setup the world allreduce */
-	rc = PAMID_Allreduce_teardown(&(PAMID_INTERNAL_STATE.world_allreduce));
-	PAMID_ASSERT(rc==PAMI_SUCCESS,"PAMID_Allreduce_teardown");
+    /* teardown the world allreduce */
+    rc = PAMID_Allreduce_teardown(&(PAMID_INTERNAL_STATE.world_allreduce));
+    PAMID_ASSERT(rc==PAMI_SUCCESS,"PAMID_Allreduce_teardown");
 
-	/* setup the world allgather */
-	rc = PAMID_Allgather_teardown(&(PAMID_INTERNAL_STATE.world_allgather));
-	PAMID_ASSERT(rc==PAMI_SUCCESS,"PAMID_Allgather_teardown");
+    /* teardown the world allgather */
+    rc = PAMID_Allgather_teardown(&(PAMID_INTERNAL_STATE.world_allgather));
+    PAMID_ASSERT(rc==PAMI_SUCCESS,"PAMID_Allgather_teardown");
 
-	/* setup the world broadcast */
-	rc = PAMID_Broadcast_teardown(&(PAMID_INTERNAL_STATE.world_bcast));
-	PAMID_ASSERT(rc==PAMI_SUCCESS,"PAMID_Broadcast_teardown");
+    /* teardown the world broadcast */
+    rc = PAMID_Broadcast_teardown(&(PAMID_INTERNAL_STATE.world_bcast));
+    PAMID_ASSERT(rc==PAMI_SUCCESS,"PAMID_Broadcast_teardown");
 
-	/* teardown the world barrier */
-	rc = PAMID_Barrier_teardown(&(PAMID_INTERNAL_STATE.world_barrier));
-	PAMID_ASSERT(rc==PAMI_SUCCESS,"PAMID_Barrier_teardown");
+    /* teardown the world barrier */
+    rc = PAMID_Barrier_teardown(&(PAMID_INTERNAL_STATE.world_barrier));
+    PAMID_ASSERT(rc==PAMI_SUCCESS,"PAMID_Barrier_teardown");
 
 	/* finalize the contexts */
 	rc = PAMI_Context_destroyv( PAMID_INTERNAL_STATE.pami_contexts, PAMID_INTERNAL_STATE.num_contexts );

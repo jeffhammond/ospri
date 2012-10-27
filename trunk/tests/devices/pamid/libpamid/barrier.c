@@ -50,7 +50,9 @@ int PAMID_Barrier_doit(pamid_collective_state_t * barrier)
 	this.cookie    = (void*) &active;
 	this.algorithm = barrier->safe_algs[barrier_alg]; /* safe algs should (must?) work */
 
-	int context = PAMID_INTERNAL_STATE.context_roles.local_blocking_context;
+	/* perform a barrier */
+	rc = PAMI_Collective( PAMID_INTERNAL_STATE.pami_contexts[PAMID_INTERNAL_STATE.context_roles.local_blocking_context], &this );
+	PAMID_ASSERT(rc==PAMI_SUCCESS,"PAMI_Collective");
 
 	rc = PAMI_Collective( PAMID_INTERNAL_STATE.pami_contexts[context], &this );
 	PAMID_ASSERT(rc==PAMI_SUCCESS,"PAMI_Collective");
