@@ -60,21 +60,14 @@ int PAMID_Allreduce_doit(pamid_collective_state_t * allreduce,
     this.cmd.xfer_allreduce.rtype      = type;
     this.cmd.xfer_allreduce.rtypecount = count;
 
-	int context = PAMID_INTERNAL_STATE.context_roles.local_blocking_context;
-
-	rc = PAMI_Context_lock(PAMID_INTERNAL_STATE.pami_contexts[context]);
-	PAMID_ASSERT(rc==PAMI_SUCCESS,"PAMI_Context_lock");
-
+	/* perform a allreduce */
 	rc = PAMI_Collective(PAMID_INTERNAL_STATE.pami_contexts[PAMID_INTERNAL_STATE.context_roles.local_blocking_context], &this );
 	PAMID_ASSERT(rc==PAMI_SUCCESS,"PAMI_Collective");
 
 	while (active)
-		rc = PAMI_Context_advance( PAMID_INTERNAL_STATE.pami_contexts[context], 1000 );
+		rc = PAMI_Context_trylock_advancev( &(PAMID_INTERNAL_STATE.pami_contexts[PAMID_INTERNAL_STATE.context_roles.local_blocking_context]), 1, 1000 );
 
 	PAMID_ASSERT(rc==PAMI_SUCCESS,"PAMI_Context_trylock_advancev");
-
-	rc = PAMI_Context_unlock(PAMID_INTERNAL_STATE.pami_contexts[context]);
-	PAMID_ASSERT(rc==PAMI_SUCCESS,"PAMI_Context_unlock");
 
 	return PAMI_SUCCESS;
 }
