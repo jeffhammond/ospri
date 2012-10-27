@@ -65,7 +65,6 @@ int PAMID_Initialize(void)
 	PAMID_INTERNAL_STATE.context_roles.remote_get_context     = (PAMID_INTERNAL_STATE.num_contexts > 3 ? 3 : PAMID_INTERNAL_STATE.context_roles.remote_put_context);
 	PAMID_INTERNAL_STATE.context_roles.remote_acc_context     = (PAMID_INTERNAL_STATE.num_contexts > 4 ? 4 : PAMID_INTERNAL_STATE.context_roles.remote_get_context);
 	PAMID_INTERNAL_STATE.context_roles.remote_rmw_context     = (PAMID_INTERNAL_STATE.num_contexts > 5 ? 5 : PAMID_INTERNAL_STATE.context_roles.remote_acc_context);
-
 	/* TODO: if we want put, acc and/or rmw ordered w.r.t. each other, we need to set remote_put_context=remote_send_context */
 
 #ifdef IBM_ASYNC_PROGRESS
