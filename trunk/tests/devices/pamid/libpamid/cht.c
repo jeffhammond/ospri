@@ -6,7 +6,7 @@ void * PAMID_Progress_function(void * dummy)
 {
 	pami_result_t rc = PAMI_ERROR;
 
-	printf("PAMID_Progress_function started");
+	fprintf(stderr,"PAMID_Progress_function started \n");
 
 	while (1)
 	{

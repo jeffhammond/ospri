@@ -55,13 +55,13 @@ extern pamid_global_state_t PAMID_INTERNAL_STATE;
 #define PAMID_ASSERT(c,m) \
 		do { \
 			if (!(c)) { \
-				printf(m" FAILED\n"); \
-				fflush(stdout); \
+				fprintf(stderr,m" FAILED\n"); \
+				fflush(stderr); \
 			    abort(); \
 			} \
 			else if (PRINT_SUCCESS) { \
-				printf(m" SUCCEEDED \n"); \
-				fflush(stdout); \
+				fprintf(stderr,m" SUCCEEDED \n"); \
+				fflush(stderr); \
 			} \
 		} \
 		while(0);
