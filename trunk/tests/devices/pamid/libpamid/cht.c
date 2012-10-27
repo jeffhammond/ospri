@@ -21,6 +21,8 @@ void * PAMID_Progress_function(void * dummy)
 
 			rc = PAMI_Context_unlock(PAMID_INTERNAL_STATE.pami_contexts[context]);
 			PAMID_ASSERT(rc==PAMI_SUCCESS,"PAMI_Context_unlock");
+
+			usleep(1000);
 		}
 	}
 	return NULL;

@@ -43,6 +43,7 @@ int PAMID_Initialize(void)
 	PAMID_ASSERT(rc==PAMI_SUCCESS,"PAMID_Allreduce_setup");
 
 	/* initialize the contexts */
+	PAMID_INTERNAL_STATE.num_contexts = 2; /* <<<< OVERRIDE */
 	PAMID_INTERNAL_STATE.pami_contexts = (pami_context_t *) PAMIU_Malloc( PAMID_INTERNAL_STATE.num_contexts * sizeof(pami_context_t) );
 	rc = PAMI_Context_createv(PAMID_INTERNAL_STATE.pami_client, config, 0, PAMID_INTERNAL_STATE.pami_contexts, PAMID_INTERNAL_STATE.num_contexts );
 	PAMID_ASSERT(rc==PAMI_SUCCESS,"PAMI_Context_createv");
@@ -61,10 +62,10 @@ int PAMID_Initialize(void)
 	PAMID_INTERNAL_STATE.context_roles.local_blocking_context = 0;
 	/* these are all asynchronous contexts */
 	PAMID_INTERNAL_STATE.context_roles.local_offload_context  = 1;
-	PAMID_INTERNAL_STATE.context_roles.remote_put_context     = (PAMID_INTERNAL_STATE.num_contexts > 2 ? 2 : PAMID_INTERNAL_STATE.context_roles.local_offload_context);
-	PAMID_INTERNAL_STATE.context_roles.remote_get_context     = (PAMID_INTERNAL_STATE.num_contexts > 3 ? 3 : PAMID_INTERNAL_STATE.context_roles.remote_put_context);
-	PAMID_INTERNAL_STATE.context_roles.remote_acc_context     = (PAMID_INTERNAL_STATE.num_contexts > 4 ? 4 : PAMID_INTERNAL_STATE.context_roles.remote_get_context);
-	PAMID_INTERNAL_STATE.context_roles.remote_rmw_context     = (PAMID_INTERNAL_STATE.num_contexts > 5 ? 5 : PAMID_INTERNAL_STATE.context_roles.remote_acc_context);
+	PAMID_INTERNAL_STATE.context_roles.remote_put_context     = 1;//(PAMID_INTERNAL_STATE.num_contexts > 2 ? 2 : PAMID_INTERNAL_STATE.context_roles.local_offload_context);
+	PAMID_INTERNAL_STATE.context_roles.remote_get_context     = 1;//(PAMID_INTERNAL_STATE.num_contexts > 3 ? 3 : PAMID_INTERNAL_STATE.context_roles.remote_put_context);
+	PAMID_INTERNAL_STATE.context_roles.remote_acc_context     = 1;//(PAMID_INTERNAL_STATE.num_contexts > 4 ? 4 : PAMID_INTERNAL_STATE.context_roles.remote_get_context);
+	PAMID_INTERNAL_STATE.context_roles.remote_rmw_context     = 1;//(PAMID_INTERNAL_STATE.num_contexts > 5 ? 5 : PAMID_INTERNAL_STATE.context_roles.remote_acc_context);
 	/* TODO: if we want put, acc and/or rmw ordered w.r.t. each other, we need to set remote_put_context=remote_send_context */
 
 #ifdef IBM_ASYNC_PROGRESS
