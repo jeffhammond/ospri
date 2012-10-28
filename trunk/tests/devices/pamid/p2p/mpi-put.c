@@ -9,29 +9,8 @@
 #include <hwi/include/bqc/A2_inlines.h>
 
 #include "safemalloc.h"
-#include "barrier.h"
-
-#define TEST_ASSERT(c,m) \
-        do { \
-        if (!(c)) { \
-                    printf(m" FAILED on rank %ld\n", world_rank); \
-                    fflush(stdout); \
-                  } \
-        else if (PRINT_SUCCESS) { \
-                    printf(m" SUCCEEDED on rank %ld\n", world_rank); \
-                    fflush(stdout); \
-                  } \
-        /*assert(c);*/ \
-        } \
-        while(0);
-
-static size_t world_size, world_rank = -1;
-
-void cb_done (void *ctxt, void * clientdata, pami_result_t err)
-{
-  int * active = (int *) clientdata;
-  (*active)--;
-}
+#include "preamble.h"
+#include "coll.h"
 
 pami_context_t * contexts;
 

@@ -11,7 +11,7 @@ int allgather(pami_geometry_t geometry, pami_context_t context, size_t count, vo
 	size_t num_alg[2];
 	/* query the geometry */
 	rc = PAMI_Geometry_algorithms_num( geometry, xfer, num_alg );
-	PAMID_ASSERT(rc==PAMI_SUCCESS,"PAMI_Geometry_algorithms_num");
+	TEST_ASSERT(rc==PAMI_SUCCESS,"PAMI_Geometry_algorithms_num");
 
 	pami_algorithm_t * safe_algs = (pami_algorithm_t *) safemalloc( num_alg[0] * sizeof(pami_algorithm_t) );
 	pami_algorithm_t * fast_algs = (pami_algorithm_t *) safemalloc( num_alg[1] * sizeof(pami_algorithm_t) );
@@ -19,7 +19,7 @@ int allgather(pami_geometry_t geometry, pami_context_t context, size_t count, vo
 	pami_metadata_t  * fast_meta = (pami_metadata_t  *) safemalloc( num_alg[1] * sizeof(pami_metadata_t)  );
 
 	rc = PAMI_Geometry_algorithms_query(geometry, xfer, safe_algs, safe_meta, num_alg[0], fast_algs, fast_meta, num_alg[1]);
-	PAMID_ASSERT(rc==PAMI_SUCCESS,"PAMI_Geometry_algorithms_query");
+	TEST_ASSERT(rc==PAMI_SUCCESS,"PAMI_Geometry_algorithms_query");
 
 	size_t allgather_alg = 0; /* 0 is not necessarily the best one... */
 
@@ -38,12 +38,12 @@ int allgather(pami_geometry_t geometry, pami_context_t context, size_t count, vo
 
 	/* perform a allgather */
 	rc = PAMI_Collective( context, &this );
-	PAMID_ASSERT(rc==PAMI_SUCCESS,"PAMI_Collective - allgather");
+	TEST_ASSERT(rc==PAMI_SUCCESS,"PAMI_Collective - allgather");
 
 	while (active)
 	{
 		rc = PAMI_Context_trylock_advancev( &context, 1, 1000 );
-		PAMID_ASSERT(rc==PAMI_SUCCESS,"PAMI_Context_trylock_advancev - allgather");
+		TEST_ASSERT(rc==PAMI_SUCCESS,"PAMI_Context_trylock_advancev - allgather");
 	}
 
 	free(safe_algs);

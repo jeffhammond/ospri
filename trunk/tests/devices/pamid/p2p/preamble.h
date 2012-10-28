@@ -1,4 +1,7 @@
-#include <hwi/include/bqc/A2_inlines.h>
+#ifndef PREAMBLE_H
+#define PREAMBLE_H
+
+#include <pami.h>
 
 #define PRINT_SUCCESS 0
 
@@ -32,3 +35,4 @@ static void cb_done (void *ctxt, void * clientdata, pami_result_t err)
   (*active)--;
 }
 
+#endif

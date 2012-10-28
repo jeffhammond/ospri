@@ -20,14 +20,14 @@ ifdef PROGRESS
     CFLAGS += -DPROGRESS_THREAD
 endif
 
-all: safemalloc.o endpoint.x mpi-get.x mpi-put.x mpi-rget.x mpi-rput.x mpi-rput-ibm.x rget.x new-rget.x
-obj: barrier.o allgather.o
+all: endpoint.x put.x mpi-put.x mpi-rput.x mpi-rput-ibm.x #mpi-get.x mpi-rget.x rget.x new-rget.x
+obj = safemalloc.o barrier.o allgather.o
 
-%.o: %.c safemalloc.h
-	$(CC) $(CFLAGS) -c $< $(obj) -o $@
+%.o: %.c safemalloc.h coll.h
+	$(CC) $(CFLAGS) -c $< -o $@
 
-%.x: %.o safemalloc.o
-	$(LD) $(LDFLAGS) $< safemalloc.o -o $@
+%.x: %.o $(obj)
+	$(LD) $(LDFLAGS) $< $(obj) -o $@
 
 clean:
 	$(RM) $(RMFLAGS) *.o

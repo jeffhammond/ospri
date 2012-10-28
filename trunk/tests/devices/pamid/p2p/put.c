@@ -4,12 +4,12 @@
 #include <assert.h>
 #include <unistd.h>
 #include <pthread.h>
-#include <mpi.h>
 #include <pami.h>
 #include <hwi/include/bqc/A2_inlines.h>
 
 #include "safemalloc.h"
 #include "preamble.h"
+#include "coll.h"
 
 int main(int argc, char* argv[])
 {
