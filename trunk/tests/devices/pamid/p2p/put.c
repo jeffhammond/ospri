@@ -9,7 +9,6 @@
 #include <hwi/include/bqc/A2_inlines.h>
 
 #include "safemalloc.h"
-#include "barrier.h"
 
 //#define SLEEP sleep
 //#define SLEEP usleep
