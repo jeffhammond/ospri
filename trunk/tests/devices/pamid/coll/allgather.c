@@ -81,7 +81,7 @@ int main(int argc, char* argv[])
   TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Geometry_algorithms_query");
 
   /* allgather algs */
-  pami_xfer_type_t allgather_xfer   = PAMI_XFER_ALLREDUCE;
+  pami_xfer_type_t allgather_xfer   = PAMI_XFER_ALLGATHER;
   size_t num_allgather_alg[2];
 
   result = PAMI_Geometry_algorithms_num( world_geometry, allgather_xfer, num_allgather_alg );
