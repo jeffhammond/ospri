@@ -8,8 +8,8 @@ int main(int argc, char * argv[])
 	int * a = malloc(n*sizeof(int));
 	int * b = malloc(n*sizeof(int));
 
-	//int r = (int)PAMID_World_rank();
-	int s = (int)PAMID_World_size();
+	int rank = (int)PAMID_World_rank();
+	int size = (int)PAMID_World_size();
 
 	for (int i=0; i<n; i++)
 		a[i] = 1;
@@ -21,7 +21,7 @@ int main(int argc, char * argv[])
 
 	int errors = 0;
 	for (int i=0; i<n; i++)
-		if (b[i] != s)
+		if (b[i] != size)
 			errors++;
 
 	if (errors>0)
@@ -32,7 +32,8 @@ int main(int argc, char * argv[])
 
 	PAMID_Finalize();
 
-	printf("TEST DONE \n");
+	if (rank==0) printf("TEST DONE \n");
+    fflush(stdout);
 
 	return 0;
 }

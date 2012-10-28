@@ -7,9 +7,9 @@ int main(int argc, char * argv[])
 	const int n = 1000;
 	int * a = malloc(n*sizeof(int));
 
-	int r = (int)PAMID_World_rank();
+	size_t rank = PAMID_World_rank();
 
-	if (r==0)
+	if (rank==0)
 		for (int i=0; i<n; i++)
 			a[i] = 37373737;
 	else
@@ -30,7 +30,8 @@ int main(int argc, char * argv[])
 
 	PAMID_Finalize();
 
-	printf("TEST DONE \n");
+	if (rank==0) printf("TEST DONE \n");
+    fflush(stdout);
 
 	return 0;
 }

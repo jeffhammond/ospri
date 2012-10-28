@@ -8,7 +8,8 @@ int main(int argc, char * argv[])
 
 	PAMID_Finalize();
 
-	printf("TEST DONE \n");
+	if (PAMID_World_rank()==0) printf("TEST DONE \n");
+    fflush(stdout);
 
 	return 0;
 }

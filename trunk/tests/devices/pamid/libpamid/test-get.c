@@ -24,6 +24,7 @@ int main(int argc, char * argv[])
 	PAMID_Finalize();
 
 	if (rank==0) printf("TEST DONE \n");
+    fflush(stdout);
 
 	return 0;
 }
