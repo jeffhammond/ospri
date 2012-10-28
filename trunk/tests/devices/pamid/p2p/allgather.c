@@ -1,27 +1,6 @@
 #include <pami.h>
 #include "safemalloc.h"
-
-#define PRINT_SUCCESS 0
-
-#define PAMID_ASSERT(c,m) \
-		do { \
-			if (!(c)) { \
-				printf(m" FAILED\n"); \
-				fflush(stdout); \
-				abort(); \
-			} \
-			else if (PRINT_SUCCESS) { \
-				printf(m" SUCCEEDED \n"); \
-				fflush(stdout); \
-			} \
-		} \
-		while(0);
-
-void cb_done_allgather (void *ctxt, void * clientdata, pami_result_t err)
-{
-	int * active = (int *) clientdata;
-	(*active)--;
-}
+#include "preamble.h"
 
 int allgather(pami_geometry_t geometry, pami_context_t context, size_t count, void * sbuf, void * rbuf)
 {
@@ -47,7 +26,7 @@ int allgather(pami_geometry_t geometry, pami_context_t context, size_t count, vo
 	pami_xfer_t this;
 	volatile int active = 1;
 
-	this.cb_done                       = cb_done_allgather;
+	this.cb_done                       = cb_done;
 	this.cookie                        = (void*) &active;
 	this.algorithm                     = safe_algs[allgather_alg]; /* safe algs should (must?) work */
 	this.cmd.xfer_allgather.sndbuf     = sbuf;

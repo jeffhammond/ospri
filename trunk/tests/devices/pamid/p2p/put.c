@@ -9,43 +9,11 @@
 #include <hwi/include/bqc/A2_inlines.h>
 
 #include "safemalloc.h"
-
-//#define SLEEP sleep
-//#define SLEEP usleep
-#define SLEEP
-
-#define TEST_ASSERT(c,m) \
-        do { \
-        if (!(c)) { \
-                    printf(m" FAILED on rank %ld\n", world_rank); \
-                    fflush(stdout); \
-                  } \
-        else if (PRINT_SUCCESS) { \
-                    printf(m" SUCCEEDED on rank %ld\n", world_rank); \
-                    fflush(stdout); \
-                  } \
-        SLEEP(1); \
-        /*assert(c);*/ \
-        } \
-        while(0);
-
-static size_t world_size, world_rank = -1;
-
-void cb_done (void *ctxt, void * clientdata, pami_result_t err)
-{
-  int * active = (int *) clientdata;
-  (*active)--;
-}
+#include "preamble.h"
 
 int main(int argc, char* argv[])
 {
-  int status = MPI_SUCCESS; 
   pami_result_t result = PAMI_ERROR;
-
-  int provided = MPI_THREAD_SINGLE;
-  MPI_Init_thread(&argc, &argv, MPI_THREAD_MULTIPLE, &provided);
-  if (provided<MPI_THREAD_MULTIPLE) 
-    exit(provided);
 
   /* initialize the second client */
   char * clientname = "";
@@ -96,14 +64,13 @@ int main(int argc, char* argv[])
   for (int i=0; i<n; i++)
     local[i] = world_rank;
 
-  status = MPI_Barrier(MPI_COMM_WORLD);
-  TEST_ASSERT(result == MPI_SUCCESS,"MPI_Barrier");
+  result = barrier(world_geometry, contexts[0]);
+  TEST_ASSERT(result == PAMI_SUCCESS,"barrier");
 
   int ** shptrs = (int **) safemalloc( world_size * sizeof(int *) );
 
-  status = MPI_Allgather(&shared, sizeof(int *), MPI_BYTE, 
-                         shptrs,  sizeof(int *), MPI_BYTE, MPI_COMM_WORLD);
-  TEST_ASSERT(result == MPI_SUCCESS,"MPI_Allgather");
+  result = allgather(world_geometry, contexts[0], sizeof(int*), &shared, shptrs);
+  TEST_ASSERT(result == PAMI_SUCCESS,"allgather");
 
   int target = (world_rank>0 ? world_rank-1 : world_size-1);
   pami_endpoint_t target_ep;
@@ -121,7 +88,8 @@ int main(int argc, char* argv[])
   parameters.addr.remote  = shptrs[target];
   parameters.put.rdone_fn = cb_done;
 
-  barrier(world_geometry, contexts[0]);
+  result = barrier(world_geometry, contexts[0]);
+  TEST_ASSERT(result == PAMI_SUCCESS,"barrier");
 
   uint64_t t0 = GetTimeBase();
 
@@ -133,7 +101,7 @@ int main(int argc, char* argv[])
     //result = PAMI_Context_advance( contexts[0], 100);
     //TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Context_advance");
     result = PAMI_Context_trylock_advancev(contexts, 1, 1000);
-    //TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Context_trylock_advancev");
+    TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Context_trylock_advancev");
   }
 
   uint64_t t1 = GetTimeBase();
@@ -159,8 +127,10 @@ int main(int argc, char* argv[])
     printf("%ld: no errors :-) \n", (long)world_rank); 
 
   fflush(stdout);
-  SLEEP(1);
-  MPI_Barrier(MPI_COMM_WORLD);
+
+  result = barrier(world_geometry, contexts[0]);
+  TEST_ASSERT(result == PAMI_SUCCESS,"barrier");
+
   free(shptrs);
   free(local);
   free(shared);
@@ -177,10 +147,8 @@ int main(int argc, char* argv[])
   result = PAMI_Client_destroy( &client );
   TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Client_destroy");
 
-  status = MPI_Barrier(MPI_COMM_WORLD);
-  TEST_ASSERT(result == MPI_SUCCESS,"MPI_Barrier");
-
-  MPI_Finalize();
+  result = barrier(world_geometry, contexts[0]);
+  TEST_ASSERT(result == PAMI_SUCCESS,"barrier");
 
   if (world_rank==0)
     printf("%ld: end of test \n", world_rank );
