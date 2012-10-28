@@ -20,8 +20,9 @@ ifdef PROGRESS
     CFLAGS += -DPROGRESS_THREAD
 endif
 
-all: endpoint.x put.x mpi-put.x mpi-rput.x mpi-rput-ibm.x #mpi-get.x mpi-rget.x rget.x new-rget.x
 obj = safemalloc.o barrier.o allgather.o
+
+all: endpoint.x put.x mpi-put.x mpi-rput.x mpi-rput-ibm.x #mpi-get.x mpi-rget.x rget.x new-rget.x
 
 %.o: %.c safemalloc.h coll.h
 	$(CC) $(CFLAGS) -c $< -o $@

@@ -11,6 +11,29 @@
 #include "preamble.h"
 #include "coll.h"
 
+int put_context;
+pami_context_t * contexts;
+
+#ifdef PROGRESS_THREAD
+pthread_t Progress_thread;
+
+void * Progress_function(void * dummy)
+{
+	pami_result_t result = PAMI_ERROR;
+
+	while (1)
+	{
+        //result = PAMI_Context_advance( contexts[put_context], 1000);
+        //TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Context_advance");
+        result = PAMI_Context_trylock_advancev(&(contexts[put_context]), 1, 1000);
+        TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Context_trylock_advancev");
+		usleep(1);
+	}
+
+	return NULL;
+}
+#endif
+
 int main(int argc, char* argv[])
 {
   pami_result_t result = PAMI_ERROR;
@@ -33,14 +56,15 @@ int main(int argc, char* argv[])
   world_size   = config[0].value.intval;
   world_rank   = config[1].value.intval;
   num_contexts = config[2].value.intval;
+  TEST_ASSERT(num_contexts>1,"num_contexts>1");
 
   if (world_rank==0)
+  {
     printf("hello world from rank %ld of %ld \n", world_rank, world_size );
-  fflush(stdout);
-  SLEEP(1);
+    fflush(stdout);
+  }
 
   /* initialize the contexts */
-  pami_context_t * contexts;
   contexts = (pami_context_t *) safemalloc( num_contexts * sizeof(pami_context_t) );
 
   result = PAMI_Context_createv( client, NULL, 0, contexts, num_contexts );
@@ -50,6 +74,13 @@ int main(int argc, char* argv[])
   pami_geometry_t world_geometry;
   result = PAMI_Geometry_world(client, &world_geometry );
   TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Geometry_world");
+
+  put_context = (argc>2 ? atoi(argv[2]) : 0);
+
+#ifdef PROGRESS_THREAD
+  status = pthread_create(&Progress_thread, NULL, &Progress_function, NULL);
+  TEST_ASSERT(status==0, "pthread_create");
+#endif
 
   /************************************************************************/
 
@@ -74,7 +105,7 @@ int main(int argc, char* argv[])
 
   int target = (world_rank>0 ? world_rank-1 : world_size-1);
   pami_endpoint_t target_ep;
-  result = PAMI_Endpoint_create(client, (pami_task_t) target, 0, &target_ep);
+  result = PAMI_Endpoint_create(client, (pami_task_t) target, put_context, &target_ep);
   TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Endpoint_create");
 
   int active = 2;
@@ -93,25 +124,30 @@ int main(int argc, char* argv[])
 
   uint64_t t0 = GetTimeBase();
 
-  result = PAMI_Put(contexts[0], &parameters);
+  //result = PAMI_Put(contexts[0], &parameters);
+  result = PAMI_Put(contexts[put_context], &parameters);
   TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Put");
 
   while (active)
   {
     //result = PAMI_Context_advance( contexts[0], 100);
+    //result = PAMI_Context_advance( contexts[put_context], 100);
     //TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Context_advance");
-    result = PAMI_Context_trylock_advancev(contexts, 1, 1000);
+    result = PAMI_Context_trylock_advancev(&(contexts[0]), 2, 1000);
     TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Context_trylock_advancev");
   }
 
   uint64_t t1 = GetTimeBase();
   uint64_t dt = t1-t0;
 
+#ifndef PROGRESS_THREAD
+  barrier(world_geometry, contexts[put_context]);
+#endif
+
   barrier(world_geometry, contexts[0]);
 
   printf("%ld: PAMI_Put of %d bytes achieves %lf MB/s \n", (long)world_rank, n, 1.6e9*1e-6*(double)bytes/(double)dt );
   fflush(stdout);
-  SLEEP(1);
 
   int errors = 0;
   
@@ -137,6 +173,14 @@ int main(int argc, char* argv[])
 
   /************************************************************************/
 
+#ifdef PROGRESS_THREAD
+  status = pthread_cancel(Progress_thread);
+  TEST_ASSERT(status==0, "pthread_cancel");
+#endif
+
+  result = barrier(world_geometry, contexts[0]);
+  TEST_ASSERT(result == PAMI_SUCCESS,"barrier");
+
   /* finalize the contexts */
   result = PAMI_Context_destroyv( contexts, num_contexts );
   TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Context_destroyv");
@@ -147,13 +191,9 @@ int main(int argc, char* argv[])
   result = PAMI_Client_destroy( &client );
   TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Client_destroy");
 
-  result = barrier(world_geometry, contexts[0]);
-  TEST_ASSERT(result == PAMI_SUCCESS,"barrier");
-
   if (world_rank==0)
     printf("%ld: end of test \n", world_rank );
   fflush(stdout);
-  SLEEP(1);
 
   return 0;
 }
