@@ -26,7 +26,7 @@
 
 static size_t world_size, world_rank = -1;
 
-void cb_done (void *ctxt, void * clientdata, pami_result_t err)
+static void cb_done (void *ctxt, void * clientdata, pami_result_t err)
 {
   int * active = (int *) clientdata;
   (*active)--;
