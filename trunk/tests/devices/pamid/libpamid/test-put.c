@@ -35,6 +35,9 @@ int main(int argc, char * argv[])
     printf("PAMID_Put_endtoend from rank %ld to %ld of %ld bytes took %llu cycles (%lf MB/s) \n",
             rank, target, n, (unsigned long long)dt, 1.0e-6 * n / dt);
 
+    for (int i=0; i<100; i++)
+        PAMID_Progress_poke();
+
 	PAMID_Barrier_world();
 
 	int same = memcmp( src, baseptrs[rank], n);

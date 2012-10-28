@@ -43,3 +43,15 @@ void * PAMID_Progress_function(void * dummy)
 	}
 	return NULL;
 }
+
+int PAMID_Progress_poke(void)
+{
+	pami_result_t rc = PAMI_ERROR;
+
+	int c0 = PAMID_INTERNAL_STATE.context_roles.local_offload_context; 
+    int c1 = PAMID_INTERNAL_STATE.context_roles.remote_rmw_context; 
+	rc = PAMI_Context_trylock_advancev( &(PAMID_INTERNAL_STATE.pami_contexts[c0]), c1-c0 , 1000 );
+    PAMID_ASSERT(rc==PAMI_SUCCESS,"PAMI_Context_trylock_advancev");
+
+	return PAMI_SUCCESS;
+}

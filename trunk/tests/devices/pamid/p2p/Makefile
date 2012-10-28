@@ -2,12 +2,12 @@ ifndef COMPILER
   COMPILER = GNU
 endif
 
-ifeq	($(COMPILER),GNU)
+ifeq ($(COMPILER),GNU)
   CC      = mpicc
   COPT    = -g -Wall -std=gnu99 -O2 -mcpu=a2 -mtune=a2
 endif
 
-ifeq	($(COMPILER),XL)
+ifeq ($(COMPILER),XL)
   CC      = mpixlc_r
   COPT    = -g -qstrict --qlanglvl=extc99 -O3 -qarch=qp -qtune=qp
 endif
@@ -15,6 +15,10 @@ endif
 LD      = $(CC)
 CFLAGS  = $(COPT) -I.
 LDFLAGS = $(COPT) -lpthread
+
+ifdef PROGRESS
+    CFLAGS += -DPROGRESS_THREAD
+endif
 
 all: safemalloc.o endpoint.x mpi-get.x mpi-put.x mpi-rget.x mpi-rput.x mpi-rput-ibm.x rget.x new-rget.x
 
