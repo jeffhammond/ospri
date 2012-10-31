@@ -131,8 +131,8 @@ int main(int argc, char* argv[])
 
   uint64_t t0 = GetTimeBase();
 
-  result = PAMI_Put(contexts[0], &parameters);
-  TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Put");
+  result = PAMI_Rput(contexts[0], &parameters);
+  TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Rput");
 
   while (active)
   {
