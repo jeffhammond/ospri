@@ -89,7 +89,7 @@ int main(int argc, char* argv[])
     shared[i] = -1;
 
   pami_memregion_t shared_mr;
-  result = PAMI_Memregion_create(contexts[0], shared, bytes, &bytes_out, &shared_mr);
+  result = PAMI_Memregion_create(contexts[1], shared, bytes, &bytes_out, &shared_mr);
   TEST_ASSERT(result == PAMI_SUCCESS && bytes==bytes_out,"PAMI_Memregion_create");
 
   int *  local  = (int *) safemalloc(bytes);
@@ -165,7 +165,8 @@ int main(int argc, char* argv[])
 
   if (errors>0)
     for (int i=0; i<n; i++)
-      printf("%ld: shared[%d] = %d (%d) \n", (long)world_rank, i, shared[i], target);
+      if (shared[i] != target)
+        printf("%ld: shared[%d] = %d (%d) \n", (long)world_rank, i, shared[i], target);
   else
     printf("%ld: no errors :-) \n", (long)world_rank); 
 

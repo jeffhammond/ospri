@@ -152,7 +152,8 @@ int main(int argc, char* argv[])
 
   if (errors>0)
     for (int i=0; i<n; i++)
-      printf("%ld: local[%d] = %d (%d) \n", (long)world_rank, i, local[i], target);
+      if (local[i] != target)
+        printf("%ld: local[%d] = %d (%d) \n", (long)world_rank, i, local[i], target);
   else
     printf("%ld: no errors :-) \n", (long)world_rank); 
 

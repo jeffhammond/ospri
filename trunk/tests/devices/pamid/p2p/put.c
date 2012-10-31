@@ -155,7 +155,8 @@ int main(int argc, char* argv[])
 
   if (errors>0)
     for (int i=0; i<n; i++)
-      printf("%ld: shared[%d] = %d (%d) \n", (long)world_rank, i, shared[i], target);
+      if (shared[i] != target)
+        printf("%ld: shared[%d] = %d (%d) \n", (long)world_rank, i, shared[i], target);
   else
     printf("%ld: no errors :-) \n", (long)world_rank); 
 
