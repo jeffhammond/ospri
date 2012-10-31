@@ -144,7 +144,8 @@ int main(int argc, char* argv[])
 
   int errors = 0;
   
-  target = (world_rank<(world_size-1) ? world_rank+1 : 0);
+  //target = (world_rank<(world_size-1) ? world_rank+1 : 0);
+  target = (world_rank>0 ? world_rank-1 : world_size-1);
   for (int i=0; i<n; i++)
     if (local[i] != target)
        errors++;

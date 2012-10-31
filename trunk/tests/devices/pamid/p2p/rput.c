@@ -97,7 +97,7 @@ int main(int argc, char* argv[])
     local[i] = world_rank;
 
   pami_memregion_t local_mr;
-  result = PAMI_Memregion_create(contexts[0], shared, bytes, &bytes_out, &local_mr);
+  result = PAMI_Memregion_create(contexts[0], local, bytes, &bytes_out, &local_mr);
   TEST_ASSERT(result == PAMI_SUCCESS && bytes==bytes_out,"PAMI_Memregion_create");
 
   result = barrier(world_geometry, contexts[0]);
@@ -148,9 +148,12 @@ int main(int argc, char* argv[])
 #ifdef PROGRESS_THREAD
   /* barrier on non-progressing context to make sure CHT does its job */
   barrier(world_geometry, contexts[0]);
+#else
+  /* barrier on remote context since otherwise put cannot complete */
+  barrier(world_geometry, contexts[1]);
 #endif
 
-  printf("%ld: PAMI_Put of %d bytes achieves %lf MB/s \n", (long)world_rank, n, 1.6e9*1e-6*(double)bytes/(double)dt );
+  printf("%ld: PAMI_Rput of %d bytes achieves %lf MB/s \n", (long)world_rank, n, 1.6e9*1e-6*(double)bytes/(double)dt );
   fflush(stdout);
 
   int errors = 0;

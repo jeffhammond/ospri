@@ -44,7 +44,6 @@ int main(int argc, char* argv[])
   if (world_rank==0)
     printf("hello world from rank %ld of %ld \n", world_rank, world_size );
   fflush(stdout);
-  SLEEP(1);
 
   /* initialize the contexts */
   pami_context_t * contexts;
@@ -106,7 +105,6 @@ int main(int argc, char* argv[])
   uint64_t dt = t1-t0;
   printf("%ld: PAMI_Get of %d bytes achieves %lf MB/s \n", (long)world_rank, n, 1.6e9*1e-6*(double)bytes/(double)dt );
   fflush(stdout);
-  SLEEP(1);
 
   int errors = 0;
   
@@ -121,7 +119,6 @@ int main(int argc, char* argv[])
     printf("%ld: no errors :-) \n", (long)world_rank); 
 
   fflush(stdout);
-  SLEEP(1);
   MPI_Barrier(MPI_COMM_WORLD);
   free(shptrs);
   free(local);
@@ -147,7 +144,6 @@ int main(int argc, char* argv[])
   if (world_rank==0)
     printf("%ld: end of test \n", world_rank );
   fflush(stdout);
-  SLEEP(1);
 
   return 0;
 }

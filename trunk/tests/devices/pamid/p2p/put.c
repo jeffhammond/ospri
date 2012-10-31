@@ -138,6 +138,9 @@ int main(int argc, char* argv[])
 #ifdef PROGRESS_THREAD
   /* barrier on non-progressing context to make sure CHT does its job */
   barrier(world_geometry, contexts[0]);
+#else
+  /* barrier on remote context since otherwise put cannot complete */
+  barrier(world_geometry, contexts[1]);
 #endif
 
   printf("%ld: PAMI_Put of %d bytes achieves %lf MB/s \n", (long)world_rank, n, 1.6e9*1e-6*(double)bytes/(double)dt );

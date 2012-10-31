@@ -97,7 +97,7 @@ int main(int argc, char* argv[])
     local[i] = -1;
 
   pami_memregion_t local_mr;
-  result = PAMI_Memregion_create(contexts[0], shared, bytes, &bytes_out, &local_mr);
+  result = PAMI_Memregion_create(contexts[0], local, bytes, &bytes_out, &local_mr);
   TEST_ASSERT(result == PAMI_SUCCESS && bytes==bytes_out,"PAMI_Memregion_create");
 
   result = barrier(world_geometry, contexts[0]);
@@ -154,7 +154,8 @@ int main(int argc, char* argv[])
 
   int errors = 0;
   
-  target = (world_rank<(world_size-1) ? world_rank+1 : 0);
+  //target = (world_rank<(world_size-1) ? world_rank+1 : 0);
+  target = (world_rank>0 ? world_rank-1 : world_size-1);
   for (int i=0; i<n; i++)
     if (local[i] != target)
        errors++;
