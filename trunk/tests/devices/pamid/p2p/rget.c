@@ -116,8 +116,8 @@ int main(int argc, char* argv[])
   result = barrier(world_geometry, contexts[0]);
   TEST_ASSERT(result == PAMI_SUCCESS,"barrier");
 
-  int active = 2;
-  pami_rput_simple_t parameters;
+  int active = 1;
+  pami_rget_simple_t parameters;
   parameters.rma.dest     		= target_ep;
   //parameters.rma.hints    	  = ;
   parameters.rma.bytes    		= bytes;
@@ -127,12 +127,11 @@ int main(int argc, char* argv[])
   parameters.rdma.local.offset  = 0;
   parameters.rdma.remote.mr     = &shared_mr;
   parameters.rdma.remote.offset = 0;
-  parameters.put.rdone_fn       = cb_done;
 
   uint64_t t0 = GetTimeBase();
 
-  result = PAMI_Rput(contexts[0], &parameters);
-  TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Rput");
+  result = PAMI_Rget(contexts[0], &parameters);
+  TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Rget");
 
   while (active)
   {
@@ -157,12 +156,12 @@ int main(int argc, char* argv[])
   
   target = (world_rank<(world_size-1) ? world_rank+1 : 0);
   for (int i=0; i<n; i++)
-    if (shared[i] != target)
+    if (local[i] != target)
        errors++;
 
   if (errors>0)
     for (int i=0; i<n; i++)
-      printf("%ld: shared[%d] = %d (%d) \n", (long)world_rank, i, shared[i], target);
+      printf("%ld: local[%d] = %d (%d) \n", (long)world_rank, i, local[i], target);
   else
     printf("%ld: no errors :-) \n", (long)world_rank); 
 
