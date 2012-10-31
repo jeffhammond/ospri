@@ -5,194 +5,175 @@
 #include <unistd.h>
 #include <pthread.h>
 #include <pami.h>
+#include <hwi/include/bqc/A2_inlines.h>
 
-//#define SLEEP sleep
-#define SLEEP usleep
+#include "safemalloc.h"
+#include "preamble.h"
+#include "coll.h"
 
-#define PRINT_SUCCESS 0
-
-#define TEST_ASSERT(c,m) \
-        do { \
-        if (!(c)) { \
-                    printf(m" FAILED on rank %ld\n", world_rank); \
-                    fflush(stdout); \
-                  } \
-        else if (PRINT_SUCCESS) { \
-                    printf(m" SUCCEEDED on rank %ld\n", world_rank); \
-                    fflush(stdout); \
-                  } \
-        SLEEP(1); \
-        /*assert(c);*/ \
-        } \
-        while(0);
-
-static size_t world_size, world_rank = -1;
-
-void cb_done (void *ctxt, void * clientdata, pami_result_t err)
-{
-  int * active = (int *) clientdata;
-  (*active)--;
-}
-
-pami_client_t client;
-pami_geometry_t world_geometry;
 pami_context_t * contexts;
 
-void barrier(void)
+#define PROGRESS_THREAD
+
+#ifdef PROGRESS_THREAD
+pthread_t Progress_thread;
+
+void * Progress_function(void * dummy)
 {
-  pami_result_t result = PAMI_ERROR;
+	pami_result_t result = PAMI_ERROR;
 
-  pami_xfer_type_t barrier_xfer   = PAMI_XFER_BARRIER;
-  size_t num_barrier_alg[2];
+	while (1)
+	{
+        result = PAMI_Context_trylock_advancev(&(contexts[1]), 1, 1000);
+        TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Context_trylock_advancev");
+		usleep(1);
+	}
 
-  result = PAMI_Geometry_algorithms_num( world_geometry, barrier_xfer, num_barrier_alg );
-  TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Geometry_algorithms_num - barrier");
-
-  pami_algorithm_t * safe_barrier_algs = (pami_algorithm_t *) malloc( num_barrier_alg[0] * sizeof(pami_algorithm_t) );
-  pami_metadata_t  * safe_barrier_meta = (pami_metadata_t  *) malloc( num_barrier_alg[0] * sizeof(pami_metadata_t)  );
-  pami_algorithm_t * fast_barrier_algs = (pami_algorithm_t *) malloc( num_barrier_alg[1] * sizeof(pami_algorithm_t) );
-  pami_metadata_t  * fast_barrier_meta = (pami_metadata_t  *) malloc( num_barrier_alg[1] * sizeof(pami_metadata_t)  );
-  TEST_ASSERT(safe_barrier_algs!=NULL && safe_barrier_meta!=NULL && fast_barrier_algs!=NULL && fast_barrier_meta!=NULL,"malloc");
-  result = PAMI_Geometry_algorithms_query( world_geometry, barrier_xfer,
-                                           safe_barrier_algs, safe_barrier_meta, num_barrier_alg[0],
-                                           fast_barrier_algs, fast_barrier_meta, num_barrier_alg[1] );
-  TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Geometry_algorithms_query - barrier");
-
-  /* perform a barrier */
-  pami_xfer_t barrier;
-  volatile int active = 0;
-
-  active = 1;
-  barrier.cb_done   = cb_done;
-  barrier.cookie    = (void*) &active;
-  barrier.algorithm = safe_barrier_algs[0];
-
-  result = PAMI_Collective( contexts[0], &barrier );
-  TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Collective - barrier");
-
-  while (active)
-    result = PAMI_Context_advance( contexts[0], 1 );
-  TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Context_advance");
-
-  free(safe_barrier_algs);
-  free(safe_barrier_meta);
-  free(fast_barrier_algs);
-  free(fast_barrier_meta);
-
-  return;
+	return NULL;
 }
+#endif
 
 int main(int argc, char* argv[])
 {
   pami_result_t result = PAMI_ERROR;
 
-  /* initialize the client */
+  /* initialize the second client */
   char * clientname = "";
+  pami_client_t client;
   result = PAMI_Client_create(clientname, &client, NULL, 0);
   TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Client_create");
 
   /* query properties of the client */
-  pami_configuration_t config;
+  pami_configuration_t config[3];
   size_t num_contexts;
 
-  config.name = PAMI_CLIENT_NUM_TASKS;
-  result = PAMI_Client_query( client, &config,1);
+  config[0].name = PAMI_CLIENT_NUM_TASKS;
+  config[1].name = PAMI_CLIENT_TASK_ID;
+  config[2].name = PAMI_CLIENT_NUM_CONTEXTS;
+  result = PAMI_Client_query(client, config, 3);
   TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Client_query");
-  world_size = config.value.intval;
+  world_size   = config[0].value.intval;
+  world_rank   = config[1].value.intval;
+  num_contexts = config[2].value.intval;
+  TEST_ASSERT(num_contexts>1,"num_contexts>1");
 
-  config.name = PAMI_CLIENT_TASK_ID;
-  result = PAMI_Client_query( client, &config,1);
-  TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Client_query");
-  world_rank = config.value.intval;
-  printf("hello world from rank %ld of %ld \n", world_rank, world_size );
-  fflush(stdout);
-  SLEEP(1);
-
-  config.name = PAMI_CLIENT_NUM_CONTEXTS;
-  result = PAMI_Client_query( client, &config, 1);
-  TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Client_query");
-  num_contexts = config.value.intval;
+  if (world_rank==0)
+  {
+    printf("hello world from rank %ld of %ld \n", world_rank, world_size );
+    fflush(stdout);
+  }
 
   /* initialize the contexts */
-  contexts = (pami_context_t *) malloc( num_contexts * sizeof(pami_context_t) );
-  TEST_ASSERT(contexts!=NULL,"malloc");
+  contexts = (pami_context_t *) safemalloc( num_contexts * sizeof(pami_context_t) );
 
-  result = PAMI_Context_createv( client, &config, 0, contexts, num_contexts );
+  result = PAMI_Context_createv( client, NULL, 0, contexts, num_contexts );
   TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Context_createv");
-
-  printf("%ld contexts were created by rank %ld \n", num_contexts, world_rank );
-  fflush(stdout);
-  SLEEP(1);
 
   /* setup the world geometry */
   pami_geometry_t world_geometry;
-
-  result = PAMI_Geometry_world( client, &world_geometry );
+  result = PAMI_Geometry_world(client, &world_geometry );
   TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Geometry_world");
 
-  pami_xfer_type_t allgather_xfer = PAMI_XFER_ALLGATHER;
-  size_t num_allgather_alg[2];
+#ifdef PROGRESS_THREAD
+  int status = pthread_create(&Progress_thread, NULL, &Progress_function, NULL);
+  TEST_ASSERT(status==0, "pthread_create");
+#endif
 
-  result = PAMI_Geometry_algorithms_num( world_geometry, allgather_xfer, num_allgather_alg );
-  TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Geometry_algorithms_num - allgather");
+  /************************************************************************/
 
-  pami_algorithm_t * safe_allgather_algs = (pami_algorithm_t *) malloc( num_allgather_alg[0] * sizeof(pami_algorithm_t) );
-  pami_metadata_t  * safe_allgather_meta = (pami_metadata_t  *) malloc( num_allgather_alg[0] * sizeof(pami_metadata_t)  );
-  pami_algorithm_t * fast_allgather_algs = (pami_algorithm_t *) malloc( num_allgather_alg[1] * sizeof(pami_algorithm_t) );
-  pami_metadata_t  * fast_allgather_meta = (pami_metadata_t  *) malloc( num_allgather_alg[1] * sizeof(pami_metadata_t)  );
-  TEST_ASSERT(safe_allgather_algs!=NULL && safe_allgather_meta!=NULL && fast_allgather_algs!=NULL && fast_allgather_meta!=NULL,"malloc");
-  result = PAMI_Geometry_algorithms_query( world_geometry, allgather_xfer,
-                                           safe_allgather_algs, safe_allgather_meta, num_allgather_alg[0],
-                                           fast_allgather_algs, fast_allgather_meta, num_allgather_alg[1] );
-  TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Geometry_algorithms_query - allgather");
+  int n = (argc>1 ? atoi(argv[1]) : 1000000);
 
-  /* initialize the allgather buffers */
-  size_t alg     = ( argc > 1 ? atoi(argv[1]) : 0 );
-  size_t bufsize = ( argc > 2 ? atoi(argv[2]) : 1000 );
+  size_t bytes = n * sizeof(int);
+  int *  shared = (int *) safemalloc(bytes);
+  for (int i=0; i<n; i++)
+    shared[i] = -1;
 
-  int * sbuf = NULL;
-  int * rbuf = NULL;
+  int *  local  = (int *) safemalloc(bytes);
+  for (int i=0; i<n; i++)
+    local[i] = world_rank;
 
-  sbuf = malloc( bufsize * sizeof(int) );
-  rbuf = malloc( bufsize * world_size * sizeof(int) );
-  TEST_ASSERT(sbuf!=NULL && rbuf!=NULL,"malloc");
+  result = barrier(world_geometry, contexts[0]);
+  TEST_ASSERT(result == PAMI_SUCCESS,"barrier");
 
-  size_t i, j;
-  for ( i = 0 ; i < bufsize ; i++ )                  sbuf[i] = (int) world_rank;
-  for ( i = 0 ; i < ( bufsize * world_size ) ; i++ ) rbuf[i] = -1;
+  int ** shptrs = (int **) safemalloc( world_size * sizeof(int *) );
 
-  barrier();
+  result = allgather(world_geometry, contexts[0], sizeof(int*), &shared, shptrs);
+  TEST_ASSERT(result == PAMI_SUCCESS,"allgather");
 
-  /* perform allgather */
-  pami_xfer_t allgather;
+  int target = (world_rank>0 ? world_rank-1 : world_size-1);
+  pami_endpoint_t target_ep;
+  result = PAMI_Endpoint_create(client, (pami_task_t) target, 1, &target_ep);
+  TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Endpoint_create");
 
-  volatile int active = 0;
-  allgather.cb_done   = cb_done;
-  allgather.cookie    = (void*) &active;
-  allgather.algorithm = safe_allgather_algs[0];
+  int active = 2;
+  pami_put_simple_t parameters;
+  parameters.rma.dest     = target_ep;
+  //parameters.rma.hints    = ;
+  parameters.rma.bytes    = bytes;
+  parameters.rma.cookie   = &active;
+  parameters.rma.done_fn  = cb_done;
+  parameters.addr.local   = local;
+  parameters.addr.remote  = shptrs[target];
+  parameters.put.rdone_fn = cb_done;
 
-  allgather.cmd.xfer_allgather.sndbuf     = (void*) sbuf;
-  allgather.cmd.xfer_allgather.stype      = PAMI_TYPE_SIGNED_INT;
-  allgather.cmd.xfer_allgather.stypecount = bufsize;
-  allgather.cmd.xfer_allgather.rcvbuf     = (void*) rbuf;
-  allgather.cmd.xfer_allgather.rtype      = PAMI_TYPE_SIGNED_INT;
-  allgather.cmd.xfer_allgather.rtypecount = bufsize;
+  result = barrier(world_geometry, contexts[0]);
+  TEST_ASSERT(result == PAMI_SUCCESS,"barrier");
 
-  active = 1;
-  if ( world_rank == 0 ) printf("trying allgather of %ld bytes with algorithm %ld (%s) \n", bufsize, alg, safe_allgather_meta[alg].name );
-  result = PAMI_Collective( contexts[0], &allgather );
-  TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Collective - allgather");
+  uint64_t t0 = GetTimeBase();
+
+  result = PAMI_Put(contexts[0], &parameters);
+  TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Put");
+
   while (active)
-    result = PAMI_Context_advance( contexts[0], 1 );
-  TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Context_advance");
+  {
+    //result = PAMI_Context_advance( contexts[0], 100);
+    //TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Context_advance");
+    result = PAMI_Context_trylock_advancev(&(contexts[0]), 1, 1000);
+    TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Context_trylock_advancev");
+  }
 
-  barrier();
+  uint64_t t1 = GetTimeBase();
+  uint64_t dt = t1-t0;
 
-  for ( i = 0 ; i < world_size ; i++ )
-    for ( j = 0 ; j < bufsize ; j++ ) 
-      if ( rbuf[ i * bufsize + j ] != i)
-        printf("%ld: rbuf[%ld] = %d \n", world_rank, i * bufsize + j, rbuf[ i * bufsize + j ] );
-  if ( world_rank == 0 ) printf("allgather successful\n");
+#ifdef PROGRESS_THREAD
+  /* barrier on non-progressing context to make sure CHT does its job */
+  barrier(world_geometry, contexts[0]);
+#endif
+
+  printf("%ld: PAMI_Put of %d bytes achieves %lf MB/s \n", (long)world_rank, n, 1.6e9*1e-6*(double)bytes/(double)dt );
+  fflush(stdout);
+
+  int errors = 0;
+  
+  target = (world_rank<(world_size-1) ? world_rank+1 : 0);
+  for (int i=0; i<n; i++)
+    if (shared[i] != target)
+       errors++;
+
+  if (errors>0)
+    for (int i=0; i<n; i++)
+      printf("%ld: local[%d] = %d (%d) \n", (long)world_rank, i, local[i], target);
+  else
+    printf("%ld: no errors :-) \n", (long)world_rank); 
+
+  fflush(stdout);
+
+  result = barrier(world_geometry, contexts[0]);
+  TEST_ASSERT(result == PAMI_SUCCESS,"barrier");
+
+  free(shptrs);
+  free(local);
+  free(shared);
+
+  /************************************************************************/
+
+#ifdef PROGRESS_THREAD
+  status = pthread_cancel(Progress_thread);
+  TEST_ASSERT(status==0, "pthread_cancel");
+#endif
+
+  result = barrier(world_geometry, contexts[0]);
+  TEST_ASSERT(result == PAMI_SUCCESS,"barrier");
 
   /* finalize the contexts */
   result = PAMI_Context_destroyv( contexts, num_contexts );
@@ -204,9 +185,9 @@ int main(int argc, char* argv[])
   result = PAMI_Client_destroy( &client );
   TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Client_destroy");
 
-  printf("%ld: end of test \n", world_rank );
+  if (world_rank==0)
+    printf("%ld: end of test \n", world_rank );
   fflush(stdout);
-  SLEEP(1);
 
   return 0;
 }
