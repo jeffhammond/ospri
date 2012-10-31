@@ -22,7 +22,10 @@ endif
 
 obj = safemalloc.o barrier.o allgather.o
 
-all: endpoint.x put.x mpi-put.x mpi-rput.x mpi-rput-ibm.x #mpi-get.x mpi-rget.x rget.x new-rget.x
+all: mpi pami
+
+pami: endpoint.x put.x rput.x get.x rget.x
+mpi: mpi-put.x mpi-rput.x mpi-rput-ibm.x mpi-get.x mpi-rget.x
 
 %.o: %.c safemalloc.h coll.h
 	$(CC) $(CFLAGS) -c $< -o $@
