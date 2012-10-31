@@ -86,11 +86,11 @@ int main(int argc, char* argv[])
   size_t bytes = n * sizeof(int);
   int *  shared = (int *) safemalloc(bytes);
   for (int i=0; i<n; i++)
-    shared[i] = -1;
+    shared[i] = world_rank;
 
   int *  local  = (int *) safemalloc(bytes);
   for (int i=0; i<n; i++)
-    local[i] = world_rank;
+    local[i] = -1;
 
   result = barrier(world_geometry, contexts[0]);
   TEST_ASSERT(result == PAMI_SUCCESS,"barrier");
@@ -108,8 +108,8 @@ int main(int argc, char* argv[])
   result = barrier(world_geometry, contexts[0]);
   TEST_ASSERT(result == PAMI_SUCCESS,"barrier");
 
-  int active = 2;
-  pami_put_simple_t parameters;
+  int active = 1;
+  pami_get_simple_t parameters;
   parameters.rma.dest     = target_ep;
   //parameters.rma.hints    = ;
   parameters.rma.bytes    = bytes;
@@ -117,27 +117,10 @@ int main(int argc, char* argv[])
   parameters.rma.done_fn  = cb_done;
   parameters.addr.local   = local;
   parameters.addr.remote  = shptrs[target];
-  parameters.put.rdone_fn = cb_done;
 
   uint64_t t0 = GetTimeBase();
 
-  result = PAMI_Put(contexts[0], &parameters);
-  TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Put");
-
-  int active = 1;
-  pami_rget_simple_t parameters;
-  parameters.rma.dest           = target_ep;
-  parameters.rma.bytes          = bytes;
-  parameters.rma.cookie         = &active;
-  parameters.rma.done_fn        = cb_done;
-  parameters.rdma.local.mr      = &local_mr;
-  parameters.rdma.local.offset  = 0;
-  parameters.rdma.remote.mr     = &shared_mr;
-  parameters.rdma.remote.offset = 0;
-
-  uint64_t t0 = GetTimeBase();
-
-  result = PAMI_Rget(contexts[0], &parameters);
+  result = PAMI_Get(contexts[0], &parameters);
   TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Rget");
 
   while (active)
@@ -156,14 +139,14 @@ int main(int argc, char* argv[])
   barrier(world_geometry, contexts[0]);
 #endif
 
-  printf("%ld: PAMI_Put of %d bytes achieves %lf MB/s \n", (long)world_rank, n, 1.6e9*1e-6*(double)bytes/(double)dt );
+  printf("%ld: PAMI_Get of %d bytes achieves %lf MB/s \n", (long)world_rank, n, 1.6e9*1e-6*(double)bytes/(double)dt );
   fflush(stdout);
 
   int errors = 0;
   
   target = (world_rank<(world_size-1) ? world_rank+1 : 0);
   for (int i=0; i<n; i++)
-    if (shared[i] != target)
+    if (local[i] != target)
        errors++;
 
   if (errors>0)
