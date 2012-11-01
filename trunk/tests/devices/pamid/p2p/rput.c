@@ -125,7 +125,7 @@ int main(int argc, char* argv[])
   parameters.rma.done_fn  		= cb_done;
   parameters.rdma.local.mr      = &local_mr;
   parameters.rdma.local.offset  = 0;
-  parameters.rdma.remote.mr     = &shared_mr;
+  parameters.rdma.remote.mr     = &shmrs[target];
   parameters.rdma.remote.offset = 0;
   parameters.put.rdone_fn       = cb_done;
 
