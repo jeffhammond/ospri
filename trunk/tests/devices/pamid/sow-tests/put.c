@@ -59,9 +59,8 @@ int main(int argc, char* argv[])
 
   /************************************************************************/
 
+  for (int n=1; n<=67108864; n*=2)
   {
-    int n = (argc>1 ? atoi(argv[1]) : 1000000);
-
     size_t bytes = n * sizeof(int);
     int *  shared = (int *) safemalloc(bytes);
     for (int i=0; i<n; i++)
@@ -140,6 +139,9 @@ int main(int argc, char* argv[])
       printf("%ld: no errors :-) \n", (long)world_rank); 
 
     fflush(stdout);
+
+    if (errors>0)
+      exit(13);
 
     result = barrier(world_geometry, contexts[0]);
     TEST_ASSERT(result == PAMI_SUCCESS,"barrier");
