@@ -188,8 +188,13 @@ int main(int argc, char* argv[])
   /************************************************************************/
 
 #ifdef PROGRESS_THREAD
+  void * rv;
+
   status = pthread_cancel(Progress_thread);
   TEST_ASSERT(status==0, "pthread_cancel");
+
+  status = pthread_join(Progress_thread, &rv);
+  TEST_ASSERT(status==0, "pthread_join");
 #endif
 
   result = barrier(world_geometry, contexts[0]);
