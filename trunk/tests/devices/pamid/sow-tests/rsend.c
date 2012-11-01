@@ -11,9 +11,10 @@
 
 int main(int argc, char* argv[])
 {
-  int provided = MPI_THREAD_SINGLE;
-  MPI_Init_thread(&argc, &argv, MPI_THREAD_FUNNELED, &provided);
-  if (provided<MPI_THREAD_MULTIPLE) 
+  int requested = MPI_THREAD_FUNNELED;
+  int provided  = MPI_THREAD_SINGLE;
+  MPI_Init_thread(&argc, &argv, requested, &provided);
+  if (provided<requested)
     exit(provided);
 
   int world_rank, world_size;
