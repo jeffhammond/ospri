@@ -40,17 +40,18 @@ int main(int argc, char* argv[])
   for (int i=0; i<n; i++)
     sbuf[i] = world_rank;
 
-  MPI_Barrier(MPI_COMM_WORLD);
-
   int send_to   = (world_rank>0 ? world_rank-1 : world_size-1);
   int recv_from = (world_rank<(world_size-1) ? world_rank+1 : 0);
 
   MPI_Request req[2];
 
+  MPI_Irecv( rbuf, n, MPI_INT, recv_from, 0, MPI_COMM_WORLD, &req[0] );
+
+  MPI_Barrier(MPI_COMM_WORLD);
+
   uint64_t t0 = GetTimeBase();
 
-  MPI_Irecv( rbuf, n, MPI_INT, recv_from, 0, MPI_COMM_WORLD, &req[0] );
-  MPI_Isend( sbuf, n, MPI_INT, send_to,   0, MPI_COMM_WORLD, &req[1] );
+  MPI_Irsend( sbuf, n, MPI_INT, send_to,   0, MPI_COMM_WORLD, &req[1] );
   MPI_Waitall( 2, req, MPI_STATUSES_IGNORE ); 
 
   uint64_t t1 = GetTimeBase();
@@ -58,7 +59,7 @@ int main(int argc, char* argv[])
 
   MPI_Barrier(MPI_COMM_WORLD);
 
-  printf("%d: MPI_Isend/Irecv/Waitall of %d bytes achieves %lf MB/s \n", world_rank, n, 1.6e9*1e-6*(double)bytes/(double)dt );
+  printf("%d: MPI_Irsend/Irecv/Waitall of %d bytes achieves %lf MB/s \n", world_rank, n, 1.6e9*1e-6*(double)bytes/(double)dt );
   fflush(stdout);
 
   int errors = 0;
