@@ -1,0 +1,2 @@
+#!/bin/bash
+for i in mpi-get mpi-put mpi-rget mpi-rput ; do qsub -t 30 -n 2 --mode=c2 --env PAMID_VERBOSE=1:PAMI_CLIENTS="MPI," -O $i.\$jobid ./$i.x ; done

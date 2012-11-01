@@ -1,0 +1,2 @@
+for n in 2 4 8 128 ; do for t in 1 2 4 8 16 32 ; do for i in 1 2 4 8 16 32 64 128 256 512 1024 2048 4096 8192 16384 32768 50000 100000 200000 400000 700000 1000000 2000000 4000000 8000000 16000000 32000000 ; do for b in put get ; do qsub -t 30 -n $n --mode=c$t -O $b.$n.c$t.$i.\$jobid ./$b.x $i ; done ; done ; done ; done
+
