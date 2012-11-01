@@ -75,10 +75,15 @@ int main(int argc, char* argv[])
 
   /************************************************************************/
 
-  int shared[1] = 0;
-  int local[1]  = 0;
-  int value[1]  = world_rank;
-  int test[1]   = -1;
+  int * shared = safemalloc(sizeof(int));
+  int * local  = safemalloc(sizeof(int));
+  int * value  = safemalloc(sizeof(int));
+  int * test   = safemalloc(sizeof(int));
+
+  shared[0] = 0;
+  local[0]  = 0;
+  value[0]  = (int)world_rank;
+  test[0]   = -1;
 
   int ** shptrs = (int **) safemalloc( world_size * sizeof(int *) );
 
@@ -127,11 +132,13 @@ int main(int argc, char* argv[])
   /* barrier on non-progressing context to make sure CHT does its job */
   barrier(world_geometry, contexts[0]);
 
-  if (world_rank==0)
-    printf("%ld: PAMI_Rmw local = %d in %llu cycles (shared = %d) \n", (long)world_rank, local[0], dt, shared[0] );
-  else
-    printf("%ld: PAMI_Rmw local = %d in %llu cycles \n", (long)world_rank, local[0], dt );
+  printf("%ld: PAMI_Rmw local = %d shared = %d in %llu cycles = %lf microseconds \n", (long)world_rank, local[0], shared[0], (long long unsigned) dt, dt/1600.0 );
   fflush(stdout);
+  
+  free(shared);
+  free(local);
+  free(value);
+  free(test);
 
   /************************************************************************/
 
