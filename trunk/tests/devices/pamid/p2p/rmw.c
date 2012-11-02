@@ -75,25 +75,41 @@ int main(int argc, char* argv[])
 
   /************************************************************************/
 
-#ifdef HEAP
-  printf("allocating arrays on the heap with malloc \n");
+#define HEAP
+
+#if defined(HEAP)
+  if (world_rank==0) 
+    printf("allocating arrays on the heap with malloc \n");
   int * shared = safemalloc(sizeof(int));
   int * local  = safemalloc(sizeof(int));
   int * value  = safemalloc(sizeof(int));
   int * test   = safemalloc(sizeof(int));
-#elif STACK
-  printf("allocating arrays on the stack \n");
+#else
+  if (world_rank==0) 
+    printf("allocating arrays on the stack and working on pointers thereto \n");
+  int _shared[1];
+  int _local[1];
+  int _value[1];
+  int _test[1];
+  int * shared = _shared;
+  int * local  = _local;
+  int * value  = _value;
+  int * test   = _test;
+/*
+  if (world_rank==0) 
+    printf("allocating arrays on the stack \n");
   int shared[1];
   int local[1];
   int value[1];
   int test[1];
-#else
+
   if (world_rank==0) 
     printf("allocating arrays on the text segment (?) \n");
   int shared[1] = {0};
   int local[1]  = {0};
   int value[1]  = {0};
   int test[1]   = {0};
+*/
 #endif
 
   shared[0] = 0;
