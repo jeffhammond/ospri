@@ -75,15 +75,32 @@ int main(int argc, char* argv[])
 
   /************************************************************************/
 
+#ifdef HEAP
   int * shared = safemalloc(sizeof(int));
   int * local  = safemalloc(sizeof(int));
   int * value  = safemalloc(sizeof(int));
   int * test   = safemalloc(sizeof(int));
+#elif STACK
+  int shared[1];
+  int local[1];
+  int value[1];
+  int test[1];
+#else
+  int shared[1] = {0};
+  int local[1]  = {0};
+  int value[1]  = {0};
+  int test[1]   = {0};
+#endif
 
   shared[0] = 0;
   local[0]  = 0;
   value[0]  = (int)world_rank;
   test[0]   = -1;
+
+  printf("shared %p %d \n", shared, *shared);
+  printf("local  %p %d \n", local , *local );
+  printf("value  %p %d \n", value , *value );
+  printf("test   %p %d \n", test  , *test  );
 
   int ** shptrs = (int **) safemalloc( world_size * sizeof(int *) );
 
@@ -135,10 +152,12 @@ int main(int argc, char* argv[])
   printf("%ld: PAMI_Rmw local = %d shared = %d in %llu cycles = %lf microseconds \n", (long)world_rank, local[0], shared[0], (long long unsigned) dt, dt/1600.0 );
   fflush(stdout);
   
+#ifdef HEAP
   free(shared);
   free(local);
   free(value);
   free(test);
+#endif
 
   /************************************************************************/
 
