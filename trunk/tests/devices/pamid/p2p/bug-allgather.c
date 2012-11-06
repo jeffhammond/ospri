@@ -75,113 +75,14 @@ int main(int argc, char* argv[])
 
   /************************************************************************/
 
-#define HEAP
-
-#if defined(HEAP)
-  if (world_rank==0) 
-    printf("allocating arrays on the heap with malloc \n");
   int * shared = safemalloc(sizeof(int));
-  int * local  = safemalloc(sizeof(int));
-  int * value  = safemalloc(sizeof(int));
-  int * test   = safemalloc(sizeof(int));
-#else
-  if (world_rank==0) 
-    printf("allocating arrays on the stack and working on pointers thereto \n");
-  int _shared[1];
-  int _local[1];
-  int _value[1];
-  int _test[1];
-  int * shared = _shared;
-  int * local  = _local;
-  int * value  = _value;
-  int * test   = _test;
-/*
-  if (world_rank==0) 
-    printf("allocating arrays on the stack \n");
-  int shared[1];
-  int local[1];
-  int value[1];
-  int test[1];
-
-  if (world_rank==0) 
-    printf("allocating arrays on the text segment (?) \n");
-  int shared[1] = {0};
-  int local[1]  = {0};
-  int value[1]  = {0};
-  int test[1]   = {0};
-*/
-#endif
-
-  shared[0] = 0;
-  local[0]  = 0;
-  value[0]  = (int)world_rank;
-  test[0]   = -1;
-
-  if (world_rank==0) 
-  {
-    printf("shared %p %d \n", shared, *shared);
-    printf("local  %p %d \n", local , *local );
-    printf("value  %p %d \n", value , *value );
-    printf("test   %p %d \n", test  , *test  );
-  }
-  fflush(stdout);
-
   int ** shptrs = (int **) safemalloc( world_size * sizeof(int *) );
 
   result = allgather(world_geometry, contexts[0], sizeof(int*), &shared, shptrs);
   TEST_ASSERT(result == PAMI_SUCCESS,"allgather");
 
-  int target = 0;
-  pami_endpoint_t target_ep;
-  result = PAMI_Endpoint_create(client, (pami_task_t) target, 1, &target_ep);
-  TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Endpoint_create");
-
-  result = barrier(world_geometry, contexts[0]);
-  TEST_ASSERT(result == PAMI_SUCCESS,"barrier");
-
-  int active = 1;
-  pami_rmw_t parameters;
-  parameters.dest      = target_ep;
-  //parameters.hints    = ;
-  parameters.cookie    = &active;
-  parameters.done_fn   = cb_done;
-  parameters.local     = local;
-  parameters.remote    = shptrs[target];
-  parameters.value     = value;
-  parameters.test      = test; /* unused */
-  parameters.operation = PAMI_ATOMIC_FETCH_ADD;
-  parameters.type      = PAMI_TYPE_SIGNED_INT;
-
-  /* PAMI_ATOMIC_FETCH_ADD : local=remote and remote+=value */
-
-  uint64_t t0 = GetTimeBase();
-
-  result = PAMI_Rmw(contexts[0], &parameters);
-  TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Rmw");
-
-  while (active)
-  {
-    //result = PAMI_Context_advance( contexts[0], 100);
-    //TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Context_advance");
-    result = PAMI_Context_trylock_advancev(&(contexts[0]), 1, 1000);
-    TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Context_trylock_advancev");
-  }
-
-  uint64_t t1 = GetTimeBase();
-  uint64_t dt = t1-t0;
-
-  /* barrier on non-progressing context to make sure CHT does its job */
-  barrier(world_geometry, contexts[0]);
-
-  printf("%ld: PAMI_Rmw local = %d shared = %d in %llu cycles = %lf microseconds \n", (long)world_rank, local[0], shared[0], (long long unsigned) dt, dt/1600.0 );
-  fflush(stdout);
-  
-#ifdef HEAP
   free(shared);
-  free(local);
-  free(value);
-  free(test);
-#endif
+  free(shptrs);
 
   /************************************************************************/
 

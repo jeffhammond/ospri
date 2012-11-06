@@ -13,6 +13,12 @@ int allgather(pami_geometry_t geometry, pami_context_t context, size_t count, vo
 	rc = PAMI_Geometry_algorithms_num( geometry, xfer, num_alg );
 	TEST_ASSERT(rc==PAMI_SUCCESS,"PAMI_Geometry_algorithms_num");
 
+    //if (world_rank==0)
+    {
+      fprintf(stderr, "num_alg = {%ld,%ld} \n", (long)num_alg[0], (long)num_alg[1]);
+      fflush(stderr);
+    }
+
 	pami_algorithm_t * safe_algs = (pami_algorithm_t *) safemalloc( num_alg[0] * sizeof(pami_algorithm_t) );
 	pami_algorithm_t * fast_algs = (pami_algorithm_t *) safemalloc( num_alg[1] * sizeof(pami_algorithm_t) );
 	pami_metadata_t  * safe_meta = (pami_metadata_t  *) safemalloc( num_alg[0] * sizeof(pami_metadata_t)  );
