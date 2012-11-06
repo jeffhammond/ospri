@@ -11,8 +11,6 @@ void * safemalloc(size_t n)
     {
         fprintf( stderr , "attempting to allocate %ld bytes \n" , (long)n );
         fflush(stderr);
-        sleep(1);
-        exit(11);
     }
 
 #ifdef NO_MEMALIGN

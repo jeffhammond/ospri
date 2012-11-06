@@ -11,28 +11,6 @@
 #include "preamble.h"
 #include "coll.h"
 
-pami_context_t * contexts;
-
-#define PROGRESS_THREAD
-
-#ifdef PROGRESS_THREAD
-pthread_t Progress_thread;
-
-void * Progress_function(void * dummy)
-{
-	pami_result_t result = PAMI_ERROR;
-
-	while (1)
-	{
-        result = PAMI_Context_trylock_advancev(&(contexts[1]), 1, 1000);
-        TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Context_trylock_advancev");
-		usleep(1);
-	}
-
-	return NULL;
-}
-#endif
-
 int main(int argc, char* argv[])
 {
   pami_result_t result = PAMI_ERROR;
@@ -74,10 +52,8 @@ int main(int argc, char* argv[])
   result = PAMI_Geometry_world(client, &world_geometry );
   TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Geometry_world");
 
-#ifdef PROGRESS_THREAD
   int status = pthread_create(&Progress_thread, NULL, &Progress_function, NULL);
   TEST_ASSERT(status==0, "pthread_create");
-#endif
 
   /************************************************************************/
 
@@ -135,13 +111,8 @@ int main(int argc, char* argv[])
   uint64_t t1 = GetTimeBase();
   uint64_t dt = t1-t0;
 
-#ifdef PROGRESS_THREAD
   /* barrier on non-progressing context to make sure CHT does its job */
   barrier(world_geometry, contexts[0]);
-#else
-  /* barrier on remote context since otherwise put cannot complete */
-  barrier(world_geometry, contexts[1]);
-#endif
 
   printf("%ld: PAMI_Put of %d bytes achieves %lf MB/s \n", (long)world_rank, n, 1.6e9*1e-6*(double)bytes/(double)dt );
   fflush(stdout);
@@ -171,7 +142,6 @@ int main(int argc, char* argv[])
 
   /************************************************************************/
 
-#ifdef PROGRESS_THREAD
   void * rv;
 
   status = pthread_cancel(Progress_thread);
@@ -179,7 +149,6 @@ int main(int argc, char* argv[])
 
   status = pthread_join(Progress_thread, &rv);
   TEST_ASSERT(status==0, "pthread_join");
-#endif
 
   result = barrier(world_geometry, contexts[0]);
   TEST_ASSERT(result == PAMI_SUCCESS,"barrier");

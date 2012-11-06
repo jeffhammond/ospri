@@ -27,7 +27,7 @@ all: mpi pami
 pami: endpoint.x put.x rput.x get.x rget.x rmw.x bug-allgather.x
 mpi: mpi-put.x mpi-rput.x mpi-rput-ibm.x mpi-get.x mpi-rget.x
 
-%.o: %.c safemalloc.h coll.h
+%.o: %.c safemalloc.h coll.h preamble.h
 	$(CC) $(CFLAGS) -c $< -o $@
 
 %.x: %.o $(obj)

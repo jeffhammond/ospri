@@ -35,4 +35,23 @@ static void cb_done (void *ctxt, void * clientdata, pami_result_t err)
   (*active)--;
 }
 
+pami_context_t * contexts;
+
+pthread_t Progress_thread;
+
+static void * Progress_function(void * dummy)
+{
+	//pami_result_t result = PAMI_ERROR;
+
+	while (1)
+	{
+        PAMI_Context_trylock_advancev(&(contexts[1]), 1, 1000);
+        //result = PAMI_Context_trylock_advancev(&(contexts[1]), 1, 1000);
+        //TEST_ASSERT(result == PAMI_SUCCESS || result == PAMI_EAGAIN,"PAMI_Context_trylock_advancev");
+		usleep(1);
+	}
+
+	return NULL;
+}
+
 #endif

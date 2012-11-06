@@ -11,24 +11,6 @@
 #include "preamble.h"
 #include "coll.h"
 
-pami_context_t * contexts;
-
-pthread_t Progress_thread;
-
-void * Progress_function(void * dummy)
-{
-	pami_result_t result = PAMI_ERROR;
-
-	while (1)
-	{
-        result = PAMI_Context_trylock_advancev(&(contexts[1]), 1, 1000);
-        TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Context_trylock_advancev");
-		usleep(1);
-	}
-
-	return NULL;
-}
-
 int main(int argc, char* argv[])
 {
   pami_result_t result = PAMI_ERROR;
