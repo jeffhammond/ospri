@@ -37,7 +37,7 @@ static void dispatch_recv_cb(pami_context_t context,
   printf("dispatch_recv_cb: origin = (%ld,%ld) cookie = %d \n", task, ctxoff, *c);
 
   printf("dispatch_recv_cb: header_size = %ld \n", header_size);
-  const size_t * h = header_addr;
+  const void ** h = (const void **)header_addr;
   printf("dispatch_recv_cb: header_addr[] = %p \n", *h);
   fflush(stdout);
 
@@ -57,8 +57,7 @@ static void dispatch_recv_cb(pami_context_t context,
     printf("dispatch_recv_cb: data_size = %ld \n", data_size);
     fflush(stdout);
 
-    const size_t temp  = *h;
-    const void * raddr = (void*)temp;
+    void * raddr = *h;
     printf("dispatch_recv_cb: raddr = %p \n", raddr);
 
     recv->cookie      = 0;
@@ -157,13 +156,13 @@ int main(int argc, char* argv[])
     result = barrier(world_geometry, contexts[0]);
     TEST_ASSERT(result == PAMI_SUCCESS,"barrier");
 
-    size_t raddr = (size_t)shptrs[target];
+    void * raddr = shptrs[target];
     printf("%ld: raddr = %p \n", world_rank, raddr);
 
     int active = 2;
     pami_send_t parameters;
     parameters.send.header.iov_base = &raddr;
-    parameters.send.header.iov_len  = sizeof(size_t*);
+    parameters.send.header.iov_len  = sizeof(void *);
     parameters.send.data.iov_base   = local;
     parameters.send.data.iov_len    = bytes;
     parameters.send.dispatch        = dispatch_id;
