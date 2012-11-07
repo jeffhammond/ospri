@@ -131,7 +131,7 @@ int main(int argc, char* argv[])
     barrier(world_geometry, contexts[1]);
 #endif
  
-    printf("%ld: PAMI_Rput of %d bytes achieves %lf MB/s \n", (long)world_rank, n, 1.6e9*1e-6*(double)bytes/(double)dt );
+    printf("%ld: PAMI_Rput of %ld bytes achieves %lf MB/s \n", (long)world_rank, bytes, 1.6e9*1e-6*(double)bytes/(double)dt );
     fflush(stdout);
  
     int errors = 0;

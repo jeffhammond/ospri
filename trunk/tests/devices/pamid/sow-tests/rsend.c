@@ -60,7 +60,7 @@ int main(int argc, char* argv[])
 
     MPI_Barrier(MPI_COMM_WORLD);
 
-    printf("%d: MPI_Irsend/Irecv/Waitall of %d bytes achieves %lf MB/s \n", world_rank, n, 1.6e9*1e-6*(double)bytes/(double)dt );
+    printf("%d: MPI_Irsend/Irecv/Waitall of %ld bytes achieves %lf MB/s \n", world_rank, bytes, 1.6e9*1e-6*(double)bytes/(double)dt );
     fflush(stdout);
 
     int errors = 0;

@@ -11,6 +11,68 @@
 #include "preamble.h"
 #include "coll.h"
 
+static void dispatch_done_cb(pami_context_t context, void * cookie, pami_result_t result)
+{
+  printf("dispatch_done_cb \n");
+  fflush(stdout);
+  return;
+}
+
+static void dispatch_recv_cb(pami_context_t context,
+                             void * cookie,
+                             const void * header_addr, size_t header_size,
+                             const void * pipe_addr,
+                             size_t data_size,
+                             pami_endpoint_t origin,
+                             pami_recv_t * recv)
+{
+  pami_result_t result = PAMI_ERROR;
+
+  size_t task;
+  size_t ctxoff;
+  result = PAMI_Endpoint_query(origin, &task, &ctxoff);
+  TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Endpoint_query");
+
+  int * c = (int *) cookie;
+  printf("dispatch_recv_cb: origin = (%ld,%ld) cookie = %d \n", task, ctxoff, *c);
+
+  printf("dispatch_recv_cb: header_size = %ld \n", header_size);
+  const size_t * h = header_addr;
+  printf("dispatch_recv_cb: header_addr[] = %p \n", *h);
+  fflush(stdout);
+
+  if (pipe_addr!=NULL)
+  {
+    printf("dispatch_recv_cb: immediate protocol \n");
+    fflush(stdout);
+
+    printf("dispatch_recv_cb: data_size = %ld \n", data_size);
+    const char * p = pipe_addr;
+    printf("dispatch_recv_cb: pipe_addr[] = %s \n", p);
+    fflush(stdout);
+  }
+  else
+  {
+    printf("dispatch_recv_cb: asychronous protocol \n");
+    printf("dispatch_recv_cb: data_size = %ld \n", data_size);
+    fflush(stdout);
+
+    const size_t temp  = *h;
+    const void * raddr = (void*)temp;
+    printf("dispatch_recv_cb: raddr = %p \n", world_rank, raddr);
+
+    recv->cookie      = 0;
+    recv->local_fn    = dispatch_done_cb;
+    recv->addr        = raddr;
+    recv->type        = PAMI_TYPE_BYTE;
+    recv->offset      = 0;
+    recv->data_fn     = PAMI_DATA_COPY;
+    recv->data_cookie = NULL;
+  }
+
+  return;
+}
+
 int main(int argc, char* argv[])
 {
   pami_result_t result = PAMI_ERROR;
@@ -59,19 +121,28 @@ int main(int argc, char* argv[])
 
   /************************************************************************/
 
+  /* register the dispatch function */
+  pami_dispatch_callback_function dispatch_cb;
+  size_t dispatch_id                 = 37;
+  dispatch_cb.p2p                    = dispatch_recv_cb;
+  pami_dispatch_hint_t dispatch_hint = {0};
+  int dispatch_cookie                = 1000000+world_rank;
+  dispatch_hint.recv_immediate       = PAMI_HINT_DISABLE;
+  result = PAMI_Dispatch_set(contexts[0], dispatch_id, dispatch_cb, &dispatch_cookie, dispatch_hint);
+  TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Dispatch_set");
+  result = PAMI_Dispatch_set(contexts[1], dispatch_id, dispatch_cb, &dispatch_cookie, dispatch_hint);
+  TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Dispatch_set");
+
   for (int n=1; n<=67108864; n*=2)
   {
     size_t bytes = n * sizeof(int);
     int *  shared = (int *) safemalloc(bytes);
     for (int i=0; i<n; i++)
-      shared[i] = world_rank;
+      shared[i] = -1;
 
     int *  local  = (int *) safemalloc(bytes);
     for (int i=0; i<n; i++)
-      local[i] = -1;
-
-    result = barrier(world_geometry, contexts[0]);
-    TEST_ASSERT(result == PAMI_SUCCESS,"barrier");
+      local[i] = world_rank;
 
     int ** shptrs = (int **) safemalloc( world_size * sizeof(int *) );
 
@@ -86,20 +157,26 @@ int main(int argc, char* argv[])
     result = barrier(world_geometry, contexts[0]);
     TEST_ASSERT(result == PAMI_SUCCESS,"barrier");
 
-    int active = 1;
-    pami_get_simple_t parameters;
-    parameters.rma.dest     = target_ep;
-    //parameters.rma.hints    = ;
-    parameters.rma.bytes    = bytes;
-    parameters.rma.cookie   = &active;
-    parameters.rma.done_fn  = cb_done;
-    parameters.addr.local   = local;
-    parameters.addr.remote  = shptrs[target];
+    size_t raddr = (size_t)shptrs[target];
+    printf("%ld: raddr = %p \n", world_rank, raddr);
+
+    int active = 2;
+    pami_send_t parameters;
+    parameters.send.header.iov_base = &raddr;
+    parameters.send.header.iov_len  = sizeof(size_t*);
+    parameters.send.data.iov_base   = local;
+    parameters.send.data.iov_len    = bytes;
+    parameters.send.dispatch        = dispatch_id;
+    //parameters.send.hints           = ;
+    parameters.send.dest            = target_ep;
+    parameters.events.cookie        = &active;
+    parameters.events.local_fn      = cb_done;
+    parameters.events.remote_fn     = cb_done;
 
     uint64_t t0 = GetTimeBase();
 
-    result = PAMI_Get(contexts[0], &parameters);
-    TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Rget");
+    result = PAMI_Send(contexts[0], &parameters);
+    TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Send");
 
     while (active)
     {
@@ -115,23 +192,25 @@ int main(int argc, char* argv[])
 #ifdef PROGRESS_THREAD
     /* barrier on non-progressing context to make sure CHT does its job */
     barrier(world_geometry, contexts[0]);
+#else
+    /* barrier on remote context since otherwise put cannot complete */
+    barrier(world_geometry, contexts[1]);
 #endif
 
-    printf("%ld: PAMI_Get of %ld bytes achieves %lf MB/s \n", (long)world_rank, bytes, 1.6e9*1e-6*(double)bytes/(double)dt );
+    printf("%ld: PAMI_Send of %ld bytes achieves %lf MB/s \n", (long)world_rank, bytes, 1.6e9*1e-6*(double)bytes/(double)dt );
     fflush(stdout);
 
     int errors = 0;
     
-    //target = (world_rank<(world_size-1) ? world_rank+1 : 0);
-    target = (world_rank>0 ? world_rank-1 : world_size-1);
+    target = (world_rank<(world_size-1) ? world_rank+1 : 0);
     for (int i=0; i<n; i++)
-      if (local[i] != target)
+      if (shared[i] != target)
          errors++;
 
     if (errors>0)
       for (int i=0; i<n; i++)
-        if (local[i] != target)
-          printf("%ld: local[%d] = %d (%d) \n", (long)world_rank, i, local[i], target);
+        if (shared[i] != target)
+          printf("%ld: shared[%d] = %d (%d) \n", (long)world_rank, i, shared[i], target);
     else
       printf("%ld: no errors :-) \n", (long)world_rank); 
 
