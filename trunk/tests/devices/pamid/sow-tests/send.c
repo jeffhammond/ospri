@@ -13,8 +13,6 @@
 
 static void dispatch_done_cb(pami_context_t context, void * cookie, pami_result_t result)
 {
-  printf("dispatch_done_cb \n");
-  fflush(stdout);
   return;
 }
 
@@ -34,35 +32,17 @@ static void dispatch_recv_cb(pami_context_t context,
   TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Endpoint_query");
 
   int * c = (int *) cookie;
-  printf("dispatch_recv_cb: origin = (%ld,%ld) cookie = %d \n", task, ctxoff, *c);
-
-  printf("dispatch_recv_cb: header_size = %ld \n", header_size);
   const void ** h = (const void **)header_addr;
-  printf("dispatch_recv_cb: header_addr[] = %p \n", *h);
-  fflush(stdout);
 
   if (pipe_addr!=NULL)
   {
-    printf("dispatch_recv_cb: immediate protocol \n");
-    fflush(stdout);
-
-    printf("dispatch_recv_cb: data_size = %ld \n", data_size);
-    const char * p = pipe_addr;
-    printf("dispatch_recv_cb: pipe_addr[] = %s \n", p);
-    fflush(stdout);
+    memcpy(*h, pipe_addr, data_size);
   }
   else
   {
-    printf("dispatch_recv_cb: asychronous protocol \n");
-    printf("dispatch_recv_cb: data_size = %ld \n", data_size);
-    fflush(stdout);
-
-    void * raddr = *h;
-    printf("dispatch_recv_cb: raddr = %p \n", raddr);
-
     recv->cookie      = 0;
-    recv->local_fn    = dispatch_done_cb;
-    recv->addr        = raddr;
+    recv->local_fn    = NULL;
+    recv->addr        = *h;
     recv->type        = PAMI_TYPE_BYTE;
     recv->offset      = 0;
     recv->data_fn     = PAMI_DATA_COPY;
@@ -126,7 +106,7 @@ int main(int argc, char* argv[])
   dispatch_cb.p2p                    = dispatch_recv_cb;
   pami_dispatch_hint_t dispatch_hint = {0};
   int dispatch_cookie                = 1000000+world_rank;
-  dispatch_hint.recv_immediate       = PAMI_HINT_DISABLE;
+  //dispatch_hint.recv_immediate       = PAMI_HINT_DISABLE;
   result = PAMI_Dispatch_set(contexts[0], dispatch_id, dispatch_cb, &dispatch_cookie, dispatch_hint);
   TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Dispatch_set");
   result = PAMI_Dispatch_set(contexts[1], dispatch_id, dispatch_cb, &dispatch_cookie, dispatch_hint);
