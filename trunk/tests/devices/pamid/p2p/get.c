@@ -113,7 +113,7 @@ int main(int argc, char* argv[])
   /* barrier on non-progressing context to make sure CHT does its job */
   barrier(world_geometry, contexts[0]);
 
-  printf("%ld: PAMI_Get of %d bytes achieves %lf MB/s \n", (long)world_rank, bytes, 1.6e9*1e-6*(double)bytes/(double)dt );
+  printf("%ld: PAMI_Get of %ld bytes achieves %lf MB/s \n", (long)world_rank, bytes, 1.6e9*1e-6*(double)bytes/(double)dt );
   fflush(stdout);
 
   int errors = 0;

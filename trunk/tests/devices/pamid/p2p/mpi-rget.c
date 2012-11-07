@@ -113,7 +113,7 @@ int main(int argc, char* argv[])
 
   uint64_t t1 = GetTimeBase();
   uint64_t dt = t1-t0;
-  printf("%ld: PAMI_Rget of %d bytes achieves %lf MB/s \n", (long)world_rank, bytes, 1.6e9*1e-6*(double)bytes/(double)dt );
+  printf("%ld: PAMI_Rget of %ld bytes achieves %lf MB/s \n", (long)world_rank, bytes, 1.6e9*1e-6*(double)bytes/(double)dt );
   fflush(stdout);
 
   int errors = 0;

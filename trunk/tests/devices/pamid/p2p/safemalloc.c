@@ -7,11 +7,13 @@ void * safemalloc(size_t n)
     int rc = 0;
     void * ptr = NULL;
 
+#if 0
     if (n<=0)
     {
         fprintf( stderr , "attempting to allocate %ld bytes \n" , (long)n );
         fflush(stderr);
     }
+#endif
 
 #ifdef NO_MEMALIGN
     ptr = malloc( n );
