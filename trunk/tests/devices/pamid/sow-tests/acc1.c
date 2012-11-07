@@ -35,9 +35,9 @@ static void dispatch_recv_cb(pami_context_t context,
     recv->cookie      = 0;
     recv->local_fn    = NULL;
     recv->addr        = *h;
-    recv->type        = PAMI_TYPE_BYTE;
+    recv->type        = PAMI_TYPE_DOUBLE;
     recv->offset      = 0;
-    recv->data_fn     = PAMI_DATA_COPY;
+    recv->data_fn     = PAMI_DATA_SUM;
     recv->data_cookie = NULL;
   }
 
@@ -98,7 +98,7 @@ int main(int argc, char* argv[])
   dispatch_cb.p2p                    = dispatch_recv_cb;
   pami_dispatch_hint_t dispatch_hint = {0};
   int dispatch_cookie                = 1000000+world_rank;
-  dispatch_hint.recv_immediate       = PAMI_HINT_DISABLE;
+  //dispatch_hint.recv_immediate       = PAMI_HINT_DISABLE;
   result = PAMI_Dispatch_set(contexts[0], dispatch_id, dispatch_cb, &dispatch_cookie, dispatch_hint);
   TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Dispatch_set");
   result = PAMI_Dispatch_set(contexts[1], dispatch_id, dispatch_cb, &dispatch_cookie, dispatch_hint);
@@ -106,18 +106,18 @@ int main(int argc, char* argv[])
 
   for (int n=1; n<=67108864; n*=2)
   {
-    size_t bytes = n * sizeof(int);
-    int *  shared = (int *) safemalloc(bytes);
+    size_t bytes = n * sizeof(double);
+    double *  shared = (double *) safemalloc(bytes);
     for (int i=0; i<n; i++)
-      shared[i] = -1;
+      shared[i] = 0.0;
 
-    int *  local  = (int *) safemalloc(bytes);
+    double *  local  = (double *) safemalloc(bytes);
     for (int i=0; i<n; i++)
-      local[i] = world_rank;
+      local[i] = (double)world_rank;
 
-    int ** shptrs = (int **) safemalloc( world_size * sizeof(int *) );
+    double ** shptrs = (double **) safemalloc( world_size * sizeof(double *) );
 
-    result = allgather(world_geometry, contexts[0], sizeof(int*), &shared, shptrs);
+    result = allgather(world_geometry, contexts[0], sizeof(double*), &shared, shptrs);
     TEST_ASSERT(result == PAMI_SUCCESS,"allgather");
 
     int target = (world_rank>0 ? world_rank-1 : world_size-1);
@@ -139,7 +139,7 @@ int main(int argc, char* argv[])
     parameters.send.dest            = target_ep;
     parameters.events.cookie        = &active;
     parameters.events.local_fn      = cb_done;
-    parameters.events.remote_fn     = NULL; //cb_done;
+    parameters.events.remote_fn     = NULL;//cb_done;
 
     uint64_t t0 = GetTimeBase();
 
@@ -148,8 +148,6 @@ int main(int argc, char* argv[])
 
     while (active)
     {
-      //result = PAMI_Context_advance( contexts[0], 100);
-      //TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Context_advance");
       result = PAMI_Context_trylock_advancev(&(contexts[0]), 1, 1000);
       TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Context_trylock_advancev");
     }
@@ -172,13 +170,13 @@ int main(int argc, char* argv[])
     
     target = (world_rank<(world_size-1) ? world_rank+1 : 0);
     for (int i=0; i<n; i++)
-      if (shared[i] != target)
+      if (shared[i] != (double)target)
          errors++;
 
     if (errors>0)
       for (int i=0; i<n; i++)
-        if (shared[i] != target)
-          printf("%ld: shared[%d] = %d (%d) \n", (long)world_rank, i, shared[i], target);
+        if (shared[i] != (double)target)
+          printf("%ld: shared[%d] = %lf (%lf) \n", (long)world_rank, i, shared[i], (double)target);
     else
       printf("%ld: no errors :-) \n", (long)world_rank); 
 
