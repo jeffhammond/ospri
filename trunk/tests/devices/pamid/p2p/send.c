@@ -37,9 +37,11 @@ void dispatch_recv_cb(pami_context_t context,
   int * c = (int *) cookie;
   printf("dispatch_recv_cb: origin = (%ld,%ld) cookie = %d \n", task, ctxoff, *c);
 
-  const char * h = header_addr;
   printf("dispatch_recv_cb: header_size = %ld \n", header_size);
-  printf("dispatch_recv_cb: header_addr[] = %s \n", h);
+  //const char * h = header_addr;
+  //printf("dispatch_recv_cb: header_addr[] = %s \n", h);
+  const int * h = header_addr;
+  printf("dispatch_recv_cb: header_addr[] = %d \n", *h);
   fflush(stdout);
 
   if (pipe_addr!=NULL)
@@ -47,8 +49,8 @@ void dispatch_recv_cb(pami_context_t context,
     printf("dispatch_recv_cb: immediate protocol \n");
     fflush(stdout);
 
-    const char * p = pipe_addr;
     printf("dispatch_recv_cb: data_size = %ld \n", data_size);
+    const char * p = pipe_addr;
     printf("dispatch_recv_cb: pipe_addr[] = %s \n", p);
     fflush(stdout);
   }
@@ -134,12 +136,12 @@ int main(int argc, char* argv[])
   TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Endpoint_create");
 
   /* register the dispatch function */
-  size_t dispatch_id = 37;
   pami_dispatch_callback_function dispatch_cb;
+  size_t dispatch_id                 = 37;
   dispatch_cb.p2p                    = dispatch_recv_cb;
   pami_dispatch_hint_t dispatch_hint = {0};
   int dispatch_cookie                = 1000000+world_rank;
-  dispatch_hint.recv_immediate       = PAMI_HINT_DISABLE;
+  //dispatch_hint.recv_immediate       = PAMI_HINT_DISABLE;
   result = PAMI_Dispatch_set(contexts[0], dispatch_id, dispatch_cb, &dispatch_cookie, dispatch_hint);
   result = PAMI_Dispatch_set(contexts[1], dispatch_id, dispatch_cb, &dispatch_cookie, dispatch_hint);
   TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Dispatch_set");
@@ -186,7 +188,7 @@ int main(int argc, char* argv[])
   /* barrier on non-progressing context to make sure CHT does its job */
   barrier(world_geometry, contexts[0]);
 
-  printf("%ld: PAMI_Send of %d bytes achieves %lf MB/s \n", (long)world_rank, n, 1.6e9*1e-6*(double)bytes/(double)dt );
+  printf("%ld: PAMI_Send of %d bytes achieves %lf MB/s \n", (long)world_rank, bytes, 1.6e9*1e-6*(double)bytes/(double)dt );
   fflush(stdout);
 
   result = barrier(world_geometry, contexts[0]);
