@@ -59,7 +59,7 @@ static void dispatch_recv_cb(pami_context_t context,
 
     const size_t temp  = *h;
     const void * raddr = (void*)temp;
-    printf("dispatch_recv_cb: raddr = %p \n", world_rank, raddr);
+    printf("dispatch_recv_cb: raddr = %p \n", raddr);
 
     recv->cookie      = 0;
     recv->local_fn    = dispatch_done_cb;
