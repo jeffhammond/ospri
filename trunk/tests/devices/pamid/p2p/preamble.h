@@ -3,7 +3,7 @@
 
 #include <pami.h>
 
-#define PRINT_SUCCESS 1
+#define PRINT_SUCCESS 0
 
 #define TEST_ASSERT(c,m) \
         do { \

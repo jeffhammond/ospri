@@ -35,7 +35,6 @@ int main(int argc, char* argv[])
   world_rank = config.value.intval;
   printf("hello world from rank %ld of %ld \n", world_rank, world_size );
   fflush(stdout);
-  SLEEP(1);
 
   config.name = PAMI_CLIENT_NUM_CONTEXTS;
   result = PAMI_Client_query( client, &config, 1);
@@ -52,7 +51,6 @@ int main(int argc, char* argv[])
 
   printf("%ld contexts were created by rank %ld \n", num_contexts, world_rank );
   fflush(stdout);
-  SLEEP(1);
 
   /* setup the world geometry */
   pami_geometry_t world_geometry;
@@ -174,7 +172,6 @@ int main(int argc, char* argv[])
 
   printf("%ld: end of test \n", world_rank );
   fflush(stdout);
-  SLEEP(1);
 
   return 0;
 }

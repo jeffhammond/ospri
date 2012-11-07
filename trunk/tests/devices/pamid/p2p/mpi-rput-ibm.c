@@ -45,7 +45,6 @@ int main(int argc, char* argv[])
   if (world_rank==0)
     printf("hello world from rank %ld of %ld, number of contexts %zu \n", world_rank, world_size, num_contexts );/*IBM: debug num_contexts */
   fflush(stdout);
-  SLEEP(1);
 
   /* initialize the contexts */
   pami_context_t * contexts;
@@ -173,7 +172,6 @@ int main(int argc, char* argv[])
   if (world_rank==0)
     printf("%ld: end of test \n", world_rank );
   fflush(stdout);
-  SLEEP(1);
 
   return 0;
 }

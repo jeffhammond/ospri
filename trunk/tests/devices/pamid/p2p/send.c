@@ -39,10 +39,7 @@ void dispatch_recv_cb(pami_context_t context,
 
   const char * h = header_addr;
   printf("dispatch_recv_cb: header_size = %ld \n", header_size);
-  printf("dispatch_recv_cb: header_addr[] = ");
-  for (size_t i=0; i<header_size; i++) 
-    printf("%c", h[i]);
-  printf("\n");
+  printf("dispatch_recv_cb: header_addr[] = %s \n", h);
   fflush(stdout);
 
   if (pipe_addr!=NULL)
@@ -52,10 +49,7 @@ void dispatch_recv_cb(pami_context_t context,
 
     const char * p = pipe_addr;
     printf("dispatch_recv_cb: data_size = %ld \n", data_size);
-    printf("dispatch_recv_cb: pipe_addr[] = ");
-    for (size_t i=0; i<data_size; i++) 
-      printf("%c", p[i]);
-    printf("\n");
+    printf("dispatch_recv_cb: pipe_addr[] = %s \n", p);
     fflush(stdout);
   }
   else
@@ -136,6 +130,7 @@ int main(int argc, char* argv[])
   int target = (world_rank>0 ? world_rank-1 : world_size-1);
   pami_endpoint_t target_ep;
   result = PAMI_Endpoint_create(client, (pami_task_t) target, 1, &target_ep);
+  //result = PAMI_Endpoint_create(client, (pami_task_t) target, 0, &target_ep);
   TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Endpoint_create");
 
   /* register the dispatch function */
@@ -145,6 +140,7 @@ int main(int argc, char* argv[])
   pami_dispatch_hint_t dispatch_hint = {0};
   int dispatch_cookie                = 1000000+world_rank;
   dispatch_hint.recv_immediate       = PAMI_HINT_DISABLE;
+  result = PAMI_Dispatch_set(contexts[0], dispatch_id, dispatch_cb, &dispatch_cookie, dispatch_hint);
   result = PAMI_Dispatch_set(contexts[1], dispatch_id, dispatch_cb, &dispatch_cookie, dispatch_hint);
   TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Dispatch_set");
 
@@ -158,18 +154,18 @@ int main(int argc, char* argv[])
 
   int header  = 37373;
 
-  int active = 2;
+  int active = 1;
   pami_send_t parameters;
   parameters.send.header.iov_base = &header;
-  parameters.send.header.iov_len  = 4;
-  parameters.send.data.iov_base   = &local;
+  parameters.send.header.iov_len  = sizeof(int);
+  parameters.send.data.iov_base   = local;
   parameters.send.data.iov_len    = bytes;
-  parameters.send.dispatch        = 37;
+  parameters.send.dispatch        = dispatch_id;
   //parameters.send.hints           = ;
   parameters.send.dest            = target_ep;
   parameters.events.cookie        = &active;
   parameters.events.local_fn      = cb_done;
-  parameters.events.remote_fn     = cb_done;
+  parameters.events.remote_fn     = NULL;//cb_done;
 
   uint64_t t0 = GetTimeBase();
 

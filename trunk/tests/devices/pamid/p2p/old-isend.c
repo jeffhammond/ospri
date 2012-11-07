@@ -6,9 +6,6 @@
 #include <pthread.h>
 #include <pami.h>
 
-//#define SLEEP sleep
-#define SLEEP usleep
-
 const size_t poll_continuous = -1;
 
 //  typedef void (*pami_dispatch_p2p_function) (pami_context_t    context,
@@ -92,7 +89,6 @@ int main(int argc, char* argv[])
     if (world_rank==0)
         printf("hello world from rank %d of %d \n", world_rank, world_size);
     fflush(stdout);
-    SLEEP(1);
 
     int num_contexts = 1;
 #ifdef MULTICONTEXT
@@ -112,7 +108,6 @@ int main(int argc, char* argv[])
     if (world_rank==0)
         printf("%d contexts were created \n", num_contexts);
     fflush(stdout);
-    SLEEP(1);
 
     /*************************************************************************
      * setup dispatch
@@ -215,7 +210,6 @@ int main(int argc, char* argv[])
 
     printf("end of test \n");
     fflush(stdout);
-    SLEEP(1);
 
     return 0;
 }
