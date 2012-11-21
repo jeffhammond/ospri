@@ -165,6 +165,7 @@ int main(int argc, char *argv[])
     fflush(stdout);
     MPI_Barrier( MPI_COMM_WORLD );
 
+#if 0
     test_comm = comm_world_oddeven;
 
     for (int i=0; i<2; i++)
@@ -212,6 +213,7 @@ int main(int argc, char *argv[])
         bcast_only(even_out, comm_world_oddeven, max_mem);
     if (world_rank%2==1)
         bcast_only(odd_out,  comm_world_oddeven, max_mem);
+#endif
 #endif
 
     /*********************************************************************************
