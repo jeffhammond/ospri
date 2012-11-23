@@ -2,7 +2,8 @@
 #for n in 2 4 8 128 ; do 
 for n in 128 ; do 
     for t in 1 2 4 8 16 ; do 
-        for b in acc1 get put rget rmw rput rsend send ; do 
+        #for b in acc1 get put rget rmw rput rsend send ; do 
+        for b in acc1 rmw ; do 
             qsub -q ATP -t 30 -n $n --mode=c$t -O $b.$n.c$t.\$jobid ./$b.x
         done
     done
