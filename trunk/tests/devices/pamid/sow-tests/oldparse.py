@@ -4,14 +4,12 @@ import os
 import sys
 #import string
 
-def parse(filename):
+def parse(filename,ranks):
   file = open(filename,'r')
 
   # for each target + message type: total count, total bytes, contig count, strided count, total stride (>1)
   l,w = 2, 5
-  getStats = [[0] * w for i in range(l)]
-  putStats = [[0] * w for i in range(l)]
-  accStats = [[0] * w for i in range(l)]
+  Stats = [[0] * w for i in range(l)]
 
   for line in file.readlines():
     if 'Get' in line:

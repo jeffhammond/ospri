@@ -128,7 +128,7 @@ int main(int argc, char* argv[])
     result = barrier(world_geometry, contexts[0]);
     TEST_ASSERT(result == PAMI_SUCCESS,"barrier");
 
-    int active = 1;
+    int active = 2;
     pami_send_t parameters;
     parameters.send.header.iov_base = &(shptrs[target]);
     parameters.send.header.iov_len  = sizeof(void *);
@@ -139,14 +139,14 @@ int main(int argc, char* argv[])
     parameters.send.dest            = target_ep;
     parameters.events.cookie        = &active;
     parameters.events.local_fn      = cb_done;
-    parameters.events.remote_fn     = NULL;//cb_done;
+    parameters.events.remote_fn     = cb_done;
 
     uint64_t t0 = GetTimeBase();
 
     result = PAMI_Send(contexts[0], &parameters);
     TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Send");
 
-    while (active)
+    while (active>1)
     {
       result = PAMI_Context_trylock_advancev(&(contexts[0]), 1, 1000);
       TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Context_trylock_advancev");
@@ -154,6 +154,12 @@ int main(int argc, char* argv[])
 
     uint64_t t1 = GetTimeBase();
     uint64_t dt = t1-t0;
+
+    while (active>0)
+    {
+      result = PAMI_Context_trylock_advancev(&(contexts[0]), 1, 1000);
+      TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Context_trylock_advancev");
+    }
 
 #ifdef PROGRESS_THREAD
     /* barrier on non-progressing context to make sure CHT does its job */

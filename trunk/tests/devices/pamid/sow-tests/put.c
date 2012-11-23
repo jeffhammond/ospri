@@ -102,16 +102,20 @@ int main(int argc, char* argv[])
     result = PAMI_Put(contexts[0], &parameters);
     TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Put");
 
-    while (active)
+    while (active>1)
     {
-      //result = PAMI_Context_advance( contexts[0], 100);
-      //TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Context_advance");
       result = PAMI_Context_trylock_advancev(&(contexts[0]), 1, 1000);
       TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Context_trylock_advancev");
     }
 
     uint64_t t1 = GetTimeBase();
     uint64_t dt = t1-t0;
+
+    while (active>0)
+    {
+      result = PAMI_Context_trylock_advancev(&(contexts[0]), 1, 1000);
+      TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Context_trylock_advancev");
+    }
 
 #ifdef PROGRESS_THREAD
     /* barrier on non-progressing context to make sure CHT does its job */

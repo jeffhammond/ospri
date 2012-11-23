@@ -103,8 +103,6 @@ int main(int argc, char* argv[])
 
     while (active)
     {
-      //result = PAMI_Context_advance( contexts[0], 100);
-      //TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Context_advance");
       result = PAMI_Context_trylock_advancev(&(contexts[0]), 1, 1000);
       TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Context_trylock_advancev");
     }
