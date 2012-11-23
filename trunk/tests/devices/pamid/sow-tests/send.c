@@ -24,7 +24,7 @@ static void dispatch_recv_cb(pami_context_t context,
                              pami_endpoint_t origin,
                              pami_recv_t * recv)
 {
-  void ** h = (const void **)header_addr;
+  void ** h = (void **)header_addr;
 
   if (pipe_addr!=NULL)
   {

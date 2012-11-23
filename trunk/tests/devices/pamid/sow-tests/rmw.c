@@ -91,7 +91,8 @@ int main(int argc, char* argv[])
  
     /* PAMI_ATOMIC_FETCH_ADD : local=remote and remote+=value */
  
-    for (int n=1; n<=67108864; n*=2)
+    //for (int n=1; n<=67108864; n*=2)
+    for (int n=8; n<=65536; n*=8)
     {
       shared[0] = 0;
       local[0] = 0;
@@ -119,7 +120,7 @@ int main(int argc, char* argv[])
       /* barrier on non-progressing context to make sure CHT does its job */
       barrier(world_geometry, contexts[0]);
      
-      printf("%6ld: PAMI_Rmw %d times local = %12d shared = %12d in %20llu cycles = %13.6lf seconds \n", 
+      printf("%6ld: PAMI_Rmw %d times: local = %12d shared = %12d in %20llu cycles = %13.6lf seconds \n", 
              (long)world_rank, n, local[0], shared[0], (long long unsigned) dt, dt/1.6e9 );
       fflush(stdout);
     }
