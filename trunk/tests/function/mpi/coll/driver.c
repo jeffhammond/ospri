@@ -8,8 +8,6 @@
 #include "safemalloc.h"
 #include "driver.h"
 
-#define DEBUG YES
-
 #define MPI_THREAD_STRING(level)  \
         ( level==MPI_THREAD_SERIALIZED ? "THREAD_SERIALIZED" : \
                 ( level==MPI_THREAD_MULTIPLE ? "THREAD_MULTIPLE" : \
@@ -85,6 +83,10 @@ int main(int argc, char *argv[])
     if (world_rank==0) printf("MPI_Barrier on comm_world_dup \n");
     MPI_Barrier( comm_world_dup );
 
+    if (world_rank==0) printf("MPI_Comm_split of MPI_COMM_WORLD into world_reordered \n");
+    MPI_Comm comm_world_reordered;
+    MPI_Comm_split(MPI_COMM_WORLD, 0, world_size-world_rank, &comm_world_reordered);
+
     if (world_rank==0) printf("MPI_Comm_split of MPI_COMM_WORLD into odd-even \n");
     MPI_Comm comm_world_oddeven;
     int oddeven = (world_rank%2);
@@ -122,10 +124,12 @@ int main(int argc, char *argv[])
     if (world_rank==0) printf("MPI_Group_incl of group_geomprog (geometric progression) from group_world \n");
     MPI_Group group_geomprog;
     MPI_Group_incl(group_world, geomprog_size, geomprog_list, &group_geomprog);
+    MPI_Group_free(&group_world);
 
     if (world_rank==0) printf("MPI_Comm_create of comm_geomprog from group_geomprog on MPI_COMM_WORLD \n");
     MPI_Comm comm_geomprog;
     MPI_Comm_create(MPI_COMM_WORLD, group_geomprog, &comm_geomprog);
+    MPI_Group_free(&group_geomprog);
 
     if (world_rank==0) printf("MPI_Barrier on comm_geomprog \n");
     for (int i=0; i<geomprog_size; i++)
@@ -139,33 +143,84 @@ int main(int argc, char *argv[])
      *                            COLLECTIVES
      *********************************************************************************/
 
-    int max_mem = (argc>1 ? atoi(argv[1]) : 64*1024*1024);
+    int max_mem = (argc>1 ? atoi(argv[1]) : 32*1024*1024);
 
     MPI_Comm test_comm;
 
+#ifdef DO_COMM_WORLD
     test_comm = MPI_COMM_WORLD;
 
-    bcast_only(stdout, test_comm, max_mem);
-    fflush(stdout);
     MPI_Barrier( MPI_COMM_WORLD );
 
-    allgather_only(stdout, test_comm, max_mem);
+    if (world_rank==0)
+    	printf("############## %s ##############\n", "MPI_COMM_WORLD" );
+
+    {
+    	MPI_Barrier( test_comm );
+    	bcast_only(stdout, test_comm, max_mem);
+    	gather_only(stdout, test_comm, max_mem);
+    	allgather_only(stdout, test_comm, max_mem);
+    	scatter_only(stdout, test_comm, max_mem);
+    	alltoall_only(stdout, test_comm, max_mem);
+    	reduce_only(stdout, test_comm, max_mem);
+    	allreduce_only(stdout, test_comm, max_mem);
+    	reducescatterblock_only(stdout, test_comm, max_mem);
+    }
+
     fflush(stdout);
     MPI_Barrier( MPI_COMM_WORLD );
+#endif
 
-    alltoall_only(stdout, test_comm, max_mem);
-    fflush(stdout);
+#ifdef DO_WORLD_REORDERED
+    test_comm = comm_world_reordered;
+
     MPI_Barrier( MPI_COMM_WORLD );
 
-    allreduce_only(stdout, test_comm, max_mem);
+    if (world_rank==0)
+    	printf("############## %s ##############\n", "WORLD_REORDERED" );
+
+    {
+    	MPI_Barrier( test_comm );
+    	bcast_only(stdout, test_comm, max_mem);
+    	gather_only(stdout, test_comm, max_mem);
+    	allgather_only(stdout, test_comm, max_mem);
+    	scatter_only(stdout, test_comm, max_mem);
+    	alltoall_only(stdout, test_comm, max_mem);
+    	reduce_only(stdout, test_comm, max_mem);
+    	allreduce_only(stdout, test_comm, max_mem);
+    	reducescatterblock_only(stdout, test_comm, max_mem);
+    }
+
     fflush(stdout);
     MPI_Barrier( MPI_COMM_WORLD );
+#endif
 
-    reducescatterblock_only(stdout, test_comm, max_mem);
-    fflush(stdout);
+#ifdef DO_WORLD_MINUS_ONE
+    test_comm = comm_world_minus_one;
+
     MPI_Barrier( MPI_COMM_WORLD );
 
-#if 0
+    if (world_rank==0)
+    	printf("############## %s ##############\n", "WORLD_MINUS_ONE" );
+
+    if (left_out==0)
+    {
+    	MPI_Barrier( test_comm );
+    	bcast_only(stdout, test_comm, max_mem);
+    	gather_only(stdout, test_comm, max_mem);
+    	allgather_only(stdout, test_comm, max_mem);
+    	scatter_only(stdout, test_comm, max_mem);
+    	alltoall_only(stdout, test_comm, max_mem);
+    	reduce_only(stdout, test_comm, max_mem);
+    	allreduce_only(stdout, test_comm, max_mem);
+    	reducescatterblock_only(stdout, test_comm, max_mem);
+    }
+
+    fflush(stdout);
+    MPI_Barrier( MPI_COMM_WORLD );
+#endif
+
+#if DO_ODD_EVEN
     test_comm = comm_world_oddeven;
 
     for (int i=0; i<2; i++)
@@ -173,35 +228,25 @@ int main(int argc, char *argv[])
         MPI_Barrier( MPI_COMM_WORLD );
 
         if (world_rank==i)
-            printf("%s \n", (i==0 ? "even" : "odd") );
+        	printf("############## %s ##############\n", (i==0 ? "EVEN" : "ODD") );
 
         if (oddeven==i)
         {
-            bcast_only(stdout, test_comm, max_mem);
-            fflush(stdout);
-            MPI_Barrier( test_comm );
-
-            allgather_only(stdout, test_comm, max_mem);
-            fflush(stdout);
-            MPI_Barrier( test_comm );
-
-            alltoall_only(stdout, test_comm, max_mem);
-            fflush(stdout);
-            MPI_Barrier( test_comm );
-
-            allreduce_only(stdout, test_comm, max_mem);
-            fflush(stdout);
-            MPI_Barrier( test_comm );
-
-            reducescatterblock_only(stdout, test_comm, max_mem);
-            fflush(stdout);
-            MPI_Barrier( test_comm );
+        	MPI_Barrier( test_comm );
+        	bcast_only(stdout, test_comm, max_mem);
+        	gather_only(stdout, test_comm, max_mem);
+        	allgather_only(stdout, test_comm, max_mem);
+        	scatter_only(stdout, test_comm, max_mem);
+        	alltoall_only(stdout, test_comm, max_mem);
+        	reduce_only(stdout, test_comm, max_mem);
+        	allreduce_only(stdout, test_comm, max_mem);
+        	reducescatterblock_only(stdout, test_comm, max_mem);
         }
     }
     fflush(stdout);
     MPI_Barrier( MPI_COMM_WORLD );
 
-#if 0
+# if 0
     bcast_only(stdout, comm_world_dup, max_mem);
     fflush(stdout);
     MPI_Barrier( test_comm );
@@ -213,7 +258,33 @@ int main(int argc, char *argv[])
         bcast_only(even_out, comm_world_oddeven, max_mem);
     if (world_rank%2==1)
         bcast_only(odd_out,  comm_world_oddeven, max_mem);
+# endif
 #endif
+
+#ifdef DO_GEOM_PROG
+    test_comm = comm_geomprog;
+
+    MPI_Barrier( MPI_COMM_WORLD );
+
+    if (world_rank==0)
+    	printf("############## %s ##############\n", "GEOM_PROG" );
+
+    for (int i=0; i<geomprog_size; i++)
+    	if (geomprog_list[i]==world_rank)
+    	{
+        	MPI_Barrier( test_comm );
+        	bcast_only(stdout, test_comm, max_mem);
+        	gather_only(stdout, test_comm, max_mem);
+        	allgather_only(stdout, test_comm, max_mem);
+        	scatter_only(stdout, test_comm, max_mem);
+        	alltoall_only(stdout, test_comm, max_mem);
+        	reduce_only(stdout, test_comm, max_mem);
+        	allreduce_only(stdout, test_comm, max_mem);
+        	reducescatterblock_only(stdout, test_comm, max_mem);
+    	}
+
+    fflush(stdout);
+    MPI_Barrier( MPI_COMM_WORLD );
 #endif
 
     /*********************************************************************************
@@ -222,6 +293,7 @@ int main(int argc, char *argv[])
 
     MPI_Comm_free(&comm_world_minus_one);
     MPI_Comm_free(&comm_world_oddeven);
+    MPI_Comm_free(&comm_world_reordered);
     MPI_Comm_free(&comm_world_dup);
 
     free(geomprog_list);

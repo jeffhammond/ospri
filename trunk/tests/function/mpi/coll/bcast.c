@@ -18,7 +18,7 @@ void bcast_only(FILE * output, MPI_Comm comm, int max_mem)
     if ( comm_rank == 0 )
         fprintf(output, "============== BCAST ==============\n");
 
-    /* testing only intergers because it really ~shouldn't~ matter */
+    /* testing only integers because it really ~shouldn't~ matter */
 
     int max_count = max_mem/sizeof(int);
 
@@ -40,6 +40,7 @@ void bcast_only(FILE * output, MPI_Comm comm, int max_mem)
         double t0 = MPI_Wtime();
         MPI_Bcast( buffer, c, MPI_INT, root, comm );
         double t1 = MPI_Wtime();
+        double dt_bcast = t1-t0;
 
         int errors = 0;
         for (int i=0 ; i< c; i++)
@@ -57,7 +58,7 @@ void bcast_only(FILE * output, MPI_Comm comm, int max_mem)
 
         if ( comm_rank == root )
             fprintf(output, "%d: MPI_Bcast %d integers in %lf seconds (%lf MB/s) \n",
-                   world_rank, c, t1-t0, 1.0e-6*c*sizeof(int)/(t1-t0) );
+                   world_rank, c, dt_bcast, 1.0e-6*c*sizeof(int)/dt_bcast );
 
         free(buffer);
     }

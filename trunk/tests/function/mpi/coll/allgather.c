@@ -36,7 +36,7 @@ void allgather_only(FILE * output, MPI_Comm comm, int max_mem)
         double t0 = MPI_Wtime();
         MPI_Allgather( in, c, MPI_INT, out, c, MPI_INT, comm );
         double t1 = MPI_Wtime();
-        double dt_a2a = t1-t0;
+        double dt_allgath = t1-t0;
 
         int errors = 0;
         for (int i=0 ; i<(c*comm_size); i++)
@@ -54,7 +54,7 @@ void allgather_only(FILE * output, MPI_Comm comm, int max_mem)
 
         if ( comm_rank == 0 )
             fprintf(output, "%d: MPI_Allgather %d integers in %lf seconds (%lf MB/s) \n",
-                   world_rank, c*comm_size, dt_a2a, 1.0e-6*c*comm_size*sizeof(int)/dt_a2a );
+                   world_rank, c*comm_size, dt_allgath, 1.0e-6*c*comm_size*sizeof(int)/dt_allgath );
 
         free(out);
         free(in);
