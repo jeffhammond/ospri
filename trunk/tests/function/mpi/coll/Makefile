@@ -22,7 +22,7 @@ OBJECTS := driver.o safemalloc.o bcast.o allreduce.o allgather.o alltoall.o redu
 
 HEADERS := safemalloc.h driver.h
 
-all: $(TESTS) fun
+all: $(TESTS)
 
 %.x: %.c $(OBJECTS)
 	$(LD) $(LDFLAGS) $(OBJECTS) $(LIBS) -o $@
