@@ -59,6 +59,8 @@ int main(int argc, char *argv[])
 
 #endif
 
+    double t0 = MPI_Wtime();
+
     int is_init = 0;
     MPI_Initialized(&is_init);
     if (world_rank==0) printf("MPI %s initialized. \n", (is_init==1 ? "was" : "was not") );
@@ -396,6 +398,13 @@ int main(int argc, char *argv[])
     free(geomprog_list);
 
     MPI_Barrier( MPI_COMM_WORLD );
+
+    double t1 = MPI_Wtime();
+    double dt = t1-t0;
+    if (world_rank==0)
+       printf("TEST FINISHED SUCCESSFULLY IN %lf SECONDS \n", dt);
+    fflush(stdout);
+
     MPI_Finalize();
 
     return 0;
