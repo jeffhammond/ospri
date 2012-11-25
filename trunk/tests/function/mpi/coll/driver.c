@@ -123,11 +123,9 @@ int main(int argc, char *argv[])
     for (int i=0; i<geomprog_size; i++)
         geomprog_list[i] = pow(2,i)-1;
 
-#ifdef DEBUG
     if (world_rank==0)
         for (int i=0; i<geomprog_size; i++)
             if (world_rank==0) printf("geomprog_list[%d] = %d \n", i, geomprog_list[i]);
-#endif
 
     if (world_rank==0) printf("MPI_Group_incl of group_geomprog (geometric progression) from group_world \n");
     MPI_Group group_geomprog;
