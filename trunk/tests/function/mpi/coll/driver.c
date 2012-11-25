@@ -87,6 +87,14 @@ int main(int argc, char *argv[])
     MPI_Comm comm_world_reordered;
     MPI_Comm_split(MPI_COMM_WORLD, 0, world_size-world_rank, &comm_world_reordered);
 
+    if (world_rank==0) printf("MPI_Comm_split of MPI_COMM_WORLD into left-right \n");
+    MPI_Comm comm_world_leftright;
+    int leftright = (world_rank<(world_size/2));
+    MPI_Comm_split(MPI_COMM_WORLD, leftright, world_rank, &comm_world_leftright);
+
+    if (world_rank==0) printf("MPI_Barrier on comm_world_leftright \n");
+    MPI_Barrier( comm_world_leftright );
+
     if (world_rank==0) printf("MPI_Comm_split of MPI_COMM_WORLD into odd-even \n");
     MPI_Comm comm_world_oddeven;
     int oddeven = (world_rank%2);
@@ -171,6 +179,83 @@ int main(int argc, char *argv[])
     MPI_Barrier( MPI_COMM_WORLD );
 #endif
 
+#ifdef DO_COMM_WORLD_JITTER
+    test_comm = MPI_COMM_WORLD;
+
+    MPI_Barrier( MPI_COMM_WORLD );
+
+    if (world_rank==0)
+    	printf("############## %s ##############\n", "COMM_WORLD_JITTER" );
+
+    {
+    	int jitter = 0;
+    	if ((world_rank%10)==0) jitter++;
+    	if ((world_rank%100)==0) jitter++;
+    	if ((world_rank%1000)==0) jitter++;
+    	if ((world_rank%10000)==0) jitter++;
+    	if ((world_rank%100000)==0) jitter++;
+
+    	MPI_Barrier( test_comm );
+    	sleep(jitter);
+    	bcast_only(stdout, test_comm, max_mem);
+
+    	MPI_Barrier( test_comm );
+    	sleep(jitter);
+    	gather_only(stdout, test_comm, max_mem);
+
+    	MPI_Barrier( test_comm );
+    	sleep(jitter);
+    	allgather_only(stdout, test_comm, max_mem);
+
+    	MPI_Barrier( test_comm );
+    	sleep(jitter);
+    	scatter_only(stdout, test_comm, max_mem);
+
+    	MPI_Barrier( test_comm );
+    	sleep(jitter);
+    	alltoall_only(stdout, test_comm, max_mem);
+
+    	MPI_Barrier( test_comm );
+    	sleep(jitter);
+    	reduce_only(stdout, test_comm, max_mem);
+
+    	MPI_Barrier( test_comm );
+    	sleep(jitter);
+    	allreduce_only(stdout, test_comm, max_mem);
+
+    	MPI_Barrier( test_comm );
+    	sleep(jitter);
+    	reducescatterblock_only(stdout, test_comm, max_mem);
+    }
+
+    fflush(stdout);
+    MPI_Barrier( MPI_COMM_WORLD );
+#endif
+
+#ifdef DO_COMM_WORLD_DUP
+    test_comm = comm_world_dup;
+
+    MPI_Barrier( MPI_COMM_WORLD );
+
+    if (world_rank==0)
+    	printf("############## %s ##############\n", "COMM_WORLD_DUP" );
+
+    {
+    	MPI_Barrier( test_comm );
+    	bcast_only(stdout, test_comm, max_mem);
+    	gather_only(stdout, test_comm, max_mem);
+    	allgather_only(stdout, test_comm, max_mem);
+    	scatter_only(stdout, test_comm, max_mem);
+    	alltoall_only(stdout, test_comm, max_mem);
+    	reduce_only(stdout, test_comm, max_mem);
+    	allreduce_only(stdout, test_comm, max_mem);
+    	reducescatterblock_only(stdout, test_comm, max_mem);
+    }
+
+    fflush(stdout);
+    MPI_Barrier( MPI_COMM_WORLD );
+#endif
+
 #ifdef DO_WORLD_REORDERED
     test_comm = comm_world_reordered;
 
@@ -220,6 +305,33 @@ int main(int argc, char *argv[])
     MPI_Barrier( MPI_COMM_WORLD );
 #endif
 
+#if DO_LEFT_RIGHT
+    test_comm = comm_world_leftright;
+
+    for (int i=0; i<2; i++)
+    {
+        MPI_Barrier( MPI_COMM_WORLD );
+
+        if (world_rank==i)
+        	printf("############## %s ##############\n", (i==0 ? "LEFT" : "RIGHT") );
+
+        if (leftright==i)
+        {
+        	MPI_Barrier( test_comm );
+        	bcast_only(stdout, test_comm, max_mem);
+        	gather_only(stdout, test_comm, max_mem);
+        	allgather_only(stdout, test_comm, max_mem);
+        	scatter_only(stdout, test_comm, max_mem);
+        	alltoall_only(stdout, test_comm, max_mem);
+        	reduce_only(stdout, test_comm, max_mem);
+        	allreduce_only(stdout, test_comm, max_mem);
+        	reducescatterblock_only(stdout, test_comm, max_mem);
+        }
+    }
+    fflush(stdout);
+    MPI_Barrier( MPI_COMM_WORLD );
+#endif
+
 #if DO_ODD_EVEN
     test_comm = comm_world_oddeven;
 
@@ -245,20 +357,6 @@ int main(int argc, char *argv[])
     }
     fflush(stdout);
     MPI_Barrier( MPI_COMM_WORLD );
-
-# if 0
-    bcast_only(stdout, comm_world_dup, max_mem);
-    fflush(stdout);
-    MPI_Barrier( test_comm );
-
-    FILE * even_out = safefopen("./even.txt", "w+");
-    FILE * odd_out  = safefopen("./odd.txt", "w+");
-
-    if (world_rank%2==0)
-        bcast_only(even_out, comm_world_oddeven, max_mem);
-    if (world_rank%2==1)
-        bcast_only(odd_out,  comm_world_oddeven, max_mem);
-# endif
 #endif
 
 #ifdef DO_GEOM_PROG
@@ -293,6 +391,7 @@ int main(int argc, char *argv[])
 
     MPI_Comm_free(&comm_world_minus_one);
     MPI_Comm_free(&comm_world_oddeven);
+    MPI_Comm_free(&comm_world_leftright);
     MPI_Comm_free(&comm_world_reordered);
     MPI_Comm_free(&comm_world_dup);
 
