@@ -1,9 +1,0 @@
-2012-11-26 05:48:06.252 (INFO ) [0x400013a8ad0] ibm.runjob.AbstractOptions: using properties file /bgsys/local/etc/bg.properties
-2012-11-26 05:48:06.255 (INFO ) [0x400013a8ad0] ibm.runjob.AbstractOptions: max open file descriptors: 524287
-2012-11-26 05:48:06.255 (INFO ) [0x400013a8ad0] ibm.runjob.AbstractOptions: core file limit: 18446744073709551615
-2012-11-26 05:48:06.256 (INFO ) [0x400013a8ad0] MIR-48000-7B7F1-4096:35082:ibm.runjob.client.options.Parser: set local socket to runjob_mux from properties file
-2012-11-26 05:48:20.239 (INFO ) [0x400013a8ad0] MIR-48000-7B7F1-4096:76988:ibm.runjob.client.Job: job 76988 started
-/bgsys/source/srcV1R1M2.13952/comm/sys/buildtools/pami/components/memory/MemoryAllocator.h:164: 
-alloc 10752 bytes failed for context
-2012-11-26 05:48:44.795 (WARN ) [0x400013a8ad0] MIR-48000-7B7F1-4096:76988:ibm.runjob.client.Job: terminated by signal 6
-2012-11-26 05:48:44.795 (WARN ) [0x400013a8ad0] MIR-48000-7B7F1-4096:76988:ibm.runjob.client.Job: abnormal termination by signal 6 from rank 239552
