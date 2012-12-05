@@ -1,14 +1,3 @@
-
-/* ------------------------------------------------------------------------- */
-/* Licensed Materials - Property of IBM                                      */
-/* Blue Gene/Q 5765-PER 5765-PRP                                             */
-/* © Copyright IBM Corp. 2012 All Rights Reserved                            */
-/* US Government Users Restricted Rights - Use, duplication or disclosure    */
-/*   restricted by GSA ADP Schedule Contract with IBM Corp.                  */
-/*                                                                           */
-/* This software is available to you under the Eclipse Public License (EPL). */
-/* ------------------------------------------------------------------------- */
-
 #ifndef __simple_async_progress_h__
 #define __simple_async_progress_h__
 
@@ -17,22 +6,27 @@
 
 
 /**
- * \brief Open the 'async progress' extension
+ * \brief Opaque async progress 'handle'
  *
- * \param [in] client The PAMI client to open the extension against
+ * Maintains the state of the async progress extension for a client.
  *
- * \return async progress extension handle
+ * Defined for illustrative purposes only.
  */
-pami_extension_t simple_async_progress_open (pami_client_t client);
-
+typedef uintptr_t async_progress_t[8];
 
 /**
- * \brief Close the 'async progress' extension
+ * \brief Open the 'async progress' extension
  *
- * \param [in] extension The async progress extension handle
+ * This is a blocking operation.
+ *
+ * \param [in]  client         The PAMI client to open the extension against
+ * \param [out] async_progress An async progress 'handle'; defined for
+ *                             illustrative purposes
  */
-void simple_async_progress_close (pami_extension_t extension);
+void async_progress_open (pami_client_t      client,
+                          async_progress_t * async_progress);
 
+void async_progress_close (async_progress_t * async_progress);
 
 /**
  * \brief Enable 'async progress' for a communication context
@@ -49,24 +43,20 @@ void simple_async_progress_close (pami_extension_t extension);
  * \note This simple example does not illustrate the use of an explicit
  *       'progress function'.
  *
- * \param [in] extension The async progress extension handle
- * \param [in] context   The communication context to be advanced asynchronously
- */
-void simple_async_progress_enable (pami_extension_t extension,
-                                   pami_context_t   context);
-
-
-/**
- * \brief Disable 'async progress' for a communication context
+ * \note This simple example does not illustrate the use of an explicit
+ *       'suspend function' nor an explicit 'resume function'.
  *
- * This is a blocking operation. This function will not return until
- * asynchronous progress has been disabled for the communication context.
- *
- * \param [in] extension The async progress extension handle
- * \param [in] context   The communication context to be advanced asynchronously
+ * \param [in] async_progress An async progress 'handle'; defined for
+ *                            illustrative purposes
+ * \param [in] context        The communication context to be advanced
+ *                            asynchronously
  */
-void simple_async_progress_disable (pami_extension_t extension,
-                                    pami_context_t   context);
+void async_progress_enable (async_progress_t * async_progress,
+                            pami_context_t     context);
+
+void async_progress_disable (async_progress_t * async_progress,
+                             pami_context_t     context);
+
 
 
 #endif /* __simple_async_progress_h__ */

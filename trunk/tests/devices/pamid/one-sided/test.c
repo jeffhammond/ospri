@@ -1,12 +1,3 @@
-/* ------------------------------------------------------------------------- */
-/* Licensed Materials - Property of IBM                                      */
-/* Blue Gene/Q 5765-PER 5765-PRP                                             */
-/* © Copyright IBM Corp. 2012 All Rights Reserved                            */
-/* US Government Users Restricted Rights - Use, duplication or disclosure    */
-/*   restricted by GSA ADP Schedule Contract with IBM Corp.                  */
-/*                                                                           */
-/* This software is available to you under the Eclipse Public License (EPL). */
-/* ------------------------------------------------------------------------- */
 
 #include <string.h>
 #include <stdio.h>
@@ -15,13 +6,10 @@
 
 #include "simple_barrier.h"
 #include "simple_async_progress.h"
-#include "simple_memregion_registry.h"
-
 #include "accumulate_data_functions.h"
 
+#define MEMREGION_EXCHANGE_DISPATCH_ID 20
 #define ACCUMULATE_TEST_DISPATCH_ID    21
-
-#define SIMPLE_MEMREGION_REGISTRY_HASH 1234
 
 #define ASYNC_PROGRESS
 
@@ -52,6 +40,39 @@ char * accumulate_test_name[] = {
   "ACCUMULATE_TEST_COUNT"
 };
 
+typedef struct memregion_information
+{
+  struct iovec     data;
+  pami_memregion_t memregion[2];
+  unsigned         active;
+} memregion_information_t;
+
+void exchange_memregion_recv_cb (pami_context_t    context,
+                                 void            * cookie,
+                                 const void      * header_addr,
+                                 size_t            header_size,
+                                 const void      * pipe_addr,
+                                 size_t            data_size,
+                                 pami_endpoint_t   origin,
+                                 pami_recv_t     * recv)
+{
+  memregion_information_t * info = (memregion_information_t *) cookie;
+
+  pami_task_t origin_task;
+  size_t origin_offset;
+  PAMI_Endpoint_query (origin, & origin_task, & origin_offset);
+
+  pami_memregion_t * memregion = (pami_memregion_t *) pipe_addr;
+
+  memcpy ((void *) & info[origin_task].memregion[0], (void *) & memregion[0], sizeof(pami_memregion_t));
+  memcpy ((void *) & info[origin_task].memregion[1], (void *) & memregion[1], sizeof(pami_memregion_t));
+
+
+  info[origin_task].active = 1;
+
+  return;
+}
+
 
 typedef struct accumulate_test_information
 {
@@ -61,7 +82,6 @@ typedef struct accumulate_test_information
   double             scalar;
 } accumulate_test_information_t;
 
-
 void accumulate_test_done_cb (pami_context_t   context,
                               void           * cookie,
                               pami_result_t    result)
@@ -69,7 +89,6 @@ void accumulate_test_done_cb (pami_context_t   context,
   accumulate_test_t test = (accumulate_test_t) cookie;
   fprintf (stdout, "(%03d) end accumulate test \"%s\"\n", __LINE__, accumulate_test_name[test]);
 }
-
 
 void accumulate_test_recv_cb (pami_context_t    context,
                               void            * cookie,
@@ -99,7 +118,6 @@ void accumulate_test_recv_cb (pami_context_t    context,
   return;
 }
 
-
 void test_fn (int argc, char * argv[], pami_client_t client, pami_context_t context[])
 {
   int num_doubles = 16;
@@ -113,10 +131,57 @@ void test_fn (int argc, char * argv[], pami_client_t client, pami_context_t cont
 
 
   /*
-   * Initialize the accumulate test information.  This information is specified
-   * as the cookie for the accumulate test dispatch for use by the accumulate
-   * test receive callback.
+   * Allocate a 'window' of memory region information, one for each task in the
+   * client. Only the 'local' memory region information for this task will
+   * contain a valid data buffer. The memory region information is marked
+   * 'active' when the memory regions are received from each remote task.
    */
+  memregion_information_t * mr_info =
+    (memregion_information_t *) malloc (sizeof(memregion_information_t) * num_tasks);
+  unsigned i;
+  for (i = 0; i < num_tasks; i++)
+    {
+      mr_info[i].data.iov_len = 0;
+      mr_info[i].data.iov_base = NULL;
+      mr_info[i].active = 0;
+    }
+
+
+  /*
+   * Create a local memregion for each context.
+   *
+   * Note that both memregions will describe the same memory location. This is
+   * necessary when writing portable, platform independent code as the physical
+   * hardware underlying the contexts may, or may not, require separate memory
+   * pinning.
+   */
+  size_t actual_memregion_bytes = 0;
+  mr_info[my_task_id].data.iov_base = malloc (sizeof(double) * num_doubles);
+  mr_info[my_task_id].data.iov_len = sizeof(double) * num_doubles;
+  PAMI_Memregion_create (context[0],
+                         mr_info[my_task_id].data.iov_base,
+                         mr_info[my_task_id].data.iov_len,
+                         & actual_memregion_bytes,
+                         & mr_info[my_task_id].memregion[0]);
+  PAMI_Memregion_create (context[1],
+                         mr_info[my_task_id].data.iov_base,
+                         mr_info[my_task_id].data.iov_len,
+                         & actual_memregion_bytes,
+                         & mr_info[my_task_id].memregion[1]);
+  mr_info[my_task_id].active = 1;
+
+
+  /*
+   * Register the memory region exchange dispatch; only needed on the
+   * first context of each task.
+   */
+  pami_dispatch_hint_t mr_hint = {0};
+  pami_dispatch_callback_function mr_dispatch;
+  mr_dispatch.p2p = exchange_memregion_recv_cb;
+  PAMI_Dispatch_set (context[0], MEMREGION_EXCHANGE_DISPATCH_ID, mr_dispatch, (void *) mr_info, mr_hint);
+
+
+
   accumulate_test_information_t test_info;
 
   test_info.data_buffer.iov_base = malloc (sizeof(double) * num_doubles);
@@ -154,90 +219,86 @@ void test_fn (int argc, char * argv[], pami_client_t client, pami_context_t cont
   PAMI_Dispatch_set (context[1], ACCUMULATE_TEST_DISPATCH_ID, acc_dispatch, (void *) & test_info, acc_hint);
 
 
-  /*
-   * Create a memory region registry for managing memory region 'collections',
-   * or 'windows',
-   *
-   * The first context will be used to manage memory regions for all endpoints.
-   */
-  simple_memregion_registry_t * simple_memregion_registry =
-    simple_memregion_registry_init (client, context[0], 0);
-
-
-  /*
-   * Create a local memregion for each context.
-   *
-   * Note that both memregions will describe the same memory location. This is
-   * necessary when writing portable, platform independent code as the physical
-   * hardware underlying the contexts may, or may not, require separate memory
-   * pinning.
-   */
-  pami_memregion_t local_memregion[2];
-
-  void * local_data_addr = malloc (sizeof(double) * num_doubles);
-
-  simple_memregion_registry_add (simple_memregion_registry,
-                                 context, 0,
-                                 SIMPLE_MEMREGION_REGISTRY_HASH,
-                                 local_data_addr,
-                                 sizeof(double) * num_doubles,
-                                 & local_memregion[0]);
-
-  simple_memregion_registry_add (simple_memregion_registry,
-                                 context, 1,
-                                 SIMPLE_MEMREGION_REGISTRY_HASH,
-                                 local_data_addr,
-                                 sizeof(double) * num_doubles,
-                                 & local_memregion[1]);
-
-
-  /*
-   * Open the async progress extension and enable async progress only on
-   * the second context.
-   */
-  pami_extension_t async_progress_extension = simple_async_progress_open (client);
-  simple_async_progress_enable (async_progress_extension, context[1]);
-
-
-  /*
-   * Perform a simple, blocking, 'world' barrier before the accumulate
-   * test begins using the first context. Recall that the first context
-   * does NOT have async progress enabled.
-   */
   simple_barrier(client, context[0]);
 
+
+  /*
+   * Exchange the memory regions
+   */
+  volatile unsigned mr_exchange_active = 0;
+  pami_send_t mr_exchange_parameters = {0};
+  mr_exchange_parameters.send.dispatch = MEMREGION_EXCHANGE_DISPATCH_ID;
+  mr_exchange_parameters.send.header.iov_base = NULL;
+  mr_exchange_parameters.send.header.iov_len = 0;
+  mr_exchange_parameters.send.data.iov_base = (void *) mr_info[my_task_id].memregion;
+  mr_exchange_parameters.send.data.iov_len = sizeof(pami_memregion_t) * 2;
+  mr_exchange_parameters.events.cookie = (void *) & mr_exchange_active;
+  mr_exchange_parameters.events.local_fn = decrement;
+
+  for (i = 0; i < num_tasks; i++)
+    {
+      if (i == my_task_id) continue;
+
+      PAMI_Endpoint_create (client, i, 0, & mr_exchange_parameters.send.dest);
+      mr_exchange_active++;
+      PAMI_Send (context[0], & mr_exchange_parameters);
+    }
+
+  /*
+   * Advance until local memory regions have been sent and
+   * all memory regions have been received.
+   */
+  unsigned num_memregions_active;
+
+  do
+    {
+      num_memregions_active = 0;
+
+      for (i = 0; i < num_tasks; i++)
+        num_memregions_active += mr_info[i].active;
+
+      PAMI_Context_advance (context[0], 1);
+    }
+  while (num_memregions_active < num_tasks);
+
+  while (mr_exchange_active > 0)
+    PAMI_Context_advance (context[0], 1);
+
+#ifdef ASYNC_PROGRESS
+  async_progress_t async_progress;
+  async_progress_open (client, &async_progress);
+  async_progress_enable (&async_progress, context[1]);
+#endif
 
   if (my_task_id == target_task_id)
     {
       /*
        * This is the "passive target" task.
-       *
+       */
+#ifdef ASYNC_PROGRESS
+      /*
        * Do "something" besides communication for a little bit.
        */
-      fprintf (stdout, "(%03d) 'passive target' begin sleep\n", __LINE__);
-      sleep(2);
-      fprintf (stdout, "(%03d) 'passive target' end sleep\n", __LINE__);
+      sleep(1);
+#else
+      /*
+       * Advance the second context for a little bit.
+       */
+      fprintf (stdout, "(%03d) spoofing async progress\n", __LINE__);
+      for (i=0; i<10; i++)
+      {
+        fprintf (stdout, "(%03d) 'async progress context' advancing\n", __LINE__);
+        PAMI_Context_advance (context[1], 100000);
+        fprintf (stdout, "(%03d) 'async progress context' sleeping\n", __LINE__);
+        sleep(1);
+      }
+#endif
     }
   else if (my_task_id == origin_task_id)
     {
       /*
        * This is the "active origin" task.
-       *
-       * Query the memregion registry for the remote memregion. Advance the
-       * context until the memregion information is received from the remote.
        */
-      pami_memregion_t * remote_memregion = NULL;
-      pami_endpoint_t remote_endpoint;
-      PAMI_Endpoint_create (client, target_task_id, 1, & remote_endpoint);
-
-      while (remote_memregion == NULL)
-      {
-        PAMI_Context_advance (context[0], 1);
-        remote_memregion =
-          simple_memregion_registry_query (simple_memregion_registry,
-                                           remote_endpoint,
-                                           SIMPLE_MEMREGION_REGISTRY_HASH);
-      }
 
       {
         /*
@@ -245,11 +306,11 @@ void test_fn (int argc, char * argv[], pami_client_t client, pami_context_t cont
          */
         volatile unsigned rput_active = 1;
         pami_rput_simple_t rput_parameters = {0};
-        rput_parameters.rma.dest = remote_endpoint;
+        PAMI_Endpoint_create (client, target_task_id, 1, & rput_parameters.rma.dest);
         rput_parameters.rma.bytes = num_doubles * sizeof(double);
-        rput_parameters.rdma.local.mr = & local_memregion[0];
+        rput_parameters.rdma.local.mr = mr_info[origin_task_id].memregion;
         rput_parameters.rdma.local.offset = 0;
-        rput_parameters.rdma.remote.mr = remote_memregion;
+        rput_parameters.rdma.remote.mr = mr_info[target_task_id].memregion;
         rput_parameters.rdma.remote.offset = 0;
         rput_parameters.put.rdone_fn = decrement;
         rput_parameters.rma.cookie = (void *) & rput_active;
@@ -293,13 +354,13 @@ void test_fn (int argc, char * argv[], pami_client_t client, pami_context_t cont
          */
         volatile unsigned rget_active = 1;
         pami_rget_simple_t rget_parameters = {0};
-        rget_parameters.rma.dest = remote_endpoint;
+        PAMI_Endpoint_create (client, target_task_id, 1, & rget_parameters.rma.dest);
         rget_parameters.rma.done_fn = decrement;
         rget_parameters.rma.cookie = (void *) & rget_active;
         rget_parameters.rma.bytes = sizeof(double) * num_doubles;
-        rget_parameters.rdma.local.mr = & local_memregion[0];
+        rget_parameters.rdma.local.mr = mr_info[origin_task_id].memregion;
         rget_parameters.rdma.local.offset = 0;
-        rget_parameters.rdma.remote.mr = remote_memregion;
+        rget_parameters.rdma.remote.mr = mr_info[target_task_id].memregion;
         rget_parameters.rdma.remote.offset = 0;
 
         PAMI_Rget (context[0], & rget_parameters);
@@ -318,12 +379,10 @@ void test_fn (int argc, char * argv[], pami_client_t client, pami_context_t cont
 
   simple_barrier (client, context[0]);
 
-
-  /*
-   * Disable async progress on the second context and close the extension.
-   */
-  simple_async_progress_disable (async_progress_extension, context[1]);
-  simple_async_progress_close (async_progress_extension);
+#ifdef ASYNC_PROGRESS
+  async_progress_disable (&async_progress, context[1]);
+  async_progress_close (&async_progress);
+#endif
 
 
   /*

@@ -1,14 +1,3 @@
-
-/* ------------------------------------------------------------------------- */
-/* Licensed Materials - Property of IBM                                      */
-/* Blue Gene/Q 5765-PER 5765-PRP                                             */
-/* © Copyright IBM Corp. 2012 All Rights Reserved                            */
-/* US Government Users Restricted Rights - Use, duplication or disclosure    */
-/*   restricted by GSA ADP Schedule Contract with IBM Corp.                  */
-/*                                                                           */
-/* This software is available to you under the Eclipse Public License (EPL). */
-/* ------------------------------------------------------------------------- */
-
 #include <stdio.h>
 #include <assert.h>
 
@@ -32,30 +21,14 @@ int main (int argc, char * argv[])
   result = PAMI_Client_create ("ClientName", & client, NULL, 0);
   assert (result == PAMI_SUCCESS);
 
-
-  /*
-   * Determine the number of tasks in the client for the current job. This test
-   * requires > 1 tasks
-   */
-  if (task (client) == 0)
-    fprintf (stdout, "(%03d) Number of tasks in the job: %d\n", __LINE__, size (client));
-  if (size (client) < 2)
-  {
-    if (task (client) == 0)
-      fprintf (stdout, "(%03d) This test requires > 1 task\n", __LINE__);
-    return 1;
-  } 
-
   /*
    * Determine the maximum number of contexts supported by this client for the
    * current job configuration.
    */
-  if (task (client) == 0)
-    fprintf (stdout, "(%03d) Maximum number of contexts allowed: %d\n", __LINE__, max_contexts (client));
+  fprintf (stdout, "(%03d) Maximum number of contexts allowed: %d\n", __LINE__, max_contexts (client));
   if (max_contexts (client) < 2)
   {
-    if (task (client) == 0)
-      fprintf (stdout, "(%03d) This test requires > 1 context; On Blue Gene/Q, set the environment variable 'PAMI_MU_RESOURCES=Minimal' to increase the number of supported contexts for this job configuration.\n", __LINE__);
+    fprintf (stdout, "(%03d) This test requires > 1 context; On Blue Gene/Q, set the environment variable 'PAMI_MU_RESOURCES=Minimal' to increase the number of supported contexts for this job configuration.\n", __LINE__);
     return 1;
   } 
  
@@ -69,9 +42,11 @@ int main (int argc, char * argv[])
   assert (result == PAMI_SUCCESS);
 
 
-  fprintf (stdout, "(%03d) before test_fn()\n", __LINE__);
+fprintf (stdout, "before test_fn()\n");
   test_fn (argc, argv, client, context);
-  fprintf (stdout, "(%03d) after test_fn()\n", __LINE__);
+fprintf (stdout, "after test_fn()\n");
+
+
 
   /* Destroy the context */
   result = PAMI_ERROR;

@@ -1,15 +1,3 @@
-
-/* ------------------------------------------------------------------------- */
-/* Licensed Materials - Property of IBM                                      */
-/* Blue Gene/Q 5765-PER 5765-PRP                                             */
-/* © Copyright IBM Corp. 2012 All Rights Reserved                            */
-/* US Government Users Restricted Rights - Use, duplication or disclosure    */
-/*   restricted by GSA ADP Schedule Contract with IBM Corp.                  */
-/*                                                                           */
-/* This software is available to you under the Eclipse Public License (EPL). */
-/* ------------------------------------------------------------------------- */
-
-
 /*
  * The operations supported by Acc shall include both scalar and vector
  * addition/subtraction (e.g. y[i]+=c*x[i] and y[i]+=c[i]*x[i], where c is local

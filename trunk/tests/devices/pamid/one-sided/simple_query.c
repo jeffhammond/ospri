@@ -1,14 +1,4 @@
 
-/* ------------------------------------------------------------------------- */
-/* Licensed Materials - Property of IBM                                      */
-/* Blue Gene/Q 5765-PER 5765-PRP                                             */
-/* © Copyright IBM Corp. 2012 All Rights Reserved                            */
-/* US Government Users Restricted Rights - Use, duplication or disclosure    */
-/*   restricted by GSA ADP Schedule Contract with IBM Corp.                  */
-/*                                                                           */
-/* This software is available to you under the Eclipse Public License (EPL). */
-/* ------------------------------------------------------------------------- */
-
 #include <assert.h>
 
 #include "simple_query.h"
