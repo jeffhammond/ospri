@@ -1,0 +1,2 @@
+2012-11-19 11:22:18.978 (FATAL) [0xfff8f8d8b30] R00-M1-N10:8248:ibm.runjob.client.Job: could not start job: job failed to start
+2012-11-19 11:22:18.979 (FATAL) [0xfff8f8d8b30] R00-M1-N10:8248:ibm.runjob.client.Job: Load failed on Q04-IA-J06: Changing to working directory failed, errno 2 No such file or directory
