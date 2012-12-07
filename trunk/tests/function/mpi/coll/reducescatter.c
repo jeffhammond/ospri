@@ -10,6 +10,8 @@
 
 void reducescatterblock_only(FILE * output, MPI_Comm comm, int max_mem)
 {
+#if ( MPI_VERSION == 2 && MPI_SUBVERSION == 2 ) || MPI_VERSION >= 3
+
 	int comm_rank = -1, world_rank = -1, comm_size = 0;
 	MPI_Comm_rank(comm, &comm_rank);
 	MPI_Comm_size(comm, &comm_size);
@@ -105,7 +107,7 @@ void reducescatterblock_only(FILE * output, MPI_Comm comm, int max_mem)
         free(out);
         free(in );
     }
-
+#endif
 
     return;
 }
