@@ -19,10 +19,13 @@
 #endif
 
 #ifdef __bgq__
-//#  include <firmware/include/personality.h>
-//#  include <spi/include/kernel/process.h>
-//#  include <spi/include/kernel/location.h>
-#include <mpix.h>
+# ifdef BGQ_SPI_TOPO
+#  include <firmware/include/personality.h>
+#  include <spi/include/kernel/process.h>
+#  include <spi/include/kernel/location.h>
+# else
+#  include <mpix.h>
+# endif
 #endif
 
 #if defined(__CRAYXT) || defined(__CRAYXE)
@@ -79,9 +82,38 @@ int main(int argc, char* argv[])
 
     MPI_Comm NodeComm;
 #if defined(__bgq__)
-#warning Use MPIX instead here
-    rank_in_node = Kernel_MyTcoord();
+    int nodeid;
+# ifdef BGQ_SPI_TOPO
+#  warning Not implemented yet!
+    Personality_t pers;
+
+    rc = Kernel_GetPersonality(&pers, sizeof(pers));
+    assert(rc==0);
+
+    // this is nonsense...
+    nodeid = pers.Network_Config.Acoord;
+             pers.Network_Config.Bcoord;
+             pers.Network_Config.Ccoord;
+             pers.Network_Config.Dcoord;
+             pers.Network_Config.Ecoord;
+             pers.Network_Config.Anodes;
+             pers.Network_Config.Bnodes;
+             pers.Network_Config.Cnodes;
+             pers.Network_Config.Dnodes;
+             pers.Network_Config.Enodes;
+# else
+    MPIX_Hardware_t hw;
+    MPIX_Hardware(&hw);
+
+    nodeid = hw.Size[0] * hw.Coords[1] * hw.Coords[2] * hw.Coords[3] * hw.Coords[4]
+           + hw.Size[1] * hw.Coords[2] * hw.Coords[3] * hw.Coords[4]
+           + hw.Size[2] * hw.Coords[3] * hw.Coords[4]
+           + hw.Size[3] * hw.Coords[4]
+           + hw.Size[4];
+#endif
+    MPI_Comm_split(MPI_COMM_WORLD, nodeid, 0, &NodeComm);
 #elif defined(__bgp__)
+#  warning There is a better way to do this...
     rank_in_node = Kernel_PhysicalProcessorID();
     MPI_Allreduce( &rank_in_node, &ranks_per_node, 1, MPI_INT, MPI_MAX, MPI_COMM_WORLD);
     ranks_per_node++; /* change from [0,n-1] to [1,n] */
@@ -92,7 +124,7 @@ int main(int argc, char* argv[])
     PMI_Portals_get_nid(world_rank, &cray_nid);
 #    elif defined(__CRAYXE)
     PMI_Get_nid(world_rank, &cray_nid);
-    PMI_Get_clique_size(&ranks_per_node);
+    //PMI_Get_clique_size(&ranks_per_node);
 #    endif
     MPI_Comm_split(MPI_COMM_WORLD, cray_nid, 0, &NodeComm);
 #  elif MPI_VERSION >= 3
@@ -100,11 +132,11 @@ int main(int argc, char* argv[])
 #  elif defined(MPICH2) && (MPICH2_NUMVERSION>10500000)
     MPIX_Comm_split_type(MPI_COMM_WORLD, MPIX_COMM_TYPE_SHARED, 0, MPI_INFO_NULL, &NodeComm);
 #  else
-
+#   error No way to find node communicator!
 #  endif
 #endif
     MPI_Comm_rank(NodeComm, &rank_in_node);
-
+    MPI_Comm_rank(NodeComm, &ranks_per_node);
 
     num_nodes = world_size/ranks_per_node;
     assert( (world_size % ranks_per_node)==0 );
@@ -119,7 +151,6 @@ int main(int argc, char* argv[])
     color = rank_in_node;
     key   = my_node;
 
-    /* int MPI_Comm_split(MPI_Comm comm, int color, int key, MPI_Comm *newcomm) */
     MPI_Comm_split(MPI_COMM_WORLD, color, key, &NodeRankComm);
 
     int subcomm_rank = -1;

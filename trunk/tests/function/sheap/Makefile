@@ -9,7 +9,7 @@ LIBS    = -lm
 TESTS   := $(patsubst %.c,%.x,$(wildcard *.c))
 OBJECTS := $(patsubst %.c,%.o,$(wildcard *.c))
 
-all: $(TESTS)
+all: mmap_fixed.x
 
 %.x: %.o
 	$(LD) $(LDFLAGS) $< $(LIBS) -o $@
