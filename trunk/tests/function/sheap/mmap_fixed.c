@@ -79,7 +79,7 @@ int main(int argc, char* argv[])
            + hw.Size[3] * hw.Coords[4]
            + hw.Size[4];
     MPI_Comm_split(MPI_COMM_WORLD, nodeid, 0, &NodeComm);
-#if defined(__CRAYXT) || defined(__CRAYXE)
+#elif defined(__CRAYXT) || defined(__CRAYXE)
     int nodeid;
 #  if defined(__CRAYXT)
     PMI_Portals_get_nid(world_rank, &nodeid);
