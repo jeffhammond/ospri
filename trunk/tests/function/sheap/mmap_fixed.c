@@ -12,7 +12,7 @@
 #include <pthread.h>
 #include <mpi.h>
 
-#ifdef __bgq__
+#if defined(__bgp__) || defined(__bgq__)
 #  include <mpix.h>
 #endif
 
@@ -53,7 +53,18 @@ int main(int argc, char* argv[])
     MPI_Barrier(MPI_COMM_WORLD);
 
     MPI_Comm NodeComm;
-#if defined(__bgq__)
+#if defined(__bgp__)
+    int nodeid, rpn;
+    unsigned x,y,z,t;
+
+    /* this is a hack for getting ranks per node */
+    MPIX_rank2torus(world_size, &x, &y, &z, &t);
+    rpn = t+1;
+
+    MPIX_rank2torus(world_rank, &x, &y, &z, &t);
+    nodeid = MPIX_torus2rank(x,y,z,0)/rpn;
+    MPI_Comm_split(MPI_COMM_WORLD, nodeid, 0, &NodeComm);
+#elif defined(__bgq__)
     int nodeid;
     MPIX_Hardware_t hw;
     MPIX_Hardware(&hw);
