@@ -16,6 +16,10 @@
 #  include <mpix.h>
 #endif
 
+#if defined(__CRAYXT) || defined(__CRAYXE)
+#  include <pmi.h> 
+#endif
+
 int main(int argc, char* argv[])
 {
     int mpi_result = MPI_SUCCESS;
@@ -75,11 +79,19 @@ int main(int argc, char* argv[])
            + hw.Size[3] * hw.Coords[4]
            + hw.Size[4];
     MPI_Comm_split(MPI_COMM_WORLD, nodeid, 0, &NodeComm);
-# elif MPI_VERSION >= 3
+#if defined(__CRAYXT) || defined(__CRAYXE)
+    int nodeid;
+#  if defined(__CRAYXT)
+    PMI_Portals_get_nid(world_rank, &nodeid);
+#  elif defined(__CRAYXE)
+    PMI_Get_nid(world_rank, &nodeid);
+#  endif
+    MPI_Comm_split(MPI_COMM_WORLD, nodeid, 0, &NodeComm);
+#elif MPI_VERSION >= 3
     MPI_Comm_split_type(MPI_COMM_WORLD, MPI_COMM_TYPE_SHARED, 0, MPI_INFO_NULL, &NodeComm);
-# elif defined(MPICH2) && (MPICH2_NUMVERSION>10500000)
+#elif defined(MPICH2) && (MPICH2_NUMVERSION>10500000)
     MPIX_Comm_split_type(MPI_COMM_WORLD, MPIX_COMM_TYPE_SHARED, 0, MPI_INFO_NULL, &NodeComm);
-# else
+#else
 #   error No way to find node communicator!
 #endif
 
