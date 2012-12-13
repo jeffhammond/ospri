@@ -79,7 +79,6 @@ int main(int argc, char* argv[])
 
     num_nodes = world_size/ranks_per_node;
     my_node = (world_rank - rank_in_node)/ranks_per_node;
-    assert( (world_size % ranks_per_node)==0 );
 
     printf("%7d: rank_in_node = %2d, ranks_per_node = %2d, my_node = %5d, num_nodes = %5d, world_rank = %7d, world_size = %7d \n",
             world_rank, rank_in_node, ranks_per_node, my_node, num_nodes, world_rank, world_size);
