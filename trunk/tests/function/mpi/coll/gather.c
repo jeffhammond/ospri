@@ -52,7 +52,7 @@ void gather_only(FILE * output, MPI_Comm comm, int max_mem)
 			for (int i=0 ; i<(c*comm_size); i++)
 				fprintf(output, "%d: out[%d] = %d (correct is %d) \n",
 						world_rank, i, out[i], i/c );
-			exit(1);
+            MPI_Abort(MPI_COMM_WORLD, 1);
 		}
 
 		if ( comm_rank == 0 )

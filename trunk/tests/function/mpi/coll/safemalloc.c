@@ -11,7 +11,7 @@ void * safemalloc(size_t n)
     if ( ptr==NULL || rc!=0 )
     {
         fprintf( stderr , "%ld bytes could not be allocated \n" , (long)n );
-        exit(1);
+        MPI_Abort(MPI_COMM_WORLD, 1);
     }
 
     return ptr;
@@ -37,7 +37,7 @@ FILE * safefopen(const char * path, const char *mode)
     if ( fp==NULL )
     {
         fprintf( stderr , "file at %s could not be opened \n" , path );
-        exit(1);
+        MPI_Abort(MPI_COMM_WORLD, 1);
     }
 
     return fp;

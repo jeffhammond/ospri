@@ -55,7 +55,7 @@ int main(int argc, char *argv[])
         if (world_rank==0) printf("MPI_Init_thread returned %s instead of %s so the test will exit. \n",
                                   MPI_THREAD_STRING(provided), MPI_THREAD_STRING(requested) );
         fflush(stdout);
-        exit(1);
+        MPI_Abort(MPI_COMM_WORLD, 1);
     }
 
 #endif

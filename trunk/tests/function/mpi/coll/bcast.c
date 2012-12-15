@@ -53,7 +53,7 @@ void bcast_only(FILE * output, MPI_Comm comm, int max_mem)
             for (int i=0 ; i<c; i++)
                 fprintf(output, "%d: buffer[%d] = %d (correct is %d) \n",
                        world_rank, i, buffer[i], comm_size );
-            exit(1);
+            MPI_Abort(MPI_COMM_WORLD, 1);
         }
 
         if ( comm_rank == root )
@@ -118,7 +118,7 @@ void bcast_vs_scatter_allgather(FILE * output, MPI_Comm comm, int max_mem)
                 for (int i=0 ; i<c; i++)
                     fprintf(output, "%d: buffer[%d] = %d (correct is %d) \n",
                             world_rank, i, buffer[i], comm_size );
-                exit(1);
+                MPI_Abort(MPI_COMM_WORLD, 1);
             }
 
             /*****************************************************/
@@ -148,7 +148,7 @@ void bcast_vs_scatter_allgather(FILE * output, MPI_Comm comm, int max_mem)
                 for (int i=0 ; i<c; i++)
                     fprintf(output, "%d: buffer[%d] = %d (correct is %d) \n",
                            world_rank, i, buffer[i], comm_size );
-                exit(1);
+                MPI_Abort(MPI_COMM_WORLD, 1);
             }
 
             if ( comm_rank == root )

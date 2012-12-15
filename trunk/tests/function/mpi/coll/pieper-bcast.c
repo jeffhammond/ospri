@@ -25,7 +25,7 @@ static void bcast_only(FILE * output, MPI_Comm comm)
 
     int max_count = 1024*1024*1024;
 
-    for (int c=1; c<max_count; c*=2)
+    for (int c=1; c<=max_count; c*=2)
     {
         int root = 0;
 
@@ -41,22 +41,23 @@ static void bcast_only(FILE * output, MPI_Comm comm)
             buffer[i] = value;
 
         double t0 = MPI_Wtime();
-        MPI_Bcast( buffer, c, MPI_INT, root, comm );
+        MPI_Bcast( buffer, c, MPI_DOUBLE, root, comm );
         double t1 = MPI_Wtime();
         double dt_bcast = t1-t0;
 
         int errors = 0;
         for (int i=0 ; i< c; i++)
-            errors += (int) ( buffer[i] != (double)comm_size );
+            errors += (int) ( fabs(buffer[i] - comm_size) > 1e-12 );
 
         if (errors>0)
         {
             fprintf(output, "%d: MPI_Bcast had %d errors on rank %d! \n",
                    world_rank, errors, comm_rank);
             for (int i=0 ; i<c; i++)
-                fprintf(output, "%d: buffer[%d] = %lf (correct is %lf) \n",
-                       world_rank, i, buffer[i], (double)comm_size );
-            exit(1);
+                if ( fabs(buffer[i] - comm_size) > 1e-12 )
+                    fprintf(output, "%d: buffer[%d] = %lf (correct is %lf) \n",
+                           world_rank, i, buffer[i], (double)comm_size );
+            MPI_Abort(MPI_COMM_WORLD, 1);
         }
 
         if ( comm_rank == root )
@@ -109,7 +110,7 @@ int main(int argc, char *argv[])
     {
         if (world_rank==0) printf("MPI_Init_thread returned %s instead of %s so the test will exit. \n",
                                   MPI_THREAD_STRING(provided), MPI_THREAD_STRING(requested) );
-        exit(1);
+        MPI_Abort(MPI_COMM_WORLD, 1);
     }
 
 #endif
