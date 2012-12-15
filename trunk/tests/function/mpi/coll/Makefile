@@ -20,25 +20,16 @@ endif
 LDFLAGS = $(COPT)
 LIBS    = -lm
 
-TESTS := driver.x bcast-zero.x dtype-zero-vector.x comm_split.x
+TESTS := driver.x bcast-zero.x dtype-zero-vector.x comm_split.x pieper-bcast.x
 
-OBJECTS := driver.o safemalloc.o bcast.o reduce.o allreduce.o gather.o allgather.o scatter.o alltoall.o reducescatter.o
+OBJECTS := safemalloc.o bcast.o reduce.o allreduce.o gather.o allgather.o scatter.o alltoall.o reducescatter.o
 
 HEADERS := safemalloc.h driver.h
 
 all: $(TESTS)
 
 %.x: %.c $(OBJECTS)
-	$(LD) $(LDFLAGS) $(OBJECTS) $(LIBS) -o $@
-
-bcast-zero.x: bcast-zero.c $(HEADERS)
-	$(CC) $(CFLAGS) $< -o $@
-
-dtype-zero-vector.x: dtype-zero-vector.c $(HEADERS)
-	$(CC) $(CFLAGS) $< -o $@
-
-comm_split.x: comm_split.c safemalloc.h safemalloc.o
-	$(CC) $(CFLAGS) $< safemalloc.o -o $@
+	$(LD) $(LDFLAGS) $< $(OBJECTS) $(LIBS) -o $@
 
 %.o: %.c $(HEADERS)
 	$(CC) $(CFLAGS) -c $< -o $@
