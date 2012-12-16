@@ -17,7 +17,7 @@ ifeq ($(PLATFORM),linux-rhel_6-ppc64)
 CFLAGS  += -DBGQ
 endif
 
-LDFLAGS = $(COPT)
+LDFLAGS = $(COPT) $(CFLAGS)
 LIBS    = -lm
 
 TESTS := driver.x bcast-zero.x dtype-zero-vector.x comm_split.x pieper-bcast.x

@@ -155,7 +155,7 @@ int main(int argc, char *argv[])
 
     MPI_Comm test_comm;
 
-#if defined(DO_COMM_WORLD) || 1
+#if defined(DO_COMM_WORLD)
     test_comm = MPI_COMM_WORLD;
 
     MPI_Barrier( MPI_COMM_WORLD );
