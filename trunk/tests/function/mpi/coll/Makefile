@@ -31,6 +31,9 @@ all: $(TESTS)
 %.x: %.c $(OBJECTS)
 	$(LD) $(LDFLAGS) $< $(OBJECTS) $(LIBS) -o $@
 
+reduce_local_inplace.x: reduce_local_inplace.c
+	$(CC) $(CFLAGS) $< -o $@
+
 %.o: %.c $(HEADERS)
 	$(CC) $(CFLAGS) -c $< -o $@
 
@@ -39,6 +42,7 @@ clean:
 
 realclean: clean
 	$(RM) $(RMFLAGS) $(TESTS)
+	$(RM) $(RMFLAGS) -r *.dSYM
 
 fun:
 	say Open M P I sucks
