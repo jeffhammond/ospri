@@ -8,16 +8,88 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <asm-generic/errno-base.h>
-
 #include <pthread.h>
+
 #include <mpi.h>
 
 #if defined(__bgp__) || defined(__bgq__)
 #  include <mpix.h>
-#endif
-
-#if defined(__CRAYXT) || defined(__CRAYXE)
+#elif defined(__CRAYXT) || defined(__CRAYXE)
 #  include <pmi.h> 
+#elif MPI_VERSION >= 3 || (defined(MPICH2) && (MPICH2_NUMVERSION>10500000))
+// MPICH provides MPI(X)_Comm_split_type
+#else
+// fall back to Jeff's memory-intensive implementation 
+static inline int xstrcmp(const void *a, const void *b) 
+{ 
+    const char **ia = (const char **)a;
+    const char **ib = (const char **)b;
+    return strcmp(*ia, *ib);
+} 
+
+int MPE_Comm_split_node(MPI_Comm ParentComm, MPI_Comm * NodeComm)
+{
+    int world_rank = -1, world_size = -1;
+
+    MPI_Comm_rank(ParentComm, &world_rank);
+    MPI_Comm_size(ParentComm, &world_size);
+
+    int namelen = 0;
+    char procname[MPI_MAX_PROCESSOR_NAME];
+    memset(procname, '\0', MPI_MAX_PROCESSOR_NAME);
+    MPI_Get_processor_name( procname, &namelen );
+
+    char ** procname_array   = NULL;
+    char *  procname_storage = NULL;
+    int  *  procname_colors  = NULL;
+
+    if (world_rank==0)
+    {
+        procname_array = malloc( world_size * sizeof(char *) );
+        assert( procname_array != NULL );
+
+        procname_storage = malloc( world_size * namelen * sizeof(char) );
+        assert( procname_storage != NULL );
+
+        memset( procname_storage, '\0', world_size * namelen);
+
+        int i;
+        for (i=0; i<world_size; i++)
+            procname_array[i] = &procname_storage[i*namelen];
+    }
+
+    MPI_Gather( procname, namelen, MPI_CHAR, procname_storage, namelen, MPI_CHAR, 0, ParentComm );
+
+    int color = world_rank;
+
+    if (world_rank==0)
+    {
+        int i;
+        qsort(procname_array, world_size, sizeof(char *), (void*) &xstrcmp);
+
+        procname_colors = malloc( world_size * sizeof(int) );
+        assert( procname_colors != NULL );
+
+        color = 0;
+        procname_colors[0] = color;
+        for (i=1; i<world_size; i++)
+        {
+            if (0!=strncmp(procname_array[i], procname_array[i-1], namelen)) color++;
+            procname_colors[i] = color;
+        }
+
+        free(procname_storage);
+        free(procname_array);
+    }
+    MPI_Scatter( procname_colors, 1, MPI_INT, &color, 1, MPI_INT, 0, ParentComm );
+
+    if (world_rank==0) 
+        free(procname_colors);
+
+    MPI_Comm_split(ParentComm, color, 0, NodeComm);
+
+    return MPI_SUCCESS;
+}
 #endif
 
 int main(int argc, char* argv[])
@@ -92,7 +164,7 @@ int main(int argc, char* argv[])
 #elif defined(MPICH2) && (MPICH2_NUMVERSION>10500000)
     MPIX_Comm_split_type(MPI_COMM_WORLD, MPIX_COMM_TYPE_SHARED, 0, MPI_INFO_NULL, &NodeComm);
 #else
-#   error No way to find node communicator!
+    MPE_Comm_split_node(MPI_COMM_WORLD, &NodeComm);
 #endif
 
     int rank_in_node = -1, ranks_per_node = 0, num_nodes = 0, my_node = -1;
