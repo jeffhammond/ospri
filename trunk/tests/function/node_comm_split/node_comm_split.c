@@ -22,12 +22,6 @@ int MPE_Comm_split_node(MPI_Comm * NodeComm)
     MPI_Comm_rank(MPI_COMM_WORLD, &world_rank);
     MPI_Comm_size(MPI_COMM_WORLD, &world_size);
 
-#if MPI_VERSION >= 3
-    MPI_Comm_split_type(MPI_COMM_WORLD, MPI_COMM_TYPE_SHARED, 0, MPI_INFO_NULL, NodeComm);
-#elif defined (MPICH2) && (MPICH2_NUM_VERSION >= MPICH2_CALC_VERSION(1,5,0,0,0)) && 0
-    MPIX_Comm_split_type(MPI_COMM_WORLD, MPIX_COMM_TYPE_SHARED, 0, MPI_INFO_NULL, NodeComm);
-#else
-
     int namelen = 0;
     char procname[MPI_MAX_PROCESSOR_NAME];
     memset(procname, '\0', MPI_MAX_PROCESSOR_NAME);
@@ -107,7 +101,6 @@ int MPE_Comm_split_node(MPI_Comm * NodeComm)
         free(procname_colors);
 
     MPI_Comm_split(MPI_COMM_WORLD, color, 0, NodeComm);
-#endif /* MPIX_Comm_split_type */
 
     return MPI_SUCCESS;
 }
@@ -121,7 +114,13 @@ int main(int argc, char* argv[])
     MPI_Comm_size(MPI_COMM_WORLD, &world_size);
 
     MPI_Comm NodeComm;
+#if MPI_VERSION >= 3
+    MPI_Comm_split_type(MPI_COMM_WORLD, MPI_COMM_TYPE_SHARED, 0, MPI_INFO_NULL, &NodeComm);
+#elif defined (MPICH2) && (MPICH2_NUM_VERSION >= MPICH2_CALC_VERSION(1,5,0,0,0)) && 0
+    MPIX_Comm_split_type(MPI_COMM_WORLD, MPIX_COMM_TYPE_SHARED, 0, MPI_INFO_NULL, &NodeComm);
+#else
     MPE_Comm_split_node(&NodeComm);
+#endif
 
     int node_rank = -1,  node_size = -1;
     MPI_Comm_rank(NodeComm, &node_rank);
