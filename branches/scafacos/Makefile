@@ -23,6 +23,7 @@ ifeq ($(TARGET),BGP)
 COMPILER  = XL
 CC        = mpixlc_r
 FC        = mpixlf95_r
+FOPT     += -qstrict
 MAKEJNUM  = 4
 # Surveyor
 LIBARMCI  = -L$(HOME)/ARMCI-MPI/armci-mpi/trunk/install/lib -larmci
