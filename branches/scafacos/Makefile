@@ -21,11 +21,11 @@ endif
 
 ifeq ($(TARGET),BGP)
 COMPILER  = XL
-CC        = mpixlc
-FC        = mpixlf90
+CC        = mpixlc_r
+FC        = mpixlf95_r
 MAKEJNUM  = 4
 # Surveyor
-LIBARMCI  = -L/home/jhammond/ARMCI-MPI/armci-mpi/trunk/install/lib -larmci
+LIBARMCI  = -L$(HOME)/ARMCI-MPI/armci-mpi/trunk/install/lib -larmci
 INC       = -I/bgsys/drivers/ppcfloor/arch/include/
 endif
 
@@ -35,11 +35,11 @@ CC        = mpicc
 FC        = mpif90
 MAKEJNUM  = 8
 # EAS
-LIBARMCI  = -L/home/xajhammond/ARMCI-MPI/trunk/install-bgq-gcc/lib -larmci
+LIBARMCI  = -L$(HOME)/ARMCI-MPI/trunk/install-bgq-gcc/lib -larmci
 endif
 
 ifeq ($(COMPILER),)
-FOPT     += -ffast-math -funroll-loops -ftree-vectorize -msse -msse2 -msse3 -mfpmath=sse 
+FOPT     += -ffast-math -funroll-loops -ftree-vectorize #-msse -msse2 -msse3 -mfpmath=sse 
 FPP       = -cpp
 FIXED     = -ffixed-form
 FREE      = -ffree-form
@@ -83,7 +83,8 @@ LDFLAGS  = -g -O3
 
 OBJECTS = caladdr2.o cptrsize.o diffcpointers.o dummy_malloc.o fmm_full.o fmmgradt.o fmm_mods.o fmmmopn.o fmmoopn.o getcjpa.o getneighbors.o mp_constants.o mp_wrapper.o ptroffset.o pvlist2.o
 
-all: fmm_dmapp.x fmm_armpi.x
+#all: fmm_dmapp.x fmm_armpi.x
+all: fmm_armpi.x
 
 fmm_dmapp.x: libfm_r32.a sl/libsl.a armci-scafacos.o
 	$(LD) $(LDFLAGS) libfm_r32.a sl/libsl.a armci-scafacos.o -o $@
