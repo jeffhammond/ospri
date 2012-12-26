@@ -94,7 +94,7 @@ fmm_armpi.x: libfm_r32.a sl/libsl.a armci-boot-only.o
 	$(LD) $(LDFLAGS) libfm_r32.a sl/libsl.a $(LIBARMPI) armci-boot-only.o -o $@
 
 fmm_armci.x: libfm_r32.a sl/libsl.a armci-boot-only.o
-	/opt/pgi/default/linux86-64/default/bin/pgf90 -rpath /opt/pgi/default/linux86-64/default/libso $(LDFLAGS) libfm_r32.a sl/libsl.a $(LIBARMCI) armci-boot-only.o -o $@
+	$(LD) $(LDFLAGS) libfm_r32.a sl/libsl.a $(LIBARMCI) armci-boot-only.o -o $@
 
 sl/libsl.a:
 	make -C sl -j $(MAKEJNUM) CC="$(CC)" CFLAGS="$(CFLAGS)"
