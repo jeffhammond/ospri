@@ -271,10 +271,9 @@ int ARMCI_Init(void)
     DCMF_CriticalSection_exit(0);
 
     /* exchange memregions because we don't use symmetry heap */
-#warning Need to dupe MPI_COMM_WORLD and use A1D_COMM_WORLD here
     mpi_status = MPI_Allgather(&local_memregion,sizeof(DCMF_Memregion_t),MPI_BYTE,
                                A1D_Memregion_list,sizeof(DCMF_Memregion_t),MPI_BYTE,
-                               MPI_COMM_WORLD);
+                               A1_COMM_WORLD);
     assert(mpi_status==0);
 
     DCMF_CriticalSection_enter(0);
