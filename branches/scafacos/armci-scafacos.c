@@ -56,6 +56,10 @@
 
 #include "armci.h"
 
+#if defined(__bgp__)
+#include <dcmf.h>
+#endif
+
 #if defined(__CRAYXE)
 #include <dmapp.h>
 void parse_error(dmapp_return_t rc)
@@ -136,7 +140,7 @@ MPI_Comm A1_COMM_WORLD;
 
 /* This function exists because DMAPP needs to be booted before MPI
    in some cases for Cray XE6 to work properly.                      */
-void ARMCI_Boot(void)
+int ARMCI_Boot(void)
 {
 #if defined(__CRAYXE)
     dmapp_return_t                      dmapp_status = DMAPP_RC_SUCCESS;
@@ -170,7 +174,7 @@ void ARMCI_Boot(void)
 
 #endif
 
-    return;
+    return 0;
 }
 
 int ARMCI_Init(void)
@@ -251,24 +255,26 @@ int ARMCI_Init(void)
     assert(mpi_size==(int)DCMF_Messager_size());
 
     /* allocate memregion list */
-    A1D_Memregion_list = malloc( mpi_size * sizeof(DCMF_Memregion_t) );
+    DCMF_Memregion_t * A1D_Memregion_list = malloc( mpi_size * sizeof(DCMF_Memregion_t) );
     assert(A1D_Memregion_list != NULL);
 
     /* allocate base pointer list */
-    A1D_Baseptr_list = malloc( mpi_size * sizeof(void*) );
+    void ** A1D_Baseptr_list = malloc( mpi_size * sizeof(void*) );
     assert(A1D_Memregion_list != NULL);
 
     /* create memregions */
-    bytes_in = -1;
-    dcmf_result = DCMF_Memregion_create(&local_memregion,&bytes_out,bytes_in,NULL,0);
+    size_t bytes_in = -1, bytes_out;
+    DCMF_Memregion_t local_memregion;
+    DCMF_Result dcmf_result = DCMF_Memregion_create(&local_memregion, &bytes_out, bytes_in, NULL, 0);
     assert(dcmf_result==DCMF_SUCCESS);
 
     DCMF_CriticalSection_exit(0);
 
     /* exchange memregions because we don't use symmetry heap */
+#warning Need to dupe MPI_COMM_WORLD and use A1D_COMM_WORLD here
     mpi_status = MPI_Allgather(&local_memregion,sizeof(DCMF_Memregion_t),MPI_BYTE,
                                A1D_Memregion_list,sizeof(DCMF_Memregion_t),MPI_BYTE,
-                               A1D_COMM_WORLD);
+                               MPI_COMM_WORLD);
     assert(mpi_status==0);
 
     DCMF_CriticalSection_enter(0);
@@ -278,7 +284,7 @@ int ARMCI_Init(void)
     assert(dcmf_result==DCMF_SUCCESS);
 
     /* check for valid memregions */
-    for (i = 0; i < mpi_size; i++)
+    for (int i = 0; i < mpi_size; i++)
     {
         dcmf_result = DCMF_Memregion_query(&A1D_Memregion_list[i],
                                            &bytes_out,
@@ -316,6 +322,7 @@ int ARMCI_Init(void)
      *
      ***************************************************/
 
+    DCMF_Callback_t A1D_Nocallback;
     A1D_Nocallback.function = NULL;
     A1D_Nocallback.clientdata = NULL;
 
