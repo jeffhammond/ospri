@@ -1,5 +1,5 @@
-CC      = mpicc
-#CC      = ~/eclipse/MPICH2/mpich2-trunk/install-clang/bin/mpicc
+#CC      = mpicc
+CC      = ~/eclipse/MPICH2/mpich2-trunk/install-clang/bin/mpicc
 COPT    = -g -O0 -Wall -std=gnu99
 
 LD      = $(CC)
@@ -24,4 +24,5 @@ clean:
 
 realclean: clean
 	$(RM) $(RMFLAGS) $(TESTS)
+	$(RM) $(RMFLAGS) -r *.dSYM
 

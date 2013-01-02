@@ -2,14 +2,23 @@
 
 void * safemalloc(size_t n)
 {
-    //void * ptr = malloc( n );
-    int rc;
-    void * ptr;
-    rc = posix_memalign( &ptr , ALIGNMENT , n );
+    void * ptr = NULL;
 
-    if ( ptr == NULL )
+#ifdef USE_MALLOC
+    ptr = malloc(n);
+#else
+    int rc = posix_memalign(&ptr, ALIGNMENT, n);
+
+    if (rc!=0)
     {
-        fprintf( stderr , "%ld bytes could not be allocated \n" , (long)n );
+        fprintf(stderr, "posix_memalign returned %d \n", rc);
+        exit(1);
+    }
+#endif
+
+    if (ptr==NULL)
+    {
+        fprintf(stderr, "%ld bytes could not be allocated \n" , (long)n );
         exit(1);
     }
 

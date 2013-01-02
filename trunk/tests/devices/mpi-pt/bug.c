@@ -51,6 +51,7 @@ int main(int argc, char * argv[])
 
     MPI_Barrier(MPI_COMM_WORLD);
 
+#if 0
     rc = pthread_cancel(Progress_thread);
     if (rc!=0) MPI_Abort(MPI_COMM_WORLD, rc);
 
@@ -62,11 +63,12 @@ int main(int argc, char * argv[])
     fflush(stdout);
 
     MPI_Barrier(MPI_COMM_WORLD);
+#endif
 
     printf("before MPI Abort/Finalize \n");
     fflush(stdout);
 
-    MPI_Abort(MPI_COMM_SELF, 2);
+    //MPI_Abort(MPI_COMM_SELF, 2);
     MPI_Finalize();
 
     printf("after MPI Abort/Finalize \n");
