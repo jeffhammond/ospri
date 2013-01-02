@@ -12,17 +12,18 @@
 
 //#define DEBUG
 
-pthread_t Progress_thread;
-MPI_Comm MSG_COMM_WORLD;
- 
 #define MSG_INFO_TAG 100
 
-#define MSG_FENCE     1
-#define MSG_GET       2
-#define MSG_PUT       4
-#define MSG_ACC       8
-#define MSG_RMW      16 
-#define MSG_CHT_EXIT 32
+/**************************/
+/* these must be non-zero */
+/**************************/
+#define MSG_CHT_EXIT  1
+#define MSG_FENCE     2
+#define MSG_GET       4
+#define MSG_PUT       8
+#define MSG_ACC      16
+#define MSG_RMW      32 
+/**************************/
 
 #define MSG_FENCE_TAG MSG_INFO_TAG+MSG_FENCE
 #define MSG_GET_TAG   MSG_INFO_TAG+MSG_GET
@@ -30,24 +31,31 @@ MPI_Comm MSG_COMM_WORLD;
 #define MSG_ACC_TAG   MSG_INFO_TAG+MSG_ACC
 #define MSG_RMW_TAG   MSG_INFO_TAG+MSG_RMW
 
-#if defined(DEBUG) || 0
-#  define MSG_MAX_COUNT 1024*1024
-#else
-#  define MSG_MAX_COUNT INT_MAX
-#endif
-
+pthread_t Progress_thread;
+MPI_Comm MSG_COMM_WORLD;
+ 
 typedef struct
 {
-    size_t       count; 
+    int          count; 
     MPI_Datatype dt;
     MPI_Op       op; /* only used for MSG_ACC */
 }
 msg_rma_info_t;
 
+typedef union
+{
+    int           si;
+    unsigned int  ui;
+    long          sl;
+    unsigned long ul;
+}
+msg_rmw_data_t;
+
 typedef struct
 {
-    size_t       count; 
-    MPI_Datatype dt;
+    int            rmw_op;
+    int            rmw_type;
+    msg_rmw_data_t rmw_data;
 }
 msg_rmw_info_t;
 
@@ -55,7 +63,7 @@ typedef struct
 {
     int          type;
     void *       address;
-    size_t       count; 
+    int          count; 
     MPI_Datatype dt;
     MPI_Op       op; /* only used for MSG_ACC */
 }
@@ -92,53 +100,25 @@ void Poll(void)
 #ifdef DEBUG
             printf("MSG_GET \n");
 #endif
-            if (info.count<MSG_MAX_COUNT)
-            {
-                int count = (int) info.count;
-                MPI_Send(info.address, count, info.dt, source, MSG_GET_TAG, MSG_COMM_WORLD);
-            }
-            else /* TODO: need to implement long-message protocol */
-                MPI_Abort(MSG_COMM_WORLD, 1);
+            MPI_Send(info.address, info.count, info.dt, source, MSG_GET_TAG, MSG_COMM_WORLD);
             break;
 
         case MSG_PUT:
 #ifdef DEBUG
             printf("MSG_PUT \n");
 #endif
-            if (info.count<MSG_MAX_COUNT)
-            {
-                int count = (int) info.count;
-                MPI_Recv(info.address, count, info.dt, source, MSG_PUT_TAG, MSG_COMM_WORLD, MPI_STATUS_IGNORE);
-            }
-            else /* TODO: need to implement long-message protocol */
-                MPI_Abort(MSG_COMM_WORLD, 1);
-
+            MPI_Recv(info.address, info.count, info.dt, source, MSG_PUT_TAG, MSG_COMM_WORLD, MPI_STATUS_IGNORE);
             break;
 
-        case MSG_ACC:
+        case MSG_ACC: /* TODO: need to do pipelining to limit buffering */
 #ifdef DEBUG
             printf("MSG_ACC \n");
 #endif
-            if (info.count<MSG_MAX_COUNT)
-            {
-                /* TODO: need to do pipelining to limit buffering */
-
-                MPI_Type_size(info.dt, &type_size);
-                void * temp = safemalloc(info.count*type_size);
-#ifdef DEBUG
-                printf("temp = %p \n", temp);
-#endif
-
-                int count = (int) info.count;
-                MPI_Recv(temp, count, info.dt, source, MSG_ACC_TAG, MSG_COMM_WORLD, MPI_STATUS_IGNORE);
-
-                MPI_Reduce_local(temp, info.address, count, info.dt, info.op);
-
-                free(temp);
-            }
-            else /* TODO: need to implement long-message protocol */
-                MPI_Abort(MSG_COMM_WORLD, 1);
-
+            MPI_Type_size(info.dt, &type_size);
+            void * temp = safemalloc(info.count*type_size);
+            MPI_Recv(temp, info.count, info.dt, source, MSG_ACC_TAG, MSG_COMM_WORLD, MPI_STATUS_IGNORE);
+            MPI_Reduce_local(temp, info.address, info.count, info.dt, info.op);
+            free(temp);
             break;
 
         case MSG_RMW:
@@ -155,15 +135,12 @@ void Poll(void)
             printf("MSG_CHT_EXIT \n");
 #endif
             MPI_Comm_rank(MSG_COMM_WORLD, &rank);
-
             if (rank!=source)
             {
                 fprintf(stderr, "%d: CHT received EXIT signal from rank %d \n", rank, source);
                 MPI_Abort(MSG_COMM_WORLD, 1);
             }
-
             pthread_exit(NULL);
-
             break;
 
         default:
@@ -177,9 +154,6 @@ void Poll(void)
 
 static void * Progress_function(void * dummy)
 {
-    int rank;
-    MPI_Comm_rank(MSG_COMM_WORLD, &rank);
-
 	while (1)
 	{
         Poll();
@@ -196,6 +170,7 @@ void MSG_CHT_Exit(void)
 
     msg_info_t info;
     info.type = MSG_CHT_EXIT;
+
     MPI_Ssend(&info, sizeof(msg_info_t), MPI_BYTE, rank, MSG_INFO_TAG, MSG_COMM_WORLD);
 
     return;
@@ -204,17 +179,15 @@ void MSG_CHT_Exit(void)
 void MSG_Win_fence(int target)
 {
     msg_info_t info;
-
-    info.type     = MSG_FENCE;
+    info.type = MSG_FENCE;
 
     MPI_Send(&info, sizeof(msg_info_t), MPI_BYTE, target, MSG_INFO_TAG, MSG_COMM_WORLD);
-
     MPI_Recv(NULL, 0, MPI_BYTE, target, MSG_FENCE_TAG, MSG_COMM_WORLD, MPI_STATUS_IGNORE);
 
     return;
 }
 
-void MSG_Win_get(int target, msg_window_t * win, size_t offset, size_t count, MPI_Datatype type, void * buffer)
+void MSG_Win_get(int target, msg_window_t * win, size_t offset, int count, MPI_Datatype type, void * buffer)
 {
     msg_info_t info;
 
@@ -229,39 +202,12 @@ void MSG_Win_get(int target, msg_window_t * win, size_t offset, size_t count, MP
 #endif
 
     MPI_Send(&info, sizeof(msg_info_t), MPI_BYTE, target, MSG_INFO_TAG, MSG_COMM_WORLD);
-
-    if (info.count<MSG_MAX_COUNT)
-    {
-        int count = (int) info.count;
-        MPI_Recv(buffer, count, info.dt, target, MSG_GET_TAG, MSG_COMM_WORLD, MPI_STATUS_IGNORE);
-    }
-    else
-    {
-#ifdef NOT_DONE
-        size_t num   = info.count/MSG_MAX_COUNT;
-        size_t count = info.count/num;
-        if (num>INT_MAX || count>INT_MAX) /* extremely unlikely unless MSG_MAX_COUNT is very small */
-        {
-            int rank;
-            MPI_Comm_rank(MSG_COMM_WORLD, &rank);
-
-            fprintf("%d: number of messages (%ld) or their count (%ld) is too large \n", rank, num, count);
-            MPI_Abort(MSG_COMM_WORLD, 1);
-        }
-
-        int num_msg   = (int)num;
-        int msg_count = (int)count;
-        int rem_count = ;
-#else
-        /* TODO: need to implement long-message protocol */
-        MPI_Abort(MSG_COMM_WORLD, 1);
-#endif        
-    }
+    MPI_Recv(buffer, info.count, info.dt, target, MSG_GET_TAG, MSG_COMM_WORLD, MPI_STATUS_IGNORE);
 
     return;
 }
 
-void MSG_Win_put(int target, msg_window_t * win, size_t offset, size_t count, MPI_Datatype type, void * buffer)
+void MSG_Win_put(int target, msg_window_t * win, size_t offset, int count, MPI_Datatype type, void * buffer)
 {
     msg_info_t info;
 
@@ -276,22 +222,12 @@ void MSG_Win_put(int target, msg_window_t * win, size_t offset, size_t count, MP
 #endif
 
     MPI_Send(&info, sizeof(msg_info_t), MPI_BYTE, target, MSG_INFO_TAG, MSG_COMM_WORLD);
-
-    if (info.count<MSG_MAX_COUNT)
-    {
-        int count = (int) info.count;
-        MPI_Send(buffer, count, info.dt, target, MSG_PUT_TAG, MSG_COMM_WORLD);
-    }
-    else
-    {
-        /* TODO: need to implement long-message protocol */
-        MPI_Abort(MSG_COMM_WORLD, 1);
-    }
+    MPI_Send(buffer, info.count, info.dt, target, MSG_PUT_TAG, MSG_COMM_WORLD);
 
     return;
 }
 
-void MSG_Win_acc(int target, msg_window_t * win, size_t offset, size_t count, MPI_Datatype type, MPI_Op op, void * buffer)
+void MSG_Win_acc(int target, msg_window_t * win, size_t offset, int count, MPI_Datatype type, MPI_Op op, void * buffer)
 {
     msg_info_t info;
 
@@ -308,26 +244,16 @@ void MSG_Win_acc(int target, msg_window_t * win, size_t offset, size_t count, MP
 
     MPI_Send(&info, sizeof(msg_info_t), MPI_BYTE, target, MSG_INFO_TAG, MSG_COMM_WORLD);
 
-    if (info.count<MSG_MAX_COUNT)
-    {
-        int count = (int) info.count;
-        MPI_Send(buffer, count, info.dt, target, MSG_ACC_TAG, MSG_COMM_WORLD);
-    }
-    else
-    {
-        /* TODO: need to implement long-message protocol */
-        MPI_Abort(MSG_COMM_WORLD, 1);
-    }
+    MPI_Send(buffer, info.count, info.dt, target, MSG_ACC_TAG, MSG_COMM_WORLD);
 
     return;
 }
 
-void MSG_Win_allocate(MPI_Comm comm, size_t bytes, msg_window_t * win)
+void MSG_Win_allocate(MPI_Comm comm, int bytes, msg_window_t * win)
 {
     MPI_Comm_dup(comm, &(win->comm));
 
-    int rank, size;
-    MPI_Comm_rank(win->comm, &rank);
+    int size;
     MPI_Comm_size(win->comm, &size);
 
     win->base    = safemalloc( size * sizeof(void *) );
@@ -336,6 +262,9 @@ void MSG_Win_allocate(MPI_Comm comm, size_t bytes, msg_window_t * win)
     MPI_Allgather(&(win->my_base), sizeof(void *), MPI_BYTE, win->base, sizeof(void *), MPI_BYTE, comm);
 
 #ifdef DEBUG
+    int rank;
+    MPI_Comm_rank(win->comm, &rank);
+
     printf("%d: win->base = %p \n", rank, win->base);
     printf("%d: my_base = %p \n", rank, win->my_base);
     for (int i=0; i<size; i++)
@@ -352,15 +281,15 @@ void MSG_Win_deallocate(msg_window_t * win)
 {
     MPI_Barrier(win->comm);
 
-    int rank;
-    MPI_Comm_rank(win->comm, &rank);
-
     free(win->my_base);
     free(win->base);
 
     MPI_Comm_free(&(win->comm));
 
 #ifdef DEBUG
+    int rank;
+    MPI_Comm_rank(win->comm, &rank);
+
     printf("%d: win->base = %p \n", rank, win->base);
     printf("%d: win->my_base = %p \n", rank, win->my_base);
     printf("%d: win->base[%d] = %p \n", rank, rank, win->base[rank]);
