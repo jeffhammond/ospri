@@ -419,18 +419,9 @@ int main(int argc, char * argv[])
         MSG_Win_deallocate(&win);
     }
 
-    printf("test done except for pthread shutdown \n");
-    fflush(stdout);
-
     MPI_Barrier(MSG_COMM_WORLD);
 
-#if 1
     MSG_CHT_Exit();
-#else
-    rc = pthread_cancel(Progress_thread);
-    if (rc!=0) 
-        MPI_Abort(MSG_COMM_WORLD, rc);
-#endif
 
     void * rv;
     rc = pthread_join(Progress_thread, &rv);
