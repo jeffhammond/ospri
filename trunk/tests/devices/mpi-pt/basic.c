@@ -10,29 +10,46 @@
 
 #include "safemalloc.h"
 
-#define DEBUG
+//#define DEBUG
 
 pthread_t Progress_thread;
 MPI_Comm MSG_COMM_WORLD;
  
 #define MSG_INFO_TAG 100
 
-#define MSG_GET 1
-#define MSG_PUT 2
-#define MSG_ACC 4
-#define MSG_RMW 8
-#define MSG_CHT_EXIT 1024
+#define MSG_FENCE     1
+#define MSG_GET       2
+#define MSG_PUT       4
+#define MSG_ACC       8
+#define MSG_RMW      16 
+#define MSG_CHT_EXIT 32
 
-#define MSG_GET_TAG 100+MSG_GET
-#define MSG_PUT_TAG 100+MSG_PUT
-#define MSG_ACC_TAG 100+MSG_ACC
-#define MSG_RMW_TAG 100+MSG_RMW
+#define MSG_FENCE_TAG 100+MSG_FENCE
+#define MSG_GET_TAG   100+MSG_GET
+#define MSG_PUT_TAG   100+MSG_PUT
+#define MSG_ACC_TAG   100+MSG_ACC
+#define MSG_RMW_TAG   100+MSG_RMW
 
 #if defined(DEBUG) || 0
 #  define MSG_MAX_COUNT 1024*1024
 #else
 #  define MSG_MAX_COUNT INT_MAX
 #endif
+
+typedef struct
+{
+    size_t       count; 
+    MPI_Datatype dt;
+    MPI_Op       op; /* only used for MSG_ACC */
+}
+msg_rma_info_t;
+
+typedef struct
+{
+    size_t       count; 
+    MPI_Datatype dt;
+}
+msg_rmw_info_t;
 
 typedef struct
 {
@@ -64,6 +81,13 @@ void Poll(void)
 
     switch (info.type)
     {
+        case MSG_FENCE:
+#ifdef DEBUG
+            printf("MSG_FENCE \n");
+#endif
+            MPI_Send(NULL, 0, MPI_BYTE, source, MSG_FENCE_TAG, MSG_COMM_WORLD);
+            break;
+
         case MSG_GET:
 #ifdef DEBUG
             printf("MSG_GET \n");
@@ -158,9 +182,6 @@ static void * Progress_function(void * dummy)
 
 	while (1)
 	{
-#ifdef DEBUG
-        printf("%d: Progress \n", rank);
-#endif
         Poll();
 		//usleep(500);
 	}
@@ -176,6 +197,19 @@ void MSG_CHT_Exit(void)
     msg_info_t info;
     info.type = MSG_CHT_EXIT;
     MPI_Ssend(&info, sizeof(msg_info_t), MPI_BYTE, rank, MSG_INFO_TAG, MSG_COMM_WORLD);
+
+    return;
+}
+
+void MSG_Win_fence(int target)
+{
+    msg_info_t info;
+
+    info.type     = MSG_FENCE;
+
+    MPI_Send(&info, sizeof(msg_info_t), MPI_BYTE, target, MSG_INFO_TAG, MSG_COMM_WORLD);
+
+    MPI_Recv(NULL, 0, MPI_BYTE, target, MSG_FENCE_TAG, MSG_COMM_WORLD, MPI_STATUS_IGNORE);
 
     return;
 }
@@ -374,6 +408,7 @@ int main(int argc, char * argv[])
             memset(out, '\0', smallcount);
 
             MSG_Win_put(size>1 ? size-1 : 0, &win, 0, smallcount, MPI_BYTE, in);
+            MSG_Win_fence(size>1 ? size-1 : 0);
             MSG_Win_get(size>1 ? size-1 : 0, &win, 0, smallcount, MPI_BYTE, out);
 
             int rc = memcmp(in, out, smallcount);
@@ -416,6 +451,7 @@ int main(int argc, char * argv[])
             printf("MSG_Win_put \n");
             fflush(stdout);
             MSG_Win_put(size>1 ? size-1 : 0, &win, 0, smallcount, type, in);
+            MSG_Win_fence(size>1 ? size-1 : 0);
 
             for (int i=0; i<smallcount; i++)
                 in[i] = 12.0;
@@ -423,8 +459,11 @@ int main(int argc, char * argv[])
             printf("MSG_Win_acc \n");
             fflush(stdout);
             MSG_Win_acc(size>1 ? size-1 : 0, &win, 0, smallcount, type, op, in);
+            MSG_Win_fence(size>1 ? size-1 : 0);
             MSG_Win_acc(size>1 ? size-1 : 0, &win, 0, smallcount, type, op, in);
+            MSG_Win_fence(size>1 ? size-1 : 0);
             MSG_Win_acc(size>1 ? size-1 : 0, &win, 0, smallcount, type, op, in);
+            MSG_Win_fence(size>1 ? size-1 : 0);
 
             printf("MSG_Win_get \n");
             fflush(stdout);
@@ -432,7 +471,7 @@ int main(int argc, char * argv[])
 
             int errors = 0;
             for (int i=0; i<smallcount; i++)
-#ifdef DEBUG
+#if defined(DEBUG) && 0
                 printf("%d: out[%d] = %lf  in[%d] = %lf \n", rank, i, out[i], i, in[i]);
 #else
                 errors += (int)(out[i] != 3*in[i]);
