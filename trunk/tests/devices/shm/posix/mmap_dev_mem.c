@@ -19,7 +19,12 @@ int main(int argc, char* argv[])
 
     //int fd = open("/dev/mem/foo", O_RDWR | O_CREAT, S_IRUSR | S_IWUSR );
     //int fd = open("/dev/cnkmemfs/foo", O_RDWR | O_CREAT, S_IRUSR | S_IWUSR );
-    int fd = open("/dev/shm/foo", O_RDWR | O_CREAT, S_IRUSR | S_IWUSR );
+    //int fd = open("/dev/shm/foo", O_RDWR | O_CREAT, S_IRUSR | S_IWUSR );
+    //int fd = open("/dev/local", O_RDWR | O_CREAT, S_IRUSR | S_IWUSR );
+
+    char * filename = "/dev/local";
+    printf("%d: filename = %s \n", world_rank, filename);
+    int fd = open(filename, O_RDWR | O_CREAT, S_IRUSR | S_IWUSR );
     if (fd<0) printf("%d: open failed: %d \n", world_rank, fd);
     else      printf("%d: open succeeded: %d \n", world_rank, fd);
 
@@ -58,6 +63,8 @@ int main(int argc, char* argv[])
         if (rc==0) printf("%d: munmap succeeded \n", world_rank);
         else       printf("%d: munmap failed \n", world_rank);
     }
+
+    printf("%d: test finished \n", world_rank);
 
     return 0;
 }
