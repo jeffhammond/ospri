@@ -17,12 +17,10 @@ int main(int argc, char* argv[])
     size_t size = ( argc>1 ? atoi(argv[1]) : getpagesize() ); 
     printf("%d: size = %ld \n", world_rank, (long)size);
 
-    //int fd = open("/dev/mem/foo", O_RDWR | O_CREAT, S_IRUSR | S_IWUSR );
-    //int fd = open("/dev/cnkmemfs/foo", O_RDWR | O_CREAT, S_IRUSR | S_IWUSR );
-    //int fd = open("/dev/shm/foo", O_RDWR | O_CREAT, S_IRUSR | S_IWUSR );
-    //int fd = open("/dev/local", O_RDWR | O_CREAT, S_IRUSR | S_IWUSR );
-
-    char * filename = "/dev/local";
+    //char * filename = "/dev/shm/foo";      // works with BG_SHAREDMEMSIZE>0
+    //char * filename = "/dev/cnkmemfs/foo"; // does not work
+    //char * filename = "/dev/mem/foo";      // does not work
+    char * filename = "/dev/local/foo";    // works
     printf("%d: filename = %s \n", world_rank, filename);
     int fd = open(filename, O_RDWR | O_CREAT, S_IRUSR | S_IWUSR );
     if (fd<0) printf("%d: open failed: %d \n", world_rank, fd);
