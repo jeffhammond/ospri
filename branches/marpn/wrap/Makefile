@@ -9,7 +9,7 @@ LIBS    = libmpiarbrpn.a
 
 all: hello.x
 
-%.x: %.o
+%.x: %.o libmpiarbrpn.a
 	$(LD) $(LDFLAGS) $< $(LIBS) -o $@
 
 %.o: %.c
