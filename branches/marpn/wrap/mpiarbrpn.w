@@ -24,7 +24,17 @@ static MPI_Comm altworld;
 static int sleep_and_abort;
 static int marpn_debug;
 
-inline void swap_world(MPI_Comm & world) {
+inline void swap_world(MPI_Comm& world) {
+   if (world == MPI_COMM_NULL) {
+     fprintf(stderr, "swap_world: world == MPI_COMM_NULL\n");
+     fflush(stderr);
+     PMPI_Abort(MPI_COMM_WORLD, 1);
+   }
+   if (altworld == MPI_COMM_NULL) {
+     fprintf(stderr, "swap_world: altworld == MPI_COMM_NULL\n");
+     fflush(stderr);
+     PMPI_Abort(MPI_COMM_WORLD, 2);
+   }
    if (world == MPI_COMM_WORLD) {
       world = altworld;
    }
@@ -45,28 +55,34 @@ inline void swap_world(MPI_Comm & world) {
 #endif
 
    marpn_debug = 0;
-   char * dbgenv;
+   char * dbgenv = NULL;
    dbgenv = getenv ("MARPN_DEBUG");
    if (dbgenv!=NULL)
       marpn_debug = atoi(dbgenv);
 
    sleep_and_abort = 0;
-   char * sabenv;
+   char * sabenv = NULL;
    sabenv = getenv ("MARPN_SLEEP_AND_ABORT");
    if (sabenv!=NULL)
       sleep_and_abort = atoi(sabenv);
 
-   char * rpnenv;
+   char * rpnenv = NULL;
    rpnenv = getenv ("MARPN_RANKS_PER_NODE");
-   if (rpnenv!=NULL)
+   if (rpnenv==NULL)
+   {
+      fprintf(stderr, "well this is pretty boring, no?\n");
+      fflush(stderr);
+      PMPI_Comm_dup(MPI_COMM_WORLD, &altworld);
+   }
+   else 
    {
       rpn = atoi(rpnenv);
       if (rpn>maxrpn)
       {
-         printf("You have requested more ranks per node (%d) than are available (%d)! \n", 
+         fprintf(stderr, "You have requested more ranks per node (%d) than are available (%d)! \n", 
                 rpn, maxrpn);
+         fflush(stderr);
          PMPI_Abort(MPI_COMM_WORLD, rpn);
-         exit(rpn);
       }
       else if (rpn<maxrpn)
       {
@@ -84,32 +100,41 @@ inline void swap_world(MPI_Comm & world) {
             keep = (corehwtid < 2) || ((coreid < (rpn-32)) && (corehwtid == 2));
          else if (rpn<=64)
             keep = (corehwtid < 3) || ((coreid < (rpn-48)) && (corehwtid == 3));
+         else
+            keep = 0;
 
          if (marpn_debug)
-            printf("rank %d (core %d, hwtid %d) is %s the new world \n", rank, coreid, corehwtid, keep ? "included in" : "excluded from" );
+         {
+            fprintf(stderr, "rank %d (core %d, hwtid %d) is %s the new world \n", rank, coreid, corehwtid, keep ? "included in" : "excluded from" );
+            fflush(stderr);
+         }
 
+         PMPI_Barrier(MPI_COMM_WORLD);
          PMPI_Comm_split(MPI_COMM_WORLD, keep, rank, &altworld);
          if (!keep) 
          {
             if (sleep_and_abort)
             {
                if (marpn_debug)
-                  printf("rank %d (core %d, hwtid %d) going to sleep \n", rank, coreid, corehwtid );
+               {
+                  fprintf(stderr, "rank %d (core %d, hwtid %d) going to sleep \n", rank, coreid, corehwtid );
+                  fflush(stderr);
+               }
+
                /* 1B seconds is a long time */
                sleep(1000000000);
             }
             else
             {
                if (marpn_debug)
-                  printf("rank %d (core %d, hwtid %d) calling MPI_Finalize \n", rank, coreid, corehwtid );
-               PMPI_Finalize();
-               exit(0);
+               {
+                  fprintf(stderr, "rank %d (core %d, hwtid %d) calling MPI_Finalize \n", rank, coreid, corehwtid );
+                  fflush(stderr);
+               }
+
+               //PMPI_Finalize();
             }
          }
-      }
-      else /* trivial case */
-      {
-         PMPI_Comm_dup(MPI_COMM_WORLD, &altworld);
       }
    } 
 
@@ -120,7 +145,6 @@ inline void swap_world(MPI_Comm & world) {
    {
       /* returning exit code 0 ~should~ behave like MPI_Finalize here */
       PMPI_Abort(MPI_COMM_WORLD, 0);
-      exit(0);
    }
    {{callfn}}
 }{{endfn}}
