@@ -43,8 +43,6 @@ _EXTERN_C_ void pmpi_init__(MPI_Fint *ierr);
 #  include </bgsys/drivers/ppcfloor/spi/include/kernel/process.h>
 #  include </bgsys/drivers/ppcfloor/spi/include/kernel/location.h>
 #  include </bgsys/drivers/ppcfloor/firmware/include/personality.h>
-#  define MPI_ARB_RPN
-#  warning You are using an unsupported feature on Blue Gene/Q.
 #elif defined(__bgp__)
 #  error Blue Gene/P support has not been implemented yet.
 #elif defined(__crayxe)
@@ -57,7 +55,7 @@ static MPI_Comm altworld;
 static int sleep_and_abort;
 static int marpn_debug;
 
-inline void swap_world(MPI_Comm& world) {
+inline void swap_world(MPI_Comm & world) {
    if (world == MPI_COMM_WORLD) {
       world = altworld;
    }
@@ -73,7 +71,7 @@ _EXTERN_C_ int MPI_Init(int *arg_0, char ***arg_1) {
    int rank;
    PMPI_Comm_rank(MPI_COMM_WORLD, &rank);
 
-#if defined(MPI_ARB_RPN) && defined(__bgq__)
+#if defined(__bgq__)
    int maxrpn = Kernel_ProcessCount();
    int rpn    = maxrpn;
 #else
