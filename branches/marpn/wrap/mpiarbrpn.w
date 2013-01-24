@@ -86,7 +86,7 @@ inline void swap_world(MPI_Comm & world) {
             keep = (corehwtid < 3) || ((coreid < (rpn-48)) && (corehwtid == 3));
 
          if (marpn_debug)
-            printf("rank %d (core %d, hwtid %d) is %s from the new world \n", rank, coreid, corehwtid, keep ? "included" : "excluded" );
+            printf("rank %d (core %d, hwtid %d) is %s the new world \n", rank, coreid, corehwtid, keep ? "included in" : "excluded from" );
 
          PMPI_Comm_split(MPI_COMM_WORLD, keep, rank, &altworld);
          if (!keep) 
