@@ -12,26 +12,28 @@
 
 //#define DEBUG
 
-#define MSG_INFO_TAG 100
+typedef enum
+{
+    MSG_GET,
+    MSG_PUT,
+    MSG_ACC,
+    MSG_RMW,
+    MSG_FENCE,
+    MSG_CHT_EXIT
+} 
+msg_type_e;
 
-/**************************/
-/* these must be non-zero */
-/**************************/
-#define MSG_CHT_EXIT  1
-#define MSG_FENCE     2
-#define MSG_GET       4
-#define MSG_PUT       8
-#define MSG_ACC      16
-#define MSG_RMW      32 
-/**************************/
+typedef enum
+{
+    MSG_INFO_TAG,
+    MSG_FENCE_TAG, 
+    MSG_GET_TAG,
+    MSG_PUT_TAG,
+    MSG_ACC_TAG,
+    MSG_RMW_TAG
+} 
+msg_tag_e;
 
-#define MSG_FENCE_TAG MSG_INFO_TAG+MSG_FENCE
-#define MSG_GET_TAG   MSG_INFO_TAG+MSG_GET
-#define MSG_PUT_TAG   MSG_INFO_TAG+MSG_PUT
-#define MSG_ACC_TAG   MSG_INFO_TAG+MSG_ACC
-#define MSG_RMW_TAG   MSG_INFO_TAG+MSG_RMW
-
-pthread_t Progress_thread;
 MPI_Comm MSG_COMM_WORLD;
  
 typedef struct
@@ -61,7 +63,7 @@ msg_rmw_info_t;
 
 typedef struct
 {
-    int          type;
+    msg_type_e   type;
     void *       address;
     int          count; 
     MPI_Datatype dt;
@@ -197,7 +199,7 @@ void MSG_Win_get(int target, msg_window_t * win, size_t offset, int count, MPI_D
     info.dt       = type;
 
 #ifdef DEBUG
-    printf("MSG_Win_get win->base[%d]=%p address=%p count=%ld\n", target, win->base[target], info.address, info.count);
+    printf("MSG_Win_get win->base[%d]=%p address=%p count=%d\n", target, win->base[target], info.address, info.count);
     fflush(stdout);
 #endif
 
@@ -217,7 +219,7 @@ void MSG_Win_put(int target, msg_window_t * win, size_t offset, int count, MPI_D
     info.dt       = type;
 
 #ifdef DEBUG
-    printf("MSG_Win_put win->base[%d]=%p address=%p count=%ld\n", target, win->base[target], info.address, info.count);
+    printf("MSG_Win_put win->base[%d]=%p address=%p count=%d\n", target, win->base[target], info.address, info.count);
     fflush(stdout);
 #endif
 
@@ -238,7 +240,7 @@ void MSG_Win_acc(int target, msg_window_t * win, size_t offset, int count, MPI_D
     info.op       = op;
 
 #ifdef DEBUG
-    printf("MSG_Win_acc win->base[%d]=%p address=%p count=%ld type=%d\n", target, win->base[target], info.address, info.count, info.dt);
+    printf("MSG_Win_acc win->base[%d]=%p address=%p count=%d type=%d\n", target, win->base[target], info.address, info.count, info.dt);
     fflush(stdout);
 #endif
 
@@ -281,11 +283,6 @@ void MSG_Win_deallocate(msg_window_t * win)
 {
     MPI_Barrier(win->comm);
 
-    free(win->my_base);
-    free(win->base);
-
-    MPI_Comm_free(&(win->comm));
-
 #ifdef DEBUG
     int rank;
     MPI_Comm_rank(win->comm, &rank);
@@ -293,7 +290,14 @@ void MSG_Win_deallocate(msg_window_t * win)
     printf("%d: win->base = %p \n", rank, win->base);
     printf("%d: win->my_base = %p \n", rank, win->my_base);
     printf("%d: win->base[%d] = %p \n", rank, rank, win->base[rank]);
+#endif
 
+    free(win->my_base);
+    free(win->base);
+
+    MPI_Comm_free(&(win->comm));
+
+#ifdef DEBUG
     printf("MSG_Win_deallocate finished\n");
     fflush(stdout);
 #endif
@@ -315,6 +319,7 @@ int main(int argc, char * argv[])
     MPI_Comm_rank(MSG_COMM_WORLD, &rank);
     MPI_Comm_size(MSG_COMM_WORLD, &size);
 
+    pthread_t Progress_thread;
     rc = pthread_create(&Progress_thread, NULL, &Progress_function, NULL);
     if (rc!=0) 
         MPI_Abort(MSG_COMM_WORLD, rc);
