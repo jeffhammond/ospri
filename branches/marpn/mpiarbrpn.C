@@ -31,8 +31,9 @@ _EXTERN_C_ void pmpi_init__(MPI_Fint *ierr);
 
 // -*- c++ -*-
 // To build:
-//    wrap.py mpiarbrpn.w > mpiarbrpn.c
-//    mpicc -c mpiarbrpn.c
+//    (need to use C++ because of pass-by-reference in swap)
+//    wrap.py mpiarbrpn.w > mpiarbrpn.C
+//    mpicc -c mpiarbrpn.C
 //    ar cr libmpiarbrpn.a mpiarbrpn.o
 //    ranlib libmpiarbrpn.a
 #include <unistd.h>
@@ -42,8 +43,6 @@ _EXTERN_C_ void pmpi_init__(MPI_Fint *ierr);
 #  include </bgsys/drivers/ppcfloor/spi/include/kernel/process.h>
 #  include </bgsys/drivers/ppcfloor/spi/include/kernel/location.h>
 #  include </bgsys/drivers/ppcfloor/firmware/include/personality.h>
-#  define MPI_ARB_RPN
-#  warning You are using an unsupported feature on Blue Gene/Q.
 #elif defined(__bgp__)
 #  error Blue Gene/P support has not been implemented yet.
 #elif defined(__crayxe)
@@ -54,8 +53,20 @@ _EXTERN_C_ void pmpi_init__(MPI_Fint *ierr);
 
 static MPI_Comm altworld;
 static int sleep_and_abort;
+static int marpn_debug;
+static int in_altworld;
 
 inline void swap_world(MPI_Comm& world) {
+   if (world == MPI_COMM_NULL) {
+     fprintf(stderr, "swap_world: world == MPI_COMM_NULL\n");
+     fflush(stderr);
+     PMPI_Abort(MPI_COMM_WORLD, 1);
+   }
+   if (altworld == MPI_COMM_NULL) {
+     fprintf(stderr, "swap_world: altworld == MPI_COMM_NULL\n");
+     fflush(stderr);
+     PMPI_Abort(MPI_COMM_WORLD, 2);
+   }
    if (world == MPI_COMM_WORLD) {
       world = altworld;
    }
@@ -71,7 +82,7 @@ _EXTERN_C_ int MPI_Init(int *arg_0, char ***arg_1) {
    int rank;
    PMPI_Comm_rank(MPI_COMM_WORLD, &rank);
 
-#if defined(MPI_ARB_RPN) && defined(__bgq__)
+#if defined(__bgq__)
    int maxrpn = Kernel_ProcessCount();
    int rpn    = maxrpn;
 #else
@@ -79,36 +90,47 @@ _EXTERN_C_ int MPI_Init(int *arg_0, char ***arg_1) {
    int rpn    = maxrpn;
 #endif
 
-   int debug = 0;
-   char * dbgenv;
+   marpn_debug = 0;
+   char * dbgenv = NULL;
    dbgenv = getenv ("MARPN_DEBUG");
-   if (rpnenv!=NULL)
-      debug = atoi(rpnenv);
+   if (dbgenv!=NULL)
+      marpn_debug = atoi(dbgenv);
 
+#if 1
+   sleep_and_abort = 1;
+#else
    sleep_and_abort = 0;
-   char * sabenv;
+   char * sabenv = NULL;
    sabenv = getenv ("MARPN_SLEEP_AND_ABORT");
    if (sabenv!=NULL)
-      sleep_and_abort = atoi(rpnenv);
+      sleep_and_abort = atoi(sabenv);
+#endif
 
-   char * rpnenv;
+   char * rpnenv = NULL;
    rpnenv = getenv ("MARPN_RANKS_PER_NODE");
-   if (rpnenv!=NULL)
+   if (rpnenv==NULL)
+   {
+      fprintf(stderr, "This is pretty boring, no?\n");
+      fflush(stderr);
+      PMPI_Comm_dup(MPI_COMM_WORLD, &altworld);
+   }
+   else 
    {
       rpn = atoi(rpnenv);
       if (rpn>maxrpn)
       {
-         printf("You have requested more ranks per node (%d) than are available (%d)! \n", 
-                rpn, maxrpn);
+         fprintf(stderr, "You have requested more ranks per node (%d) than are available (%d)! \n", rpn, maxrpn);
+         fflush(stderr);
          PMPI_Abort(MPI_COMM_WORLD, rpn);
-         exit(rpn);
       }
       else if (rpn<maxrpn)
       {
+         int keep = 0;
+
+#if defined(__bgq__)
          int coreid    = Kernel_ProcessorCoreID();   /* 0-15 */
          int corehwtid = Kernel_ProcessorThreadID(); /* 0-3  */
 
-         int keep = 0;
          /* it is a good idea to spread the active ranks across all the cores 
           * one should not assume a particular rank layout when splitting world */
          if (rpn<=16)
@@ -119,35 +141,58 @@ _EXTERN_C_ int MPI_Init(int *arg_0, char ***arg_1) {
             keep = (corehwtid < 2) || ((coreid < (rpn-32)) && (corehwtid == 2));
          else if (rpn<=64)
             keep = (corehwtid < 3) || ((coreid < (rpn-48)) && (corehwtid == 3));
+         else
+            keep = 0;
 
-         if (debug)
-            printf("rank %d (core %d, hwtid %d) is %s from the new world \n", rank, coreid, corehwtid, keep ? "included" : "excluded" );
+         if (marpn_debug)
+         {
+            fprintf(stderr, "rank %d (core %d, hwtid %d) is %s the new world \n", rank, coreid, corehwtid, keep ? "included in" : "excluded from" );
+            fflush(stderr);
+         }
+#endif
 
          PMPI_Comm_split(MPI_COMM_WORLD, keep, rank, &altworld);
          if (!keep) 
          {
             if (sleep_and_abort)
             {
-               if (debug)
-                  printf("rank %d (core %d, hwtid %d) going to sleep \n", rank, coreid, corehwtid );
-               /* 1B seconds is a long time */
-               sleep(1000000000);
+               if (marpn_debug)
+               {
+                  fprintf(stderr, "rank %d (core %d, hwtid %d) going to sleep \n", rank, coreid, corehwtid );
+                  fflush(stderr);
+               }
+
+               /* 2 days */
+               sleep(48*60*60);
             }
             else
             {
-               if (debug)
-                  printf("rank %d (core %d, hwtid %d) calling MPI_Finalize \n", rank, coreid, corehwtid );
-               PMPI_Finalize();
-               exit(0);
+               if (marpn_debug)
+               {
+                  fprintf(stderr, "rank %d (core %d, hwtid %d) calling MPI_Finalize \n", rank, coreid, corehwtid );
+                  fflush(stderr);
+               }
+
+               MPI_Finalize();
             }
          }
-      }
-      else /* trivial case */
-      {
-         PMPI_Comm_dup(MPI_COMM_WORLD, &altworld);
+         in_altworld = keep;
       }
    } 
 
+}    return _wrap_py_return_val;
+}
+
+
+
+/* ================== C Wrappers for MPI_Init_thread ================== */
+_EXTERN_C_ int PMPI_Init_thread(int *arg_0, char ***arg_1, int arg_2, int *arg_3);
+_EXTERN_C_ int MPI_Init_thread(int *arg_0, char ***arg_1, int arg_2, int *arg_3) { 
+    int _wrap_py_return_val = 0;
+{
+   fprintf(stderr, "MARPN does not support MPI_Init_thread \n");
+   fflush(stderr);
+   PMPI_Abort(MPI_COMM_WORLD, 0);
 }    return _wrap_py_return_val;
 }
 
@@ -160,11 +205,11 @@ _EXTERN_C_ int MPI_Finalize() {
 {
    if (sleep_and_abort)
    {
-      if (debug)
-         printf("rank %d (core %d, hwtid %d) calling MPI_Abort \n", rank, coreid, corehwtid );
+      /* make sure all included processes reach this point */
+      PMPI_Barrier(altworld);
+
       /* returning exit code 0 ~should~ behave like MPI_Finalize here */
       PMPI_Abort(MPI_COMM_WORLD, 0);
-      exit(0);
    }
    _wrap_py_return_val = PMPI_Finalize();
 }    return _wrap_py_return_val;
@@ -1060,16 +1105,6 @@ _EXTERN_C_ int MPI_Cart_shift(MPI_Comm arg_0, int arg_1, int arg_2, int *arg_3, 
    swap_world(arg_0);
 
    _wrap_py_return_val = PMPI_Cart_shift(arg_0, arg_1, arg_2, arg_3, arg_4);
-}    return _wrap_py_return_val;
-}
-
-/* ================== C Wrappers for MPI_Init_thread ================== */
-_EXTERN_C_ int PMPI_Init_thread(int *arg_0, char ***arg_1, int arg_2, int *arg_3);
-_EXTERN_C_ int MPI_Init_thread(int *arg_0, char ***arg_1, int arg_2, int *arg_3) { 
-    int _wrap_py_return_val = 0;
-{
-   
-   _wrap_py_return_val = PMPI_Init_thread(arg_0, arg_1, arg_2, arg_3);
 }    return _wrap_py_return_val;
 }
 
