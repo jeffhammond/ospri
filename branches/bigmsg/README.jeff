@@ -1,0 +1,30 @@
+Building:
+
+./wrap.py mpiarbrpn.w -o mpiarbrpn.C
+
+================================
+To remove the ^M characters at the end of all lines in vi, use:
+:%s/^V^M//g
+The ^v is a CONTROL-V character and ^m is a CONTROL-M. When you type this, it will look like this:
+:%s/^M//g
+================================
+mpicxx -c -g -O2 mpiarbrpn.C && ar -r libmpiarbrpn.a mpiarbrpn.o
+
+Using:
+
+MARPN_RANKS_PER_NODE
+
+Set this to the number of ranks-per-node (rpn) you really want.
+If you want 48 rpn, you need to submit your job in 64 rpn.
+In general, submit your jobs requesting the next power of two.
+
+MARPN_DEBUG
+
+Turn on debug printing during MPI_Init to see if the split is correct.
+
+MARPN_SLEEP_AND_ABORT
+
+Unused MPI ranks sleep(1B) instead of calling PMPI_Finalize, which
+might help with instruction scheduling of those hardware threads.
+To exit the job, MPI_Finalize calls PMPI_Abort with exit code 0,
+which should behave approximately the same on Blue Gene/Q.
