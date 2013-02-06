@@ -112,10 +112,13 @@ int main(int argc, char* argv[])
 
     MPI_Comm NodeComm;
 #if MPI_VERSION >= 3
+#warning Using MPI_Comm_split_type
     MPI_Comm_split_type(MPI_COMM_WORLD, MPI_COMM_TYPE_SHARED, 0, MPI_INFO_NULL, &NodeComm);
 #elif defined (MPICH2) && (MPICH2_NUM_VERSION >= MPICH2_CALC_VERSION(1,5,0,0,0)) && 0
+#warning Using MPIX_Comm_split_type
     MPIX_Comm_split_type(MPI_COMM_WORLD, MPIX_COMM_TYPE_SHARED, 0, MPI_INFO_NULL, &NodeComm);
 #else
+#warning Using MPE_Comm_split_node
     MPE_Comm_split_node(MPI_COMM_WORLD, &NodeComm);
 #endif
 
@@ -130,6 +133,8 @@ int main(int argc, char* argv[])
     printf("%s: %d of %d on node, %d of %d on world \n", procname, node_rank, node_size, world_rank, world_size );
 
     MPI_Barrier(MPI_COMM_WORLD);
+
+    MPI_Comm_free(&NodeComm);
 
     if (world_rank==0) printf("%7d: all done! \n", world_rank );
     fflush(stdout);
