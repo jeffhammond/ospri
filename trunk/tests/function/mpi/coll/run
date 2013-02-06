@@ -1,7 +1,8 @@
 #!/bin/bash
-for n in 49152 32768 16384 8192 4096 2048 1024 ; do 
-#for n in 128 512 1024 ; do 
-    for t in 1 2 4 8 16 32 64 ; do 
-        qsub -A Acceptance -t 120 -n $n --mode=c$t --env PAMID_VERBOSE=1 -O driver.n$n.c$t.\$jobid ./driver.x 10000000
+#for n in 49152 32768 16384 8192 4096 2048 1024 ; do 
+for n in 1024 512 ; do 
+#    for t in 1 2 4 8 16 32 64 ; do 
+    for t in 16 32 64 ; do 
+        qsub -A critical_perf -t 20 -n $n --mode=c$t --env PAMID_VERBOSE=2:BG_MAPCOMMONHEAP=1 -O $1.n$n.c$t.mch.\$jobid ./$1.x 40000000
     done
 done

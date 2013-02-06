@@ -45,6 +45,9 @@ int main(int argc, char *argv[])
     MPI_Init_thread( &argc, &argv, requested, &provided );
     MPI_Comm_rank( MPI_COMM_WORLD, &world_rank );
 
+    if (world_rank==0)
+        print_meminfo(stdout, "after MPI_Init_thread");
+
     if (provided>requested)
     {
         if (world_rank==0) printf("MPI_Init_thread returned %s instead of %s, but this is okay. \n",
@@ -146,6 +149,9 @@ int main(int argc, char *argv[])
 
     if (world_rank==0) printf("MPI_Barrier on MPI_COMM_WORLD 2 \n");
     MPI_Barrier( MPI_COMM_WORLD );
+
+    if (world_rank==0)
+        print_meminfo(stdout, "after MPI communicator creation");
 
     /*********************************************************************************
      *                            COLLECTIVES
@@ -385,6 +391,9 @@ int main(int argc, char *argv[])
     MPI_Barrier( MPI_COMM_WORLD );
 #endif
 
+    if (world_rank==0)
+        print_meminfo(stdout, "after MPI collective tests");
+
     /*********************************************************************************
      *                            CLEAN UP AND FINALIZE
      *********************************************************************************/
@@ -404,6 +413,9 @@ int main(int argc, char *argv[])
     if (world_rank==0)
        printf("TEST FINISHED SUCCESSFULLY IN %lf SECONDS \n", dt);
     fflush(stdout);
+
+    if (world_rank==0)
+        print_meminfo(stdout, "before MPI_Finalize");
 
     MPI_Finalize();
 

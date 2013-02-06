@@ -1,6 +1,8 @@
 #ifndef DRIVER_H
 #define DRIVER_H
 
+void print_meminfo(FILE * output, char * message);
+
 void bcast_only(FILE * output, MPI_Comm comm, int max_mem);
 void bcast_vs_scatter_allgather(FILE * output, MPI_Comm comm, int max_mem);
 
