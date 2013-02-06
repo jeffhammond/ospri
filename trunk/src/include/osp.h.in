@@ -19,8 +19,6 @@ extern "C"
  * @{
  */
 
-#define OSP_ERROR 1
-
 /* ********************************************************************* */
 /*                                                                       */
 /*               Enumerations                                            */
@@ -49,13 +47,12 @@ typedef enum
                                 but never simultaneously. */
     OSP_THREAD_MULTIPLE    /**< There are multiple threads present and each can make OSP calls. */
 }
-osp_thread_level;
+osp_thread_level_t;
 
 /**
  * \brief Datatype support within OSP.
  *
- * \note OSP does not support complex numbers yet.  This is okay because
- *       imaginary numbers don't exist, by definition :-)
+ * \note OSP does not support complex numbers yet.
  *
  * \ingroup ENUMS
  *
@@ -86,6 +83,19 @@ typedef enum
 }
 osp_bool_t;
 
+/**
+ * \brief OSP result
+ *
+ * \ingroup ENUMS
+ *
+ */
+
+typedef enum
+{
+    OSP_SUCCESS =  0,
+    OSP_FAILURE = -1,
+}
+osp_result_t;
 
 /* ********************************************************************* */
 /*                                                                       */
@@ -162,6 +172,15 @@ typedef ospd_counter_t osp_counter_t;
 typedef ospd_mutex_t osp_mutex_t;
 
 /**
+ * \brief OSP atomic integer type.
+ *
+ * \ingroup TYPEDEFS
+ *
+ */
+
+typedef ospd_atomic_t osp_atomic_t;
+
+/**
  * \brief OSP stride descriptor type.
  *
  * \see OSP_PutS, OSP_GetS, OSP_AccS, etc.
@@ -185,12 +204,12 @@ osp_iovec_t;
 /* ********************************************************************* */
 
 /**
- * \brief Initializes the Al environment.
+ * \brief Initializes the OSP environment.
  *
  * \note This routine is called OSP_Initialize for syntactic symmetry with
  *       OSP_Finalize and because of Jeff's schadenfreude toward Pavan.
  *
- * \param[out] rc               The error code from initializing OSP
+ * \param[out] rc                The error code from initializing OSP
  * \param[in]  OSP_thread_level  The type of thread support for OSP
  *
  * \see OSP_thread_level
@@ -198,7 +217,7 @@ osp_iovec_t;
  * \ingroup MANAGEMENT
  */
 
-osp_result_t OSP_Initialize(int osp_thread_level);
+osp_result_t OSP_Initialize(osp_thread_level_t osp_thread_level);
 
 /**
  * \brief Terminates the OSP environment normally.
@@ -228,6 +247,7 @@ osp_result_t OSP_Finalize(void);
  * \warning This must be the last OSP call made in any code unless OSP_Finalize is called instead.
  *
  * \param[in]  error_code    The error code to be returned to the submitting environment.
+ *                           This is an 8-bit integer because the OS environment will probably truncate it anyways.
  * \param[in]  error_message Text string to print to stderr upon termination.
  *
  * \see OSP_Initialize, OSP_Finalize
@@ -235,7 +255,7 @@ osp_result_t OSP_Finalize(void);
  * \ingroup MANAGEMENT
  */
 
-void OSP_Abort(int error_code, char error_message[]);
+void OSP_Abort(int8_t error_code, char error_message[]);
 
 /* ********************************************************************* */
 /*                                                                       */
@@ -254,6 +274,7 @@ void OSP_Abort(int error_code, char error_message[]);
  * \param[in]  comm          MPI communicator over which the memregion is shared.
  * \param[in]  type          MPI datatype of window
  * \param[in]  count         The number of elements to allocate locally
+ * \param[in]  symmetric     Assert that count will be the same on all ranks
  * \param[out] window        Pointer to window to be created.
  *
  * \see OSP_Destroy_window
@@ -263,7 +284,8 @@ void OSP_Abort(int error_code, char error_message[]);
 
 osp_result_t OSP_Allocate_window(MPI_Comm comm,
                                  MPI_Datatype type
-                                 int count,
+                                 size_t count,
+                                 osp_bool_t symmetric,                                
                                  osp_window_t * window);
 
 /**
@@ -293,6 +315,7 @@ osp_result_t OSP_Destroy_window(osp_window_t * window);
  *
  * \param[out]    rc            The error code.
  * \param[in]     comm          MPI communicator over which the counter is shared.
+ * \param[out]    atom_size     The size of atomic variable provided (32 or 64)
  * \param[inout]  counter       OSP shared counter.
  *
  * \see osp_counter_t, OSP_Destroy_counter, OSP_Incr_counter, OSP_NbIncr_counter
@@ -300,7 +323,8 @@ osp_result_t OSP_Destroy_window(osp_window_t * window);
  * \ingroup Atomics
  */
 
-osp_result_t OSP_Create_counter(MPI_Comm comm,
+osp_result_t OSP_Create_counter(MPI_Comm        comm, 
+                                size_t        * atom_size,
                                 osp_counter_t * counter);
 
 /**
@@ -315,7 +339,7 @@ osp_result_t OSP_Create_counter(MPI_Comm comm,
  * \ingroup Atomics
  */
 
-osp_result_t OSP_Destroy_counter(osp_counter_t * counter);
+osp_result_t OSP_Destroy_counter(osp_counter_t counter);
 
 /**
  * \brief Atomically updates a shared counter and returns the current value.
@@ -332,8 +356,8 @@ osp_result_t OSP_Destroy_counter(osp_counter_t * counter);
  */
 
 osp_result_t OSP_Incr_counter(osp_counter_t * counter,
-                              long  increment,
-                              long* original);
+                              osp_atomic_t    increment,
+                              osp_atomic_t  * original);
 
 /**
  * \brief Non-blocking atomic RMW update of a shared counter.
@@ -351,9 +375,9 @@ osp_result_t OSP_Incr_counter(osp_counter_t * counter,
  */
 
 osp_result_t OSP_NbIncr_counter(osp_counter_t * counter,
-                                long  increment,
-                                long * original,
-                                osp_handle_t handle);
+                                osp_atomic_t    increment,
+                                osp_atomic_t  * original,
+                                osp_handle_t    handle);
 
 /**
  * \brief Collective operation to initialize a list of mutexes.
@@ -362,17 +386,17 @@ osp_result_t OSP_NbIncr_counter(osp_counter_t * counter,
  *
  * \param[out]    rc            The error code.
  * \param[in]     comm          MPI communicator over which the mutexes are shared.
- * \param[in]     mutex_count   Number of mutexes to be created.
- * \param[int]    mutex_array   An arrays storing the number of mutexes on each process
+ * \param[in]     count         Number of mutexes to be created.
+ * \param[out]    array         Array storing the number of mutexes on each process
  *
  * \see osp_mutex_t, OSP_Destroy_mutexes, OSP_Lock_mutex, OSP_Trylock_mutex, OSP_Unlock_mutex
  *
  * \ingroup Atomics
  */
 
-osp_result_t OSP_Create_mutexes(MPI_Comm comm,
-                                int mutex_count,
-                                osp_mutex_t * mutexes[]);
+osp_result_t OSP_Create_mutexes(MPI_Comm      comm,
+                                size_t        count,
+                                osp_mutex_t * array[]);
 
 /**
  * \brief Collective operation to uninitialize a list of mutexes
@@ -381,24 +405,20 @@ osp_result_t OSP_Create_mutexes(MPI_Comm comm,
  *                     will create a memory leak.
  *
  * \param[out]    rc            The error code.
- * \param[in]     comm          MPI communicator over which the mutexes are shared.
- * \param[in]     mutexes       Pointer to vector OSP mutexes.
+ * \param[in]     array         Array storing the number of mutexes on each process
  *
  * \see osp_mutex_t, OSP_Create_mutexes, OSP_Lock_mutex, OSP_Trylock_mutex, OSP_Unlock_mutex
  *
  * \ingroup Atomics
  */
 
-osp_result_t OSP_Destroy_mutexes(int mutex_count,
-                                 osp_mutex_t * mutexes[]);
+osp_result_t OSP_Destroy_mutexes(osp_mutex_t * array[]);
 
 /**
  * \brief Local operation to lock a mutex.  This call blocks until the mutex has been locked.
  *
  * \param[out]    rc            The error code.
- * \param[in]     comm          MPI communicator over which the mutexes are shared.
  * \param[in]     mutex         OSP mutex.
- * \param[in]     proc          Process on which you want to lock mutex on
  *
  * \see osp_mutex_t, OSP_Trylock_mutex, OSP_Unlock_mutex, OSP_Create_mutexes, OSP_Destroy_mutex, OSP_Trylock_mutex, OSP_Unlock_mutex
  *
@@ -453,7 +473,7 @@ osp_result_t OSP_Unlock_mutex(osp_mutex_t * mutex);
  * \ingroup Atomics
  */
 
-osp_result_t OSP_Lock_mutexes(int count,
+osp_result_t OSP_Lock_mutexes(size_t count,
                               osp_mutex_t * mutexes[]);
 
 /**
@@ -472,7 +492,7 @@ osp_result_t OSP_Lock_mutexes(int count,
  * \ingroup Atomics
  */
 
-osp_result_t OSP_Trylock_mutexes(int count,
+osp_result_t OSP_Trylock_mutexes(size_t count,
                                  osp_mutex_t * mutexes[],
                                  osp_bool_t * acquired[]);
 
@@ -489,7 +509,7 @@ osp_result_t OSP_Trylock_mutexes(int count,
  * \ingroup Atomics
  */
 
-osp_result_t OSP_Unlock_mutexes(int count,
+osp_result_t OSP_Unlock_mutexes(size_t count,
                                 osp_mutex_t * mutexes[]);
 
 /* ********************************************************************** */
@@ -1172,7 +1192,7 @@ osp_result_t OSP_NbFlush(int proc, osp_handle_t * handle);
  * \ingroup COMPLETION
  */
 
-osp_result_t OSP_Flush_list(int count,
+osp_result_t OSP_Flush_list(size_t count,
                             int procs[]);
 
 /**
@@ -1190,7 +1210,7 @@ osp_result_t OSP_Flush_list(int count,
  * \ingroup COMPLETION
  */
 
-osp_result_t OSP_NbFlush_list(int count,
+osp_result_t OSP_NbFlush_list(size_t count,
                               int procs[],
                               osp_handle_t * handle);
 
@@ -1217,7 +1237,7 @@ osp_result_t OSP_Wait(osp_handle_t * handle);
  * \ingroup SYNCHRONIZATION
  */
 
-osp_result_t OSP_Wait_list(int count,
+osp_result_t OSP_Wait_list(size_t count,
                            osp_handle_t * handles[]);
 
 /**
@@ -1246,7 +1266,7 @@ osp_result_t OSP_Test(osp_handle_t * handle,
  * \ingroup SYNCHRONIZATION
  */
 
-osp_result_t OSP_Test_list(int count,
+osp_result_t OSP_Test_list(size_t count,
                            osp_handle_t * handles[],
                            osp_bool_t * completed[]);
 
@@ -1273,7 +1293,7 @@ osp_result_t OSP_Reset(osp_handle_t * handle);
  * \ingroup SYNCHRONIZATION
  */
 
-osp_result_t OSP_Reset_list(int count, 
+osp_result_t OSP_Reset_list(size_t count, 
                             osp_handle_t * handles[]);
 
 /*! @} */
