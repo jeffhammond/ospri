@@ -127,23 +127,6 @@ int main(int argc, char *argv[])
         MPI_Group group_world;
         MPI_Comm_group(MPI_COMM_WORLD, &group_world);
 
-        int geomprog_size = (world_size==1) ? 1 : ceil(log2(world_size));
-
-        int * geomprog_list = NULL;
-        geomprog_list = (int *) safemalloc( geomprog_size * sizeof(int) );
-
-        for (int i=0; i<geomprog_size; i++)
-            geomprog_list[i] = pow(2,i)-1;
-
-        if (world_rank==0)
-            for (int i=0; i<geomprog_size; i++)
-                if (world_rank==0) printf("geomprog_list[%d] = %d \n", i, geomprog_list[i]);
-
-        if (world_rank==0) printf("MPI_Group_incl of group_geomprog (geometric progression) from group_world \n");
-        MPI_Group group_geomprog;
-        MPI_Group_incl(group_world, geomprog_size, geomprog_list, &group_geomprog);
-        MPI_Group_free(&group_world);
-
         if (world_rank==0)
             print_meminfo(stdout, "after MPI communicator creation");
 
@@ -152,8 +135,6 @@ int main(int argc, char *argv[])
         MPI_Comm_free(&comm_world_leftright);
         MPI_Comm_free(&comm_world_reordered);
         MPI_Comm_free(&comm_world_dup);
-
-        free(geomprog_list);
 
         if (world_rank==0)
             print_meminfo(stdout, "after MPI communicator free-ing");
