@@ -144,21 +144,8 @@ int main(int argc, char *argv[])
         MPI_Group_incl(group_world, geomprog_size, geomprog_list, &group_geomprog);
         MPI_Group_free(&group_world);
 
-        if (world_rank==0) printf("MPI_Comm_create of comm_geomprog from group_geomprog on MPI_COMM_WORLD \n");
-        MPI_Comm comm_geomprog;
-        MPI_Comm_create(MPI_COMM_WORLD, group_geomprog, &comm_geomprog);
-        MPI_Group_free(&group_geomprog);
-
-        if (world_rank==0) printf("MPI_Barrier on comm_geomprog \n");
-        for (int i=0; i<geomprog_size; i++)
-            if (geomprog_list[i]==world_rank)
-                MPI_Barrier( comm_geomprog );
-
         if (world_rank==0)
             print_meminfo(stdout, "after MPI communicator creation");
-
-        if (comm_geomprog!=MPI_COMM_NULL);
-            MPI_Comm_free(&comm_geomprog);
 
         MPI_Comm_free(&comm_world_minus_one);
         MPI_Comm_free(&comm_world_oddeven);

@@ -398,16 +398,17 @@ int main(int argc, char *argv[])
      *                            CLEAN UP AND FINALIZE
      *********************************************************************************/
 
-    if (comm_geomprog!=MPI_COMM_NULL);
-        MPI_Comm_free(&comm_geomprog);
+    for (int i=0; i<geomprog_size; i++)
+        if (geomprog_list[i]==world_rank)
+            MPI_Comm_free(&comm_geomprog);
+
+    free(geomprog_list);
 
     MPI_Comm_free(&comm_world_minus_one);
     MPI_Comm_free(&comm_world_oddeven);
     MPI_Comm_free(&comm_world_leftright);
     MPI_Comm_free(&comm_world_reordered);
     MPI_Comm_free(&comm_world_dup);
-
-    free(geomprog_list);
 
     MPI_Barrier( MPI_COMM_WORLD );
 
