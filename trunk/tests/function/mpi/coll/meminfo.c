@@ -1,8 +1,12 @@
 #include <stdio.h>
+
+#ifdef __bgq__
 #include <spi/include/kernel/memory.h>
+#endif
 
 void print_meminfo(FILE * output, char * message)
 {
+#ifdef __bgq__
   uint64_t shared, persist, heapavail, stackavail, stack, heap, guard, mmap;
 
   Kernel_GetMemorySize(KERNEL_MEMSIZE_SHARED, &shared);
@@ -22,6 +26,7 @@ void print_meminfo(FILE * output, char * message)
   fprintf(output, "Memory: shared: %.2f MB, persist: %.2f MB, guard: %.2f MB, mmap: %.2f MB\n", 
           (double)shared/(1024*1024), (double)persist/(1024*1024), (double)guard/(1024*1024), (double)mmap/(1024*1024));
   fflush(stdout);
+#endif
 
   return;
 }
