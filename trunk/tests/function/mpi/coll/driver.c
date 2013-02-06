@@ -398,6 +398,9 @@ int main(int argc, char *argv[])
      *                            CLEAN UP AND FINALIZE
      *********************************************************************************/
 
+    if (comm_geomprog!=MPI_COMM_NULL);
+        MPI_Comm_free(&comm_geomprog);
+
     MPI_Comm_free(&comm_world_minus_one);
     MPI_Comm_free(&comm_world_oddeven);
     MPI_Comm_free(&comm_world_leftright);
