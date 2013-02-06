@@ -157,6 +157,7 @@ int main(int argc, char *argv[])
         if (world_rank==0)
             print_meminfo(stdout, "after MPI communicator creation");
 
+        MPI_Comm_free(&comm_geomprog);
         MPI_Comm_free(&comm_world_minus_one);
         MPI_Comm_free(&comm_world_oddeven);
         MPI_Comm_free(&comm_world_leftright);
