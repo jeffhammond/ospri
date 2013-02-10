@@ -167,7 +167,25 @@ int main(int argc, char *argv[])
     MPI_Barrier( MPI_COMM_WORLD );
 
     if (world_rank==0)
-    	printf("############## %s ##############\n", "MPI_COMM_WORLD" );
+    	printf("############## %s ##############\n", "MPI_COMM_WORLD - pass 1" );
+
+    {
+    	MPI_Barrier( test_comm );
+    	bcast_only(stdout, test_comm, max_mem);
+    	gather_only(stdout, test_comm, max_mem);
+    	allgather_only(stdout, test_comm, max_mem);
+    	scatter_only(stdout, test_comm, max_mem);
+    	alltoall_only(stdout, test_comm, max_mem);
+    	reduce_only(stdout, test_comm, max_mem);
+    	allreduce_only(stdout, test_comm, max_mem);
+    	reducescatterblock_only(stdout, test_comm, max_mem);
+    }
+
+    fflush(stdout);
+    MPI_Barrier( MPI_COMM_WORLD );
+
+    if (world_rank==0)
+    	printf("############## %s ##############\n", "MPI_COMM_WORLD - pass 2" );
 
     {
     	MPI_Barrier( test_comm );
