@@ -7,4 +7,6 @@
 
 cd $PBS_O_WORKDIR
 
-aprun -n 64 ./crayxe_pmi.x
+aprun -n 16 ./cray_pmi.x
+aprun -n 32 ./cray_pmi.x
+aprun -n 64 ./cray_pmi.x

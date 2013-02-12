@@ -6,10 +6,12 @@
 #include <pmi2.h>
 #include <rca_lib.h>
 
-int main(void)
+int main(int argc, char * argv[])
 {
   int rc;
   int rank, size;
+
+  int verbose = ( argc > 1 ? atoi(argv[1]) : 0 );
 
   PMI_BOOL initialized;
   rc = PMI_Initialized(&initialized);
@@ -32,13 +34,10 @@ int main(void)
   if (rc!=PMI_SUCCESS) 
     PMI_Abort(rc,"PMI_Get_size failed");
 
-  printf("rank %d of %d \n", rank, size);
-
   int rpn; /* rpn = ranks per node */
   rc = PMI_Get_clique_size(&rpn); 
   if (rc!=PMI_SUCCESS)  
     PMI_Abort(rc,"PMI_Get_clique_size failed");
-  printf("rank %d clique size %d \n", rank, rpn);
 
   int * clique_ranks = malloc( rpn * sizeof(int) );
   if (clique_ranks==NULL) 
@@ -47,28 +46,30 @@ int main(void)
   rc = PMI_Get_clique_ranks(clique_ranks, rpn); 
   if (rc!=PMI_SUCCESS)  
     PMI_Abort(rc,"PMI_Get_clique_ranks failed");
-  printf("rank %d clique[] = ", rank); 
-  for(int i = 0; i<rpn; i++)
-    printf("%d ", clique_ranks[i]); 
-  printf("\n");
 
   int nid;
   rc = PMI_Get_nid(rank, &nid);
   if (rc!=PMI_SUCCESS) 
     PMI_Abort(rc,"PMI_Get_nid failed");
-  printf("rank %d PMI_Get_nid gives nid %d \n", rank, nid);
 
   rca_mesh_coord_t xyz;
   rca_get_meshcoord( (uint16_t) nid, &xyz);
-  printf("rank %d rca_get_meshcoord returns (%3u,%3u,%3u)\n", rank, xyz.mesh_x, xyz.mesh_y, xyz.mesh_z);
 
   int HOST_NAME_MAX = 255;
   char hostname[HOST_NAME_MAX];
   rc = gethostname(hostname, HOST_NAME_MAX);
   if (rc!=PMI_SUCCESS) 
     PMI_Abort(rc,"gethostname");
-  else
-    printf("hostname = %s \n", hostname);
+
+  printf("rank %d of %d, nid = %d, xyz = (%u,%u,%u), hostname = %s \n", 
+          rank, size, nid, xyz.mesh_x, xyz.mesh_y, xyz.mesh_z, hostname);
+  if (verbose>0)
+  {
+      printf("rank %d, rpn = %d, clique[] = ", rank, rpn); 
+      for(int i = 0; i<rpn; i++)
+        printf("%d ", clique_ranks[i]); 
+      printf("\n");
+  }
 
 #if 0
   int flag = 0;
@@ -108,6 +109,8 @@ int main(void)
     }
   }
 #endif
+
+  free(clique_ranks);
 
   fflush(stdout);
   return 0;
