@@ -1,0 +1,10 @@
+#!/bin/bash
+#PBS -N pmi_rca
+#PBS -l mppwidth=64
+#PBS -l walltime=0:30:00
+#PBS -joe
+#PBS -V
+
+cd $PBS_O_WORKDIR
+
+aprun -n 64 ./crayxe_pmi.x
