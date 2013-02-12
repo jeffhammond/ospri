@@ -21,7 +21,7 @@ INC     = -I. -DPAMID
 DEVICE  = pamid
 endif
 
-ifeq ($(TARGET),XE)
+ifeq ($(TARGET),CRAY)
 CC      = cc
 COPT    = -g -O0 -std=gnu99
 INC     = -I. -DDMAPPD
@@ -29,7 +29,7 @@ DEVICE  = dmappd
 endif
 
 ifeq ($(DEVICE),NONE) 
-@ You need to set TARGET={BGP,BGQ,XE}
+@ You need to set TARGET={BGP,BGQ,CRAY}
 endif
 
 LIBS    = libparmci.a $(DEVICE)/liba1d.a generic/liba1g.a
