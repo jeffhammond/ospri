@@ -113,7 +113,7 @@ int main(int argc, char *argv[])
             PARMCI_Get( window[t], buffer, bytes, t );
 
             for (int i = 0; i < w; i++) 
-                printf("rank %d (after get 1) buffer[%d] = %d \n", rank, i, buffer[i] );
+                printf("rank %d (after get 1) buffer[%d] = %ld \n", rank, i, (long)buffer[i] );
 
             for (int i = 0; i < w; i++) 
 #if defined(__bgp__)

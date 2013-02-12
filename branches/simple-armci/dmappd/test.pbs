@@ -11,8 +11,8 @@ export XT_SYMMETRIC_HEAP_SIZE=2000M
 
 cd ${PBS_O_WORKDIR}
 
-#aprun -n 2 -N 1 ./test_dmapp_amo.x
-#aprun -n 2 -N 1 ./test_dmapp_get.x
-#aprun -n 2 -N 1 ./test_dmapp_put.x
-aprun -n 2 -N 1 ./test_dmapp_get_bw.x
-aprun -n 2 -N 1 ./test_dmapp_put_bw.x
+aprun -n 2 -N 1 ./test_dmapp_amo.x    2>&1 > test_dmapp_amo.${PBS_JOBID}.log
+aprun -n 2 -N 1 ./test_dmapp_get.x    2>&1 > test_dmapp_get.${PBS_JOBID}.log
+aprun -n 2 -N 1 ./test_dmapp_put.x    2>&1 > test_dmapp_put.${PBS_JOBID}.log
+aprun -n 2 -N 1 ./test_dmapp_get_bw.x 2>&1 > test_dmapp_get_bw.${PBS_JOBID}.log
+aprun -n 2 -N 1 ./test_dmapp_put_bw.x 2>&1 > test_dmapp_put_bw.${PBS_JOBID}.log
