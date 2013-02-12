@@ -1,0 +1,140 @@
+rank 8 of 16, nid = 669, xyz = (1,4,7), hostname = nid00669 
+rank 15 of 16, nid = 669, xyz = (1,4,7), hostname = nid00669 
+rank 12 of 16, nid = 669, xyz = (1,4,7), hostname = nid00669 
+rank 13 of 16, nid = 669, xyz = (1,4,7), hostname = nid00669 
+rank 7 of 16, nid = 669, xyz = (1,4,7), hostname = nid00669 
+rank 2 of 16, nid = 669, xyz = (1,4,7), hostname = nid00669 
+rank 4 of 16, nid = 669, xyz = (1,4,7), hostname = nid00669 
+rank 10 of 16, nid = 669, xyz = (1,4,7), hostname = nid00669 
+rank 11 of 16, nid = 669, xyz = (1,4,7), hostname = nid00669 
+rank 5 of 16, nid = 669, xyz = (1,4,7), hostname = nid00669 
+rank 9 of 16, nid = 669, xyz = (1,4,7), hostname = nid00669 
+rank 14 of 16, nid = 669, xyz = (1,4,7), hostname = nid00669 
+rank 1 of 16, nid = 669, xyz = (1,4,7), hostname = nid00669 
+rank 3 of 16, nid = 669, xyz = (1,4,7), hostname = nid00669 
+rank 6 of 16, nid = 669, xyz = (1,4,7), hostname = nid00669 
+rank 0 of 16, nid = 669, xyz = (1,4,7), hostname = nid00669 
+[NID 00669] 2013-02-11 18:40:46 Apid 25575: initiated application termination
+Application 25575 resources: utime ~0s, stime ~0s
+rank 0 of 32, nid = 669, xyz = (1,4,7), hostname = nid00669 
+rank 1 of 32, nid = 669, xyz = (1,4,7), hostname = nid00669 
+rank 7 of 32, nid = 669, xyz = (1,4,7), hostname = nid00669 
+rank 16 of 32, nid = 701, xyz = (1,4,15), hostname = nid00701 
+rank 22 of 32, nid = 701, xyz = (1,4,15), hostname = nid00701 
+rank 20 of 32, nid = 701, xyz = (1,4,15), hostname = nid00701 
+rank 23 of 32, nid = 701, xyz = (1,4,15), hostname = nid00701 
+rank 31 of 32, nid = 701, xyz = (1,4,15), hostname = nid00701 
+rank 30 of 32, nid = 701, xyz = (1,4,15), hostname = nid00701 
+rank 24 of 32, nid = 701, xyz = (1,4,15), hostname = nid00701 
+rank 27 of 32, nid = 701, xyz = (1,4,15), hostname = nid00701 
+rank 29 of 32, nid = 701, xyz = (1,4,15), hostname = nid00701 
+rank 28 of 32, nid = 701, xyz = (1,4,15), hostname = nid00701 
+rank 25 of 32, nid = 701, xyz = (1,4,15), hostname = nid00701 
+rank 26 of 32, nid = 701, xyz = (1,4,15), hostname = nid00701 
+rank 21 of 32, nid = 701, xyz = (1,4,15), hostname = nid00701 
+rank 18 of 32, nid = 701, xyz = (1,4,15), hostname = nid00701 
+rank 19 of 32, nid = 701, xyz = (1,4,15), hostname = nid00701 
+rank 11 of 32, nid = 669, xyz = (1,4,7), hostname = nid00669 
+rank 10 of 32, nid = 669, xyz = (1,4,7), hostname = nid00669 
+rank 12 of 32, nid = 669, xyz = (1,4,7), hostname = nid00669 
+rank 8 of 32, nid = 669, xyz = (1,4,7), hostname = nid00669 
+rank 14 of 32, nid = 669, xyz = (1,4,7), hostname = nid00669 
+rank 15 of 32, nid = 669, xyz = (1,4,7), hostname = nid00669 
+rank 9 of 32, nid = 669, xyz = (1,4,7), hostname = nid00669 
+rank 13 of 32, nid = 669, xyz = (1,4,7), hostname = nid00669 
+rank 4 of 32, nid = 669, xyz = (1,4,7), hostname = nid00669 
+rank 6 of 32, nid = 669, xyz = (1,4,7), hostname = nid00669 
+rank 3 of 32, nid = 669, xyz = (1,4,7), hostname = nid00669 
+rank 2 of 32, nid = 669, xyz = (1,4,7), hostname = nid00669 
+rank 5 of 32, nid = 669, xyz = (1,4,7), hostname = nid00669 
+rank 17 of 32, nid = 701, xyz = (1,4,15), hostname = nid00701 
+[NID 00669] 2013-02-11 18:40:48 Apid 25577: initiated application termination
+Application 25577 exit signals: Killed
+Application 25577 resources: utime ~0s, stime ~0s
+rank 6 of 64, nid = 669, xyz = (1,4,7), hostname = nid00669 
+rank 15 of 64, nid = 669, xyz = (1,4,7), hostname = nid00669 
+rank 9 of 64, nid = 669, xyz = (1,4,7), hostname = nid00669 
+rank 3 of 64, nid = 669, xyz = (1,4,7), hostname = nid00669 
+rank 2 of 64, nid = 669, xyz = (1,4,7), hostname = nid00669 
+rank 7 of 64, nid = 669, xyz = (1,4,7), hostname = nid00669 
+rank 4 of 64, nid = 669, xyz = (1,4,7), hostname = nid00669 
+rank 1 of 64, nid = 669, xyz = (1,4,7), hostname = nid00669 
+rank 5 of 64, nid = 669, xyz = (1,4,7), hostname = nid00669 
+rank 12 of 64, nid = 669, xyz = (1,4,7), hostname = nid00669 
+rank 13 of 64, nid = 669, xyz = (1,4,7), hostname = nid00669 
+rank 48 of 64, nid = 712, xyz = (1,5,2), hostname = nid00712 
+rank 53 of 64, nid = 712, xyz = (1,5,2), hostname = nid00712 
+rank 57 of 64, nid = 712, xyz = (1,5,2), hostname = nid00712 
+rank 62 of 64, nid = 712, xyz = (1,5,2), hostname = nid00712 
+rank 54 of 64, nid = 712, xyz = (1,5,2), hostname = nid00712 
+rank 58 of 64, nid = 712, xyz = (1,5,2), hostname = nid00712 
+rank 32 of 64, nid = 707, xyz = (1,5,0), hostname = nid00707 
+rank 34 of 64, nid = 707, xyz = (1,5,0), hostname = nid00707 
+rank 37 of 64, nid = 707, xyz = (1,5,0), hostname = nid00707 
+rank 46 of 64, nid = 707, xyz = (1,5,0), hostname = nid00707 
+rank 41 of 64, nid = 707, xyz = (1,5,0), hostname = nid00707 
+rank 45 of 64, nid = 707, xyz = (1,5,0), hostname = nid00707 
+rank 47 of 64, nid = 707, xyz = (1,5,0), hostname = nid00707 
+rank 40 of 64, nid = 707, xyz = (1,5,0), hostname = nid00707 
+rank 42 of 64, nid = 707, xyz = (1,5,0), hostname = nid00707 
+rank 44 of 64, nid = 707, xyz = (1,5,0), hostname = nid00707 
+rank 43 of 64, nid = 707, xyz = (1,5,0), hostname = nid00707 
+rank 39 of 64, nid = 707, xyz = (1,5,0), hostname = nid00707 
+rank 36 of 64, nid = 707, xyz = (1,5,0), hostname = nid00707 
+rank 35 of 64, nid = 707, xyz = (1,5,0), hostname = nid00707 
+rank 22 of 64, nid = 701, xyz = (1,4,15), hostname = nid00701 
+rank 25 of 64, nid = 701, xyz = (1,4,15), hostname = nid00701 
+rank 26 of 64, nid = 701, xyz = (1,4,15), hostname = nid00701 
+rank 30 of 64, nid = 701, xyz = (1,4,15), hostname = nid00701 
+rank 24 of 64, nid = 701, xyz = (1,4,15), hostname = nid00701 
+rank 27 of 64, nid = 701, xyz = (1,4,15), hostname = nid00701 
+rank 29 of 64, nid = 701, xyz = (1,4,15), hostname = nid00701 
+rank 28 of 64, nid = 701, xyz = (1,4,15), hostname = nid00701 
+rank 31 of 64, nid = 701, xyz = (1,4,15), hostname = nid00701 
+rank 19 of 64, nid = 701, xyz = (1,4,15), hostname = nid00701 
+rank 21 of 64, nid = 701, xyz = (1,4,15), hostname = nid00701 
+rank 23 of 64, nid = 701, xyz = (1,4,15), hostname = nid00701 
+rank 20 of 64, nid = 701, xyz = (1,4,15), hostname = nid00701 
+rank 16 of 64, nid = 701, xyz = (1,4,15), hostname = nid00701 
+rank 18 of 64, nid = 701, xyz = (1,4,15), hostname = nid00701 
+rank 8 of 64, nid = 669, xyz = (1,4,7), hostname = nid00669 
+rank 11 of 64, nid = 669, xyz = (1,4,7), hostname = nid00669 
+rank 10 of 64, nid = 669, xyz = (1,4,7), hostname = nid00669 
+rank 14 of 64, nid = 669, xyz = (1,4,7), hostname = nid00669 
+rank 0 of 64, nid = 669, xyz = (1,4,7), hostname = nid00669 
+rank 17 of 64, nid = 701, xyz = (1,4,15), hostname = nid00701 
+rank 38 of 64, nid = 707, xyz = (1,5,0), hostname = nid00707 
+rank 33 of 64, nid = 707, xyz = (1,5,0), hostname = nid00707 
+rank 50 of 64, nid = 712, xyz = (1,5,2), hostname = nid00712 
+rank 51 of 64, nid = 712, xyz = (1,5,2), hostname = nid00712 
+rank 56 of 64, nid = 712, xyz = (1,5,2), hostname = nid00712 
+rank 60 of 64, nid = 712, xyz = (1,5,2), hostname = nid00712 
+rank 49 of 64, nid = 712, xyz = (1,5,2), hostname = nid00712 
+rank 63 of 64, nid = 712, xyz = (1,5,2), hostname = nid00712 
+rank 59 of 64, nid = 712, xyz = (1,5,2), hostname = nid00712 
+rank 61 of 64, nid = 712, xyz = (1,5,2), hostname = nid00712 
+rank 55 of 64, nid = 712, xyz = (1,5,2), hostname = nid00712 
+rank 52 of 64, nid = 712, xyz = (1,5,2), hostname = nid00712 
+[NID 00712] 2013-02-11 18:40:53 Apid 25579: initiated application termination
+Application 25579 exit signals: Killed
+Application 25579 resources: utime ~1s, stime ~0s
+
+ + --------------------------------------------------------------------------
+ +        Job name: pmi_rca
+ +          Job Id: 6725.edison06
+ +          System: edison
+ +     Queued Time:  Mon Feb 11 18:40:34 2013
+ +      Start Time:  Mon Feb 11 18:40:41 2013
+ + Completion Time:  Mon Feb 11 18:40:53 2013
+ +            User: jhammond
+ +           Group: jhammond
+ +        MOM Host: nid00265
+ +           Queue: debug
+ +  Req. Resources: walltime=00:30:00
+ +  Used Resources: cput=00:00:02,mem=0kb,vmem=0kb,walltime=00:00:14
+ +     Acct String: darpa
+ +   PBS_O_WORKDIR: 
+ +     Submit Args:  cray_pmi.pbs
+ +        Job Exit: 137
+ + --------------------------------------------------------------------------
+

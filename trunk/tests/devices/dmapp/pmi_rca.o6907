@@ -1,0 +1,54 @@
+rank 2 of 32, nid = 744, xyz = (1,5,10) of (1,5,15), hostname = nid00744 mpiname = nid00744 
+rank 0 of 32, nid = 744, xyz = (1,5,10) of (1,5,15), hostname = nid00744 mpiname = nid00744 
+rank 12 of 32, nid = 744, xyz = (1,5,10) of (1,5,15), hostname = nid00744 mpiname = nid00744 
+rank 15 of 32, nid = 744, xyz = (1,5,10) of (1,5,15), hostname = nid00744 mpiname = nid00744 
+rank 8 of 32, nid = 744, xyz = (1,5,10) of (1,5,15), hostname = nid00744 mpiname = nid00744 
+rank 5 of 32, nid = 744, xyz = (1,5,10) of (1,5,15), hostname = nid00744 mpiname = nid00744 
+rank 1 of 32, nid = 744, xyz = (1,5,10) of (1,5,15), hostname = nid00744 mpiname = nid00744 
+rank 4 of 32, nid = 744, xyz = (1,5,10) of (1,5,15), hostname = nid00744 mpiname = nid00744 
+rank 13 of 32, nid = 744, xyz = (1,5,10) of (1,5,15), hostname = nid00744 mpiname = nid00744 
+rank 14 of 32, nid = 744, xyz = (1,5,10) of (1,5,15), hostname = nid00744 mpiname = nid00744 
+rank 11 of 32, nid = 744, xyz = (1,5,10) of (1,5,15), hostname = nid00744 mpiname = nid00744 
+rank 10 of 32, nid = 744, xyz = (1,5,10) of (1,5,15), hostname = nid00744 mpiname = nid00744 
+rank 9 of 32, nid = 744, xyz = (1,5,10) of (1,5,15), hostname = nid00744 mpiname = nid00744 
+rank 3 of 32, nid = 744, xyz = (1,5,10) of (1,5,15), hostname = nid00744 mpiname = nid00744 
+rank 7 of 32, nid = 744, xyz = (1,5,10) of (1,5,15), hostname = nid00744 mpiname = nid00744 
+rank 6 of 32, nid = 744, xyz = (1,5,10) of (1,5,15), hostname = nid00744 mpiname = nid00744 
+rank 25 of 32, nid = 745, xyz = (1,5,10) of (1,5,15), hostname = nid00745 mpiname = nid00745 
+rank 27 of 32, nid = 745, xyz = (1,5,10) of (1,5,15), hostname = nid00745 mpiname = nid00745 
+rank 29 of 32, nid = 745, xyz = (1,5,10) of (1,5,15), hostname = nid00745 mpiname = nid00745 
+rank 26 of 32, nid = 745, xyz = (1,5,10) of (1,5,15), hostname = nid00745 mpiname = nid00745 
+rank 24 of 32, nid = 745, xyz = (1,5,10) of (1,5,15), hostname = nid00745 mpiname = nid00745 
+rank 28 of 32, nid = 745, xyz = (1,5,10) of (1,5,15), hostname = nid00745 mpiname = nid00745 
+rank 31 of 32, nid = 745, xyz = (1,5,10) of (1,5,15), hostname = nid00745 mpiname = nid00745 
+rank 30 of 32, nid = 745, xyz = (1,5,10) of (1,5,15), hostname = nid00745 mpiname = nid00745 
+rank 20 of 32, nid = 745, xyz = (1,5,10) of (1,5,15), hostname = nid00745 mpiname = nid00745 
+rank 22 of 32, nid = 745, xyz = (1,5,10) of (1,5,15), hostname = nid00745 mpiname = nid00745 
+rank 23 of 32, nid = 745, xyz = (1,5,10) of (1,5,15), hostname = nid00745 mpiname = nid00745 
+rank 18 of 32, nid = 745, xyz = (1,5,10) of (1,5,15), hostname = nid00745 mpiname = nid00745 
+rank 21 of 32, nid = 745, xyz = (1,5,10) of (1,5,15), hostname = nid00745 mpiname = nid00745 
+rank 19 of 32, nid = 745, xyz = (1,5,10) of (1,5,15), hostname = nid00745 mpiname = nid00745 
+rank 16 of 32, nid = 745, xyz = (1,5,10) of (1,5,15), hostname = nid00745 mpiname = nid00745 
+rank 17 of 32, nid = 745, xyz = (1,5,10) of (1,5,15), hostname = nid00745 mpiname = nid00745 
+[NID 00744] 2013-02-11 20:17:38 Apid 25932: initiated application termination
+Application 25932 resources: utime ~1s, stime ~0s
+
+ + --------------------------------------------------------------------------
+ +        Job name: pmi_rca
+ +          Job Id: 6907.edison06
+ +          System: edison
+ +     Queued Time:  Mon Feb 11 20:17:14 2013
+ +      Start Time:  Mon Feb 11 20:17:32 2013
+ + Completion Time:  Mon Feb 11 20:17:38 2013
+ +            User: jhammond
+ +           Group: jhammond
+ +        MOM Host: nid00264
+ +           Queue: debug
+ +  Req. Resources: walltime=00:30:00
+ +  Used Resources: cput=00:00:01,mem=2772kb,vmem=26480kb,walltime=00:00:08
+ +     Acct String: darpa
+ +   PBS_O_WORKDIR: 
+ +     Submit Args:  cray_pmi.pbs
+ +        Job Exit: 0
+ + --------------------------------------------------------------------------
+

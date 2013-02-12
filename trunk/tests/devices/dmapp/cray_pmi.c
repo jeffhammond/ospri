@@ -5,11 +5,14 @@
 #include <pmi.h>
 #include <pmi2.h>
 #include <rca_lib.h>
+#include <mpi.h>
 
 int main(int argc, char * argv[])
 {
   int rc;
   int rank, size;
+
+  MPI_Init(&argc, &argv);
 
   int verbose = ( argc > 1 ? atoi(argv[1]) : 0 );
 
@@ -52,17 +55,31 @@ int main(int argc, char * argv[])
   if (rc!=PMI_SUCCESS) 
     PMI_Abort(rc,"PMI_Get_nid failed");
 
-  rca_mesh_coord_t xyz;
-  rca_get_meshcoord( (uint16_t) nid, &xyz);
+  rca_mesh_coord_t xyz, mxyz;
+  rc = rca_get_meshcoord( (uint16_t) nid, &xyz);
+  if (rc!=0) 
+    PMI_Abort(rc,"rca_get_meshcoord");
 
-  int HOST_NAME_MAX = 255;
-  char hostname[HOST_NAME_MAX];
-  rc = gethostname(hostname, HOST_NAME_MAX);
+  rc = rca_get_max_dimension(&mxyz);
+  if (rc!=0) 
+    PMI_Abort(rc,"rca_get_max_dimension");
+
+  int len = 255;
+  char hostname[len];
+  rc = gethostname(hostname, len);
   if (rc!=PMI_SUCCESS) 
     PMI_Abort(rc,"gethostname");
 
-  printf("rank %d of %d, nid = %d, xyz = (%u,%u,%u), hostname = %s \n", 
-          rank, size, nid, xyz.mesh_x, xyz.mesh_y, xyz.mesh_z, hostname);
+  int mpilen;
+  char mpiname[MPI_MAX_PROCESSOR_NAME];
+  MPI_Get_processor_name(mpiname, &mpilen);
+
+  printf("rank %d of %d, nid = %d, xyz = (%u,%u,%u) of (%u,%u,%u), hostname = %s mpiname = %s \n", 
+          rank, size, nid, 
+          xyz.mesh_x, xyz.mesh_y, xyz.mesh_z, 
+          mxyz.mesh_x, mxyz.mesh_y, mxyz.mesh_z, 
+          hostname, mpiname);
+
   if (verbose>0)
   {
       printf("rank %d, rpn = %d, clique[] = ", rank, rpn); 
@@ -111,7 +128,9 @@ int main(int argc, char * argv[])
 #endif
 
   free(clique_ranks);
-
   fflush(stdout);
+
+  MPI_Finalize();
+
   return 0;
 }

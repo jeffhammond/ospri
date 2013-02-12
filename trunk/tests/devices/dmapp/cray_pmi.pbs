@@ -1,12 +1,10 @@
 #!/bin/bash
 #PBS -N pmi_rca
-#PBS -l mppwidth=64
+#PBS -l mppwidth=32
 #PBS -l walltime=0:30:00
 #PBS -joe
 #PBS -V
 
 cd $PBS_O_WORKDIR
 
-aprun -n 16 ./cray_pmi.x
 aprun -n 32 ./cray_pmi.x
-aprun -n 64 ./cray_pmi.x
