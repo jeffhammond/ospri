@@ -1,5 +1,5 @@
 #!/bin/bash
-for n in 8 16 20 32 40 64 80 128 160 256 320 512 640
+for n in 8 16 20 32 40 64 80 128 160 256 320 512 540 576 600 640
 do 
     p="$(($n*16))"
     echo qsub -l mppwidth=$p test.pbs
