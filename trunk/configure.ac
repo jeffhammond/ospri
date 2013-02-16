@@ -107,11 +107,10 @@ AC_CHECK_HEADERS(stdio.h stdlib.h string.h strings.h unistd.h stdarg.h sys/types
 
 ## Check what device we want to use
 osp_device_dcmfd=false
+osp_device_pamid=false
 osp_device_pthreadd=false
 osp_device_mpid=false
-osp_device_geminid=false
-osp_device_lapid=false
-osp_device_ibd=false
+osp_device_dmappd=false
 AC_ARG_WITH(device, AC_HELP_STRING([--with-device],[OSP device to use]),
 	osp_device=$withval,osp_device=dcmfd)
 got_device=no
@@ -127,6 +126,28 @@ for dev in `echo $osp_device | sed -e 's/:/ /g' -e 's/,/ /g'` ; do
 		fi
            got_device=yes
            osp_device_dcmfd=true
+		;;
+    	 pamid)
+		PAC_SET_HEADER_LIB_PATH(pami)
+		got_pami=no
+		PAC_CHECK_HEADER_LIB(pami,pami.h,pami.a,PAMI_Client_create,got_pami=yes,got_pami=no)
+		if test "$got_pami" = "yes" ; then
+		   got_device=yes
+           osp_device_pamid=true
+		fi
+           got_device=yes
+           osp_device_pamid=true
+		;;
+    	 dmappd)
+		PAC_SET_HEADER_LIB_PATH(dmapp)
+		got_dmapp=no
+		PAC_CHECK_HEADER_LIB(dmapp,dmapp.h,dmapp.a,dmapp_init,got_dmapp=yes,got_dmapp=no)
+		if test "$got_dmapp" = "yes" ; then
+		   got_device=yes
+           osp_device_dmappd=true
+		fi
+           got_device=yes
+           osp_device_dmappd=true
 		;;
          pthreadd)
         PAC_SET_HEADER_LIB_PATH(pthread)
