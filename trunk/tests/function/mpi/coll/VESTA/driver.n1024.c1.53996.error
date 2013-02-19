@@ -1,0 +1,14 @@
+2013-02-05 04:04:42.730 (INFO ) [0xfff8ae3a190] 12827:ibm.runjob.AbstractOptions: using properties file /bgsys/local/etc/bg.properties
+2013-02-05 04:04:42.731 (INFO ) [0xfff8ae3a190] 12827:ibm.runjob.AbstractOptions: max open file descriptors: 65536
+2013-02-05 04:04:42.731 (INFO ) [0xfff8ae3a190] 12827:ibm.runjob.AbstractOptions: core file limit: 18446744073709551615
+2013-02-05 04:04:42.731 (INFO ) [0xfff8ae3a190] 12827:tatu.runjob.client: scheduler job id is 53996
+2013-02-05 04:04:42.734 (INFO ) [0xfff949d19f0] 12827:tatu.runjob.monitor: monitor started
+2013-02-05 04:04:42.734 (INFO ) [0xfff8ae3a190] CET-00000-33371-1024:12827:ibm.runjob.client.options.Parser: set local socket to runjob_mux from properties file
+2013-02-05 04:04:44.569 (INFO ) [0xfff8ae3a190] CET-00000-33371-1024:47578:ibm.runjob.client.Job: job 47578 started
+2013-02-05 04:04:48.305 (INFO ) [0xfff949d19f0] 12827:tatu.runjob.monitor: tracklib completed
+2013-02-05 04:05:16.112 (INFO ) [0xfff8ae3a190] CET-00000-33371-1024:47578:ibm.runjob.client.Job: exited with status 0
+2013-02-05 04:05:16.112 (WARN ) [0xfff8ae3a190] CET-00000-33371-1024:47578:ibm.runjob.client.Job: 4 RAS events
+2013-02-05 04:05:16.112 (WARN ) [0xfff8ae3a190] CET-00000-33371-1024:47578:ibm.runjob.client.Job: most recent RAS event text: DDR Maintenance Correctable Error Summary : count=3 MCFIR error status:  [MEMORY_ECC_MARKING_STORE_UPDATED] BGQ: This bit is set when the memory ECC check logic has updated the marking store;
+2013-02-05 04:05:16.112 (INFO ) [0xfff8ae3a190] tatu.runjob.client: task exited with status 0
+2013-02-05 04:05:16.113 (INFO ) [0xfff949d19f0] 12827:tatu.runjob.monitor: monitor terminating
+2013-02-05 04:05:16.114 (INFO ) [0xfff8ae3a190] tatu.runjob.client: monitor completed

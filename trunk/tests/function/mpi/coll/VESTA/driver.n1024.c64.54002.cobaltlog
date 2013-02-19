@@ -1,0 +1,46 @@
+/usr/bin/qsub.py -A Catalyst -t 20 -n 1024 --mode=c64 --env PAMID_VERBOSE=1 -O driver.n1024.c64.$jobid ./driver.x 20000000
+
+submitted with cwd set to: /gpfs/mira-home/jhammond/OSPRI/trunk/tests/function/mpi/coll
+
+Job 54002/jhammond/928: Initiating boot at location CET-00000-33371-1024.
+
+Command: '/usr/bin/runjob' '--np' '65536' '--ranks-per-node' '64' '--cwd' '/gpfs/mira-home/jhammond/OSPRI/trunk/tests/function/mpi/coll' '--block' 'CET-00000-33371-1024' '--envs' 'COBALT_JOBID=54002' '--envs' 'PAMID_VERBOSE=1' '--verbose' '4' ':' '/gpfs/mira-home/jhammond/OSPRI/trunk/tests/function/mpi/coll/./driver.x' '20000000'
+
+Environment:
+LESSOPEN=|/usr/bin/lesspipe.sh %s
+CVS_RSH=ssh
+LOGNAME=root
+USER=root
+PATH=/usr/lib64/qt-3.3/bin:/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/bgsys/drivers/ppcfloor/bin:/bgsys/drivers/ppcfloor/sbin:/usr/lpp/mmfs/bin:/root/bin:/dbhome/db2cat/sqllib/bin:/dbhome/db2cat/sqllib/adm:/dbhome/db2cat/sqllib/misc
+QTDIR=/usr/lib64/qt-3.3
+LD_LIBRARY_PATH=/bgsys/drivers/ppcfloor/lib64:/dbhome/db2cat/sqllib/lib64:/dbhome/db2cat/sqllib/lib32
+LANG=C
+IBM_DB_DIR=/dbhome/db2cat/sqllib
+TERM=screen
+SHELL=/bin/bash
+QTINC=/usr/lib64/qt-3.3/include
+IBM_DB_LIB=/dbhome/db2cat/sqllib/lib
+DB2INSTANCE=db2cat
+G_BROKEN_FILENAMES=1
+HISTSIZE=1000
+MPIRUN_VERBOSE=1
+HOME=/root
+QTLIB=/usr/lib64/qt-3.3/lib
+DB2LIB=/dbhome/db2cat/sqllib/lib
+CLASSPATH=/usr/share/java/jdom.jar:/dbhome/bgqsysdb/sqllib/tools/clpplus.jar:/dbhome/bgqsysdb/sqllib/tools/antlr-3.2.jar:/dbhome/bgqsysdb/sqllib/tools/jline-0.9.93.jar:/dbhome/db2cat/sqllib/java/db2java.zip:/dbhome/db2cat/sqllib/java/sqlj.zip:/dbhome/db2cat/sqllib/function:/dbhome/db2cat/sqllib/java/db2jcc_license_cu.jar:/dbhome/db2cat/sqllib/tools/clpplus.jar:/dbhome/db2cat/sqllib/tools/antlr-3.2.jar:/dbhome/db2cat/sqllib/tools/jline-0.9.93.jar:/dbhome/db2cat/sqllib/java/db2jcc.jar:.
+IBM_DB_INCLUDE=/dbhome/db2cat/sqllib/include
+DB2_HOME=/dbhome/db2cat/sqllib
+_=/usr/bin/nohup
+HOSTNAME=cetussn1
+HISTCONTROL=ignoredups
+SHLVL=2
+PWD=/dbhome/bgqsysdb/sqllib/security
+MAIL=/var/spool/mail/root
+COBALT_JOBID=54002
+
+Info: stdin received from /dev/null
+Info: stdout sent to /gpfs/mira-home/jhammond/OSPRI/trunk/tests/function/mpi/coll/driver.n1024.c64.54002.output
+Info: stderr sent to /gpfs/mira-home/jhammond/OSPRI/trunk/tests/function/mpi/coll/driver.n1024.c64.54002.error
+
+Job 54002/jhammond/928: Block CET-00000-33371-1024 for location CET-00000-33371-1024 successfully booted.  Starting task for job 54002. (CBS)
+Info: task completed normally with an exit code of 0; initiating job cleanup and removal
