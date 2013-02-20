@@ -19,32 +19,27 @@
 #include <mpi.h>
 
 #ifdef __CRAYXE
-#include "pmi.h"
-#include "dmapp.h"
+#include <pmi.h>
+#include <dmapp.h>
 #endif
 
 int main(int argc,char **argv)
 {
 #ifdef __CRAYXE
-    int                max;
-    int                i;
-    int                pe = -1;
-    int                npes = -1;
-    char *             source = NULL;
-    char *             target = NULL;
-    dmapp_return_t     status;
-    //dmapp_rma_attrs_t  dmapp_config_in, dmapp_config_out;
+    int                   i, max, npes = -1;
+    char *                source = NULL, target = NULL;
+    dmapp_return_t        status;
     dmapp_rma_attrs_ext_t dmapp_config_in, dmapp_config_out;
-    dmapp_jobinfo_t    job;
-    dmapp_seg_desc_t * seg = NULL;
+    dmapp_jobinfo_t       job;
+    dmapp_seg_desc_t *    seg = NULL;
+    dmapp_pe_t            mype = 0, rmpe  = 1; /* rmpe = remote PE */
 
-    double t0, t1, dt;
-    double bw;
+    double                t0, t1, dt, bw;
 
     MPI_Init(&argc, &argv);
 
     /* Initialize DMAPP resources before executing any other DMAPP calls. */
-    //status = dmapp_init(NULL, &actual_args);
+    //status = dmapp_init(NULL, &dmapp_config_out);
 
     dmapp_config_in.max_outstanding_nb   = DMAPP_DEF_OUTSTANDING_NB; /*  512 */
     dmapp_config_in.offload_threshold    = DMAPP_OFFLOAD_THRESHOLD;  /* 4096 */
@@ -62,8 +57,10 @@ int main(int argc,char **argv)
     status = dmapp_init_ext( &dmapp_config_in, &dmapp_config_out );
     assert(status==DMAPP_RC_SUCCESS);
 
-    max = (argc>1) ? atoi(argv[1]) : 1000000;
-    max *= 16; /* max must be a multiple of 16 for the test to work */
+    /* Retrieve information about RMA attributes, such as offload_threshold and routing modes. */
+    //status = dmapp_put_rma_attrs(&dmapp_config_out);
+    status = dmapp_put_rma_attrs_ext(&dmapp_config_out);
+    assert(status==DMAPP_RC_SUCCESS);
 
     /* Allocate remotely accessible memory for source and target buffers.
            Only memory in the data segment or the sheap is remotely accessible.
@@ -75,93 +72,91 @@ int main(int argc,char **argv)
     memset (source,'S',max);
     memset (target,'T',max);
 
-    /* Retrieve information about job details, such as PE id and number of PEs. */
-    status = dmapp_get_jobinfo(&job);
+    /* Retrieve information about job details, such as mype id and number of PEs. */
+    status = dmapp_put_jobinfo(&job);
     assert(status==DMAPP_RC_SUCCESS);
-    pe = job.pe;
+
+    mype = job.mype;
     npes = job.npes;
+    rmpe = (dmapp_pe_t) ((argc>1) ? atoi(argv[1]) : (npes-1));
 
-    /* Retrieve information about RMA attributes, such as offload_threshold
-           and routing modes. */
-    //status = dmapp_get_rma_attrs(&dmapp_config_out);
-    status = dmapp_get_rma_attrs_ext(&dmapp_config_out);
-    assert(status==DMAPP_RC_SUCCESS);
-
-    /* Specify in which segment the remote memory region (the source) lies.
-           In this case, it is the sheap (see above). */
+    /* Specify in which segment the remote memory region (the source) lies.  In this case, it is the sheap (see above). */
     seg = &(job.sheap_seg);
 
-    if (pe == 0) fprintf(stderr," Hello from PE %d of %d, using seg start %p, seg size 0x%lx, offload_threshold %d \n",
-            pe, npes, seg->addr, (unsigned long)seg->len, dmapp_config_out.offload_threshold);
+    if (mype == 0) fprintf(stderr," Hello from mype %d of %d, using seg start %p, seg size 0x%lx, offload_threshold %d \n",
+                         mype, npes, seg->addr, (unsigned long)seg->len, dmapp_config_out.offload_threshold);
     fflush(stderr);
     PMI_Barrier();
 
-    if (pe == 0)
+    max = (argc>2) ? atoi(argv[2]) : 1000000;
+    max *= 16; /* max must be a multiple of 16 for the test to work */
+
+    if (mype == 0)
     {
-        fprintf(stderr,"%d: max = %d bytes, dmapp_put using DMAPP_DQW \n", pe, max);
+        fprintf(stderr,"%d: max = %d bytes, dmapp_put using DMAPP_DQW \n", mype, max);
         for (i=1; i<(max/16); i*=2)
         {
             t0 = MPI_Wtime();
-            status = dmapp_put(target, seg, 1, source, i, DMAPP_DQW);
+            status = dmapp_put(target, seg, rmpe, source, i, DMAPP_DQW);
             t1 = MPI_Wtime();
             assert(status==DMAPP_RC_SUCCESS);
             dt = t1-t0;
             bw = 16 * 1e-6 * (double)i / dt;
-            fprintf(stderr,"%d: %12d bytes %12lf seconds = %lf MB/s \n", pe, 16*i, dt, bw);
+            fprintf(stderr,"%d: %12d bytes %12lf seconds = %lf MB/s \n", mype, 16*i, dt, bw);
         }
 
     }
     fflush(stderr);
     PMI_Barrier();
 
-    if (pe == 0)
+    if (mype == 0)
     {
-        fprintf(stderr,"%d: max = %d bytes, dmapp_put using DMAPP_QW \n", pe, max);
+        fprintf(stderr,"%d: max = %d bytes, dmapp_put using DMAPP_QW \n", mype, max);
         for (i=1; i<(max/8); i*=2)
         {
             t0 = MPI_Wtime();
-            status = dmapp_put(target, seg, 1, source, i, DMAPP_QW);
+            status = dmapp_put(target, seg, rmpe, source, i, DMAPP_QW);
             t1 = MPI_Wtime();
             assert(status==DMAPP_RC_SUCCESS);
             dt = t1-t0;
             bw = 8 * 1e-6 * (double)i / dt;
-            fprintf(stderr,"%d: %12d bytes %12lf seconds = %lf MB/s \n", pe, 8*i, dt, bw);
+            fprintf(stderr,"%d: %12d bytes %12lf seconds = %lf MB/s \n", mype, 8*i, dt, bw);
         }
 
     }
     fflush(stderr);
     PMI_Barrier();
 
-    if (pe == 0)
+    if (mype == 0)
     {
-        fprintf(stderr,"%d: max = %d bytes, dmapp_put using DMAPP_DW \n", pe, max);
+        fprintf(stderr,"%d: max = %d bytes, dmapp_put using DMAPP_DW \n", mype, max);
         for (i=1; i<(max/4); i*=2)
         {
             t0 = MPI_Wtime();
-            status = dmapp_put(target, seg, 1, source, i, DMAPP_DW);
+            status = dmapp_put(target, seg, rmpe, source, i, DMAPP_DW);
             t1 = MPI_Wtime();
             assert(status==DMAPP_RC_SUCCESS);
             dt = t1-t0;
             bw = 4 * 1e-6 * (double)i / dt;
-            fprintf(stderr,"%d: %12d bytes %12lf seconds = %lf MB/s \n", pe, 4*i, dt, bw);
+            fprintf(stderr,"%d: %12d bytes %12lf seconds = %lf MB/s \n", mype, 4*i, dt, bw);
         }
 
     }
     fflush(stderr);
     PMI_Barrier();
 
-    if (pe == 0)
+    if (mype == 0)
     {
-        fprintf(stderr,"%d: max = %d bytes, dmapp_put using DMAPP_BYTE \n", pe, max);
+        fprintf(stderr,"%d: max = %d bytes, dmapp_put using DMAPP_BYTE \n", mype, max);
         for (i=1; i<max; i*=2)
         {
             t0 = MPI_Wtime();
-            status = dmapp_put(target, seg, 1, source, i, DMAPP_BYTE);
+            status = dmapp_put(target, seg, rmpe, source, i, DMAPP_BYTE);
             t1 = MPI_Wtime();
             assert(status==DMAPP_RC_SUCCESS);
             dt = t1-t0;
             bw = 1 * 1e-6 * (double)i / dt;
-            fprintf(stderr,"%d: %12d bytes %12lf seconds = %lf MB/s \n", pe, 1*i, dt, bw);
+            fprintf(stderr,"%d: %12d bytes %12lf seconds = %lf MB/s \n", mype, 1*i, dt, bw);
         }
 
     }
@@ -177,6 +172,7 @@ int main(int argc,char **argv)
     assert(status==DMAPP_RC_SUCCESS);
 
     MPI_Finalize();
+
 #endif
     return(0);
 }
