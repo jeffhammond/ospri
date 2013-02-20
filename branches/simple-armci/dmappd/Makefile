@@ -1,5 +1,4 @@
-CC      = cc
-COPT    = -g -O0 -Wall -std=c99
+include ../Config.mk
 
 DMAPP_PATH=/opt/cray/dmapp/default
 GNIH_PATH=/opt/cray/gni-headers/default
