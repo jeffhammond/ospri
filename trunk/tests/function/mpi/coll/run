@@ -1,8 +1,19 @@
 #!/bin/bash
 #for n in 49152 32768 16384 8192 4096 2048 1024 ; do 
-for n in 1024 512 ; do 
-#    for t in 1 2 4 8 16 32 64 ; do 
-    for t in 16 32 64 ; do 
-        qsub -A critical_perf -t 20 -n $n --mode=c$t --env PAMID_VERBOSE=2:BG_MAPCOMMONHEAP=1 -O $1.n$n.c$t.mch.\$jobid ./$1.x 40000000
+for n in 8192 16384 32768 ; do 
+    for t in 16 32 8 4 1 64 ; do 
+        qsub -A critical_perf -t 30 \
+        -n $n --mode=c$t \
+        --env PAMID_VERBOSE=1:BG_COREDUMPFILEPREFIX=$1.n$n.c$t.core:BG_SHAREDMEMSIZE=64:PAMID_DISABLE_INTERNAL_EAGER_TASK_LIMIT=0 \
+        -O $1.n$n.c$t.\$jobid \
+        ./$1.x 40000000
     done
 done
+
+# V1R2
+# PAMID_DISABLE_INTERNAL_EAGER_TASK_LIMIT=0
+
+# V1R2 efix9 only
+# PAMI_MEMORY_OPTIMIZED=1
+# PAMI_GLOBAL_SHMEMSIZE=4M
+# PAMI_CLIENT_SHMEMSIZE=5M 

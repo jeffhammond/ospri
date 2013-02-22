@@ -28,6 +28,9 @@ int main(int argc, char *argv[])
     MPI_Init( &argc, &argv );
     MPI_Comm_rank( MPI_COMM_WORLD, &world_rank );
 
+    if (world_rank==0)
+        print_meminfo(stdout, "after MPI_Init");
+
 #else
 
     int requested = -1;
@@ -85,6 +88,9 @@ int main(int argc, char *argv[])
     MPI_Comm comm_world_dup;
     MPI_Comm_dup(MPI_COMM_WORLD, &comm_world_dup);
 
+    if (world_rank==0)
+        print_meminfo(stdout, "after MPI_Comm_dup");
+
     if (world_rank==0) printf("MPI_Barrier on comm_world_dup \n");
     MPI_Barrier( comm_world_dup );
 
@@ -92,10 +98,16 @@ int main(int argc, char *argv[])
     MPI_Comm comm_world_reordered;
     MPI_Comm_split(MPI_COMM_WORLD, 0, world_size-world_rank, &comm_world_reordered);
 
+    if (world_rank==0)
+        print_meminfo(stdout, "after MPI_Comm_split");
+
     if (world_rank==0) printf("MPI_Comm_split of MPI_COMM_WORLD into left-right \n");
     MPI_Comm comm_world_leftright;
     int leftright = (world_rank<(world_size/2));
     MPI_Comm_split(MPI_COMM_WORLD, leftright, world_rank, &comm_world_leftright);
+
+    if (world_rank==0)
+        print_meminfo(stdout, "after MPI_Comm_split");
 
     if (world_rank==0) printf("MPI_Barrier on comm_world_leftright \n");
     MPI_Barrier( comm_world_leftright );
@@ -105,6 +117,9 @@ int main(int argc, char *argv[])
     int oddeven = (world_rank%2);
     MPI_Comm_split(MPI_COMM_WORLD, oddeven, world_rank, &comm_world_oddeven);
 
+    if (world_rank==0)
+        print_meminfo(stdout, "after MPI_Comm_split");
+
     if (world_rank==0) printf("MPI_Barrier on comm_world_oddeven \n");
     MPI_Barrier( comm_world_oddeven );
 
@@ -113,12 +128,18 @@ int main(int argc, char *argv[])
     int left_out = world_rank==(world_size/2);
     MPI_Comm_split(MPI_COMM_WORLD, left_out, world_rank, &comm_world_minus_one);
 
+    if (world_rank==0)
+        print_meminfo(stdout, "after MPI_Comm_split");
+
     if (world_rank==0) printf("MPI_Barrier on comm_world_minus_one \n");
     MPI_Barrier( comm_world_minus_one );
 
     if (world_rank==0) printf("MPI_Comm_group of group_world from MPI_COMM_WORLD \n");
     MPI_Group group_world;
     MPI_Comm_group(MPI_COMM_WORLD, &group_world);
+
+    if (world_rank==0)
+        print_meminfo(stdout, "after MPI_Comm_group");
 
     int geomprog_size = (world_size==1) ? 1 : ceil(log2(world_size));
 
@@ -141,6 +162,9 @@ int main(int argc, char *argv[])
     MPI_Comm comm_geomprog;
     MPI_Comm_create(MPI_COMM_WORLD, group_geomprog, &comm_geomprog);
     MPI_Group_free(&group_geomprog);
+
+    if (world_rank==0)
+        print_meminfo(stdout, "after MPI_Comm_create");
 
     if (world_rank==0) printf("MPI_Barrier on comm_geomprog \n");
     for (int i=0; i<geomprog_size; i++)

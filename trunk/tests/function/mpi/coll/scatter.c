@@ -35,6 +35,10 @@ void scatter_only(FILE * output, MPI_Comm comm, int max_mem)
 		for (int i=0 ; i<c; i++)
 			out[i]  = -1;
 
+#ifdef PRE_BARRIER_HACK
+        MPI_Barrier(comm);
+#endif
+
 		double t0 = MPI_Wtime();
 		MPI_Scatter( in, c, MPI_INT, out, c, MPI_INT, root, comm );
 		double t1 = MPI_Wtime();

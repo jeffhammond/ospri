@@ -37,6 +37,10 @@ void bcast_only(FILE * output, MPI_Comm comm, int max_mem)
         for (int i=0 ; i< c; i++)
             buffer[i] = value;
 
+#ifdef PRE_BARRIER_HACK
+        MPI_Barrier(comm);
+#endif
+
         double t0 = MPI_Wtime();
         MPI_Bcast( buffer, c, MPI_INT, root, comm );
         double t1 = MPI_Wtime();
@@ -102,6 +106,10 @@ void bcast_vs_scatter_allgather(FILE * output, MPI_Comm comm, int max_mem)
             for (int i=0 ; i<c; i++)
                 buffer[i] = value;
 
+#ifdef PRE_BARRIER_HACK
+            MPI_Barrier(comm);
+#endif
+
             t0 = MPI_Wtime();
             MPI_Bcast( buffer, c, MPI_INT, root, comm );
             t1 = MPI_Wtime();
@@ -130,6 +138,10 @@ void bcast_vs_scatter_allgather(FILE * output, MPI_Comm comm, int max_mem)
 
             for (int i=0 ; i<(c/comm_size); i++)
                 temp[i] = 0;
+
+#ifdef PRE_BARRIER_HACK
+        MPI_Barrier(comm);
+#endif
 
             t0 = MPI_Wtime();
             MPI_Scatter( buffer, c/comm_size, MPI_INT, temp, c/comm_size, MPI_INT, root, comm );

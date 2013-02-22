@@ -33,6 +33,10 @@ void alltoall_only(FILE * output, MPI_Comm comm, int max_mem)
         for (int i=0 ; i<(c*comm_size); i++)
             out[i] = -1;
 
+#ifdef PRE_BARRIER_HACK
+        MPI_Barrier(comm);
+#endif
+
         double t0 = MPI_Wtime();
         MPI_Alltoall( in, c, MPI_INT, out, c, MPI_INT, comm );
         double t1 = MPI_Wtime();

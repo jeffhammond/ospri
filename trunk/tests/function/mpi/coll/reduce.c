@@ -33,6 +33,10 @@ void reduce_only(FILE * output, MPI_Comm comm, int max_mem)
 		for (int i=0 ; i<c; i++)
 			out[i] = 0;
 
+#ifdef PRE_BARRIER_HACK
+        MPI_Barrier(comm);
+#endif
+
 		double t0 = MPI_Wtime();
 		MPI_Reduce( in , out, c, MPI_INT, MPI_SUM, root, comm );
 		double t1 = MPI_Wtime();
@@ -72,6 +76,10 @@ void reduce_only(FILE * output, MPI_Comm comm, int max_mem)
 
 		for (int i=0 ; i<c; i++)
 			out[i] = (double)0;
+
+#ifdef PRE_BARRIER_HACK
+        MPI_Barrier(comm);
+#endif
 
 		double t0 = MPI_Wtime();
 		MPI_Reduce( in , out, c, MPI_DOUBLE, MPI_SUM, root, comm );
