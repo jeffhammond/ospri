@@ -107,7 +107,8 @@ int main(int argc, char* argv[])
   //int d = max;
 
   for ( int d = 1; d < max ; d*=2 )
-    for ( size_t b = 0 ; b < 12 /*num_bcast_alg[0]*/ ; b++ )
+    //for ( size_t b = 0 ; b < 12 /*num_bcast_alg[0]*/ ; b++ )
+    for ( size_t b = 0 ; b < num_bcast_alg[0] ; b++ )
     {
         pami_xfer_t bcast;
 
@@ -125,7 +126,6 @@ int main(int argc, char* argv[])
 
         if ( world_rank == 0 ) printf("trying safe bcast algorithm %ld (%s) \n", b, safe_bcast_meta[b].name );
         fflush(stdout);
-        //SLEEP(1);
 
         active = 1;
         double t0 = PAMI_Wtime(client);
@@ -144,7 +144,6 @@ int main(int argc, char* argv[])
         if ( world_rank == 0 ) printf("after safe bcast algorithm %ld (%s) - %d ints took %lf seconds (%lf MB/s) \n", 
                                        b, safe_bcast_meta[b].name, d, t1-t0, 1e-6*d*sizeof(int)/(t1-t0) );
         fflush(stdout);
-        //SLEEP(1);
     }
 
 #if 1
@@ -167,7 +166,6 @@ int main(int argc, char* argv[])
 
         if ( world_rank == 0 ) printf("trying fast bcast algorithm %ld (%s) \n", b, fast_bcast_meta[b].name );
         fflush(stdout);
-        //SLEEP(1);
 
         active = 1;
         double t0 = PAMI_Wtime(client);
@@ -186,7 +184,6 @@ int main(int argc, char* argv[])
         if ( world_rank == 0 ) printf("after fast bcast algorithm %ld (%s) - %d ints took %lf seconds (%lf MB/s) \n", 
                                        b, fast_bcast_meta[b].name, d, t1-t0, 1e-6*d*sizeof(int)/(t1-t0) );
         fflush(stdout);
-        //SLEEP(1);
     }
 #endif
 
@@ -205,7 +202,6 @@ int main(int argc, char* argv[])
     printf("end of test \n");
     fflush(stdout);
   }
-  SLEEP(1);
 
   return 0;
 }

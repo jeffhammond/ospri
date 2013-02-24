@@ -11,7 +11,7 @@
 
 int main(int argc, char* argv[])
 {
-  pami_result_t        result        = PAMI_ERROR;
+  pami_result_t result = PAMI_ERROR;
 
   /* initialize the client */
   char * clientname = "";
@@ -38,14 +38,12 @@ int main(int argc, char* argv[])
     printf("starting test on %ld ranks \n", world_size);
     fflush(stdout);
   }
-  SLEEP(1);
 
   config.name = PAMI_CLIENT_PROCESSOR_NAME;
   result = PAMI_Client_query( client, &config, 1);
   assert(result == PAMI_SUCCESS);
   printf("rank %ld is processor %s \n", world_rank, config.value.chararray);
   fflush(stdout);
-  SLEEP(1);
 
   config.name = PAMI_CLIENT_NUM_CONTEXTS;
   result = PAMI_Client_query( client, &config, 1);
@@ -97,7 +95,6 @@ int main(int argc, char* argv[])
 
       if ( world_rank == 0 ) printf("trying safe barrier algorithm %ld (%s) \n", b, safe_barrier_meta[b].name );
       fflush(stdout);
-      SLEEP(1);
 
       uint64_t t0 = GetTimeBase();
       active = 1;
@@ -108,9 +105,8 @@ int main(int argc, char* argv[])
       TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Context_advance - barrier");
       uint64_t t1 = GetTimeBase();
 
-      if ( world_rank == 0 ) printf("after safe barrier algorithm %ld (%s) - took %llu cycles \n", b, safe_barrier_meta[b].name, t1-t0 );
+      if ( world_rank == 0 ) printf("after safe barrier algorithm %ld (%s) - took %llu cycles \n", b, safe_barrier_meta[b].name, (long long unsigned int)t1-t0 );
       fflush(stdout);
-      SLEEP(1);
   }
   for ( b = 0 ; b < num_alg[1] ; b++ )
   {
@@ -120,7 +116,6 @@ int main(int argc, char* argv[])
 
       if ( world_rank == 0 ) printf("trying fast barrier algorithm %ld (%s) \n", b, fast_barrier_meta[b].name );
       fflush(stdout);
-      SLEEP(1);
 
       uint64_t t0 = GetTimeBase();
       active = 1;
@@ -131,9 +126,8 @@ int main(int argc, char* argv[])
       TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Context_advance - barrier");
       uint64_t t1 = GetTimeBase();
 
-      if ( world_rank == 0 ) printf("after fast barrier algorithm %ld (%s) - took %llu cycles \n", b, fast_barrier_meta[b].name, t1-t0 );
+      if ( world_rank == 0 ) printf("after fast barrier algorithm %ld (%s) - took %llu cycles \n", b, fast_barrier_meta[b].name, (long long unsigned int)t1-t0 );
       fflush(stdout);
-      SLEEP(1);
   }
 
   /* finalize the contexts */
@@ -151,7 +145,6 @@ int main(int argc, char* argv[])
     printf("end of test \n");
     fflush(stdout);
   }
-  SLEEP(1);
 
   return 0;
 }

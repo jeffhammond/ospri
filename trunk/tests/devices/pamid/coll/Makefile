@@ -16,7 +16,7 @@ LD      = $(CC)
 CFLAGS  = $(COPT) -I.
 LDFLAGS = $(COPT) -lpthread
 
-all: safemalloc.o barrier.x bcast.x allreduce.x 
+all: safemalloc.o test-memory.x test-barrier.x test-bcast.x test-allreduce.x test-allgather.c
 
 %.o: %.c safemalloc.h preamble.h Makefile
 	$(CC) $(CFLAGS) -c $< -o $@
