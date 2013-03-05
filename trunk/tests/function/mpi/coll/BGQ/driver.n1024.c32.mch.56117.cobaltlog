@@ -1,0 +1,5 @@
+/usr/bin/qsub.py -A critical_perf -t 20 -n 1024 --mode=c32 --env PAMID_VERBOSE=2:BG_MAPCOMMONHEAP=1 -O driver.n1024.c32.mch.$jobid ./comm-mem.x 40000000
+
+submitted with cwd set to: /gpfs/vesta_home/jhammond/OSPRI/trunk/tests/function/mpi/coll
+
+Info: user delete requested; removing job from the queue

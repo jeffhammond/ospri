@@ -1,0 +1,32 @@
+2013-02-05 17:14:40.732 (INFO ) [0xfff8e40a270] 14463:ibm.runjob.AbstractOptions: using properties file /bgsys/local/etc/bg.properties
+2013-02-05 17:14:40.733 (INFO ) [0xfff8e40a270] 14463:ibm.runjob.AbstractOptions: max open file descriptors: 65536
+2013-02-05 17:14:40.733 (INFO ) [0xfff8e40a270] 14463:ibm.runjob.AbstractOptions: core file limit: 0
+2013-02-05 17:14:40.733 (INFO ) [0xfff8e40a270] 14463:tatu.runjob.client: scheduler job id is 55781
+2013-02-05 17:14:40.734 (INFO ) [0xfff8e40a270] 14463:tatu.runjob.client: scheduler reservation id is 147
+2013-02-05 17:14:40.736 (INFO ) [0xfff8a211ab0] 14463:tatu.runjob.monitor: monitor started
+2013-02-05 17:14:40.736 (INFO ) [0xfff8e40a270] VST-00000-33331-512:14463:ibm.runjob.client.options.Parser: set local socket to runjob_mux from properties file
+2013-02-05 17:14:44.918 (INFO ) [0xfff8e40a270] VST-00000-33331-512:103362:ibm.runjob.client.Job: job 103362 started
+2013-02-05 17:14:46.595 (INFO ) [0xfff8a211ab0] 14463:tatu.runjob.monitor: tracklib completed
+Abort(1) on node 4608 (rank 4608 in comm 1140850688): Fatal error in PMPI_Reduce: Other MPI error, error stack:
+PMPI_Reduce(1217)..............: MPI_Reduce(sbuf=0x1fdfd19080, rbuf=0x1fe1d1a080, count=8388608, MPI_INT, MPI_SUM, root=0, MPI_COMM_WORLD) failed
+MPIR_Reduce_impl(1022).........: 
+MPIR_Reduce(991)...............: 
+MPIR_Reduce_intra(825).........: 
+MPIR_Reduce_redscat_gather(293): Unable to allocate 33554432 bytes of memory for receive buffer (probably out of memory)
+Abort(1) on node 18944 (rank 18944 in comm 1140850688): Fatal error in PMPI_Reduce: Other MPI error, error stack:
+PMPI_Reduce(1217)..............: MPI_Reduce(sbuf=0x1fdfd19080, rbuf=0x1fe1d1a080, count=8388608, MPI_INT, MPI_SUM, root=0, MPI_COMM_WORLD) failed
+MPIR_Reduce_impl(1022).........: 
+MPIR_Reduce(991)...............: 
+MPIR_Reduce_intra(825).........: 
+MPIR_Reduce_redscat_gather(293): Unable to allocate 33554432 bytes of memory for receive buffer (probably out of memory)
+Abort(1) on node 3072 (rank 3072 in comm 1140850688): Fatal error in PMPI_Reduce: Other MPI error, error stack:
+PMPI_Reduce(1217)..............: MPI_Reduce(sbuf=0x1fdfd19080, rbuf=0x1fe1d1a080, count=8388608, MPI_INT, MPI_SUM, root=0, MPI_COMM_WORLD) failed
+MPIR_Reduce_impl(1022).........: 
+MPIR_Reduce(991)...............: 
+MPIR_Reduce_intra(825).........: 
+MPIR_Reduce_redscat_gather(293): Unable to allocate 33554432 bytes of memory for receive buffer (probably out of memory)
+2013-02-05 17:15:08.063 (WARN ) [0xfff8e40a270] VST-00000-33331-512:103362:ibm.runjob.client.Job: terminated by signal 6
+2013-02-05 17:15:08.063 (WARN ) [0xfff8e40a270] VST-00000-33331-512:103362:ibm.runjob.client.Job: abnormal termination by signal 6 from rank 4608
+2013-02-05 17:15:08.063 (INFO ) [0xfff8e40a270] tatu.runjob.client: task terminated by signal 6
+2013-02-05 17:15:08.063 (INFO ) [0xfff8a211ab0] 14463:tatu.runjob.monitor: monitor terminating
+2013-02-05 17:15:08.065 (INFO ) [0xfff8e40a270] tatu.runjob.client: monitor completed
