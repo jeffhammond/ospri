@@ -1,0 +1,136 @@
+MPIDI_Process.*
+  verbose               : 1
+  statistics            : 0
+  contexts              : 1
+  async_progress        : 0
+  context_post          : 0
+  short_limit           : 113
+  eager_limit           : 2049
+  eager_limit_local     : 64
+  rma_pending           : 1000
+  shmem_pt2pt           : 1
+  optimized.collectives : 1
+  optimized.select_colls: 2
+  optimized.subcomms    : 1
+The following MPICH_* environment variables were specified:
+The following PAMID_* environment variables were specified:
+  PAMID_VERBOSE=1
+The following PAMI_* environment variables were specified:
+The following COMMAGENT_* environment variables were specified:
+The following MUSPI_* environment variables were specified:
+The following BG_* environment variables were specified:
+  BG_SHAREDMEMSIZE=32
+MPI was initialized. 
+MPI thread support is THREAD_SINGLE. 
+MPI test program running on 8192 ranks. 
+MPI_Barrier on MPI_COMM_WORLD 1 
+MPI_Comm_dup of MPI_COMM_WORLD 
+MPI_Barrier on comm_world_dup 
+MPI_Comm_split of MPI_COMM_WORLD into odd-even 
+MPI_Barrier on comm_world_oddeven 
+MPI_Comm_split MPI_COMM_WORLD into (world-1) 
+MPI_Barrier on comm_world_minus_one 
+MPI_Comm_group of group_world from MPI_COMM_WORLD 
+geomprog_list[0] = 0 
+geomprog_list[1] = 1 
+geomprog_list[2] = 3 
+geomprog_list[3] = 7 
+geomprog_list[4] = 15 
+geomprog_list[5] = 31 
+geomprog_list[6] = 63 
+geomprog_list[7] = 127 
+geomprog_list[8] = 255 
+geomprog_list[9] = 511 
+geomprog_list[10] = 1023 
+geomprog_list[11] = 2047 
+geomprog_list[12] = 4095 
+MPI_Group_incl of group_geomprog (geometric progression) from group_world 
+MPI_Comm_create of comm_geomprog from group_geomprog on MPI_COMM_WORLD 
+MPI_Barrier on comm_geomprog 
+MPI_Barrier on MPI_COMM_WORLD 2 
+============== BCAST ==============
+0: MPI_Bcast 1 integers in 0.000019 seconds (0.207160 MB/s) 
+0: MPI_Bcast 2 integers in 0.000010 seconds (0.779965 MB/s) 
+0: MPI_Bcast 4 integers in 0.000010 seconds (1.627981 MB/s) 
+0: MPI_Bcast 8 integers in 0.000010 seconds (3.354517 MB/s) 
+0: MPI_Bcast 16 integers in 0.000010 seconds (6.688876 MB/s) 
+0: MPI_Bcast 32 integers in 0.000011 seconds (12.050603 MB/s) 
+0: MPI_Bcast 64 integers in 0.000010 seconds (25.743197 MB/s) 
+0: MPI_Bcast 128 integers in 0.000010 seconds (50.223775 MB/s) 
+0: MPI_Bcast 256 integers in 0.000010 seconds (98.031472 MB/s) 
+0: MPI_Bcast 512 integers in 0.000011 seconds (186.935935 MB/s) 
+0: MPI_Bcast 1024 integers in 0.000012 seconds (332.619398 MB/s) 
+0: MPI_Bcast 2048 integers in 0.000015 seconds (539.990936 MB/s) 
+0: MPI_Bcast 4096 integers in 0.000020 seconds (817.437401 MB/s) 
+0: MPI_Bcast 8192 integers in 0.000030 seconds (1093.519658 MB/s) 
+0: MPI_Bcast 16384 integers in 0.000049 seconds (1343.036824 MB/s) 
+0: MPI_Bcast 32768 integers in 0.000087 seconds (1512.212920 MB/s) 
+0: MPI_Bcast 65536 integers in 0.000124 seconds (2118.271163 MB/s) 
+0: MPI_Bcast 131072 integers in 0.000110 seconds (4749.146823 MB/s) 
+0: MPI_Bcast 262144 integers in 0.000154 seconds (6825.555736 MB/s) 
+0: MPI_Bcast 524288 integers in 0.000269 seconds (7802.231306 MB/s) 
+0: MPI_Bcast 1048576 integers in 0.000580 seconds (7236.955143 MB/s) 
+0: MPI_Bcast 2097152 integers in 0.003998 seconds (2098.030550 MB/s) 
+0: MPI_Bcast 4194304 integers in 0.007856 seconds (2135.671505 MB/s) 
+0: MPI_Bcast 8388608 integers in 0.016773 seconds (2000.551912 MB/s) 
+============== ALLGATHER ==============
+0: MPI_Allgather 8192 integers in 0.000305 seconds (107.437387 MB/s) 
+0: MPI_Allgather 16384 integers in 0.000437 seconds (149.862511 MB/s) 
+0: MPI_Allgather 32768 integers in 0.000706 seconds (185.640915 MB/s) 
+0: MPI_Allgather 65536 integers in 0.001263 seconds (207.536687 MB/s) 
+0: MPI_Allgather 131072 integers in 0.002944 seconds (178.085520 MB/s) 
+0: MPI_Allgather 262144 integers in 0.005536 seconds (189.407368 MB/s) 
+0: MPI_Allgather 524288 integers in 0.015116 seconds (138.735488 MB/s) 
+0: MPI_Allgather 1048576 integers in 0.020372 seconds (205.888757 MB/s) 
+0: MPI_Allgather 2097152 integers in 0.066022 seconds (127.058091 MB/s) 
+0: MPI_Allgather 4194304 integers in 0.108395 seconds (154.778587 MB/s) 
+0: MPI_Allgather 8388608 integers in 0.218011 seconds (153.911988 MB/s) 
+============== ALLTOALL ==============
+0: MPI_Alltoall 8192 integers in 0.003373 seconds (9.713523 MB/s) 
+0: MPI_Alltoall 16384 integers in 0.003332 seconds (19.671022 MB/s) 
+0: MPI_Alltoall 32768 integers in 0.003312 seconds (39.570608 MB/s) 
+0: MPI_Alltoall 65536 integers in 0.003332 seconds (78.669653 MB/s) 
+0: MPI_Alltoall 131072 integers in 0.004494 seconds (116.666495 MB/s) 
+0: MPI_Alltoall 262144 integers in 0.006816 seconds (153.829571 MB/s) 
+0: MPI_Alltoall 524288 integers in 0.011441 seconds (183.296633 MB/s) 
+0: MPI_Alltoall 1048576 integers in 0.020817 seconds (201.488173 MB/s) 
+0: MPI_Alltoall 2097152 integers in 0.041621 seconds (201.545406 MB/s) 
+0: MPI_Alltoall 4194304 integers in 0.084070 seconds (199.561988 MB/s) 
+0: MPI_Alltoall 8388608 integers in 0.167645 seconds (200.151761 MB/s) 
+============== ALLREDUCE ==============
+MPI_Allreduce 1 integers in 0.000070 seconds (0.057016 MB/s) 
+MPI_Allreduce 2 integers in 0.000049 seconds (0.162573 MB/s) 
+MPI_Allreduce 4 integers in 0.000041 seconds (0.390054 MB/s) 
+MPI_Allreduce 8 integers in 0.000043 seconds (0.749876 MB/s) 
+MPI_Allreduce 16 integers in 0.000045 seconds (1.431007 MB/s) 
+MPI_Allreduce 32 integers in 0.000075 seconds (1.700983 MB/s) 
+MPI_Allreduce 64 integers in 0.000086 seconds (2.991353 MB/s) 
+MPI_Allreduce 128 integers in 0.000124 seconds (4.128325 MB/s) 
+MPI_Allreduce 256 integers in 0.000245 seconds (4.180680 MB/s) 
+MPI_Allreduce 512 integers in 0.000274 seconds (7.482167 MB/s) 
+MPI_Allreduce 1024 integers in 0.000434 seconds (9.445759 MB/s) 
+MPI_Allreduce 2048 integers in 0.000645 seconds (12.708287 MB/s) 
+MPI_Allreduce 4096 integers in 0.000983 seconds (16.675042 MB/s) 
+MPI_Allreduce 8192 integers in 0.000791 seconds (41.401901 MB/s) 
+MPI_Allreduce 16384 integers in 0.000886 seconds (73.983219 MB/s) 
+MPI_Allreduce 32768 integers in 0.001067 seconds (122.792558 MB/s) 
+MPI_Allreduce 65536 integers in 0.001473 seconds (177.917892 MB/s) 
+MPI_Allreduce 131072 integers in 0.002283 seconds (229.605965 MB/s) 
+MPI_Allreduce 262144 integers in 0.003995 seconds (262.448358 MB/s) 
+MPI_Allreduce 524288 integers in 0.008519 seconds (246.171074 MB/s) 
+MPI_Allreduce 1048576 integers in 0.020237 seconds (207.256452 MB/s) 
+MPI_Allreduce 2097152 integers in 0.042188 seconds (198.838239 MB/s) 
+MPI_Allreduce 4194304 integers in 0.084691 seconds (198.098924 MB/s) 
+MPI_Allreduce 8388608 integers in 0.168781 seconds (198.805005 MB/s) 
+============== REDUCESCATTERBLOCK ==============
+MPI_Reduce_scatter_block 8192 integers in 0.000696 seconds (47.068456 MB/s) 
+MPI_Reduce_scatter_block 16384 integers in 0.000766 seconds (85.569681 MB/s) 
+MPI_Reduce_scatter_block 32768 integers in 0.001013 seconds (129.417718 MB/s) 
+MPI_Reduce_scatter_block 65536 integers in 0.001799 seconds (145.750739 MB/s) 
+MPI_Reduce_scatter_block 131072 integers in 0.117039 seconds (4.479620 MB/s) 
+MPI_Reduce_scatter_block 262144 integers in 0.122871 seconds (8.533986 MB/s) 
+MPI_Reduce_scatter_block 524288 integers in 0.128444 seconds (16.327314 MB/s) 
+MPI_Reduce_scatter_block 1048576 integers in 0.146967 seconds (28.539151 MB/s) 
+MPI_Reduce_scatter_block 2097152 integers in 0.168530 seconds (49.775197 MB/s) 
+MPI_Reduce_scatter_block 4194304 integers in 0.238064 seconds (70.473606 MB/s) 
+MPI_Reduce_scatter_block 8388608 integers in 0.399766 seconds (83.935191 MB/s) 

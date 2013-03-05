@@ -1,0 +1,8 @@
+2012-10-06 10:25:10.088 (INFO ) [0x40001398ad0] ibm.runjob.AbstractOptions: using properties file /bgsys/local/etc/bg.properties
+2012-10-06 10:25:10.089 (INFO ) [0x40001398ad0] ibm.runjob.AbstractOptions: max open file descriptors: 131072
+2012-10-06 10:25:10.089 (INFO ) [0x40001398ad0] ibm.runjob.AbstractOptions: core file limit: 18446744073709551615
+2012-10-06 10:25:10.089 (INFO ) [0x40001398ad0] MIR-00000-73FF1-16384:32414:ibm.runjob.client.options.Parser: set local socket to runjob_mux from properties file
+2012-10-06 10:25:12.231 (INFO ) [0x40001398ad0] MIR-00000-73FF1-16384:63797:ibm.runjob.client.Job: job 63797 started
+2012-10-06 10:25:21.614 (INFO ) [0x40001398ad0] MIR-00000-73FF1-16384:63797:ibm.runjob.client.Job: exited with status 0
+2012-10-06 10:25:21.614 (WARN ) [0x40001398ad0] MIR-00000-73FF1-16384:63797:ibm.runjob.client.Job: 11 RAS events
+2012-10-06 10:25:21.614 (WARN ) [0x40001398ad0] MIR-00000-73FF1-16384:63797:ibm.runjob.client.Job: most recent RAS event text: DDR Maintenance Correctable Error Summary : count=10 MCFIR error status:  [ECC_ERROR_COUNTER_THRESHOLD_REACHED] ;

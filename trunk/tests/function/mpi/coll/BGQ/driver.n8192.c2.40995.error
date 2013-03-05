@@ -1,0 +1,6 @@
+2012-11-26 05:25:03.225 (INFO ) [0x400013a8ad0] ibm.runjob.AbstractOptions: using properties file /bgsys/local/etc/bg.properties
+2012-11-26 05:25:03.227 (INFO ) [0x400013a8ad0] ibm.runjob.AbstractOptions: max open file descriptors: 524287
+2012-11-26 05:25:03.227 (INFO ) [0x400013a8ad0] ibm.runjob.AbstractOptions: core file limit: 18446744073709551615
+2012-11-26 05:25:03.227 (INFO ) [0x400013a8ad0] MIR-48000-7BFF1-8192:40696:ibm.runjob.client.options.Parser: set local socket to runjob_mux from properties file
+2012-11-26 05:25:05.121 (INFO ) [0x400013a8ad0] MIR-48000-7BFF1-8192:76980:ibm.runjob.client.Job: job 76980 started
+2012-11-26 05:25:43.055 (INFO ) [0x400013a8ad0] MIR-48000-7BFF1-8192:76980:ibm.runjob.client.Job: exited with status 0

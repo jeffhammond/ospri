@@ -1,0 +1,15 @@
+2013-02-26 06:43:57.345 (INFO ) [0x40000a1a270] 24813:ibm.runjob.AbstractOptions: using properties file /bgsys/local/etc/bg.properties
+2013-02-26 06:43:57.347 (INFO ) [0x40000a1a270] 24813:ibm.runjob.AbstractOptions: max open file descriptors: 524287
+2013-02-26 06:43:57.347 (INFO ) [0x40000a1a270] 24813:ibm.runjob.AbstractOptions: core file limit: 18446744073709551615
+2013-02-26 06:43:57.348 (INFO ) [0x40000a1a270] 24813:tatu.runjob.client: scheduler job id is 59548
+2013-02-26 06:43:57.348 (INFO ) [0x40000a1a270] 24813:tatu.runjob.client: scheduler reservation id is 356
+2013-02-26 06:43:57.351 (INFO ) [0x40000401ab0] 24813:tatu.runjob.monitor: monitor started
+2013-02-26 06:43:57.352 (INFO ) [0x40000a1a270] MIR-48800-7BFF1-4096:24813:ibm.runjob.client.options.Parser: set local socket to runjob_mux from properties file
+2013-02-26 06:44:17.286 (INFO ) [0x40000a1a270] MIR-48800-7BFF1-4096:166001:ibm.runjob.client.Job: job 166001 started
+2013-02-26 06:44:19.382 (INFO ) [0x40000401ab0] 24813:tatu.runjob.monitor: tracklib completed
+2013-02-26 06:54:32.800 (INFO ) [0x40000a1a270] MIR-48800-7BFF1-4096:166001:ibm.runjob.client.Job: exited with status 0
+2013-02-26 06:54:32.802 (WARN ) [0x40000a1a270] MIR-48800-7BFF1-4096:166001:ibm.runjob.client.Job: 6 RAS events
+2013-02-26 06:54:32.803 (WARN ) [0x40000a1a270] MIR-48800-7BFF1-4096:166001:ibm.runjob.client.Job: most recent RAS event text: DDR Maintenance Correctable Error Summary : count=4 MCFIR error status:  [POWERBUS_WRITE_BUFFER_CE] This bit is set when a PBUS ECC CE is detected on a PBus write buffer read op;
+2013-02-26 06:54:32.803 (INFO ) [0x40000a1a270] tatu.runjob.client: task exited with status 0
+2013-02-26 06:54:32.803 (INFO ) [0x40000401ab0] 24813:tatu.runjob.monitor: monitor terminating
+2013-02-26 06:54:32.806 (INFO ) [0x40000a1a270] tatu.runjob.client: monitor completed
