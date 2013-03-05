@@ -108,7 +108,7 @@ void reducescatter_only(FILE * output, MPI_Comm comm, int max_mem)
         }
 
         if ( comm_rank == root )
-            fprintf(output, "MPI_Reduce_scatter_block %d integers in %lf seconds (%lf MB/s) \n",
+            fprintf(output, "MPI_Reduce_scatter_block %d doubles in %lf seconds (%lf MB/s) \n",
                    c*comm_size, dt_redscat, 1.0e-6*c*comm_size*sizeof(int)/dt_redscat );
 
         free(out);
@@ -220,7 +220,7 @@ void reducescatterblock_only(FILE * output, MPI_Comm comm, int max_mem)
         }
 
         if ( comm_rank == root )
-            fprintf(output, "MPI_Reduce_scatter_block %d integers in %lf seconds (%lf MB/s) \n",
+            fprintf(output, "MPI_Reduce_scatter_block %d doubles in %lf seconds (%lf MB/s) \n",
                    c*comm_size, dt_redscat, 1.0e-6*c*comm_size*sizeof(int)/dt_redscat );
 
         free(out);
