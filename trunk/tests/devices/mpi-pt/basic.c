@@ -245,7 +245,6 @@ void MSG_Win_acc(int target, msg_window_t * win, size_t offset, int count, MPI_D
 #endif
 
     MPI_Send(&info, sizeof(msg_info_t), MPI_BYTE, target, MSG_INFO_TAG, MSG_COMM_WORLD);
-
     MPI_Send(buffer, info.count, info.dt, target, MSG_ACC_TAG, MSG_COMM_WORLD);
 
     return;
