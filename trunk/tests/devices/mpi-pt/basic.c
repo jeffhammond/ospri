@@ -326,8 +326,11 @@ int main(int argc, char * argv[])
 
     MPI_Barrier(MSG_COMM_WORLD);
 
+    int target = size>1 ? size-1 : 0;
+
     {
         int bigcount = 1024*1024;
+
         msg_window_t win;
         MSG_Win_allocate(MSG_COMM_WORLD, bigcount, &win);
 
@@ -341,9 +344,9 @@ int main(int argc, char * argv[])
             memset(in, '\1', smallcount);
             memset(out, '\0', smallcount);
 
-            MSG_Win_put(size>1 ? size-1 : 0, &win, 0, smallcount, MPI_BYTE, in);
-            MSG_Win_fence(size>1 ? size-1 : 0);
-            MSG_Win_get(size>1 ? size-1 : 0, &win, 0, smallcount, MPI_BYTE, out);
+            MSG_Win_put(target, &win, 0, smallcount, MPI_BYTE, in);
+            MSG_Win_fence(target);
+            MSG_Win_get(target, &win, 0, smallcount, MPI_BYTE, out);
 
             int rc = memcmp(in, out, smallcount);
 
@@ -384,24 +387,24 @@ int main(int argc, char * argv[])
 
             printf("MSG_Win_put \n");
             fflush(stdout);
-            MSG_Win_put(size>1 ? size-1 : 0, &win, 0, smallcount, type, in);
-            MSG_Win_fence(size>1 ? size-1 : 0);
+            MSG_Win_put(target, &win, 0, smallcount, type, in);
+            MSG_Win_fence(target);
 
             for (int i=0; i<smallcount; i++)
                 in[i] = 12.0;
 
             printf("MSG_Win_acc \n");
             fflush(stdout);
-            MSG_Win_acc(size>1 ? size-1 : 0, &win, 0, smallcount, type, op, in);
-            MSG_Win_fence(size>1 ? size-1 : 0);
-            MSG_Win_acc(size>1 ? size-1 : 0, &win, 0, smallcount, type, op, in);
-            MSG_Win_fence(size>1 ? size-1 : 0);
-            MSG_Win_acc(size>1 ? size-1 : 0, &win, 0, smallcount, type, op, in);
-            MSG_Win_fence(size>1 ? size-1 : 0);
+            MSG_Win_acc(target, &win, 0, smallcount, type, op, in);
+            MSG_Win_fence(target);
+            MSG_Win_acc(target, &win, 0, smallcount, type, op, in);
+            MSG_Win_fence(target);
+            MSG_Win_acc(target, &win, 0, smallcount, type, op, in);
+            MSG_Win_fence(target);
 
             printf("MSG_Win_get \n");
             fflush(stdout);
-            MSG_Win_get(size>1 ? size-1 : 0, &win, 0, smallcount, type, out);
+            MSG_Win_get(target, &win, 0, smallcount, type, out);
 
             int errors = 0;
             for (int i=0; i<smallcount; i++)
