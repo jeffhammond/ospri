@@ -12,6 +12,8 @@
 
 //#define DEBUG
 
+MPI_Comm MSG_COMM_WORLD;
+ 
 typedef enum
 {
     MSG_GET,
@@ -33,33 +35,6 @@ typedef enum
     MSG_RMW_TAG
 } 
 msg_tag_e;
-
-MPI_Comm MSG_COMM_WORLD;
- 
-typedef struct
-{
-    int          count; 
-    MPI_Datatype dt;
-    MPI_Op       op; /* only used for MSG_ACC */
-}
-msg_rma_info_t;
-
-typedef union
-{
-    int           si;
-    unsigned int  ui;
-    long          sl;
-    unsigned long ul;
-}
-msg_rmw_data_t;
-
-typedef struct
-{
-    int            rmw_op;
-    int            rmw_type;
-    msg_rmw_data_t rmw_data;
-}
-msg_rmw_info_t;
 
 typedef struct
 {
