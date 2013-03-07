@@ -59,50 +59,50 @@ int main(int argc, char* argv[])
 
   /************************************************************************/
 
-  for (int n=1; n<=67108864; n*=2)
+  for (int n=1; n<=(256*1024); n*=2)
   {
-    size_t bytes = n * sizeof(int);
-    int *  shared = (int *) safemalloc(bytes);
-    for (int i=0; i<n; i++)
-      shared[i] = -1;
-
-    int *  local  = (int *) safemalloc(bytes);
-    for (int i=0; i<n; i++)
-      local[i] = world_rank;
+    double * sbuf = safemalloc(world_size*n*sizeof(double));
+    double * rbuf = safemalloc(world_size*n*sizeof(double));
+    for (int s=0; s<world_size; s++ )
+      for (int k=0; k<n; k++)
+        sbuf[s*n+k] = world_rank*n+k;
+    for (int s=0; s<world_size; s++ )
+      for (int k=0; k<n; k++)
+        rbuf[s*n+k] = -1.0;
 
     result = barrier(world_geometry, contexts[0]);
     TEST_ASSERT(result == PAMI_SUCCESS,"barrier");
 
-    int ** shptrs = (int **) safemalloc( world_size * sizeof(int *) );
+    int ** shptrs = (int **) safemalloc( world_size * sizeof(double*) );
 
-    result = allgather(world_geometry, contexts[0], sizeof(int*), &shared, shptrs);
+    result = allgather(world_geometry, contexts[0], sizeof(double*), &rbuf, shptrs);
     TEST_ASSERT(result == PAMI_SUCCESS,"allgather");
 
-    int target = (world_rank>0 ? world_rank-1 : world_size-1);
-    pami_endpoint_t target_ep;
-    result = PAMI_Endpoint_create(client, (pami_task_t) target, 1, &target_ep);
-    TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Endpoint_create");
-
-    result = barrier(world_geometry, contexts[0]);
-    TEST_ASSERT(result == PAMI_SUCCESS,"barrier");
-
-    int active = 2;
-    pami_put_simple_t parameters;
-    parameters.rma.dest     = target_ep;
-    //parameters.rma.hints    = ;
-    parameters.rma.bytes    = bytes;
-    parameters.rma.cookie   = &active;
-    parameters.rma.done_fn  = cb_done;
-    parameters.addr.local   = local;
-    parameters.addr.remote  = shptrs[target];
-    parameters.put.rdone_fn = cb_done;
+    int active = world_size;
 
     uint64_t t0 = GetTimeBase();
 
-    result = PAMI_Put(contexts[0], &parameters);
-    TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Put");
+    for (int t=world_rank+1, int count=0; count<world_size; count++)
+    {
+        int target = (t==world_size) ? 0 : t;
+        pami_endpoint_t target_ep;
+        result = PAMI_Endpoint_create(client, (pami_task_t) target, 1 /* async context*/, &target_ep);
+        TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Endpoint_create");
 
-    while (active>1)
+        pami_put_simple_t parameters;
+        parameters.rma.dest     = target_ep;
+        //parameters.rma.hints    = ;
+        parameters.rma.bytes    = n*sizeof(double);
+        parameters.rma.cookie   = &active;
+        parameters.rma.done_fn  = NULL; //cb_done;
+        parameters.addr.local   = sbuf;
+        parameters.addr.remote  = shptrs[target];
+        parameters.put.rdone_fn = cb_done;
+
+        result = PAMI_Put(contexts[0], &parameters);
+        TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Put");
+    }
+    while (active>0)
     {
       result = PAMI_Context_trylock_advancev(&(contexts[0]), 1, 1000);
       TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Context_trylock_advancev");
@@ -110,12 +110,6 @@ int main(int argc, char* argv[])
 
     uint64_t t1 = GetTimeBase();
     uint64_t dt = t1-t0;
-
-    while (active>0)
-    {
-      result = PAMI_Context_trylock_advancev(&(contexts[0]), 1, 1000);
-      TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Context_trylock_advancev");
-    }
 
 #ifdef PROGRESS_THREAD
     /* barrier on non-progressing context to make sure CHT does its job */
