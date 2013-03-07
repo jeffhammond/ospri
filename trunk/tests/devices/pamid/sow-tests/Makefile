@@ -18,11 +18,12 @@ LDFLAGS = $(COPT) -lpthread
 
 CFLAGS += -DPROGRESS_THREAD
 
-obj = safemalloc.o barrier.o allgather.o
+obj = safemalloc.o barrier.o allgather.o alltoall.o
 
-all: pami mpi
+all: pami mpi coll
 
 pami: put.x rput.x get.x rget.x send.x acc1.x rmw.x
+coll: put-a2a.x
 mpi: rsend.x
 
 %.o: %.c safemalloc.h coll.h
