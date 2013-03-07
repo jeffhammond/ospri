@@ -3,7 +3,7 @@
 
 #include <pami.h>
 
-#define PRINT_SUCCESS 1
+#define PRINT_SUCCESS 0
 
 #ifdef DEBUG
 #define TEST_ASSERT(c,m) \
@@ -25,10 +25,29 @@
 
 static size_t world_size, world_rank = -1;
 
-static void cb_done (void *ctxt, void * clientdata, pami_result_t err)
+static void cb_done (void * ctxt, void * clientdata, pami_result_t err)
 {
   int * active = (int *) clientdata;
   (*active)--;
+}
+
+typedef struct done_s
+{
+    int local;
+    int remote;
+} 
+done_t;
+
+static void cb_done_local(void * ctxt, void * clientdata, pami_result_t err)
+{
+    done_t * temp = (done_t *) clientdata;
+    (temp->local)--;
+}
+
+static void cb_done_remote(void * ctxt, void * clientdata, pami_result_t err)
+{
+    done_t * temp = (done_t *) clientdata;
+    (temp->remote)--;
 }
 
 pami_context_t * contexts;

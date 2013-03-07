@@ -11,6 +11,8 @@
 #include "preamble.h"
 #include "coll.h"
 
+const double tic = 1.0/(1.6e9);
+
 int main(int argc, char* argv[])
 {
   pami_result_t result = PAMI_ERROR;
@@ -121,7 +123,12 @@ int main(int argc, char* argv[])
     result = barrier(world_geometry, contexts[0]);
     TEST_ASSERT(result == PAMI_SUCCESS,"barrier");
 
+#ifdef SEPARATE_COMPLETION
+    done_t active = { .local  = world_size, 
+                      .remote = world_size  };
+#else
     int active = world_size;
+#endif
 
     uint64_t t0 = GetTimeBase();
 
@@ -130,43 +137,66 @@ int main(int argc, char* argv[])
         int t = world_rank+count;
         int target = t%world_size;
 
-        printf("attempting Rput from %ld to %ld \n", (long)world_rank, (long)target);
-        fflush(stdout);
+        //printf("%ld: attempting Rput to %ld (bytes=%ld,loff=%ld, roff=%ld) \n", 
+        //       (long)world_rank, (long)target, bytes, n*sizeof(double),
+        //       target*n*sizeof(double), world_rank*n*sizeof(double));
+        //printf("%ld: attempting Rput to %ld \n", (long)world_rank, (long)target),
+        //fflush(stdout);
 
         pami_rput_simple_t parameters;
         parameters.rma.dest           = target_eps[target];
         //parameters.rma.hints          = ;
-        parameters.rma.bytes          = bytes;
+        parameters.rma.bytes          = n*sizeof(double);
         parameters.rma.cookie         = &active;
-        parameters.rma.done_fn        = NULL;//cb_done;
+#ifdef SEPARATE_COMPLETION
+        parameters.rma.done_fn        = cb_done_local;
+        parameters.put.rdone_fn       = cb_done_remote;
+#else
+        parameters.rma.done_fn        = NULL;
+        parameters.put.rdone_fn       = cb_done;
+#endif
         parameters.rdma.local.mr      = &local_mr;
         parameters.rdma.local.offset  = target*n*sizeof(double);
         parameters.rdma.remote.mr     = &shmrs[target];
         parameters.rdma.remote.offset = world_rank*n*sizeof(double);
-        parameters.put.rdone_fn       = cb_done;
 
         result = PAMI_Rput(contexts[0], &parameters);
         TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Rput");
     }
+
+#ifdef SEPARATE_COMPLETION
+    while (active.local>0)
+    {
+      result = PAMI_Context_trylock_advancev(&(contexts[0]), 1, 1000);
+      TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Context_trylock_advancev");
+    }
+#endif
+
+    uint64_t t1 = GetTimeBase();
+    double  dt1 = (t1-t0)*tic;
+
+#ifdef SEPARATE_COMPLETION
+    while (active.remote>0)
+#else
     while (active>0)
+#endif
     {
       result = PAMI_Context_trylock_advancev(&(contexts[0]), 1, 1000);
       TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Context_trylock_advancev");
     }
 
-#ifdef PROGRESS_THREAD
-    /* barrier on non-progressing context to make sure CHT does its job */
-    barrier(world_geometry, contexts[0]);
-#else
-    /* barrier on remote context since otherwise rput cannot complete */
-    barrier(world_geometry, contexts[1]);
-#endif
+    uint64_t t2 = GetTimeBase();
+    double  dt2 = (t2-t0)*tic;
 
-    uint64_t t1 = GetTimeBase();
-    uint64_t dt = t1-t0;
+    result = barrier(world_geometry, contexts[0]);
+    TEST_ASSERT(result == PAMI_SUCCESS,"barrier");
 
-    printf("%ld: PAMI_Rput A2A of %ld bytes took %llu cycles (%lf MB/s) \n", 
-           (long)world_rank, bytes, (long long unsigned)dt, 1.6e9*1.e-6*(double)bytes/(double)dt );
+    double megabytes = 1.e-6*bytes;
+
+    printf("%ld: PAMI_Rput A2A: %ld bytes per rank, local %lf seconds (%lf MB/s), remote %lf seconds (%lf MB/s) \n", 
+           (long)world_rank, n*sizeof(double), 
+           dt1, megabytes/dt1,
+           dt2, megabytes/dt2 );
     fflush(stdout);
 
     result = barrier(world_geometry, contexts[0]);
@@ -175,9 +205,8 @@ int main(int argc, char* argv[])
     for (int s=0; s<world_size; s++ )
       for (int k=0; k<n; k++)
       {
-        double correct = 1.0*s*n+1.0*k;
-        if (rbuf[s*n+k]!=correct) 
-          printf("%4d: rbuf[%d] = %lf \n", (int)world_rank, s*n+k, rbuf[s*n+k] );
+        if (rbuf[s*n+k]!=(1.0*s*n+1.0*k))
+          printf("%4d: rbuf[%d] = %lf (%lf) \n", (int)world_rank, s*n+k, rbuf[s*n+k], (1.0*s*n+1.0*k) );
       }
     fflush(stdout);
 

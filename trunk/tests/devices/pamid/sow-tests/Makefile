@@ -4,7 +4,7 @@ endif
 
 ifeq ($(COMPILER),GNU)
   CC      = mpicc
-  COPT    = -g -Wall -std=gnu99 -O2 -mcpu=a2 -mtune=a2
+  COPT    = -g -std=gnu99 -O2 -mcpu=a2 -mtune=a2
 endif
 
 ifeq ($(COMPILER),XL)
@@ -26,7 +26,7 @@ pami: put.x rput.x get.x rget.x send.x acc1.x rmw.x
 coll: rput-a2a.x
 mpi: rsend.x
 
-%.o: %.c safemalloc.h coll.h
+%.o: %.c safemalloc.h coll.h preamble.h
 	$(CC) $(CFLAGS) -c $< -o $@
 
 %.x: %.o $(obj)
