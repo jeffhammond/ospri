@@ -3,7 +3,7 @@
 
 #include <pami.h>
 
-#define PRINT_SUCCESS 0
+#define PRINT_SUCCESS 1
 
 #ifdef DEBUG
 #define TEST_ASSERT(c,m) \
@@ -16,7 +16,6 @@
                     printf(m" SUCCEEDED on rank %ld\n", world_rank); \
                     fflush(stdout); \
                   } \
-        SLEEP(1); \
         assert(c); \
         } \
         while(0);

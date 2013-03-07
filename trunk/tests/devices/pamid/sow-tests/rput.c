@@ -66,13 +66,13 @@ int main(int argc, char* argv[])
     for (int i=0; i<n; i++)
       shared[i] = -1;
  
-    pami_memregion_t shared_mr;
-    result = PAMI_Memregion_create(contexts[1], shared, bytes, &bytes_out, &shared_mr);
-    TEST_ASSERT(result == PAMI_SUCCESS && bytes==bytes_out,"PAMI_Memregion_create");
- 
     int *  local  = (int *) safemalloc(bytes);
     for (int i=0; i<n; i++)
       local[i] = world_rank;
+ 
+    pami_memregion_t shared_mr;
+    result = PAMI_Memregion_create(contexts[1], shared, bytes, &bytes_out, &shared_mr);
+    TEST_ASSERT(result == PAMI_SUCCESS && bytes==bytes_out,"PAMI_Memregion_create");
  
     pami_memregion_t local_mr;
     result = PAMI_Memregion_create(contexts[0], local, bytes, &bytes_out, &local_mr);
@@ -96,11 +96,11 @@ int main(int argc, char* argv[])
  
     int active = 2;
     pami_rput_simple_t parameters;
-    parameters.rma.dest     		= target_ep;
-    //parameters.rma.hints    	  = ;
-    parameters.rma.bytes    		= bytes;
-    parameters.rma.cookie   		= &active;
-    parameters.rma.done_fn  		= cb_done;
+    parameters.rma.dest           = target_ep;
+    //parameters.rma.hints          = ;
+    parameters.rma.bytes          = bytes;
+    parameters.rma.cookie         = &active;
+    parameters.rma.done_fn        = cb_done;
     parameters.rdma.local.mr      = &local_mr;
     parameters.rdma.local.offset  = 0;
     parameters.rdma.remote.mr     = &shmrs[target];
