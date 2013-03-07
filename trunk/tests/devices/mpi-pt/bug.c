@@ -8,8 +8,6 @@
 
 #include <mpi.h>
 
-#define DEBUG
-
 pthread_t Progress_thread;
  
 static void * Progress_function(void * dummy)

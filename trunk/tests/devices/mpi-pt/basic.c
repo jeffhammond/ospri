@@ -10,17 +10,19 @@
 
 #include "safemalloc.h"
 
-//#define DEBUG
+#define SHORT_DATA_SIZE 64
 
 MPI_Comm MSG_COMM_WORLD;
  
 typedef enum
 {
-    MSG_GET,
-    MSG_PUT,
-    MSG_ACC,
-    MSG_RMW,
     MSG_FENCE,
+    MSG_RMW,
+    MSG_GET,
+    MSG_SHORT_PUT,
+    MSG_SHORT_ACC,
+    MSG_LONG_PUT,
+    MSG_LONG_ACC,
     MSG_CHT_EXIT
 } 
 msg_type_e;
@@ -43,6 +45,7 @@ typedef struct
     int          count; 
     MPI_Datatype dt;
     MPI_Op       op; /* only used for MSG_ACC */
+    char         shortdata[SHORT_DATA_SIZE];
 }
 msg_info_t;
 
@@ -73,31 +76,6 @@ void Poll(void)
             MPI_Send(NULL, 0, MPI_BYTE, source, MSG_FENCE_TAG, MSG_COMM_WORLD);
             break;
 
-        case MSG_GET:
-#ifdef DEBUG
-            printf("MSG_GET \n");
-#endif
-            MPI_Send(info.address, info.count, info.dt, source, MSG_GET_TAG, MSG_COMM_WORLD);
-            break;
-
-        case MSG_PUT:
-#ifdef DEBUG
-            printf("MSG_PUT \n");
-#endif
-            MPI_Recv(info.address, info.count, info.dt, source, MSG_PUT_TAG, MSG_COMM_WORLD, MPI_STATUS_IGNORE);
-            break;
-
-        case MSG_ACC: /* TODO: need to do pipelining to limit buffering */
-#ifdef DEBUG
-            printf("MSG_ACC \n");
-#endif
-            MPI_Type_size(info.dt, &type_size);
-            void * temp = safemalloc(info.count*type_size);
-            MPI_Recv(temp, info.count, info.dt, source, MSG_ACC_TAG, MSG_COMM_WORLD, MPI_STATUS_IGNORE);
-            MPI_Reduce_local(temp, info.address, info.count, info.dt, info.op);
-            free(temp);
-            break;
-
         case MSG_RMW:
 #ifdef DEBUG
             printf("MSG_RMW \n");
@@ -105,6 +83,46 @@ void Poll(void)
             MPI_Comm_rank(MSG_COMM_WORLD, &rank);
             fprintf(stderr, "%d: MSG_RMW not supported yet \n", rank);
             MPI_Abort(MSG_COMM_WORLD, 1);
+            break;
+
+        case MSG_GET:
+#ifdef DEBUG
+            printf("MSG_GET \n");
+#endif
+            MPI_Send(info.address, info.count, info.dt, source, MSG_GET_TAG, MSG_COMM_WORLD);
+            break;
+
+        case MSG_SHORT_PUT:
+#ifdef DEBUG
+            printf("MSG_SHORT_PUT \n");
+#endif
+            MPI_Type_size(info.dt, &type_size);
+            memcpy(info.address, info.shortdata, info.count*type_size);
+            break;
+
+        case MSG_SHORT_ACC: /* TODO: need to do pipelining to limit buffering */
+#ifdef DEBUG
+            printf("MSG_SHORT_ACC \n");
+#endif
+            MPI_Reduce_local(info.shortdata, info.address, info.count, info.dt, info.op);
+            break;
+
+        case MSG_LONG_PUT:
+#ifdef DEBUG
+            printf("MSG_LONG_PUT \n");
+#endif
+            MPI_Recv(info.address, info.count, info.dt, source, MSG_PUT_TAG, MSG_COMM_WORLD, MPI_STATUS_IGNORE);
+            break;
+
+        case MSG_LONG_ACC: /* TODO: need to do pipelining to limit buffering */
+#ifdef DEBUG
+            printf("MSG_LONG_ACC \n");
+#endif
+            MPI_Type_size(info.dt, &type_size);
+            void * temp = safemalloc(info.count*type_size);
+            MPI_Recv(temp, info.count, info.dt, source, MSG_ACC_TAG, MSG_COMM_WORLD, MPI_STATUS_IGNORE);
+            MPI_Reduce_local(temp, info.address, info.count, info.dt, info.op);
+            free(temp);
             break;
 
         case MSG_CHT_EXIT:
@@ -188,18 +206,34 @@ void MSG_Win_put(int target, msg_window_t * win, size_t offset, int count, MPI_D
 {
     msg_info_t info;
 
-    info.type     = MSG_PUT;
-    info.address  = win->base[target]+offset;
-    info.count    = count; 
-    info.dt       = type;
-
+    int type_size;
+    MPI_Type_size(type, &type_size);
+        
 #ifdef DEBUG
     printf("MSG_Win_put win->base[%d]=%p address=%p count=%d\n", target, win->base[target], info.address, info.count);
     fflush(stdout);
 #endif
 
-    MPI_Send(&info, sizeof(msg_info_t), MPI_BYTE, target, MSG_INFO_TAG, MSG_COMM_WORLD);
-    MPI_Send(buffer, info.count, info.dt, target, MSG_PUT_TAG, MSG_COMM_WORLD);
+    if (count*type_size < SHORT_DATA_SIZE)
+    {
+        info.type     = MSG_SHORT_PUT;
+        info.address  = win->base[target]+offset;
+        info.count    = count; 
+        info.dt       = type;
+
+        memcpy(info.shortdata, buffer, count*type_size);
+        MPI_Send(&info, sizeof(msg_info_t), MPI_BYTE, target, MSG_INFO_TAG, MSG_COMM_WORLD);
+    }
+    else
+    {
+        info.type     = MSG_LONG_PUT;
+        info.address  = win->base[target]+offset;
+        info.count    = count; 
+        info.dt       = type;
+
+        MPI_Send(&info, sizeof(msg_info_t), MPI_BYTE, target, MSG_INFO_TAG, MSG_COMM_WORLD);
+        MPI_Send(buffer, info.count, info.dt, target, MSG_PUT_TAG, MSG_COMM_WORLD);
+    }
 
     return;
 }
@@ -208,19 +242,36 @@ void MSG_Win_acc(int target, msg_window_t * win, size_t offset, int count, MPI_D
 {
     msg_info_t info;
 
-    info.type     = MSG_ACC;
-    info.address  = win->base[target]+offset;
-    info.count    = count; 
-    info.dt       = type;
-    info.op       = op;
+    int type_size;
+    MPI_Type_size(type, &type_size);
 
 #ifdef DEBUG
     printf("MSG_Win_acc win->base[%d]=%p address=%p count=%d type=%d\n", target, win->base[target], info.address, info.count, info.dt);
     fflush(stdout);
 #endif
 
-    MPI_Send(&info, sizeof(msg_info_t), MPI_BYTE, target, MSG_INFO_TAG, MSG_COMM_WORLD);
-    MPI_Send(buffer, info.count, info.dt, target, MSG_ACC_TAG, MSG_COMM_WORLD);
+    if (count*type_size < SHORT_DATA_SIZE)
+    {
+        info.type     = MSG_SHORT_ACC;
+        info.address  = win->base[target]+offset;
+        info.count    = count; 
+        info.dt       = type;
+        info.op       = op;
+
+        memcpy(info.shortdata, buffer, count*type_size);
+        MPI_Send(&info, sizeof(msg_info_t), MPI_BYTE, target, MSG_INFO_TAG, MSG_COMM_WORLD);
+    }
+    else
+    {
+        info.type     = MSG_LONG_ACC;
+        info.address  = win->base[target]+offset;
+        info.count    = count; 
+        info.dt       = type;
+        info.op       = op;
+
+        MPI_Send(&info, sizeof(msg_info_t), MPI_BYTE, target, MSG_INFO_TAG, MSG_COMM_WORLD);
+        MPI_Send(buffer, info.count, info.dt, target, MSG_ACC_TAG, MSG_COMM_WORLD);
+    }
 
     return;
 }
@@ -310,7 +361,7 @@ int main(int argc, char * argv[])
 
         if (rank==0)
         {
-            int smallcount = 1024;
+            int smallcount = (argc>1) ? atoi(argv[1]) : 1024;
 
             void * in = safemalloc(smallcount);
             void * out = safemalloc(smallcount);
@@ -351,7 +402,7 @@ int main(int argc, char * argv[])
 
         if (rank==0)
         {
-            int smallcount = 1024;
+            int smallcount = (argc>1) ? atoi(argv[1]) : 1024;
 
             double * in = safemalloc(smallcount*type_size);
             double * out = safemalloc(smallcount*type_size);

@@ -3,7 +3,7 @@ CC      = mpicc
 COPT    = -g -O0 -Wall -std=gnu99
 
 LD      = $(CC)
-CFLAGS  = $(COPT)
+CFLAGS  = $(COPT) -DDEBUG
 LDFLAGS = $(COPT) safemalloc.o
 LIBS    = -lm
 
