@@ -23,7 +23,7 @@ obj = safemalloc.o barrier.o allgather.o alltoall.o
 all: pami mpi coll
 
 pami: put.x rput.x get.x rget.x send.x acc1.x rmw.x
-coll: rput-a2a.x
+coll: rput-a2a.x rput-a2a-mt.x
 mpi: rsend.x
 
 %.o: %.c safemalloc.h coll.h preamble.h

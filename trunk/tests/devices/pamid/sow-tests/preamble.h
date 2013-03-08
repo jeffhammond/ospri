@@ -11,12 +11,13 @@
         if (!(c)) { \
                     printf(m" FAILED on rank %ld\n", world_rank); \
                     fflush(stdout); \
+                    sleep(1); \
+                    abort(); \
                   } \
         else if (PRINT_SUCCESS) { \
                     printf(m" SUCCEEDED on rank %ld\n", world_rank); \
                     fflush(stdout); \
                   } \
-        assert(c); \
         } \
         while(0);
 #else
@@ -55,13 +56,20 @@ pami_context_t * contexts;
 #ifdef PROGRESS_THREAD
 pthread_t Progress_thread;
 
-static void * Progress_function(void * dummy)
+static void * Progress_function(void * input)
 {
 	pami_result_t result = PAMI_ERROR;
 
+    int * ptr        = (int *) input;
+    int   my_context = (ptr!=NULL) ? (*ptr) : 1;
+
+#ifdef DEBUG
+    printf("%ld: Progress_function advancing context %d \n", world_rank, my_context);
+#endif
+
 	while (1)
 	{
-        result = PAMI_Context_trylock_advancev(&(contexts[1]), 1, 1000);
+        result = PAMI_Context_trylock_advancev(&(contexts[my_context]), 1, 1000);
         TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Context_trylock_advancev");
 		usleep(1);
 	}
