@@ -24,22 +24,29 @@ int main(int argc, char* argv[])
   TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Client_create");
 
   /* query properties of the client */
-  pami_configuration_t config[3];
-  size_t num_contexts;
-
+  pami_configuration_t config[4];
   config[0].name = PAMI_CLIENT_NUM_TASKS;
   config[1].name = PAMI_CLIENT_TASK_ID;
   config[2].name = PAMI_CLIENT_NUM_CONTEXTS;
-  result = PAMI_Client_query(client, config, 3);
+  config[3].name = PAMI_CLIENT_NUM_LOCAL_TASKS;
+  result = PAMI_Client_query(client, config, 4);
   TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Client_query");
-  world_size   = config[0].value.intval;
-  world_rank   = config[1].value.intval;
-  num_contexts = config[2].value.intval;
+
+  world_size             = config[0].value.intval;
+  world_rank             = config[1].value.intval;
+  size_t num_contexts    = config[2].value.intval;
+  size_t num_local_tasks = config[3].value.intval;
   TEST_ASSERT(num_contexts>1,"num_contexts>1");
+
+  int ppn    = (int)num_local_tasks;
+  int nnodes = world_size/ppn;
+  int mycore = world_size%nnodes;
+  int mynode = (world_rank-mycore)/ppn;
 
   if (world_rank==0)
   {
-    printf("hello world from rank %ld of %ld \n", world_rank, world_size );
+    printf("hello world from rank %ld of %ld, node %d of %d, core %d of %d \n", 
+           world_rank, world_size, mynode, nnodes, mycore, ppn );
     fflush(stdout);
   }
 
