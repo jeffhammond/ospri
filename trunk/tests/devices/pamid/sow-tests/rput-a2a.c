@@ -150,6 +150,7 @@ int main(int argc, char* argv[])
         //printf("%ld: attempting Rput to %ld \n", (long)world_rank, (long)target),
         //fflush(stdout);
 
+
         pami_rput_simple_t parameters;
         parameters.rma.dest           = target_eps[target];
         //parameters.rma.hints          = ;
