@@ -7,6 +7,10 @@
 #include <pami.h>
 #include <hwi/include/bqc/A2_inlines.h>
 
+#ifdef _OPENMP
+#include <omp.h>
+#endif
+
 #include "safemalloc.h"
 #include "preamble.h"
 #include "coll.h"
@@ -71,23 +75,6 @@ int main(int argc, char* argv[])
   pami_geometry_t world_geometry;
   result = PAMI_Geometry_world(client, &world_geometry );
   TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Geometry_world");
-
-#ifdef PROGRESS_THREAD
-  int * async_context_offset = safemalloc(num_async*sizeof(int));
-  for (int i=0; i<num_async; i++)
-  {
-      async_context_offset[i] = async_context_begin+i;
-#ifdef DEBUG
-      //if (world_rank==0)
-      {
-        printf("%ld: pthread_create to advance context %d \n", world_rank, async_context_offset[i] );
-        fflush(stdout);
-      }
-#endif
-      int status = pthread_create(&Progress_thread, NULL, &Progress_function, &(async_context_offset[i]) );
-      TEST_ASSERT(status==0, "pthread_create");
-  }
-#endif
 
   /************************************************************************/
 
@@ -157,23 +144,18 @@ int main(int argc, char* argv[])
     result = barrier(world_geometry, contexts[0]);
     TEST_ASSERT(result == PAMI_SUCCESS,"barrier");
 
-#ifdef SEPARATE_COMPLETION
-    done_t active = { .local  = world_size, 
-                      .remote = world_size  };
-#else
     int active = world_size;
-#endif
 
     uint64_t t0 = GetTimeBase();
 
+#ifdef _OPENMP
+#pragma omp parallel for schedule(static) default(shared)
+#endif
     for (int count=0; count<world_size; count++)
     {
         int t = world_rank+count;
         int target = t%world_size;
 
-        //printf("%ld: attempting Rput to %ld (bytes=%ld,loff=%ld, roff=%ld) \n", 
-        //       (long)world_rank, (long)target, bytes, n*sizeof(double),
-        //       target*n*sizeof(double), world_rank*n*sizeof(double));
         //printf("%ld: attempting Rput to %ld \n", (long)world_rank, (long)target),
         //fflush(stdout);
         
@@ -184,13 +166,8 @@ int main(int argc, char* argv[])
         //parameters.rma.hints          = ;
         parameters.rma.bytes          = n*sizeof(double);
         parameters.rma.cookie         = &active;
-#ifdef SEPARATE_COMPLETION
-        parameters.rma.done_fn        = cb_done_local;
-        parameters.put.rdone_fn       = cb_done_remote;
-#else
         parameters.rma.done_fn        = NULL;
         parameters.put.rdone_fn       = cb_done;
-#endif
         parameters.rdma.local.mr      = &local_mr[outbound_context];
         parameters.rdma.local.offset  = target*n*sizeof(double);
         parameters.rdma.remote.mr     = &shmrs[target*num_async+outbound_context];
@@ -200,24 +177,12 @@ int main(int argc, char* argv[])
         TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Rput");
     }
 
-#ifdef SEPARATE_COMPLETION
-    while (active.local>0)
-    {
-      result = PAMI_Context_trylock_advancev(&(contexts[0]), num_sync, 1000);
-      TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Context_trylock_advancev");
-    }
-#endif
-
     uint64_t t1 = GetTimeBase();
     double  dt1 = (t1-t0)*tic;
 
-#ifdef SEPARATE_COMPLETION
-    while (active.remote>0)
-#else
     while (active>0)
-#endif
     {
-      result = PAMI_Context_trylock_advancev(&(contexts[0]), num_sync, 1000);
+      result = PAMI_Context_trylock_advancev(&(contexts[0]), num_sync+num_async, 1000);
       TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Context_trylock_advancev");
     }
 
@@ -267,19 +232,6 @@ int main(int argc, char* argv[])
   }
 
   /************************************************************************/
-
-#ifdef PROGRESS_THREAD
-  for (int i=0; i<num_async; i++)
-  {
-      void * rv;
-
-      int status = pthread_cancel(Progress_thread);
-      TEST_ASSERT(status==0, "pthread_cancel");
-
-      status = pthread_join(Progress_thread, &rv);
-      TEST_ASSERT(status==0, "pthread_join");
-  }
-#endif
 
   result = barrier(world_geometry, contexts[0]);
   TEST_ASSERT(result == PAMI_SUCCESS,"barrier");

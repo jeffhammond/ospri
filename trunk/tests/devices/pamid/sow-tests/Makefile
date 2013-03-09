@@ -4,12 +4,14 @@ endif
 
 ifeq ($(COMPILER),GNU)
   CC      = mpicc
-  COPT    = -g -std=gnu99 -O2 -mcpu=a2 -mtune=a2
+  COPT    = -g -std=gnu99 -O2 -mcpu=a2 -mtune=a2 
+  COPT   += -fopenmp
 endif
 
 ifeq ($(COMPILER),XL)
   CC      = mpixlc_r
   COPT    = -g -qstrict --qlanglvl=extc99 -O3 -qarch=qp -qtune=qp
+  COPT   += -qsmp=omp:noauto
 endif
 
 LD      = $(CC)
