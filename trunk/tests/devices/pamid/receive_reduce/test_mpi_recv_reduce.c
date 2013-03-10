@@ -5,11 +5,10 @@
 #include <unistd.h>
 #include <pthread.h>
 #include <mpi.h>
-#include <hwi/include/bqc/A2_inlines.h>
 
 #include "safemalloc.h"
-//#include "preamble.h"
-#include "coll.h"
+
+int MPIX_Recv_reduce(void * buf, int count, MPI_Datatype datatype, int source, int tag, MPI_Comm comm, MPI_Status * status);
 
 int main(int argc, char* argv[])
 {
@@ -52,17 +51,17 @@ int main(int argc, char* argv[])
 
     MPI_Barrier(MPI_COMM_WORLD);
 
-    uint64_t t0 = GetTimeBase();
+    double t0 = MPI_Wtime();
 
     MPI_Irsend( sbuf, n, MPI_INT, send_to,   0, MPI_COMM_WORLD, &req[1] );
     MPI_Waitall( 2, req, MPI_STATUSES_IGNORE ); 
 
-    uint64_t t1 = GetTimeBase();
-    uint64_t dt = t1-t0;
+    double t1 = MPI_Wtime();
+    double dt = t1-t0;
 
     MPI_Barrier(MPI_COMM_WORLD);
 
-    printf("%d: MPI_Irsend/Irecv/Waitall of %ld bytes achieves %lf MB/s \n", world_rank, bytes, 1.6e9*1e-6*(double)bytes/(double)dt );
+    printf("%d: MPI_Irsend/Irecv/Waitall of %ld bytes achieves %lf MB/s \n", world_rank, bytes, 1.e-6*(double)bytes/(double)dt );
     fflush(stdout);
 
     int errors = 0;
