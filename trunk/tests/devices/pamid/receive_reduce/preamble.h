@@ -3,6 +3,8 @@
 
 #include <pami.h>
 
+static size_t world_size, world_rank = -1;
+
 #define PRINT_SUCCESS 0
 
 #ifdef DEBUG
@@ -23,8 +25,6 @@
 #else
 #define TEST_ASSERT(c,m) 
 #endif
-
-static size_t world_size, world_rank = -1;
 
 static void cb_done (void * ctxt, void * clientdata, pami_result_t err)
 {

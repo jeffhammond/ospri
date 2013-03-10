@@ -18,9 +18,9 @@ LDFLAGS = $(COPT) -lpthread
 
 CFLAGS += -DDEBUG
 
-obj = safemalloc.o barrier.o
+obj = safemalloc.o barrier.o pami_recv_reduce.o mpi_recv_reduce.o
 
-all: send.x acc1.x mpi.x
+all: test_pami_recv_reduce.x test_mpi_recv_reduce.x
 
 %.o: %.c safemalloc.h coll.h preamble.h
 	$(CC) $(CFLAGS) -c $< -o $@
