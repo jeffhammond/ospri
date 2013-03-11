@@ -151,30 +151,37 @@ int main(int argc, char* argv[])
 #ifdef _OPENMP
 #pragma omp parallel for schedule(static) default(shared)
 #endif
-    for (int count=0; count<world_size; count++)
     {
-        int t = world_rank+count;
-        int target = t%world_size;
+      int tid = omp_get_thread_num();
 
-        //printf("%ld: attempting Rput to %ld \n", (long)world_rank, (long)target),
-        //fflush(stdout);
-        
-        int outbound_context = target % num_sync;
-
-        pami_rput_simple_t parameters;
-        parameters.rma.dest           = target_eps[target*num_async+outbound_context];
-        //parameters.rma.hints          = ;
-        parameters.rma.bytes          = n*sizeof(double);
-        parameters.rma.cookie         = &active;
-        parameters.rma.done_fn        = NULL;
-        parameters.put.rdone_fn       = cb_done;
-        parameters.rdma.local.mr      = &local_mr[outbound_context];
-        parameters.rdma.local.offset  = target*n*sizeof(double);
-        parameters.rdma.remote.mr     = &shmrs[target*num_async+outbound_context];
-        parameters.rdma.remote.offset = world_rank*n*sizeof(double);
-
-        result = PAMI_Rput(contexts[outbound_context], &parameters);
-        TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Rput");
+      if (tid<num_sync)
+        for (int count=0; count<world_size; count++)
+        {
+          /* do not blast all remote targets at the same time */
+          int t      = world_rank + count;
+          int target = t % world_size;
+ 
+          //printf("%ld: attempting Rput to %ld \n", (long)world_rank, (long)target),
+          //fflush(stdout);
+          
+          int local_context  = tid; /* each thread uses its own context so this is thread-safe */
+          int remote_context = target % num_sync;
+ 
+          pami_rput_simple_t parameters;
+          parameters.rma.dest           = target_eps[target*num_async+remote_context];
+          //parameters.rma.hints          = ;
+          parameters.rma.bytes          = n*sizeof(double);
+          parameters.rma.cookie         = &active;
+          parameters.rma.done_fn        = NULL;
+          parameters.put.rdone_fn       = cb_done;
+          parameters.rdma.local.mr      = &local_mr[local_context];
+          parameters.rdma.local.offset  = target*n*sizeof(double);
+          parameters.rdma.remote.mr     = &shmrs[target*num_async+remote_context];
+          parameters.rdma.remote.offset = world_rank*n*sizeof(double);
+ 
+          result = PAMI_Rput(contexts[local_context], &parameters);
+          TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Rput");
+        }
     }
 
     uint64_t t1 = GetTimeBase();
