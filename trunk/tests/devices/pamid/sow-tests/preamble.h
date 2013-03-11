@@ -9,13 +9,13 @@
 #define TEST_ASSERT(c,m) \
         do { \
         if (!(c)) { \
-                    printf(m" FAILED on rank %ld\n", world_rank); \
+                    printf(m" FAILED on rank %ld\n", g_world_rank); \
                     fflush(stdout); \
                     sleep(1); \
                     abort(); \
                   } \
         else if (PRINT_SUCCESS) { \
-                    printf(m" SUCCEEDED on rank %ld\n", world_rank); \
+                    printf(m" SUCCEEDED on rank %ld\n", g_world_rank); \
                     fflush(stdout); \
                   } \
         } \
@@ -24,7 +24,7 @@
 #define TEST_ASSERT(c,m) 
 #endif
 
-static size_t world_size, world_rank = -1;
+static size_t g_world_rank = -1;
 
 static void cb_done (void * ctxt, void * clientdata, pami_result_t err)
 {
@@ -64,7 +64,7 @@ static void * Progress_function(void * input)
     int   my_context = (ptr!=NULL) ? (*ptr) : 1;
 
 #ifdef DEBUG
-    printf("%ld: Progress_function advancing context %d \n", world_rank, my_context);
+    printf("%ld: Progress_function advancing context %d \n", g_world_rank, my_context);
 #endif
 
 	while (1)

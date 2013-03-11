@@ -56,16 +56,14 @@ int main(int argc, char* argv[])
 
   /* query properties of the client */
   pami_configuration_t config[3];
-  size_t num_contexts;
-
   config[0].name = PAMI_CLIENT_NUM_TASKS;
   config[1].name = PAMI_CLIENT_TASK_ID;
   config[2].name = PAMI_CLIENT_NUM_CONTEXTS;
   result = PAMI_Client_query(client, config, 3);
   TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Client_query");
-  world_size   = config[0].value.intval;
-  world_rank   = config[1].value.intval;
-  num_contexts = config[2].value.intval;
+  const size_t world_size   = config[0].value.intval;
+  const size_t world_rank   = config[1].value.intval;
+  const size_t num_contexts = config[2].value.intval;
   TEST_ASSERT(num_contexts>1,"num_contexts>1");
 
   if (world_rank==0)

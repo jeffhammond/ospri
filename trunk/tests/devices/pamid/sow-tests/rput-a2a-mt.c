@@ -35,15 +35,11 @@ int main(int argc, char* argv[])
   config[3].name = PAMI_CLIENT_NUM_LOCAL_TASKS;
   result = PAMI_Client_query(client, config, 4);
   TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Client_query");
-
-  world_size             = config[0].value.intval;
-  world_rank             = config[1].value.intval;
-  size_t num_contexts    = config[2].value.intval;
-  size_t num_local_tasks = config[3].value.intval;
+  const size_t world_size      = config[0].value.intval;
+  const size_t world_rank      = config[1].value.intval;
+  const size_t num_contexts    = (config[2].value.intval > 32) ? 32 : config[2].value.intval; /* because I only need 16+16 contexts in c1 mode */
+  const size_t num_local_tasks = config[3].value.intval;
   TEST_ASSERT(num_contexts>1,"num_contexts>1");
-
-  /* because I only need 16+16 contexts in c1 mode */
-  if (num_contexts>32) num_contexts = 32;
 
   int ppn    = (int)num_local_tasks;
   int nnodes = world_size/ppn;
@@ -149,12 +145,12 @@ int main(int argc, char* argv[])
     uint64_t t0 = GetTimeBase();
 
 #ifdef _OPENMP
-#pragma omp parallel for schedule(static) default(shared)
+#pragma omp parallel default(shared) firstprivate(n, num_async, num_sync)
 #endif
     {
-      int tid = omp_get_thread_num();
+        int tid = omp_get_thread_num();
 
-      if (tid<num_sync)
+#warning need to do manual thunking
         for (int count=0; count<world_size; count++)
         {
           /* do not blast all remote targets at the same time */
