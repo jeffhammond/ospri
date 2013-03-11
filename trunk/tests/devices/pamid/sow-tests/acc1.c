@@ -28,7 +28,11 @@ static void dispatch_recv_cb(pami_context_t context,
 
   if (pipe_addr!=NULL)
   {
-    memcpy(*h, pipe_addr, data_size);
+    size_t count = data_size/sizeof(double);
+    double * target_data = *h;
+    const double * pipe_data = (const double *) pipe_addr;
+    for (size_t i=0; i<count; i++)
+      target_data[i] += pipe_data[i];
   }
   else
   {
