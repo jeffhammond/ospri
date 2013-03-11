@@ -27,12 +27,20 @@ static void dispatch_recv_cb(pami_context_t context,
 
   if (pipe_addr!=NULL)
   {
-    memcpy(*h, pipe_addr, data_size);
+#ifdef DISABLE_IMMEDIATE
+    abort();
+#else
+    size_t count = data_size/sizeof(double);
+    double * target_data = *h;
+    const double * pipe_data = (const double *) pipe_addr;
+    for (size_t i=0; i<count; i++)
+      target_data[i] += pipe_data[i];
+#endif
   }
   else
   {
     recv->cookie      = 0;
-    recv->local_fn    = NULL;
+    recv->local_fn    = NULL; /* use dispatch_done_cb if necessary */
     recv->addr        = *h;
     recv->type        = PAMI_TYPE_DOUBLE;
     recv->offset      = 0;
@@ -97,7 +105,11 @@ int init(void)
   dispatch_cb.p2p                    = dispatch_recv_cb;
   pami_dispatch_hint_t dispatch_hint = {0};
   int dispatch_cookie                = 1000000+world_rank;
-  //dispatch_hint.recv_immediate       = PAMI_HINT_DISABLE;
+#ifdef DISABLE_IMMEDIATE
+  /* set this hint so that PAMI data functions are used exclusively */
+  dispatch_hint.recv_immediate       = PAMI_HINT_DISABLE;
+#endif
+
   result = PAMI_Dispatch_set(contexts[0], dispatch_id, dispatch_cb, &dispatch_cookie, dispatch_hint);
   TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Dispatch_set");
   result = PAMI_Dispatch_set(contexts[1], dispatch_id, dispatch_cb, &dispatch_cookie, dispatch_hint);
