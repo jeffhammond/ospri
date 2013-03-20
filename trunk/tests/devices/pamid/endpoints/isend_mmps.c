@@ -7,15 +7,42 @@
 #include <pami.h>
 #include <hwi/include/bqc/A2_inlines.h>
 
-#ifdef _OPENMP
-#include <omp.h>
-#endif
-
 #include "safemalloc.h"
 #include "preamble.h"
 #include "coll.h"
 
-const double tic = 1.0/(1.6e9);
+static void dispatch_done_cb(pami_context_t context, void * cookie, pami_result_t result)
+{
+  return;
+}
+
+static void dispatch_recv_cb(pami_context_t context,
+                             void * cookie,
+                             const void * header_addr, size_t header_size,
+                             const void * pipe_addr,
+                             size_t data_size,
+                             pami_endpoint_t origin,
+                             pami_recv_t * recv)
+{
+  void ** h = (void **)header_addr;
+
+  if (pipe_addr!=NULL)
+  {
+    memcpy(*h, pipe_addr, data_size);
+  }
+  else
+  {
+    recv->cookie      = 0;
+    recv->local_fn    = NULL;
+    recv->addr        = *h;
+    recv->type        = PAMI_TYPE_BYTE;
+    recv->offset      = 0;
+    recv->data_fn     = PAMI_DATA_COPY;
+    recv->data_cookie = NULL;
+  }
+
+  return;
+}
 
 int main(int argc, char* argv[])
 {
@@ -37,27 +64,21 @@ int main(int argc, char* argv[])
   TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Client_query");
   const size_t world_size      = config[0].value.intval;
   const size_t world_rank      = config[1].value.intval;
-  const size_t num_contexts    = (config[2].value.intval > 32) ? 32 : config[2].value.intval; /* because I only need 16+16 contexts in c1 mode */
+  const size_t num_contexts    = config[2].value.intval>32 ? 32 : config[2].value.intval; /* because I only need 16+16 contexts in c1 mode */
   const size_t num_local_tasks = config[3].value.intval;
   TEST_ASSERT(num_contexts>1,"num_contexts>1");
 
-  int ppn    = (int)num_local_tasks;
-  int nnodes = world_size/ppn;
-  int mycore = world_size%nnodes;
-  int mynode = (world_rank-mycore)/ppn;
+  const int ppn    = (int)num_local_tasks;
+  const int nnodes = world_size/ppn;
+  const int mycore = world_size%nnodes;
+  const int mynode = (world_rank-mycore)/ppn;
 
-  int num_sync            = num_contexts/2;
-  int num_async           = num_contexts/2;
-
-  int async_context_begin = num_sync+1;
-  int async_context_end   = num_contexts;
+  const int num_sync            = num_contexts/2;
+  const int num_async           = num_contexts/2;
 
   if (world_rank==0)
   {
-    printf("hello world from rank %ld of %ld, node %d of %d, core %d of %d \n", 
-           world_rank, world_size, mynode, nnodes, mycore, ppn );
-    printf("num_contexts = %ld, async_context_begin = %d, async_context_end = %d \n",
-            num_contexts, async_context_begin, async_context_end);
+    printf("hello world from rank %ld of %ld \n", world_rank, world_size );
     fflush(stdout);
   }
 
@@ -74,165 +95,106 @@ int main(int argc, char* argv[])
 
   /************************************************************************/
 
-  for (int n=1; n<=(256*1024); n*=2)
+  /* register the dispatch function */
+  size_t dispatch_id = 37;
+
+  pami_dispatch_callback_function dispatch_cb   = { .p2p = dispatch_recv_cb };
+  pami_dispatch_hint_t            dispatch_hint = { .recv_immediate = PAMI_HINT_ENABLE };
+
+  for (int i=0; i<num_contexts; i++)
   {
-    if (world_rank==0) 
-    {
-        printf("starting n = %d \n", n);
-        fflush(stdout);
-    }
+    int dispatch_cookie = world_rank*num_contexts+i;
+    result = PAMI_Dispatch_set(contexts[i], 
+                               dispatch_id, 
+                               dispatch_cb, 
+                               &dispatch_cookie, 
+                               dispatch_hint);
+    TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Dispatch_set");
+  }
 
-    result = barrier(world_geometry, contexts[0]);
-    TEST_ASSERT(result == PAMI_SUCCESS,"barrier");
+  /************************************************************************/
 
-    double * sbuf = safemalloc(world_size*n*sizeof(double));
-    double * rbuf = safemalloc(world_size*n*sizeof(double));
+  size_t n = 16*1024*1024;
+  size_t bytes  = n * sizeof(int64_t);
+  int64_t * shared = (int64_t *) safemalloc(bytes);
+  for (int i=0; i<n; i++)
+    shared[i] = -1;
 
-    for (int s=0; s<world_size; s++ )
-      for (int k=0; k<n; k++)
-        sbuf[s*n+k] = world_rank*n+k;
+  int *  local  = (int *) safemalloc(bytes);
+  for (int i=0; i<n; i++)
+    local[i] = world_rank;
 
-    for (int s=0; s<world_size; s++ )
-      for (int k=0; k<n; k++)
-        rbuf[s*n+k] = -1.0;
+  int64_t ** shptrs = (int64_t **) safemalloc( world_size * sizeof(int64_t *) );
 
-    result = barrier(world_geometry, contexts[0]);
-    TEST_ASSERT(result == PAMI_SUCCESS,"barrier");
+  result = allgather(world_geometry, contexts[0], sizeof(int64_t*), &shared, shptrs);
+  TEST_ASSERT(result == PAMI_SUCCESS,"allgather");
 
-    size_t bytes = world_size * n * sizeof(double), bytes_out;
+  int target = (world_rank>0 ? world_rank-1 : world_size-1);
+  pami_endpoint_t target_endpoints * = safemalloc(num_contexts * sizeof(pami_endpoint_t) );
+  for (int i=0; i<num_contexts; i++)
+  {
+      result = PAMI_Endpoint_create(client, (pami_task_t) target, i, &(target_endpoints[i]));
+      TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Endpoint_create");
+  }
 
-    pami_memregion_t * local_mr  = safemalloc(num_sync * sizeof(pami_memregion_t) );
-    pami_memregion_t * shared_mr = safemalloc(num_sync * sizeof(pami_memregion_t) );
-    for (int i=0; i<num_sync; i++)
-    {
-        result = PAMI_Memregion_create(contexts[i], sbuf, bytes, &bytes_out, &(local_mr[i]));
-        TEST_ASSERT(result == PAMI_SUCCESS && bytes==bytes_out,"PAMI_Memregion_create");
+  result = barrier(world_geometry, contexts[0]);
+  TEST_ASSERT(result == PAMI_SUCCESS,"barrier");
 
-        result = PAMI_Memregion_create(contexts[async_context_begin+i], rbuf, bytes, &bytes_out, &(shared_mr[i]));
-        TEST_ASSERT(result == PAMI_SUCCESS && bytes==bytes_out,"PAMI_Memregion_create");
-    }
- 
-    result = barrier(world_geometry, contexts[0]);
-    TEST_ASSERT(result == PAMI_SUCCESS,"barrier");
+  pami_send_immediate_t parameters = { .header.iov_base = &(shptrs[target]),
+                                       .header.iov_len  = sizeof(int64_t *),
+                                       .data.iov_base   = local,
+                                       .data.iov_len    = bytes,
+                                       .dispatch        = dispatch_id,
+                                       .dest            = target_ep };
 
-    pami_endpoint_t * target_eps = (pami_endpoint_t *) safemalloc( num_async * world_size * sizeof(pami_endpoint_t) );
-    for (int target=0; target<world_size; target++)
-        for (int i=0; i<num_async; i++)
-        {
-            result = PAMI_Endpoint_create(client, (pami_task_t) target, i, &(target_eps[target*num_async+i]) );
-            TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Endpoint_create");
-        }
-
-    result = barrier(world_geometry, contexts[0]);
-    TEST_ASSERT(result == PAMI_SUCCESS,"barrier");
-
-    pami_memregion_t * shmrs = (pami_memregion_t *) safemalloc( num_async * world_size * sizeof(pami_memregion_t) );
-
-    result = allgather(world_geometry, contexts[0], num_async * sizeof(pami_memregion_t), shared_mr, shmrs);
-    TEST_ASSERT(result == PAMI_SUCCESS,"allgather");
-
-    if (world_rank==0) 
-    {
-        printf("starting A2A \n");
-        fflush(stdout);
-    }
-
-    result = barrier(world_geometry, contexts[0]);
-    TEST_ASSERT(result == PAMI_SUCCESS,"barrier");
-
-    int active = world_size;
-
-    uint64_t t0 = GetTimeBase();
+  uint64_t t0 = GetTimeBase();
 
 #ifdef _OPENMP
 #pragma omp parallel default(shared) firstprivate(n, num_async, num_sync)
 #endif
+  {
+    int tid = omp_get_thread_num();
+
+    #pragma omp parallel for
+    for (int i=0; i<n; i++)
     {
-        int tid = omp_get_thread_num();
-
-#warning need to do manual thunking
-        for (int count=0; count<world_size; count++)
-        {
-          /* do not blast all remote targets at the same time */
-          int t      = world_rank + count;
-          int target = t % world_size;
- 
-          //printf("%ld: attempting Rput to %ld \n", (long)world_rank, (long)target),
-          //fflush(stdout);
-          
-          int local_context  = tid; /* each thread uses its own context so this is thread-safe */
-          int remote_context = target % num_sync;
- 
-          pami_rput_simple_t parameters;
-          parameters.rma.dest           = target_eps[target*num_async+remote_context];
-          //parameters.rma.hints          = ;
-          parameters.rma.bytes          = n*sizeof(double);
-          parameters.rma.cookie         = &active;
-          parameters.rma.done_fn        = NULL;
-          parameters.put.rdone_fn       = cb_done;
-          parameters.rdma.local.mr      = &local_mr[local_context];
-          parameters.rdma.local.offset  = target*n*sizeof(double);
-          parameters.rdma.remote.mr     = &shmrs[target*num_async+remote_context];
-          parameters.rdma.remote.offset = world_rank*n*sizeof(double);
- 
-          result = PAMI_Rput(contexts[local_context], &parameters);
-          TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Rput");
-        }
+        parameters.iov_base = &(shptrs[target])+i;
+        result = PAMI_Send_immediate(contexts[tid], &parameters);
+        TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Send");
     }
-
-    uint64_t t1 = GetTimeBase();
-    double  dt1 = (t1-t0)*tic;
-
-    while (active>0)
-    {
-      result = PAMI_Context_trylock_advancev(&(contexts[0]), num_sync+num_async, 1000);
-      TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Context_trylock_advancev");
-    }
-
-    uint64_t t2 = GetTimeBase();
-    double  dt2 = (t2-t0)*tic;
-
-    result = barrier(world_geometry, contexts[0]);
-    TEST_ASSERT(result == PAMI_SUCCESS,"barrier");
-
-    double megabytes = 1.e-6*bytes;
-
-    printf("%ld: PAMI_Rput A2A: %ld bytes per rank, local %lf seconds (%lf MB/s), remote %lf seconds (%lf MB/s) \n", 
-           (long)world_rank, n*sizeof(double), 
-           dt1, megabytes/dt1,
-           dt2, megabytes/dt2 );
-    fflush(stdout);
-
-    result = barrier(world_geometry, contexts[0]);
-    TEST_ASSERT(result == PAMI_SUCCESS,"barrier");
-
-    for (int s=0; s<world_size; s++ )
-      for (int k=0; k<n; k++)
-      {
-        if (rbuf[s*n+k]!=(1.0*s*n+1.0*k))
-          printf("%4d: rbuf[%d] = %lf (%lf) \n", (int)world_rank, s*n+k, rbuf[s*n+k], (1.0*s*n+1.0*k) );
-      }
-    fflush(stdout);
-
-    result = barrier(world_geometry, contexts[0]);
-    TEST_ASSERT(result == PAMI_SUCCESS,"barrier");
-
-    for (int i=0; i<num_async; i++)
-    {
-        result = PAMI_Memregion_destroy(contexts[i], &(local_mr[i]) );
-        TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Memregion_destroy");
-
-        result = PAMI_Memregion_destroy(contexts[async_context_begin+i], &(shared_mr[i]) );
-        TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Memregion_destroy");
-    }
- 
-    free(shared_mr);
-    free(local_mr);
-    free(target_eps);
-    free(shmrs);
-    free(rbuf);
-    free(sbuf);
   }
+
+  uint64_t t1 = GetTimeBase();
+  uint64_t dt = t1-t0;
+
+  printf("%ld: PAMI_Send_immediate of %ld bytes achieves %lf MB/s \n", (long)world_rank, bytes, 1.6e9*1e-6*(double)bytes/(double)dt );
+  fflush(stdout);
+
+  int errors = 0;
+  
+  target = (world_rank<(world_size-1) ? world_rank+1 : 0);
+  for (int i=0; i<n; i++)
+    if (shared[i] != target)
+       errors++;
+
+  if (errors>0)
+    for (int i=0; i<n; i++)
+      if (shared[i] != target)
+        printf("%ld: shared[%d] = %d (%d) \n", (long)world_rank, i, shared[i], target);
+  else
+    printf("%ld: no errors :-) \n", (long)world_rank); 
+
+  fflush(stdout);
+
+  if (errors>0)
+    exit(13);
+
+  result = barrier(world_geometry, contexts[0]);
+  TEST_ASSERT(result == PAMI_SUCCESS,"barrier");
+
+  free(shptrs);
+  free(local);
+  free(shared);
 
   /************************************************************************/
 
