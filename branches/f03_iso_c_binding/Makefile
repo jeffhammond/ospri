@@ -14,14 +14,14 @@ FC      = ifort
 FFLAGS  = -g -i8
 endif
 
-ifeq ($(COMPILER,XL)
+ifeq ($(COMPILER),XL)
 CC      = xlc_r
 CFLAGS  = -g
 FC      = xlf2003_r
 FFLAGS  = -g -qintsize=8
 endif
 
-ifeq ($(COMPILER,GCC)
+ifeq ($(COMPILER),GCC)
 CC      = gcc
 CFLAGS  = -g -Wall
 FC      = gfortran
