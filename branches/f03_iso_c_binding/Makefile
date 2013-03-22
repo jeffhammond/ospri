@@ -1,16 +1,21 @@
-FC      = gfortran
-FFLAGS  = -g 
+CC		= gcc
+CFLAGS  = -g -Wall
+
+FC      = xlf2003_r
+FFLAGS  = -g -qintsize=8
 
 LD	    = $(FC)
 LDFLAGS = $(FFLAGS)
 
-all: c_size_t.x basic.x
+LIBS    = -lm
 
-%.o: %.f03
-	$(FC) $(FFLAGS) -c $< -o $@
+all: size_t.x c_size_t.x basic.x
 
-%.x: %.o
-	$(FC) $(FFLAGS) $< -o $@
+%.x: %.f03
+	$(FC) $(FFLAGS) $< $(LIBS) -o $@
+
+%.x: %.c
+	$(CC) $(CFLAGS) $< $(LIBS) -o $@
 
 clean:
 	$(RM) $(RMFLAGS) *.o

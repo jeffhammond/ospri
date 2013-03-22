@@ -1,14 +1,14 @@
-program c_size_t
+program test
     use iso_c_binding
     implicit none
 
-    integer(C_INT)       :: i
-    integer(C_SIZE_T)    :: j
+    integer(c_int)       :: i
+    integer(c_size_t)    :: j
 
-    do i = 0, 100
+    do i = 0, 64
         j = 2**i
-        print*,j
+        print*,'i = ',i,', j = ',j
     end do
 
     return
-end program c_size_t
+end program test
