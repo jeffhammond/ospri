@@ -10,5 +10,4 @@ program test
         print*,'i = ',i,', j = ',j
     end do
 
-    return
 end program test

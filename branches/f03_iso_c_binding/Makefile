@@ -1,8 +1,23 @@
-CC		= gcc
-CFLAGS  = -g -Wall
+ifeq ($(COMPILER),CRAY)
+CC	     = craycc
+CFLAGS  = -g 
+FC      = crayftn
+FFLAGS  = -g -s integer64
+endif
 
+ifeq ($(COMPILER),INTEL)
+CC	    = icc
+CFLAGS  = -g 
+FC      = ifort
+FFLAGS  = -g -i8
+endif
+
+ifeq ($(COMPILER,XL)
+CC      = xlc_r
+CFLAGS  = -g -Wall
 FC      = xlf2003_r
 FFLAGS  = -g -qintsize=8
+endif
 
 LD	    = $(FC)
 LDFLAGS = $(FFLAGS)
@@ -11,7 +26,7 @@ LIBS    = -lm
 
 all: size_t.x c_size_t.x basic.x
 
-%.x: %.f03
+%.x: %.f
 	$(FC) $(FFLAGS) $< $(LIBS) -o $@
 
 %.x: %.c
