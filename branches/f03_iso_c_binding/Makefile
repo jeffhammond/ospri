@@ -1,3 +1,5 @@
+ifndef COMPILER
+
 ifeq ($(COMPILER),CRAY)
 CC	     = craycc
 CFLAGS  = -g 
@@ -14,9 +16,16 @@ endif
 
 ifeq ($(COMPILER,XL)
 CC      = xlc_r
-CFLAGS  = -g -Wall
+CFLAGS  = -g
 FC      = xlf2003_r
 FFLAGS  = -g -qintsize=8
+endif
+
+ifeq ($(COMPILER,GCC)
+CC      = gcc
+CFLAGS  = -g -Wall
+FC      = gfortran
+FFLAGS  = -g -fdefault-integer-8
 endif
 
 LD	    = $(FC)
