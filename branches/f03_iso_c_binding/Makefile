@@ -1,10 +1,10 @@
 FC      = gfortran
-FFLAGS  = -g -Wall
+FFLAGS  = -g 
 
-LD	    = gfortran
-LDFLAGS = -g -Wall
+LD	    = $(FC)
+LDFLAGS = $(FFLAGS)
 
-all: c_size_t.x
+all: c_size_t.x basic.x
 
 %.o: %.f03
 	$(FC) $(FFLAGS) -c $< -o $@
