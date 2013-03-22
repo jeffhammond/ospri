@@ -1,4 +1,6 @@
 ifndef COMPILER
+COMPILER=GCC
+endif
 
 ifeq ($(COMPILER),CRAY)
 CC	     = craycc
@@ -11,7 +13,7 @@ ifeq ($(COMPILER),INTEL)
 CC	    = icc
 CFLAGS  = -g 
 FC      = ifort
-FFLAGS  = -g -i8
+FFLAGS  = -g -i8 -free -stand f03
 endif
 
 ifeq ($(COMPILER),XL)
