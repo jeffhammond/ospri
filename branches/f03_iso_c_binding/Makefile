@@ -36,7 +36,7 @@ ifeq ($(COMPILER),GCC)
  CC       = gcc
  CFLAGS   = -g -Wall
  FC       = gfortran
- FFLAGS   = -g
+ FFLAGS   = -g -ffree-form
  ifeq ($(INTSIZE),8)
   FFLAGS += -fdefault-integer-8
  endif
