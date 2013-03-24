@@ -1,7 +1,7 @@
 FC      = ftn 
 CC      = cc 
-COPT    = -g -O2 -std=gnu99
-FOPT    = -g -O2 -std=gnu99
+COPT    = -g -O2 #-std=gnu99
+FOPT    = -g -O2 #-std=gnu99
 
 # CSCS paths
 DMAPP_PATH=/opt/cray/dmapp/default
