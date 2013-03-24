@@ -1,17 +1,3 @@
-/*
- * Copyright (c) 2009 Cray Inc. All Rights Reserved.
- *
- * The contents of this file is proprietary information of Cray Inc.
- * and may not be disclosed without prior written consent.
- *
- * $HeadURL: http://svn.us.cray.com/svn/baker/packages/dmapp/trunk/tests0/dmapp_sample_get.c $
- * $LastChangedRevision: 1671 $
- *
- * Simple DMAPP Get test - blocking version
- * This test uses the external job launch package PMI.
- *
- */
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
@@ -27,7 +13,8 @@ int main(int argc,char **argv)
 {
 #ifdef __CRAYXE
     int                   i, max, npes = -1;
-    char *                source = NULL, target = NULL;
+    char *                source = NULL;
+    char *                target = NULL;
     dmapp_return_t        status;
     dmapp_rma_attrs_ext_t dmapp_config_in, dmapp_config_out;
     dmapp_jobinfo_t       job;
@@ -58,8 +45,8 @@ int main(int argc,char **argv)
     assert(status==DMAPP_RC_SUCCESS);
 
     /* Retrieve information about RMA attributes, such as offload_threshold and routing modes. */
-    //status = dmapp_put_rma_attrs(&dmapp_config_out);
-    status = dmapp_put_rma_attrs_ext(&dmapp_config_out);
+    //status = dmapp_get_rma_attrs(&dmapp_config_out);
+    status = dmapp_get_rma_attrs_ext(&dmapp_config_out);
     assert(status==DMAPP_RC_SUCCESS);
 
     /* Allocate remotely accessible memory for source and target buffers.
@@ -73,10 +60,10 @@ int main(int argc,char **argv)
     memset (target,'T',max);
 
     /* Retrieve information about job details, such as mype id and number of PEs. */
-    status = dmapp_put_jobinfo(&job);
+    status = dmapp_get_jobinfo(&job);
     assert(status==DMAPP_RC_SUCCESS);
 
-    mype = job.mype;
+    mype = job.pe;
     npes = job.npes;
     rmpe = (dmapp_pe_t) ((argc>1) ? atoi(argv[1]) : (npes-1));
 
@@ -91,6 +78,7 @@ int main(int argc,char **argv)
     max = (argc>2) ? atoi(argv[2]) : 1000000;
     max *= 16; /* max must be a multiple of 16 for the test to work */
 
+#if 1
     if (mype == 0)
     {
         fprintf(stderr,"%d: max = %d bytes, dmapp_put using DMAPP_DQW \n", mype, max);
@@ -106,6 +94,7 @@ int main(int argc,char **argv)
         }
 
     }
+#endif
     fflush(stderr);
     PMI_Barrier();
 
