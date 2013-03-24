@@ -49,16 +49,6 @@ int main(int argc,char **argv)
     status = dmapp_get_rma_attrs_ext(&dmapp_config_out);
     assert(status==DMAPP_RC_SUCCESS);
 
-    /* Allocate remotely accessible memory for source and target buffers.
-           Only memory in the data segment or the sheap is remotely accessible.
-           Here we allocate from the sheap. */
-    source = (char *)dmapp_sheap_malloc( max*sizeof(char) );
-    target = (char *)dmapp_sheap_malloc( max*sizeof(char) );
-    assert( (source!=NULL) && (target!=NULL));
-
-    memset (source,'S',max);
-    memset (target,'T',max);
-
     /* Retrieve information about job details, such as mype id and number of PEs. */
     status = dmapp_get_jobinfo(&job);
     assert(status==DMAPP_RC_SUCCESS);
@@ -77,6 +67,16 @@ int main(int argc,char **argv)
 
     max = (argc>2) ? atoi(argv[2]) : 1000000;
     max *= 16; /* max must be a multiple of 16 for the test to work */
+
+    /* Allocate remotely accessible memory for source and target buffers.
+           Only memory in the data segment or the sheap is remotely accessible.
+           Here we allocate from the sheap. */
+    source = (char *)dmapp_sheap_malloc( max*sizeof(char) );
+    target = (char *)dmapp_sheap_malloc( max*sizeof(char) );
+    assert( (source!=NULL) && (target!=NULL));
+
+    memset (source,'S',max);
+    memset (target,'T',max);
 
 #if 1
     if (mype == 0)
