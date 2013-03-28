@@ -5,6 +5,7 @@
 #include <pthread.h>
 #include <unistd.h>
 
+#include <spi/include/kernel/memory.h>
 #include <spi/include/l2/barrier.h>
 #include <spi/include/l2/lock.h>
 
@@ -14,6 +15,7 @@ pthread_t * pool;
 int64_t counter;
 
 L2_Barrier_t barrier = L2_BARRIER_INITIALIZER;
+L2_Lock_t lock;
 
 int get_thread_id(void)
 {
@@ -33,20 +35,20 @@ void * fight(void * input)
     printf("%d: after  L2_Barrier 1 \n", tid);
     fflush(stdout);
 
-    L2_Lock_t * lock_ptr = (L2_Lock_t *)input;
-
+#if 0
     int64_t mycounter = 0;
 
     while (mycounter<100000)
     {
-        L2_LockAcquire(lock_ptr);
+        L2_LockAcquire(&lock);
         counter++;
         mycounter++;
-        L2_LockRelease(lock_ptr);
+        L2_LockRelease(&lock);
 
         if (mycounter%10000) 
             printf("%d: mycounter = %lld \n", tid, (long long int)mycounter);
     }
+#endif
 
     printf("%d: before L2_Barrier 2 \n", tid);
     L2_Barrier(&barrier, num_threads);
@@ -60,10 +62,8 @@ void * fight(void * input)
 
 int main(int argc, char * argv[])
 {
-    L2_Lock_t lock;
-
     num_threads = (argc>1) ? atoi(argv[1]) : 1;
-    printf("L2 barrier test using %d threads \n", num_threads );
+    printf("L2 lock test using %d threads \n", num_threads );
 
     Kernel_L2AtomicsAllocate(&barrier, sizeof(L2_Barrier_t) );
     Kernel_L2AtomicsAllocate(&lock, sizeof(L2_Lock_t));
