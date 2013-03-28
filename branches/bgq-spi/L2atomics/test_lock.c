@@ -60,10 +60,13 @@ void * fight(void * input)
 
 int main(int argc, char * argv[])
 {
+    L2_Lock_t lock;
+
     num_threads = (argc>1) ? atoi(argv[1]) : 1;
     printf("L2 barrier test using %d threads \n", num_threads );
 
-    L2_Lock_t lock;
+    Kernel_L2AtomicsAllocate(&barrier, sizeof(L2_Barrier_t) );
+    Kernel_L2AtomicsAllocate(&lock, sizeof(L2_Lock_t));
     L2_LockInit(&lock);
 
     pool = (pthread_t *) malloc( num_threads * sizeof(pthread_t) );
@@ -72,11 +75,12 @@ int main(int argc, char * argv[])
     counter = 0;
 
     for (int i=0; i<num_threads; i++) {
-        int rc = pthread_create(&(pool[i]), NULL, &fight, &lock);
-        if (rc!=0)
-            printf("fucking shit \n");
-        fflush(stdout);
-        sleep(1);
+        int rc = pthread_create(&(pool[i]), NULL, &fight, NULL);
+        if (rc!=0) {
+            printf("pthread error \n");
+            fflush(stdout);
+            sleep(1);
+        }
         assert(rc==0);
     }
 
@@ -86,10 +90,11 @@ int main(int argc, char * argv[])
     for (int i=0; i<num_threads; i++) {
         void * junk;
         int rc = pthread_join(pool[i], &junk);
-        if (rc!=0)
-            printf("fucking shit \n");
-        fflush(stdout);
-        sleep(1);
+        if (rc!=0) {
+            printf("pthread error \n");
+            fflush(stdout);
+            sleep(1);
+        }
         assert(rc==0);
     }
     
