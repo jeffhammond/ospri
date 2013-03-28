@@ -13,6 +13,8 @@ pthread_t * pool;
 
 static L2_Barrier_t barrier = L2_BARRIER_INITIALIZER;
 
+int debug = 0;
+
 int get_thread_id(void)
 {
     for (int i=0; i<num_threads; i++)
@@ -26,14 +28,25 @@ void * fight(void * input)
 {
     int tid = get_thread_id();
 
-#if 1
-    printf("%d: before L2_Barrier \n", tid);
-    L2_Barrier(&barrier, num_threads);
-    printf("%d: after  L2_Barrier \n", tid);
+    int count = 100000;
+
+    if (debug) 
+        printf("%d: before L2_Barrier \n", tid);
+
+    uint64_t t0 = GetTimeBase();
+    for (int i=0; i<count; i++)
+        L2_Barrier(&barrier, num_threads);
+    uint64_t t1 = GetTimeBase();
+
+    if (debug) {
+        printf("%d: after  L2_Barrier \n", tid);
+        fflush(stdout);
+    }
+
+    uint64_t dt = t1-t0;
+    printf("%2d: %d calls to %s took %llu cycles per call \n", 
+           tid, count, "L2_Barrier", dt/count);
     fflush(stdout);
-#else
-    printf("%d: do nothing \n", tid);
-#endif
 
     pthread_exit(NULL);
 
