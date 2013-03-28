@@ -65,8 +65,10 @@ int main(int argc, char * argv[])
     num_threads = (argc>1) ? atoi(argv[1]) : 1;
     printf("L2 lock test using %d threads \n", num_threads );
 
+    /* this "activates" the L2 atomic data structures */
     Kernel_L2AtomicsAllocate(&barrier, sizeof(L2_Barrier_t) );
     Kernel_L2AtomicsAllocate(&lock, sizeof(L2_Lock_t));
+
     L2_LockInit(&lock);
 
     pool = (pthread_t *) malloc( num_threads * sizeof(pthread_t) );

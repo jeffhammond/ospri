@@ -8,7 +8,7 @@ CFLAGS   = -g -O2 -Wall -std=gnu99 $(INCLUDE)
 LD       = $(CC)
 LDFLAGS  = $(CFLAGS)
 
-all: test_barrier.x test_lock.x
+all: test_barrier.x test_lock.x test_counter.x
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
