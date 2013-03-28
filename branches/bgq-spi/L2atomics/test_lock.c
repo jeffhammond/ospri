@@ -35,18 +35,18 @@ void * fight(void * input)
     printf("%d: after  L2_Barrier 1 \n", tid);
     fflush(stdout);
 
-#if 0
+#if 1
     int64_t mycounter = 0;
 
-    while (mycounter<100000)
+    while (mycounter<100)
     {
         L2_LockAcquire(&lock);
-        counter++;
-        mycounter++;
+        if ( counter%num_threads == tid ) {
+            mycounter++;
+            printf("%d: mycounter = %lld counter = %lld \n", tid, mycounter, counter);
+            counter++;
+        }
         L2_LockRelease(&lock);
-
-        if (mycounter%10000) 
-            printf("%d: mycounter = %lld \n", tid, (long long int)mycounter);
     }
 #endif
 
