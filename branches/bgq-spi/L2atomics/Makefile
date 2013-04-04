@@ -20,3 +20,5 @@ clean:
 	$(RM) $(RMFLAGS) *.o
 	$(RM) $(RMFLAGS) *.x
 
+realclean: clean
+

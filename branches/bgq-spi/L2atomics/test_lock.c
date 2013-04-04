@@ -35,18 +35,37 @@ void * fight(void * input)
     printf("%d: after  L2_Barrier 1 \n", tid);
     fflush(stdout);
 
-#if 1
+    int count = 10000;
+
+    uint64_t t0, t1, dt=0;
     int64_t mycounter = 0;
 
-    while (mycounter<100)
+#if 1
+    while (mycounter<count)
     {
+        t0 = GetTimeBase();
         L2_LockAcquire(&lock);
+        mycounter++;
+        L2_LockRelease(&lock);
+        t1 = GetTimeBase();
+        dt+=(t1-t0);
+    }
+#else
+    while (mycounter<count)
+    {
+        t0 = GetTimeBase();
+        L2_LockAcquire(&lock);
+        t1 = GetTimeBase();
+        dt+=(t1-t0);
         if ( counter%num_threads == tid ) {
             mycounter++;
-            printf("%d: mycounter = %lld counter = %lld \n", tid, mycounter, counter);
+            //printf("%d: mycounter = %lld counter = %lld \n", tid, mycounter, counter);
             counter++;
         }
+        t0 = GetTimeBase();
         L2_LockRelease(&lock);
+        t1 = GetTimeBase();
+        dt+=(t1-t0);
     }
 #endif
 
@@ -55,6 +74,10 @@ void * fight(void * input)
     printf("%d: after  L2_Barrier 2 \n", tid);
     fflush(stdout);
     
+    printf("%2d: %d calls to %s took %llu cycles per call \n", 
+           tid, count, "L2_Lock{Acquire,Release}", dt/count);
+    fflush(stdout);
+
     pthread_exit(NULL);
 
     return NULL;
