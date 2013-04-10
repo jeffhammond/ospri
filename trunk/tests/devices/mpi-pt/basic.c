@@ -8,8 +8,6 @@
 
 #include <mpi.h>
 
-#include "safemalloc.h"
-
 #define SHORT_DATA_SIZE 64
 
 MPI_Comm MSG_COMM_WORLD;
@@ -118,11 +116,12 @@ void Poll(void)
 #ifdef DEBUG
             printf("MSG_LONG_ACC \n");
 #endif
+            void * temp = NULL;
             MPI_Type_size(info.dt, &type_size);
-            void * temp = safemalloc(info.count*type_size);
+            MPI_Alloc_mem(info.count*type_size, MPI_INFO_NULL, &temp);
             MPI_Recv(temp, info.count, info.dt, source, MSG_ACC_TAG, MSG_COMM_WORLD, MPI_STATUS_IGNORE);
             MPI_Reduce_local(temp, info.address, info.count, info.dt, info.op);
-            free(temp);
+            MPI_Free_mem(temp);
             break;
 
         case MSG_CHT_EXIT:
@@ -283,9 +282,8 @@ void MSG_Win_allocate(MPI_Comm comm, int bytes, msg_window_t * win)
     int size;
     MPI_Comm_size(win->comm, &size);
 
-    win->base    = safemalloc( size * sizeof(void *) );
-    win->my_base = safemalloc(bytes);
-
+    MPI_Alloc_mem(size * sizeof(void *), MPI_INFO_NULL, &(win->base) );
+    MPI_Alloc_mem(bytes, MPI_INFO_NULL, &(win->my_base) );
     MPI_Allgather(&(win->my_base), sizeof(void *), MPI_BYTE, win->base, sizeof(void *), MPI_BYTE, comm);
 
 #ifdef DEBUG
@@ -317,8 +315,8 @@ void MSG_Win_deallocate(msg_window_t * win)
     printf("%d: win->base[%d] = %p \n", rank, rank, win->base[rank]);
 #endif
 
-    free(win->my_base);
-    free(win->base);
+    MPI_Free_mem(win->my_base);
+    MPI_Free_mem(win->base);
 
     MPI_Comm_free(&(win->comm));
 
@@ -363,8 +361,10 @@ int main(int argc, char * argv[])
         {
             int smallcount = (argc>1) ? atoi(argv[1]) : 1024;
 
-            void * in = safemalloc(smallcount);
-            void * out = safemalloc(smallcount);
+            void * in  = NULL;
+            void * out = NULL;
+            MPI_Alloc_mem(smallcount, MPI_INFO_NULL, &in);
+            MPI_Alloc_mem(smallcount, MPI_INFO_NULL, &out);
             
             memset(in, '\1', smallcount);
             memset(out, '\0', smallcount);
@@ -381,8 +381,8 @@ int main(int argc, char * argv[])
                 printf("WIN! \n");
             fflush(stdout);
 
-            free(out);
-            free(in);
+            MPI_Free_mem(out);
+            MPI_Free_mem(in);
         }
 
         MSG_Win_deallocate(&win);
@@ -404,8 +404,10 @@ int main(int argc, char * argv[])
         {
             int smallcount = (argc>1) ? atoi(argv[1]) : 1024;
 
-            double * in = safemalloc(smallcount*type_size);
-            double * out = safemalloc(smallcount*type_size);
+            double * in  = NULL;
+            double * out = NULL;
+            MPI_Alloc_mem(smallcount*type_size, MPI_INFO_NULL, &in);
+            MPI_Alloc_mem(smallcount*type_size, MPI_INFO_NULL, &out);
             
             for (int i=0; i<smallcount; i++)
                 in[i] = 0.0;
@@ -445,8 +447,8 @@ int main(int argc, char * argv[])
                 printf("WIN! \n");
             fflush(stdout);
 
-            free(out);
-            free(in);
+            MPI_Free_mem(out);
+            MPI_Free_mem(in);
         }
 
         MSG_Win_deallocate(&win);
