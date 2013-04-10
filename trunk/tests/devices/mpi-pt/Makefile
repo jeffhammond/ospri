@@ -7,7 +7,7 @@ CFLAGS  = $(COPT) -DDEBUG
 LDFLAGS = $(COPT) safemalloc.o
 LIBS    = -lm
 
-TESTS := basic.x bug.x
+TESTS := basic.x bug.x hello.x
 
 OBJECTS := $(patsubst %.c,%.o,$(wildcard *.c))
 

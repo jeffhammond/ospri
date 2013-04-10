@@ -8,7 +8,7 @@
 
 #include <mpi.h>
 
-#define SHORT_DATA_SIZE 64
+#define SHORT_DATA_SIZE 0
 
 MPI_Comm MSG_COMM_WORLD;
  
