@@ -245,7 +245,7 @@ void MSG_Win_acc(int target, msg_window_t * win, size_t offset, int count, MPI_D
     MPI_Type_size(type, &type_size);
 
 #ifdef DEBUG
-    printf("MSG_Win_acc win->base[%d]=%p address=%p count=%d type=%d\n", target, win->base[target], info.address, info.count, info.dt);
+    printf("MSG_Win_acc win->base[%d]=%p address=%p count=%d \n", target, win->base[target], info.address, info.count);
     fflush(stdout);
 #endif
 
