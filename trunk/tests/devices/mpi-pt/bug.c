@@ -15,16 +15,16 @@ static void * Progress_function(void * dummy)
     int rank;
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
 
-	while (1)
-	{
+    while (1)
+    {
 #ifdef DEBUG
         printf("%d: Progress \n", rank);
 #endif
         MPI_Probe(MPI_ANY_SOURCE, MPI_ANY_TAG, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
-		//usleep(500);
-	}
+        //usleep(500);
+    }
 
-	return NULL;
+    return NULL;
 }
 
 int main(int argc, char * argv[])
