@@ -1,0 +1,11 @@
+hello world from rank 0 of 4 
+allocating arrays on the stack and working on pointers thereto 
+shared 0x1dbfffb950 0 
+local  0x1dbfffb954 0 
+value  0x1dbfffb958 0 
+test   0x1dbfffb95c -1 
+0: PAMI_Rmw local = 0 shared = 6 in 39949 cycles = 24.968125 microseconds 
+1: PAMI_Rmw local = 0 shared = 0 in 43031 cycles = 26.894375 microseconds 
+3: PAMI_Rmw local = 1 shared = 0 in 45215 cycles = 28.259375 microseconds 
+2: PAMI_Rmw local = 4 shared = 0 in 47283 cycles = 29.551875 microseconds 
+0: end of test 
