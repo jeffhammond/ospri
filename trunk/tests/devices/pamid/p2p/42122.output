@@ -1,0 +1,6 @@
+hello world from rank 0 of 4 
+0: PAMI_Rput of 4000000 bytes achieves 1759.693022 MB/s 
+2: PAMI_Rput of 4000000 bytes achieves 1759.675604 MB/s 
+1: PAMI_Rput of 4000000 bytes achieves 1759.478227 MB/s 
+3: PAMI_Rput of 4000000 bytes achieves 1759.489836 MB/s 
+0: end of test 
