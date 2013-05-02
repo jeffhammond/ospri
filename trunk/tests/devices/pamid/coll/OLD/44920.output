@@ -1,0 +1,284 @@
+rank 36 is processor Task 36 of 256 (0,1,0,2,0,0)  R00-M0-N02-J15 
+rank 195 is processor Task 195 of 256 (3,0,0,1,1,0)  R00-M0-N04-J11 
+rank 2 is processor Task 2 of 256 (0,0,0,1,0,0)  R00-M0-N00-J12 
+rank 179 is processor Task 179 of 256 (2,1,2,1,1,0)  R00-M0-N05-J20 
+rank 79 is processor Task 79 of 256 (1,0,1,3,1,0)  R00-M0-N02-J27 
+rank 189 is processor Task 189 of 256 (2,1,3,2,1,0)  R00-M0-N07-J21 
+rank 66 is processor Task 66 of 256 (1,0,0,1,0,0)  R00-M0-N00-J17 
+rank 240 is processor Task 240 of 256 (3,1,2,0,0,0)  R00-M0-N05-J02 
+rank 212 is processor Task 212 of 256 (3,0,2,2,0,0)  R00-M0-N07-J13 
+rank 97 is processor Task 97 of 256 (1,1,0,0,1,0)  R00-M0-N00-J25 
+rank 46 is processor Task 46 of 256 (0,1,1,3,0,0)  R00-M0-N02-J02 
+rank 176 is processor Task 176 of 256 (2,1,2,0,0,0)  R00-M0-N05-J31 
+rank 35 is processor Task 35 of 256 (0,1,0,1,1,0)  R00-M0-N00-J08 
+rank 182 is processor Task 182 of 256 (2,1,2,3,0,0)  R00-M0-N07-J31 
+rank 108 is processor Task 108 of 256 (1,1,1,2,0,0)  R00-M0-N02-J19 
+rank 249 is processor Task 249 of 256 (3,1,3,0,1,0)  R00-M0-N05-J04 
+rank 11 is processor Task 11 of 256 (0,0,1,1,1,0)  R00-M0-N00-J10 
+rank 184 is processor Task 184 of 256 (2,1,3,0,0,0)  R00-M0-N05-J30 
+rank 4 is processor Task 4 of 256 (0,0,0,2,0,0)  R00-M0-N02-J12 
+rank 149 is processor Task 149 of 256 (2,0,2,2,1,0)  R00-M0-N07-J23 
+rank 104 is processor Task 104 of 256 (1,1,1,0,0,0)  R00-M0-N00-J31 
+rank 15 is processor Task 15 of 256 (0,0,1,3,1,0)  R00-M0-N02-J06 
+rank 183 is processor Task 183 of 256 (2,1,2,3,1,0)  R00-M0-N07-J24 
+rank 155 is processor Task 155 of 256 (2,0,3,1,1,0)  R00-M0-N05-J22 
+rank 107 is processor Task 107 of 256 (1,1,1,1,1,0)  R00-M0-N00-J20 
+rank 101 is processor Task 101 of 256 (1,1,0,2,1,0)  R00-M0-N02-J21 
+rank 244 is processor Task 244 of 256 (3,1,2,2,0,0)  R00-M0-N07-J14 
+rank 145 is processor Task 145 of 256 (2,0,2,0,1,0)  R00-M0-N05-J27 
+starting test on 256 ranks 
+rank 220 is processor Task 220 of 256 (3,0,3,2,0,0)  R00-M0-N07-J12 
+rank 78 is processor Task 78 of 256 (1,0,1,3,0,0)  R00-M0-N02-J28 
+rank 193 is processor Task 193 of 256 (3,0,0,0,1,0)  R00-M0-N04-J07 
+rank 72 is processor Task 72 of 256 (1,0,1,0,0,0)  R00-M0-N00-J28 
+rank 190 is processor Task 190 of 256 (2,1,3,3,0,0)  R00-M0-N07-J30 
+rank 100 is processor Task 100 of 256 (1,1,0,2,0,0)  R00-M0-N02-J18 
+rank 248 is processor Task 248 of 256 (3,1,3,0,0,0)  R00-M0-N05-J03 
+rank 43 is processor Task 43 of 256 (0,1,1,1,1,0)  R00-M0-N00-J09 
+rank 221 is processor Task 221 of 256 (3,0,3,2,1,0)  R00-M0-N07-J11 
+rank 109 is processor Task 109 of 256 (1,1,1,2,1,0)  R00-M0-N02-J20 
+rank 106 is processor Task 106 of 256 (1,1,1,1,0,0)  R00-M0-N00-J19 
+rank 178 is processor Task 178 of 256 (2,1,2,1,0,0)  R00-M0-N05-J19 
+rank 156 is processor Task 156 of 256 (2,0,3,2,0,0)  R00-M0-N07-J17 
+rank 102 is processor Task 102 of 256 (1,1,0,3,0,0)  R00-M0-N02-J30 
+rank 32 is processor Task 32 of 256 (0,1,0,0,0,0)  R00-M0-N00-J03 
+rank 217 is processor Task 217 of 256 (3,0,3,0,1,0)  R00-M0-N05-J07 
+rank 222 is processor Task 222 of 256 (3,0,3,3,0,0)  R00-M0-N07-J00 
+rank 37 is processor Task 37 of 256 (0,1,0,2,1,0)  R00-M0-N02-J08 
+rank 98 is processor Task 98 of 256 (1,1,0,1,0,0)  R00-M0-N00-J18 
+rank 243 is processor Task 243 of 256 (3,1,2,1,1,0)  R00-M0-N05-J09 
+rank 150 is processor Task 150 of 256 (2,0,2,3,0,0)  R00-M0-N07-J28 
+rank 71 is processor Task 71 of 256 (1,0,0,3,1,0)  R00-M0-N02-J26 
+rank 187 is processor Task 187 of 256 (2,1,3,1,1,0)  R00-M0-N05-J21 
+rank 151 is processor Task 151 of 256 (2,0,2,3,1,0)  R00-M0-N07-J27 
+rank 39 is processor Task 39 of 256 (0,1,0,3,1,0)  R00-M0-N02-J04 
+rank 34 is processor Task 34 of 256 (0,1,0,1,0,0)  R00-M0-N00-J15 
+rank 146 is processor Task 146 of 256 (2,0,2,1,0,0)  R00-M0-N05-J16 
+rank 246 is processor Task 246 of 256 (3,1,2,3,0,0)  R00-M0-N07-J02 
+rank 10 is processor Task 10 of 256 (0,0,1,1,0,0)  R00-M0-N00-J13 
+rank 70 is processor Task 70 of 256 (1,0,0,3,0,0)  R00-M0-N02-J29 
+rank 147 is processor Task 147 of 256 (2,0,2,1,1,0)  R00-M0-N05-J23 
+rank 245 is processor Task 245 of 256 (3,1,2,2,1,0)  R00-M0-N07-J09 
+rank 38 is processor Task 38 of 256 (0,1,0,3,0,0)  R00-M0-N02-J03 
+rank 1 is processor Task 1 of 256 (0,0,0,0,1,0)  R00-M0-N00-J07 
+rank 185 is processor Task 185 of 256 (2,1,3,0,1,0)  R00-M0-N05-J25 
+rank 77 is processor Task 77 of 256 (1,0,1,2,1,0)  R00-M0-N02-J23 
+rank 180 is processor Task 180 of 256 (2,1,2,2,0,0)  R00-M0-N07-J19 
+rank 121 is processor Task 121 of 256 (1,1,3,0,1,0)  R00-M0-N01-J25 
+rank 241 is processor Task 241 of 256 (3,1,2,0,1,0)  R00-M0-N05-J05 
+rank 13 is processor Task 13 of 256 (0,0,1,2,1,0)  R00-M0-N02-J10 
+rank 159 is processor Task 159 of 256 (2,0,3,3,1,0)  R00-M0-N07-J26 
+rank 88 is processor Task 88 of 256 (1,0,3,0,0,0)  R00-M0-N01-J29 
+rank 210 is processor Task 210 of 256 (3,0,2,1,0,0)  R00-M0-N05-J13 
+rank 68 is processor Task 68 of 256 (1,0,0,2,0,0)  R00-M0-N02-J17 
+rank 181 is processor Task 181 of 256 (2,1,2,2,1,0)  R00-M0-N07-J20 
+rank 59 is processor Task 59 of 256 (0,1,3,1,1,0)  R00-M0-N01-J08 
+rank 251 is processor Task 251 of 256 (3,1,3,1,1,0)  R00-M0-N05-J08 
+rank 3 is processor Task 3 of 256 (0,0,0,1,1,0)  R00-M0-N00-J11 
+rank 255 is processor Task 255 of 256 (3,1,3,3,1,0)  R00-M0-N07-J04 
+rank 17 is processor Task 17 of 256 (0,0,2,0,1,0)  R00-M0-N01-J06 
+rank 216 is processor Task 216 of 256 (3,0,3,0,0,0)  R00-M0-N05-J00 
+rank 254 is processor Task 254 of 256 (3,1,3,3,0,0)  R00-M0-N07-J03 
+rank 52 is processor Task 52 of 256 (0,1,2,2,0,0)  R00-M0-N03-J14 
+rank 16 is processor Task 16 of 256 (0,0,2,0,0,0)  R00-M0-N01-J01 
+rank 208 is processor Task 208 of 256 (3,0,2,0,0,0)  R00-M0-N05-J01 
+rank 55 is processor Task 55 of 256 (0,1,2,3,1,0)  R00-M0-N03-J05 
+rank 188 is processor Task 188 of 256 (2,1,3,2,0,0)  R00-M0-N07-J18 
+rank 89 is processor Task 89 of 256 (1,0,3,0,1,0)  R00-M0-N01-J26 
+rank 198 is processor Task 198 of 256 (3,0,0,3,0,0)  R00-M0-N06-J00 
+rank 119 is processor Task 119 of 256 (1,1,2,3,1,0)  R00-M0-N03-J24 
+rank 247 is processor Task 247 of 256 (3,1,2,3,1,0)  R00-M0-N07-J05 
+rank 26 is processor Task 26 of 256 (0,0,3,1,0,0)  R00-M0-N01-J12 
+rank 200 is processor Task 200 of 256 (3,0,1,0,0,0)  R00-M0-N04-J01 
+rank 60 is processor Task 60 of 256 (0,1,3,2,0,0)  R00-M0-N03-J15 
+rank 253 is processor Task 253 of 256 (3,1,3,2,1,0)  R00-M0-N07-J08 
+rank 83 is processor Task 83 of 256 (1,0,2,1,1,0)  R00-M0-N01-J23 
+rank 233 is processor Task 233 of 256 (3,1,1,0,1,0)  R00-M0-N04-J05 
+rank 62 is processor Task 62 of 256 (0,1,3,3,0,0)  R00-M0-N03-J03 
+rank 237 is processor Task 237 of 256 (3,1,1,2,1,0)  R00-M0-N06-J09 
+rank 27 is processor Task 27 of 256 (0,0,3,1,1,0)  R00-M0-N01-J11 
+rank 194 is processor Task 194 of 256 (3,0,0,1,0,0)  R00-M0-N04-J12 
+rank 54 is processor Task 54 of 256 (0,1,2,3,0,0)  R00-M0-N03-J02 
+rank 199 is processor Task 199 of 256 (3,0,0,3,1,0)  R00-M0-N06-J07 
+rank 56 is processor Task 56 of 256 (0,1,3,0,0,0)  R00-M0-N01-J03 
+rank 169 is processor Task 169 of 256 (2,1,1,0,1,0)  R00-M0-N04-J24 
+rank 116 is processor Task 116 of 256 (1,1,2,2,0,0)  R00-M0-N03-J19 
+rank 140 is processor Task 140 of 256 (2,0,1,2,0,0)  R00-M0-N06-J16 
+rank 123 is processor Task 123 of 256 (1,1,3,1,1,0)  R00-M0-N01-J21 
+rank 235 is processor Task 235 of 256 (3,1,1,1,1,0)  R00-M0-N04-J09 
+rank 53 is processor Task 53 of 256 (0,1,2,2,1,0)  R00-M0-N03-J09 
+rank 191 is processor Task 191 of 256 (2,1,3,3,1,0)  R00-M0-N07-J25 
+rank 51 is processor Task 51 of 256 (0,1,2,1,1,0)  R00-M0-N01-J09 
+rank 170 is processor Task 170 of 256 (2,1,1,1,0,0)  R00-M0-N04-J19 
+rank 94 is processor Task 94 of 256 (1,0,3,3,0,0)  R00-M0-N03-J29 
+rank 229 is processor Task 229 of 256 (3,1,0,2,1,0)  R00-M0-N06-J08 
+rank 57 is processor Task 57 of 256 (0,1,3,0,1,0)  R00-M0-N01-J04 
+rank 131 is processor Task 131 of 256 (2,0,0,1,1,0)  R00-M0-N04-J22 
+rank 21 is processor Task 21 of 256 (0,0,2,2,1,0)  R00-M0-N03-J10 
+rank 215 is processor Task 215 of 256 (3,0,2,3,1,0)  R00-M0-N07-J06 
+rank 112 is processor Task 112 of 256 (1,1,2,0,0,0)  R00-M0-N01-J31 
+rank 160 is processor Task 160 of 256 (2,1,0,0,0,0)  R00-M0-N04-J30 
+rank 93 is processor Task 93 of 256 (1,0,3,2,1,0)  R00-M0-N03-J22 
+rank 231 is processor Task 231 of 256 (3,1,0,3,1,0)  R00-M0-N06-J04 
+rank 50 is processor Task 50 of 256 (0,1,2,1,0,0)  R00-M0-N01-J14 
+rank 139 is processor Task 139 of 256 (2,0,1,1,1,0)  R00-M0-N04-J23 
+rank 22 is processor Task 22 of 256 (0,0,2,3,0,0)  R00-M0-N03-J01 
+rank 142 is processor Task 142 of 256 (2,0,1,3,0,0)  R00-M0-N06-J28 
+rank 19 is processor Task 19 of 256 (0,0,2,1,1,0)  R00-M0-N01-J10 
+rank 168 is processor Task 168 of 256 (2,1,1,0,0,0)  R00-M0-N04-J31 
+rank 118 is processor Task 118 of 256 (1,1,2,3,0,0)  R00-M0-N03-J31 
+rank 214 is processor Task 214 of 256 (3,0,2,3,0,0)  R00-M0-N07-J01 
+rank 81 is processor Task 81 of 256 (1,0,2,0,1,0)  R00-M0-N01-J27 
+rank 130 is processor Task 130 of 256 (2,0,0,1,0,0)  R00-M0-N04-J17 
+rank 14 is processor Task 14 of 256 (0,0,1,3,0,0)  R00-M0-N02-J01 
+rank 167 is processor Task 167 of 256 (2,1,0,3,1,0)  R00-M0-N06-J25 
+rank 6 is processor Task 6 of 256 (0,0,0,3,0,0)  R00-M0-N02-J00 
+rank 163 is processor Task 163 of 256 (2,1,0,1,1,0)  R00-M0-N04-J21 
+rank 44 is processor Task 44 of 256 (0,1,1,2,0,0)  R00-M0-N02-J14 
+rank 158 is processor Task 158 of 256 (2,0,3,3,0,0)  R00-M0-N07-J29 
+rank 82 is processor Task 82 of 256 (1,0,2,1,0,0)  R00-M0-N01-J16 
+rank 137 is processor Task 137 of 256 (2,0,1,0,1,0)  R00-M0-N04-J27 
+rank 111 is processor Task 111 of 256 (1,1,1,3,1,0)  R00-M0-N02-J24 
+rank 141 is processor Task 141 of 256 (2,0,1,2,1,0)  R00-M0-N06-J23 
+rank 58 is processor Task 58 of 256 (0,1,3,1,0,0)  R00-M0-N01-J15 
+rank 192 is processor Task 192 of 256 (3,0,0,0,0,0)  R00-M0-N04-J00 
+rank 7 is processor Task 7 of 256 (0,0,0,3,1,0)  R00-M0-N02-J07 
+rank 165 is processor Task 165 of 256 (2,1,0,2,1,0)  R00-M0-N06-J21 
+rank 18 is processor Task 18 of 256 (0,0,2,1,0,0)  R00-M0-N01-J13 
+rank 129 is processor Task 129 of 256 (2,0,0,0,1,0)  R00-M0-N04-J26 
+rank 12 is processor Task 12 of 256 (0,0,1,2,0,0)  R00-M0-N02-J13 
+rank 206 is processor Task 206 of 256 (3,0,1,3,0,0)  R00-M0-N06-J01 
+rank 115 is processor Task 115 of 256 (1,1,2,1,1,0)  R00-M0-N01-J20 
+rank 225 is processor Task 225 of 256 (3,1,0,0,1,0)  R00-M0-N04-J04 
+rank 103 is processor Task 103 of 256 (1,1,0,3,1,0)  R00-M0-N02-J25 
+rank 172 is processor Task 172 of 256 (2,1,1,2,0,0)  R00-M0-N06-J19 
+rank 120 is processor Task 120 of 256 (1,1,3,0,0,0)  R00-M0-N01-J30 
+rank 227 is processor Task 227 of 256 (3,1,0,1,1,0)  R00-M0-N04-J08 
+rank 76 is processor Task 76 of 256 (1,0,1,2,0,0)  R00-M0-N02-J16 
+rank 230 is processor Task 230 of 256 (3,1,0,3,0,0)  R00-M0-N06-J03 
+rank 114 is processor Task 114 of 256 (1,1,2,1,0,0)  R00-M0-N01-J19 
+rank 232 is processor Task 232 of 256 (3,1,1,0,0,0)  R00-M0-N04-J02 
+rank 110 is processor Task 110 of 256 (1,1,1,3,0,0)  R00-M0-N02-J31 
+rank 252 is processor Task 252 of 256 (3,1,3,2,0,0)  R00-M0-N07-J15 
+rank 48 is processor Task 48 of 256 (0,1,2,0,0,0)  R00-M0-N01-J02 
+rank 136 is processor Task 136 of 256 (2,0,1,0,0,0)  R00-M0-N04-J28 
+rank 47 is processor Task 47 of 256 (0,1,1,3,1,0)  R00-M0-N02-J05 
+rank 164 is processor Task 164 of 256 (2,1,0,2,0,0)  R00-M0-N06-J18 
+rank 80 is processor Task 80 of 256 (1,0,2,0,0,0)  R00-M0-N01-J28 
+rank 234 is processor Task 234 of 256 (3,1,1,1,0,0)  R00-M0-N04-J14 
+rank 45 is processor Task 45 of 256 (0,1,1,2,1,0)  R00-M0-N02-J09 
+rank 133 is processor Task 133 of 256 (2,0,0,2,1,0)  R00-M0-N06-J22 
+rank 122 is processor Task 122 of 256 (1,1,3,1,0,0)  R00-M0-N01-J18 
+rank 201 is processor Task 201 of 256 (3,0,1,0,1,0)  R00-M0-N04-J06 
+rank 69 is processor Task 69 of 256 (1,0,0,2,1,0)  R00-M0-N02-J22 
+rank 228 is processor Task 228 of 256 (3,1,0,2,0,0)  R00-M0-N06-J15 
+rank 49 is processor Task 49 of 256 (0,1,2,0,1,0)  R00-M0-N01-J05 
+rank 224 is processor Task 224 of 256 (3,1,0,0,0,0)  R00-M0-N04-J03 
+rank 5 is processor Task 5 of 256 (0,0,0,2,1,0)  R00-M0-N02-J11 
+rank 223 is processor Task 223 of 256 (3,0,3,3,1,0)  R00-M0-N07-J07 
+rank 91 is processor Task 91 of 256 (1,0,3,1,1,0)  R00-M0-N01-J22 
+rank 128 is processor Task 128 of 256 (2,0,0,0,0,0)  R00-M0-N04-J29 
+rank 84 is processor Task 84 of 256 (1,0,2,2,0,0)  R00-M0-N03-J16 
+rank 197 is processor Task 197 of 256 (3,0,0,2,1,0)  R00-M0-N06-J11 
+rank 0 is processor Task 0 of 256 (0,0,0,0,0,0)  R00-M0-N00-J00 
+rank 138 is processor Task 138 of 256 (2,0,1,1,0,0)  R00-M0-N04-J16 
+rank 85 is processor Task 85 of 256 (1,0,2,2,1,0)  R00-M0-N03-J23 
+rank 148 is processor Task 148 of 256 (2,0,2,2,0,0)  R00-M0-N07-J16 
+rank 113 is processor Task 113 of 256 (1,1,2,0,1,0)  R00-M0-N01-J24 
+rank 211 is processor Task 211 of 256 (3,0,2,1,1,0)  R00-M0-N05-J10 
+rank 23 is processor Task 23 of 256 (0,0,2,3,1,0)  R00-M0-N03-J06 
+rank 157 is processor Task 157 of 256 (2,0,3,2,1,0)  R00-M0-N07-J22 
+rank 24 is processor Task 24 of 256 (0,0,3,0,0,0)  R00-M0-N01-J00 
+rank 203 is processor Task 203 of 256 (3,0,1,1,1,0)  R00-M0-N04-J10 
+rank 63 is processor Task 63 of 256 (0,1,3,3,1,0)  R00-M0-N03-J04 
+rank 236 is processor Task 236 of 256 (3,1,1,2,0,0)  R00-M0-N06-J14 
+rank 25 is processor Task 25 of 256 (0,0,3,0,1,0)  R00-M0-N01-J07 
+rank 226 is processor Task 226 of 256 (3,1,0,1,0,0)  R00-M0-N04-J15 
+rank 20 is processor Task 20 of 256 (0,0,2,2,0,0)  R00-M0-N03-J13 
+rank 134 is processor Task 134 of 256 (2,0,0,3,0,0)  R00-M0-N06-J29 
+rank 90 is processor Task 90 of 256 (1,0,3,1,0,0)  R00-M0-N01-J17 
+rank 242 is processor Task 242 of 256 (3,1,2,1,0,0)  R00-M0-N05-J14 
+rank 124 is processor Task 124 of 256 (1,1,3,2,0,0)  R00-M0-N03-J18 
+rank 196 is processor Task 196 of 256 (3,0,0,2,0,0)  R00-M0-N06-J12 
+rank 65 is processor Task 65 of 256 (1,0,0,0,1,0)  R00-M0-N00-J26 
+rank 162 is processor Task 162 of 256 (2,1,0,1,0,0)  R00-M0-N04-J18 
+rank 28 is processor Task 28 of 256 (0,0,3,2,0,0)  R00-M0-N03-J12 
+rank 174 is processor Task 174 of 256 (2,1,1,3,0,0)  R00-M0-N06-J31 
+rank 74 is processor Task 74 of 256 (1,0,1,1,0,0)  R00-M0-N00-J16 
+rank 202 is processor Task 202 of 256 (3,0,1,1,0,0)  R00-M0-N04-J13 
+rank 29 is processor Task 29 of 256 (0,0,3,2,1,0)  R00-M0-N03-J11 
+rank 213 is processor Task 213 of 256 (3,0,2,2,1,0)  R00-M0-N07-J10 
+rank 105 is processor Task 105 of 256 (1,1,1,0,1,0)  R00-M0-N00-J24 
+rank 154 is processor Task 154 of 256 (2,0,3,1,0,0)  R00-M0-N05-J17 
+rank 92 is processor Task 92 of 256 (1,0,3,2,0,0)  R00-M0-N03-J17 
+rank 166 is processor Task 166 of 256 (2,1,0,3,0,0)  R00-M0-N06-J30 
+rank 9 is processor Task 9 of 256 (0,0,1,0,1,0)  R00-M0-N00-J06 
+rank 153 is processor Task 153 of 256 (2,0,3,0,1,0)  R00-M0-N05-J26 
+rank 87 is processor Task 87 of 256 (1,0,2,3,1,0)  R00-M0-N03-J27 
+rank 204 is processor Task 204 of 256 (3,0,1,2,0,0)  R00-M0-N06-J13 
+rank 75 is processor Task 75 of 256 (1,0,1,1,1,0)  R00-M0-N00-J23 
+rank 209 is processor Task 209 of 256 (3,0,2,0,1,0)  R00-M0-N05-J06 
+rank 126 is processor Task 126 of 256 (1,1,3,3,0,0)  R00-M0-N03-J30 
+rank 175 is processor Task 175 of 256 (2,1,1,3,1,0)  R00-M0-N06-J24 
+rank 42 is processor Task 42 of 256 (0,1,1,1,0,0)  R00-M0-N00-J14 
+rank 218 is processor Task 218 of 256 (3,0,3,1,0,0)  R00-M0-N05-J12 
+rank 95 is processor Task 95 of 256 (1,0,3,3,1,0)  R00-M0-N03-J26 
+rank 135 is processor Task 135 of 256 (2,0,0,3,1,0)  R00-M0-N06-J26 
+rank 8 is processor Task 8 of 256 (0,0,1,0,0,0)  R00-M0-N00-J01 
+rank 177 is processor Task 177 of 256 (2,1,2,0,1,0)  R00-M0-N05-J24 
+rank 61 is processor Task 61 of 256 (0,1,3,2,1,0)  R00-M0-N03-J08 
+rank 205 is processor Task 205 of 256 (3,0,1,2,1,0)  R00-M0-N06-J10 
+rank 73 is processor Task 73 of 256 (1,0,1,0,1,0)  R00-M0-N00-J27 
+rank 152 is processor Task 152 of 256 (2,0,3,0,0,0)  R00-M0-N05-J29 
+rank 125 is processor Task 125 of 256 (1,1,3,2,1,0)  R00-M0-N03-J21 
+rank 173 is processor Task 173 of 256 (2,1,1,2,1,0)  R00-M0-N06-J20 
+rank 33 is processor Task 33 of 256 (0,1,0,0,1,0)  R00-M0-N00-J04 
+rank 161 is processor Task 161 of 256 (2,1,0,0,1,0)  R00-M0-N04-J25 
+rank 31 is processor Task 31 of 256 (0,0,3,3,1,0)  R00-M0-N03-J07 
+rank 238 is processor Task 238 of 256 (3,1,1,3,0,0)  R00-M0-N06-J02 
+rank 96 is processor Task 96 of 256 (1,1,0,0,0,0)  R00-M0-N00-J30 
+rank 186 is processor Task 186 of 256 (2,1,3,1,0,0)  R00-M0-N05-J18 
+rank 86 is processor Task 86 of 256 (1,0,2,3,0,0)  R00-M0-N03-J28 
+rank 132 is processor Task 132 of 256 (2,0,0,2,0,0)  R00-M0-N06-J17 
+rank 64 is processor Task 64 of 256 (1,0,0,0,0,0)  R00-M0-N00-J29 
+rank 171 is processor Task 171 of 256 (2,1,1,1,1,0)  R00-M0-N04-J20 
+rank 117 is processor Task 117 of 256 (1,1,2,2,1,0)  R00-M0-N03-J20 
+rank 239 is processor Task 239 of 256 (3,1,1,3,1,0)  R00-M0-N06-J05 
+rank 41 is processor Task 41 of 256 (0,1,1,0,1,0)  R00-M0-N00-J05 
+rank 250 is processor Task 250 of 256 (3,1,3,1,0,0)  R00-M0-N05-J15 
+rank 30 is processor Task 30 of 256 (0,0,3,3,0,0)  R00-M0-N03-J00 
+rank 207 is processor Task 207 of 256 (3,0,1,3,1,0)  R00-M0-N06-J06 
+rank 67 is processor Task 67 of 256 (1,0,0,1,1,0)  R00-M0-N00-J22 
+rank 144 is processor Task 144 of 256 (2,0,2,0,0,0)  R00-M0-N05-J28 
+rank 127 is processor Task 127 of 256 (1,1,3,3,1,0)  R00-M0-N03-J25 
+rank 143 is processor Task 143 of 256 (2,0,1,3,1,0)  R00-M0-N06-J27 
+rank 40 is processor Task 40 of 256 (0,1,1,0,0,0)  R00-M0-N00-J02 
+rank 219 is processor Task 219 of 256 (3,0,3,1,1,0)  R00-M0-N05-J11 
+rank 99 is processor Task 99 of 256 (1,1,0,1,1,0)  R00-M0-N00-J21 
+number of barrier algorithms = {7,0} 
+number of bcast algorithms = {17,11} 
+trying safe bcast algorithm 0 (I1:Broadcast:P2P:P2P) 
+after safe bcast algorithm 0 (I1:Broadcast:P2P:P2P) - 1 ints took 0.000090 seconds (0.044665 MB/s) 
+trying safe bcast algorithm 1 (I0:Binomial:-:MU) 
+after safe bcast algorithm 1 (I0:Binomial:-:MU) - 1 ints took 0.000071 seconds (0.056001 MB/s) 
+trying safe bcast algorithm 2 (I0:BinomialSingleTh:-:MU) 
+after safe bcast algorithm 2 (I0:BinomialSingleTh:-:MU) - 1 ints took 0.000054 seconds (0.073491 MB/s) 
+trying safe bcast algorithm 3 (I0:Sync2-nary:-:MU) 
+after safe bcast algorithm 3 (I0:Sync2-nary:-:MU) - 1 ints took 0.000058 seconds (0.069091 MB/s) 
+trying safe bcast algorithm 4 (I0:SequenceBased_Binomial:-:MU) 
+after safe bcast algorithm 4 (I0:SequenceBased_Binomial:-:MU) - 1 ints took 0.000049 seconds (0.080888 MB/s) 
+trying safe bcast algorithm 5 (I0:2-nomial:-:MU) 
+after safe bcast algorithm 5 (I0:2-nomial:-:MU) - 1 ints took 0.000065 seconds (0.061401 MB/s) 
+trying safe bcast algorithm 6 (I0:3-nomial:-:MU) 
+after safe bcast algorithm 6 (I0:3-nomial:-:MU) - 1 ints took 0.000065 seconds (0.061391 MB/s) 
+trying safe bcast algorithm 7 (I0:4-nomial:-:MU) 
+after safe bcast algorithm 7 (I0:4-nomial:-:MU) - 1 ints took 0.000066 seconds (0.060611 MB/s) 
+trying safe bcast algorithm 8 (I0:2-nary:-:MU) 
+after safe bcast algorithm 8 (I0:2-nary:-:MU) - 1 ints took 0.000040 seconds (0.099754 MB/s) 
+trying safe bcast algorithm 9 (I0:3-nary:-:MU) 
+after safe bcast algorithm 9 (I0:3-nary:-:MU) - 1 ints took 0.000046 seconds (0.086123 MB/s) 
+trying safe bcast algorithm 10 (I0:4-nary:-:MU) 
+after safe bcast algorithm 10 (I0:4-nary:-:MU) - 1 ints took 0.000048 seconds (0.084076 MB/s) 
+trying safe bcast algorithm 11 (I0:RankBased_Binomial:-:MU) 
+after safe bcast algorithm 11 (I0:RankBased_Binomial:-:MU) - 1 ints took 0.000043 seconds (0.092057 MB/s) 
+trying safe bcast algorithm 12 (I0:BinomialSingleTh:-:MUDput) 

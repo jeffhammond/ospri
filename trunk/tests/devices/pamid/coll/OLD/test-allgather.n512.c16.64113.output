@@ -1,0 +1,23 @@
+starting test on 8192 ranks 
+number of barrier algorithms = {6,0} 
+number of allgather algorithms = {3,2} 
+safe allgather algorithm 0 (I1:Allgather:P2P:P2P) - 8192 ints took 0.000857 seconds (76.452789 MB/s) 
+safe allgather algorithm 1 (I0:Binomial:SHMEM:MU) - 8192 ints took 0.000532 seconds (123.196654 MB/s) 
+safe allgather algorithm 2 (I0:Ring:SHMEM:MU) - 8192 ints took 0.114909 seconds (0.570331 MB/s) 
+safe allgather algorithm 0 (I1:Allgather:P2P:P2P) - 16384 ints took 0.001784 seconds (73.486196 MB/s) 
+safe allgather algorithm 1 (I0:Binomial:SHMEM:MU) - 16384 ints took 0.002141 seconds (61.218025 MB/s) 
+safe allgather algorithm 2 (I0:Ring:SHMEM:MU) - 16384 ints took 0.116393 seconds (1.126118 MB/s) 
+safe allgather algorithm 0 (I1:Allgather:P2P:P2P) - 32768 ints took 0.002457 seconds (106.679743 MB/s) 
+safe allgather algorithm 1 (I0:Binomial:SHMEM:MU) - 32768 ints took 0.003436 seconds (76.293503 MB/s) 
+safe allgather algorithm 2 (I0:Ring:SHMEM:MU) - 32768 ints took 0.116026 seconds (2.259353 MB/s) 
+safe allgather algorithm 0 (I1:Allgather:P2P:P2P) - 65536 ints took 0.006455 seconds (81.223697 MB/s) 
+safe allgather algorithm 1 (I0:Binomial:SHMEM:MU) - 65536 ints took 0.008710 seconds (60.194163 MB/s) 
+safe allgather algorithm 2 (I0:Ring:SHMEM:MU) - 65536 ints took 0.118100 seconds (4.439364 MB/s) 
+safe allgather algorithm 0 (I1:Allgather:P2P:P2P) - 131072 ints took 0.010969 seconds (95.597686 MB/s) 
+safe allgather algorithm 1 (I0:Binomial:SHMEM:MU) - 131072 ints took 0.015277 seconds (68.638908 MB/s) 
+safe allgather algorithm 2 (I0:Ring:SHMEM:MU) - 131072 ints took 0.238219 seconds (4.401730 MB/s) 
+safe allgather algorithm 0 (I1:Allgather:P2P:P2P) - 262144 ints took 0.021393 seconds (98.031490 MB/s) 
+safe allgather algorithm 1 (I0:Binomial:SHMEM:MU) - 262144 ints took 0.034593 seconds (60.624276 MB/s) 
+safe allgather algorithm 2 (I0:Ring:SHMEM:MU) - 262144 ints took 0.243145 seconds (8.625104 MB/s) 
+safe allgather algorithm 0 (I1:Allgather:P2P:P2P) - 524288 ints took 0.038822 seconds (108.038048 MB/s) 
+safe allgather algorithm 1 (I0:Binomial:SHMEM:MU) - 524288 ints took 0.070594 seconds (59.414549 MB/s) 

@@ -1,0 +1,716 @@
+rank 22 is processor Task 22 of 512 (0,0,2,3,0,0)  R00-M1-N03-J01 
+rank 370 is processor Task 370 of 512 (2,3,2,1,0,0)  R00-M1-N13-J23 
+rank 77 is processor Task 77 of 512 (0,2,1,2,1,0)  R00-M1-N10-J14 
+rank 314 is processor Task 314 of 512 (2,1,3,1,0,0)  R00-M1-N05-J18 
+rank 21 is processor Task 21 of 512 (0,0,2,2,1,0)  R00-M1-N03-J10 
+rank 346 is processor Task 346 of 512 (2,2,3,1,0,0)  R00-M1-N13-J21 
+rank 220 is processor Task 220 of 512 (1,2,3,2,0,0)  R00-M1-N11-J21 
+rank 315 is processor Task 315 of 512 (2,1,3,1,1,0)  R00-M1-N05-J21 
+rank 29 is processor Task 29 of 512 (0,0,3,2,1,0)  R00-M1-N03-J11 
+rank 347 is processor Task 347 of 512 (2,2,3,1,1,0)  R00-M1-N13-J18 
+rank 231 is processor Task 231 of 512 (1,3,0,3,1,0)  R00-M1-N10-J29 
+rank 306 is processor Task 306 of 512 (2,1,2,1,0,0)  R00-M1-N05-J19 
+rank 151 is processor Task 151 of 512 (1,0,2,3,1,0)  R00-M1-N03-J27 
+rank 369 is processor Task 369 of 512 (2,3,2,0,1,0)  R00-M1-N13-J28 
+rank 93 is processor Task 93 of 512 (0,2,3,2,1,0)  R00-M1-N11-J15 
+rank 63 is processor Task 63 of 512 (0,1,3,3,1,0)  R00-M1-N03-J04 
+rank 403 is processor Task 403 of 512 (3,0,2,1,1,0)  R00-M1-N05-J10 
+rank 467 is processor Task 467 of 512 (3,2,2,1,1,0)  R00-M1-N13-J14 
+rank 206 is processor Task 206 of 512 (1,2,1,3,0,0)  R00-M1-N10-J24 
+rank 401 is processor Task 401 of 512 (3,0,2,0,1,0)  R00-M1-N05-J06 
+rank 158 is processor Task 158 of 512 (1,0,3,3,0,0)  R00-M1-N03-J29 
+rank 246 is processor Task 246 of 512 (1,3,2,3,0,0)  R00-M1-N11-J27 
+rank 339 is processor Task 339 of 512 (2,2,2,1,1,0)  R00-M1-N13-J19 
+rank 282 is processor Task 282 of 512 (2,0,3,1,0,0)  R00-M1-N05-J17 
+rank 183 is processor Task 183 of 512 (1,1,2,3,1,0)  R00-M1-N03-J24 
+rank 505 is processor Task 505 of 512 (3,3,3,0,1,0)  R00-M1-N13-J00 
+rank 118 is processor Task 118 of 512 (0,3,2,3,0,0)  R00-M1-N11-J06 
+rank 432 is processor Task 432 of 512 (3,1,2,0,0,0)  R00-M1-N05-J02 
+rank 31 is processor Task 31 of 512 (0,0,3,3,1,0)  R00-M1-N03-J07 
+rank 345 is processor Task 345 of 512 (2,2,3,0,1,0)  R00-M1-N13-J30 
+rank 213 is processor Task 213 of 512 (1,2,2,2,1,0)  R00-M1-N11-J19 
+rank 443 is processor Task 443 of 512 (3,1,3,1,1,0)  R00-M1-N05-J08 
+rank 159 is processor Task 159 of 512 (1,0,3,3,1,0)  R00-M1-N03-J26 
+rank 344 is processor Task 344 of 512 (2,2,3,0,0,0)  R00-M1-N13-J25 
+rank 239 is processor Task 239 of 512 (1,3,1,3,1,0)  R00-M1-N10-J28 
+rank 283 is processor Task 283 of 512 (2,0,3,1,1,0)  R00-M1-N05-J22 
+rank 20 is processor Task 20 of 512 (0,0,2,2,0,0)  R00-M1-N03-J13 
+rank 496 is processor Task 496 of 512 (3,3,2,0,0,0)  R00-M1-N13-J06 
+rank 85 is processor Task 85 of 512 (0,2,2,2,1,0)  R00-M1-N11-J14 
+rank 312 is processor Task 312 of 512 (2,1,3,0,0,0)  R00-M1-N05-J30 
+rank 52 is processor Task 52 of 512 (0,1,2,2,0,0)  R00-M1-N03-J14 
+rank 338 is processor Task 338 of 512 (2,2,2,1,0,0)  R00-M1-N13-J20 
+rank 124 is processor Task 124 of 512 (0,3,3,2,0,0)  R00-M1-N11-J11 
+rank 441 is processor Task 441 of 512 (3,1,3,0,1,0)  R00-M1-N05-J04 
+rank 62 is processor Task 62 of 512 (0,1,3,3,0,0)  R00-M1-N03-J03 
+rank 497 is processor Task 497 of 512 (3,3,2,0,1,0)  R00-M1-N13-J01 
+rank 214 is processor Task 214 of 512 (1,2,2,3,0,0)  R00-M1-N11-J24 
+rank 275 is processor Task 275 of 512 (2,0,2,1,1,0)  R00-M1-N05-J23 
+rank 200 is processor Task 200 of 512 (1,2,1,0,0,0)  R00-M1-N08-J24 
+rank 379 is processor Task 379 of 512 (2,3,3,1,1,0)  R00-M1-N13-J17 
+rank 84 is processor Task 84 of 512 (0,2,2,2,0,0)  R00-M1-N11-J09 
+rank 400 is processor Task 400 of 512 (3,0,2,0,0,0)  R00-M1-N05-J01 
+rank 224 is processor Task 224 of 512 (1,3,0,0,0,0)  R00-M1-N08-J26 
+rank 475 is processor Task 475 of 512 (3,2,3,1,1,0)  R00-M1-N13-J15 
+rank 221 is processor Task 221 of 512 (1,2,3,2,1,0)  R00-M1-N11-J18 
+rank 305 is processor Task 305 of 512 (2,1,2,0,1,0)  R00-M1-N05-J24 
+rank 105 is processor Task 105 of 512 (0,3,1,0,1,0)  R00-M1-N08-J01 
+rank 377 is processor Task 377 of 512 (2,3,3,0,1,0)  R00-M1-N13-J29 
+rank 119 is processor Task 119 of 512 (0,3,2,3,1,0)  R00-M1-N11-J01 
+rank 281 is processor Task 281 of 512 (2,0,3,0,1,0)  R00-M1-N05-J26 
+rank 193 is processor Task 193 of 512 (1,2,0,0,1,0)  R00-M1-N08-J30 
+rank 368 is processor Task 368 of 512 (2,3,2,0,0,0)  R00-M1-N13-J27 
+rank 92 is processor Task 92 of 512 (0,2,3,2,0,0)  R00-M1-N11-J08 
+rank 274 is processor Task 274 of 512 (2,0,2,1,0,0)  R00-M1-N05-J16 
+rank 38 is processor Task 38 of 512 (0,1,0,3,0,0)  R00-M1-N02-J03 
+rank 336 is processor Task 336 of 512 (2,2,2,0,0,0)  R00-M1-N13-J24 
+rank 87 is processor Task 87 of 512 (0,2,2,3,1,0)  R00-M1-N11-J02 
+rank 359 is processor Task 359 of 512 (2,3,0,3,1,0)  R00-M1-N14-J29 
+rank 226 is processor Task 226 of 512 (1,3,0,1,0,0)  R00-M1-N08-J22 
+rank 507 is processor Task 507 of 512 (3,3,3,1,1,0)  R00-M1-N13-J12 
+rank 245 is processor Task 245 of 512 (1,3,2,2,1,0)  R00-M1-N11-J16 
+rank 325 is processor Task 325 of 512 (2,2,0,2,1,0)  R00-M1-N14-J18 
+rank 201 is processor Task 201 of 512 (1,2,1,0,1,0)  R00-M1-N08-J31 
+rank 474 is processor Task 474 of 512 (3,2,3,1,0,0)  R00-M1-N13-J08 
+rank 86 is processor Task 86 of 512 (0,2,2,3,0,0)  R00-M1-N11-J05 
+rank 324 is processor Task 324 of 512 (2,2,0,2,0,0)  R00-M1-N14-J21 
+rank 73 is processor Task 73 of 512 (0,2,1,0,1,0)  R00-M1-N08-J02 
+rank 473 is processor Task 473 of 512 (3,2,3,0,1,0)  R00-M1-N13-J03 
+rank 111 is processor Task 111 of 512 (0,3,1,3,1,0)  R00-M1-N10-J01 
+rank 327 is processor Task 327 of 512 (2,2,0,3,1,0)  R00-M1-N14-J30 
+rank 106 is processor Task 106 of 512 (0,3,1,1,0,0)  R00-M1-N08-J10 
+rank 472 is processor Task 472 of 512 (3,2,3,0,0,0)  R00-M1-N13-J04 
+rank 252 is processor Task 252 of 512 (1,3,3,2,0,0)  R00-M1-N11-J22 
+rank 460 is processor Task 460 of 512 (3,2,1,2,0,0)  R00-M1-N14-J09 
+rank 97 is processor Task 97 of 512 (0,3,0,0,1,0)  R00-M1-N08-J00 
+rank 466 is processor Task 466 of 512 (3,2,2,1,0,0)  R00-M1-N13-J09 
+rank 95 is processor Task 95 of 512 (0,2,3,3,1,0)  R00-M1-N11-J03 
+rank 367 is processor Task 367 of 512 (2,3,1,3,1,0)  R00-M1-N14-J28 
+rank 104 is processor Task 104 of 512 (0,3,1,0,0,0)  R00-M1-N08-J06 
+rank 499 is processor Task 499 of 512 (3,3,2,1,1,0)  R00-M1-N13-J13 
+rank 253 is processor Task 253 of 512 (1,3,3,2,1,0)  R00-M1-N11-J17 
+rank 492 is processor Task 492 of 512 (3,3,1,2,0,0)  R00-M1-N14-J10 
+rank 235 is processor Task 235 of 512 (1,3,1,1,1,0)  R00-M1-N08-J16 
+rank 371 is processor Task 371 of 512 (2,3,2,1,1,0)  R00-M1-N13-J16 
+rank 223 is processor Task 223 of 512 (1,2,3,3,1,0)  R00-M1-N11-J30 
+rank 455 is processor Task 455 of 512 (3,2,0,3,1,0)  R00-M1-N14-J03 
+rank 203 is processor Task 203 of 512 (1,2,1,1,1,0)  R00-M1-N08-J19 
+rank 506 is processor Task 506 of 512 (3,3,3,1,0,0)  R00-M1-N13-J11 
+rank 110 is processor Task 110 of 512 (0,3,1,3,0,0)  R00-M1-N10-J06 
+rank 366 is processor Task 366 of 512 (2,3,1,3,0,0)  R00-M1-N14-J27 
+rank 227 is processor Task 227 of 512 (1,3,0,1,1,0)  R00-M1-N08-J17 
+rank 337 is processor Task 337 of 512 (2,2,2,0,1,0)  R00-M1-N13-J31 
+rank 247 is processor Task 247 of 512 (1,3,2,3,1,0)  R00-M1-N11-J28 
+rank 495 is processor Task 495 of 512 (3,3,1,3,1,0)  R00-M1-N14-J01 
+rank 233 is processor Task 233 of 512 (1,3,1,0,1,0)  R00-M1-N08-J28 
+rank 504 is processor Task 504 of 512 (3,3,3,0,0,0)  R00-M1-N13-J07 
+rank 199 is processor Task 199 of 512 (1,2,0,3,1,0)  R00-M1-N10-J30 
+rank 486 is processor Task 486 of 512 (3,3,0,3,0,0)  R00-M1-N14-J07 
+rank 99 is processor Task 99 of 512 (0,3,0,1,1,0)  R00-M1-N08-J12 
+rank 353 is processor Task 353 of 512 (2,3,0,0,1,0)  R00-M1-N12-J29 
+rank 116 is processor Task 116 of 512 (0,3,2,2,0,0)  R00-M1-N11-J10 
+rank 452 is processor Task 452 of 512 (3,2,0,2,0,0)  R00-M1-N14-J08 
+rank 202 is processor Task 202 of 512 (1,2,1,1,0,0)  R00-M1-N08-J20 
+rank 322 is processor Task 322 of 512 (2,2,0,1,0,0)  R00-M1-N12-J21 
+rank 268 is processor Task 268 of 512 (2,0,1,2,0,0)  R00-M1-N06-J16 
+rank 484 is processor Task 484 of 512 (3,3,0,2,0,0)  R00-M1-N14-J11 
+rank 192 is processor Task 192 of 512 (1,2,0,0,0,0)  R00-M1-N08-J25 
+rank 450 is processor Task 450 of 512 (3,2,0,1,0,0)  R00-M1-N12-J08 
+rank 431 is processor Task 431 of 512 (3,1,1,3,1,0)  R00-M1-N06-J05 
+rank 453 is processor Task 453 of 512 (3,2,0,2,1,0)  R00-M1-N14-J15 
+rank 195 is processor Task 195 of 512 (1,2,0,1,1,0)  R00-M1-N08-J18 
+rank 330 is processor Task 330 of 512 (2,2,1,1,0,0)  R00-M1-N12-J20 
+rank 420 is processor Task 420 of 512 (3,1,0,2,0,0)  R00-M1-N06-J15 
+rank 462 is processor Task 462 of 512 (3,2,1,3,0,0)  R00-M1-N14-J05 
+rank 75 is processor Task 75 of 512 (0,2,1,1,1,0)  R00-M1-N08-J14 
+rank 355 is processor Task 355 of 512 (2,3,0,1,1,0)  R00-M1-N12-J17 
+rank 300 is processor Task 300 of 512 (2,1,1,2,0,0)  R00-M1-N06-J19 
+rank 358 is processor Task 358 of 512 (2,3,0,3,0,0)  R00-M1-N14-J26 
+rank 96 is processor Task 96 of 512 (0,3,0,0,0,0)  R00-M1-N08-J07 
+rank 363 is processor Task 363 of 512 (2,3,1,1,1,0)  R00-M1-N12-J16 
+rank 387 is processor Task 387 of 512 (3,0,0,1,1,0)  R00-M1-N04-J11 
+rank 365 is processor Task 365 of 512 (2,3,1,2,1,0)  R00-M1-N14-J16 
+rank 64 is processor Task 64 of 512 (0,2,0,0,0,0)  R00-M1-N08-J04 
+rank 331 is processor Task 331 of 512 (2,2,1,1,1,0)  R00-M1-N12-J19 
+rank 98 is processor Task 98 of 512 (0,3,0,1,0,0)  R00-M1-N08-J11 
+rank 461 is processor Task 461 of 512 (3,2,1,2,1,0)  R00-M1-N14-J14 
+rank 194 is processor Task 194 of 512 (1,2,0,1,0,0)  R00-M1-N08-J21 
+rank 360 is processor Task 360 of 512 (2,3,1,0,0,0)  R00-M1-N12-J27 
+rank 293 is processor Task 293 of 512 (2,1,0,2,1,0)  R00-M1-N06-J21 
+rank 463 is processor Task 463 of 512 (3,2,1,3,1,0)  R00-M1-N14-J02 
+rank 232 is processor Task 232 of 512 (1,3,1,0,0,0)  R00-M1-N08-J27 
+rank 451 is processor Task 451 of 512 (3,2,0,1,1,0)  R00-M1-N12-J15 
+rank 391 is processor Task 391 of 512 (3,0,0,3,1,0)  R00-M1-N06-J07 
+rank 332 is processor Task 332 of 512 (2,2,1,2,0,0)  R00-M1-N14-J20 
+rank 65 is processor Task 65 of 512 (0,2,0,0,1,0)  R00-M1-N08-J03 
+rank 329 is processor Task 329 of 512 (2,2,1,0,1,0)  R00-M1-N12-J31 
+rank 271 is processor Task 271 of 512 (2,0,1,3,1,0)  R00-M1-N06-J27 
+rank 364 is processor Task 364 of 512 (2,3,1,2,0,0)  R00-M1-N14-J23 
+rank 67 is processor Task 67 of 512 (0,2,0,1,1,0)  R00-M1-N08-J15 
+rank 488 is processor Task 488 of 512 (3,3,1,0,0,0)  R00-M1-N12-J06 
+rank 260 is processor Task 260 of 512 (2,0,0,2,0,0)  R00-M1-N06-J17 
+rank 335 is processor Task 335 of 512 (2,2,1,3,1,0)  R00-M1-N14-J31 
+rank 66 is processor Task 66 of 512 (0,2,0,1,0,0)  R00-M1-N08-J08 
+rank 491 is processor Task 491 of 512 (3,3,1,1,1,0)  R00-M1-N12-J13 
+rank 269 is processor Task 269 of 512 (2,0,1,2,1,0)  R00-M1-N06-J23 
+rank 334 is processor Task 334 of 512 (2,2,1,3,0,0)  R00-M1-N14-J24 
+rank 225 is processor Task 225 of 512 (1,3,0,0,1,0)  R00-M1-N08-J29 
+rank 480 is processor Task 480 of 512 (3,3,0,0,0,0)  R00-M1-N12-J07 
+rank 421 is processor Task 421 of 512 (3,1,0,2,1,0)  R00-M1-N06-J08 
+rank 326 is processor Task 326 of 512 (2,2,0,3,0,0)  R00-M1-N14-J25 
+rank 107 is processor Task 107 of 512 (0,3,1,1,1,0)  R00-M1-N08-J13 
+rank 459 is processor Task 459 of 512 (3,2,1,1,1,0)  R00-M1-N12-J14 
+rank 388 is processor Task 388 of 512 (3,0,0,2,0,0)  R00-M1-N06-J12 
+rank 357 is processor Task 357 of 512 (2,3,0,2,1,0)  R00-M1-N14-J17 
+rank 4 is processor Task 4 of 512 (0,0,0,2,0,0)  R00-M1-N02-J12 
+rank 489 is processor Task 489 of 512 (3,3,1,0,1,0)  R00-M1-N12-J01 
+rank 397 is processor Task 397 of 512 (3,0,1,2,1,0)  R00-M1-N06-J10 
+rank 350 is processor Task 350 of 512 (2,2,3,3,0,0)  R00-M1-N15-J25 
+rank 74 is processor Task 74 of 512 (0,2,1,1,0,0)  R00-M1-N08-J09 
+rank 361 is processor Task 361 of 512 (2,3,1,0,1,0)  R00-M1-N12-J28 
+rank 423 is processor Task 423 of 512 (3,1,0,3,1,0)  R00-M1-N06-J04 
+rank 478 is processor Task 478 of 512 (3,2,3,3,0,0)  R00-M1-N15-J04 
+rank 134 is processor Task 134 of 512 (1,0,0,3,0,0)  R00-M1-N02-J29 
+rank 352 is processor Task 352 of 512 (2,3,0,0,0,0)  R00-M1-N12-J26 
+rank 429 is processor Task 429 of 512 (3,1,1,2,1,0)  R00-M1-N06-J09 
+rank 469 is processor Task 469 of 512 (3,2,2,2,1,0)  R00-M1-N15-J14 
+rank 234 is processor Task 234 of 512 (1,3,1,1,0,0)  R00-M1-N08-J23 
+rank 328 is processor Task 328 of 512 (2,2,1,0,0,0)  R00-M1-N12-J24 
+rank 301 is processor Task 301 of 512 (2,1,1,2,1,0)  R00-M1-N06-J20 
+rank 372 is processor Task 372 of 512 (2,3,2,2,0,0)  R00-M1-N15-J23 
+rank 5 is processor Task 5 of 512 (0,0,0,2,1,0)  R00-M1-N02-J11 
+rank 458 is processor Task 458 of 512 (3,2,1,1,0,0)  R00-M1-N12-J09 
+rank 422 is processor Task 422 of 512 (3,1,0,3,0,0)  R00-M1-N06-J03 
+rank 479 is processor Task 479 of 512 (3,2,3,3,1,0)  R00-M1-N15-J03 
+rank 72 is processor Task 72 of 512 (0,2,1,0,0,0)  R00-M1-N08-J05 
+rank 457 is processor Task 457 of 512 (3,2,1,0,1,0)  R00-M1-N12-J02 
+rank 295 is processor Task 295 of 512 (2,1,0,3,1,0)  R00-M1-N06-J25 
+rank 373 is processor Task 373 of 512 (2,3,2,2,1,0)  R00-M1-N15-J16 
+rank 140 is processor Task 140 of 512 (1,0,1,2,0,0)  R00-M1-N02-J16 
+rank 449 is processor Task 449 of 512 (3,2,0,0,1,0)  R00-M1-N12-J03 
+rank 508 is processor Task 508 of 512 (3,3,3,2,0,0)  R00-M1-N15-J11 
+rank 36 is processor Task 36 of 512 (0,1,0,2,0,0)  R00-M1-N02-J15 
+rank 490 is processor Task 490 of 512 (3,3,1,1,0,0)  R00-M1-N12-J10 
+rank 351 is processor Task 351 of 512 (2,2,3,3,1,0)  R00-M1-N15-J30 
+rank 143 is processor Task 143 of 512 (1,0,1,3,1,0)  R00-M1-N02-J27 
+rank 354 is processor Task 354 of 512 (2,3,0,1,0,0)  R00-M1-N12-J22 
+rank 349 is processor Task 349 of 512 (2,2,3,2,1,0)  R00-M1-N15-J18 
+rank 7 is processor Task 7 of 512 (0,0,0,3,1,0)  R00-M1-N02-J07 
+rank 483 is processor Task 483 of 512 (3,3,0,1,1,0)  R00-M1-N12-J12 
+rank 500 is processor Task 500 of 512 (3,3,2,2,0,0)  R00-M1-N15-J10 
+rank 14 is processor Task 14 of 512 (0,0,1,3,0,0)  R00-M1-N02-J01 
+rank 362 is processor Task 362 of 512 (2,3,1,1,0,0)  R00-M1-N12-J23 
+rank 381 is processor Task 381 of 512 (2,3,3,2,1,0)  R00-M1-N15-J17 
+rank 39 is processor Task 39 of 512 (0,1,0,3,1,0)  R00-M1-N02-J04 
+rank 320 is processor Task 320 of 512 (2,2,0,0,0,0)  R00-M1-N12-J25 
+rank 510 is processor Task 510 of 512 (3,3,3,3,0,0)  R00-M1-N15-J07 
+rank 142 is processor Task 142 of 512 (1,0,1,3,0,0)  R00-M1-N02-J28 
+rank 481 is processor Task 481 of 512 (3,3,0,0,1,0)  R00-M1-N12-J00 
+rank 477 is processor Task 477 of 512 (3,2,3,2,1,0)  R00-M1-N15-J15 
+rank 173 is processor Task 173 of 512 (1,1,1,2,1,0)  R00-M1-N02-J20 
+rank 448 is processor Task 448 of 512 (3,2,0,0,0,0)  R00-M1-N12-J04 
+rank 343 is processor Task 343 of 512 (2,2,2,3,1,0)  R00-M1-N15-J31 
+rank 133 is processor Task 133 of 512 (1,0,0,2,1,0)  R00-M1-N02-J22 
+rank 323 is processor Task 323 of 512 (2,2,0,1,1,0)  R00-M1-N12-J18 
+rank 382 is processor Task 382 of 512 (2,3,3,3,0,0)  R00-M1-N15-J26 
+rank 15 is processor Task 15 of 512 (0,0,1,3,1,0)  R00-M1-N02-J06 
+rank 321 is processor Task 321 of 512 (2,2,0,0,1,0)  R00-M1-N12-J30 
+rank 501 is processor Task 501 of 512 (3,3,2,2,1,0)  R00-M1-N15-J13 
+rank 44 is processor Task 44 of 512 (0,1,1,2,0,0)  R00-M1-N02-J14 
+rank 456 is processor Task 456 of 512 (3,2,1,0,0,0)  R00-M1-N12-J05 
+rank 471 is processor Task 471 of 512 (3,2,2,3,1,0)  R00-M1-N15-J02 
+rank 135 is processor Task 135 of 512 (1,0,0,3,1,0)  R00-M1-N02-J26 
+rank 27 is processor Task 27 of 512 (0,0,3,1,1,0)  R00-M1-N01-J11 
+rank 468 is processor Task 468 of 512 (3,2,2,2,0,0)  R00-M1-N15-J09 
+rank 132 is processor Task 132 of 512 (1,0,0,2,0,0)  R00-M1-N02-J17 
+rank 145 is processor Task 145 of 512 (1,0,2,0,1,0)  R00-M1-N01-J27 
+rank 470 is processor Task 470 of 512 (3,2,2,3,0,0)  R00-M1-N15-J05 
+rank 47 is processor Task 47 of 512 (0,1,1,3,1,0)  R00-M1-N02-J05 
+rank 186 is processor Task 186 of 512 (1,1,3,1,0,0)  R00-M1-N01-J18 
+rank 375 is processor Task 375 of 512 (2,3,2,3,1,0)  R00-M1-N15-J28 
+rank 167 is processor Task 167 of 512 (1,1,0,3,1,0)  R00-M1-N02-J25 
+rank 19 is processor Task 19 of 512 (0,0,2,1,1,0)  R00-M1-N01-J10 
+rank 509 is processor Task 509 of 512 (3,3,3,2,1,0)  R00-M1-N15-J12 
+rank 172 is processor Task 172 of 512 (1,1,1,2,0,0)  R00-M1-N02-J19 
+rank 187 is processor Task 187 of 512 (1,1,3,1,1,0)  R00-M1-N01-J21 
+rank 341 is processor Task 341 of 512 (2,2,2,2,1,0)  R00-M1-N15-J19 
+rank 166 is processor Task 166 of 512 (1,1,0,3,0,0)  R00-M1-N02-J30 
+rank 147 is processor Task 147 of 512 (1,0,2,1,1,0)  R00-M1-N01-J23 
+rank 502 is processor Task 502 of 512 (3,3,2,3,0,0)  R00-M1-N15-J06 
+rank 165 is processor Task 165 of 512 (1,1,0,2,1,0)  R00-M1-N02-J21 
+rank 24 is processor Task 24 of 512 (0,0,3,0,0,0)  R00-M1-N01-J00 
+rank 340 is processor Task 340 of 512 (2,2,2,2,0,0)  R00-M1-N15-J20 
+rank 37 is processor Task 37 of 512 (0,1,0,2,1,0)  R00-M1-N02-J08 
+rank 178 is processor Task 178 of 512 (1,1,2,1,0,0)  R00-M1-N01-J19 
+rank 348 is processor Task 348 of 512 (2,2,3,2,0,0)  R00-M1-N15-J21 
+rank 46 is processor Task 46 of 512 (0,1,1,3,0,0)  R00-M1-N02-J02 
+rank 25 is processor Task 25 of 512 (0,0,3,0,1,0)  R00-M1-N01-J07 
+rank 374 is processor Task 374 of 512 (2,3,2,3,0,0)  R00-M1-N15-J27 
+rank 141 is processor Task 141 of 512 (1,0,1,2,1,0)  R00-M1-N02-J23 
+rank 185 is processor Task 185 of 512 (1,1,3,0,1,0)  R00-M1-N01-J25 
+rank 503 is processor Task 503 of 512 (3,3,2,3,1,0)  R00-M1-N15-J01 
+rank 174 is processor Task 174 of 512 (1,1,1,3,0,0)  R00-M1-N02-J31 
+rank 383 is processor Task 383 of 512 (2,3,3,3,1,0)  R00-M1-N15-J29 
+rank 13 is processor Task 13 of 512 (0,0,1,2,1,0)  R00-M1-N02-J10 
+rank 49 is processor Task 49 of 512 (0,1,2,0,1,0)  R00-M1-N01-J05 
+rank 380 is processor Task 380 of 512 (2,3,3,2,0,0)  R00-M1-N15-J22 
+rank 12 is processor Task 12 of 512 (0,0,1,2,0,0)  R00-M1-N02-J13 
+rank 342 is processor Task 342 of 512 (2,2,2,3,0,0)  R00-M1-N15-J24 
+rank 175 is processor Task 175 of 512 (1,1,1,3,1,0)  R00-M1-N02-J24 
+rank 155 is processor Task 155 of 512 (1,0,3,1,1,0)  R00-M1-N01-J22 
+rank 511 is processor Task 511 of 512 (3,3,3,3,1,0)  R00-M1-N15-J00 
+rank 26 is processor Task 26 of 512 (0,0,3,1,0,0)  R00-M1-N01-J12 
+rank 45 is processor Task 45 of 512 (0,1,1,2,1,0)  R00-M1-N02-J09 
+rank 476 is processor Task 476 of 512 (3,2,3,2,0,0)  R00-M1-N15-J08 
+rank 482 is processor Task 482 of 512 (3,3,0,1,0,0)  R00-M1-N12-J11 
+rank 17 is processor Task 17 of 512 (0,0,2,0,1,0)  R00-M1-N01-J06 
+rank 164 is processor Task 164 of 512 (1,1,0,2,0,0)  R00-M1-N02-J18 
+rank 179 is processor Task 179 of 512 (1,1,2,1,1,0)  R00-M1-N01-J20 
+rank 258 is processor Task 258 of 512 (2,0,0,1,0,0)  R00-M1-N04-J17 
+rank 123 is processor Task 123 of 512 (0,3,3,1,1,0)  R00-M1-N09-J12 
+rank 394 is processor Task 394 of 512 (3,0,1,1,0,0)  R00-M1-N04-J13 
+rank 50 is processor Task 50 of 512 (0,1,2,1,0,0)  R00-M1-N01-J14 
+rank 248 is processor Task 248 of 512 (1,3,3,0,0,0)  R00-M1-N09-J26 
+rank 152 is processor Task 152 of 512 (1,0,3,0,0,0)  R00-M1-N01-J29 
+rank 386 is processor Task 386 of 512 (3,0,0,1,0,0)  R00-M1-N04-J12 
+rank 218 is processor Task 218 of 512 (1,2,3,1,0,0)  R00-M1-N09-J21 
+rank 417 is processor Task 417 of 512 (3,1,0,0,1,0)  R00-M1-N04-J04 
+rank 56 is processor Task 56 of 512 (0,1,3,0,0,0)  R00-M1-N01-J03 
+rank 217 is processor Task 217 of 512 (1,2,3,0,1,0)  R00-M1-N09-J30 
+rank 59 is processor Task 59 of 512 (0,1,3,1,1,0)  R00-M1-N01-J08 
+rank 208 is processor Task 208 of 512 (1,2,2,0,0,0)  R00-M1-N09-J24 
+rank 267 is processor Task 267 of 512 (2,0,1,1,1,0)  R00-M1-N04-J23 
+rank 153 is processor Task 153 of 512 (1,0,3,0,1,0)  R00-M1-N01-J26 
+rank 298 is processor Task 298 of 512 (2,1,1,1,0,0)  R00-M1-N04-J19 
+rank 3 is processor Task 3 of 512 (0,0,0,1,1,0)  R00-M1-N00-J11 
+rank 385 is processor Task 385 of 512 (3,0,0,0,1,0)  R00-M1-N04-J07 
+rank 16 is processor Task 16 of 512 (0,0,2,0,0,0)  R00-M1-N01-J01 
+rank 209 is processor Task 209 of 512 (1,2,2,0,1,0)  R00-M1-N09-J31 
+rank 57 is processor Task 57 of 512 (0,1,3,0,1,0)  R00-M1-N01-J04 
+rank 291 is processor Task 291 of 512 (2,1,0,1,1,0)  R00-M1-N04-J21 
+rank 216 is processor Task 216 of 512 (1,2,3,0,0,0)  R00-M1-N09-J25 
+rank 51 is processor Task 51 of 512 (0,1,2,1,1,0)  R00-M1-N01-J09 
+rank 384 is processor Task 384 of 512 (3,0,0,0,0,0)  R00-M1-N04-J00 
+rank 219 is processor Task 219 of 512 (1,2,3,1,1,0)  R00-M1-N09-J18 
+rank 146 is processor Task 146 of 512 (1,0,2,1,0,0)  R00-M1-N01-J16 
+rank 416 is processor Task 416 of 512 (3,1,0,0,0,0)  R00-M1-N04-J03 
+rank 241 is processor Task 241 of 512 (1,3,2,0,1,0)  R00-M1-N09-J28 
+rank 48 is processor Task 48 of 512 (0,1,2,0,0,0)  R00-M1-N01-J02 
+rank 264 is processor Task 264 of 512 (2,0,1,0,0,0)  R00-M1-N04-J28 
+rank 89 is processor Task 89 of 512 (0,2,3,0,1,0)  R00-M1-N09-J03 
+rank 18 is processor Task 18 of 512 (0,0,2,1,0,0)  R00-M1-N01-J13 
+rank 289 is processor Task 289 of 512 (2,1,0,0,1,0)  R00-M1-N04-J25 
+rank 250 is processor Task 250 of 512 (1,3,3,1,0,0)  R00-M1-N09-J22 
+rank 154 is processor Task 154 of 512 (1,0,3,1,0,0)  R00-M1-N01-J17 
+rank 392 is processor Task 392 of 512 (3,0,1,0,0,0)  R00-M1-N04-J01 
+rank 83 is processor Task 83 of 512 (0,2,2,1,1,0)  R00-M1-N09-J14 
+rank 419 is processor Task 419 of 512 (3,1,0,1,1,0)  R00-M1-N04-J08 
+rank 113 is processor Task 113 of 512 (0,3,2,0,1,0)  R00-M1-N09-J01 
+rank 177 is processor Task 177 of 512 (1,1,2,0,1,0)  R00-M1-N01-J24 
+rank 81 is processor Task 81 of 512 (0,2,2,0,1,0)  R00-M1-N09-J02 
+rank 184 is processor Task 184 of 512 (1,1,3,0,0,0)  R00-M1-N01-J30 
+rank 256 is processor Task 256 of 512 (2,0,0,0,0,0)  R00-M1-N04-J29 
+rank 90 is processor Task 90 of 512 (0,2,3,1,0,0)  R00-M1-N09-J08 
+rank 144 is processor Task 144 of 512 (1,0,2,0,0,0)  R00-M1-N01-J28 
+rank 296 is processor Task 296 of 512 (2,1,1,0,0,0)  R00-M1-N04-J31 
+rank 399 is processor Task 399 of 512 (3,0,1,3,1,0)  R00-M1-N06-J06 
+rank 242 is processor Task 242 of 512 (1,3,2,1,0,0)  R00-M1-N09-J23 
+rank 58 is processor Task 58 of 512 (0,1,3,1,0,0)  R00-M1-N01-J15 
+rank 299 is processor Task 299 of 512 (2,1,1,1,1,0)  R00-M1-N04-J20 
+rank 294 is processor Task 294 of 512 (2,1,0,3,0,0)  R00-M1-N06-J30 
+rank 80 is processor Task 80 of 512 (0,2,2,0,0,0)  R00-M1-N09-J05 
+rank 176 is processor Task 176 of 512 (1,1,2,0,0,0)  R00-M1-N01-J31 
+rank 426 is processor Task 426 of 512 (3,1,1,1,0,0)  R00-M1-N04-J14 
+rank 428 is processor Task 428 of 512 (3,1,1,2,0,0)  R00-M1-N06-J14 
+rank 91 is processor Task 91 of 512 (0,2,3,1,1,0)  R00-M1-N09-J15 
+rank 6 is processor Task 6 of 512 (0,0,0,3,0,0)  R00-M1-N02-J00 
+rank 425 is processor Task 425 of 512 (3,1,1,0,1,0)  R00-M1-N04-J05 
+rank 263 is processor Task 263 of 512 (2,0,0,3,1,0)  R00-M1-N06-J26 
+rank 251 is processor Task 251 of 512 (1,3,3,1,1,0)  R00-M1-N09-J17 
+rank 130 is processor Task 130 of 512 (1,0,0,1,0,0)  R00-M1-N00-J17 
+rank 266 is processor Task 266 of 512 (2,0,1,1,0,0)  R00-M1-N04-J16 
+rank 302 is processor Task 302 of 512 (2,1,1,3,0,0)  R00-M1-N06-J31 
+rank 114 is processor Task 114 of 512 (0,3,2,1,0,0)  R00-M1-N09-J10 
+rank 42 is processor Task 42 of 512 (0,1,1,1,0,0)  R00-M1-N00-J14 
+rank 265 is processor Task 265 of 512 (2,0,1,0,1,0)  R00-M1-N04-J27 
+rank 292 is processor Task 292 of 512 (2,1,0,2,0,0)  R00-M1-N06-J18 
+rank 243 is processor Task 243 of 512 (1,3,2,1,1,0)  R00-M1-N09-J16 
+rank 1 is processor Task 1 of 512 (0,0,0,0,1,0)  R00-M1-N00-J07 
+rank 290 is processor Task 290 of 512 (2,1,0,1,0,0)  R00-M1-N04-J18 
+rank 398 is processor Task 398 of 512 (3,0,1,3,0,0)  R00-M1-N06-J01 
+rank 240 is processor Task 240 of 512 (1,3,2,0,0,0)  R00-M1-N09-J27 
+starting test on 512 ranks 
+rank 395 is processor Task 395 of 512 (3,0,1,1,1,0)  R00-M1-N04-J10 
+rank 270 is processor Task 270 of 512 (2,0,1,3,0,0)  R00-M1-N06-J28 
+rank 120 is processor Task 120 of 512 (0,3,3,0,0,0)  R00-M1-N09-J07 
+rank 139 is processor Task 139 of 512 (1,0,1,1,1,0)  R00-M1-N00-J23 
+rank 424 is processor Task 424 of 512 (3,1,1,0,0,0)  R00-M1-N04-J02 
+rank 396 is processor Task 396 of 512 (3,0,1,2,0,0)  R00-M1-N06-J13 
+rank 115 is processor Task 115 of 512 (0,3,2,1,1,0)  R00-M1-N09-J13 
+rank 8 is processor Task 8 of 512 (0,0,1,0,0,0)  R00-M1-N00-J01 
+rank 393 is processor Task 393 of 512 (3,0,1,0,1,0)  R00-M1-N04-J06 
+rank 262 is processor Task 262 of 512 (2,0,0,3,0,0)  R00-M1-N06-J29 
+rank 210 is processor Task 210 of 512 (1,2,2,1,0,0)  R00-M1-N09-J20 
+rank 160 is processor Task 160 of 512 (1,1,0,0,0,0)  R00-M1-N00-J30 
+rank 427 is processor Task 427 of 512 (3,1,1,1,1,0)  R00-M1-N04-J09 
+rank 430 is processor Task 430 of 512 (3,1,1,3,0,0)  R00-M1-N06-J02 
+rank 122 is processor Task 122 of 512 (0,3,3,1,0,0)  R00-M1-N09-J11 
+rank 128 is processor Task 128 of 512 (1,0,0,0,0,0)  R00-M1-N00-J29 
+rank 257 is processor Task 257 of 512 (2,0,0,0,1,0)  R00-M1-N04-J26 
+rank 261 is processor Task 261 of 512 (2,0,0,2,1,0)  R00-M1-N06-J22 
+rank 88 is processor Task 88 of 512 (0,2,3,0,0,0)  R00-M1-N09-J04 
+rank 162 is processor Task 162 of 512 (1,1,0,1,0,0)  R00-M1-N00-J18 
+rank 259 is processor Task 259 of 512 (2,0,0,1,1,0)  R00-M1-N04-J22 
+rank 303 is processor Task 303 of 512 (2,1,1,3,1,0)  R00-M1-N06-J24 
+rank 249 is processor Task 249 of 512 (1,3,3,0,1,0)  R00-M1-N09-J29 
+rank 33 is processor Task 33 of 512 (0,1,0,0,1,0)  R00-M1-N00-J04 
+rank 288 is processor Task 288 of 512 (2,1,0,0,0,0)  R00-M1-N04-J30 
+rank 389 is processor Task 389 of 512 (3,0,0,2,1,0)  R00-M1-N06-J11 
+rank 121 is processor Task 121 of 512 (0,3,3,0,1,0)  R00-M1-N09-J00 
+rank 137 is processor Task 137 of 512 (1,0,1,0,1,0)  R00-M1-N00-J27 
+rank 297 is processor Task 297 of 512 (2,1,1,0,1,0)  R00-M1-N04-J24 
+rank 445 is processor Task 445 of 512 (3,1,3,2,1,0)  R00-M1-N07-J08 
+rank 211 is processor Task 211 of 512 (1,2,2,1,1,0)  R00-M1-N09-J19 
+rank 168 is processor Task 168 of 512 (1,1,1,0,0,0)  R00-M1-N00-J31 
+rank 418 is processor Task 418 of 512 (3,1,0,1,0,0)  R00-M1-N04-J15 
+rank 309 is processor Task 309 of 512 (2,1,2,2,1,0)  R00-M1-N07-J20 
+rank 112 is processor Task 112 of 512 (0,3,2,0,0,0)  R00-M1-N09-J06 
+rank 41 is processor Task 41 of 512 (0,1,1,0,1,0)  R00-M1-N00-J05 
+rank 390 is processor Task 390 of 512 (3,0,0,3,0,0)  R00-M1-N06-J00 
+rank 436 is processor Task 436 of 512 (3,1,2,2,0,0)  R00-M1-N07-J14 
+rank 82 is processor Task 82 of 512 (0,2,2,1,0,0)  R00-M1-N09-J09 
+rank 170 is processor Task 170 of 512 (1,1,1,1,0,0)  R00-M1-N00-J19 
+rank 273 is processor Task 273 of 512 (2,0,2,0,1,0)  R00-M1-N05-J27 
+rank 318 is processor Task 318 of 512 (2,1,3,3,0,0)  R00-M1-N07-J30 
+rank 103 is processor Task 103 of 512 (0,3,0,3,1,0)  R00-M1-N10-J00 
+rank 35 is processor Task 35 of 512 (0,1,0,1,1,0)  R00-M1-N00-J08 
+rank 433 is processor Task 433 of 512 (3,1,2,0,1,0)  R00-M1-N05-J05 
+rank 311 is processor Task 311 of 512 (2,1,2,3,1,0)  R00-M1-N07-J24 
+rank 181 is processor Task 181 of 512 (1,1,2,2,1,0)  R00-M1-N03-J20 
+rank 43 is processor Task 43 of 512 (0,1,1,1,1,0)  R00-M1-N00-J09 
+rank 313 is processor Task 313 of 512 (2,1,3,0,1,0)  R00-M1-N05-J25 
+rank 447 is processor Task 447 of 512 (3,1,3,3,1,0)  R00-M1-N07-J04 
+rank 60 is processor Task 60 of 512 (0,1,3,2,0,0)  R00-M1-N03-J15 
+rank 9 is processor Task 9 of 512 (0,0,1,0,1,0)  R00-M1-N00-J06 
+rank 485 is processor Task 485 of 512 (3,3,0,2,1,0)  R00-M1-N14-J12 
+rank 286 is processor Task 286 of 512 (2,0,3,3,0,0)  R00-M1-N07-J29 
+rank 150 is processor Task 150 of 512 (1,0,2,3,0,0)  R00-M1-N03-J28 
+rank 34 is processor Task 34 of 512 (0,1,0,1,0,0)  R00-M1-N00-J15 
+rank 454 is processor Task 454 of 512 (3,2,0,3,0,0)  R00-M1-N14-J04 
+rank 319 is processor Task 319 of 512 (2,1,3,3,1,0)  R00-M1-N07-J25 
+rank 156 is processor Task 156 of 512 (1,0,3,2,0,0)  R00-M1-N03-J17 
+rank 171 is processor Task 171 of 512 (1,1,1,1,1,0)  R00-M1-N00-J20 
+rank 493 is processor Task 493 of 512 (3,3,1,2,1,0)  R00-M1-N14-J13 
+rank 284 is processor Task 284 of 512 (2,0,3,2,0,0)  R00-M1-N07-J17 
+rank 182 is processor Task 182 of 512 (1,1,2,3,0,0)  R00-M1-N03-J31 
+rank 40 is processor Task 40 of 512 (0,1,1,0,0,0)  R00-M1-N00-J02 
+rank 333 is processor Task 333 of 512 (2,2,1,2,1,0)  R00-M1-N14-J19 
+rank 316 is processor Task 316 of 512 (2,1,3,2,0,0)  R00-M1-N07-J18 
+rank 53 is processor Task 53 of 512 (0,1,2,2,1,0)  R00-M1-N03-J09 
+rank 136 is processor Task 136 of 512 (1,0,1,0,0,0)  R00-M1-N00-J28 
+rank 494 is processor Task 494 of 512 (3,3,1,3,0,0)  R00-M1-N14-J06 
+rank 407 is processor Task 407 of 512 (3,0,2,3,1,0)  R00-M1-N07-J06 
+rank 23 is processor Task 23 of 512 (0,0,2,3,1,0)  R00-M1-N03-J06 
+rank 129 is processor Task 129 of 512 (1,0,0,0,1,0)  R00-M1-N00-J26 
+rank 356 is processor Task 356 of 512 (2,3,0,2,0,0)  R00-M1-N14-J22 
+rank 277 is processor Task 277 of 512 (2,0,2,2,1,0)  R00-M1-N07-J23 
+rank 157 is processor Task 157 of 512 (1,0,3,2,1,0)  R00-M1-N03-J22 
+rank 169 is processor Task 169 of 512 (1,1,1,0,1,0)  R00-M1-N00-J24 
+rank 409 is processor Task 409 of 512 (3,0,3,0,1,0)  R00-M1-N05-J07 
+rank 308 is processor Task 308 of 512 (2,1,2,2,0,0)  R00-M1-N07-J19 
+rank 191 is processor Task 191 of 512 (1,1,3,3,1,0)  R00-M1-N03-J25 
+rank 163 is processor Task 163 of 512 (1,1,0,1,1,0)  R00-M1-N00-J21 
+rank 402 is processor Task 402 of 512 (3,0,2,1,0,0)  R00-M1-N05-J13 
+rank 413 is processor Task 413 of 512 (3,0,3,2,1,0)  R00-M1-N07-J11 
+rank 54 is processor Task 54 of 512 (0,1,2,3,0,0)  R00-M1-N03-J02 
+rank 10 is processor Task 10 of 512 (0,0,1,1,0,0)  R00-M1-N00-J13 
+rank 304 is processor Task 304 of 512 (2,1,2,0,0,0)  R00-M1-N05-J31 
+rank 287 is processor Task 287 of 512 (2,0,3,3,1,0)  R00-M1-N07-J26 
+rank 180 is processor Task 180 of 512 (1,1,2,2,0,0)  R00-M1-N03-J19 
+rank 161 is processor Task 161 of 512 (1,1,0,0,1,0)  R00-M1-N00-J25 
+rank 408 is processor Task 408 of 512 (3,0,3,0,0,0)  R00-M1-N05-J00 
+rank 444 is processor Task 444 of 512 (3,1,3,2,0,0)  R00-M1-N07-J15 
+rank 188 is processor Task 188 of 512 (1,1,3,2,0,0)  R00-M1-N03-J18 
+rank 138 is processor Task 138 of 512 (1,0,1,1,0,0)  R00-M1-N00-J16 
+rank 442 is processor Task 442 of 512 (3,1,3,1,0,0)  R00-M1-N05-J15 
+rank 412 is processor Task 412 of 512 (3,0,3,2,0,0)  R00-M1-N07-J12 
+rank 55 is processor Task 55 of 512 (0,1,2,3,1,0)  R00-M1-N03-J05 
+rank 131 is processor Task 131 of 512 (1,0,0,1,1,0)  R00-M1-N00-J22 
+rank 434 is processor Task 434 of 512 (3,1,2,1,0,0)  R00-M1-N05-J14 
+rank 406 is processor Task 406 of 512 (3,0,2,3,0,0)  R00-M1-N07-J01 
+rank 190 is processor Task 190 of 512 (1,1,3,3,0,0)  R00-M1-N03-J30 
+rank 11 is processor Task 11 of 512 (0,0,1,1,1,0)  R00-M1-N00-J10 
+rank 280 is processor Task 280 of 512 (2,0,3,0,0,0)  R00-M1-N05-J29 
+rank 438 is processor Task 438 of 512 (3,1,2,3,0,0)  R00-M1-N07-J02 
+rank 149 is processor Task 149 of 512 (1,0,2,2,1,0)  R00-M1-N03-J23 
+rank 32 is processor Task 32 of 512 (0,1,0,0,0,0)  R00-M1-N00-J03 
+rank 440 is processor Task 440 of 512 (3,1,3,0,0,0)  R00-M1-N05-J03 
+rank 446 is processor Task 446 of 512 (3,1,3,3,0,0)  R00-M1-N07-J03 
+rank 148 is processor Task 148 of 512 (1,0,2,2,0,0)  R00-M1-N03-J16 
+rank 2 is processor Task 2 of 512 (0,0,0,1,0,0)  R00-M1-N00-J12 
+rank 272 is processor Task 272 of 512 (2,0,2,0,0,0)  R00-M1-N05-J28 
+rank 404 is processor Task 404 of 512 (3,0,2,2,0,0)  R00-M1-N07-J13 
+rank 28 is processor Task 28 of 512 (0,0,3,2,0,0)  R00-M1-N03-J12 
+rank 487 is processor Task 487 of 512 (3,3,0,3,1,0)  R00-M1-N14-J00 
+rank 435 is processor Task 435 of 512 (3,1,2,1,1,0)  R00-M1-N05-J09 
+rank 437 is processor Task 437 of 512 (3,1,2,2,1,0)  R00-M1-N07-J09 
+rank 61 is processor Task 61 of 512 (0,1,3,2,1,0)  R00-M1-N03-J08 
+rank 498 is processor Task 498 of 512 (3,3,2,1,0,0)  R00-M1-N13-J10 
+rank 307 is processor Task 307 of 512 (2,1,2,1,1,0)  R00-M1-N05-J20 
+rank 279 is processor Task 279 of 512 (2,0,2,3,1,0)  R00-M1-N07-J27 
+rank 30 is processor Task 30 of 512 (0,0,3,3,0,0)  R00-M1-N03-J00 
+rank 378 is processor Task 378 of 512 (2,3,3,1,0,0)  R00-M1-N13-J22 
+rank 411 is processor Task 411 of 512 (3,0,3,1,1,0)  R00-M1-N05-J11 
+rank 439 is processor Task 439 of 512 (3,1,2,3,1,0)  R00-M1-N07-J05 
+rank 189 is processor Task 189 of 512 (1,1,3,2,1,0)  R00-M1-N03-J21 
+rank 465 is processor Task 465 of 512 (3,2,2,0,1,0)  R00-M1-N13-J02 
+rank 410 is processor Task 410 of 512 (3,0,3,1,0,0)  R00-M1-N05-J12 
+rank 317 is processor Task 317 of 512 (2,1,3,2,1,0)  R00-M1-N07-J21 
+rank 464 is processor Task 464 of 512 (3,2,2,0,0,0)  R00-M1-N13-J05 
+rank 405 is processor Task 405 of 512 (3,0,2,2,1,0)  R00-M1-N07-J10 
+rank 376 is processor Task 376 of 512 (2,3,3,0,0,0)  R00-M1-N13-J26 
+rank 285 is processor Task 285 of 512 (2,0,3,2,1,0)  R00-M1-N07-J22 
+rank 0 is processor Task 0 of 512 (0,0,0,0,0,0)  R00-M1-N00-J00 
+rank 278 is processor Task 278 of 512 (2,0,2,3,0,0)  R00-M1-N07-J28 
+number of barrier algorithms = {7,0} 
+rank 414 is processor Task 414 of 512 (3,0,3,3,0,0)  R00-M1-N07-J00 
+number of allreduce algorithms = {5,7} 
+rank 310 is processor Task 310 of 512 (2,1,2,3,0,0)  R00-M1-N07-J31 
+trying safe allreduce algorithm 0 (I1:Allreduce:P2P:P2P) 
+rank 276 is processor Task 276 of 512 (2,0,2,2,0,0)  R00-M1-N07-J16 
+after safe allreduce algorithm 0 (I1:Allreduce:P2P:P2P) - 1 ints took 0.000085 seconds (0.047186 MB/s) 
+rank 415 is processor Task 415 of 512 (3,0,3,3,1,0)  R00-M1-N07-J07 
+trying safe allreduce algorithm 1 (I0:Binomial:-:MU) 
+rank 100 is processor Task 100 of 512 (0,3,0,2,0,0)  R00-M1-N10-J11 
+after safe allreduce algorithm 1 (I0:Binomial:-:MU) - 1 ints took 0.000134 seconds (0.029943 MB/s) 
+rank 76 is processor Task 76 of 512 (0,2,1,2,0,0)  R00-M1-N10-J09 
+trying safe allreduce algorithm 2 (X0:MultinomialRadix4:-:MU) 
+rank 79 is processor Task 79 of 512 (0,2,1,3,1,0)  R00-M1-N10-J02 
+after safe allreduce algorithm 2 (X0:MultinomialRadix4:-:MU) - 1 ints took 0.000127 seconds (0.031408 MB/s) 
+rank 68 is processor Task 68 of 512 (0,2,0,2,0,0)  R00-M1-N10-J08 
+trying safe allreduce algorithm 3 (X0:MultinomialRadix8:-:MU) 
+rank 207 is processor Task 207 of 512 (1,2,1,3,1,0)  R00-M1-N10-J31 
+after safe allreduce algorithm 3 (X0:MultinomialRadix8:-:MU) - 1 ints took 0.000136 seconds (0.029513 MB/s) 
+rank 71 is processor Task 71 of 512 (0,2,0,3,1,0)  R00-M1-N10-J03 
+trying safe allreduce algorithm 4 (I0:SequenceBased_Binomial:-:MU) 
+rank 222 is processor Task 222 of 512 (1,2,3,3,0,0)  R00-M1-N11-J25 
+after safe allreduce algorithm 4 (I0:SequenceBased_Binomial:-:MU) - 1 ints took 0.000139 seconds (0.028763 MB/s) 
+rank 125 is processor Task 125 of 512 (0,3,3,2,1,0)  R00-M1-N11-J12 
+trying safe allreduce algorithm 0 (I1:Allreduce:P2P:P2P) 
+rank 215 is processor Task 215 of 512 (1,2,2,3,1,0)  R00-M1-N11-J31 
+after safe allreduce algorithm 0 (I1:Allreduce:P2P:P2P) - 2 ints took 0.000056 seconds (0.142282 MB/s) 
+rank 244 is processor Task 244 of 512 (1,3,2,2,0,0)  R00-M1-N11-J23 
+trying safe allreduce algorithm 1 (I0:Binomial:-:MU) 
+rank 126 is processor Task 126 of 512 (0,3,3,3,0,0)  R00-M1-N11-J07 
+after safe allreduce algorithm 1 (I0:Binomial:-:MU) - 2 ints took 0.000106 seconds (0.075447 MB/s) 
+rank 236 is processor Task 236 of 512 (1,3,1,2,0,0)  R00-M1-N10-J23 
+trying safe allreduce algorithm 2 (X0:MultinomialRadix4:-:MU) 
+rank 70 is processor Task 70 of 512 (0,2,0,3,0,0)  R00-M1-N10-J04 
+after safe allreduce algorithm 2 (X0:MultinomialRadix4:-:MU) - 2 ints took 0.000113 seconds (0.070750 MB/s) 
+rank 237 is processor Task 237 of 512 (1,3,1,2,1,0)  R00-M1-N10-J16 
+trying safe allreduce algorithm 3 (X0:MultinomialRadix8:-:MU) 
+rank 198 is processor Task 198 of 512 (1,2,0,3,0,0)  R00-M1-N10-J25 
+after safe allreduce algorithm 3 (X0:MultinomialRadix8:-:MU) - 2 ints took 0.000117 seconds (0.068341 MB/s) 
+rank 229 is processor Task 229 of 512 (1,3,0,2,1,0)  R00-M1-N10-J17 
+trying safe allreduce algorithm 4 (I0:SequenceBased_Binomial:-:MU) 
+rank 228 is processor Task 228 of 512 (1,3,0,2,0,0)  R00-M1-N10-J22 
+after safe allreduce algorithm 4 (I0:SequenceBased_Binomial:-:MU) - 2 ints took 0.000115 seconds (0.069754 MB/s) 
+rank 101 is processor Task 101 of 512 (0,3,0,2,1,0)  R00-M1-N10-J12 
+trying safe allreduce algorithm 0 (I1:Allreduce:P2P:P2P) 
+rank 205 is processor Task 205 of 512 (1,2,1,2,1,0)  R00-M1-N10-J19 
+after safe allreduce algorithm 0 (I1:Allreduce:P2P:P2P) - 4 ints took 0.000055 seconds (0.289691 MB/s) 
+rank 102 is processor Task 102 of 512 (0,3,0,3,0,0)  R00-M1-N10-J07 
+trying safe allreduce algorithm 1 (I0:Binomial:-:MU) 
+rank 230 is processor Task 230 of 512 (1,3,0,3,0,0)  R00-M1-N10-J26 
+after safe allreduce algorithm 1 (I0:Binomial:-:MU) - 4 ints took 0.000108 seconds (0.148291 MB/s) 
+rank 109 is processor Task 109 of 512 (0,3,1,2,1,0)  R00-M1-N10-J13 
+trying safe allreduce algorithm 2 (X0:MultinomialRadix4:-:MU) 
+rank 197 is processor Task 197 of 512 (1,2,0,2,1,0)  R00-M1-N10-J18 
+after safe allreduce algorithm 2 (X0:MultinomialRadix4:-:MU) - 4 ints took 0.000113 seconds (0.141192 MB/s) 
+rank 108 is processor Task 108 of 512 (0,3,1,2,0,0)  R00-M1-N10-J10 
+trying safe allreduce algorithm 3 (X0:MultinomialRadix8:-:MU) 
+rank 127 is processor Task 127 of 512 (0,3,3,3,1,0)  R00-M1-N11-J00 
+after safe allreduce algorithm 3 (X0:MultinomialRadix8:-:MU) - 4 ints took 0.000117 seconds (0.136251 MB/s) 
+rank 254 is processor Task 254 of 512 (1,3,3,3,0,0)  R00-M1-N11-J26 
+trying safe allreduce algorithm 4 (I0:SequenceBased_Binomial:-:MU) 
+rank 255 is processor Task 255 of 512 (1,3,3,3,1,0)  R00-M1-N11-J29 
+after safe allreduce algorithm 4 (I0:SequenceBased_Binomial:-:MU) - 4 ints took 0.000115 seconds (0.138549 MB/s) 
+rank 69 is processor Task 69 of 512 (0,2,0,2,1,0)  R00-M1-N10-J15 
+trying safe allreduce algorithm 0 (I1:Allreduce:P2P:P2P) 
+rank 204 is processor Task 204 of 512 (1,2,1,2,0,0)  R00-M1-N10-J20 
+after safe allreduce algorithm 0 (I1:Allreduce:P2P:P2P) - 8 ints took 0.000058 seconds (0.555194 MB/s) 
+rank 196 is processor Task 196 of 512 (1,2,0,2,0,0)  R00-M1-N10-J21 
+trying safe allreduce algorithm 1 (I0:Binomial:-:MU) 
+rank 117 is processor Task 117 of 512 (0,3,2,2,1,0)  R00-M1-N11-J13 
+after safe allreduce algorithm 1 (I0:Binomial:-:MU) - 8 ints took 0.000108 seconds (0.295776 MB/s) 
+rank 94 is processor Task 94 of 512 (0,2,3,3,0,0)  R00-M1-N11-J04 
+trying safe allreduce algorithm 2 (X0:MultinomialRadix4:-:MU) 
+rank 78 is processor Task 78 of 512 (0,2,1,3,0,0)  R00-M1-N10-J05 
+after safe allreduce algorithm 2 (X0:MultinomialRadix4:-:MU) - 8 ints took 0.000112 seconds (0.284831 MB/s) 
+rank 238 is processor Task 238 of 512 (1,3,1,3,0,0)  R00-M1-N10-J27 
+trying safe allreduce algorithm 3 (X0:MultinomialRadix8:-:MU) 
+rank 212 is processor Task 212 of 512 (1,2,2,2,0,0)  R00-M1-N11-J20 
+after safe allreduce algorithm 3 (X0:MultinomialRadix8:-:MU) - 8 ints took 0.000118 seconds (0.270236 MB/s) 
+trying safe allreduce algorithm 4 (I0:SequenceBased_Binomial:-:MU) 
+after safe allreduce algorithm 4 (I0:SequenceBased_Binomial:-:MU) - 8 ints took 0.000115 seconds (0.278612 MB/s) 
+trying safe allreduce algorithm 0 (I1:Allreduce:P2P:P2P) 
+after safe allreduce algorithm 0 (I1:Allreduce:P2P:P2P) - 16 ints took 0.000059 seconds (1.076128 MB/s) 
+trying safe allreduce algorithm 1 (I0:Binomial:-:MU) 
+after safe allreduce algorithm 1 (I0:Binomial:-:MU) - 16 ints took 0.000112 seconds (0.573310 MB/s) 
+trying safe allreduce algorithm 2 (X0:MultinomialRadix4:-:MU) 
+after safe allreduce algorithm 2 (X0:MultinomialRadix4:-:MU) - 16 ints took 0.000115 seconds (0.557061 MB/s) 
+trying safe allreduce algorithm 3 (X0:MultinomialRadix8:-:MU) 
+after safe allreduce algorithm 3 (X0:MultinomialRadix8:-:MU) - 16 ints took 0.000122 seconds (0.525317 MB/s) 
+trying safe allreduce algorithm 4 (I0:SequenceBased_Binomial:-:MU) 
+after safe allreduce algorithm 4 (I0:SequenceBased_Binomial:-:MU) - 16 ints took 0.000117 seconds (0.548920 MB/s) 
+trying safe allreduce algorithm 0 (I1:Allreduce:P2P:P2P) 
+after safe allreduce algorithm 0 (I1:Allreduce:P2P:P2P) - 32 ints took 0.000073 seconds (1.751505 MB/s) 
+trying safe allreduce algorithm 1 (I0:Binomial:-:MU) 
+after safe allreduce algorithm 1 (I0:Binomial:-:MU) - 32 ints took 0.000126 seconds (1.013430 MB/s) 
+trying safe allreduce algorithm 2 (X0:MultinomialRadix4:-:MU) 
+after safe allreduce algorithm 2 (X0:MultinomialRadix4:-:MU) - 32 ints took 0.000128 seconds (1.001800 MB/s) 
+trying safe allreduce algorithm 3 (X0:MultinomialRadix8:-:MU) 
+after safe allreduce algorithm 3 (X0:MultinomialRadix8:-:MU) - 32 ints took 0.000147 seconds (0.870571 MB/s) 
+trying safe allreduce algorithm 4 (I0:SequenceBased_Binomial:-:MU) 
+after safe allreduce algorithm 4 (I0:SequenceBased_Binomial:-:MU) - 32 ints took 0.000133 seconds (0.962578 MB/s) 
+trying safe allreduce algorithm 0 (I1:Allreduce:P2P:P2P) 
+after safe allreduce algorithm 0 (I1:Allreduce:P2P:P2P) - 64 ints took 0.000080 seconds (3.195008 MB/s) 
+trying safe allreduce algorithm 1 (I0:Binomial:-:MU) 
+after safe allreduce algorithm 1 (I0:Binomial:-:MU) - 64 ints took 0.000129 seconds (1.978667 MB/s) 
+trying safe allreduce algorithm 2 (X0:MultinomialRadix4:-:MU) 
+after safe allreduce algorithm 2 (X0:MultinomialRadix4:-:MU) - 64 ints took 0.000133 seconds (1.930345 MB/s) 
+trying safe allreduce algorithm 3 (X0:MultinomialRadix8:-:MU) 
+after safe allreduce algorithm 3 (X0:MultinomialRadix8:-:MU) - 64 ints took 0.000150 seconds (1.703274 MB/s) 
+trying safe allreduce algorithm 4 (I0:SequenceBased_Binomial:-:MU) 
+after safe allreduce algorithm 4 (I0:SequenceBased_Binomial:-:MU) - 64 ints took 0.000140 seconds (1.828816 MB/s) 
+trying safe allreduce algorithm 0 (I1:Allreduce:P2P:P2P) 
+after safe allreduce algorithm 0 (I1:Allreduce:P2P:P2P) - 128 ints took 0.000127 seconds (4.047031 MB/s) 
+trying safe allreduce algorithm 1 (I0:Binomial:-:MU) 
+after safe allreduce algorithm 1 (I0:Binomial:-:MU) - 128 ints took 0.000156 seconds (3.274364 MB/s) 
+trying safe allreduce algorithm 2 (X0:MultinomialRadix4:-:MU) 
+after safe allreduce algorithm 2 (X0:MultinomialRadix4:-:MU) - 128 ints took 0.000160 seconds (3.194933 MB/s) 
+trying safe allreduce algorithm 3 (X0:MultinomialRadix8:-:MU) 
+after safe allreduce algorithm 3 (X0:MultinomialRadix8:-:MU) - 128 ints took 0.000196 seconds (2.608386 MB/s) 
+trying safe allreduce algorithm 4 (I0:SequenceBased_Binomial:-:MU) 
+after safe allreduce algorithm 4 (I0:SequenceBased_Binomial:-:MU) - 128 ints took 0.000162 seconds (3.157229 MB/s) 
+trying safe allreduce algorithm 0 (I1:Allreduce:P2P:P2P) 
+after safe allreduce algorithm 0 (I1:Allreduce:P2P:P2P) - 256 ints took 0.000153 seconds (6.698119 MB/s) 
+trying safe allreduce algorithm 1 (I0:Binomial:-:MU) 
+after safe allreduce algorithm 1 (I0:Binomial:-:MU) - 256 ints took 0.000171 seconds (5.996984 MB/s) 
+trying safe allreduce algorithm 2 (X0:MultinomialRadix4:-:MU) 
+after safe allreduce algorithm 2 (X0:MultinomialRadix4:-:MU) - 256 ints took 0.000178 seconds (5.768852 MB/s) 
+trying safe allreduce algorithm 3 (X0:MultinomialRadix8:-:MU) 
+after safe allreduce algorithm 3 (X0:MultinomialRadix8:-:MU) - 256 ints took 0.000220 seconds (4.652219 MB/s) 
+trying safe allreduce algorithm 4 (I0:SequenceBased_Binomial:-:MU) 
+after safe allreduce algorithm 4 (I0:SequenceBased_Binomial:-:MU) - 256 ints took 0.000179 seconds (5.712373 MB/s) 
+trying safe allreduce algorithm 0 (I1:Allreduce:P2P:P2P) 
+after safe allreduce algorithm 0 (I1:Allreduce:P2P:P2P) - 512 ints took 0.000218 seconds (9.386422 MB/s) 
+trying safe allreduce algorithm 1 (I0:Binomial:-:MU) 
+after safe allreduce algorithm 1 (I0:Binomial:-:MU) - 512 ints took 0.000205 seconds (9.973338 MB/s) 
+trying safe allreduce algorithm 2 (X0:MultinomialRadix4:-:MU) 
+after safe allreduce algorithm 2 (X0:MultinomialRadix4:-:MU) - 512 ints took 0.000209 seconds (9.778574 MB/s) 
+trying safe allreduce algorithm 3 (X0:MultinomialRadix8:-:MU) 
+after safe allreduce algorithm 3 (X0:MultinomialRadix8:-:MU) - 512 ints took 0.000291 seconds (7.039918 MB/s) 
+trying safe allreduce algorithm 4 (I0:SequenceBased_Binomial:-:MU) 
+after safe allreduce algorithm 4 (I0:SequenceBased_Binomial:-:MU) - 512 ints took 0.000214 seconds (9.564842 MB/s) 
+trying safe allreduce algorithm 0 (I1:Allreduce:P2P:P2P) 
+after safe allreduce algorithm 0 (I1:Allreduce:P2P:P2P) - 1024 ints took 0.000358 seconds (11.454019 MB/s) 
+trying safe allreduce algorithm 1 (I0:Binomial:-:MU) 
+after safe allreduce algorithm 1 (I0:Binomial:-:MU) - 1024 ints took 0.000280 seconds (14.603146 MB/s) 
+trying safe allreduce algorithm 2 (X0:MultinomialRadix4:-:MU) 
+after safe allreduce algorithm 2 (X0:MultinomialRadix4:-:MU) - 1024 ints took 0.000287 seconds (14.261094 MB/s) 
+trying safe allreduce algorithm 3 (X0:MultinomialRadix8:-:MU) 
+after safe allreduce algorithm 3 (X0:MultinomialRadix8:-:MU) - 1024 ints took 0.000484 seconds (8.460669 MB/s) 
+trying safe allreduce algorithm 4 (I0:SequenceBased_Binomial:-:MU) 
+after safe allreduce algorithm 4 (I0:SequenceBased_Binomial:-:MU) - 1024 ints took 0.000247 seconds (16.567988 MB/s) 
+trying safe allreduce algorithm 0 (I1:Allreduce:P2P:P2P) 
+after safe allreduce algorithm 0 (I1:Allreduce:P2P:P2P) - 2048 ints took 0.000602 seconds (13.608765 MB/s) 
+trying safe allreduce algorithm 1 (I0:Binomial:-:MU) 
+after safe allreduce algorithm 1 (I0:Binomial:-:MU) - 2048 ints took 0.000424 seconds (19.305160 MB/s) 
+trying safe allreduce algorithm 2 (X0:MultinomialRadix4:-:MU) 
+after safe allreduce algorithm 2 (X0:MultinomialRadix4:-:MU) - 2048 ints took 0.000431 seconds (19.012861 MB/s) 
+trying safe allreduce algorithm 3 (X0:MultinomialRadix8:-:MU) 
+after safe allreduce algorithm 3 (X0:MultinomialRadix8:-:MU) - 2048 ints took 0.000800 seconds (10.240320 MB/s) 
+trying safe allreduce algorithm 4 (I0:SequenceBased_Binomial:-:MU) 
+after safe allreduce algorithm 4 (I0:SequenceBased_Binomial:-:MU) - 2048 ints took 0.000379 seconds (21.589071 MB/s) 
+trying safe allreduce algorithm 0 (I1:Allreduce:P2P:P2P) 
+after safe allreduce algorithm 0 (I1:Allreduce:P2P:P2P) - 4096 ints took 0.001095 seconds (14.955967 MB/s) 
+trying safe allreduce algorithm 1 (I0:Binomial:-:MU) 
+after safe allreduce algorithm 1 (I0:Binomial:-:MU) - 4096 ints took 0.000702 seconds (23.343479 MB/s) 
+trying safe allreduce algorithm 2 (X0:MultinomialRadix4:-:MU) 
+after safe allreduce algorithm 2 (X0:MultinomialRadix4:-:MU) - 4096 ints took 0.000703 seconds (23.299452 MB/s) 
+trying safe allreduce algorithm 3 (X0:MultinomialRadix8:-:MU) 
+after safe allreduce algorithm 3 (X0:MultinomialRadix8:-:MU) - 4096 ints took 0.001305 seconds (12.553695 MB/s) 
+trying safe allreduce algorithm 4 (I0:SequenceBased_Binomial:-:MU) 
+after safe allreduce algorithm 4 (I0:SequenceBased_Binomial:-:MU) - 4096 ints took 0.000709 seconds (23.095492 MB/s) 
+trying safe allreduce algorithm 0 (I1:Allreduce:P2P:P2P) 
+after safe allreduce algorithm 0 (I1:Allreduce:P2P:P2P) - 8192 ints took 0.002056 seconds (15.938974 MB/s) 
+trying safe allreduce algorithm 1 (I0:Binomial:-:MU) 
+after safe allreduce algorithm 1 (I0:Binomial:-:MU) - 8192 ints took 0.001238 seconds (26.465852 MB/s) 
+trying safe allreduce algorithm 2 (X0:MultinomialRadix4:-:MU) 
+after safe allreduce algorithm 2 (X0:MultinomialRadix4:-:MU) - 8192 ints took 0.001241 seconds (26.396137 MB/s) 
+trying safe allreduce algorithm 3 (X0:MultinomialRadix8:-:MU) 
+after safe allreduce algorithm 3 (X0:MultinomialRadix8:-:MU) - 8192 ints took 0.002403 seconds (13.636125 MB/s) 
+trying safe allreduce algorithm 4 (I0:SequenceBased_Binomial:-:MU) 
+after safe allreduce algorithm 4 (I0:SequenceBased_Binomial:-:MU) - 8192 ints took 0.001241 seconds (26.394118 MB/s) 
+trying safe allreduce algorithm 0 (I1:Allreduce:P2P:P2P) 
+after safe allreduce algorithm 0 (I1:Allreduce:P2P:P2P) - 16384 ints took 0.003974 seconds (16.492251 MB/s) 
+trying safe allreduce algorithm 1 (I0:Binomial:-:MU) 
+after safe allreduce algorithm 1 (I0:Binomial:-:MU) - 16384 ints took 0.002189 seconds (29.934170 MB/s) 
+trying safe allreduce algorithm 2 (X0:MultinomialRadix4:-:MU) 
+after safe allreduce algorithm 2 (X0:MultinomialRadix4:-:MU) - 16384 ints took 0.002221 seconds (29.509339 MB/s) 
+trying safe allreduce algorithm 3 (X0:MultinomialRadix8:-:MU) 
+after safe allreduce algorithm 3 (X0:MultinomialRadix8:-:MU) - 16384 ints took 0.004610 seconds (14.215751 MB/s) 
+trying safe allreduce algorithm 4 (I0:SequenceBased_Binomial:-:MU) 
+after safe allreduce algorithm 4 (I0:SequenceBased_Binomial:-:MU) - 16384 ints took 0.002257 seconds (29.032208 MB/s) 
+trying safe allreduce algorithm 0 (I1:Allreduce:P2P:P2P) 
+after safe allreduce algorithm 0 (I1:Allreduce:P2P:P2P) - 32768 ints took 0.007811 seconds (16.781039 MB/s) 
+trying safe allreduce algorithm 1 (I0:Binomial:-:MU) 
+after safe allreduce algorithm 1 (I0:Binomial:-:MU) - 32768 ints took 0.004054 seconds (32.331056 MB/s) 
+trying safe allreduce algorithm 2 (X0:MultinomialRadix4:-:MU) 
+after safe allreduce algorithm 2 (X0:MultinomialRadix4:-:MU) - 32768 ints took 0.004056 seconds (32.318171 MB/s) 
+trying safe allreduce algorithm 3 (X0:MultinomialRadix8:-:MU) 
+after safe allreduce algorithm 3 (X0:MultinomialRadix8:-:MU) - 32768 ints took 0.009081 seconds (14.433233 MB/s) 
+trying safe allreduce algorithm 4 (I0:SequenceBased_Binomial:-:MU) 
+after safe allreduce algorithm 4 (I0:SequenceBased_Binomial:-:MU) - 32768 ints took 0.004286 seconds (30.578271 MB/s) 
+trying safe allreduce algorithm 0 (I1:Allreduce:P2P:P2P) 
+after safe allreduce algorithm 0 (I1:Allreduce:P2P:P2P) - 65536 ints took 0.015439 seconds (16.979487 MB/s) 
+trying safe allreduce algorithm 1 (I0:Binomial:-:MU) 
+after safe allreduce algorithm 1 (I0:Binomial:-:MU) - 65536 ints took 0.007763 seconds (33.767035 MB/s) 
+trying safe allreduce algorithm 2 (X0:MultinomialRadix4:-:MU) 
+after safe allreduce algorithm 2 (X0:MultinomialRadix4:-:MU) - 65536 ints took 0.007763 seconds (33.768872 MB/s) 
+trying safe allreduce algorithm 3 (X0:MultinomialRadix8:-:MU) 
+after safe allreduce algorithm 3 (X0:MultinomialRadix8:-:MU) - 65536 ints took 0.018049 seconds (14.524334 MB/s) 
+trying safe allreduce algorithm 4 (I0:SequenceBased_Binomial:-:MU) 
+after safe allreduce algorithm 4 (I0:SequenceBased_Binomial:-:MU) - 65536 ints took 0.008120 seconds (32.282129 MB/s) 
+trying safe allreduce algorithm 0 (I1:Allreduce:P2P:P2P) 
+after safe allreduce algorithm 0 (I1:Allreduce:P2P:P2P) - 131072 ints took 0.030665 seconds (17.097389 MB/s) 
+trying safe allreduce algorithm 1 (I0:Binomial:-:MU) 
+after safe allreduce algorithm 1 (I0:Binomial:-:MU) - 131072 ints took 0.015330 seconds (34.200719 MB/s) 
+trying safe allreduce algorithm 2 (X0:MultinomialRadix4:-:MU) 
+after safe allreduce algorithm 2 (X0:MultinomialRadix4:-:MU) - 131072 ints took 0.015661 seconds (33.478019 MB/s) 
+trying safe allreduce algorithm 3 (X0:MultinomialRadix8:-:MU) 
+after safe allreduce algorithm 3 (X0:MultinomialRadix8:-:MU) - 131072 ints took 0.036042 seconds (14.546483 MB/s) 
+trying safe allreduce algorithm 4 (I0:SequenceBased_Binomial:-:MU) 
+after safe allreduce algorithm 4 (I0:SequenceBased_Binomial:-:MU) - 131072 ints took 0.015621 seconds (33.562406 MB/s) 
+trying safe allreduce algorithm 0 (I1:Allreduce:P2P:P2P) 
+after safe allreduce algorithm 0 (I1:Allreduce:P2P:P2P) - 262144 ints took 0.061066 seconds (17.171222 MB/s) 
+trying safe allreduce algorithm 1 (I0:Binomial:-:MU) 
+after safe allreduce algorithm 1 (I0:Binomial:-:MU) - 262144 ints took 0.030785 seconds (34.060763 MB/s) 
+trying safe allreduce algorithm 2 (X0:MultinomialRadix4:-:MU) 
+after safe allreduce algorithm 2 (X0:MultinomialRadix4:-:MU) - 262144 ints took 0.031151 seconds (33.661281 MB/s) 
+trying safe allreduce algorithm 3 (X0:MultinomialRadix8:-:MU) 
+after safe allreduce algorithm 3 (X0:MultinomialRadix8:-:MU) - 262144 ints took 0.071615 seconds (14.641816 MB/s) 
+trying safe allreduce algorithm 4 (I0:SequenceBased_Binomial:-:MU) 
+after safe allreduce algorithm 4 (I0:SequenceBased_Binomial:-:MU) - 262144 ints took 0.032869 seconds (31.902080 MB/s) 
+trying safe allreduce algorithm 0 (I1:Allreduce:P2P:P2P) 
+after safe allreduce algorithm 0 (I1:Allreduce:P2P:P2P) - 524288 ints took 0.121817 seconds (17.215596 MB/s) 
+trying safe allreduce algorithm 1 (I0:Binomial:-:MU) 
+after safe allreduce algorithm 1 (I0:Binomial:-:MU) - 524288 ints took 0.061531 seconds (34.082621 MB/s) 
+trying safe allreduce algorithm 2 (X0:MultinomialRadix4:-:MU) 
+after safe allreduce algorithm 2 (X0:MultinomialRadix4:-:MU) - 524288 ints took 0.062402 seconds (33.606867 MB/s) 
+trying safe allreduce algorithm 3 (X0:MultinomialRadix8:-:MU) 
+after safe allreduce algorithm 3 (X0:MultinomialRadix8:-:MU) - 524288 ints took 0.144107 seconds (14.552782 MB/s) 
+trying safe allreduce algorithm 4 (I0:SequenceBased_Binomial:-:MU) 
+after safe allreduce algorithm 4 (I0:SequenceBased_Binomial:-:MU) - 524288 ints took 0.066199 seconds (31.679360 MB/s) 
+end of test 

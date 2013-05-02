@@ -1,0 +1,15 @@
+starting test on 8192 ranks 
+number of barrier algorithms = {6,0} 
+trying safe barrier algorithm 0 (I1:Barrier:P2P:P2P) 
+after safe barrier algorithm 0 (I1:Barrier:P2P:P2P) - took 90615 cycles 
+trying safe barrier algorithm 1 (I0:Binomial:SHMEM:MU) 
+after safe barrier algorithm 1 (I0:Binomial:SHMEM:MU) - took 42495 cycles 
+trying safe barrier algorithm 2 (I0:Binomial:-:ShortMU) 
+after safe barrier algorithm 2 (I0:Binomial:-:ShortMU) - took 33813 cycles 
+trying safe barrier algorithm 3 (I0:OptBinomial:P2P:P2P) 
+after safe barrier algorithm 3 (I0:OptBinomial:P2P:P2P) - took 34009 cycles 
+trying safe barrier algorithm 4 (I0:MultiSync2Device:SHMEM:GI) 
+after safe barrier algorithm 4 (I0:MultiSync2Device:SHMEM:GI) - took 31652 cycles 
+trying safe barrier algorithm 5 (I0:MultiSync2Device:SHMEM:MU) 
+after safe barrier algorithm 5 (I0:MultiSync2Device:SHMEM:MU) - took 40995 cycles 
+end of test 

@@ -1,0 +1,332 @@
+rank 44 is processor Task 44 of 128 (0,1,1,2,0,0)  R00-M0-N02-J14 
+rank 40 is processor Task 40 of 128 (0,1,1,0,0,0)  R00-M0-N00-J02 
+rank 78 is processor Task 78 of 128 (1,0,1,3,0,0)  R00-M0-N02-J28 
+rank 66 is processor Task 66 of 128 (1,0,0,1,0,0)  R00-M0-N00-J17 
+rank 70 is processor Task 70 of 128 (1,0,0,3,0,0)  R00-M0-N02-J29 
+rank 104 is processor Task 104 of 128 (1,1,1,0,0,0)  R00-M0-N00-J31 
+rank 68 is processor Task 68 of 128 (1,0,0,2,0,0)  R00-M0-N02-J17 
+rank 6 is processor Task 6 of 128 (0,0,0,3,0,0)  R00-M0-N02-J00 
+rank 39 is processor Task 39 of 128 (0,1,0,3,1,0)  R00-M0-N02-J04 
+rank 41 is processor Task 41 of 128 (0,1,1,0,1,0)  R00-M0-N00-J05 
+rank 71 is processor Task 71 of 128 (1,0,0,3,1,0)  R00-M0-N02-J26 
+rank 9 is processor Task 9 of 128 (0,0,1,0,1,0)  R00-M0-N00-J06 
+rank 101 is processor Task 101 of 128 (1,1,0,2,1,0)  R00-M0-N02-J21 
+rank 107 is processor Task 107 of 128 (1,1,1,1,1,0)  R00-M0-N00-J20 
+rank 72 is processor Task 72 of 128 (1,0,1,0,0,0)  R00-M0-N00-J28 
+rank 46 is processor Task 46 of 128 (0,1,1,3,0,0)  R00-M0-N02-J02 
+rank 33 is processor Task 33 of 128 (0,1,0,0,1,0)  R00-M0-N00-J04 
+rank 108 is processor Task 108 of 128 (1,1,1,2,0,0)  R00-M0-N02-J19 
+rank 43 is processor Task 43 of 128 (0,1,1,1,1,0)  R00-M0-N00-J09 
+rank 38 is processor Task 38 of 128 (0,1,0,3,0,0)  R00-M0-N02-J03 
+rank 96 is processor Task 96 of 128 (1,1,0,0,0,0)  R00-M0-N00-J30 
+rank 15 is processor Task 15 of 128 (0,0,1,3,1,0)  R00-M0-N02-J06 
+rank 105 is processor Task 105 of 128 (1,1,1,0,1,0)  R00-M0-N00-J24 
+rank 65 is processor Task 65 of 128 (1,0,0,0,1,0)  R00-M0-N00-J26 
+rank 3 is processor Task 3 of 128 (0,0,0,1,1,0)  R00-M0-N00-J11 
+rank 1 is processor Task 1 of 128 (0,0,0,0,1,0)  R00-M0-N00-J07 
+rank 12 is processor Task 12 of 128 (0,0,1,2,0,0)  R00-M0-N02-J13 
+rank 106 is processor Task 106 of 128 (1,1,1,1,0,0)  R00-M0-N00-J19 
+rank 7 is processor Task 7 of 128 (0,0,0,3,1,0)  R00-M0-N02-J07 
+rank 64 is processor Task 64 of 128 (1,0,0,0,0,0)  R00-M0-N00-J29 
+rank 77 is processor Task 77 of 128 (1,0,1,2,1,0)  R00-M0-N02-J23 
+rank 74 is processor Task 74 of 128 (1,0,1,1,0,0)  R00-M0-N00-J16 
+rank 5 is processor Task 5 of 128 (0,0,0,2,1,0)  R00-M0-N02-J11 
+rank 10 is processor Task 10 of 128 (0,0,1,1,0,0)  R00-M0-N00-J13 
+rank 110 is processor Task 110 of 128 (1,1,1,3,0,0)  R00-M0-N02-J31 
+rank 11 is processor Task 11 of 128 (0,0,1,1,1,0)  R00-M0-N00-J10 
+rank 103 is processor Task 103 of 128 (1,1,0,3,1,0)  R00-M0-N02-J25 
+starting test on 128 ranks 
+rank 109 is processor Task 109 of 128 (1,1,1,2,1,0)  R00-M0-N02-J20 
+rank 73 is processor Task 73 of 128 (1,0,1,0,1,0)  R00-M0-N00-J27 
+rank 111 is processor Task 111 of 128 (1,1,1,3,1,0)  R00-M0-N02-J24 
+rank 2 is processor Task 2 of 128 (0,0,0,1,0,0)  R00-M0-N00-J12 
+rank 45 is processor Task 45 of 128 (0,1,1,2,1,0)  R00-M0-N02-J09 
+rank 98 is processor Task 98 of 128 (1,1,0,1,0,0)  R00-M0-N00-J18 
+rank 47 is processor Task 47 of 128 (0,1,1,3,1,0)  R00-M0-N02-J05 
+rank 32 is processor Task 32 of 128 (0,1,0,0,0,0)  R00-M0-N00-J03 
+rank 100 is processor Task 100 of 128 (1,1,0,2,0,0)  R00-M0-N02-J18 
+rank 67 is processor Task 67 of 128 (1,0,0,1,1,0)  R00-M0-N00-J22 
+rank 76 is processor Task 76 of 128 (1,0,1,2,0,0)  R00-M0-N02-J16 
+rank 99 is processor Task 99 of 128 (1,1,0,1,1,0)  R00-M0-N00-J21 
+rank 14 is processor Task 14 of 128 (0,0,1,3,0,0)  R00-M0-N02-J01 
+rank 42 is processor Task 42 of 128 (0,1,1,1,0,0)  R00-M0-N00-J14 
+rank 79 is processor Task 79 of 128 (1,0,1,3,1,0)  R00-M0-N02-J27 
+rank 35 is processor Task 35 of 128 (0,1,0,1,1,0)  R00-M0-N00-J08 
+rank 37 is processor Task 37 of 128 (0,1,0,2,1,0)  R00-M0-N02-J08 
+rank 75 is processor Task 75 of 128 (1,0,1,1,1,0)  R00-M0-N00-J23 
+rank 69 is processor Task 69 of 128 (1,0,0,2,1,0)  R00-M0-N02-J22 
+rank 34 is processor Task 34 of 128 (0,1,0,1,0,0)  R00-M0-N00-J15 
+rank 13 is processor Task 13 of 128 (0,0,1,2,1,0)  R00-M0-N02-J10 
+rank 8 is processor Task 8 of 128 (0,0,1,0,0,0)  R00-M0-N00-J01 
+rank 36 is processor Task 36 of 128 (0,1,0,2,0,0)  R00-M0-N02-J15 
+rank 97 is processor Task 97 of 128 (1,1,0,0,1,0)  R00-M0-N00-J25 
+rank 102 is processor Task 102 of 128 (1,1,0,3,0,0)  R00-M0-N02-J30 
+rank 57 is processor Task 57 of 128 (0,1,3,0,1,0)  R00-M0-N01-J04 
+rank 4 is processor Task 4 of 128 (0,0,0,2,0,0)  R00-M0-N02-J12 
+rank 17 is processor Task 17 of 128 (0,0,2,0,1,0)  R00-M0-N01-J06 
+rank 52 is processor Task 52 of 128 (0,1,2,2,0,0)  R00-M0-N03-J14 
+rank 91 is processor Task 91 of 128 (1,0,3,1,1,0)  R00-M0-N01-J22 
+rank 93 is processor Task 93 of 128 (1,0,3,2,1,0)  R00-M0-N03-J22 
+rank 24 is processor Task 24 of 128 (0,0,3,0,0,0)  R00-M0-N01-J00 
+rank 117 is processor Task 117 of 128 (1,1,2,2,1,0)  R00-M0-N03-J20 
+rank 112 is processor Task 112 of 128 (1,1,2,0,0,0)  R00-M0-N01-J31 
+rank 21 is processor Task 21 of 128 (0,0,2,2,1,0)  R00-M0-N03-J10 
+rank 80 is processor Task 80 of 128 (1,0,2,0,0,0)  R00-M0-N01-J28 
+rank 127 is processor Task 127 of 128 (1,1,3,3,1,0)  R00-M0-N03-J25 
+rank 114 is processor Task 114 of 128 (1,1,2,1,0,0)  R00-M0-N01-J19 
+rank 125 is processor Task 125 of 128 (1,1,3,2,1,0)  R00-M0-N03-J21 
+rank 82 is processor Task 82 of 128 (1,0,2,1,0,0)  R00-M0-N01-J16 
+rank 95 is processor Task 95 of 128 (1,0,3,3,1,0)  R00-M0-N03-J26 
+rank 81 is processor Task 81 of 128 (1,0,2,0,1,0)  R00-M0-N01-J27 
+rank 94 is processor Task 94 of 128 (1,0,3,3,0,0)  R00-M0-N03-J29 
+rank 120 is processor Task 120 of 128 (1,1,3,0,0,0)  R00-M0-N01-J30 
+rank 30 is processor Task 30 of 128 (0,0,3,3,0,0)  R00-M0-N03-J00 
+rank 88 is processor Task 88 of 128 (1,0,3,0,0,0)  R00-M0-N01-J29 
+rank 124 is processor Task 124 of 128 (1,1,3,2,0,0)  R00-M0-N03-J18 
+rank 27 is processor Task 27 of 128 (0,0,3,1,1,0)  R00-M0-N01-J11 
+rank 87 is processor Task 87 of 128 (1,0,2,3,1,0)  R00-M0-N03-J27 
+rank 51 is processor Task 51 of 128 (0,1,2,1,1,0)  R00-M0-N01-J09 
+rank 22 is processor Task 22 of 128 (0,0,2,3,0,0)  R00-M0-N03-J01 
+rank 26 is processor Task 26 of 128 (0,0,3,1,0,0)  R00-M0-N01-J12 
+rank 126 is processor Task 126 of 128 (1,1,3,3,0,0)  R00-M0-N03-J30 
+rank 16 is processor Task 16 of 128 (0,0,2,0,0,0)  R00-M0-N01-J01 
+rank 85 is processor Task 85 of 128 (1,0,2,2,1,0)  R00-M0-N03-J23 
+rank 48 is processor Task 48 of 128 (0,1,2,0,0,0)  R00-M0-N01-J02 
+rank 31 is processor Task 31 of 128 (0,0,3,3,1,0)  R00-M0-N03-J07 
+rank 50 is processor Task 50 of 128 (0,1,2,1,0,0)  R00-M0-N01-J14 
+rank 61 is processor Task 61 of 128 (0,1,3,2,1,0)  R00-M0-N03-J08 
+rank 18 is processor Task 18 of 128 (0,0,2,1,0,0)  R00-M0-N01-J13 
+rank 118 is processor Task 118 of 128 (1,1,2,3,0,0)  R00-M0-N03-J31 
+rank 115 is processor Task 115 of 128 (1,1,2,1,1,0)  R00-M0-N01-J20 
+rank 23 is processor Task 23 of 128 (0,0,2,3,1,0)  R00-M0-N03-J06 
+rank 89 is processor Task 89 of 128 (1,0,3,0,1,0)  R00-M0-N01-J26 
+rank 28 is processor Task 28 of 128 (0,0,3,2,0,0)  R00-M0-N03-J12 
+rank 83 is processor Task 83 of 128 (1,0,2,1,1,0)  R00-M0-N01-J23 
+rank 60 is processor Task 60 of 128 (0,1,3,2,0,0)  R00-M0-N03-J15 
+rank 90 is processor Task 90 of 128 (1,0,3,1,0,0)  R00-M0-N01-J17 
+rank 84 is processor Task 84 of 128 (1,0,2,2,0,0)  R00-M0-N03-J16 
+rank 56 is processor Task 56 of 128 (0,1,3,0,0,0)  R00-M0-N01-J03 
+rank 54 is processor Task 54 of 128 (0,1,2,3,0,0)  R00-M0-N03-J02 
+rank 113 is processor Task 113 of 128 (1,1,2,0,1,0)  R00-M0-N01-J24 
+rank 92 is processor Task 92 of 128 (1,0,3,2,0,0)  R00-M0-N03-J17 
+rank 59 is processor Task 59 of 128 (0,1,3,1,1,0)  R00-M0-N01-J08 
+rank 53 is processor Task 53 of 128 (0,1,2,2,1,0)  R00-M0-N03-J09 
+rank 121 is processor Task 121 of 128 (1,1,3,0,1,0)  R00-M0-N01-J25 
+rank 29 is processor Task 29 of 128 (0,0,3,2,1,0)  R00-M0-N03-J11 
+rank 19 is processor Task 19 of 128 (0,0,2,1,1,0)  R00-M0-N01-J10 
+rank 20 is processor Task 20 of 128 (0,0,2,2,0,0)  R00-M0-N03-J13 
+rank 123 is processor Task 123 of 128 (1,1,3,1,1,0)  R00-M0-N01-J21 
+rank 55 is processor Task 55 of 128 (0,1,2,3,1,0)  R00-M0-N03-J05 
+rank 122 is processor Task 122 of 128 (1,1,3,1,0,0)  R00-M0-N01-J18 
+rank 62 is processor Task 62 of 128 (0,1,3,3,0,0)  R00-M0-N03-J03 
+rank 25 is processor Task 25 of 128 (0,0,3,0,1,0)  R00-M0-N01-J07 
+rank 86 is processor Task 86 of 128 (1,0,2,3,0,0)  R00-M0-N03-J28 
+rank 49 is processor Task 49 of 128 (0,1,2,0,1,0)  R00-M0-N01-J05 
+rank 63 is processor Task 63 of 128 (0,1,3,3,1,0)  R00-M0-N03-J04 
+rank 58 is processor Task 58 of 128 (0,1,3,1,0,0)  R00-M0-N01-J15 
+rank 116 is processor Task 116 of 128 (1,1,2,2,0,0)  R00-M0-N03-J19 
+rank 0 is processor Task 0 of 128 (0,0,0,0,0,0)  R00-M0-N00-J00 
+rank 119 is processor Task 119 of 128 (1,1,2,3,1,0)  R00-M0-N03-J24 
+number of barrier algorithms = {7,0} 
+number of allreduce algorithms = {5,7} 
+trying safe allreduce algorithm 0 (I1:Allreduce:P2P:P2P) 
+after safe allreduce algorithm 0 (I1:Allreduce:P2P:P2P) - 1 ints took 0.000075 seconds (0.053640 MB/s) 
+trying safe allreduce algorithm 1 (I0:Binomial:-:MU) 
+after safe allreduce algorithm 1 (I0:Binomial:-:MU) - 1 ints took 0.000118 seconds (0.033961 MB/s) 
+trying safe allreduce algorithm 2 (X0:MultinomialRadix4:-:MU) 
+after safe allreduce algorithm 2 (X0:MultinomialRadix4:-:MU) - 1 ints took 0.000109 seconds (0.036537 MB/s) 
+trying safe allreduce algorithm 3 (X0:MultinomialRadix8:-:MU) 
+after safe allreduce algorithm 3 (X0:MultinomialRadix8:-:MU) - 1 ints took 0.000112 seconds (0.035854 MB/s) 
+trying safe allreduce algorithm 4 (I0:SequenceBased_Binomial:-:MU) 
+after safe allreduce algorithm 4 (I0:SequenceBased_Binomial:-:MU) - 1 ints took 0.000120 seconds (0.033282 MB/s) 
+trying safe allreduce algorithm 0 (I1:Allreduce:P2P:P2P) 
+after safe allreduce algorithm 0 (I1:Allreduce:P2P:P2P) - 2 ints took 0.000045 seconds (0.177669 MB/s) 
+trying safe allreduce algorithm 1 (I0:Binomial:-:MU) 
+after safe allreduce algorithm 1 (I0:Binomial:-:MU) - 2 ints took 0.000091 seconds (0.088128 MB/s) 
+trying safe allreduce algorithm 2 (X0:MultinomialRadix4:-:MU) 
+after safe allreduce algorithm 2 (X0:MultinomialRadix4:-:MU) - 2 ints took 0.000093 seconds (0.085635 MB/s) 
+trying safe allreduce algorithm 3 (X0:MultinomialRadix8:-:MU) 
+after safe allreduce algorithm 3 (X0:MultinomialRadix8:-:MU) - 2 ints took 0.000094 seconds (0.085234 MB/s) 
+trying safe allreduce algorithm 4 (I0:SequenceBased_Binomial:-:MU) 
+after safe allreduce algorithm 4 (I0:SequenceBased_Binomial:-:MU) - 2 ints took 0.000097 seconds (0.082891 MB/s) 
+trying safe allreduce algorithm 0 (I1:Allreduce:P2P:P2P) 
+after safe allreduce algorithm 0 (I1:Allreduce:P2P:P2P) - 4 ints took 0.000046 seconds (0.350378 MB/s) 
+trying safe allreduce algorithm 1 (I0:Binomial:-:MU) 
+after safe allreduce algorithm 1 (I0:Binomial:-:MU) - 4 ints took 0.000092 seconds (0.174703 MB/s) 
+trying safe allreduce algorithm 2 (X0:MultinomialRadix4:-:MU) 
+after safe allreduce algorithm 2 (X0:MultinomialRadix4:-:MU) - 4 ints took 0.000094 seconds (0.169406 MB/s) 
+trying safe allreduce algorithm 3 (X0:MultinomialRadix8:-:MU) 
+after safe allreduce algorithm 3 (X0:MultinomialRadix8:-:MU) - 4 ints took 0.000093 seconds (0.171302 MB/s) 
+trying safe allreduce algorithm 4 (I0:SequenceBased_Binomial:-:MU) 
+after safe allreduce algorithm 4 (I0:SequenceBased_Binomial:-:MU) - 4 ints took 0.000094 seconds (0.170533 MB/s) 
+trying safe allreduce algorithm 0 (I1:Allreduce:P2P:P2P) 
+after safe allreduce algorithm 0 (I1:Allreduce:P2P:P2P) - 8 ints took 0.000046 seconds (0.696693 MB/s) 
+trying safe allreduce algorithm 1 (I0:Binomial:-:MU) 
+after safe allreduce algorithm 1 (I0:Binomial:-:MU) - 8 ints took 0.000091 seconds (0.352564 MB/s) 
+trying safe allreduce algorithm 2 (X0:MultinomialRadix4:-:MU) 
+after safe allreduce algorithm 2 (X0:MultinomialRadix4:-:MU) - 8 ints took 0.000093 seconds (0.344031 MB/s) 
+trying safe allreduce algorithm 3 (X0:MultinomialRadix8:-:MU) 
+after safe allreduce algorithm 3 (X0:MultinomialRadix8:-:MU) - 8 ints took 0.000094 seconds (0.340371 MB/s) 
+trying safe allreduce algorithm 4 (I0:SequenceBased_Binomial:-:MU) 
+after safe allreduce algorithm 4 (I0:SequenceBased_Binomial:-:MU) - 8 ints took 0.000095 seconds (0.335535 MB/s) 
+trying safe allreduce algorithm 0 (I1:Allreduce:P2P:P2P) 
+after safe allreduce algorithm 0 (I1:Allreduce:P2P:P2P) - 16 ints took 0.000049 seconds (1.296564 MB/s) 
+trying safe allreduce algorithm 1 (I0:Binomial:-:MU) 
+after safe allreduce algorithm 1 (I0:Binomial:-:MU) - 16 ints took 0.000093 seconds (0.689776 MB/s) 
+trying safe allreduce algorithm 2 (X0:MultinomialRadix4:-:MU) 
+after safe allreduce algorithm 2 (X0:MultinomialRadix4:-:MU) - 16 ints took 0.000093 seconds (0.686253 MB/s) 
+trying safe allreduce algorithm 3 (X0:MultinomialRadix8:-:MU) 
+after safe allreduce algorithm 3 (X0:MultinomialRadix8:-:MU) - 16 ints took 0.000095 seconds (0.673560 MB/s) 
+trying safe allreduce algorithm 4 (I0:SequenceBased_Binomial:-:MU) 
+after safe allreduce algorithm 4 (I0:SequenceBased_Binomial:-:MU) - 16 ints took 0.000096 seconds (0.665687 MB/s) 
+trying safe allreduce algorithm 0 (I1:Allreduce:P2P:P2P) 
+after safe allreduce algorithm 0 (I1:Allreduce:P2P:P2P) - 32 ints took 0.000061 seconds (2.112603 MB/s) 
+trying safe allreduce algorithm 1 (I0:Binomial:-:MU) 
+after safe allreduce algorithm 1 (I0:Binomial:-:MU) - 32 ints took 0.000106 seconds (1.202132 MB/s) 
+trying safe allreduce algorithm 2 (X0:MultinomialRadix4:-:MU) 
+after safe allreduce algorithm 2 (X0:MultinomialRadix4:-:MU) - 32 ints took 0.000104 seconds (1.230163 MB/s) 
+trying safe allreduce algorithm 3 (X0:MultinomialRadix8:-:MU) 
+after safe allreduce algorithm 3 (X0:MultinomialRadix8:-:MU) - 32 ints took 0.000105 seconds (1.218554 MB/s) 
+trying safe allreduce algorithm 4 (I0:SequenceBased_Binomial:-:MU) 
+after safe allreduce algorithm 4 (I0:SequenceBased_Binomial:-:MU) - 32 ints took 0.000111 seconds (1.155000 MB/s) 
+trying safe allreduce algorithm 0 (I1:Allreduce:P2P:P2P) 
+after safe allreduce algorithm 0 (I1:Allreduce:P2P:P2P) - 64 ints took 0.000065 seconds (3.926907 MB/s) 
+trying safe allreduce algorithm 1 (I0:Binomial:-:MU) 
+after safe allreduce algorithm 1 (I0:Binomial:-:MU) - 64 ints took 0.000113 seconds (2.274469 MB/s) 
+trying safe allreduce algorithm 2 (X0:MultinomialRadix4:-:MU) 
+after safe allreduce algorithm 2 (X0:MultinomialRadix4:-:MU) - 64 ints took 0.000110 seconds (2.325687 MB/s) 
+trying safe allreduce algorithm 3 (X0:MultinomialRadix8:-:MU) 
+after safe allreduce algorithm 3 (X0:MultinomialRadix8:-:MU) - 64 ints took 0.000111 seconds (2.306021 MB/s) 
+trying safe allreduce algorithm 4 (I0:SequenceBased_Binomial:-:MU) 
+after safe allreduce algorithm 4 (I0:SequenceBased_Binomial:-:MU) - 64 ints took 0.000116 seconds (2.198321 MB/s) 
+trying safe allreduce algorithm 0 (I1:Allreduce:P2P:P2P) 
+after safe allreduce algorithm 0 (I1:Allreduce:P2P:P2P) - 128 ints took 0.000100 seconds (5.100618 MB/s) 
+trying safe allreduce algorithm 1 (I0:Binomial:-:MU) 
+after safe allreduce algorithm 1 (I0:Binomial:-:MU) - 128 ints took 0.000130 seconds (3.940091 MB/s) 
+trying safe allreduce algorithm 2 (X0:MultinomialRadix4:-:MU) 
+after safe allreduce algorithm 2 (X0:MultinomialRadix4:-:MU) - 128 ints took 0.000130 seconds (3.945632 MB/s) 
+trying safe allreduce algorithm 3 (X0:MultinomialRadix8:-:MU) 
+after safe allreduce algorithm 3 (X0:MultinomialRadix8:-:MU) - 128 ints took 0.000130 seconds (3.932525 MB/s) 
+trying safe allreduce algorithm 4 (I0:SequenceBased_Binomial:-:MU) 
+after safe allreduce algorithm 4 (I0:SequenceBased_Binomial:-:MU) - 128 ints took 0.000137 seconds (3.745702 MB/s) 
+trying safe allreduce algorithm 0 (I1:Allreduce:P2P:P2P) 
+after safe allreduce algorithm 0 (I1:Allreduce:P2P:P2P) - 256 ints took 0.000120 seconds (8.537424 MB/s) 
+trying safe allreduce algorithm 1 (I0:Binomial:-:MU) 
+after safe allreduce algorithm 1 (I0:Binomial:-:MU) - 256 ints took 0.000142 seconds (7.233490 MB/s) 
+trying safe allreduce algorithm 2 (X0:MultinomialRadix4:-:MU) 
+after safe allreduce algorithm 2 (X0:MultinomialRadix4:-:MU) - 256 ints took 0.000145 seconds (7.077138 MB/s) 
+trying safe allreduce algorithm 3 (X0:MultinomialRadix8:-:MU) 
+after safe allreduce algorithm 3 (X0:MultinomialRadix8:-:MU) - 256 ints took 0.000143 seconds (7.138438 MB/s) 
+trying safe allreduce algorithm 4 (I0:SequenceBased_Binomial:-:MU) 
+after safe allreduce algorithm 4 (I0:SequenceBased_Binomial:-:MU) - 256 ints took 0.000151 seconds (6.803196 MB/s) 
+trying safe allreduce algorithm 0 (I1:Allreduce:P2P:P2P) 
+after safe allreduce algorithm 0 (I1:Allreduce:P2P:P2P) - 512 ints took 0.000176 seconds (11.666690 MB/s) 
+trying safe allreduce algorithm 1 (I0:Binomial:-:MU) 
+after safe allreduce algorithm 1 (I0:Binomial:-:MU) - 512 ints took 0.000170 seconds (12.073425 MB/s) 
+trying safe allreduce algorithm 2 (X0:MultinomialRadix4:-:MU) 
+after safe allreduce algorithm 2 (X0:MultinomialRadix4:-:MU) - 512 ints took 0.000171 seconds (11.999941 MB/s) 
+trying safe allreduce algorithm 3 (X0:MultinomialRadix8:-:MU) 
+after safe allreduce algorithm 3 (X0:MultinomialRadix8:-:MU) - 512 ints took 0.000170 seconds (12.061604 MB/s) 
+trying safe allreduce algorithm 4 (I0:SequenceBased_Binomial:-:MU) 
+after safe allreduce algorithm 4 (I0:SequenceBased_Binomial:-:MU) - 512 ints took 0.000176 seconds (11.640745 MB/s) 
+trying safe allreduce algorithm 0 (I1:Allreduce:P2P:P2P) 
+after safe allreduce algorithm 0 (I1:Allreduce:P2P:P2P) - 1024 ints took 0.000280 seconds (14.613892 MB/s) 
+trying safe allreduce algorithm 1 (I0:Binomial:-:MU) 
+after safe allreduce algorithm 1 (I0:Binomial:-:MU) - 1024 ints took 0.000227 seconds (18.072415 MB/s) 
+trying safe allreduce algorithm 2 (X0:MultinomialRadix4:-:MU) 
+after safe allreduce algorithm 2 (X0:MultinomialRadix4:-:MU) - 1024 ints took 0.000230 seconds (17.827686 MB/s) 
+trying safe allreduce algorithm 3 (X0:MultinomialRadix8:-:MU) 
+after safe allreduce algorithm 3 (X0:MultinomialRadix8:-:MU) - 1024 ints took 0.000229 seconds (17.883632 MB/s) 
+trying safe allreduce algorithm 4 (I0:SequenceBased_Binomial:-:MU) 
+after safe allreduce algorithm 4 (I0:SequenceBased_Binomial:-:MU) - 1024 ints took 0.000231 seconds (17.717412 MB/s) 
+trying safe allreduce algorithm 0 (I1:Allreduce:P2P:P2P) 
+after safe allreduce algorithm 0 (I1:Allreduce:P2P:P2P) - 2048 ints took 0.000474 seconds (17.274409 MB/s) 
+trying safe allreduce algorithm 1 (I0:Binomial:-:MU) 
+after safe allreduce algorithm 1 (I0:Binomial:-:MU) - 2048 ints took 0.000339 seconds (24.184632 MB/s) 
+trying safe allreduce algorithm 2 (X0:MultinomialRadix4:-:MU) 
+after safe allreduce algorithm 2 (X0:MultinomialRadix4:-:MU) - 2048 ints took 0.000339 seconds (24.158422 MB/s) 
+trying safe allreduce algorithm 3 (X0:MultinomialRadix8:-:MU) 
+after safe allreduce algorithm 3 (X0:MultinomialRadix8:-:MU) - 2048 ints took 0.000339 seconds (24.143648 MB/s) 
+trying safe allreduce algorithm 4 (I0:SequenceBased_Binomial:-:MU) 
+after safe allreduce algorithm 4 (I0:SequenceBased_Binomial:-:MU) - 2048 ints took 0.000342 seconds (23.948752 MB/s) 
+trying safe allreduce algorithm 0 (I1:Allreduce:P2P:P2P) 
+after safe allreduce algorithm 0 (I1:Allreduce:P2P:P2P) - 4096 ints took 0.000853 seconds (19.205983 MB/s) 
+trying safe allreduce algorithm 1 (I0:Binomial:-:MU) 
+after safe allreduce algorithm 1 (I0:Binomial:-:MU) - 4096 ints took 0.000553 seconds (29.652554 MB/s) 
+trying safe allreduce algorithm 2 (X0:MultinomialRadix4:-:MU) 
+after safe allreduce algorithm 2 (X0:MultinomialRadix4:-:MU) - 4096 ints took 0.000554 seconds (29.550471 MB/s) 
+trying safe allreduce algorithm 3 (X0:MultinomialRadix8:-:MU) 
+after safe allreduce algorithm 3 (X0:MultinomialRadix8:-:MU) - 4096 ints took 0.000555 seconds (29.517264 MB/s) 
+trying safe allreduce algorithm 4 (I0:SequenceBased_Binomial:-:MU) 
+after safe allreduce algorithm 4 (I0:SequenceBased_Binomial:-:MU) - 4096 ints took 0.000560 seconds (29.235673 MB/s) 
+trying safe allreduce algorithm 0 (I1:Allreduce:P2P:P2P) 
+after safe allreduce algorithm 0 (I1:Allreduce:P2P:P2P) - 8192 ints took 0.001599 seconds (20.490597 MB/s) 
+trying safe allreduce algorithm 1 (I0:Binomial:-:MU) 
+after safe allreduce algorithm 1 (I0:Binomial:-:MU) - 8192 ints took 0.000976 seconds (33.587364 MB/s) 
+trying safe allreduce algorithm 2 (X0:MultinomialRadix4:-:MU) 
+after safe allreduce algorithm 2 (X0:MultinomialRadix4:-:MU) - 8192 ints took 0.000977 seconds (33.524566 MB/s) 
+trying safe allreduce algorithm 3 (X0:MultinomialRadix8:-:MU) 
+after safe allreduce algorithm 3 (X0:MultinomialRadix8:-:MU) - 8192 ints took 0.000968 seconds (33.838306 MB/s) 
+trying safe allreduce algorithm 4 (I0:SequenceBased_Binomial:-:MU) 
+after safe allreduce algorithm 4 (I0:SequenceBased_Binomial:-:MU) - 8192 ints took 0.000981 seconds (33.404225 MB/s) 
+trying safe allreduce algorithm 0 (I1:Allreduce:P2P:P2P) 
+after safe allreduce algorithm 0 (I1:Allreduce:P2P:P2P) - 16384 ints took 0.003096 seconds (21.166959 MB/s) 
+trying safe allreduce algorithm 1 (I0:Binomial:-:MU) 
+after safe allreduce algorithm 1 (I0:Binomial:-:MU) - 16384 ints took 0.001759 seconds (37.248745 MB/s) 
+trying safe allreduce algorithm 2 (X0:MultinomialRadix4:-:MU) 
+after safe allreduce algorithm 2 (X0:MultinomialRadix4:-:MU) - 16384 ints took 0.001760 seconds (37.229912 MB/s) 
+trying safe allreduce algorithm 3 (X0:MultinomialRadix8:-:MU) 
+after safe allreduce algorithm 3 (X0:MultinomialRadix8:-:MU) - 16384 ints took 0.001762 seconds (37.188109 MB/s) 
+trying safe allreduce algorithm 4 (I0:SequenceBased_Binomial:-:MU) 
+after safe allreduce algorithm 4 (I0:SequenceBased_Binomial:-:MU) - 16384 ints took 0.001765 seconds (37.129353 MB/s) 
+trying safe allreduce algorithm 0 (I1:Allreduce:P2P:P2P) 
+after safe allreduce algorithm 0 (I1:Allreduce:P2P:P2P) - 32768 ints took 0.006086 seconds (21.538380 MB/s) 
+trying safe allreduce algorithm 1 (I0:Binomial:-:MU) 
+after safe allreduce algorithm 1 (I0:Binomial:-:MU) - 32768 ints took 0.003196 seconds (41.008393 MB/s) 
+trying safe allreduce algorithm 2 (X0:MultinomialRadix4:-:MU) 
+after safe allreduce algorithm 2 (X0:MultinomialRadix4:-:MU) - 32768 ints took 0.003177 seconds (41.260314 MB/s) 
+trying safe allreduce algorithm 3 (X0:MultinomialRadix8:-:MU) 
+after safe allreduce algorithm 3 (X0:MultinomialRadix8:-:MU) - 32768 ints took 0.003185 seconds (41.157023 MB/s) 
+trying safe allreduce algorithm 4 (I0:SequenceBased_Binomial:-:MU) 
+after safe allreduce algorithm 4 (I0:SequenceBased_Binomial:-:MU) - 32768 ints took 0.003181 seconds (41.201479 MB/s) 
+trying safe allreduce algorithm 0 (I1:Allreduce:P2P:P2P) 
+after safe allreduce algorithm 0 (I1:Allreduce:P2P:P2P) - 65536 ints took 0.012024 seconds (21.802267 MB/s) 
+trying safe allreduce algorithm 1 (I0:Binomial:-:MU) 
+after safe allreduce algorithm 1 (I0:Binomial:-:MU) - 65536 ints took 0.006040 seconds (43.398046 MB/s) 
+trying safe allreduce algorithm 2 (X0:MultinomialRadix4:-:MU) 
+after safe allreduce algorithm 2 (X0:MultinomialRadix4:-:MU) - 65536 ints took 0.006047 seconds (43.352239 MB/s) 
+trying safe allreduce algorithm 3 (X0:MultinomialRadix8:-:MU) 
+after safe allreduce algorithm 3 (X0:MultinomialRadix8:-:MU) - 65536 ints took 0.006043 seconds (43.381995 MB/s) 
+trying safe allreduce algorithm 4 (I0:SequenceBased_Binomial:-:MU) 
+after safe allreduce algorithm 4 (I0:SequenceBased_Binomial:-:MU) - 65536 ints took 0.006172 seconds (42.470679 MB/s) 
+trying safe allreduce algorithm 0 (I1:Allreduce:P2P:P2P) 
+after safe allreduce algorithm 0 (I1:Allreduce:P2P:P2P) - 131072 ints took 0.023878 seconds (21.957311 MB/s) 
+trying safe allreduce algorithm 1 (I0:Binomial:-:MU) 
+after safe allreduce algorithm 1 (I0:Binomial:-:MU) - 131072 ints took 0.012041 seconds (43.540235 MB/s) 
+trying safe allreduce algorithm 2 (X0:MultinomialRadix4:-:MU) 
+after safe allreduce algorithm 2 (X0:MultinomialRadix4:-:MU) - 131072 ints took 0.011931 seconds (43.941753 MB/s) 
+trying safe allreduce algorithm 3 (X0:MultinomialRadix8:-:MU) 
+after safe allreduce algorithm 3 (X0:MultinomialRadix8:-:MU) - 131072 ints took 0.012153 seconds (43.139368 MB/s) 
+trying safe allreduce algorithm 4 (I0:SequenceBased_Binomial:-:MU) 
+after safe allreduce algorithm 4 (I0:SequenceBased_Binomial:-:MU) - 131072 ints took 0.012162 seconds (43.107977 MB/s) 
+trying safe allreduce algorithm 0 (I1:Allreduce:P2P:P2P) 
+after safe allreduce algorithm 0 (I1:Allreduce:P2P:P2P) - 262144 ints took 0.047547 seconds (22.053662 MB/s) 
+trying safe allreduce algorithm 1 (I0:Binomial:-:MU) 
+after safe allreduce algorithm 1 (I0:Binomial:-:MU) - 262144 ints took 0.023992 seconds (43.705199 MB/s) 
+trying safe allreduce algorithm 2 (X0:MultinomialRadix4:-:MU) 
+after safe allreduce algorithm 2 (X0:MultinomialRadix4:-:MU) - 262144 ints took 0.023968 seconds (43.748928 MB/s) 
+trying safe allreduce algorithm 3 (X0:MultinomialRadix8:-:MU) 
+after safe allreduce algorithm 3 (X0:MultinomialRadix8:-:MU) - 262144 ints took 0.024162 seconds (43.397685 MB/s) 
+trying safe allreduce algorithm 4 (I0:SequenceBased_Binomial:-:MU) 
+after safe allreduce algorithm 4 (I0:SequenceBased_Binomial:-:MU) - 262144 ints took 0.024172 seconds (43.379058 MB/s) 
+trying safe allreduce algorithm 0 (I1:Allreduce:P2P:P2P) 
+after safe allreduce algorithm 0 (I1:Allreduce:P2P:P2P) - 524288 ints took 0.094829 seconds (22.115082 MB/s) 
+trying safe allreduce algorithm 1 (I0:Binomial:-:MU) 
+after safe allreduce algorithm 1 (I0:Binomial:-:MU) - 524288 ints took 0.047746 seconds (43.922856 MB/s) 
+trying safe allreduce algorithm 2 (X0:MultinomialRadix4:-:MU) 
+after safe allreduce algorithm 2 (X0:MultinomialRadix4:-:MU) - 524288 ints took 0.047791 seconds (43.881617 MB/s) 
+trying safe allreduce algorithm 3 (X0:MultinomialRadix8:-:MU) 
+after safe allreduce algorithm 3 (X0:MultinomialRadix8:-:MU) - 524288 ints took 0.048316 seconds (43.405276 MB/s) 
+trying safe allreduce algorithm 4 (I0:SequenceBased_Binomial:-:MU) 
+after safe allreduce algorithm 4 (I0:SequenceBased_Binomial:-:MU) - 524288 ints took 0.048234 seconds (43.478750 MB/s) 
+end of test 

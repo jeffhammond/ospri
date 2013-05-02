@@ -1,0 +1,460 @@
+rank 3 is processor Task 3 of 256 (0,0,0,1,1,0)  R00-M1-N00-J11 
+rank 113 is processor Task 113 of 256 (1,1,2,0,1,0)  R00-M1-N01-J24 
+rank 241 is processor Task 241 of 256 (3,1,2,0,1,0)  R00-M1-N05-J05 
+rank 195 is processor Task 195 of 256 (3,0,0,1,1,0)  R00-M1-N04-J11 
+rank 79 is processor Task 79 of 256 (1,0,1,3,1,0)  R00-M1-N02-J27 
+rank 59 is processor Task 59 of 256 (0,1,3,1,1,0)  R00-M1-N01-J08 
+rank 144 is processor Task 144 of 256 (2,0,2,0,0,0)  R00-M1-N05-J28 
+rank 214 is processor Task 214 of 256 (3,0,2,3,0,0)  R00-M1-N07-J01 
+rank 45 is processor Task 45 of 256 (0,1,1,2,1,0)  R00-M1-N02-J09 
+rank 6 is processor Task 6 of 256 (0,0,0,3,0,0)  R00-M1-N02-J00 
+rank 146 is processor Task 146 of 256 (2,0,2,1,0,0)  R00-M1-N05-J16 
+rank 220 is processor Task 220 of 256 (3,0,3,2,0,0)  R00-M1-N07-J12 
+rank 70 is processor Task 70 of 256 (1,0,0,3,0,0)  R00-M1-N02-J29 
+rank 105 is processor Task 105 of 256 (1,1,1,0,1,0)  R00-M1-N00-J24 
+rank 249 is processor Task 249 of 256 (3,1,3,0,1,0)  R00-M1-N05-J04 
+rank 132 is processor Task 132 of 256 (2,0,0,2,0,0)  R00-M1-N06-J17 
+rank 44 is processor Task 44 of 256 (0,1,1,2,0,0)  R00-M1-N02-J14 
+rank 74 is processor Task 74 of 256 (1,0,1,1,0,0)  R00-M1-N00-J16 
+rank 155 is processor Task 155 of 256 (2,0,3,1,1,0)  R00-M1-N05-J22 
+rank 196 is processor Task 196 of 256 (3,0,0,2,0,0)  R00-M1-N06-J12 
+rank 13 is processor Task 13 of 256 (0,0,1,2,1,0)  R00-M1-N02-J10 
+rank 66 is processor Task 66 of 256 (1,0,0,1,0,0)  R00-M1-N00-J17 
+rank 218 is processor Task 218 of 256 (3,0,3,1,0,0)  R00-M1-N05-J12 
+rank 197 is processor Task 197 of 256 (3,0,0,2,1,0)  R00-M1-N06-J11 
+rank 77 is processor Task 77 of 256 (1,0,1,2,1,0)  R00-M1-N02-J23 
+rank 58 is processor Task 58 of 256 (0,1,3,1,0,0)  R00-M1-N01-J15 
+rank 208 is processor Task 208 of 256 (3,0,2,0,0,0)  R00-M1-N05-J01 
+rank 236 is processor Task 236 of 256 (3,1,1,2,0,0)  R00-M1-N06-J14 
+rank 108 is processor Task 108 of 256 (1,1,1,2,0,0)  R00-M1-N02-J19 
+rank 26 is processor Task 26 of 256 (0,0,3,1,0,0)  R00-M1-N01-J12 
+rank 152 is processor Task 152 of 256 (2,0,3,0,0,0)  R00-M1-N05-J29 
+rank 252 is processor Task 252 of 256 (3,1,3,2,0,0)  R00-M1-N07-J15 
+rank 46 is processor Task 46 of 256 (0,1,1,3,0,0)  R00-M1-N02-J02 
+rank 114 is processor Task 114 of 256 (1,1,2,1,0,0)  R00-M1-N01-J19 
+rank 210 is processor Task 210 of 256 (3,0,2,1,0,0)  R00-M1-N05-J13 
+rank 189 is processor Task 189 of 256 (2,1,3,2,1,0)  R00-M1-N07-J21 
+rank 86 is processor Task 86 of 256 (1,0,2,3,0,0)  R00-M1-N03-J28 
+rank 56 is processor Task 56 of 256 (0,1,3,0,0,0)  R00-M1-N01-J03 
+rank 219 is processor Task 219 of 256 (3,0,3,1,1,0)  R00-M1-N05-J11 
+rank 223 is processor Task 223 of 256 (3,0,3,3,1,0)  R00-M1-N07-J07 
+rank 54 is processor Task 54 of 256 (0,1,2,3,0,0)  R00-M1-N03-J02 
+rank 153 is processor Task 153 of 256 (2,0,3,0,1,0)  R00-M1-N05-J26 
+rank 73 is processor Task 73 of 256 (1,0,1,0,1,0)  R00-M1-N00-J27 
+rank 151 is processor Task 151 of 256 (2,0,2,3,1,0)  R00-M1-N07-J27 
+rank 125 is processor Task 125 of 256 (1,1,3,2,1,0)  R00-M1-N03-J21 
+rank 185 is processor Task 185 of 256 (2,1,3,0,1,0)  R00-M1-N05-J25 
+rank 75 is processor Task 75 of 256 (1,0,1,1,1,0)  R00-M1-N00-J23 
+rank 254 is processor Task 254 of 256 (3,1,3,3,0,0)  R00-M1-N07-J03 
+rank 55 is processor Task 55 of 256 (0,1,2,3,1,0)  R00-M1-N03-J05 
+rank 242 is processor Task 242 of 256 (3,1,2,1,0,0)  R00-M1-N05-J14 
+rank 9 is processor Task 9 of 256 (0,0,1,0,1,0)  R00-M1-N00-J06 
+rank 157 is processor Task 157 of 256 (2,0,3,2,1,0)  R00-M1-N07-J22 
+rank 4 is processor Task 4 of 256 (0,0,0,2,0,0)  R00-M1-N02-J12 
+rank 186 is processor Task 186 of 256 (2,1,3,1,0,0)  R00-M1-N05-J18 
+rank 41 is processor Task 41 of 256 (0,1,1,0,1,0)  R00-M1-N00-J05 
+rank 215 is processor Task 215 of 256 (3,0,2,3,1,0)  R00-M1-N07-J06 
+rank 110 is processor Task 110 of 256 (1,1,1,3,0,0)  R00-M1-N02-J31 
+rank 250 is processor Task 250 of 256 (3,1,3,1,0,0)  R00-M1-N05-J15 
+rank 2 is processor Task 2 of 256 (0,0,0,1,0,0)  R00-M1-N00-J12 
+rank 158 is processor Task 158 of 256 (2,0,3,3,0,0)  R00-M1-N07-J29 
+rank 5 is processor Task 5 of 256 (0,0,0,2,1,0)  R00-M1-N02-J11 
+rank 209 is processor Task 209 of 256 (3,0,2,0,1,0)  R00-M1-N05-J06 
+rank 106 is processor Task 106 of 256 (1,1,1,1,0,0)  R00-M1-N00-J19 
+rank 244 is processor Task 244 of 256 (3,1,2,2,0,0)  R00-M1-N07-J14 
+rank 15 is processor Task 15 of 256 (0,0,1,3,1,0)  R00-M1-N02-J06 
+rank 217 is processor Task 217 of 256 (3,0,3,0,1,0)  R00-M1-N05-J07 
+rank 40 is processor Task 40 of 256 (0,1,1,0,0,0)  R00-M1-N00-J02 
+rank 190 is processor Task 190 of 256 (2,1,3,3,0,0)  R00-M1-N07-J30 
+rank 36 is processor Task 36 of 256 (0,1,0,2,0,0)  R00-M1-N02-J15 
+rank 179 is processor Task 179 of 256 (2,1,2,1,1,0)  R00-M1-N05-J20 
+rank 65 is processor Task 65 of 256 (1,0,0,0,1,0)  R00-M1-N00-J26 
+rank 221 is processor Task 221 of 256 (3,0,3,2,1,0)  R00-M1-N07-J11 
+rank 102 is processor Task 102 of 256 (1,1,0,3,0,0)  R00-M1-N02-J30 
+rank 240 is processor Task 240 of 256 (3,1,2,0,0,0)  R00-M1-N05-J02 
+rank 35 is processor Task 35 of 256 (0,1,0,1,1,0)  R00-M1-N00-J08 
+rank 245 is processor Task 245 of 256 (3,1,2,2,1,0)  R00-M1-N07-J09 
+rank 47 is processor Task 47 of 256 (0,1,1,3,1,0)  R00-M1-N02-J05 
+rank 129 is processor Task 129 of 256 (2,0,0,0,1,0)  R00-M1-N04-J26 
+rank 104 is processor Task 104 of 256 (1,1,1,0,0,0)  R00-M1-N00-J31 
+rank 246 is processor Task 246 of 256 (3,1,2,3,0,0)  R00-M1-N07-J02 
+rank 76 is processor Task 76 of 256 (1,0,1,2,0,0)  R00-M1-N02-J16 
+rank 203 is processor Task 203 of 256 (3,0,1,1,1,0)  R00-M1-N04-J10 
+rank 98 is processor Task 98 of 256 (1,1,0,1,0,0)  R00-M1-N00-J18 
+rank 149 is processor Task 149 of 256 (2,0,2,2,1,0)  R00-M1-N07-J23 
+rank 68 is processor Task 68 of 256 (1,0,0,2,0,0)  R00-M1-N02-J17 
+rank 131 is processor Task 131 of 256 (2,0,0,1,1,0)  R00-M1-N04-J22 
+rank 67 is processor Task 67 of 256 (1,0,0,1,1,0)  R00-M1-N00-J22 
+rank 213 is processor Task 213 of 256 (3,0,2,2,1,0)  R00-M1-N07-J10 
+rank 101 is processor Task 101 of 256 (1,1,0,2,1,0)  R00-M1-N02-J21 
+rank 193 is processor Task 193 of 256 (3,0,0,0,1,0)  R00-M1-N04-J07 
+rank 107 is processor Task 107 of 256 (1,1,1,1,1,0)  R00-M1-N00-J20 
+rank 183 is processor Task 183 of 256 (2,1,2,3,1,0)  R00-M1-N07-J24 
+rank 111 is processor Task 111 of 256 (1,1,1,3,1,0)  R00-M1-N02-J24 
+rank 227 is processor Task 227 of 256 (3,1,0,1,1,0)  R00-M1-N04-J08 
+rank 64 is processor Task 64 of 256 (1,0,0,0,0,0)  R00-M1-N00-J29 
+rank 150 is processor Task 150 of 256 (2,0,2,3,0,0)  R00-M1-N07-J28 
+rank 14 is processor Task 14 of 256 (0,0,1,3,0,0)  R00-M1-N02-J01 
+rank 235 is processor Task 235 of 256 (3,1,1,1,1,0)  R00-M1-N04-J09 
+rank 11 is processor Task 11 of 256 (0,0,1,1,1,0)  R00-M1-N00-J10 
+rank 247 is processor Task 247 of 256 (3,1,2,3,1,0)  R00-M1-N07-J05 
+rank 103 is processor Task 103 of 256 (1,1,0,3,1,0)  R00-M1-N02-J25 
+rank 194 is processor Task 194 of 256 (3,0,0,1,0,0)  R00-M1-N04-J12 
+rank 42 is processor Task 42 of 256 (0,1,1,1,0,0)  R00-M1-N00-J14 
+rank 180 is processor Task 180 of 256 (2,1,2,2,0,0)  R00-M1-N07-J19 
+rank 12 is processor Task 12 of 256 (0,0,1,2,0,0)  R00-M1-N02-J13 
+rank 130 is processor Task 130 of 256 (2,0,0,1,0,0)  R00-M1-N04-J17 
+rank 72 is processor Task 72 of 256 (1,0,1,0,0,0)  R00-M1-N00-J28 
+rank 148 is processor Task 148 of 256 (2,0,2,2,0,0)  R00-M1-N07-J16 
+rank 38 is processor Task 38 of 256 (0,1,0,3,0,0)  R00-M1-N02-J03 
+rank 161 is processor Task 161 of 256 (2,1,0,0,1,0)  R00-M1-N04-J25 
+starting test on 256 ranks 
+rank 156 is processor Task 156 of 256 (2,0,3,2,0,0)  R00-M1-N07-J17 
+rank 109 is processor Task 109 of 256 (1,1,1,2,1,0)  R00-M1-N02-J20 
+rank 138 is processor Task 138 of 256 (2,0,1,1,0,0)  R00-M1-N04-J16 
+rank 96 is processor Task 96 of 256 (1,1,0,0,0,0)  R00-M1-N00-J30 
+rank 212 is processor Task 212 of 256 (3,0,2,2,0,0)  R00-M1-N07-J13 
+rank 37 is processor Task 37 of 256 (0,1,0,2,1,0)  R00-M1-N02-J08 
+rank 192 is processor Task 192 of 256 (3,0,0,0,0,0)  R00-M1-N04-J00 
+rank 33 is processor Task 33 of 256 (0,1,0,0,1,0)  R00-M1-N00-J04 
+rank 191 is processor Task 191 of 256 (2,1,3,3,1,0)  R00-M1-N07-J25 
+rank 100 is processor Task 100 of 256 (1,1,0,2,0,0)  R00-M1-N02-J18 
+rank 170 is processor Task 170 of 256 (2,1,1,1,0,0)  R00-M1-N04-J19 
+rank 99 is processor Task 99 of 256 (1,1,0,1,1,0)  R00-M1-N00-J21 
+rank 255 is processor Task 255 of 256 (3,1,3,3,1,0)  R00-M1-N07-J04 
+rank 69 is processor Task 69 of 256 (1,0,0,2,1,0)  R00-M1-N02-J22 
+rank 169 is processor Task 169 of 256 (2,1,1,0,1,0)  R00-M1-N04-J24 
+rank 8 is processor Task 8 of 256 (0,0,1,0,0,0)  R00-M1-N00-J01 
+rank 253 is processor Task 253 of 256 (3,1,3,2,1,0)  R00-M1-N07-J08 
+rank 7 is processor Task 7 of 256 (0,0,0,3,1,0)  R00-M1-N02-J07 
+rank 162 is processor Task 162 of 256 (2,1,0,1,0,0)  R00-M1-N04-J18 
+rank 34 is processor Task 34 of 256 (0,1,0,1,0,0)  R00-M1-N00-J15 
+rank 222 is processor Task 222 of 256 (3,0,3,3,0,0)  R00-M1-N07-J00 
+rank 39 is processor Task 39 of 256 (0,1,0,3,1,0)  R00-M1-N02-J04 
+rank 160 is processor Task 160 of 256 (2,1,0,0,0,0)  R00-M1-N04-J30 
+rank 97 is processor Task 97 of 256 (1,1,0,0,1,0)  R00-M1-N00-J25 
+rank 159 is processor Task 159 of 256 (2,0,3,3,1,0)  R00-M1-N07-J26 
+rank 71 is processor Task 71 of 256 (1,0,0,3,1,0)  R00-M1-N02-J26 
+rank 168 is processor Task 168 of 256 (2,1,1,0,0,0)  R00-M1-N04-J31 
+rank 43 is processor Task 43 of 256 (0,1,1,1,1,0)  R00-M1-N00-J09 
+rank 167 is processor Task 167 of 256 (2,1,0,3,1,0)  R00-M1-N06-J25 
+rank 78 is processor Task 78 of 256 (1,0,1,3,0,0)  R00-M1-N02-J28 
+rank 139 is processor Task 139 of 256 (2,0,1,1,1,0)  R00-M1-N04-J23 
+rank 32 is processor Task 32 of 256 (0,1,0,0,0,0)  R00-M1-N00-J03 
+rank 188 is processor Task 188 of 256 (2,1,3,2,0,0)  R00-M1-N07-J18 
+rank 28 is processor Task 28 of 256 (0,0,3,2,0,0)  R00-M1-N03-J12 
+rank 136 is processor Task 136 of 256 (2,0,1,0,0,0)  R00-M1-N04-J28 
+rank 10 is processor Task 10 of 256 (0,0,1,1,0,0)  R00-M1-N00-J13 
+rank 141 is processor Task 141 of 256 (2,0,1,2,1,0)  R00-M1-N06-J23 
+rank 60 is processor Task 60 of 256 (0,1,3,2,0,0)  R00-M1-N03-J15 
+rank 128 is processor Task 128 of 256 (2,0,0,0,0,0)  R00-M1-N04-J29 
+rank 1 is processor Task 1 of 256 (0,0,0,0,1,0)  R00-M1-N00-J07 
+rank 181 is processor Task 181 of 256 (2,1,2,2,1,0)  R00-M1-N07-J20 
+rank 92 is processor Task 92 of 256 (1,0,3,2,0,0)  R00-M1-N03-J17 
+rank 163 is processor Task 163 of 256 (2,1,0,1,1,0)  R00-M1-N04-J21 
+rank 57 is processor Task 57 of 256 (0,1,3,0,1,0)  R00-M1-N01-J04 
+rank 142 is processor Task 142 of 256 (2,0,1,3,0,0)  R00-M1-N06-J28 
+rank 93 is processor Task 93 of 256 (1,0,3,2,1,0)  R00-M1-N03-J22 
+rank 224 is processor Task 224 of 256 (3,1,0,0,0,0)  R00-M1-N04-J03 
+rank 120 is processor Task 120 of 256 (1,1,3,0,0,0)  R00-M1-N01-J30 
+rank 182 is processor Task 182 of 256 (2,1,2,3,0,0)  R00-M1-N07-J31 
+rank 61 is processor Task 61 of 256 (0,1,3,2,1,0)  R00-M1-N03-J08 
+rank 232 is processor Task 232 of 256 (3,1,1,0,0,0)  R00-M1-N04-J02 
+rank 115 is processor Task 115 of 256 (1,1,2,1,1,0)  R00-M1-N01-J20 
+rank 165 is processor Task 165 of 256 (2,1,0,2,1,0)  R00-M1-N06-J21 
+rank 21 is processor Task 21 of 256 (0,0,2,2,1,0)  R00-M1-N03-J10 
+rank 225 is processor Task 225 of 256 (3,1,0,0,1,0)  R00-M1-N04-J04 
+rank 48 is processor Task 48 of 256 (0,1,2,0,0,0)  R00-M1-N01-J02 
+rank 230 is processor Task 230 of 256 (3,1,0,3,0,0)  R00-M1-N06-J03 
+rank 23 is processor Task 23 of 256 (0,0,2,3,1,0)  R00-M1-N03-J06 
+rank 171 is processor Task 171 of 256 (2,1,1,1,1,0)  R00-M1-N04-J20 
+rank 88 is processor Task 88 of 256 (1,0,3,0,0,0)  R00-M1-N01-J29 
+rank 143 is processor Task 143 of 256 (2,0,1,3,1,0)  R00-M1-N06-J27 
+rank 119 is processor Task 119 of 256 (1,1,2,3,1,0)  R00-M1-N03-J24 
+rank 233 is processor Task 233 of 256 (3,1,1,0,1,0)  R00-M1-N04-J05 
+rank 81 is processor Task 81 of 256 (1,0,2,0,1,0)  R00-M1-N01-J27 
+rank 166 is processor Task 166 of 256 (2,1,0,3,0,0)  R00-M1-N06-J30 
+rank 94 is processor Task 94 of 256 (1,0,3,3,0,0)  R00-M1-N03-J29 
+rank 137 is processor Task 137 of 256 (2,0,1,0,1,0)  R00-M1-N04-J27 
+rank 24 is processor Task 24 of 256 (0,0,3,0,0,0)  R00-M1-N01-J00 
+rank 174 is processor Task 174 of 256 (2,1,1,3,0,0)  R00-M1-N06-J31 
+rank 116 is processor Task 116 of 256 (1,1,2,2,0,0)  R00-M1-N03-J19 
+rank 202 is processor Task 202 of 256 (3,0,1,1,0,0)  R00-M1-N04-J13 
+rank 49 is processor Task 49 of 256 (0,1,2,0,1,0)  R00-M1-N01-J05 
+rank 207 is processor Task 207 of 256 (3,0,1,3,1,0)  R00-M1-N06-J06 
+rank 30 is processor Task 30 of 256 (0,0,3,3,0,0)  R00-M1-N03-J00 
+rank 201 is processor Task 201 of 256 (3,0,1,0,1,0)  R00-M1-N04-J06 
+rank 83 is processor Task 83 of 256 (1,0,2,1,1,0)  R00-M1-N01-J23 
+rank 228 is processor Task 228 of 256 (3,1,0,2,0,0)  R00-M1-N06-J15 
+rank 127 is processor Task 127 of 256 (1,1,3,3,1,0)  R00-M1-N03-J25 
+rank 234 is processor Task 234 of 256 (3,1,1,1,0,0)  R00-M1-N04-J14 
+rank 51 is processor Task 51 of 256 (0,1,2,1,1,0)  R00-M1-N01-J09 
+rank 238 is processor Task 238 of 256 (3,1,1,3,0,0)  R00-M1-N06-J02 
+rank 22 is processor Task 22 of 256 (0,0,2,3,0,0)  R00-M1-N03-J01 
+rank 226 is processor Task 226 of 256 (3,1,0,1,0,0)  R00-M1-N04-J15 
+rank 112 is processor Task 112 of 256 (1,1,2,0,0,0)  R00-M1-N01-J31 
+rank 140 is processor Task 140 of 256 (2,0,1,2,0,0)  R00-M1-N06-J16 
+rank 31 is processor Task 31 of 256 (0,0,3,3,1,0)  R00-M1-N03-J07 
+rank 200 is processor Task 200 of 256 (3,0,1,0,0,0)  R00-M1-N04-J01 
+rank 91 is processor Task 91 of 256 (1,0,3,1,1,0)  R00-M1-N01-J22 
+rank 204 is processor Task 204 of 256 (3,0,1,2,0,0)  R00-M1-N06-J13 
+rank 29 is processor Task 29 of 256 (0,0,3,2,1,0)  R00-M1-N03-J11 
+rank 251 is processor Task 251 of 256 (3,1,3,1,1,0)  R00-M1-N05-J08 
+rank 80 is processor Task 80 of 256 (1,0,2,0,0,0)  R00-M1-N01-J28 
+rank 205 is processor Task 205 of 256 (3,0,1,2,1,0)  R00-M1-N06-J10 
+rank 87 is processor Task 87 of 256 (1,0,2,3,1,0)  R00-M1-N03-J27 
+rank 248 is processor Task 248 of 256 (3,1,3,0,0,0)  R00-M1-N05-J03 
+rank 89 is processor Task 89 of 256 (1,0,3,0,1,0)  R00-M1-N01-J26 
+rank 175 is processor Task 175 of 256 (2,1,1,3,1,0)  R00-M1-N06-J24 
+rank 118 is processor Task 118 of 256 (1,1,2,3,0,0)  R00-M1-N03-J31 
+rank 198 is processor Task 198 of 256 (3,0,0,3,0,0)  R00-M1-N06-J00 
+rank 25 is processor Task 25 of 256 (0,0,3,0,1,0)  R00-M1-N01-J07 
+rank 133 is processor Task 133 of 256 (2,0,0,2,1,0)  R00-M1-N06-J22 
+rank 63 is processor Task 63 of 256 (0,1,3,3,1,0)  R00-M1-N03-J04 
+rank 178 is processor Task 178 of 256 (2,1,2,1,0,0)  R00-M1-N05-J19 
+rank 82 is processor Task 82 of 256 (1,0,2,1,0,0)  R00-M1-N01-J16 
+rank 135 is processor Task 135 of 256 (2,0,0,3,1,0)  R00-M1-N06-J26 
+rank 124 is processor Task 124 of 256 (1,1,3,2,0,0)  R00-M1-N03-J18 
+rank 154 is processor Task 154 of 256 (2,0,3,1,0,0)  R00-M1-N05-J17 
+rank 50 is processor Task 50 of 256 (0,1,2,1,0,0)  R00-M1-N01-J14 
+rank 199 is processor Task 199 of 256 (3,0,0,3,1,0)  R00-M1-N06-J07 
+rank 126 is processor Task 126 of 256 (1,1,3,3,0,0)  R00-M1-N03-J30 
+rank 211 is processor Task 211 of 256 (3,0,2,1,1,0)  R00-M1-N05-J10 
+rank 17 is processor Task 17 of 256 (0,0,2,0,1,0)  R00-M1-N01-J06 
+rank 172 is processor Task 172 of 256 (2,1,1,2,0,0)  R00-M1-N06-J19 
+rank 53 is processor Task 53 of 256 (0,1,2,2,1,0)  R00-M1-N03-J09 
+rank 176 is processor Task 176 of 256 (2,1,2,0,0,0)  R00-M1-N05-J31 
+rank 122 is processor Task 122 of 256 (1,1,3,1,0,0)  R00-M1-N01-J18 
+rank 134 is processor Task 134 of 256 (2,0,0,3,0,0)  R00-M1-N06-J29 
+rank 84 is processor Task 84 of 256 (1,0,2,2,0,0)  R00-M1-N03-J16 
+rank 145 is processor Task 145 of 256 (2,0,2,0,1,0)  R00-M1-N05-J27 
+rank 123 is processor Task 123 of 256 (1,1,3,1,1,0)  R00-M1-N01-J21 
+rank 164 is processor Task 164 of 256 (2,1,0,2,0,0)  R00-M1-N06-J18 
+rank 62 is processor Task 62 of 256 (0,1,3,3,0,0)  R00-M1-N03-J03 
+rank 177 is processor Task 177 of 256 (2,1,2,0,1,0)  R00-M1-N05-J24 
+rank 18 is processor Task 18 of 256 (0,0,2,1,0,0)  R00-M1-N01-J13 
+rank 231 is processor Task 231 of 256 (3,1,0,3,1,0)  R00-M1-N06-J04 
+rank 52 is processor Task 52 of 256 (0,1,2,2,0,0)  R00-M1-N03-J14 
+rank 216 is processor Task 216 of 256 (3,0,3,0,0,0)  R00-M1-N05-J00 
+rank 16 is processor Task 16 of 256 (0,0,2,0,0,0)  R00-M1-N01-J01 
+rank 237 is processor Task 237 of 256 (3,1,1,2,1,0)  R00-M1-N06-J09 
+rank 95 is processor Task 95 of 256 (1,0,3,3,1,0)  R00-M1-N03-J26 
+rank 187 is processor Task 187 of 256 (2,1,3,1,1,0)  R00-M1-N05-J21 
+rank 121 is processor Task 121 of 256 (1,1,3,0,1,0)  R00-M1-N01-J25 
+rank 239 is processor Task 239 of 256 (3,1,1,3,1,0)  R00-M1-N06-J05 
+rank 85 is processor Task 85 of 256 (1,0,2,2,1,0)  R00-M1-N03-J23 
+rank 243 is processor Task 243 of 256 (3,1,2,1,1,0)  R00-M1-N05-J09 
+rank 90 is processor Task 90 of 256 (1,0,3,1,0,0)  R00-M1-N01-J17 
+rank 206 is processor Task 206 of 256 (3,0,1,3,0,0)  R00-M1-N06-J01 
+rank 20 is processor Task 20 of 256 (0,0,2,2,0,0)  R00-M1-N03-J13 
+rank 184 is processor Task 184 of 256 (2,1,3,0,0,0)  R00-M1-N05-J30 
+rank 27 is processor Task 27 of 256 (0,0,3,1,1,0)  R00-M1-N01-J11 
+rank 229 is processor Task 229 of 256 (3,1,0,2,1,0)  R00-M1-N06-J08 
+rank 117 is processor Task 117 of 256 (1,1,2,2,1,0)  R00-M1-N03-J20 
+rank 147 is processor Task 147 of 256 (2,0,2,1,1,0)  R00-M1-N05-J23 
+rank 19 is processor Task 19 of 256 (0,0,2,1,1,0)  R00-M1-N01-J10 
+rank 173 is processor Task 173 of 256 (2,1,1,2,1,0)  R00-M1-N06-J20 
+rank 0 is processor Task 0 of 256 (0,0,0,0,0,0)  R00-M1-N00-J00 
+number of barrier algorithms = {7,0} 
+number of allreduce algorithms = {5,7} 
+trying safe allreduce algorithm 0 (I1:Allreduce:P2P:P2P) 
+after safe allreduce algorithm 0 (I1:Allreduce:P2P:P2P) - 1 ints took 0.000079 seconds (0.050492 MB/s) 
+trying safe allreduce algorithm 1 (I0:Binomial:-:MU) 
+after safe allreduce algorithm 1 (I0:Binomial:-:MU) - 1 ints took 0.000125 seconds (0.032037 MB/s) 
+trying safe allreduce algorithm 2 (X0:MultinomialRadix4:-:MU) 
+after safe allreduce algorithm 2 (X0:MultinomialRadix4:-:MU) - 1 ints took 0.000108 seconds (0.036927 MB/s) 
+trying safe allreduce algorithm 3 (X0:MultinomialRadix8:-:MU) 
+after safe allreduce algorithm 3 (X0:MultinomialRadix8:-:MU) - 1 ints took 0.000110 seconds (0.036409 MB/s) 
+trying safe allreduce algorithm 4 (I0:SequenceBased_Binomial:-:MU) 
+after safe allreduce algorithm 4 (I0:SequenceBased_Binomial:-:MU) - 1 ints took 0.000129 seconds (0.030984 MB/s) 
+trying safe allreduce algorithm 0 (I1:Allreduce:P2P:P2P) 
+after safe allreduce algorithm 0 (I1:Allreduce:P2P:P2P) - 2 ints took 0.000050 seconds (0.158983 MB/s) 
+trying safe allreduce algorithm 1 (I0:Binomial:-:MU) 
+after safe allreduce algorithm 1 (I0:Binomial:-:MU) - 2 ints took 0.000098 seconds (0.081474 MB/s) 
+trying safe allreduce algorithm 2 (X0:MultinomialRadix4:-:MU) 
+after safe allreduce algorithm 2 (X0:MultinomialRadix4:-:MU) - 2 ints took 0.000093 seconds (0.085976 MB/s) 
+trying safe allreduce algorithm 3 (X0:MultinomialRadix8:-:MU) 
+after safe allreduce algorithm 3 (X0:MultinomialRadix8:-:MU) - 2 ints took 0.000095 seconds (0.084535 MB/s) 
+trying safe allreduce algorithm 4 (I0:SequenceBased_Binomial:-:MU) 
+after safe allreduce algorithm 4 (I0:SequenceBased_Binomial:-:MU) - 2 ints took 0.000105 seconds (0.076096 MB/s) 
+trying safe allreduce algorithm 0 (I1:Allreduce:P2P:P2P) 
+after safe allreduce algorithm 0 (I1:Allreduce:P2P:P2P) - 4 ints took 0.000050 seconds (0.318163 MB/s) 
+trying safe allreduce algorithm 1 (I0:Binomial:-:MU) 
+after safe allreduce algorithm 1 (I0:Binomial:-:MU) - 4 ints took 0.000098 seconds (0.163369 MB/s) 
+trying safe allreduce algorithm 2 (X0:MultinomialRadix4:-:MU) 
+after safe allreduce algorithm 2 (X0:MultinomialRadix4:-:MU) - 4 ints took 0.000094 seconds (0.170940 MB/s) 
+trying safe allreduce algorithm 3 (X0:MultinomialRadix8:-:MU) 
+after safe allreduce algorithm 3 (X0:MultinomialRadix8:-:MU) - 4 ints took 0.000094 seconds (0.169989 MB/s) 
+trying safe allreduce algorithm 4 (I0:SequenceBased_Binomial:-:MU) 
+after safe allreduce algorithm 4 (I0:SequenceBased_Binomial:-:MU) - 4 ints took 0.000105 seconds (0.152891 MB/s) 
+trying safe allreduce algorithm 0 (I1:Allreduce:P2P:P2P) 
+after safe allreduce algorithm 0 (I1:Allreduce:P2P:P2P) - 8 ints took 0.000051 seconds (0.623129 MB/s) 
+trying safe allreduce algorithm 1 (I0:Binomial:-:MU) 
+after safe allreduce algorithm 1 (I0:Binomial:-:MU) - 8 ints took 0.000101 seconds (0.318372 MB/s) 
+trying safe allreduce algorithm 2 (X0:MultinomialRadix4:-:MU) 
+after safe allreduce algorithm 2 (X0:MultinomialRadix4:-:MU) - 8 ints took 0.000096 seconds (0.334724 MB/s) 
+trying safe allreduce algorithm 3 (X0:MultinomialRadix8:-:MU) 
+after safe allreduce algorithm 3 (X0:MultinomialRadix8:-:MU) - 8 ints took 0.000095 seconds (0.336975 MB/s) 
+trying safe allreduce algorithm 4 (I0:SequenceBased_Binomial:-:MU) 
+after safe allreduce algorithm 4 (I0:SequenceBased_Binomial:-:MU) - 8 ints took 0.000104 seconds (0.308475 MB/s) 
+trying safe allreduce algorithm 0 (I1:Allreduce:P2P:P2P) 
+after safe allreduce algorithm 0 (I1:Allreduce:P2P:P2P) - 16 ints took 0.000054 seconds (1.177066 MB/s) 
+trying safe allreduce algorithm 1 (I0:Binomial:-:MU) 
+after safe allreduce algorithm 1 (I0:Binomial:-:MU) - 16 ints took 0.000101 seconds (0.635220 MB/s) 
+trying safe allreduce algorithm 2 (X0:MultinomialRadix4:-:MU) 
+after safe allreduce algorithm 2 (X0:MultinomialRadix4:-:MU) - 16 ints took 0.000097 seconds (0.659233 MB/s) 
+trying safe allreduce algorithm 3 (X0:MultinomialRadix8:-:MU) 
+after safe allreduce algorithm 3 (X0:MultinomialRadix8:-:MU) - 16 ints took 0.000097 seconds (0.662749 MB/s) 
+trying safe allreduce algorithm 4 (I0:SequenceBased_Binomial:-:MU) 
+after safe allreduce algorithm 4 (I0:SequenceBased_Binomial:-:MU) - 16 ints took 0.000106 seconds (0.603902 MB/s) 
+trying safe allreduce algorithm 0 (I1:Allreduce:P2P:P2P) 
+after safe allreduce algorithm 0 (I1:Allreduce:P2P:P2P) - 32 ints took 0.000067 seconds (1.916096 MB/s) 
+trying safe allreduce algorithm 1 (I0:Binomial:-:MU) 
+after safe allreduce algorithm 1 (I0:Binomial:-:MU) - 32 ints took 0.000115 seconds (1.111063 MB/s) 
+trying safe allreduce algorithm 2 (X0:MultinomialRadix4:-:MU) 
+after safe allreduce algorithm 2 (X0:MultinomialRadix4:-:MU) - 32 ints took 0.000110 seconds (1.165026 MB/s) 
+trying safe allreduce algorithm 3 (X0:MultinomialRadix8:-:MU) 
+after safe allreduce algorithm 3 (X0:MultinomialRadix8:-:MU) - 32 ints took 0.000109 seconds (1.174049 MB/s) 
+trying safe allreduce algorithm 4 (I0:SequenceBased_Binomial:-:MU) 
+after safe allreduce algorithm 4 (I0:SequenceBased_Binomial:-:MU) - 32 ints took 0.000124 seconds (1.035923 MB/s) 
+trying safe allreduce algorithm 0 (I1:Allreduce:P2P:P2P) 
+after safe allreduce algorithm 0 (I1:Allreduce:P2P:P2P) - 64 ints took 0.000074 seconds (3.450600 MB/s) 
+trying safe allreduce algorithm 1 (I0:Binomial:-:MU) 
+after safe allreduce algorithm 1 (I0:Binomial:-:MU) - 64 ints took 0.000118 seconds (2.176570 MB/s) 
+trying safe allreduce algorithm 2 (X0:MultinomialRadix4:-:MU) 
+after safe allreduce algorithm 2 (X0:MultinomialRadix4:-:MU) - 64 ints took 0.000117 seconds (2.197001 MB/s) 
+trying safe allreduce algorithm 3 (X0:MultinomialRadix8:-:MU) 
+after safe allreduce algorithm 3 (X0:MultinomialRadix8:-:MU) - 64 ints took 0.000115 seconds (2.216498 MB/s) 
+trying safe allreduce algorithm 4 (I0:SequenceBased_Binomial:-:MU) 
+after safe allreduce algorithm 4 (I0:SequenceBased_Binomial:-:MU) - 64 ints took 0.000130 seconds (1.974756 MB/s) 
+trying safe allreduce algorithm 0 (I1:Allreduce:P2P:P2P) 
+after safe allreduce algorithm 0 (I1:Allreduce:P2P:P2P) - 128 ints took 0.000114 seconds (4.486505 MB/s) 
+trying safe allreduce algorithm 1 (I0:Binomial:-:MU) 
+after safe allreduce algorithm 1 (I0:Binomial:-:MU) - 128 ints took 0.000141 seconds (3.621190 MB/s) 
+trying safe allreduce algorithm 2 (X0:MultinomialRadix4:-:MU) 
+after safe allreduce algorithm 2 (X0:MultinomialRadix4:-:MU) - 128 ints took 0.000139 seconds (3.684928 MB/s) 
+trying safe allreduce algorithm 3 (X0:MultinomialRadix8:-:MU) 
+after safe allreduce algorithm 3 (X0:MultinomialRadix8:-:MU) - 128 ints took 0.000139 seconds (3.680623 MB/s) 
+trying safe allreduce algorithm 4 (I0:SequenceBased_Binomial:-:MU) 
+after safe allreduce algorithm 4 (I0:SequenceBased_Binomial:-:MU) - 128 ints took 0.000148 seconds (3.456336 MB/s) 
+trying safe allreduce algorithm 0 (I1:Allreduce:P2P:P2P) 
+after safe allreduce algorithm 0 (I1:Allreduce:P2P:P2P) - 256 ints took 0.000136 seconds (7.547726 MB/s) 
+trying safe allreduce algorithm 1 (I0:Binomial:-:MU) 
+after safe allreduce algorithm 1 (I0:Binomial:-:MU) - 256 ints took 0.000154 seconds (6.661354 MB/s) 
+trying safe allreduce algorithm 2 (X0:MultinomialRadix4:-:MU) 
+after safe allreduce algorithm 2 (X0:MultinomialRadix4:-:MU) - 256 ints took 0.000160 seconds (6.418730 MB/s) 
+trying safe allreduce algorithm 3 (X0:MultinomialRadix8:-:MU) 
+after safe allreduce algorithm 3 (X0:MultinomialRadix8:-:MU) - 256 ints took 0.000158 seconds (6.479552 MB/s) 
+trying safe allreduce algorithm 4 (I0:SequenceBased_Binomial:-:MU) 
+after safe allreduce algorithm 4 (I0:SequenceBased_Binomial:-:MU) - 256 ints took 0.000163 seconds (6.265967 MB/s) 
+trying safe allreduce algorithm 0 (I1:Allreduce:P2P:P2P) 
+after safe allreduce algorithm 0 (I1:Allreduce:P2P:P2P) - 512 ints took 0.000199 seconds (10.307903 MB/s) 
+trying safe allreduce algorithm 1 (I0:Binomial:-:MU) 
+after safe allreduce algorithm 1 (I0:Binomial:-:MU) - 512 ints took 0.000189 seconds (10.864145 MB/s) 
+trying safe allreduce algorithm 2 (X0:MultinomialRadix4:-:MU) 
+after safe allreduce algorithm 2 (X0:MultinomialRadix4:-:MU) - 512 ints took 0.000216 seconds (9.495494 MB/s) 
+trying safe allreduce algorithm 3 (X0:MultinomialRadix8:-:MU) 
+after safe allreduce algorithm 3 (X0:MultinomialRadix8:-:MU) - 512 ints took 0.000204 seconds (10.037617 MB/s) 
+trying safe allreduce algorithm 4 (I0:SequenceBased_Binomial:-:MU) 
+after safe allreduce algorithm 4 (I0:SequenceBased_Binomial:-:MU) - 512 ints took 0.000196 seconds (10.430487 MB/s) 
+trying safe allreduce algorithm 0 (I1:Allreduce:P2P:P2P) 
+after safe allreduce algorithm 0 (I1:Allreduce:P2P:P2P) - 1024 ints took 0.000318 seconds (12.898959 MB/s) 
+trying safe allreduce algorithm 1 (I0:Binomial:-:MU) 
+after safe allreduce algorithm 1 (I0:Binomial:-:MU) - 1024 ints took 0.000255 seconds (16.075117 MB/s) 
+trying safe allreduce algorithm 2 (X0:MultinomialRadix4:-:MU) 
+after safe allreduce algorithm 2 (X0:MultinomialRadix4:-:MU) - 1024 ints took 0.000286 seconds (14.299367 MB/s) 
+trying safe allreduce algorithm 3 (X0:MultinomialRadix8:-:MU) 
+after safe allreduce algorithm 3 (X0:MultinomialRadix8:-:MU) - 1024 ints took 0.000286 seconds (14.311858 MB/s) 
+trying safe allreduce algorithm 4 (I0:SequenceBased_Binomial:-:MU) 
+after safe allreduce algorithm 4 (I0:SequenceBased_Binomial:-:MU) - 1024 ints took 0.000259 seconds (15.791275 MB/s) 
+trying safe allreduce algorithm 0 (I1:Allreduce:P2P:P2P) 
+after safe allreduce algorithm 0 (I1:Allreduce:P2P:P2P) - 2048 ints took 0.000539 seconds (15.206062 MB/s) 
+trying safe allreduce algorithm 1 (I0:Binomial:-:MU) 
+after safe allreduce algorithm 1 (I0:Binomial:-:MU) - 2048 ints took 0.000381 seconds (21.506816 MB/s) 
+trying safe allreduce algorithm 2 (X0:MultinomialRadix4:-:MU) 
+after safe allreduce algorithm 2 (X0:MultinomialRadix4:-:MU) - 2048 ints took 0.000462 seconds (17.720143 MB/s) 
+trying safe allreduce algorithm 3 (X0:MultinomialRadix8:-:MU) 
+after safe allreduce algorithm 3 (X0:MultinomialRadix8:-:MU) - 2048 ints took 0.000460 seconds (17.817072 MB/s) 
+trying safe allreduce algorithm 4 (I0:SequenceBased_Binomial:-:MU) 
+after safe allreduce algorithm 4 (I0:SequenceBased_Binomial:-:MU) - 2048 ints took 0.000389 seconds (21.066640 MB/s) 
+trying safe allreduce algorithm 0 (I1:Allreduce:P2P:P2P) 
+after safe allreduce algorithm 0 (I1:Allreduce:P2P:P2P) - 4096 ints took 0.000972 seconds (16.855187 MB/s) 
+trying safe allreduce algorithm 1 (I0:Binomial:-:MU) 
+after safe allreduce algorithm 1 (I0:Binomial:-:MU) - 4096 ints took 0.000631 seconds (25.978515 MB/s) 
+trying safe allreduce algorithm 2 (X0:MultinomialRadix4:-:MU) 
+after safe allreduce algorithm 2 (X0:MultinomialRadix4:-:MU) - 4096 ints took 0.000809 seconds (20.259519 MB/s) 
+trying safe allreduce algorithm 3 (X0:MultinomialRadix8:-:MU) 
+after safe allreduce algorithm 3 (X0:MultinomialRadix8:-:MU) - 4096 ints took 0.000818 seconds (20.023373 MB/s) 
+trying safe allreduce algorithm 4 (I0:SequenceBased_Binomial:-:MU) 
+after safe allreduce algorithm 4 (I0:SequenceBased_Binomial:-:MU) - 4096 ints took 0.000635 seconds (25.788883 MB/s) 
+trying safe allreduce algorithm 0 (I1:Allreduce:P2P:P2P) 
+after safe allreduce algorithm 0 (I1:Allreduce:P2P:P2P) - 8192 ints took 0.001824 seconds (17.969222 MB/s) 
+trying safe allreduce algorithm 1 (I0:Binomial:-:MU) 
+after safe allreduce algorithm 1 (I0:Binomial:-:MU) - 8192 ints took 0.001104 seconds (29.691783 MB/s) 
+trying safe allreduce algorithm 2 (X0:MultinomialRadix4:-:MU) 
+after safe allreduce algorithm 2 (X0:MultinomialRadix4:-:MU) - 8192 ints took 0.001465 seconds (22.362809 MB/s) 
+trying safe allreduce algorithm 3 (X0:MultinomialRadix8:-:MU) 
+after safe allreduce algorithm 3 (X0:MultinomialRadix8:-:MU) - 8192 ints took 0.001465 seconds (22.360939 MB/s) 
+trying safe allreduce algorithm 4 (I0:SequenceBased_Binomial:-:MU) 
+after safe allreduce algorithm 4 (I0:SequenceBased_Binomial:-:MU) - 8192 ints took 0.001119 seconds (29.287051 MB/s) 
+trying safe allreduce algorithm 0 (I1:Allreduce:P2P:P2P) 
+after safe allreduce algorithm 0 (I1:Allreduce:P2P:P2P) - 16384 ints took 0.003535 seconds (18.536636 MB/s) 
+trying safe allreduce algorithm 1 (I0:Binomial:-:MU) 
+after safe allreduce algorithm 1 (I0:Binomial:-:MU) - 16384 ints took 0.001989 seconds (32.944003 MB/s) 
+trying safe allreduce algorithm 2 (X0:MultinomialRadix4:-:MU) 
+after safe allreduce algorithm 2 (X0:MultinomialRadix4:-:MU) - 16384 ints took 0.002737 seconds (23.948369 MB/s) 
+trying safe allreduce algorithm 3 (X0:MultinomialRadix8:-:MU) 
+after safe allreduce algorithm 3 (X0:MultinomialRadix8:-:MU) - 16384 ints took 0.002732 seconds (23.989505 MB/s) 
+trying safe allreduce algorithm 4 (I0:SequenceBased_Binomial:-:MU) 
+after safe allreduce algorithm 4 (I0:SequenceBased_Binomial:-:MU) - 16384 ints took 0.001998 seconds (32.803736 MB/s) 
+trying safe allreduce algorithm 0 (I1:Allreduce:P2P:P2P) 
+after safe allreduce algorithm 0 (I1:Allreduce:P2P:P2P) - 32768 ints took 0.006940 seconds (18.885435 MB/s) 
+trying safe allreduce algorithm 1 (I0:Binomial:-:MU) 
+after safe allreduce algorithm 1 (I0:Binomial:-:MU) - 32768 ints took 0.003622 seconds (36.188728 MB/s) 
+trying safe allreduce algorithm 2 (X0:MultinomialRadix4:-:MU) 
+after safe allreduce algorithm 2 (X0:MultinomialRadix4:-:MU) - 32768 ints took 0.005194 seconds (25.234646 MB/s) 
+trying safe allreduce algorithm 3 (X0:MultinomialRadix8:-:MU) 
+after safe allreduce algorithm 3 (X0:MultinomialRadix8:-:MU) - 32768 ints took 0.005189 seconds (25.259813 MB/s) 
+trying safe allreduce algorithm 4 (I0:SequenceBased_Binomial:-:MU) 
+after safe allreduce algorithm 4 (I0:SequenceBased_Binomial:-:MU) - 32768 ints took 0.003690 seconds (35.520915 MB/s) 
+trying safe allreduce algorithm 0 (I1:Allreduce:P2P:P2P) 
+after safe allreduce algorithm 0 (I1:Allreduce:P2P:P2P) - 65536 ints took 0.013729 seconds (19.094535 MB/s) 
+trying safe allreduce algorithm 1 (I0:Binomial:-:MU) 
+after safe allreduce algorithm 1 (I0:Binomial:-:MU) - 65536 ints took 0.006903 seconds (37.973936 MB/s) 
+trying safe allreduce algorithm 2 (X0:MultinomialRadix4:-:MU) 
+after safe allreduce algorithm 2 (X0:MultinomialRadix4:-:MU) - 65536 ints took 0.010226 seconds (25.635424 MB/s) 
+trying safe allreduce algorithm 3 (X0:MultinomialRadix8:-:MU) 
+after safe allreduce algorithm 3 (X0:MultinomialRadix8:-:MU) - 65536 ints took 0.010228 seconds (25.629368 MB/s) 
+trying safe allreduce algorithm 4 (I0:SequenceBased_Binomial:-:MU) 
+after safe allreduce algorithm 4 (I0:SequenceBased_Binomial:-:MU) - 65536 ints took 0.007192 seconds (36.449319 MB/s) 
+trying safe allreduce algorithm 0 (I1:Allreduce:P2P:P2P) 
+after safe allreduce algorithm 0 (I1:Allreduce:P2P:P2P) - 131072 ints took 0.027269 seconds (19.226665 MB/s) 
+trying safe allreduce algorithm 1 (I0:Binomial:-:MU) 
+after safe allreduce algorithm 1 (I0:Binomial:-:MU) - 131072 ints took 0.013633 seconds (38.456603 MB/s) 
+trying safe allreduce algorithm 2 (X0:MultinomialRadix4:-:MU) 
+after safe allreduce algorithm 2 (X0:MultinomialRadix4:-:MU) - 131072 ints took 0.020369 seconds (25.739367 MB/s) 
+trying safe allreduce algorithm 3 (X0:MultinomialRadix8:-:MU) 
+after safe allreduce algorithm 3 (X0:MultinomialRadix8:-:MU) - 131072 ints took 0.020578 seconds (25.478617 MB/s) 
+trying safe allreduce algorithm 4 (I0:SequenceBased_Binomial:-:MU) 
+after safe allreduce algorithm 4 (I0:SequenceBased_Binomial:-:MU) - 131072 ints took 0.013636 seconds (38.449355 MB/s) 
+trying safe allreduce algorithm 0 (I1:Allreduce:P2P:P2P) 
+after safe allreduce algorithm 0 (I1:Allreduce:P2P:P2P) - 262144 ints took 0.054307 seconds (19.308307 MB/s) 
+trying safe allreduce algorithm 1 (I0:Binomial:-:MU) 
+after safe allreduce algorithm 1 (I0:Binomial:-:MU) - 262144 ints took 0.027493 seconds (38.139745 MB/s) 
+trying safe allreduce algorithm 2 (X0:MultinomialRadix4:-:MU) 
+after safe allreduce algorithm 2 (X0:MultinomialRadix4:-:MU) - 262144 ints took 0.040866 seconds (25.658853 MB/s) 
+trying safe allreduce algorithm 3 (X0:MultinomialRadix8:-:MU) 
+after safe allreduce algorithm 3 (X0:MultinomialRadix8:-:MU) - 262144 ints took 0.041038 seconds (25.551371 MB/s) 
+trying safe allreduce algorithm 4 (I0:SequenceBased_Binomial:-:MU) 
+after safe allreduce algorithm 4 (I0:SequenceBased_Binomial:-:MU) - 262144 ints took 0.027644 seconds (37.930913 MB/s) 
+trying safe allreduce algorithm 0 (I1:Allreduce:P2P:P2P) 
+after safe allreduce algorithm 0 (I1:Allreduce:P2P:P2P) - 524288 ints took 0.108432 seconds (19.340760 MB/s) 
+trying safe allreduce algorithm 1 (I0:Binomial:-:MU) 
+after safe allreduce algorithm 1 (I0:Binomial:-:MU) - 524288 ints took 0.060375 seconds (34.735666 MB/s) 
+trying safe allreduce algorithm 2 (X0:MultinomialRadix4:-:MU) 
+after safe allreduce algorithm 2 (X0:MultinomialRadix4:-:MU) - 524288 ints took 0.086495 seconds (24.245845 MB/s) 
+trying safe allreduce algorithm 3 (X0:MultinomialRadix8:-:MU) 
+after safe allreduce algorithm 3 (X0:MultinomialRadix8:-:MU) - 524288 ints took 0.082134 seconds (25.533318 MB/s) 
+trying safe allreduce algorithm 4 (I0:SequenceBased_Binomial:-:MU) 
+after safe allreduce algorithm 4 (I0:SequenceBased_Binomial:-:MU) - 524288 ints took 0.055149 seconds (38.027211 MB/s) 
+end of test 
