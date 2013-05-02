@@ -1,0 +1,8 @@
+Before PAMI_Wtime()
+Before PAMI_Wtime()
+After first PAMI_Wtime, value = 9.19155
+After second PAMI_Wtime, value = 13.1919
+Elapsed time, value = 4.00037
+After first PAMI_Wtime, value = 9.19302
+After second PAMI_Wtime, value = 13.1934
+Elapsed time, value = 4.00035
