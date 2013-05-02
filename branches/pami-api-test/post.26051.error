@@ -1,0 +1,9 @@
+2012-08-20 03:30:55.353 (INFO ) [0xfff94948ad0] VST-00040-11371-128:11780:ibm.runjob.client.options.Parser: set local socket to runjob_mux from properties file
+2012-08-20 03:30:57.905 (INFO ) [0xfff94948ad0] VST-00040-11371-128:32321:ibm.runjob.client.Job: job 32321 started
+do_work() cookie = 0x149c0f8, 1 -> 0
+do_work() cookie = 0x149c0f8, 1 -> 0
+do_work() cookie = 0x149c130, 1 -> 0
+do_work() cookie = 0x149c130, 1 -> 0
+Success.
+Success.
+2012-08-20 03:30:59.974 (INFO ) [0xfff94948ad0] VST-00040-11371-128:32321:ibm.runjob.client.Job: exited with status 0
