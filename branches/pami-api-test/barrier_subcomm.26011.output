@@ -1,0 +1,9 @@
+# Context: 0
+# Test set(0):  Barrier Test -- context = 0, task_zero = 0, protocol: I1:Barrier:P2P:P2P (1 of 2 algorithms)
+# Test set(1):  Barrier Test -- context = 0, task_zero = 1, protocol: I1:Barrier:P2P:P2P (1 of 2 algorithms)
+# -------------------------------------------------------------------
+# -------------------------------------------------------------------
+# Test set(0):  Barrier Test -- context = 0, task_zero = 0, protocol: I0:OneTaskBarrier:OneTask:OneTask (2 of 2 algorithms)
+# -------------------------------------------------------------------
+# Test set(1):  Barrier Test -- context = 0, task_zero = 1, protocol: I0:OneTaskBarrier:OneTask:OneTask (2 of 2 algorithms)
+# -------------------------------------------------------------------
