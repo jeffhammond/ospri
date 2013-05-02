@@ -1,0 +1,8 @@
+Before PAMI_Wtimebase()
+Before PAMI_Wtimebase()
+After first PAMI_Wtimebase, value = 16648295206
+After first PAMI_Wtimebase, value = 16648811486
+After second PAMI_Wtimebase, value = 16649353600
+After second PAMI_Wtimebase, value = 16649845602
+Elapsed timebase, value = 1058394
+Elapsed timebase, value = 1034116
