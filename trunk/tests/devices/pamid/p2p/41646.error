@@ -1,0 +1,38 @@
+2012-11-07 02:32:42.364 (INFO ) [0xfff79198ad0] ibm.runjob.AbstractOptions: using properties file /bgsys/local/etc/bg.properties
+2012-11-07 02:32:42.365 (INFO ) [0xfff79198ad0] ibm.runjob.AbstractOptions: max open file descriptors: 65536
+2012-11-07 02:32:42.365 (INFO ) [0xfff79198ad0] ibm.runjob.AbstractOptions: core file limit: 0
+2012-11-07 02:32:42.365 (INFO ) [0xfff79198ad0] VST-22000-33331-128:9440:ibm.runjob.client.options.Parser: set local socket to runjob_mux from properties file
+2012-11-07 02:32:44.440 (INFO ) [0xfff79198ad0] VST-22000-33331-128:85027:ibm.runjob.client.Job: job 85027 started
+attempting to allocate 0 bytes 
+attempting to allocate 0 bytes 
+attempting to allocate 0 bytes 
+attempting to allocate 0 bytes 
+attempting to allocate 0 bytes 
+attempting to allocate 0 bytes 
+attempting to allocate 0 bytes 
+attempting to allocate 0 bytes 
+attempting to allocate 0 bytes 
+attempting to allocate 0 bytes 
+attempting to allocate 0 bytes 
+attempting to allocate 0 bytes 
+attempting to allocate 0 bytes 
+attempting to allocate 0 bytes 
+attempting to allocate 0 bytes 
+attempting to allocate 0 bytes 
+attempting to allocate 0 bytes 
+attempting to allocate 0 bytes 
+attempting to allocate 0 bytes 
+attempting to allocate 0 bytes 
+attempting to allocate 0 bytes 
+attempting to allocate 0 bytes 
+attempting to allocate 0 bytes 
+attempting to allocate 0 bytes 
+attempting to allocate 0 bytes 
+attempting to allocate 0 bytes 
+attempting to allocate 0 bytes 
+attempting to allocate 0 bytes 
+attempting to allocate 0 bytes 
+attempting to allocate 0 bytes 
+attempting to allocate 0 bytes 
+attempting to allocate 0 bytes 
+2012-11-07 02:32:46.208 (INFO ) [0xfff79198ad0] VST-22000-33331-128:85027:ibm.runjob.client.Job: exited with status 0
