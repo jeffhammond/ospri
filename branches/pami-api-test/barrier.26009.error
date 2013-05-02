@@ -1,0 +1,50 @@
+2012-08-20 03:27:46.245 (INFO ) [0xfffa2128ad0] VST-02040-13371-128:25485:ibm.runjob.client.options.Parser: set local socket to runjob_mux from properties file
+2012-08-20 03:27:48.810 (INFO ) [0xfffa2128ad0] VST-02040-13371-128:32311:ibm.runjob.client.Job: job 32311 started
+(Optimize -1) Test Default Barrier(I1:Barrier:P2P:P2P)
+(Optimize -1) Barrier Done (I1:Barrier:P2P:P2P)
+Test Barrier optimize = -1, protocol: I1:Barrier:P2P:P2P correctness (1 of 9 algorithms)
+I1:Barrier:P2P:P2P PASS: Barrier correct!
+Test Barrier optimize = -1, protocol: I1:Barrier:P2P:P2P correctness (1 of 9 algorithms)
+I1:Barrier:P2P:P2P PASS: Barrier correct!
+Test Barrier protocol(I1:Barrier:P2P:P2P) Performance: time=3.190000 usec
+Test Barrier optimize = -1, protocol: I0:Binomial:-:MU correctness (2 of 9 algorithms)
+I0:Binomial:-:MU PASS: Barrier correct!
+Test Barrier optimize = -1, protocol: I0:Binomial:-:MU correctness (2 of 9 algorithms)
+I0:Binomial:-:MU PASS: Barrier correct!
+Test Barrier protocol(I0:Binomial:-:MU) Performance: time=8.700000 usec
+Test Barrier optimize = -1, protocol: I0:Binomial:-:ShortMU correctness (3 of 9 algorithms)
+I0:Binomial:-:ShortMU PASS: Barrier correct!
+Test Barrier optimize = -1, protocol: I0:Binomial:-:ShortMU correctness (3 of 9 algorithms)
+I0:Binomial:-:ShortMU PASS: Barrier correct!
+Test Barrier protocol(I0:Binomial:-:ShortMU) Performance: time=3.580000 usec
+Test Barrier optimize = -1, protocol: I0:OptBinomial:P2P:P2P correctness (4 of 9 algorithms)
+I0:OptBinomial:P2P:P2P PASS: Barrier correct!
+Test Barrier optimize = -1, protocol: I0:OptBinomial:P2P:P2P correctness (4 of 9 algorithms)
+I0:OptBinomial:P2P:P2P PASS: Barrier correct!
+Test Barrier protocol(I0:OptBinomial:P2P:P2P) Performance: time=2.120000 usec
+Test Barrier optimize = -1, protocol: I0:MultiSync:-:GI correctness (5 of 9 algorithms)
+I0:MultiSync:-:GI PASS: Barrier correct!
+Test Barrier optimize = -1, protocol: I0:MultiSync:-:GI correctness (5 of 9 algorithms)
+I0:MultiSync:-:GI PASS: Barrier correct!
+Test Barrier protocol(I0:MultiSync:-:GI) Performance: time=0.820000 usec
+Test Barrier optimize = -1, protocol: I0:RectangleMultiSync:-:MU correctness (6 of 9 algorithms)
+I0:RectangleMultiSync:-:MU PASS: Barrier correct!
+Test Barrier optimize = -1, protocol: I0:RectangleMultiSync:-:MU correctness (6 of 9 algorithms)
+I0:RectangleMultiSync:-:MU PASS: Barrier correct!
+Test Barrier protocol(I0:RectangleMultiSync:-:MU) Performance: time=1.380000 usec
+Test Barrier optimize = -1, protocol: I0:MultiSync2Device:SHMEM:GI correctness (7 of 9 algorithms)
+I0:MultiSync2Device:SHMEM:GI PASS: Barrier correct!
+Test Barrier optimize = -1, protocol: I0:MultiSync2Device:SHMEM:GI correctness (7 of 9 algorithms)
+I0:MultiSync2Device:SHMEM:GI PASS: Barrier correct!
+Test Barrier protocol(I0:MultiSync2Device:SHMEM:GI) Performance: time=0.890000 usec
+Test Barrier optimize = -1, protocol: I0:RectangleMultiSync2Device:SHMEM:MU correctness (8 of 9 algorithms)
+I0:RectangleMultiSync2Device:SHMEM:MU PASS: Barrier correct!
+Test Barrier optimize = -1, protocol: I0:RectangleMultiSync2Device:SHMEM:MU correctness (8 of 9 algorithms)
+I0:RectangleMultiSync2Device:SHMEM:MU PASS: Barrier correct!
+Test Barrier protocol(I0:RectangleMultiSync2Device:SHMEM:MU) Performance: time=1.470000 usec
+Test Barrier optimize = -1, protocol: I0:MultiSync2Device:SHMEM:MU correctness (9 of 9 algorithms)
+I0:MultiSync2Device:SHMEM:MU PASS: Barrier correct!
+Test Barrier optimize = -1, protocol: I0:MultiSync2Device:SHMEM:MU correctness (9 of 9 algorithms)
+I0:MultiSync2Device:SHMEM:MU PASS: Barrier correct!
+Test Barrier protocol(I0:MultiSync2Device:SHMEM:MU) Performance: time=7.330000 usec
+2012-08-20 03:28:44.835 (INFO ) [0xfffa2128ad0] VST-02040-13371-128:32311:ibm.runjob.client.Job: exited with status 0
