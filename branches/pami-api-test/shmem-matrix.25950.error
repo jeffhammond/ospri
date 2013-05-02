@@ -1,0 +1,104 @@
+2012-08-20 03:25:51.835 (INFO ) [0xfffb3e28ad0] VST-22040-33371-128:16779:ibm.runjob.client.options.Parser: set local socket to runjob_mux from properties file
+2012-08-20 03:25:54.398 (INFO ) [0xfffb3e28ad0] VST-22040-33371-128:32304:ibm.runjob.client.Job: job 32304 started
+WARNING (W):  No other local tasks exist with Rank 1.  Skipping creation of "SHMem" dispatch ID ...
+WARNING (W):  No other local tasks exist with Rank 1.  Skipping creation of "SHMem" dispatch ID ...
+WARNING (W):  No other local tasks exist with Rank 1.  Skipping creation of "SHMem" dispatch ID ...
+WARNING (W):  No other local tasks exist with Rank 1.  Skipping creation of "SHMem" dispatch ID ...
+WARNING (W):  No other local tasks exist with Rank 0.  Skipping creation of "SHMem" dispatch ID ...
+WARNING (W):  No other local tasks exist with Rank 0.  Skipping creation of "SHMem" dispatch ID ...
+======== Combinations of use_shmem hints that should pass  ========
+WARNING (W):  No other local tasks exist with Rank 0.  Skipping creation of "SHMem" dispatch ID ...
+===== PAMI_Send() FUNCTIONAL Test [no crosstalk][callback] 16 512 (0, 0) -> (1, 0) =====
+		task 0 use_shmem hard hint = PAMI_HINT_DEFAULT
+		task 0 use_shmem soft hint = PAMI_HINT_DEFAULT
+		task 1 use shmem hard hint = PAMI_HINT_DEFAULT
+===== PAMI_Send() FUNCTIONAL Test [no crosstalk][callback] 16 512 (1, 0) -> (0, 0) =====
+		task 1 use_shmem hard hint = PAMI_HINT_DEFAULT
+		task 1 use_shmem soft hint = PAMI_HINT_DEFAULT
+		task 0 use shmem hard hint = PAMI_HINT_DEFAULT
+===== PAMI_Send() FUNCTIONAL Test [no crosstalk][callback] 16 512 (0, 0) -> (1, 0) =====
+		task 0 use_shmem hard hint = PAMI_HINT_DEFAULT
+		task 0 use_shmem soft hint = PAMI_HINT_ENABLE
+		task 1 use shmem hard hint = PAMI_HINT_DEFAULT
+===== PAMI_Send() FUNCTIONAL Test [no crosstalk][callback] 16 512 (1, 0) -> (0, 0) =====
+		task 1 use_shmem hard hint = PAMI_HINT_DEFAULT
+		task 1 use_shmem soft hint = PAMI_HINT_ENABLE
+		task 0 use shmem hard hint = PAMI_HINT_DEFAULT
+===== PAMI_Send() FUNCTIONAL Test [no crosstalk][callback] 16 512 (0, 0) -> (1, 0) =====
+		task 0 use_shmem hard hint = PAMI_HINT_DEFAULT
+		task 0 use_shmem soft hint = PAMI_HINT_DISABLE
+		task 1 use shmem hard hint = PAMI_HINT_DEFAULT
+===== PAMI_Send() FUNCTIONAL Test [no crosstalk][callback] 16 512 (1, 0) -> (0, 0) =====
+		task 1 use_shmem hard hint = PAMI_HINT_DEFAULT
+		task 1 use_shmem soft hint = PAMI_HINT_DISABLE
+		task 0 use shmem hard hint = PAMI_HINT_DEFAULT
+===== PAMI_Send() FUNCTIONAL Test [no crosstalk][callback] 16 512 (0, 0) -> (1, 0) =====
+		task 0 use_shmem hard hint = PAMI_HINT_DEFAULT
+		task 0 use_shmem soft hint = PAMI_HINT_INVALID
+		task 1 use shmem hard hint = PAMI_HINT_DEFAULT
+===== PAMI_Send() FUNCTIONAL Test [no crosstalk][callback] 16 512 (1, 0) -> (0, 0) =====
+		task 1 use_shmem hard hint = PAMI_HINT_DEFAULT
+		task 1 use_shmem soft hint = PAMI_HINT_INVALID
+		task 0 use shmem hard hint = PAMI_HINT_DEFAULT
+WARNING (W):  Rank 1 is unaddressable by Rank 0 when use_shmem = PAMI_HINT_ENABLE. Skipping ...
+WARNING (W):  Rank 1 is unaddressable by Rank 0 when use_shmem = PAMI_HINT_ENABLE. Skipping ...
+WARNING (W):  Rank 1 is unaddressable by Rank 0 when use_shmem = PAMI_HINT_ENABLE. Skipping ...
+===== PAMI_Send() FUNCTIONAL Test [no crosstalk][callback] 16 512 (0, 0) -> (1, 0) =====
+		task 0 use_shmem hard hint = PAMI_HINT_DISABLE
+		task 0 use_shmem soft hint = PAMI_HINT_DEFAULT
+		task 1 use shmem hard hint = PAMI_HINT_DEFAULT
+===== PAMI_Send() FUNCTIONAL Test [no crosstalk][callback] 16 512 (1, 0) -> (0, 0) =====
+		task 1 use_shmem hard hint = PAMI_HINT_DISABLE
+		task 1 use_shmem soft hint = PAMI_HINT_DEFAULT
+		task 0 use shmem hard hint = PAMI_HINT_DEFAULT
+===== PAMI_Send() FUNCTIONAL Test [no crosstalk][callback] 16 512 (0, 0) -> (1, 0) =====
+		task 0 use_shmem hard hint = PAMI_HINT_DISABLE
+		task 0 use_shmem soft hint = PAMI_HINT_ENABLE
+		task 1 use shmem hard hint = PAMI_HINT_DEFAULT
+===== PAMI_Send() FUNCTIONAL Test [no crosstalk][callback] 16 512 (1, 0) -> (0, 0) =====
+		task 1 use_shmem hard hint = PAMI_HINT_DISABLE
+		task 1 use_shmem soft hint = PAMI_HINT_ENABLE
+		task 0 use shmem hard hint = PAMI_HINT_DEFAULT
+===== PAMI_Send() FUNCTIONAL Test [no crosstalk][callback] 16 512 (0, 0) -> (1, 0) =====
+		task 0 use_shmem hard hint = PAMI_HINT_DISABLE
+		task 0 use_shmem soft hint = PAMI_HINT_INVALID
+		task 1 use shmem hard hint = PAMI_HINT_DEFAULT
+===== PAMI_Send() FUNCTIONAL Test [no crosstalk][callback] 16 512 (1, 0) -> (0, 0) =====
+		task 1 use_shmem hard hint = PAMI_HINT_DISABLE
+		task 1 use_shmem soft hint = PAMI_HINT_INVALID
+		task 0 use shmem hard hint = PAMI_HINT_DEFAULT
+WARNING (W):  Rank 1 is unaddressable by Rank 0 when use_shmem = PAMI_HINT_ENABLE. Skipping ...
+WARNING (W):  Rank 1 is unaddressable by Rank 0 when use_shmem = PAMI_HINT_ENABLE. Skipping ...
+WARNING (W):  Rank 1 is unaddressable by Rank 0 when use_shmem = PAMI_HINT_ENABLE. Skipping ...
+===== PAMI_Send() FUNCTIONAL Test [no crosstalk][callback] 16 512 (0, 0) -> (1, 0) =====
+		task 0 use_shmem hard hint = PAMI_HINT_DISABLE
+		task 0 use_shmem soft hint = PAMI_HINT_DEFAULT
+		task 1 use shmem hard hint = PAMI_HINT_DISABLE
+===== PAMI_Send() FUNCTIONAL Test [no crosstalk][callback] 16 512 (1, 0) -> (0, 0) =====
+		task 1 use_shmem hard hint = PAMI_HINT_DISABLE
+		task 1 use_shmem soft hint = PAMI_HINT_DEFAULT
+		task 0 use shmem hard hint = PAMI_HINT_DISABLE
+===== PAMI_Send() FUNCTIONAL Test [no crosstalk][callback] 16 512 (0, 0) -> (1, 0) =====
+		task 0 use_shmem hard hint = PAMI_HINT_DISABLE
+		task 0 use_shmem soft hint = PAMI_HINT_ENABLE
+		task 1 use shmem hard hint = PAMI_HINT_DISABLE
+===== PAMI_Send() FUNCTIONAL Test [no crosstalk][callback] 16 512 (1, 0) -> (0, 0) =====
+		task 1 use_shmem hard hint = PAMI_HINT_DISABLE
+		task 1 use_shmem soft hint = PAMI_HINT_ENABLE
+		task 0 use shmem hard hint = PAMI_HINT_DISABLE
+===== PAMI_Send() FUNCTIONAL Test [no crosstalk][callback] 16 512 (0, 0) -> (1, 0) =====
+		task 0 use_shmem hard hint = PAMI_HINT_DISABLE
+		task 0 use_shmem soft hint = PAMI_HINT_INVALID
+		task 1 use shmem hard hint = PAMI_HINT_DISABLE
+===== PAMI_Send() FUNCTIONAL Test [no crosstalk][callback] 16 512 (1, 0) -> (0, 0) =====
+		task 1 use_shmem hard hint = PAMI_HINT_DISABLE
+		task 1 use_shmem soft hint = PAMI_HINT_INVALID
+		task 0 use shmem hard hint = PAMI_HINT_DISABLE
+2012-08-20 03:40:13.373 (WARN ) [0xfffb3e28ad0] VST-22040-33371-128:ibm.runjob.LogSignalInfo: received signal 15
+2012-08-20 03:40:13.373 (WARN ) [0xfffb3e28ad0] VST-22040-33371-128:ibm.runjob.LogSignalInfo: signal sent from USER
+2012-08-20 03:40:13.373 (WARN ) [0xfffb3e28ad0] VST-22040-33371-128:ibm.runjob.LogSignalInfo: sent from pid 23294
+2012-08-20 03:40:13.373 (WARN ) [0xfffb3e28ad0] VST-22040-33371-128:ibm.runjob.LogSignalInfo: could not read /proc/23294/exe
+2012-08-20 03:40:13.373 (WARN ) [0xfffb3e28ad0] VST-22040-33371-128:ibm.runjob.LogSignalInfo: Permission denied
+2012-08-20 03:40:13.373 (WARN ) [0xfffb3e28ad0] VST-22040-33371-128:ibm.runjob.LogSignalInfo: sent from uid 0 (root)
+2012-08-20 03:40:15.361 (WARN ) [0xfffb3e28ad0] VST-22040-33371-128:32304:ibm.runjob.client.Job: terminated by signal 9
+2012-08-20 03:40:15.361 (WARN ) [0xfffb3e28ad0] VST-22040-33371-128:32304:ibm.runjob.client.Job: abnormal termination by signal 9 from rank 0
