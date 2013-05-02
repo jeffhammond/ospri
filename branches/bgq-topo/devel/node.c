@@ -8,16 +8,15 @@
 
 int main(int argc, char* argv[])
 {
-    if (rank==0) printf("%d: Kernel_GetJobID() = %lu \n", rank, Kernel_GetJobID() );
-
-    printf("%d: Kernel_ProcessCount() = %d \n", rank, Kernel_ProcessCount() );
-    printf("%d: Kernel_ProcessorCount() = %d \n", rank, Kernel_ProcessorCount() );
-    printf("%d: Kernel_ProcessorID() = %d \n", rank, Kernel_ProcessorID() );
-    printf("%d: Kernel_ProcessorCoreID() = %d \n", rank, Kernel_ProcessorCoreID() );
-    printf("%d: Kernel_ProcessorThreadID() = %d \n", rank, Kernel_ProcessorThreadID() );
-    printf("%d: Kernel_BlockThreadId() = %d \n", rank, Kernel_BlockThreadId() );
-    printf("%d: Kernel_MyTcoord() = %d \n", rank, Kernel_MyTcoord() );
-    printf("%d: Kernel_GetRank() = %d \n", rank, Kernel_GetRank() );
+    printf("Kernel_GetJobID() = %lu \n", Kernel_GetJobID() );
+    printf("Kernel_ProcessCount() = %d \n", Kernel_ProcessCount() );
+    printf("Kernel_ProcessorCount() = %d \n", Kernel_ProcessorCount() );
+    printf("Kernel_ProcessorID() = %d \n", Kernel_ProcessorID() );
+    printf("Kernel_ProcessorCoreID() = %d \n", Kernel_ProcessorCoreID() );
+    printf("Kernel_ProcessorThreadID() = %d \n", Kernel_ProcessorThreadID() );
+    printf("Kernel_BlockThreadId() = %d \n", Kernel_BlockThreadId() );
+    printf("Kernel_MyTcoord() = %d \n", Kernel_MyTcoord() );
+    printf("Kernel_GetRank() = %d \n", Kernel_GetRank() );
 
     fflush(stdout);
 

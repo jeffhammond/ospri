@@ -1,14 +1,13 @@
-#ifdef BGQ
-#include </bgsys/drivers/ppcfloor/spi/include/kernel/location.h>
+#ifdef __bgq__
+#include <spi/include/kernel/location.h>
 #endif
 
 /*=======================================*/
-/* routine to return the BGQ core number */
+/* routine to return the __bgq__ core number */
 /*=======================================*/
 int get_bgq_core(void)
 {
-#ifdef BGQ
-    //int core = Kernel_PhysicalProcessorID();
+#ifdef __bgq__
     int core = Kernel_ProcessorCoreID();
     return core;
 #else
@@ -17,12 +16,11 @@ int get_bgq_core(void)
 }
 
 /*==========================================*/
-/* routine to return the BGQ hwthread (0-3) */
+/* routine to return the __bgq__ hwthread (0-3) */
 /*==========================================*/
 int get_bgq_hwthread(void)
 {
-#ifdef BGQ
-    //int hwthread = Kernel_PhysicalHWThreadID();
+#ifdef __bgq__
     int hwthread = Kernel_ProcessorThreadID();
     return hwthread;
 #else
@@ -31,11 +29,11 @@ int get_bgq_hwthread(void)
 }
 
 /*======================================================*/
-/* routine to return the BGQ virtual core number (0-67) */
+/* routine to return the __bgq__ virtual core number (0-67) */
 /*======================================================*/
 int get_bgq_vcore(void)
 {
-#ifdef BGQ
+#ifdef __bgq__
     int hwthread = Kernel_ProcessorID();
     return hwthread;
 #else
