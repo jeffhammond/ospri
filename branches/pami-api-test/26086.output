@@ -1,0 +1,11 @@
+Max number of contexts = 24
+Max number of contexts = 24
+PAMI_CLIENT_NUM_LOCAL_TASKS = 2
+PAMI_CLIENT_NUM_LOCAL_TASKS = 2
+use_shmem Value(s)	AVAILABLE	UNDER TEST
+PAMI_HINT_DEFAULT	    Y		     Y
+PAMI_HINT_ENABLE	    Y		     Y
+PAMI_HINT_DISABLE	    Y		     Y
+Receive immediate maximum for context 0 dispatch ID 20 = 128
+Receive immediate maximum for context 0 dispatch ID 21 = 128
+Receive immediate maximum for context 0 dispatch ID 22 = 512
