@@ -1,0 +1,7 @@
+2012-08-20 03:21:28.424 (INFO ) [0xfffaffa8ad0] VST-00000-11331-128:23727:ibm.runjob.client.options.Parser: set local socket to runjob_mux from properties file
+2012-08-20 03:21:30.964 (INFO ) [0xfffaffa8ad0] VST-00000-11331-128:32285:ibm.runjob.client.Job: job 32285 started
+Trylock with multiple threads passed. 16 (16 expected)
+Trylock with multiple threads passed. 16 (16 expected)
+Success.
+Success.
+2012-08-20 03:21:32.984 (INFO ) [0xfffaffa8ad0] VST-00000-11331-128:32285:ibm.runjob.client.Job: exited with status 0
