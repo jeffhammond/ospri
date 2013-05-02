@@ -1,0 +1,4 @@
+Before PAMI_Wtick()
+Before PAMI_Wtick()
+After PAMI_Wtick, value = 6.25e-10
+After PAMI_Wtick, value = 6.25e-10
