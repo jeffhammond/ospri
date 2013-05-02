@@ -1,0 +1,27 @@
+2012-12-13 02:27:00.763 (INFO ) [0xfff8e87a210] 1486:ibm.runjob.AbstractOptions: using properties file /bgsys/local/etc/bg.properties
+2012-12-13 02:27:00.765 (INFO ) [0xfff8e87a210] 1486:ibm.runjob.AbstractOptions: max open file descriptors: 65536
+2012-12-13 02:27:00.765 (INFO ) [0xfff8e87a210] 1486:ibm.runjob.AbstractOptions: core file limit: 0
+2012-12-13 02:27:00.765 (INFO ) [0xfff8e87a210] 1486:tatu.runjob.client: scheduler job id is 47466
+2012-12-13 02:27:00.768 (INFO ) [0xfff85fb1a70] 1486:tatu.runjob.monitor: monitor started
+2012-12-13 02:27:00.768 (INFO ) [0xfff8e87a210] VST-22040-33371-128:1486:ibm.runjob.client.options.Parser: set local socket to runjob_mux from properties file
+2012-12-13 02:27:03.720 (INFO ) [0xfff8e87a210] VST-22040-33371-128:92479:ibm.runjob.client.Job: job 92479 started
+mmap_fixed.x: mmap_fixed.c:82: main: Assertion `(world_size % ranks_per_node)==0' failed.
+mmap_fixed.x: mmap_fixed.c:82: main: Assertion `(world_size % ranks_per_node)==0' failed.
+mmap_fixed.x: mmap_fixed.c:82: main: Assertion `(world_size % ranks_per_node)==0' failed.
+mmap_fixed.x: mmap_fixed.c:82: main: Assertion `(world_size % ranks_per_node)==0' failed.
+mmap_fixed.x: mmap_fixed.c:82: main: Assertion `(world_size % ranks_per_node)==0' failed.
+mmap_fixed.x: mmap_fixed.c:82: main: Assertion `(world_size % ranks_per_node)==0' failed.
+mmap_fixed.x: mmap_fixed.c:82: main: Assertion `(world_size % ranks_per_node)==0' failed.
+mmap_fixed.x: mmap_fixed.c:82: main: Assertion `(world_size % ranks_per_node)==0' failed.
+mmap_fixed.x: mmap_fixed.c:82: main: Assertion `(world_size % ranks_per_node)==0' failed.
+mmap_fixed.x: mmap_fixed.c:82: main: Assertion `(world_size % ranks_per_node)==0' failed.
+mmap_fixed.x: mmap_fixed.c:82: main: Assertion `(world_size % ranks_per_node)==0' failed.
+mmap_fixed.x: mmap_fixed.c:82: main: Assertion `(world_size % ranks_per_node)==0' failed.
+2012-12-13 02:27:06.013 (INFO ) [0xfff85fb1a70] 1486:tatu.runjob.monitor: tracklib completed
+2012-12-13 02:27:06.166 (WARN ) [0xfff8e87a210] VST-22040-33371-128:92479:ibm.runjob.client.Job: terminated by signal 6
+2012-12-13 02:27:06.166 (WARN ) [0xfff8e87a210] VST-22040-33371-128:92479:ibm.runjob.client.Job: abnormal termination by signal 6 from rank 1791
+2012-12-13 02:27:06.166 (WARN ) [0xfff8e87a210] VST-22040-33371-128:92479:ibm.runjob.client.Job: 3 RAS events
+2012-12-13 02:27:06.166 (WARN ) [0xfff8e87a210] VST-22040-33371-128:92479:ibm.runjob.client.Job: most recent RAS event text: DDR Correctable Error Summary : count=2 MCFIR error status:  [MEMORY_CE] This bit is set when a memory CE is detected on a non-maintenance memory read op;
+2012-12-13 02:27:06.166 (INFO ) [0xfff8e87a210] tatu.runjob.client: task terminated by signal 6
+2012-12-13 02:27:06.166 (INFO ) [0xfff85fb1a70] 1486:tatu.runjob.monitor: monitor terminating
+2012-12-13 02:27:06.168 (INFO ) [0xfff8e87a210] tatu.runjob.client: monitor completed
