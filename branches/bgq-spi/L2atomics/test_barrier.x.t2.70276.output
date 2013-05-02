@@ -1,0 +1,5 @@
+L2 barrier test using 2 threads 
+threads created 
+ 0: 100000 calls to L2_Barrier took 298 cycles per call 
+ 1: 100000 calls to L2_Barrier took 298 cycles per call 
+threads joined 

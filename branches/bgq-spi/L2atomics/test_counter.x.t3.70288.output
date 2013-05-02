@@ -1,0 +1,11 @@
+L2 counter test using 3 threads 
+ 1: 1000000 calls to L2_AtomicLoadIncrement took 99 cycles per call 
+ 2: 1000000 calls to L2_AtomicLoadIncrement took 99 cycles per call 
+ 0: 1000000 calls to L2_AtomicLoadIncrement took 99 cycles per call 
+final value of counter is 3000000 
+threads created 
+ 1: 1000000 calls to Fetch_and_Add took 556 cycles per call 
+ 0: 1000000 calls to Fetch_and_Add took 538 cycles per call 
+ 2: 1000000 calls to Fetch_and_Add took 528 cycles per call 
+threads joined 
+final value of slowcounter is 3000000 

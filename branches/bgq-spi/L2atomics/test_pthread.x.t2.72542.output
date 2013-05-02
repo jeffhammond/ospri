@@ -1,0 +1,3 @@
+Pthread test using 2 threads 
+2 threads created in 35854 cycles per call 
+2 threads joined in 4073 cycles per call 

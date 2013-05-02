@@ -1,0 +1,38 @@
+L2 lock test using 7 threads 
+0: before L2_Barrier 1 
+1: before L2_Barrier 1 
+2: before L2_Barrier 1 
+3: before L2_Barrier 1 
+4: before L2_Barrier 1 
+5: before L2_Barrier 1 
+threads created 
+6: before L2_Barrier 1 
+6: after  L2_Barrier 1 
+0: after  L2_Barrier 1 
+1: after  L2_Barrier 1 
+2: after  L2_Barrier 1 
+5: after  L2_Barrier 1 
+4: after  L2_Barrier 1 
+3: after  L2_Barrier 1 
+6: before L2_Barrier 2 
+0: before L2_Barrier 2 
+1: before L2_Barrier 2 
+2: before L2_Barrier 2 
+5: before L2_Barrier 2 
+4: before L2_Barrier 2 
+3: before L2_Barrier 2 
+3: after  L2_Barrier 2 
+ 3: 10000 calls to L2_Lock{Acquire,Release} took 1735 cycles per call 
+5: after  L2_Barrier 2 
+ 5: 10000 calls to L2_Lock{Acquire,Release} took 1798 cycles per call 
+1: after  L2_Barrier 2 
+ 1: 10000 calls to L2_Lock{Acquire,Release} took 1796 cycles per call 
+0: after  L2_Barrier 2 
+2: after  L2_Barrier 2 
+4: after  L2_Barrier 2 
+ 4: 10000 calls to L2_Lock{Acquire,Release} took 1771 cycles per call 
+ 0: 10000 calls to L2_Lock{Acquire,Release} took 1728 cycles per call 
+ 2: 10000 calls to L2_Lock{Acquire,Release} took 1810 cycles per call 
+6: after  L2_Barrier 2 
+ 6: 10000 calls to L2_Lock{Acquire,Release} took 1521 cycles per call 
+threads joined 

@@ -1,0 +1,35 @@
+L2 counter test using 15 threads 
+ 0: 1000000 calls to L2_AtomicLoadIncrement took 110 cycles per call 
+12: 1000000 calls to L2_AtomicLoadIncrement took 110 cycles per call 
+ 9: 1000000 calls to L2_AtomicLoadIncrement took 110 cycles per call 
+ 1: 1000000 calls to L2_AtomicLoadIncrement took 110 cycles per call 
+ 7: 1000000 calls to L2_AtomicLoadIncrement took 110 cycles per call 
+10: 1000000 calls to L2_AtomicLoadIncrement took 110 cycles per call 
+ 4: 1000000 calls to L2_AtomicLoadIncrement took 110 cycles per call 
+ 6: 1000000 calls to L2_AtomicLoadIncrement took 110 cycles per call 
+11: 1000000 calls to L2_AtomicLoadIncrement took 110 cycles per call 
+13: 1000000 calls to L2_AtomicLoadIncrement took 110 cycles per call 
+ 3: 1000000 calls to L2_AtomicLoadIncrement took 110 cycles per call 
+14: 1000000 calls to L2_AtomicLoadIncrement took 110 cycles per call 
+ 8: 1000000 calls to L2_AtomicLoadIncrement took 110 cycles per call 
+ 5: 1000000 calls to L2_AtomicLoadIncrement took 110 cycles per call 
+ 2: 1000000 calls to L2_AtomicLoadIncrement took 110 cycles per call 
+final value of counter is 15000000 
+threads created 
+ 1: 1000000 calls to Fetch_and_Add took 1620 cycles per call 
+11: 1000000 calls to Fetch_and_Add took 1601 cycles per call 
+ 7: 1000000 calls to Fetch_and_Add took 1477 cycles per call 
+ 6: 1000000 calls to Fetch_and_Add took 1588 cycles per call 
+ 5: 1000000 calls to Fetch_and_Add took 1472 cycles per call 
+10: 1000000 calls to Fetch_and_Add took 1584 cycles per call 
+13: 1000000 calls to Fetch_and_Add took 1479 cycles per call 
+ 8: 1000000 calls to Fetch_and_Add took 1587 cycles per call 
+ 3: 1000000 calls to Fetch_and_Add took 1592 cycles per call 
+ 2: 1000000 calls to Fetch_and_Add took 1474 cycles per call 
+12: 1000000 calls to Fetch_and_Add took 1475 cycles per call 
+ 4: 1000000 calls to Fetch_and_Add took 1476 cycles per call 
+ 0: 1000000 calls to Fetch_and_Add took 1547 cycles per call 
+ 9: 1000000 calls to Fetch_and_Add took 1620 cycles per call 
+14: 1000000 calls to Fetch_and_Add took 1581 cycles per call 
+threads joined 
+final value of slowcounter is 15000000 

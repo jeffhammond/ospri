@@ -1,0 +1,5 @@
+2012-05-25 16:14:51.131 (INFO ) [0xfffacb08a40] EAS-20040-31371-128:8736:ibm.runjob.client.options.Parser: set local socket to runjob_mux from properties file
+2012-05-25 16:14:53.138 (INFO ) [0xfffacb08a40] EAS-20040-31371-128:44852:ibm.runjob.client.Job: job 44852 started
+starting test: OpenMP ON with 16 threads... 
+2012-05-25 16:14:55.072 (WARN ) [0xfffacb08a40] EAS-20040-31371-128:44852:ibm.runjob.client.Job: terminated by signal 11
+2012-05-25 16:14:55.072 (WARN ) [0xfffacb08a40] EAS-20040-31371-128:44852:ibm.runjob.client.Job: abnormal termination by signal 11 from rank 0

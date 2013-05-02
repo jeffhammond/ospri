@@ -1,0 +1,8 @@
+L2 lock test using 1 threads 
+threads created 
+0: before L2_Barrier 1 
+0: after  L2_Barrier 1 
+0: before L2_Barrier 2 
+0: after  L2_Barrier 2 
+ 0: 10000 calls to L2_Lock{Acquire,Release} took 298 cycles per call 
+threads joined 

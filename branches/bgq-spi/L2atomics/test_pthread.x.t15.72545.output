@@ -1,0 +1,3 @@
+Pthread test using 15 threads 
+15 threads created in 22126 cycles per call 
+15 threads joined in 5716 cycles per call 

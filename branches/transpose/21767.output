@@ -1,0 +1,5 @@
+# starting test: OpenMP ON with 1 threads... 
+# sN[S/L] = stride-N [store/load] 
+# pur  = pragma unroll 
+# mur  = manual unroll 
+# murv = manual unroll and vectorize 

@@ -1,0 +1,3 @@
+Pthread test using 31 threads 
+31 threads created in 22202 cycles per call 
+31 threads joined in 7534 cycles per call 

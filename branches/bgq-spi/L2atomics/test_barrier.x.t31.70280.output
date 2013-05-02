@@ -1,0 +1,34 @@
+L2 barrier test using 31 threads 
+threads created 
+18: 100000 calls to L2_Barrier took 476 cycles per call 
+15: 100000 calls to L2_Barrier took 477 cycles per call 
+ 4: 100000 calls to L2_Barrier took 479 cycles per call 
+20: 100000 calls to L2_Barrier took 476 cycles per call 
+ 2: 100000 calls to L2_Barrier took 480 cycles per call 
+22: 100000 calls to L2_Barrier took 476 cycles per call 
+ 6: 100000 calls to L2_Barrier took 479 cycles per call 
+21: 100000 calls to L2_Barrier took 476 cycles per call 
+ 5: 100000 calls to L2_Barrier took 479 cycles per call 
+19: 100000 calls to L2_Barrier took 476 cycles per call 
+11: 100000 calls to L2_Barrier took 478 cycles per call 
+23: 100000 calls to L2_Barrier took 475 cycles per call 
+ 3: 100000 calls to L2_Barrier took 479 cycles per call 
+27: 100000 calls to L2_Barrier took 474 cycles per call 
+29: 100000 calls to L2_Barrier took 474 cycles per call 
+13: 100000 calls to L2_Barrier took 478 cycles per call 
+10: 100000 calls to L2_Barrier took 478 cycles per call 
+30: 100000 calls to L2_Barrier took 474 cycles per call 
+ 7: 100000 calls to L2_Barrier took 479 cycles per call 
+26: 100000 calls to L2_Barrier took 475 cycles per call 
+14: 100000 calls to L2_Barrier took 477 cycles per call 
+ 8: 100000 calls to L2_Barrier took 478 cycles per call 
+24: 100000 calls to L2_Barrier took 475 cycles per call 
+16: 100000 calls to L2_Barrier took 477 cycles per call 
+ 0: 100000 calls to L2_Barrier took 480 cycles per call 
+28: 100000 calls to L2_Barrier took 474 cycles per call 
+12: 100000 calls to L2_Barrier took 478 cycles per call 
+ 1: 100000 calls to L2_Barrier took 480 cycles per call 
+17: 100000 calls to L2_Barrier took 477 cycles per call 
+25: 100000 calls to L2_Barrier took 475 cycles per call 
+ 9: 100000 calls to L2_Barrier took 478 cycles per call 
+threads joined 

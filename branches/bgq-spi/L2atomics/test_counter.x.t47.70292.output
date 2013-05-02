@@ -1,0 +1,99 @@
+L2 counter test using 47 threads 
+22: 1000000 calls to L2_AtomicLoadIncrement took 241 cycles per call 
+15: 1000000 calls to L2_AtomicLoadIncrement took 241 cycles per call 
+38: 1000000 calls to L2_AtomicLoadIncrement took 241 cycles per call 
+30: 1000000 calls to L2_AtomicLoadIncrement took 241 cycles per call 
+37: 1000000 calls to L2_AtomicLoadIncrement took 241 cycles per call 
+28: 1000000 calls to L2_AtomicLoadIncrement took 241 cycles per call 
+ 6: 1000000 calls to L2_AtomicLoadIncrement took 241 cycles per call 
+14: 1000000 calls to L2_AtomicLoadIncrement took 241 cycles per call 
+33: 1000000 calls to L2_AtomicLoadIncrement took 241 cycles per call 
+ 5: 1000000 calls to L2_AtomicLoadIncrement took 241 cycles per call 
+36: 1000000 calls to L2_AtomicLoadIncrement took 241 cycles per call 
+11: 1000000 calls to L2_AtomicLoadIncrement took 241 cycles per call 
+31: 1000000 calls to L2_AtomicLoadIncrement took 241 cycles per call 
+46: 1000000 calls to L2_AtomicLoadIncrement took 241 cycles per call 
+44: 1000000 calls to L2_AtomicLoadIncrement took 241 cycles per call 
+17: 1000000 calls to L2_AtomicLoadIncrement took 241 cycles per call 
+26: 1000000 calls to L2_AtomicLoadIncrement took 241 cycles per call 
+ 4: 1000000 calls to L2_AtomicLoadIncrement took 241 cycles per call 
+42: 1000000 calls to L2_AtomicLoadIncrement took 241 cycles per call 
+ 1: 1000000 calls to L2_AtomicLoadIncrement took 241 cycles per call 
+20: 1000000 calls to L2_AtomicLoadIncrement took 241 cycles per call 
+34: 1000000 calls to L2_AtomicLoadIncrement took 241 cycles per call 
+27: 1000000 calls to L2_AtomicLoadIncrement took 241 cycles per call 
+ 2: 1000000 calls to L2_AtomicLoadIncrement took 241 cycles per call 
+21: 1000000 calls to L2_AtomicLoadIncrement took 241 cycles per call 
+10: 1000000 calls to L2_AtomicLoadIncrement took 241 cycles per call 
+13: 1000000 calls to L2_AtomicLoadIncrement took 241 cycles per call 
+ 3: 1000000 calls to L2_AtomicLoadIncrement took 241 cycles per call 
+29: 1000000 calls to L2_AtomicLoadIncrement took 241 cycles per call 
+19: 1000000 calls to L2_AtomicLoadIncrement took 241 cycles per call 
+ 7: 1000000 calls to L2_AtomicLoadIncrement took 241 cycles per call 
+12: 1000000 calls to L2_AtomicLoadIncrement took 241 cycles per call 
+ 0: 1000000 calls to L2_AtomicLoadIncrement took 241 cycles per call 
+35: 1000000 calls to L2_AtomicLoadIncrement took 241 cycles per call 
+25: 1000000 calls to L2_AtomicLoadIncrement took 241 cycles per call 
+18: 1000000 calls to L2_AtomicLoadIncrement took 241 cycles per call 
+43: 1000000 calls to L2_AtomicLoadIncrement took 241 cycles per call 
+23: 1000000 calls to L2_AtomicLoadIncrement took 241 cycles per call 
+39: 1000000 calls to L2_AtomicLoadIncrement took 241 cycles per call 
+41: 1000000 calls to L2_AtomicLoadIncrement took 241 cycles per call 
+ 8: 1000000 calls to L2_AtomicLoadIncrement took 241 cycles per call 
+32: 1000000 calls to L2_AtomicLoadIncrement took 241 cycles per call 
+24: 1000000 calls to L2_AtomicLoadIncrement took 241 cycles per call 
+ 9: 1000000 calls to L2_AtomicLoadIncrement took 241 cycles per call 
+40: 1000000 calls to L2_AtomicLoadIncrement took 241 cycles per call 
+45: 1000000 calls to L2_AtomicLoadIncrement took 241 cycles per call 
+16: 1000000 calls to L2_AtomicLoadIncrement took 241 cycles per call 
+final value of counter is 47000000 
+threads created 
+12: 1000000 calls to Fetch_and_Add took 2365 cycles per call 
+32: 1000000 calls to Fetch_and_Add took 6872 cycles per call 
+46: 1000000 calls to Fetch_and_Add took 6869 cycles per call 
+41: 1000000 calls to Fetch_and_Add took 6871 cycles per call 
+ 1: 1000000 calls to Fetch_and_Add took 2366 cycles per call 
+ 7: 1000000 calls to Fetch_and_Add took 6873 cycles per call 
+28: 1000000 calls to Fetch_and_Add took 6865 cycles per call 
+30: 1000000 calls to Fetch_and_Add took 6874 cycles per call 
+45: 1000000 calls to Fetch_and_Add took 6866 cycles per call 
+38: 1000000 calls to Fetch_and_Add took 6874 cycles per call 
+21: 1000000 calls to Fetch_and_Add took 6873 cycles per call 
+33: 1000000 calls to Fetch_and_Add took 6864 cycles per call 
+13: 1000000 calls to Fetch_and_Add took 6870 cycles per call 
+27: 1000000 calls to Fetch_and_Add took 6871 cycles per call 
+23: 1000000 calls to Fetch_and_Add took 6873 cycles per call 
+26: 1000000 calls to Fetch_and_Add took 6867 cycles per call 
+ 3: 1000000 calls to Fetch_and_Add took 6873 cycles per call 
+35: 1000000 calls to Fetch_and_Add took 6873 cycles per call 
+37: 1000000 calls to Fetch_and_Add took 6872 cycles per call 
+29: 1000000 calls to Fetch_and_Add took 6868 cycles per call 
+14: 1000000 calls to Fetch_and_Add took 6874 cycles per call 
+10: 1000000 calls to Fetch_and_Add took 6874 cycles per call 
+20: 1000000 calls to Fetch_and_Add took 6870 cycles per call 
+17: 1000000 calls to Fetch_and_Add took 6875 cycles per call 
+34: 1000000 calls to Fetch_and_Add took 6875 cycles per call 
+15: 1000000 calls to Fetch_and_Add took 6873 cycles per call 
+ 8: 1000000 calls to Fetch_and_Add took 6873 cycles per call 
+19: 1000000 calls to Fetch_and_Add took 6872 cycles per call 
+11: 1000000 calls to Fetch_and_Add took 6870 cycles per call 
+ 5: 1000000 calls to Fetch_and_Add took 6873 cycles per call 
+ 2: 1000000 calls to Fetch_and_Add took 6876 cycles per call 
+39: 1000000 calls to Fetch_and_Add took 6875 cycles per call 
+ 6: 1000000 calls to Fetch_and_Add took 6876 cycles per call 
+31: 1000000 calls to Fetch_and_Add took 6871 cycles per call 
+22: 1000000 calls to Fetch_and_Add took 6869 cycles per call 
+43: 1000000 calls to Fetch_and_Add took 6875 cycles per call 
+ 0: 1000000 calls to Fetch_and_Add took 6875 cycles per call 
+ 4: 1000000 calls to Fetch_and_Add took 6874 cycles per call 
+36: 1000000 calls to Fetch_and_Add took 6862 cycles per call 
+24: 1000000 calls to Fetch_and_Add took 6874 cycles per call 
+ 9: 1000000 calls to Fetch_and_Add took 6874 cycles per call 
+25: 1000000 calls to Fetch_and_Add took 6873 cycles per call 
+16: 1000000 calls to Fetch_and_Add took 6871 cycles per call 
+18: 1000000 calls to Fetch_and_Add took 6874 cycles per call 
+44: 1000000 calls to Fetch_and_Add took 6873 cycles per call 
+42: 1000000 calls to Fetch_and_Add took 6875 cycles per call 
+40: 1000000 calls to Fetch_and_Add took 6875 cycles per call 
+threads joined 
+final value of slowcounter is 47000000 

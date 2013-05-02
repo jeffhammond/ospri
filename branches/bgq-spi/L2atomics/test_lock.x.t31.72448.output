@@ -1,0 +1,158 @@
+L2 lock test using 31 threads 
+0: before L2_Barrier 1 
+25: before L2_Barrier 1 
+2: before L2_Barrier 1 
+3: before L2_Barrier 1 
+4: before L2_Barrier 1 
+5: before L2_Barrier 1 
+6: before L2_Barrier 1 
+7: before L2_Barrier 1 
+8: before L2_Barrier 1 
+9: before L2_Barrier 1 
+10: before L2_Barrier 1 
+11: before L2_Barrier 1 
+12: before L2_Barrier 1 
+13: before L2_Barrier 1 
+14: before L2_Barrier 1 
+15: before L2_Barrier 1 
+16: before L2_Barrier 1 
+17: before L2_Barrier 1 
+18: before L2_Barrier 1 
+19: before L2_Barrier 1 
+20: before L2_Barrier 1 
+21: before L2_Barrier 1 
+22: before L2_Barrier 1 
+23: before L2_Barrier 1 
+24: before L2_Barrier 1 
+1: before L2_Barrier 1 
+26: before L2_Barrier 1 
+27: before L2_Barrier 1 
+28: before L2_Barrier 1 
+29: before L2_Barrier 1 
+threads created 
+30: before L2_Barrier 1 
+14: after  L2_Barrier 1 
+15: after  L2_Barrier 1 
+0: after  L2_Barrier 1 
+30: after  L2_Barrier 1 
+29: after  L2_Barrier 1 
+25: after  L2_Barrier 1 
+13: after  L2_Barrier 1 
+27: after  L2_Barrier 1 
+6: after  L2_Barrier 1 
+17: after  L2_Barrier 1 
+11: after  L2_Barrier 1 
+16: after  L2_Barrier 1 
+9: after  L2_Barrier 1 
+18: after  L2_Barrier 1 
+4: after  L2_Barrier 1 
+1: after  L2_Barrier 1 
+26: after  L2_Barrier 1 
+10: after  L2_Barrier 1 
+20: after  L2_Barrier 1 
+3: after  L2_Barrier 1 
+19: after  L2_Barrier 1 
+8: after  L2_Barrier 1 
+2: after  L2_Barrier 1 
+21: after  L2_Barrier 1 
+5: after  L2_Barrier 1 
+24: after  L2_Barrier 1 
+22: after  L2_Barrier 1 
+28: after  L2_Barrier 1 
+12: after  L2_Barrier 1 
+7: after  L2_Barrier 1 
+23: after  L2_Barrier 1 
+14: before L2_Barrier 2 
+15: before L2_Barrier 2 
+0: before L2_Barrier 2 
+30: before L2_Barrier 2 
+29: before L2_Barrier 2 
+25: before L2_Barrier 2 
+13: before L2_Barrier 2 
+27: before L2_Barrier 2 
+6: before L2_Barrier 2 
+17: before L2_Barrier 2 
+11: before L2_Barrier 2 
+16: before L2_Barrier 2 
+9: before L2_Barrier 2 
+18: before L2_Barrier 2 
+4: before L2_Barrier 2 
+1: before L2_Barrier 2 
+26: before L2_Barrier 2 
+10: before L2_Barrier 2 
+3: before L2_Barrier 2 
+20: before L2_Barrier 2 
+19: before L2_Barrier 2 
+8: before L2_Barrier 2 
+2: before L2_Barrier 2 
+21: before L2_Barrier 2 
+5: before L2_Barrier 2 
+24: before L2_Barrier 2 
+22: before L2_Barrier 2 
+28: before L2_Barrier 2 
+12: before L2_Barrier 2 
+7: before L2_Barrier 2 
+23: before L2_Barrier 2 
+7: after  L2_Barrier 2 
+ 7: 10000 calls to L2_Lock{Acquire,Release} took 8173 cycles per call 
+20: after  L2_Barrier 2 
+20: 10000 calls to L2_Lock{Acquire,Release} took 8608 cycles per call 
+5: after  L2_Barrier 2 
+ 5: 10000 calls to L2_Lock{Acquire,Release} took 8413 cycles per call 
+19: after  L2_Barrier 2 
+19: 10000 calls to L2_Lock{Acquire,Release} took 8558 cycles per call 
+23: after  L2_Barrier 2 
+23: 10000 calls to L2_Lock{Acquire,Release} took 8119 cycles per call 
+28: after  L2_Barrier 2 
+28: 10000 calls to L2_Lock{Acquire,Release} took 8275 cycles per call 
+1: after  L2_Barrier 2 
+ 1: 10000 calls to L2_Lock{Acquire,Release} took 8644 cycles per call 
+2: after  L2_Barrier 2 
+ 2: 10000 calls to L2_Lock{Acquire,Release} took 8491 cycles per call 
+16: after  L2_Barrier 2 
+16: 10000 calls to L2_Lock{Acquire,Release} took 8576 cycles per call 
+21: after  L2_Barrier 2 
+21: 10000 calls to L2_Lock{Acquire,Release} took 8453 cycles per call 
+30: after  L2_Barrier 2 
+30: 10000 calls to L2_Lock{Acquire,Release} took 7303 cycles per call 
+24: after  L2_Barrier 2 
+24: 10000 calls to L2_Lock{Acquire,Release} took 8370 cycles per call 
+15: after  L2_Barrier 2 
+15: 10000 calls to L2_Lock{Acquire,Release} took 5916 cycles per call 
+18: after  L2_Barrier 2 
+29: after  L2_Barrier 2 
+29: 10000 calls to L2_Lock{Acquire,Release} took 7660 cycles per call 
+0: after  L2_Barrier 2 
+27: after  L2_Barrier 2 
+27: 10000 calls to L2_Lock{Acquire,Release} took 8273 cycles per call 
+26: after  L2_Barrier 2 
+26: 10000 calls to L2_Lock{Acquire,Release} took 8638 cycles per call 
+22: after  L2_Barrier 2 
+22: 10000 calls to L2_Lock{Acquire,Release} took 8324 cycles per call 
+4: after  L2_Barrier 2 
+ 4: 10000 calls to L2_Lock{Acquire,Release} took 8639 cycles per call 
+3: after  L2_Barrier 2 
+ 3: 10000 calls to L2_Lock{Acquire,Release} took 8585 cycles per call 
+8: after  L2_Barrier 2 
+ 8: 10000 calls to L2_Lock{Acquire,Release} took 8527 cycles per call 
+13: after  L2_Barrier 2 
+13: 10000 calls to L2_Lock{Acquire,Release} took 8108 cycles per call 
+18: 10000 calls to L2_Lock{Acquire,Release} took 8629 cycles per call 
+11: after  L2_Barrier 2 
+11: 10000 calls to L2_Lock{Acquire,Release} took 8528 cycles per call 
+6: after  L2_Barrier 2 
+ 6: 10000 calls to L2_Lock{Acquire,Release} took 8380 cycles per call 
+12: after  L2_Barrier 2 
+12: 10000 calls to L2_Lock{Acquire,Release} took 8224 cycles per call 
+14: after  L2_Barrier 2 
+14: 10000 calls to L2_Lock{Acquire,Release} took 4177 cycles per call 
+25: after  L2_Barrier 2 
+25: 10000 calls to L2_Lock{Acquire,Release} took 7918 cycles per call 
+10: after  L2_Barrier 2 
+10: 10000 calls to L2_Lock{Acquire,Release} took 8626 cycles per call 
+9: after  L2_Barrier 2 
+ 0: 10000 calls to L2_Lock{Acquire,Release} took 6783 cycles per call 
+17: after  L2_Barrier 2 
+17: 10000 calls to L2_Lock{Acquire,Release} took 8467 cycles per call 
+ 9: 10000 calls to L2_Lock{Acquire,Release} took 8608 cycles per call 
+threads joined 

@@ -1,0 +1,3 @@
+Pthread test using 15 threads 
+15 threads created in 308928 cycles 
+15 threads joined in 77524 cycles 
