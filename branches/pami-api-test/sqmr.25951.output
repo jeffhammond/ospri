@@ -1,0 +1,4 @@
+>>> Test: NMASTERS=1  NWORKERS=1  ITERATIONS=32  WINDOW=16  size=2  Bi-Dir Msgs=512  HEADER=16  DATA=0
+::: Communication complete on process 0 (0.000573126 seconds)
+::: Communication complete on process 1 (0.000967137 seconds)
+>>> Results: 512 bi-directional messages in 0.000573126 seconds is 0.893346 MMPS
