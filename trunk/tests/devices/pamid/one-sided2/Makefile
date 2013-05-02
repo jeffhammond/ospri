@@ -8,7 +8,7 @@
 # This software is available to you under the Eclipse Public License (EPL). #
 # ------------------------------------------------------------------------- #
 
-CC ?= /bgsys/drivers/ppcfloor/comm/gcc/bin/mpicc
+CC=/bgsys/drivers/ppcfloor/comm/gcc/bin/mpicc
 CFLAGS=-g
 LDLIBS=-lm
 
