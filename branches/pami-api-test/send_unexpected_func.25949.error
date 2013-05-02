@@ -1,0 +1,18 @@
+2012-08-20 03:37:02.477 (INFO ) [0xfff81668ad0] VST-00000-11331-128:10191:ibm.runjob.client.options.Parser: set local socket to runjob_mux from properties file
+2012-08-20 03:37:04.995 (INFO ) [0xfff81668ad0] VST-00000-11331-128:32344:ibm.runjob.client.Job: job 32344 started
+Start test ...
+... before PAMI_Client_create()
+Start test ...
+...  after PAMI_Client_create()
+... before PAMI_Client_create()
+... before PAMI_Context_createv()
+...  after PAMI_Client_create()
+... before PAMI_Context_createv()
+...  after PAMI_Context_createv()
+...  after PAMI_Context_createv()
+Before PAMI_Dispatch_set() .. &_recv_active = 0x149c138, recv_active = 1
+(1) decrement() cookie = 0x1dbfff6a0c, 2 => 1
+Before PAMI_Dispatch_set() .. &_recv_active = 0x149c138, recv_active = 1
+(0) long recvn(0) decrement() cookie = 0x149c138, 1 => 0
+(1) decrement() cookie = 0x1dbfff6a0c, 1 => 0
+2012-08-20 03:37:07.996 (INFO ) [0xfff81668ad0] VST-00000-11331-128:32344:ibm.runjob.client.Job: exited with status 0
