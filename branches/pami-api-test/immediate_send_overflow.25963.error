@@ -1,0 +1,109 @@
+2012-08-20 03:13:14.425 (INFO ) [0xfffa69e8ad0] VST-22040-33371-128:4068:ibm.runjob.client.options.Parser: set local socket to runjob_mux from properties file
+2012-08-20 03:13:16.986 (INFO ) [0xfffa69e8ad0] VST-22040-33371-128:32250:ibm.runjob.client.Job: job 32250 started
+My task id = 1
+My task id = 0
+Number of tasks = 2
+Number of tasks = 2
+WARNING (W):  No other local tasks exist with Rank 1.  Skipping creation of "SHMem" dispatch ID ...
+WARNING (W):  No other local tasks exist with Rank 1.  Skipping creation of "SHMem" dispatch ID ...
+WARNING (W):  No other local tasks exist with Rank 0.  Skipping creation of "SHMem" dispatch ID ...
+WARNING (W):  No other local tasks exist with Rank 0.  Skipping creation of "SHMem" dispatch ID ...
+===== PAMI_Send_immediate() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][+/-1 bit = 0] 0 128 (0, 0) -> (1, 0) =====
+
+===== PAMI_Send_immediate() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][+/-1 bit = 0] 0 128 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send_immediate() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][+/-1 bit = 255] 64 64 (0, 0) -> (1, 0) =====
+
+===== PAMI_Send_immediate() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][+/-1 bit = 255] 64 64 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send_immediate() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][+/-1 bit = 0] 128 0 (0, 0) -> (1, 0) =====
+
+===== PAMI_Send_immediate() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][+/-1 bit = 0] 128 0 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send_immediate() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][+/-1 bit = 0] 0 128 (0, 0) -> (1, 1) =====
+
+===== PAMI_Send_immediate() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][+/-1 bit = 0] 0 128 (1, 1) -> (0, 0) =====
+
+===== PAMI_Send_immediate() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][+/-1 bit = 255] 64 64 (0, 0) -> (1, 1) =====
+
+===== PAMI_Send_immediate() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][+/-1 bit = 255] 64 64 (1, 1) -> (0, 0) =====
+
+===== PAMI_Send_immediate() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][+/-1 bit = 0] 128 0 (0, 0) -> (1, 1) =====
+
+===== PAMI_Send_immediate() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][+/-1 bit = 0] 128 0 (1, 1) -> (0, 0) =====
+
+WARNING (W):  Rank 1 is unaddressable by Rank 0 when use_shmem = PAMI_HINT_ENABLE. Skipping until next use_shmem hint ...
+===== PAMI_Send_immediate() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][+/-1 bit = 0] 0 128 (0, 0) -> (1, 0) =====
+
+===== PAMI_Send_immediate() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][+/-1 bit = 0] 0 128 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send_immediate() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][+/-1 bit = 255] 64 64 (0, 0) -> (1, 0) =====
+
+===== PAMI_Send_immediate() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][+/-1 bit = 255] 64 64 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send_immediate() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][+/-1 bit = 0] 128 0 (0, 0) -> (1, 0) =====
+
+===== PAMI_Send_immediate() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][+/-1 bit = 0] 128 0 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send_immediate() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][crosstalk][+/-1 bit = 0] 0 128 (0, 0) -> (1, 1) =====
+
+===== PAMI_Send_immediate() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][crosstalk][+/-1 bit = 0] 0 128 (1, 1) -> (0, 0) =====
+
+===== PAMI_Send_immediate() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][crosstalk][+/-1 bit = 255] 64 64 (0, 0) -> (1, 1) =====
+
+===== PAMI_Send_immediate() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][crosstalk][+/-1 bit = 255] 64 64 (1, 1) -> (0, 0) =====
+
+===== PAMI_Send_immediate() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][crosstalk][+/-1 bit = 0] 128 0 (0, 0) -> (1, 1) =====
+
+===== PAMI_Send_immediate() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][crosstalk][+/-1 bit = 0] 128 0 (1, 1) -> (0, 0) =====
+
+===== PAMI_Send_immediate() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk] 0 129 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send_immediate() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk] 64 65 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send_immediate() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk] 0 129 (0, 0) -> (1, 0) =====
+
+===== PAMI_Send_immediate() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk] 129 0 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send_immediate() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk] 64 65 (0, 0) -> (1, 0) =====
+
+===== PAMI_Send_immediate() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk] 0 129 (1, 1) -> (0, 0) =====
+
+===== PAMI_Send_immediate() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk] 129 0 (0, 0) -> (1, 0) =====
+
+===== PAMI_Send_immediate() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk] 64 65 (1, 1) -> (0, 0) =====
+
+===== PAMI_Send_immediate() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk] 0 129 (0, 0) -> (1, 1) =====
+
+===== PAMI_Send_immediate() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk] 129 0 (1, 1) -> (0, 0) =====
+
+===== PAMI_Send_immediate() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk] 64 65 (0, 0) -> (1, 1) =====
+
+===== PAMI_Send_immediate() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk] 0 129 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send_immediate() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk] 129 0 (0, 0) -> (1, 1) =====
+
+===== PAMI_Send_immediate() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk] 64 65 (1, 0) -> (0, 0) =====
+
+WARNING (W):  Rank 1 is unaddressable by Rank 0 when use_shmem = PAMI_HINT_ENABLE. Skipping until next use_shmem hint ...
+===== PAMI_Send_immediate() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk] 129 0 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send_immediate() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk] 0 129 (0, 0) -> (1, 0) =====
+
+===== PAMI_Send_immediate() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][crosstalk] 0 129 (1, 1) -> (0, 0) =====
+
+===== PAMI_Send_immediate() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk] 64 65 (0, 0) -> (1, 0) =====
+
+===== PAMI_Send_immediate() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][crosstalk] 64 65 (1, 1) -> (0, 0) =====
+
+===== PAMI_Send_immediate() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk] 129 0 (0, 0) -> (1, 0) =====
+
+===== PAMI_Send_immediate() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][crosstalk] 129 0 (1, 1) -> (0, 0) =====
+
+===== PAMI_Send_immediate() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][crosstalk] 0 129 (0, 0) -> (1, 1) =====
+
+===== PAMI_Send_immediate() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][crosstalk] 64 65 (0, 0) -> (1, 1) =====
+
+===== PAMI_Send_immediate() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][crosstalk] 129 0 (0, 0) -> (1, 1) =====
+
+2012-08-20 03:13:19.063 (INFO ) [0xfffa69e8ad0] VST-22040-33371-128:32250:ibm.runjob.client.Job: exited with status 0
