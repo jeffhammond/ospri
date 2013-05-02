@@ -1,0 +1,19 @@
+2012-04-03 17:14:23.170 (INFO ) [0xfff7dcf89e0] EAS-22040-33371-128:26156:ibm.runjob.client.options.Parser: set local socket to runjob_mux from properties file
+2012-04-03 17:14:28.067 (INFO ) [0xfff7dcf89e0] EAS-22040-33371-128:7435:ibm.runjob.client.Job: job 7435 started
+Abort(1) on node 0 (rank 0 in comm 1140850688): Fatal error in PMPI_Waitall: Invalid MPI_Request, error stack:
+PMPI_Waitall(420): MPI_Waitall(count=2, req_array=0x1dffffb9bc, status_array=0x1) failed
+PMPI_Waitall(396): The supplied request in array element 1 was invalid (kind=0)
+Abort(1) on node 1 (rank 1 in comm 1140850688): Fatal error in PMPI_Waitall: Invalid MPI_Request, error stack:
+PMPI_Waitall(420): MPI_Waitall(count=2, req_array=0x1dffffb9bc, status_array=0x1) failed
+PMPI_Waitall(396): The supplied request in array element 1 was invalid (kind=0)
+PMPI_Waitall(396): The supplied request in array element 0 was invalid (kind=0)
+Abort(1) on node 2 (rank 2 in comm 1140850688): Fatal error in PMPI_Waitall: Invalid MPI_Request, error stack:
+PMPI_Waitall(420): MPI_Waitall(count=2, req_array=0x1dffffb9bc, status_array=0x1) failed
+PMPI_Waitall(396): The supplied request in array element 1 was invalid (kind=0)
+PMPI_Waitall(396): The supplied request in array element 0 was invalid (kind=0)
+Abort(1) on node 3 (rank 3 in comm 1140850688): Fatal error in PMPI_Waitall: Invalid MPI_Request, error stack:
+PMPI_Waitall(420): MPI_Waitall(count=2, req_array=0x1dffffb9bc, status_array=0x1) failed
+PMPI_Waitall(396): The supplied request in array element 1 was invalid (kind=0)
+PMPI_Waitall(396): The supplied request in array element 0 was invalid (kind=0)
+2012-04-03 17:14:29.606 (WARN ) [0xfff7dcf89e0] EAS-22040-33371-128:7435:ibm.runjob.client.Job: terminated by signal 6
+2012-04-03 17:14:29.607 (WARN ) [0xfff7dcf89e0] EAS-22040-33371-128:7435:ibm.runjob.client.Job: abnormal termination by signal 6 from rank 0
