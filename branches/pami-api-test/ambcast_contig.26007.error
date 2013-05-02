@@ -1,0 +1,3 @@
+2012-08-20 03:11:51.124 (INFO ) [0xfffb1248ad0] VST-00000-11331-128:29545:ibm.runjob.client.options.Parser: set local socket to runjob_mux from properties file
+2012-08-20 03:11:53.798 (INFO ) [0xfffb1248ad0] VST-00000-11331-128:32244:ibm.runjob.client.Job: job 32244 started
+2012-08-20 03:11:56.416 (INFO ) [0xfffb1248ad0] VST-00000-11331-128:32244:ibm.runjob.client.Job: exited with status 0
