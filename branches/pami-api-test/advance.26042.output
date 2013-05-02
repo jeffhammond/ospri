@@ -1,0 +1,4 @@
+Before PAMI_Context_advance()
+Before PAMI_Context_advance()
+ After PAMI_Context_advance(), result = 0
+ After PAMI_Context_advance(), result = 0
