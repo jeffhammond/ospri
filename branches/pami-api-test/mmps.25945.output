@@ -1,0 +1,6 @@
+0 = PAMI_Context_createv(client=0x19c53356c0, {PAMI_CLIENT_CONST_CONTEXTS = 1}, contexts=0x144c008, ncontexts=48);
+0 = PAMI_Context_createv(client=0x19c53356c0, {PAMI_CLIENT_CONST_CONTEXTS = 1}, contexts=0x144c008, ncontexts=48);
+>>> Test: ITERATIONS=4096  WINDOW=16  Remotes=1  Bi-Dir Msgs=65536  HEADER=16  DATA=0
+::: Communication complete on process 0 (0.0704014 seconds)
+::: Communication complete on process 1 (0.0710939 seconds)
+>>> Results: 65536 bi-directional messages in 0.0704014 seconds is 0.930891 MMPS
