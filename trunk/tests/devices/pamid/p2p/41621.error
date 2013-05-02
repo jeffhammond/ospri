@@ -1,0 +1,19 @@
+2012-11-06 23:09:14.212 (INFO ) [0xfff869f8ad0] ibm.runjob.AbstractOptions: using properties file /bgsys/local/etc/bg.properties
+2012-11-06 23:09:14.213 (INFO ) [0xfff869f8ad0] ibm.runjob.AbstractOptions: max open file descriptors: 65536
+2012-11-06 23:09:14.213 (INFO ) [0xfff869f8ad0] ibm.runjob.AbstractOptions: core file limit: 0
+2012-11-06 23:09:14.213 (INFO ) [0xfff869f8ad0] VST-00000-11331-128:15071:ibm.runjob.client.options.Parser: set local socket to runjob_mux from properties file
+2012-11-06 23:09:16.295 (INFO ) [0xfff869f8ad0] VST-00000-11331-128:84999:ibm.runjob.client.Job: job 84999 started
+attempting to allocate 0 bytes 
+attempting to allocate 0 bytes 
+attempting to allocate 0 bytes 
+attempting to allocate 0 bytes 
+attempting to allocate 0 bytes 
+attempting to allocate 0 bytes 
+attempting to allocate 0 bytes 
+attempting to allocate 0 bytes 
+send.x: send.c:177: main: Assertion `result == PAMI_SUCCESS' failed.
+send.x: send.c:177: main: Assertion `result == PAMI_SUCCESS' failed.
+send.x: send.c:177: main: Assertion `result == PAMI_SUCCESS' failed.
+send.x: send.c:177: main: Assertion `result == PAMI_SUCCESS' failed.
+2012-11-06 23:09:18.103 (WARN ) [0xfff869f8ad0] VST-00000-11331-128:84999:ibm.runjob.client.Job: terminated by signal 6
+2012-11-06 23:09:18.103 (WARN ) [0xfff869f8ad0] VST-00000-11331-128:84999:ibm.runjob.client.Job: abnormal termination by signal 6 from rank 3
