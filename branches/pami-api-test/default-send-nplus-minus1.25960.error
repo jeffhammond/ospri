@@ -1,0 +1,908 @@
+2012-08-20 03:24:59.687 (INFO ) [0xfffa0ee8ad0] VST-20040-31371-128:11253:ibm.runjob.client.options.Parser: set local socket to runjob_mux from properties file
+2012-08-20 03:25:02.243 (INFO ) [0xfffa0ee8ad0] VST-20040-31371-128:32300:ibm.runjob.client.Job: job 32300 started
+My task id = 1
+My task id = 0
+Number of tasks = 2
+Number of tasks = 2
+WARNING (W):  No other local tasks exist with Rank 1.  Skipping creation of "SHMem" dispatch ID ...
+WARNING (W):  No other local tasks exist with Rank 1.  Skipping creation of "SHMem" dispatch ID ...
+WARNING (W):  No other local tasks exist with Rank 0.  Skipping creation of "SHMem" dispatch ID ...
+WARNING (W):  No other local tasks exist with Rank 0.  Skipping creation of "SHMem" dispatch ID ...
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][no callback][+/-1 bit = 0][no long header] 0 0 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][no callback][+/-1 bit = 0][no long header] 0 0 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][no callback][+/-1 bit = 0][no long header] 0 128 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][no callback][+/-1 bit = 0][no long header] 0 128 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][no callback][+/-1 bit = 0][no long header] 0 256 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][no callback][+/-1 bit = 0][no long header] 0 256 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][no callback][+/-1 bit = 0][no long header] 0 512 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][no callback][+/-1 bit = 0][no long header] 0 512 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][no callback][+/-1 bit = 0][no long header] 0 1024 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][no callback][+/-1 bit = 0][no long header] 0 1024 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][no callback][+/-1 bit = 0][no long header] 16 0 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][no callback][+/-1 bit = 0][no long header] 16 0 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][no callback][+/-1 bit = 0][no long header] 16 128 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][no callback][+/-1 bit = 0][no long header] 16 128 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][no callback][+/-1 bit = 0][no long header] 16 256 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][no callback][+/-1 bit = 0][no long header] 16 256 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][no callback][+/-1 bit = 0][no long header] 16 512 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][no callback][+/-1 bit = 0][no long header] 16 512 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][no callback][+/-1 bit = 0][no long header] 16 1024 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][no callback][+/-1 bit = 0][no long header] 16 1024 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][no callback][+/-1 bit = 0][no long header] 32 0 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][no callback][+/-1 bit = 0][no long header] 32 0 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][no callback][+/-1 bit = 0][no long header] 32 128 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][no callback][+/-1 bit = 0][no long header] 32 128 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][no callback][+/-1 bit = 0][no long header] 32 256 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][no callback][+/-1 bit = 0][no long header] 32 256 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][no callback][+/-1 bit = 0][no long header] 32 512 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][no callback][+/-1 bit = 0][no long header] 32 512 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][no callback][+/-1 bit = 0][no long header] 32 1024 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][no callback][+/-1 bit = 0][no long header] 32 1024 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][no callback][+/-1 bit = 0][no long header] 512 0 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][no callback][+/-1 bit = 0][no long header] 512 0 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][no callback][+/-1 bit = 0][no long header] 512 128 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][no callback][+/-1 bit = 0][no long header] 512 128 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][no callback][+/-1 bit = 0][no long header] 512 256 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][no callback][+/-1 bit = 0][no long header] 512 256 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][no callback][+/-1 bit = 0][no long header] 512 512 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][no callback][+/-1 bit = 0][no long header] 512 512 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][no callback][+/-1 bit = 0][no long header] 512 1024 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][no callback][+/-1 bit = 0][no long header] 512 1024 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][no callback][+/-1 bit = 0][long header] 544 0 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][no callback][+/-1 bit = 0][long header] 544 0 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][no callback][+/-1 bit = 0][long header] 544 128 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][no callback][+/-1 bit = 0][long header] 544 128 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][no callback][+/-1 bit = 0][long header] 544 256 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][no callback][+/-1 bit = 0][long header] 544 256 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][no callback][+/-1 bit = 0][long header] 544 512 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][no callback][+/-1 bit = 0][long header] 544 512 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][no callback][+/-1 bit = 0][long header] 544 1024 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][no callback][+/-1 bit = 0][long header] 544 1024 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][no callback][+/-1 bit = 255][no long header] 0 0 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][no callback][+/-1 bit = 255][no long header] 0 0 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][no callback][+/-1 bit = 255][no long header] 0 128 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][no callback][+/-1 bit = 255][no long header] 0 128 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][no callback][+/-1 bit = 255][no long header] 0 256 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][no callback][+/-1 bit = 255][no long header] 0 256 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][no callback][+/-1 bit = 255][no long header] 0 512 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][no callback][+/-1 bit = 255][no long header] 0 512 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][no callback][+/-1 bit = 255][no long header] 0 1024 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][no callback][+/-1 bit = 255][no long header] 0 1024 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][no callback][+/-1 bit = 255][no long header] 16 0 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][no callback][+/-1 bit = 255][no long header] 16 0 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][no callback][+/-1 bit = 255][no long header] 16 128 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][no callback][+/-1 bit = 255][no long header] 16 128 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][no callback][+/-1 bit = 255][no long header] 16 256 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][no callback][+/-1 bit = 255][no long header] 16 256 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][no callback][+/-1 bit = 255][no long header] 16 512 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][no callback][+/-1 bit = 255][no long header] 16 512 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][no callback][+/-1 bit = 255][no long header] 16 1024 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][no callback][+/-1 bit = 255][no long header] 16 1024 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][no callback][+/-1 bit = 255][no long header] 32 0 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][no callback][+/-1 bit = 255][no long header] 32 0 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][no callback][+/-1 bit = 255][no long header] 32 128 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][no callback][+/-1 bit = 255][no long header] 32 128 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][no callback][+/-1 bit = 255][no long header] 32 256 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][no callback][+/-1 bit = 255][no long header] 32 256 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][no callback][+/-1 bit = 255][no long header] 32 512 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][no callback][+/-1 bit = 255][no long header] 32 512 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][no callback][+/-1 bit = 255][no long header] 32 1024 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][no callback][+/-1 bit = 255][no long header] 32 1024 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][no callback][+/-1 bit = 255][no long header] 512 0 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][no callback][+/-1 bit = 255][no long header] 512 0 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][no callback][+/-1 bit = 255][no long header] 512 128 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][no callback][+/-1 bit = 255][no long header] 512 128 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][no callback][+/-1 bit = 255][no long header] 512 256 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][no callback][+/-1 bit = 255][no long header] 512 256 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][no callback][+/-1 bit = 255][no long header] 512 512 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][no callback][+/-1 bit = 255][no long header] 512 512 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][no callback][+/-1 bit = 255][no long header] 512 1024 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][no callback][+/-1 bit = 255][no long header] 512 1024 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][no callback][+/-1 bit = 255][long header] 544 0 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][no callback][+/-1 bit = 255][long header] 544 0 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][no callback][+/-1 bit = 255][long header] 544 128 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][no callback][+/-1 bit = 255][long header] 544 128 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][no callback][+/-1 bit = 255][long header] 544 256 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][no callback][+/-1 bit = 255][long header] 544 256 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][no callback][+/-1 bit = 255][long header] 544 512 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][no callback][+/-1 bit = 255][long header] 544 512 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][no callback][+/-1 bit = 255][long header] 544 1024 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][no callback][+/-1 bit = 255][long header] 544 1024 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][callback][+/-1 bit = 0][no long header] 0 0 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][callback][+/-1 bit = 0][no long header] 0 0 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][callback][+/-1 bit = 0][no long header] 0 128 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][callback][+/-1 bit = 0][no long header] 0 128 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][callback][+/-1 bit = 0][no long header] 0 256 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][callback][+/-1 bit = 0][no long header] 0 256 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][callback][+/-1 bit = 0][no long header] 0 512 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][callback][+/-1 bit = 0][no long header] 0 512 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][callback][+/-1 bit = 0][no long header] 0 1024 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][callback][+/-1 bit = 0][no long header] 0 1024 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][callback][+/-1 bit = 0][no long header] 16 0 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][callback][+/-1 bit = 0][no long header] 16 0 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][callback][+/-1 bit = 0][no long header] 16 128 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][callback][+/-1 bit = 0][no long header] 16 128 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][callback][+/-1 bit = 0][no long header] 16 256 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][callback][+/-1 bit = 0][no long header] 16 256 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][callback][+/-1 bit = 0][no long header] 16 512 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][callback][+/-1 bit = 0][no long header] 16 512 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][callback][+/-1 bit = 0][no long header] 16 1024 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][callback][+/-1 bit = 0][no long header] 16 1024 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][callback][+/-1 bit = 0][no long header] 32 0 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][callback][+/-1 bit = 0][no long header] 32 0 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][callback][+/-1 bit = 0][no long header] 32 128 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][callback][+/-1 bit = 0][no long header] 32 128 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][callback][+/-1 bit = 0][no long header] 32 256 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][callback][+/-1 bit = 0][no long header] 32 256 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][callback][+/-1 bit = 0][no long header] 32 512 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][callback][+/-1 bit = 0][no long header] 32 512 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][callback][+/-1 bit = 0][no long header] 32 1024 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][callback][+/-1 bit = 0][no long header] 32 1024 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][callback][+/-1 bit = 0][no long header] 512 0 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][callback][+/-1 bit = 0][no long header] 512 0 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][callback][+/-1 bit = 0][no long header] 512 128 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][callback][+/-1 bit = 0][no long header] 512 128 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][callback][+/-1 bit = 0][no long header] 512 256 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][callback][+/-1 bit = 0][no long header] 512 256 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][callback][+/-1 bit = 0][no long header] 512 512 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][callback][+/-1 bit = 0][no long header] 512 512 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][callback][+/-1 bit = 0][no long header] 512 1024 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][callback][+/-1 bit = 0][no long header] 512 1024 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][callback][+/-1 bit = 0][long header] 544 0 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][callback][+/-1 bit = 0][long header] 544 0 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][callback][+/-1 bit = 0][long header] 544 128 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][callback][+/-1 bit = 0][long header] 544 128 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][callback][+/-1 bit = 0][long header] 544 256 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][callback][+/-1 bit = 0][long header] 544 256 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][callback][+/-1 bit = 0][long header] 544 512 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][callback][+/-1 bit = 0][long header] 544 512 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][callback][+/-1 bit = 0][long header] 544 1024 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][callback][+/-1 bit = 0][long header] 544 1024 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][callback][+/-1 bit = 255][no long header] 0 0 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][callback][+/-1 bit = 255][no long header] 0 0 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][callback][+/-1 bit = 255][no long header] 0 128 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][callback][+/-1 bit = 255][no long header] 0 128 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][callback][+/-1 bit = 255][no long header] 0 256 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][callback][+/-1 bit = 255][no long header] 0 256 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][callback][+/-1 bit = 255][no long header] 0 512 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][callback][+/-1 bit = 255][no long header] 0 512 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][callback][+/-1 bit = 255][no long header] 0 1024 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][callback][+/-1 bit = 255][no long header] 0 1024 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][callback][+/-1 bit = 255][no long header] 16 0 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][callback][+/-1 bit = 255][no long header] 16 0 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][callback][+/-1 bit = 255][no long header] 16 128 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][callback][+/-1 bit = 255][no long header] 16 128 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][callback][+/-1 bit = 255][no long header] 16 256 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][callback][+/-1 bit = 255][no long header] 16 256 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][callback][+/-1 bit = 255][no long header] 16 512 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][callback][+/-1 bit = 255][no long header] 16 512 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][callback][+/-1 bit = 255][no long header] 16 1024 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][callback][+/-1 bit = 255][no long header] 16 1024 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][callback][+/-1 bit = 255][no long header] 32 0 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][callback][+/-1 bit = 255][no long header] 32 0 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][callback][+/-1 bit = 255][no long header] 32 128 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][callback][+/-1 bit = 255][no long header] 32 128 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][callback][+/-1 bit = 255][no long header] 32 256 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][callback][+/-1 bit = 255][no long header] 32 256 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][callback][+/-1 bit = 255][no long header] 32 512 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][callback][+/-1 bit = 255][no long header] 32 512 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][callback][+/-1 bit = 255][no long header] 32 1024 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][callback][+/-1 bit = 255][no long header] 32 1024 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][callback][+/-1 bit = 255][no long header] 512 0 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][callback][+/-1 bit = 255][no long header] 512 0 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][callback][+/-1 bit = 255][no long header] 512 128 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][callback][+/-1 bit = 255][no long header] 512 128 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][callback][+/-1 bit = 255][no long header] 512 256 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][callback][+/-1 bit = 255][no long header] 512 256 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][callback][+/-1 bit = 255][no long header] 512 512 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][callback][+/-1 bit = 255][no long header] 512 512 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][callback][+/-1 bit = 255][no long header] 512 1024 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][callback][+/-1 bit = 255][no long header] 512 1024 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][callback][+/-1 bit = 255][long header] 544 0 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][callback][+/-1 bit = 255][long header] 544 0 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][callback][+/-1 bit = 255][long header] 544 128 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][callback][+/-1 bit = 255][long header] 544 128 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][callback][+/-1 bit = 255][long header] 544 256 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][callback][+/-1 bit = 255][long header] 544 256 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][callback][+/-1 bit = 255][long header] 544 512 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][callback][+/-1 bit = 255][long header] 544 512 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][callback][+/-1 bit = 255][long header] 544 1024 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][no crosstalk][callback][+/-1 bit = 255][long header] 544 1024 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][no callback][+/-1 bit = 0][no long header] 0 0 (0, 0) -> (1, 1) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][no callback][+/-1 bit = 0][no long header] 0 0 (1, 1) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][no callback][+/-1 bit = 0][no long header] 0 128 (0, 0) -> (1, 1) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][no callback][+/-1 bit = 0][no long header] 0 128 (1, 1) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][no callback][+/-1 bit = 0][no long header] 0 256 (0, 0) -> (1, 1) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][no callback][+/-1 bit = 0][no long header] 0 256 (1, 1) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][no callback][+/-1 bit = 0][no long header] 0 512 (0, 0) -> (1, 1) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][no callback][+/-1 bit = 0][no long header] 0 512 (1, 1) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][no callback][+/-1 bit = 0][no long header] 0 1024 (0, 0) -> (1, 1) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][no callback][+/-1 bit = 0][no long header] 0 1024 (1, 1) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][no callback][+/-1 bit = 0][no long header] 16 0 (0, 0) -> (1, 1) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][no callback][+/-1 bit = 0][no long header] 16 0 (1, 1) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][no callback][+/-1 bit = 0][no long header] 16 128 (0, 0) -> (1, 1) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][no callback][+/-1 bit = 0][no long header] 16 128 (1, 1) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][no callback][+/-1 bit = 0][no long header] 16 256 (0, 0) -> (1, 1) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][no callback][+/-1 bit = 0][no long header] 16 256 (1, 1) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][no callback][+/-1 bit = 0][no long header] 16 512 (0, 0) -> (1, 1) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][no callback][+/-1 bit = 0][no long header] 16 512 (1, 1) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][no callback][+/-1 bit = 0][no long header] 16 1024 (0, 0) -> (1, 1) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][no callback][+/-1 bit = 0][no long header] 16 1024 (1, 1) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][no callback][+/-1 bit = 0][no long header] 32 0 (0, 0) -> (1, 1) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][no callback][+/-1 bit = 0][no long header] 32 0 (1, 1) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][no callback][+/-1 bit = 0][no long header] 32 128 (0, 0) -> (1, 1) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][no callback][+/-1 bit = 0][no long header] 32 128 (1, 1) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][no callback][+/-1 bit = 0][no long header] 32 256 (0, 0) -> (1, 1) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][no callback][+/-1 bit = 0][no long header] 32 256 (1, 1) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][no callback][+/-1 bit = 0][no long header] 32 512 (0, 0) -> (1, 1) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][no callback][+/-1 bit = 0][no long header] 32 512 (1, 1) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][no callback][+/-1 bit = 0][no long header] 32 1024 (0, 0) -> (1, 1) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][no callback][+/-1 bit = 0][no long header] 32 1024 (1, 1) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][no callback][+/-1 bit = 0][no long header] 512 0 (0, 0) -> (1, 1) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][no callback][+/-1 bit = 0][no long header] 512 0 (1, 1) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][no callback][+/-1 bit = 0][no long header] 512 128 (0, 0) -> (1, 1) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][no callback][+/-1 bit = 0][no long header] 512 128 (1, 1) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][no callback][+/-1 bit = 0][no long header] 512 256 (0, 0) -> (1, 1) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][no callback][+/-1 bit = 0][no long header] 512 256 (1, 1) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][no callback][+/-1 bit = 0][no long header] 512 512 (0, 0) -> (1, 1) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][no callback][+/-1 bit = 0][no long header] 512 512 (1, 1) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][no callback][+/-1 bit = 0][no long header] 512 1024 (0, 0) -> (1, 1) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][no callback][+/-1 bit = 0][no long header] 512 1024 (1, 1) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][no callback][+/-1 bit = 0][long header] 544 0 (0, 0) -> (1, 1) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][no callback][+/-1 bit = 0][long header] 544 0 (1, 1) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][no callback][+/-1 bit = 0][long header] 544 128 (0, 0) -> (1, 1) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][no callback][+/-1 bit = 0][long header] 544 128 (1, 1) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][no callback][+/-1 bit = 0][long header] 544 256 (0, 0) -> (1, 1) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][no callback][+/-1 bit = 0][long header] 544 256 (1, 1) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][no callback][+/-1 bit = 0][long header] 544 512 (0, 0) -> (1, 1) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][no callback][+/-1 bit = 0][long header] 544 512 (1, 1) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][no callback][+/-1 bit = 0][long header] 544 1024 (0, 0) -> (1, 1) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][no callback][+/-1 bit = 0][long header] 544 1024 (1, 1) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][no callback][+/-1 bit = 255][no long header] 0 0 (0, 0) -> (1, 1) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][no callback][+/-1 bit = 255][no long header] 0 0 (1, 1) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][no callback][+/-1 bit = 255][no long header] 0 128 (0, 0) -> (1, 1) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][no callback][+/-1 bit = 255][no long header] 0 128 (1, 1) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][no callback][+/-1 bit = 255][no long header] 0 256 (0, 0) -> (1, 1) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][no callback][+/-1 bit = 255][no long header] 0 256 (1, 1) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][no callback][+/-1 bit = 255][no long header] 0 512 (0, 0) -> (1, 1) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][no callback][+/-1 bit = 255][no long header] 0 512 (1, 1) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][no callback][+/-1 bit = 255][no long header] 0 1024 (0, 0) -> (1, 1) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][no callback][+/-1 bit = 255][no long header] 0 1024 (1, 1) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][no callback][+/-1 bit = 255][no long header] 16 0 (0, 0) -> (1, 1) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][no callback][+/-1 bit = 255][no long header] 16 0 (1, 1) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][no callback][+/-1 bit = 255][no long header] 16 128 (0, 0) -> (1, 1) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][no callback][+/-1 bit = 255][no long header] 16 128 (1, 1) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][no callback][+/-1 bit = 255][no long header] 16 256 (0, 0) -> (1, 1) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][no callback][+/-1 bit = 255][no long header] 16 256 (1, 1) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][no callback][+/-1 bit = 255][no long header] 16 512 (0, 0) -> (1, 1) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][no callback][+/-1 bit = 255][no long header] 16 512 (1, 1) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][no callback][+/-1 bit = 255][no long header] 16 1024 (0, 0) -> (1, 1) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][no callback][+/-1 bit = 255][no long header] 16 1024 (1, 1) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][no callback][+/-1 bit = 255][no long header] 32 0 (0, 0) -> (1, 1) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][no callback][+/-1 bit = 255][no long header] 32 0 (1, 1) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][no callback][+/-1 bit = 255][no long header] 32 128 (0, 0) -> (1, 1) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][no callback][+/-1 bit = 255][no long header] 32 128 (1, 1) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][no callback][+/-1 bit = 255][no long header] 32 256 (0, 0) -> (1, 1) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][no callback][+/-1 bit = 255][no long header] 32 256 (1, 1) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][no callback][+/-1 bit = 255][no long header] 32 512 (0, 0) -> (1, 1) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][no callback][+/-1 bit = 255][no long header] 32 512 (1, 1) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][no callback][+/-1 bit = 255][no long header] 32 1024 (0, 0) -> (1, 1) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][no callback][+/-1 bit = 255][no long header] 32 1024 (1, 1) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][no callback][+/-1 bit = 255][no long header] 512 0 (0, 0) -> (1, 1) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][no callback][+/-1 bit = 255][no long header] 512 0 (1, 1) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][no callback][+/-1 bit = 255][no long header] 512 128 (0, 0) -> (1, 1) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][no callback][+/-1 bit = 255][no long header] 512 128 (1, 1) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][no callback][+/-1 bit = 255][no long header] 512 256 (0, 0) -> (1, 1) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][no callback][+/-1 bit = 255][no long header] 512 256 (1, 1) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][no callback][+/-1 bit = 255][no long header] 512 512 (0, 0) -> (1, 1) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][no callback][+/-1 bit = 255][no long header] 512 512 (1, 1) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][no callback][+/-1 bit = 255][no long header] 512 1024 (0, 0) -> (1, 1) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][no callback][+/-1 bit = 255][no long header] 512 1024 (1, 1) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][no callback][+/-1 bit = 255][long header] 544 0 (0, 0) -> (1, 1) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][no callback][+/-1 bit = 255][long header] 544 0 (1, 1) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][no callback][+/-1 bit = 255][long header] 544 128 (0, 0) -> (1, 1) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][no callback][+/-1 bit = 255][long header] 544 128 (1, 1) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][no callback][+/-1 bit = 255][long header] 544 256 (0, 0) -> (1, 1) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][no callback][+/-1 bit = 255][long header] 544 256 (1, 1) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][no callback][+/-1 bit = 255][long header] 544 512 (0, 0) -> (1, 1) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][no callback][+/-1 bit = 255][long header] 544 512 (1, 1) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][no callback][+/-1 bit = 255][long header] 544 1024 (0, 0) -> (1, 1) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][no callback][+/-1 bit = 255][long header] 544 1024 (1, 1) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][callback][+/-1 bit = 0][no long header] 0 0 (0, 0) -> (1, 1) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][callback][+/-1 bit = 0][no long header] 0 0 (1, 1) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][callback][+/-1 bit = 0][no long header] 0 128 (0, 0) -> (1, 1) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][callback][+/-1 bit = 0][no long header] 0 128 (1, 1) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][callback][+/-1 bit = 0][no long header] 0 256 (0, 0) -> (1, 1) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][callback][+/-1 bit = 0][no long header] 0 256 (1, 1) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][callback][+/-1 bit = 0][no long header] 0 512 (0, 0) -> (1, 1) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][callback][+/-1 bit = 0][no long header] 0 512 (1, 1) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][callback][+/-1 bit = 0][no long header] 0 1024 (0, 0) -> (1, 1) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][callback][+/-1 bit = 0][no long header] 0 1024 (1, 1) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][callback][+/-1 bit = 0][no long header] 16 0 (0, 0) -> (1, 1) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][callback][+/-1 bit = 0][no long header] 16 0 (1, 1) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][callback][+/-1 bit = 0][no long header] 16 128 (0, 0) -> (1, 1) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][callback][+/-1 bit = 0][no long header] 16 128 (1, 1) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][callback][+/-1 bit = 0][no long header] 16 256 (0, 0) -> (1, 1) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][callback][+/-1 bit = 0][no long header] 16 256 (1, 1) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][callback][+/-1 bit = 0][no long header] 16 512 (0, 0) -> (1, 1) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][callback][+/-1 bit = 0][no long header] 16 512 (1, 1) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][callback][+/-1 bit = 0][no long header] 16 1024 (0, 0) -> (1, 1) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][callback][+/-1 bit = 0][no long header] 16 1024 (1, 1) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][callback][+/-1 bit = 0][no long header] 32 0 (0, 0) -> (1, 1) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][callback][+/-1 bit = 0][no long header] 32 0 (1, 1) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][callback][+/-1 bit = 0][no long header] 32 128 (0, 0) -> (1, 1) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][callback][+/-1 bit = 0][no long header] 32 128 (1, 1) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][callback][+/-1 bit = 0][no long header] 32 256 (0, 0) -> (1, 1) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][callback][+/-1 bit = 0][no long header] 32 256 (1, 1) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][callback][+/-1 bit = 0][no long header] 32 512 (0, 0) -> (1, 1) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][callback][+/-1 bit = 0][no long header] 32 512 (1, 1) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][callback][+/-1 bit = 0][no long header] 32 1024 (0, 0) -> (1, 1) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][callback][+/-1 bit = 0][no long header] 32 1024 (1, 1) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][callback][+/-1 bit = 0][no long header] 512 0 (0, 0) -> (1, 1) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][callback][+/-1 bit = 0][no long header] 512 0 (1, 1) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][callback][+/-1 bit = 0][no long header] 512 128 (0, 0) -> (1, 1) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][callback][+/-1 bit = 0][no long header] 512 128 (1, 1) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][callback][+/-1 bit = 0][no long header] 512 256 (0, 0) -> (1, 1) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][callback][+/-1 bit = 0][no long header] 512 256 (1, 1) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][callback][+/-1 bit = 0][no long header] 512 512 (0, 0) -> (1, 1) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][callback][+/-1 bit = 0][no long header] 512 512 (1, 1) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][callback][+/-1 bit = 0][no long header] 512 1024 (0, 0) -> (1, 1) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][callback][+/-1 bit = 0][no long header] 512 1024 (1, 1) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][callback][+/-1 bit = 0][long header] 544 0 (0, 0) -> (1, 1) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][callback][+/-1 bit = 0][long header] 544 0 (1, 1) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][callback][+/-1 bit = 0][long header] 544 128 (0, 0) -> (1, 1) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][callback][+/-1 bit = 0][long header] 544 128 (1, 1) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][callback][+/-1 bit = 0][long header] 544 256 (0, 0) -> (1, 1) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][callback][+/-1 bit = 0][long header] 544 256 (1, 1) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][callback][+/-1 bit = 0][long header] 544 512 (0, 0) -> (1, 1) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][callback][+/-1 bit = 0][long header] 544 512 (1, 1) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][callback][+/-1 bit = 0][long header] 544 1024 (0, 0) -> (1, 1) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][callback][+/-1 bit = 0][long header] 544 1024 (1, 1) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][callback][+/-1 bit = 255][no long header] 0 0 (0, 0) -> (1, 1) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][callback][+/-1 bit = 255][no long header] 0 0 (1, 1) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][callback][+/-1 bit = 255][no long header] 0 128 (0, 0) -> (1, 1) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][callback][+/-1 bit = 255][no long header] 0 128 (1, 1) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][callback][+/-1 bit = 255][no long header] 0 256 (0, 0) -> (1, 1) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][callback][+/-1 bit = 255][no long header] 0 256 (1, 1) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][callback][+/-1 bit = 255][no long header] 0 512 (0, 0) -> (1, 1) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][callback][+/-1 bit = 255][no long header] 0 512 (1, 1) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][callback][+/-1 bit = 255][no long header] 0 1024 (0, 0) -> (1, 1) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][callback][+/-1 bit = 255][no long header] 0 1024 (1, 1) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][callback][+/-1 bit = 255][no long header] 16 0 (0, 0) -> (1, 1) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][callback][+/-1 bit = 255][no long header] 16 0 (1, 1) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][callback][+/-1 bit = 255][no long header] 16 128 (0, 0) -> (1, 1) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][callback][+/-1 bit = 255][no long header] 16 128 (1, 1) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][callback][+/-1 bit = 255][no long header] 16 256 (0, 0) -> (1, 1) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][callback][+/-1 bit = 255][no long header] 16 256 (1, 1) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][callback][+/-1 bit = 255][no long header] 16 512 (0, 0) -> (1, 1) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][callback][+/-1 bit = 255][no long header] 16 512 (1, 1) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][callback][+/-1 bit = 255][no long header] 16 1024 (0, 0) -> (1, 1) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][callback][+/-1 bit = 255][no long header] 16 1024 (1, 1) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][callback][+/-1 bit = 255][no long header] 32 0 (0, 0) -> (1, 1) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][callback][+/-1 bit = 255][no long header] 32 0 (1, 1) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][callback][+/-1 bit = 255][no long header] 32 128 (0, 0) -> (1, 1) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][callback][+/-1 bit = 255][no long header] 32 128 (1, 1) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][callback][+/-1 bit = 255][no long header] 32 256 (0, 0) -> (1, 1) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][callback][+/-1 bit = 255][no long header] 32 256 (1, 1) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][callback][+/-1 bit = 255][no long header] 32 512 (0, 0) -> (1, 1) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][callback][+/-1 bit = 255][no long header] 32 512 (1, 1) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][callback][+/-1 bit = 255][no long header] 32 1024 (0, 0) -> (1, 1) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][callback][+/-1 bit = 255][no long header] 32 1024 (1, 1) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][callback][+/-1 bit = 255][no long header] 512 0 (0, 0) -> (1, 1) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][callback][+/-1 bit = 255][no long header] 512 0 (1, 1) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][callback][+/-1 bit = 255][no long header] 512 128 (0, 0) -> (1, 1) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][callback][+/-1 bit = 255][no long header] 512 128 (1, 1) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][callback][+/-1 bit = 255][no long header] 512 256 (0, 0) -> (1, 1) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][callback][+/-1 bit = 255][no long header] 512 256 (1, 1) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][callback][+/-1 bit = 255][no long header] 512 512 (0, 0) -> (1, 1) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][callback][+/-1 bit = 255][no long header] 512 512 (1, 1) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][callback][+/-1 bit = 255][no long header] 512 1024 (0, 0) -> (1, 1) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][callback][+/-1 bit = 255][no long header] 512 1024 (1, 1) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][callback][+/-1 bit = 255][long header] 544 0 (0, 0) -> (1, 1) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][callback][+/-1 bit = 255][long header] 544 0 (1, 1) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][callback][+/-1 bit = 255][long header] 544 128 (0, 0) -> (1, 1) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][callback][+/-1 bit = 255][long header] 544 128 (1, 1) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][callback][+/-1 bit = 255][long header] 544 256 (0, 0) -> (1, 1) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][callback][+/-1 bit = 255][long header] 544 256 (1, 1) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][callback][+/-1 bit = 255][long header] 544 512 (0, 0) -> (1, 1) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][callback][+/-1 bit = 255][long header] 544 512 (1, 1) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][callback][+/-1 bit = 255][long header] 544 1024 (0, 0) -> (1, 1) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DEFAULT][crosstalk][callback][+/-1 bit = 255][long header] 544 1024 (1, 1) -> (0, 0) =====
+
+WARNING (W):  Rank 1 is unaddressable by Rank 0 when use_shmem = PAMI_HINT_ENABLE. Skipping until next use_shmem hint ...
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][no callback][+/-1 bit = 0][no long header] 0 0 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][no callback][+/-1 bit = 0][no long header] 0 0 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][no callback][+/-1 bit = 0][no long header] 0 128 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][no callback][+/-1 bit = 0][no long header] 0 128 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][no callback][+/-1 bit = 0][no long header] 0 256 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][no callback][+/-1 bit = 0][no long header] 0 256 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][no callback][+/-1 bit = 0][no long header] 0 512 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][no callback][+/-1 bit = 0][no long header] 0 512 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][no callback][+/-1 bit = 0][no long header] 0 1024 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][no callback][+/-1 bit = 0][no long header] 0 1024 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][no callback][+/-1 bit = 0][no long header] 16 0 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][no callback][+/-1 bit = 0][no long header] 16 0 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][no callback][+/-1 bit = 0][no long header] 16 128 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][no callback][+/-1 bit = 0][no long header] 16 128 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][no callback][+/-1 bit = 0][no long header] 16 256 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][no callback][+/-1 bit = 0][no long header] 16 256 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][no callback][+/-1 bit = 0][no long header] 16 512 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][no callback][+/-1 bit = 0][no long header] 16 512 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][no callback][+/-1 bit = 0][no long header] 16 1024 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][no callback][+/-1 bit = 0][no long header] 16 1024 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][no callback][+/-1 bit = 0][no long header] 32 0 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][no callback][+/-1 bit = 0][no long header] 32 0 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][no callback][+/-1 bit = 0][no long header] 32 128 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][no callback][+/-1 bit = 0][no long header] 32 128 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][no callback][+/-1 bit = 0][no long header] 32 256 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][no callback][+/-1 bit = 0][no long header] 32 256 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][no callback][+/-1 bit = 0][no long header] 32 512 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][no callback][+/-1 bit = 0][no long header] 32 512 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][no callback][+/-1 bit = 0][no long header] 32 1024 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][no callback][+/-1 bit = 0][no long header] 32 1024 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][no callback][+/-1 bit = 0][no long header] 512 0 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][no callback][+/-1 bit = 0][no long header] 512 0 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][no callback][+/-1 bit = 0][no long header] 512 128 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][no callback][+/-1 bit = 0][no long header] 512 128 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][no callback][+/-1 bit = 0][no long header] 512 256 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][no callback][+/-1 bit = 0][no long header] 512 256 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][no callback][+/-1 bit = 0][no long header] 512 512 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][no callback][+/-1 bit = 0][no long header] 512 512 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][no callback][+/-1 bit = 0][no long header] 512 1024 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][no callback][+/-1 bit = 0][no long header] 512 1024 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][no callback][+/-1 bit = 0][long header] 544 0 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][no callback][+/-1 bit = 0][long header] 544 0 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][no callback][+/-1 bit = 0][long header] 544 128 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][no callback][+/-1 bit = 0][long header] 544 128 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][no callback][+/-1 bit = 0][long header] 544 256 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][no callback][+/-1 bit = 0][long header] 544 256 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][no callback][+/-1 bit = 0][long header] 544 512 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][no callback][+/-1 bit = 0][long header] 544 512 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][no callback][+/-1 bit = 0][long header] 544 1024 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][no callback][+/-1 bit = 0][long header] 544 1024 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][no callback][+/-1 bit = 255][no long header] 0 0 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][no callback][+/-1 bit = 255][no long header] 0 0 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][no callback][+/-1 bit = 255][no long header] 0 128 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][no callback][+/-1 bit = 255][no long header] 0 128 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][no callback][+/-1 bit = 255][no long header] 0 256 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][no callback][+/-1 bit = 255][no long header] 0 256 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][no callback][+/-1 bit = 255][no long header] 0 512 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][no callback][+/-1 bit = 255][no long header] 0 512 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][no callback][+/-1 bit = 255][no long header] 0 1024 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][no callback][+/-1 bit = 255][no long header] 0 1024 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][no callback][+/-1 bit = 255][no long header] 16 0 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][no callback][+/-1 bit = 255][no long header] 16 0 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][no callback][+/-1 bit = 255][no long header] 16 128 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][no callback][+/-1 bit = 255][no long header] 16 128 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][no callback][+/-1 bit = 255][no long header] 16 256 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][no callback][+/-1 bit = 255][no long header] 16 256 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][no callback][+/-1 bit = 255][no long header] 16 512 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][no callback][+/-1 bit = 255][no long header] 16 512 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][no callback][+/-1 bit = 255][no long header] 16 1024 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][no callback][+/-1 bit = 255][no long header] 16 1024 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][no callback][+/-1 bit = 255][no long header] 32 0 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][no callback][+/-1 bit = 255][no long header] 32 0 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][no callback][+/-1 bit = 255][no long header] 32 128 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][no callback][+/-1 bit = 255][no long header] 32 128 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][no callback][+/-1 bit = 255][no long header] 32 256 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][no callback][+/-1 bit = 255][no long header] 32 256 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][no callback][+/-1 bit = 255][no long header] 32 512 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][no callback][+/-1 bit = 255][no long header] 32 512 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][no callback][+/-1 bit = 255][no long header] 32 1024 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][no callback][+/-1 bit = 255][no long header] 32 1024 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][no callback][+/-1 bit = 255][no long header] 512 0 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][no callback][+/-1 bit = 255][no long header] 512 0 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][no callback][+/-1 bit = 255][no long header] 512 128 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][no callback][+/-1 bit = 255][no long header] 512 128 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][no callback][+/-1 bit = 255][no long header] 512 256 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][no callback][+/-1 bit = 255][no long header] 512 256 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][no callback][+/-1 bit = 255][no long header] 512 512 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][no callback][+/-1 bit = 255][no long header] 512 512 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][no callback][+/-1 bit = 255][no long header] 512 1024 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][no callback][+/-1 bit = 255][no long header] 512 1024 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][no callback][+/-1 bit = 255][long header] 544 0 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][no callback][+/-1 bit = 255][long header] 544 0 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][no callback][+/-1 bit = 255][long header] 544 128 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][no callback][+/-1 bit = 255][long header] 544 128 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][no callback][+/-1 bit = 255][long header] 544 256 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][no callback][+/-1 bit = 255][long header] 544 256 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][no callback][+/-1 bit = 255][long header] 544 512 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][no callback][+/-1 bit = 255][long header] 544 512 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][no callback][+/-1 bit = 255][long header] 544 1024 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][no callback][+/-1 bit = 255][long header] 544 1024 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][callback][+/-1 bit = 0][no long header] 0 0 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][callback][+/-1 bit = 0][no long header] 0 0 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][callback][+/-1 bit = 0][no long header] 0 128 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][callback][+/-1 bit = 0][no long header] 0 128 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][callback][+/-1 bit = 0][no long header] 0 256 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][callback][+/-1 bit = 0][no long header] 0 256 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][callback][+/-1 bit = 0][no long header] 0 512 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][callback][+/-1 bit = 0][no long header] 0 512 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][callback][+/-1 bit = 0][no long header] 0 1024 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][callback][+/-1 bit = 0][no long header] 0 1024 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][callback][+/-1 bit = 0][no long header] 16 0 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][callback][+/-1 bit = 0][no long header] 16 0 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][callback][+/-1 bit = 0][no long header] 16 128 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][callback][+/-1 bit = 0][no long header] 16 128 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][callback][+/-1 bit = 0][no long header] 16 256 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][callback][+/-1 bit = 0][no long header] 16 256 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][callback][+/-1 bit = 0][no long header] 16 512 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][callback][+/-1 bit = 0][no long header] 16 512 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][callback][+/-1 bit = 0][no long header] 16 1024 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][callback][+/-1 bit = 0][no long header] 16 1024 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][callback][+/-1 bit = 0][no long header] 32 0 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][callback][+/-1 bit = 0][no long header] 32 0 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][callback][+/-1 bit = 0][no long header] 32 128 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][callback][+/-1 bit = 0][no long header] 32 128 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][callback][+/-1 bit = 0][no long header] 32 256 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][callback][+/-1 bit = 0][no long header] 32 256 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][callback][+/-1 bit = 0][no long header] 32 512 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][callback][+/-1 bit = 0][no long header] 32 512 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][callback][+/-1 bit = 0][no long header] 32 1024 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][callback][+/-1 bit = 0][no long header] 32 1024 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][callback][+/-1 bit = 0][no long header] 512 0 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][callback][+/-1 bit = 0][no long header] 512 0 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][callback][+/-1 bit = 0][no long header] 512 128 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][callback][+/-1 bit = 0][no long header] 512 128 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][callback][+/-1 bit = 0][no long header] 512 256 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][callback][+/-1 bit = 0][no long header] 512 256 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][callback][+/-1 bit = 0][no long header] 512 512 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][callback][+/-1 bit = 0][no long header] 512 512 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][callback][+/-1 bit = 0][no long header] 512 1024 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][callback][+/-1 bit = 0][no long header] 512 1024 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][callback][+/-1 bit = 0][long header] 544 0 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][callback][+/-1 bit = 0][long header] 544 0 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][callback][+/-1 bit = 0][long header] 544 128 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][callback][+/-1 bit = 0][long header] 544 128 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][callback][+/-1 bit = 0][long header] 544 256 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][callback][+/-1 bit = 0][long header] 544 256 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][callback][+/-1 bit = 0][long header] 544 512 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][callback][+/-1 bit = 0][long header] 544 512 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][callback][+/-1 bit = 0][long header] 544 1024 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][callback][+/-1 bit = 0][long header] 544 1024 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][callback][+/-1 bit = 255][no long header] 0 0 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][callback][+/-1 bit = 255][no long header] 0 0 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][callback][+/-1 bit = 255][no long header] 0 128 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][callback][+/-1 bit = 255][no long header] 0 128 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][callback][+/-1 bit = 255][no long header] 0 256 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][callback][+/-1 bit = 255][no long header] 0 256 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][callback][+/-1 bit = 255][no long header] 0 512 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][callback][+/-1 bit = 255][no long header] 0 512 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][callback][+/-1 bit = 255][no long header] 0 1024 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][callback][+/-1 bit = 255][no long header] 0 1024 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][callback][+/-1 bit = 255][no long header] 16 0 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][callback][+/-1 bit = 255][no long header] 16 0 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][callback][+/-1 bit = 255][no long header] 16 128 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][callback][+/-1 bit = 255][no long header] 16 128 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][callback][+/-1 bit = 255][no long header] 16 256 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][callback][+/-1 bit = 255][no long header] 16 256 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][callback][+/-1 bit = 255][no long header] 16 512 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][callback][+/-1 bit = 255][no long header] 16 512 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][callback][+/-1 bit = 255][no long header] 16 1024 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][callback][+/-1 bit = 255][no long header] 16 1024 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][callback][+/-1 bit = 255][no long header] 32 0 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][callback][+/-1 bit = 255][no long header] 32 0 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][callback][+/-1 bit = 255][no long header] 32 128 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][callback][+/-1 bit = 255][no long header] 32 128 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][callback][+/-1 bit = 255][no long header] 32 256 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][callback][+/-1 bit = 255][no long header] 32 256 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][callback][+/-1 bit = 255][no long header] 32 512 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][callback][+/-1 bit = 255][no long header] 32 512 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][callback][+/-1 bit = 255][no long header] 32 1024 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][callback][+/-1 bit = 255][no long header] 32 1024 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][callback][+/-1 bit = 255][no long header] 512 0 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][callback][+/-1 bit = 255][no long header] 512 0 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][callback][+/-1 bit = 255][no long header] 512 128 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][callback][+/-1 bit = 255][no long header] 512 128 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][callback][+/-1 bit = 255][no long header] 512 256 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][callback][+/-1 bit = 255][no long header] 512 256 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][callback][+/-1 bit = 255][no long header] 512 512 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][callback][+/-1 bit = 255][no long header] 512 512 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][callback][+/-1 bit = 255][no long header] 512 1024 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][callback][+/-1 bit = 255][no long header] 512 1024 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][callback][+/-1 bit = 255][long header] 544 0 (0, 0) -> (1, 0) =====
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][callback][+/-1 bit = 255][long header] 544 0 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [use_shmem=PAMI_HINT_DISABLE][no crosstalk][callback][+/-1 bit = 255][long header] 544 128 (0, 0) -> (1, 0) =====
+2012-08-20 03:39:16.082 (WARN ) [0xfffa0ee8ad0] VST-20040-31371-128:ibm.runjob.LogSignalInfo: received signal 15
+2012-08-20 03:39:16.082 (WARN ) [0xfffa0ee8ad0] VST-20040-31371-128:ibm.runjob.LogSignalInfo: signal sent from USER
+2012-08-20 03:39:16.082 (WARN ) [0xfffa0ee8ad0] VST-20040-31371-128:ibm.runjob.LogSignalInfo: sent from pid 23294
+2012-08-20 03:39:16.083 (WARN ) [0xfffa0ee8ad0] VST-20040-31371-128:ibm.runjob.LogSignalInfo: could not read /proc/23294/exe
+2012-08-20 03:39:16.083 (WARN ) [0xfffa0ee8ad0] VST-20040-31371-128:ibm.runjob.LogSignalInfo: Permission denied
+2012-08-20 03:39:16.083 (WARN ) [0xfffa0ee8ad0] VST-20040-31371-128:ibm.runjob.LogSignalInfo: sent from uid 0 (root)
+2012-08-20 03:39:18.678 (WARN ) [0xfffa0ee8ad0] VST-20040-31371-128:32300:ibm.runjob.client.Job: terminated by signal 9
+2012-08-20 03:39:18.678 (WARN ) [0xfffa0ee8ad0] VST-20040-31371-128:32300:ibm.runjob.client.Job: abnormal termination by signal 9 from rank 0
