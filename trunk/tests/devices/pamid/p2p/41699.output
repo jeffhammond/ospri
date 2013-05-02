@@ -1,0 +1,30 @@
+hello world from rank 0 of 4 
+dispatch_recv_cb: origin = (1,0) cookie = 1000000 
+dispatch_recv_cb: origin = (2,0) cookie = 1000001 
+dispatch_recv_cb: origin = (0,0) cookie = 1000003 
+dispatch_recv_cb: origin = (3,0) cookie = 1000002 
+dispatch_recv_cb: header_size = 4 
+dispatch_recv_cb: header_size = 4 
+dispatch_recv_cb: header_size = 4 
+dispatch_recv_cb: header_size = 4 
+dispatch_recv_cb: header_addr[] = 37373 
+dispatch_recv_cb: header_addr[] = 37373 
+dispatch_recv_cb: header_addr[] = 37373 
+dispatch_recv_cb: header_addr[] = 37373 
+dispatch_recv_cb: immediate protocol 
+dispatch_recv_cb: immediate protocol 
+dispatch_recv_cb: immediate protocol 
+2: PAMI_Send of 4 bytes achieves 2.001877 MB/s 
+1: PAMI_Send of 4 bytes achieves 1.981424 MB/s 
+3: PAMI_Send of 4 bytes achieves 2.011314 MB/s 
+0: PAMI_Send of 4 bytes achieves 2.048000 MB/s 
+dispatch_recv_cb: immediate protocol 
+dispatch_recv_cb: data_size = 16 
+dispatch_recv_cb: data_size = 16 
+dispatch_recv_cb: data_size = 16 
+dispatch_recv_cb: data_size = 16 
+dispatch_recv_cb: pipe_addr[] =  
+dispatch_recv_cb: pipe_addr[] =  
+dispatch_recv_cb: pipe_addr[] =  
+dispatch_recv_cb: pipe_addr[] =  
+0: end of test 
