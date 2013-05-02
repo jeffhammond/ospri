@@ -1,0 +1,64 @@
+PAMI_Client_create SUCCEEDED on rank -1
+PAMI_Client_query SUCCEEDED on rank -1
+num_contexts>1 SUCCEEDED on rank 3
+PAMI_Client_create SUCCEEDED on rank -1
+PAMI_Client_query SUCCEEDED on rank -1
+PAMI_Client_create SUCCEEDED on rank -1
+num_contexts>1 SUCCEEDED on rank 0
+PAMI_Client_create SUCCEEDED on rank -1
+PAMI_Client_query SUCCEEDED on rank -1
+hello world from rank 0 of 4 
+PAMI_Client_query SUCCEEDED on rank -1
+num_contexts>1 SUCCEEDED on rank 2
+num_contexts>1 SUCCEEDED on rank 1
+PAMI_Context_createv SUCCEEDED on rank 3
+PAMI_Context_createv SUCCEEDED on rank 1
+PAMI_Geometry_world SUCCEEDED on rank 3
+PAMI_Context_createv SUCCEEDED on rank 2
+pthread_create SUCCEEDED on rank 3
+PAMI_Context_createv SUCCEEDED on rank 0
+PAMI_Endpoint_create SUCCEEDED on rank 3
+PAMI_Geometry_world SUCCEEDED on rank 1
+PAMI_Dispatch_set SUCCEEDED on rank 3
+PAMI_Geometry_world SUCCEEDED on rank 2
+PAMI_Geometry_algorithms_num SUCCEEDED on rank -1
+PAMI_Geometry_world SUCCEEDED on rank 0
+pthread_create SUCCEEDED on rank 1
+pthread_create SUCCEEDED on rank 2
+PAMI_Geometry_algorithms_query SUCCEEDED on rank -1
+pthread_create SUCCEEDED on rank 0
+PAMI_Collective - barrier SUCCEEDED on rank -1
+PAMI_Endpoint_create SUCCEEDED on rank 1
+PAMI_Context_trylock_advancev - barrier SUCCEEDED on rank -1
+PAMI_Endpoint_create SUCCEEDED on rank 2
+PAMI_Context_trylock_advancev - barrier SUCCEEDED on rank -1
+PAMI_Endpoint_create SUCCEEDED on rank 0
+PAMI_Dispatch_set SUCCEEDED on rank 1
+PAMI_Context_trylock_advancev - barrier SUCCEEDED on rank -1
+PAMI_Dispatch_set SUCCEEDED on rank 2
+PAMI_Dispatch_set SUCCEEDED on rank 0
+PAMI_Geometry_algorithms_num SUCCEEDED on rank -1
+PAMI_Context_trylock_advancev - barrier SUCCEEDED on rank -1
+PAMI_Geometry_algorithms_num SUCCEEDED on rank -1
+PAMI_Geometry_algorithms_num SUCCEEDED on rank -1
+PAMI_Context_trylock_advancev - barrier SUCCEEDED on rank -1
+PAMI_Context_trylock_advancev - barrier SUCCEEDED on rank -1
+PAMI_Context_trylock_advancev - barrier SUCCEEDED on rank -1
+barrier SUCCEEDED on rank 3
+PAMI_Send FAILED on rank 3
+PAMI_Geometry_algorithms_query SUCCEEDED on rank -1
+PAMI_Geometry_algorithms_query SUCCEEDED on rank -1
+PAMI_Geometry_algorithms_query SUCCEEDED on rank -1
+PAMI_Collective - barrier SUCCEEDED on rank -1
+PAMI_Collective - barrier SUCCEEDED on rank -1
+PAMI_Collective - barrier SUCCEEDED on rank -1
+PAMI_Context_trylock_advancev - barrier SUCCEEDED on rank -1
+PAMI_Context_trylock_advancev - barrier SUCCEEDED on rank -1
+PAMI_Context_trylock_advancev - barrier SUCCEEDED on rank -1
+barrier SUCCEEDED on rank 1
+PAMI_Context_trylock_advancev - barrier SUCCEEDED on rank -1
+barrier SUCCEEDED on rank 0
+PAMI_Send FAILED on rank 1
+barrier SUCCEEDED on rank 2
+PAMI_Send FAILED on rank 0
+PAMI_Send FAILED on rank 2
