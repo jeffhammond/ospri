@@ -104,10 +104,10 @@ int main(int argc, char* argv[])
     pami_memregion_t * shared_mr = safemalloc(num_sync * sizeof(pami_memregion_t) );
     for (int i=0; i<num_sync; i++)
     {
-        result = PAMI_Memregion_create(contexts[i], sbuf, bytes, &bytes_out, &(local_mr[i]));
+        result = PAMI_Memregion_create(contexts[i], rbuf, bytes, &bytes_out, &(local_mr[i]));
         TEST_ASSERT(result == PAMI_SUCCESS && bytes==bytes_out,"PAMI_Memregion_create");
 
-        result = PAMI_Memregion_create(contexts[async_context_begin+i], rbuf, bytes, &bytes_out, &(shared_mr[i]));
+        result = PAMI_Memregion_create(contexts[async_context_begin+i], sbuf, bytes, &bytes_out, &(shared_mr[i]));
         TEST_ASSERT(result == PAMI_SUCCESS && bytes==bytes_out,"PAMI_Memregion_create");
     }
  
@@ -163,26 +163,25 @@ int main(int argc, char* argv[])
           target += world_rank;
           target  = target % world_size;
  
-          //printf("%ld: attempting Rput to %ld \n", (long)world_rank, (long)target);
+          //printf("%ld: attempting Rget to %ld \n", (long)world_rank, (long)target);
           //fflush(stdout);
           
           int local_context  = tid; /* each thread uses its own context so this is thread-safe */
           int remote_context = target % num_async;
- 
-          pami_rput_simple_t parameters;
+
+          pami_rget_simple_t parameters;
           parameters.rma.dest           = target_eps[target*num_async+remote_context];
           //parameters.rma.hints          = ;
           parameters.rma.bytes          = n*sizeof(double);
           parameters.rma.cookie         = &active;
-          parameters.rma.done_fn        = NULL;
-          parameters.put.rdone_fn       = cb_done;
+          parameters.rma.done_fn        = cb_done;
           parameters.rdma.local.mr      = &local_mr[local_context];
           parameters.rdma.local.offset  = target*n*sizeof(double);
           parameters.rdma.remote.mr     = &shmrs[target*num_async+remote_context];
           parameters.rdma.remote.offset = world_rank*n*sizeof(double);
  
-          result = PAMI_Rput(contexts[local_context], &parameters);
-          TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Rput");
+          result = PAMI_Rget(contexts[local_context], &parameters);
+          TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Rget");
         }
     }
 
@@ -206,7 +205,7 @@ int main(int argc, char* argv[])
 
     double megabytes = 1.e-6*bytes;
 
-    printf("%ld: PAMI_Rput A2A: %ld bytes per rank, local %lf seconds (%lf MB/s), remote %lf seconds (%lf MB/s) \n", 
+    printf("%ld: PAMI_Rget A2A: %ld bytes per rank, local %lf seconds (%lf MB/s), remote %lf seconds (%lf MB/s) \n", 
            (long)world_rank, n*sizeof(double), 
            dt1, megabytes/dt1,
            dt2, megabytes/dt2 );
