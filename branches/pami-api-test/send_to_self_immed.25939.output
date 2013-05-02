@@ -1,0 +1,21 @@
+Start test ...
+Start test ...
+(1) after Initializing client and context.  num_tasks=2
+(0) after Initializing client and context.  num_tasks=2
+# PAMI_Send_immediate() send-to-self immediate blocking latency performance test
+#
+#
+#          [--- testcase 0 ---] 
+#    bytes     cycles     usec  
+         0       2065   1.2906  
+         1       2135   1.3344  
+         2       2154   1.3462  
+         4       2168   1.3550  
+         7       2221   1.3881  
+        11       2206   1.3787  
+        17       2167   1.3544  
+        26       2274   1.4212  
+        40       2209   1.3806  
+        61       2323   1.4519  
+        92       2374   1.4837  
+        96       2308   1.4425  
