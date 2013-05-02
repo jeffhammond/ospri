@@ -100,9 +100,6 @@ int main(int argc, char* argv[])
   /* perform a gather */
   volatile int active = 0;
 
-  pami_endpoint_t root;
-  PAMI_Endpoint_create(client, (pami_task_t)0, 0, &root);
-
   int max = (argc>1 ? atoi(argv[1]) : 1000000);
   max /= world_size;
 
