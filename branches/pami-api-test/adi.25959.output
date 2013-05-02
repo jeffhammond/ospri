@@ -1,0 +1,14 @@
+Task=1 Size=2    <PAMI Initialized> thread-level=13
+Task=0 Size=2    <PAMI Initialized> thread-level=13
+Task=1 Channel=0x18c5374768 <Sent short msg>   data=aaaaa
+Task=0 Channel=0x18c537cc30(2) <Got  short msg>   remote=1 msginfo=11 len=4 data=aaaaa
+Task=1 Channel=0x18c53cfc00(12) <Got   long msg>   remote=0 msginfo=11111 len=1048576
+Task=0 Channel=0x18c53d80c8(13) <Got   long msg>   remote=1 msginfo=11111 len=1048576
+Task=1 Channel=0x18c5374768(1) <Got  short msg>   remote=0 msginfo=11 len=4 data=aaaaa
+Task=0 Channel=0x18c537cc30 <Sent short msg>   data=aaaaa
+Task=1 Channel=0x18c53cfc00 <Fini long  msg>   data=bbbbb
+Task=0 Channel=0x18c53d80c8 <Sent long  msg>   data=bbbbb
+Task=1 Channel=0x18c53cfc00 <Sent long  msg>   data=bbbbb
+Task=0 Channel=0x18c53d80c8 <Fini long  msg>   data=bbbbb
+Task=0           <DONE>
+Task=1           <DONE>
