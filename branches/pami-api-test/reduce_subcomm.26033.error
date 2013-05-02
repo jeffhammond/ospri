@@ -1,0 +1,5 @@
+2012-08-20 03:12:01.729 (INFO ) [0xfffad188ad0] VST-22000-33331-128:30321:ibm.runjob.client.options.Parser: set local socket to runjob_mux from properties file
+2012-08-20 03:12:04.286 (INFO ) [0xfffad188ad0] VST-22000-33331-128:32246:ibm.runjob.client.Job: job 32246 started
+2012-08-20 03:12:07.461 (INFO ) [0xfffad188ad0] VST-22000-33331-128:32246:ibm.runjob.client.Job: exited with status 0
+2012-08-20 03:12:07.461 (WARN ) [0xfffad188ad0] VST-22000-33331-128:32246:ibm.runjob.client.Job: 1 RAS event
+2012-08-20 03:12:07.461 (WARN ) [0xfffad188ad0] VST-22000-33331-128:32246:ibm.runjob.client.Job: most recent RAS event text: DDR Correctable Error Summary : count=5 MCFIR error status:  [MEMORY_CE] This bit is set when a memory CE is detected on a non-maintenance memory read op;
