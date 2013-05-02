@@ -1,3 +1,5 @@
+#define NOT_TEST_MAIN
+
 #include <pami.h>
 #include "safemalloc.h"
 #include "preamble.h"

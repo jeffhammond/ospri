@@ -28,6 +28,7 @@ static void cb_done(pami_context_t ctxt, void * cookie, pami_result_t result)
   return;
 }
 
+#ifndef NOT_TEST_MAIN
 pami_context_t * contexts;
 
 pthread_t Progress_thread;
@@ -46,5 +47,6 @@ static void * Progress_function(void * dummy)
 
 	return NULL;
 }
+#endif
 
 #endif
