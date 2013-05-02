@@ -1,0 +1,39 @@
+2012-12-13 02:10:52.978 (INFO ) [0xfffa183a210] 26680:ibm.runjob.AbstractOptions: using properties file /bgsys/local/etc/bg.properties
+2012-12-13 02:10:52.979 (INFO ) [0xfffa183a210] 26680:ibm.runjob.AbstractOptions: max open file descriptors: 65536
+2012-12-13 02:10:52.979 (INFO ) [0xfffa183a210] 26680:ibm.runjob.AbstractOptions: core file limit: 0
+2012-12-13 02:10:52.979 (INFO ) [0xfffa183a210] 26680:tatu.runjob.client: scheduler job id is 47465
+2012-12-13 02:10:52.981 (INFO ) [0xfff78991a70] 26680:tatu.runjob.monitor: monitor started
+2012-12-13 02:10:52.982 (INFO ) [0xfffa183a210] VST-02000-13331-128:26680:ibm.runjob.client.options.Parser: set local socket to runjob_mux from properties file
+2012-12-13 02:10:55.859 (INFO ) [0xfffa183a210] VST-02000-13331-128:92478:ibm.runjob.client.Job: job 92478 started
+mmap_fixed.x: mmap_fixed.c:142: main: Assertion `(world_size % ranks_per_node)==0' failed.
+mmap_fixed.x: mmap_fixed.c:142: main: Assertion `(world_size % ranks_per_node)==0' failed.
+mmap_fixed.x: mmap_fixed.c:142: main: Assertion `(world_size % ranks_per_node)==0' failed.
+mmap_fixed.x: mmap_fixed.c:142: main: Assertion `(world_size % ranks_per_node)==0' failed.
+mmap_fixed.x: mmap_fixed.c:142: main: Assertion `(world_size % ranks_per_node)==0' failed.
+mmap_fixed.x: mmap_fixed.c:142: main: Assertion `(world_size % ranks_per_node)==0' failed.
+mmap_fixed.x: mmap_fixed.c:142: main: Assertion `(world_size % ranks_per_node)==0' failed.
+mmap_fixed.x: mmap_fixed.c:142: main: Assertion `(world_size % ranks_per_node)==0' failed.
+mmap_fixed.x: mmap_fixed.c:142: main: Assertion `(world_size % ranks_per_node)==0' failed.
+mmap_fixed.x: mmap_fixed.c:142: main: Assertion `(world_size % ranks_per_node)==0' failed.
+mmap_fixed.x: mmap_fixed.c:142: main: Assertion `(world_size % ranks_per_node)==0' failed.
+mmap_fixed.x: mmap_fixed.c:142: main: Assertion `(world_size % ranks_per_node)==0' failed.
+mmap_fixed.x: mmap_fixed.c:142: main: Assertion `(world_size % ranks_per_node)==0' failed.
+mmap_fixed.x: mmap_fixed.c:142: main: Assertion `(world_size % ranks_per_node)==0' failed.
+mmap_fixed.x: mmap_fixed.c:142: main: Assertion `(world_size % ranks_per_node)==0' failed.
+mmap_fixed.x: mmap_fixed.c:142: main: Assertion `(world_size % ranks_per_node)==0' failed.
+mmap_fixed.x: mmap_fixed.c:142: main: Assertion `(world_size % ranks_per_node)==0' failed.
+mmap_fixed.x: mmap_fixed.c:142: main: Assertion `(world_size % ranks_per_node)==0' failed.
+mmap_fixed.x: mmap_fixed.c:142: main: Assertion `(world_size % ranks_per_node)==0' failed.
+mmap_fixed.x: mmap_fixed.c:142: main: Assertion `(world_size % ranks_per_node)==0' failed.
+mmap_fixed.x: mmap_fixed.c:142: main: Assertion `(world_size % ranks_per_node)==0' failed.
+mmap_fixed.x: mmap_fixed.c:142: main: Assertion `(world_size % ranks_per_node)==0' failed.
+mmap_fixed.x: mmap_fixed.c:142: main: Assertion `(world_size % ranks_per_node)==0' failed.
+mmap_fixed.x: mmap_fixed.c:142: main: Assertion `(world_size % ranks_per_node)==0' failed.
+mmap_fixed.x: mmap_fixed.c:142: main: Assertion `(world_size % ranks_per_node)==0' failed.
+mmap_fixed.x: mmap_fixed.c:142: main: Assertion `(world_size % ranks_per_node)==0' failed.
+2012-12-13 02:10:58.191 (INFO ) [0xfff78991a70] 26680:tatu.runjob.monitor: tracklib completed
+2012-12-13 02:10:58.504 (WARN ) [0xfffa183a210] VST-02000-13331-128:92478:ibm.runjob.client.Job: terminated by signal 6
+2012-12-13 02:10:58.504 (WARN ) [0xfffa183a210] VST-02000-13331-128:92478:ibm.runjob.client.Job: abnormal termination by signal 6 from rank 1491
+2012-12-13 02:10:58.504 (INFO ) [0xfffa183a210] tatu.runjob.client: task terminated by signal 6
+2012-12-13 02:10:58.505 (INFO ) [0xfff78991a70] 26680:tatu.runjob.monitor: monitor terminating
+2012-12-13 02:10:58.507 (INFO ) [0xfffa183a210] tatu.runjob.client: monitor completed
