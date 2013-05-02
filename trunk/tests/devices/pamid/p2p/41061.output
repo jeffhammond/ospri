@@ -1,0 +1,11 @@
+hello world from rank 0 of 4 
+allocating arrays on the heap with malloc 
+shared 0x19d0e1eb00 0 
+local  0x19d0e1eb80 0 
+value  0x19d0e1ec00 0 
+test   0x19d0e1ec80 -1 
+0: PAMI_Rmw local = 6 shared = 6 in 54264 cycles = 33.915000 microseconds 
+3: PAMI_Rmw local = 2 shared = 0 in 51444 cycles = 32.152500 microseconds 
+1: PAMI_Rmw local = 5 shared = 0 in 53880 cycles = 33.675000 microseconds 
+2: PAMI_Rmw local = 0 shared = 0 in 39288 cycles = 24.555000 microseconds 
+0: end of test 
