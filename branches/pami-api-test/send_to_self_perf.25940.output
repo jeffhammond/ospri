@@ -1,0 +1,24 @@
+Start test ...
+Start test ...
+(1) after Initializing client and context.  num_tasks=2
+(0) after Initializing client and context.  num_tasks=2
+# PAMI_Send() send-to-self blocking latency performance test
+#
+#
+#          [--- testcase 0 ---] 
+#    bytes     cycles     usec  
+         0       5106   3.1913  
+         1       4830   3.0187  
+         2       5187   3.2419  
+         4       5145   3.2156  
+         7       5265   3.2906  
+        11       5212   3.2575  
+        17       5186   3.2412  
+        26       5249   3.2806  
+        40       5270   3.2938  
+        61       5071   3.1694  
+        92       5394   3.3712  
+       139       7830   4.8937  
+       209       7600   4.7500  
+       314       7739   4.8369  
+       472       7868   4.9175  
