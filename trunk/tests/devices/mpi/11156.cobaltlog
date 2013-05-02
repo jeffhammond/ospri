@@ -1,0 +1,38 @@
+/usr/bin/qsub.py -t 30 -n 4 --mode c4 ./passive-target-put.x
+
+submitted with cwd set to: /veas_home/jhammond/OSPRI/trunk/tests/devices/mpi
+
+Info: stdout sent to /veas_home/jhammond/OSPRI/trunk/tests/devices/mpi/11156.output
+Info: stderr sent to /veas_home/jhammond/OSPRI/trunk/tests/devices/mpi/11156.error
+
+Command: '/bgsys/drivers/ppcfloor/bin/runjob' '--np' '16' '--ranks-per-node' '4' '--cwd' '/veas_home/jhammond/OSPRI/trunk/tests/devices/mpi' '--block' 'EAS-22040-33371-128' '--corner' 'R00-M1-N12-J25' '--shape' '2x2x2x2x2' '--envs' 'COBALT_JOBID=11156' '--envs' 'BG_SHAREDMEMSIZE=32' '--verbose' '4' ':' '/veas_home/jhammond/OSPRI/trunk/tests/devices/mpi/./passive-target-put.x'
+
+Environment:
+LESSOPEN=|/usr/bin/lesspipe.sh %s
+CVS_RSH=ssh
+LOGNAME=root
+USER=root
+PATH=/usr/lib64/qt-3.3/bin:/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/bgsys/drivers/ppcfloor/bin:/bgsys/drivers/ppcfloor/sbin:/opt/bin:/usr/lpp/mmfs/bin:/root/bin:/bgsys/drivers/ppcfloor/bin:/bgsys/drivers/ppcfloor/sbin:/usr/lpp/mmfs/bin:/dbhome/db2cat/sqllib/bin:/dbhome/db2cat/sqllib/adm:/dbhome/db2cat/sqllib/misc
+QTDIR=/usr/lib64/qt-3.3
+LD_LIBRARY_PATH=/bgsys/drivers/ppcfloor/lib64:/dbhome/db2cat/sqllib/lib64:/dbhome/db2cat/sqllib/lib32
+LANG=C
+QTLIB=/usr/lib64/qt-3.3/lib
+TERM=screen
+SHELL=/bin/bash
+QTINC=/usr/lib64/qt-3.3/include
+DB2INSTANCE=db2cat
+G_BROKEN_FILENAMES=1
+HISTSIZE=1000
+_=/usr/bin/nohup
+HOME=/root
+CLASSPATH=/dbhome/db2cat/sqllib/java/db2java.zip:/dbhome/db2cat/sqllib/java/db2jcc.jar:/dbhome/db2cat/sqllib/java/sqlj.zip:/dbhome/db2cat/sqllib/function:/dbhome/db2cat/sqllib/java/db2jcc_license_cu.jar:.
+MPIRUN_VERBOSE=1
+HOSTNAME=cetussn1
+HISTCONTROL=ignoredups
+SHLVL=3
+PWD=/bgsys/linux/ionfloor
+MAIL=/var/spool/mail/root
+COBALT_JOBID=11156
+
+Info: task completed normally with an exit code of 1234567; initiating job cleanup and removal
+Job 11156/jhammond/14136: Block EAS-22040-33151-32 for location EAS-22040-33151-32 successfully booted.  Starting task for job 11156.
