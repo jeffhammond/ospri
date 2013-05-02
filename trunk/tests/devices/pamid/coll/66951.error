@@ -1,0 +1,21 @@
+2013-03-15 14:20:59.487 (INFO ) [0xfff8a0ca270] 21687:ibm.runjob.AbstractOptions: using properties file /bgsys/local/etc/bg.properties
+2013-03-15 14:20:59.488 (INFO ) [0xfff8a0ca270] 21687:ibm.runjob.AbstractOptions: max open file descriptors: 65536
+2013-03-15 14:20:59.488 (INFO ) [0xfff8a0ca270] 21687:ibm.runjob.AbstractOptions: core file limit: 18446744073709551615
+2013-03-15 14:20:59.488 (INFO ) [0xfff8a0ca270] 21687:tatu.runjob.client: scheduler job id is 66951
+2013-03-15 14:20:59.491 (INFO ) [0xfff901b1ab0] 21687:tatu.runjob.monitor: monitor started
+2013-03-15 14:20:59.492 (INFO ) [0xfff8a0ca270] VST-22000-33331-128:21687:ibm.runjob.client.options.Parser: set local socket to runjob_mux from properties file
+2013-03-15 14:21:01.999 (INFO ) [0xfff8a0ca270] VST-22000-33331-128:140344:ibm.runjob.client.Job: job 140344 started
+2013-03-15 14:21:21.078 (INFO ) [0xfff901b1ab0] 21687:tatu.runjob.monitor: tracklib completed
+2013-03-15 14:35:14.429 (WARN ) [0xfff8a0ca270] VST-22000-33331-128:ibm.runjob.LogSignalInfo: received signal 15
+2013-03-15 14:35:14.431 (WARN ) [0xfff8a0ca270] VST-22000-33331-128:ibm.runjob.LogSignalInfo: signal sent from USER
+2013-03-15 14:35:14.431 (WARN ) [0xfff8a0ca270] VST-22000-33331-128:ibm.runjob.LogSignalInfo: sent from pid 6096
+2013-03-15 14:35:14.432 (WARN ) [0xfff8a0ca270] VST-22000-33331-128:ibm.runjob.LogSignalInfo: could not read /proc/6096/exe
+2013-03-15 14:35:14.432 (WARN ) [0xfff8a0ca270] VST-22000-33331-128:ibm.runjob.LogSignalInfo: Permission denied
+2013-03-15 14:35:14.432 (WARN ) [0xfff8a0ca270] VST-22000-33331-128:ibm.runjob.LogSignalInfo: sent from uid 0 (root)
+2013-03-15 14:36:15.955 (FATAL) [0xfff8a0ca270] VST-22000-33331-128:140344:ibm.runjob.client.Job: terminated due to: killing the job timed out
+2013-03-15 14:36:15.955 (FATAL) [0xfff8a0ca270] VST-22000-33331-128:140344:ibm.runjob.client.Job: abnormal termination by signal 9 from rank 1381. Delivering SIGKILL with status RUNNING timed out after 60 seconds
+2013-03-15 14:36:15.955 (FATAL) [0xfff8a0ca270] VST-22000-33331-128:140344:ibm.runjob.client.Job: 1 RAS event
+2013-03-15 14:36:15.955 (FATAL) [0xfff8a0ca270] VST-22000-33331-128:140344:ibm.runjob.client.Job: most recent RAS event text: killing job 140344 timed out after 60 seconds. 128 nodes are now unavailable.
+2013-03-15 14:36:15.955 (INFO ) [0xfff8a0ca270] tatu.runjob.client: task exited with status 1
+2013-03-15 14:36:15.956 (INFO ) [0xfff901b1ab0] 21687:tatu.runjob.monitor: monitor terminating
+2013-03-15 14:36:15.957 (INFO ) [0xfff8a0ca270] tatu.runjob.client: monitor completed
