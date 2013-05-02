@@ -1,0 +1,5 @@
+2012-08-20 03:10:38.184 (INFO ) [0xfff8ed08ad0] VST-20040-31371-128:21432:ibm.runjob.client.options.Parser: set local socket to runjob_mux from properties file
+2012-08-20 03:10:41.380 (INFO ) [0xfff8ed08ad0] VST-20040-31371-128:32239:ibm.runjob.client.Job: job 32239 started
+argv[0] = "/gpfs/vesta_home/jhammond/OSPRI/branches/pami-api-test/./build/p2p/send/send_immediate_pingpong_ring.x"
+argv[0] = "/gpfs/vesta_home/jhammond/OSPRI/branches/pami-api-test/./build/p2p/send/send_immediate_pingpong_ring.x"
+2012-08-20 03:10:43.513 (INFO ) [0xfff8ed08ad0] VST-20040-31371-128:32239:ibm.runjob.client.Job: exited with status 0
