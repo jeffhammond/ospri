@@ -1,0 +1,26 @@
+/usr/bin/qsub.py -t 10 -n 1 --mode=c32 ./kpc.x
+
+submitted with cwd set to: /gpfs/vesta_home/jhammond/OSPRI/branches/bgq-topo/devel
+
+Job 35131/jhammond/32374: Initiating boot at location VST-22000-33331-128.
+
+Command: '/bgsys/drivers/ppcfloor/bin/runjob' '--np' '32' '--ranks-per-node' '32' '--cwd' '/gpfs/vesta_home/jhammond/OSPRI/branches/bgq-topo/devel' '--block' 'VST-22000-33331-128' '--envs' 'COBALT_JOBID=35131' '--envs' 'BG_SHAREDMEMSIZE=32' '--verbose' '4' ':' '/gpfs/vesta_home/jhammond/OSPRI/branches/bgq-topo/devel/./kpc.x'
+
+Environment:
+TERM=screen-256color
+SHLVL=1
+DB2INSTANCE=db2cat
+COBALT_JOBID=35131
+CLASSPATH=/dbhome/db2cat/sqllib/java/db2java.zip:/dbhome/db2cat/sqllib/java/db2jcc.jar:/dbhome/db2cat/sqllib/java/sqlj.zip:/dbhome/db2cat/sqllib/function:/dbhome/db2cat/sqllib/java/db2jcc_license_cu.jar:.
+PWD=/
+MPIRUN_VERBOSE=1
+PATH=/sbin:/usr/sbin:/bin:/usr/bin:/dbhome/db2cat/sqllib/bin:/dbhome/db2cat/sqllib/adm:/dbhome/db2cat/sqllib/misc
+LD_LIBRARY_PATH=/bgsys/drivers/ppcfloor/lib64:/dbhome/db2cat/sqllib/lib64:/dbhome/db2cat/sqllib/lib32
+_=/usr/bin/nohup
+
+Info: stdin received from /dev/null
+Info: stdout sent to /gpfs/vesta_home/jhammond/OSPRI/branches/bgq-topo/devel/35131.output
+Info: stderr sent to /gpfs/vesta_home/jhammond/OSPRI/branches/bgq-topo/devel/35131.error
+
+Job 35131/jhammond/32374: Block VST-22000-33331-128 for location VST-22000-33331-128 successfully booted.  Starting task for job 35131. (CBS)
+Info: task completed normally with an exit code of 0; initiating job cleanup and removal
