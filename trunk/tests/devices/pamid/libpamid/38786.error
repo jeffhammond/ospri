@@ -1,0 +1,230 @@
+2012-10-28 02:45:41.503 (INFO ) [0xfff865d8ad0] ibm.runjob.AbstractOptions: using properties file /bgsys/local/etc/bg.properties
+2012-10-28 02:45:41.504 (INFO ) [0xfff865d8ad0] ibm.runjob.AbstractOptions: max open file descriptors: 65536
+2012-10-28 02:45:41.504 (INFO ) [0xfff865d8ad0] ibm.runjob.AbstractOptions: core file limit: 0
+2012-10-28 02:45:41.504 (INFO ) [0xfff865d8ad0] VST-22000-33331-128:21347:ibm.runjob.client.options.Parser: set local socket to runjob_mux from properties file
+2012-10-28 02:45:43.100 (INFO ) [0xfff865d8ad0] VST-22000-33331-128:81894:ibm.runjob.client.Job: job 81894 started
+PAMI_Client_create SUCCEEDED 
+PAMI_Client_create SUCCEEDED 
+PAMI_Client_create SUCCEEDED 
+PAMI_Client_create SUCCEEDED 
+PAMI_Client_create SUCCEEDED 
+PAMI_Client_create SUCCEEDED 
+PAMI_Client_create SUCCEEDED 
+PAMI_Client_query SUCCEEDED 
+PAMI_Client_query SUCCEEDED 
+PAMI_Client_query SUCCEEDED 
+PAMI_Client_create SUCCEEDED 
+PAMI_Client_query SUCCEEDED 
+PAMI_Client_query SUCCEEDED 
+PAMI_Client_query SUCCEEDED 
+PAMI_Client_query SUCCEEDED 
+PAMI_Client_query SUCCEEDED 
+PAMI_Context_createv SUCCEEDED 
+PAMI_Context_createv SUCCEEDED 
+PAMI_Context_createv SUCCEEDED 
+PAMI_Context_createv SUCCEEDED 
+PAMI_Context_createv SUCCEEDED 
+PAMI_Context_createv SUCCEEDED 
+PAMI_Context_createv SUCCEEDED 
+PAMI_Context_createv SUCCEEDED 
+PAMI_Geometry_world SUCCEEDED 
+PAMI_Geometry_world SUCCEEDED 
+PAMI_Geometry_world SUCCEEDED 
+PAMI_Geometry_world SUCCEEDED 
+PAMI_Geometry_world SUCCEEDED 
+PAMI_Geometry_world SUCCEEDED 
+PAMI_Geometry_world SUCCEEDED 
+PAMI_Geometry_world SUCCEEDED 
+PAMI_Geometry_algorithms_num SUCCEEDED 
+PAMI_Geometry_algorithms_num SUCCEEDED 
+PAMI_Geometry_algorithms_num SUCCEEDED 
+PAMI_Geometry_algorithms_num SUCCEEDED 
+PAMI_Geometry_algorithms_num SUCCEEDED 
+PAMI_Geometry_algorithms_num SUCCEEDED 
+PAMI_Geometry_algorithms_num SUCCEEDED 
+PAMI_Geometry_algorithms_num SUCCEEDED 
+PAMI_Geometry_algorithms_query SUCCEEDED 
+PAMI_Geometry_algorithms_query SUCCEEDED 
+PAMI_Geometry_algorithms_query SUCCEEDED 
+PAMI_Geometry_algorithms_query SUCCEEDED 
+PAMI_Geometry_algorithms_query SUCCEEDED 
+PAMI_Geometry_algorithms_query SUCCEEDED 
+PAMI_Geometry_algorithms_query SUCCEEDED 
+PAMI_Geometry_algorithms_query SUCCEEDED 
+PAMID_Barrier_setup SUCCEEDED 
+PAMID_Barrier_setup SUCCEEDED 
+PAMID_Barrier_setup SUCCEEDED 
+PAMID_Barrier_setup SUCCEEDED 
+PAMID_Barrier_setup SUCCEEDED 
+PAMID_Barrier_setup SUCCEEDED 
+PAMID_Barrier_setup SUCCEEDED 
+PAMID_Barrier_setup SUCCEEDED 
+PAMI_Geometry_algorithms_num SUCCEEDED 
+PAMI_Geometry_algorithms_num SUCCEEDED 
+PAMI_Geometry_algorithms_num SUCCEEDED 
+PAMI_Geometry_algorithms_num SUCCEEDED 
+PAMI_Geometry_algorithms_num SUCCEEDED 
+PAMI_Geometry_algorithms_num SUCCEEDED 
+PAMI_Geometry_algorithms_num SUCCEEDED 
+PAMI_Geometry_algorithms_num SUCCEEDED 
+PAMI_Geometry_algorithms_query SUCCEEDED 
+PAMI_Geometry_algorithms_query SUCCEEDED 
+PAMI_Geometry_algorithms_query SUCCEEDED 
+PAMI_Geometry_algorithms_query SUCCEEDED 
+PAMI_Geometry_algorithms_query SUCCEEDED 
+PAMI_Geometry_algorithms_query SUCCEEDED 
+PAMI_Geometry_algorithms_query SUCCEEDED 
+PAMI_Geometry_algorithms_query SUCCEEDED 
+PAMID_Broadcast_setup SUCCEEDED 
+PAMID_Broadcast_setup SUCCEEDED 
+PAMID_Broadcast_setup SUCCEEDED 
+PAMID_Broadcast_setup SUCCEEDED 
+PAMID_Broadcast_setup SUCCEEDED 
+PAMID_Broadcast_setup SUCCEEDED 
+PAMID_Broadcast_setup SUCCEEDED 
+PAMID_Broadcast_setup SUCCEEDED 
+PAMI_Geometry_algorithms_num SUCCEEDED 
+PAMI_Geometry_algorithms_num SUCCEEDED 
+PAMI_Geometry_algorithms_num SUCCEEDED 
+PAMI_Geometry_algorithms_num SUCCEEDED 
+PAMI_Geometry_algorithms_num SUCCEEDED 
+PAMI_Geometry_algorithms_num SUCCEEDED 
+PAMI_Geometry_algorithms_num SUCCEEDED 
+PAMI_Geometry_algorithms_num SUCCEEDED 
+PAMI_Geometry_algorithms_query SUCCEEDED 
+PAMI_Geometry_algorithms_query SUCCEEDED 
+PAMI_Geometry_algorithms_query SUCCEEDED 
+PAMI_Geometry_algorithms_query SUCCEEDED 
+PAMI_Geometry_algorithms_query SUCCEEDED 
+PAMI_Geometry_algorithms_query SUCCEEDED 
+PAMI_Geometry_algorithms_query SUCCEEDED 
+PAMI_Geometry_algorithms_query SUCCEEDED 
+PAMID_Allgather_setup SUCCEEDED 
+PAMID_Allgather_setup SUCCEEDED 
+PAMID_Allgather_setup SUCCEEDED 
+PAMID_Allgather_setup SUCCEEDED 
+PAMID_Allgather_setup SUCCEEDED 
+PAMID_Allgather_setup SUCCEEDED 
+PAMID_Allgather_setup SUCCEEDED 
+PAMID_Allgather_setup SUCCEEDED 
+PAMI_Geometry_algorithms_num SUCCEEDED 
+PAMI_Geometry_algorithms_num SUCCEEDED 
+PAMI_Geometry_algorithms_num SUCCEEDED 
+PAMI_Geometry_algorithms_num SUCCEEDED 
+PAMI_Geometry_algorithms_num SUCCEEDED 
+PAMI_Geometry_algorithms_num SUCCEEDED 
+PAMI_Geometry_algorithms_num SUCCEEDED 
+PAMI_Geometry_algorithms_num SUCCEEDED 
+PAMI_Geometry_algorithms_query SUCCEEDED 
+PAMI_Geometry_algorithms_query SUCCEEDED 
+PAMI_Geometry_algorithms_query SUCCEEDED 
+PAMI_Geometry_algorithms_query SUCCEEDED 
+PAMI_Geometry_algorithms_query SUCCEEDED 
+PAMI_Geometry_algorithms_query SUCCEEDED 
+PAMI_Geometry_algorithms_query SUCCEEDED 
+PAMI_Geometry_algorithms_query SUCCEEDED 
+PAMID_Allreduce_setup SUCCEEDED 
+PAMID_Allreduce_setup SUCCEEDED 
+PAMID_Allreduce_setup SUCCEEDED 
+PAMID_Allreduce_setup SUCCEEDED 
+PAMID_Allreduce_setup SUCCEEDED 
+PAMID_Allreduce_setup SUCCEEDED 
+PAMID_Allreduce_setup SUCCEEDED 
+PAMID_Allreduce_setup SUCCEEDED 
+PAMI_Collective SUCCEEDED 
+PAMI_Collective SUCCEEDED 
+PAMI_Collective SUCCEEDED 
+PAMI_Collective SUCCEEDED 
+PAMI_Collective SUCCEEDED 
+PAMI_Collective SUCCEEDED 
+PAMI_Collective SUCCEEDED 
+PAMI_Collective SUCCEEDED 
+PAMI_Context_trylock_advancev SUCCEEDED 
+PAMI_Context_trylock_advancev SUCCEEDED 
+PAMI_Context_trylock_advancev SUCCEEDED 
+PAMI_Context_trylock_advancev SUCCEEDED 
+PAMI_Context_trylock_advancev SUCCEEDED 
+PAMI_Context_trylock_advancev SUCCEEDED 
+PAMI_Context_trylock_advancev SUCCEEDED 
+PAMI_Context_trylock_advancev SUCCEEDED 
+PAMID_Barrier_doit A SUCCEEDED 
+PAMID_Barrier_doit A SUCCEEDED 
+PAMID_Barrier_doit A SUCCEEDED 
+PAMID_Barrier_doit A SUCCEEDED 
+PAMID_Barrier_doit A SUCCEEDED 
+PAMID_Barrier_doit A SUCCEEDED 
+PAMID_Barrier_doit A SUCCEEDED 
+PAMID_Barrier_doit A SUCCEEDED 
+PAMI_Collective SUCCEEDED 
+PAMI_Collective SUCCEEDED 
+PAMI_Collective SUCCEEDED 
+PAMI_Collective SUCCEEDED 
+PAMI_Collective SUCCEEDED 
+PAMI_Collective SUCCEEDED 
+PAMI_Collective SUCCEEDED 
+PAMI_Collective SUCCEEDED 
+PAMI_Context_trylock_advancev SUCCEEDED 
+PAMI_Context_trylock_advancev SUCCEEDED 
+PAMI_Context_trylock_advancev SUCCEEDED 
+PAMI_Context_trylock_advancev SUCCEEDED 
+PAMI_Context_trylock_advancev SUCCEEDED 
+PAMI_Context_trylock_advancev SUCCEEDED 
+PAMI_Context_trylock_advancev SUCCEEDED 
+PAMI_Context_trylock_advancev SUCCEEDED 
+PAMID_Barrier_doit C SUCCEEDED 
+PAMID_Barrier_doit C SUCCEEDED 
+PAMID_Barrier_doit C SUCCEEDED 
+PAMID_Barrier_doit C SUCCEEDED 
+PAMID_Barrier_doit C SUCCEEDED 
+PAMID_Barrier_doit C SUCCEEDED 
+PAMID_Barrier_doit C SUCCEEDED 
+PAMID_Barrier_doit C SUCCEEDED 
+PAMID_Allreduce_teardown SUCCEEDED 
+PAMID_Allreduce_teardown SUCCEEDED 
+PAMID_Allreduce_teardown SUCCEEDED 
+PAMID_Allreduce_teardown SUCCEEDED 
+PAMID_Allreduce_teardown SUCCEEDED 
+PAMID_Allreduce_teardown SUCCEEDED 
+PAMID_Allreduce_teardown SUCCEEDED 
+PAMID_Allreduce_teardown SUCCEEDED 
+PAMID_Allgather_teardown SUCCEEDED 
+PAMID_Allgather_teardown SUCCEEDED 
+PAMID_Allgather_teardown SUCCEEDED 
+PAMID_Allgather_teardown SUCCEEDED 
+PAMID_Allgather_teardown SUCCEEDED 
+PAMID_Allgather_teardown SUCCEEDED 
+PAMID_Allgather_teardown SUCCEEDED 
+PAMID_Allgather_teardown SUCCEEDED 
+PAMID_Broadcast_teardown SUCCEEDED 
+PAMID_Broadcast_teardown SUCCEEDED 
+PAMID_Broadcast_teardown SUCCEEDED 
+PAMID_Broadcast_teardown SUCCEEDED 
+PAMID_Broadcast_teardown SUCCEEDED 
+PAMID_Broadcast_teardown SUCCEEDED 
+PAMID_Broadcast_teardown SUCCEEDED 
+PAMID_Broadcast_teardown SUCCEEDED 
+PAMID_Barrier_teardown SUCCEEDED 
+PAMID_Barrier_teardown SUCCEEDED 
+PAMID_Barrier_teardown SUCCEEDED 
+PAMID_Barrier_teardown SUCCEEDED 
+PAMID_Barrier_teardown SUCCEEDED 
+PAMID_Barrier_teardown SUCCEEDED 
+PAMID_Barrier_teardown SUCCEEDED 
+PAMID_Barrier_teardown SUCCEEDED 
+PAMI_Context_destroyv SUCCEEDED 
+PAMI_Context_destroyv SUCCEEDED 
+PAMI_Context_destroyv SUCCEEDED 
+PAMI_Context_destroyv SUCCEEDED 
+PAMI_Context_destroyv SUCCEEDED 
+PAMI_Context_destroyv SUCCEEDED 
+PAMI_Context_destroyv SUCCEEDED 
+PAMI_Context_destroyv SUCCEEDED 
+PAMI_Client_destroy SUCCEEDED 
+PAMI_Client_destroy SUCCEEDED 
+PAMI_Client_destroy SUCCEEDED 
+PAMI_Client_destroy SUCCEEDED 
+PAMI_Client_destroy SUCCEEDED 
+PAMI_Client_destroy SUCCEEDED 
+PAMI_Client_destroy SUCCEEDED 
+PAMI_Client_destroy SUCCEEDED 
+2012-10-28 02:45:44.537 (INFO ) [0xfff865d8ad0] VST-22000-33331-128:81894:ibm.runjob.client.Job: exited with status 0
