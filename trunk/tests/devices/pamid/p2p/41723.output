@@ -1,0 +1,30 @@
+hello world from rank 0 of 4 
+dispatch_recv_cb: origin = (0,0) cookie = 1000003 
+dispatch_recv_cb: origin = (2,0) cookie = 1000001 
+dispatch_recv_cb: header_size = 4 
+dispatch_recv_cb: origin = (1,0) cookie = 1000000 
+dispatch_recv_cb: origin = (3,0) cookie = 1000002 
+dispatch_recv_cb: header_size = 4 
+dispatch_recv_cb: header_addr[] = 37373 
+dispatch_recv_cb: header_size = 4 
+dispatch_recv_cb: header_size = 4 
+dispatch_recv_cb: header_addr[] = 37373 
+dispatch_recv_cb: asychronous protocol 
+dispatch_recv_cb: header_addr[] = 37373 
+dispatch_recv_cb: header_addr[] = 37373 
+dispatch_recv_cb: asychronous protocol 
+dispatch_recv_cb: data_size = 128000000 
+dispatch_recv_cb: asychronous protocol 
+dispatch_recv_cb: asychronous protocol 
+dispatch_recv_cb: data_size = 128000000 
+dispatch_recv_cb: data_size = 128000000 
+dispatch_recv_cb: data_size = 128000000 
+2: PAMI_Send of 32000000 bytes achieves 1515.987670 MB/s 
+3: PAMI_Send of 32000000 bytes achieves 1464.243363 MB/s 
+1: PAMI_Send of 32000000 bytes achieves 1501.769349 MB/s 
+0: PAMI_Send of 32000000 bytes achieves 1536.341694 MB/s 
+dispatch_done_cb 
+dispatch_done_cb 
+dispatch_done_cb 
+dispatch_done_cb 
+0: end of test 
