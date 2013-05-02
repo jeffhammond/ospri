@@ -1,0 +1,8 @@
+2012-08-20 03:25:41.306 (INFO ) [0xfff87748ad0] VST-02000-13331-128:15587:ibm.runjob.client.options.Parser: set local socket to runjob_mux from properties file
+2012-08-20 03:25:43.862 (INFO ) [0xfff87748ad0] VST-02000-13331-128:32303:ibm.runjob.client.Job: job 32303 started
+/bgsys/source/srcV1R1M1.13560/comm/sys/buildtools/pami/components/devices/bgq/mu2/Context.h:566: 
+/bgsys/source/srcV1R1M1.13560/comm/sys/buildtools/pami/components/devices/bgq/mu2/Context.h:566: 
+Error. _connection[1] was not previously set.
+Error. _connection[0] was not previously set.
+2012-08-20 03:25:47.462 (WARN ) [0xfff87748ad0] VST-02000-13331-128:32303:ibm.runjob.client.Job: terminated by signal 6
+2012-08-20 03:25:47.462 (WARN ) [0xfff87748ad0] VST-02000-13331-128:32303:ibm.runjob.client.Job: abnormal termination by signal 6 from rank 0
