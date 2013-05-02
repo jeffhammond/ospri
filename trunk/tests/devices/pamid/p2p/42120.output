@@ -1,0 +1,6 @@
+hello world from rank 0 of 4 
+0: PAMI_Rget of 4000000 bytes achieves 1758.627787 MB/s 
+3: PAMI_Rget of 4000000 bytes achieves 3480.084131 MB/s 
+2: PAMI_Rget of 4000000 bytes achieves 1758.766972 MB/s 
+1: PAMI_Rget of 4000000 bytes achieves 3481.515330 MB/s 
+0: end of test 
