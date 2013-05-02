@@ -1,0 +1,5 @@
+2012-08-20 03:22:02.598 (INFO ) [0xfff79d28ad0] VST-02040-13371-128:27210:ibm.runjob.client.options.Parser: set local socket to runjob_mux from properties file
+2012-08-20 03:22:05.142 (INFO ) [0xfff79d28ad0] VST-02040-13371-128:32287:ibm.runjob.client.Job: job 32287 started
+Hello PAMI World:  task_id=1, size=2
+Hello PAMI World:  task_id=0, size=2
+2012-08-20 03:22:07.093 (INFO ) [0xfff79d28ad0] VST-02040-13371-128:32287:ibm.runjob.client.Job: exited with status 0
