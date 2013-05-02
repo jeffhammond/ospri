@@ -1,0 +1,256 @@
+2012-12-13 01:54:22.188 (INFO ) [0xfff86cba210] 19420:ibm.runjob.AbstractOptions: using properties file /bgsys/local/etc/bg.properties
+2012-12-13 01:54:22.189 (INFO ) [0xfff86cba210] 19420:ibm.runjob.AbstractOptions: max open file descriptors: 65536
+2012-12-13 01:54:22.189 (INFO ) [0xfff86cba210] 19420:ibm.runjob.AbstractOptions: core file limit: 0
+2012-12-13 01:54:22.189 (INFO ) [0xfff86cba210] 19420:tatu.runjob.client: scheduler job id is 47464
+2012-12-13 01:54:22.191 (INFO ) [0xfff87831a70] 19420:tatu.runjob.monitor: monitor started
+2012-12-13 01:54:22.192 (INFO ) [0xfff86cba210] VST-20040-31371-128:19420:ibm.runjob.client.options.Parser: set local socket to runjob_mux from properties file
+2012-12-13 01:54:25.133 (INFO ) [0xfff86cba210] VST-20040-31371-128:92477:ibm.runjob.client.Job: job 92477 started
+Abort(1) on node 1757 (rank 1757 in comm 1140850688): Fatal error in PMPI_Comm_rank: Invalid communicator, error stack:
+PMPI_Comm_rank(109): MPI_Comm_rank(comm=0x0, rank=0x1fffffba40) failed
+PMPI_Comm_rank(66).: Invalid communicator
+Abort(1) on node 0 (rank 0 in comm 1140850688): Fatal error in PMPI_Comm_rank: Invalid communicator, error stack:
+PMPI_Comm_rank(109): MPI_Comm_rank(comm=0x0, rank=0x1fffffba40) failed
+PMPI_Comm_rank(66).: Invalid communicator
+Abort(1) on node 1879 (rank 1879 in comm 1140850688): Fatal error in PMPI_Comm_rank: Invalid communicator, error stack:
+PMPI_Comm_rank(109): MPI_Comm_rank(comm=0x0, rank=0x1fffffba40) failed
+PMPI_Comm_rank(66).: Invalid communicator
+Abort(1) on node 813 (rank 813 in comm 1140850688): Fatal error in PMPI_Comm_rank: Invalid communicator, error stack:
+PMPI_Comm_rank(109): MPI_Comm_rank(comm=0x0, rank=0x1fffffba40) failed
+PMPI_Comm_rank(66).: Invalid communicator
+Abort(1) on node 1533 (rank 1533 in comm 1140850688): Fatal error in PMPI_Comm_rank: Invalid communicator, error stack:
+PMPI_Comm_rank(109): MPI_Comm_rank(comm=0x0, rank=0x1fffffba40) failed
+PMPI_Comm_rank(66).: Invalid communicator
+Abort(1) on node 684 (rank 684 in comm 1140850688): Fatal error in PMPI_Comm_rank: Invalid communicator, error stack:
+PMPI_Comm_rank(109): MPI_Comm_rank(comm=0x0, rank=0x1fffffba40) failed
+PMPI_Comm_rank(66).: Invalid communicator
+Abort(1) on node 1788 (rank 1788 in comm 1140850688): Fatal error in PMPI_Comm_rank: Invalid communicator, error stack:
+PMPI_Comm_rank(109): MPI_Comm_rank(comm=0x0, rank=0x1fffffba40) failed
+PMPI_Comm_rank(66).: Invalid communicator
+Abort(1) on node 959 (rank 959 in comm 1140850688): Fatal error in PMPI_Comm_rank: Invalid communicator, error stack:
+PMPI_Comm_rank(109): MPI_Comm_rank(comm=0x0, rank=0x1fffffba40) failed
+PMPI_Comm_rank(66).: Invalid communicator
+Abort(1) on node 221 (rank 221 in comm 1140850688): Fatal error in PMPI_Comm_rank: Invalid communicator, error stack:
+PMPI_Comm_rank(109): MPI_Comm_rank(comm=0x0, rank=0x1fffffba40) failed
+PMPI_Comm_rank(66).: Invalid communicator
+Abort(1) on node 29 (rank 29 in comm 1140850688): Fatal error in PMPI_Comm_rank: Invalid communicator, error stack:
+PMPI_Comm_rank(109): MPI_Comm_rank(comm=0x0, rank=0x1fffffba40) failed
+PMPI_Comm_rank(66).: Invalid communicator
+Abort(1) on node 639 (rank 639 in comm 1140850688): Fatal error in PMPI_Comm_rank: Invalid communicator, error stack:
+PMPI_Comm_rank(109): MPI_Comm_rank(comm=0x0, rank=0x1fffffba40) failed
+PMPI_Comm_rank(66).: Invalid communicator
+Abort(1) on node 668 (rank 668 in comm 1140850688): Fatal error in PMPI_Comm_rank: Invalid communicator, error stack:
+PMPI_Comm_rank(109): MPI_Comm_rank(comm=0x0, rank=0x1fffffba40) failed
+PMPI_Comm_rank(66).: Invalid communicator
+Abort(1) on node 78 (rank 78 in comm 1140850688): Fatal error in PMPI_Comm_rank: Invalid communicator, error stack:
+PMPI_Comm_rank(109): MPI_Comm_rank(comm=0x0, rank=0x1fffffba40) failed
+PMPI_Comm_rank(66).: Invalid communicator
+Abort(1) on node 1555 (rank 1555 in comm 1140850688): Fatal error in PMPI_Comm_rank: Invalid communicator, error stack:
+PMPI_Comm_rank(109): MPI_Comm_rank(comm=0x0, rank=0x1fffffba40) failed
+PMPI_Comm_rank(66).: Invalid communicator
+Abort(1) on node 252 (rank 252 in comm 1140850688): Fatal error in PMPI_Comm_rank: Invalid communicator, error stack:
+PMPI_Comm_rank(109): MPI_Comm_rank(comm=0x0, rank=0x1fffffba40) failed
+PMPI_Comm_rank(66).: Invalid communicator
+Abort(1) on node 427 (rank 427 in comm 1140850688): Fatal error in PMPI_Comm_rank: Invalid communicator, error stack:
+PMPI_Comm_rank(109): MPI_Comm_rank(comm=0x0, rank=0x1fffffba40) failed
+PMPI_Comm_rank(66).: Invalid communicator
+Abort(1) on node 122 (rank 122 in comm 1140850688): Fatal error in PMPI_Comm_rank: Invalid communicator, error stack:
+PMPI_Comm_rank(109): MPI_Comm_rank(comm=0x0, rank=0x1fffffba40) failed
+PMPI_Comm_rank(66).: Invalid communicator
+Abort(1) on node 829 (rank 829 in comm 1140850688): Fatal error in PMPI_Comm_rank: Invalid communicator, error stack:
+PMPI_Comm_rank(109): MPI_Comm_rank(comm=0x0, rank=0x1fffffba40) failed
+PMPI_Comm_rank(66).: Invalid communicator
+Abort(1) on node 378 (rank 378 in comm 1140850688): Fatal error in PMPI_Comm_rank: Invalid communicator, error stack:
+PMPI_Comm_rank(109): MPI_Comm_rank(comm=0x0, rank=0x1fffffba40) failed
+PMPI_Comm_rank(66).: Invalid communicator
+Abort(1) on node 151 (rank 151 in comm 1140850688): Fatal error in PMPI_Comm_rank: Invalid communicator, error stack:
+PMPI_Comm_rank(109): MPI_Comm_rank(comm=0x0, rank=0x1fffffba40) failed
+PMPI_Comm_rank(66).: Invalid communicator
+Abort(1) on node 1900 (rank 1900 in comm 1140850688): Fatal error in PMPI_Comm_rank: Invalid communicator, error stack:
+PMPI_Comm_rank(109): MPI_Comm_rank(comm=0x0, rank=0x1fffffba40) failed
+PMPI_Comm_rank(66).: Invalid communicator
+Abort(1) on node 59 (rank 59 in comm 1140850688): Fatal error in PMPI_Comm_rank: Invalid communicator, error stack:
+PMPI_Comm_rank(109): MPI_Comm_rank(comm=0x0, rank=0x1fffffba40) failed
+PMPI_Comm_rank(66).: Invalid communicator
+Abort(1) on node 893 (rank 893 in comm 1140850688): Fatal error in PMPI_Comm_rank: Invalid communicator, error stack:
+PMPI_Comm_rank(109): MPI_Comm_rank(comm=0x0, rank=0x1fffffba40) failed
+PMPI_Comm_rank(66).: Invalid communicator
+Abort(1) on node 180 (rank 180 in comm 1140850688): Fatal error in PMPI_Comm_rank: Invalid communicator, error stack:
+PMPI_Comm_rank(109): MPI_Comm_rank(comm=0x0, rank=0x1fffffba40) failed
+PMPI_Comm_rank(66).: Invalid communicator
+Abort(1) on node 724 (rank 724 in comm 1140850688): Fatal error in PMPI_Comm_rank: Invalid communicator, error stack:
+PMPI_Comm_rank(109): MPI_Comm_rank(comm=0x0, rank=0x1fffffba40) failed
+PMPI_Comm_rank(66).: Invalid communicator
+Abort(1) on node 1692 (rank 1692 in comm 1140850688): Fatal error in PMPI_Comm_rank: Invalid communicator, error stack:
+PMPI_Comm_rank(109): MPI_Comm_rank(comm=0x0, rank=0x1fffffba40) failed
+PMPI_Comm_rank(66).: Invalid communicator
+Abort(1) on node 603 (rank 603 in comm 1140850688): Fatal error in PMPI_Comm_rank: Invalid communicator, error stack:
+PMPI_Comm_rank(109): MPI_Comm_rank(comm=0x0, rank=0x1fffffba40) failed
+PMPI_Comm_rank(66).: Invalid communicator
+Abort(1) on node 925 (rank 925 in comm 1140850688): Fatal error in PMPI_Comm_rank: Invalid communicator, error stack:
+PMPI_Comm_rank(109): MPI_Comm_rank(comm=0x0, rank=0x1fffffba40) failed
+PMPI_Comm_rank(66).: Invalid communicator
+Abort(1) on node 763 (rank 763 in comm 1140850688): Fatal error in PMPI_Comm_rank: Invalid communicator, error stack:
+PMPI_Comm_rank(109): MPI_Comm_rank(comm=0x0, rank=0x1fffffba40) failed
+PMPI_Comm_rank(66).: Invalid communicator
+Abort(1) on node 795 (rank 795 in comm 1140850688): Fatal error in PMPI_Comm_rank: Invalid communicator, error stack:
+PMPI_Comm_rank(109): MPI_Comm_rank(comm=0x0, rank=0x1fffffba40) failed
+PMPI_Comm_rank(66).: Invalid communicator
+Abort(1) on node 1772 (rank 1772 in comm 1140850688): Fatal error in PMPI_Comm_rank: Invalid communicator, error stack:
+PMPI_Comm_rank(109): MPI_Comm_rank(comm=0x0, rank=0x1fffffba40) failed
+PMPI_Comm_rank(66).: Invalid communicator
+Abort(1) on node 554 (rank 554 in comm 1140850688): Fatal error in PMPI_Comm_rank: Invalid communicator, error stack:
+PMPI_Comm_rank(109): MPI_Comm_rank(comm=0x0, rank=0x1fffffba40) failed
+PMPI_Comm_rank(66).: Invalid communicator
+Abort(1) on node 330 (rank 330 in comm 1140850688): Fatal error in PMPI_Comm_rank: Invalid communicator, error stack:
+PMPI_Comm_rank(109): MPI_Comm_rank(comm=0x0, rank=0x1fffffba40) failed
+PMPI_Comm_rank(66).: Invalid communicator
+Abort(1) on node 285 (rank 285 in comm 1140850688): Fatal error in PMPI_Comm_rank: Invalid communicator, error stack:
+PMPI_Comm_rank(109): MPI_Comm_rank(comm=0x0, rank=0x1fffffba40) failed
+PMPI_Comm_rank(66).: Invalid communicator
+Abort(1) on node 349 (rank 349 in comm 1140850688): Fatal error in PMPI_Comm_rank: Invalid communicator, error stack:
+PMPI_Comm_rank(109): MPI_Comm_rank(comm=0x0, rank=0x1fffffba40) failed
+PMPI_Comm_rank(66).: Invalid communicator
+Abort(1) on node 1287 (rank 1287 in comm 1140850688): Fatal error in PMPI_Comm_rank: Invalid communicator, error stack:
+PMPI_Comm_rank(109): MPI_Comm_rank(comm=0x0, rank=0x1fffffba40) failed
+PMPI_Comm_rank(66).: Invalid communicator
+Abort(1) on node 199 (rank 199 in comm 1140850688): Fatal error in PMPI_Comm_rank: Invalid communicator, error stack:
+PMPI_Comm_rank(109): MPI_Comm_rank(comm=0x0, rank=0x1fffffba40) failed
+PMPI_Comm_rank(66).: Invalid communicator
+Abort(1) on node 411 (rank 411 in comm 1140850688): Fatal error in PMPI_Comm_rank: Invalid communicator, error stack:
+PMPI_Comm_rank(109): MPI_Comm_rank(comm=0x0, rank=0x1fffffba40) failed
+PMPI_Comm_rank(66).: Invalid communicator
+Abort(1) on node 1229 (rank 1229 in comm 1140850688): Fatal error in PMPI_Comm_rank: Invalid communicator, error stack:
+PMPI_Comm_rank(109): MPI_Comm_rank(comm=0x0, rank=0x1fffffba40) failed
+PMPI_Comm_rank(66).: Invalid communicator
+Abort(1) on node 317 (rank 317 in comm 1140850688): Fatal error in PMPI_Comm_rank: Invalid communicator, error stack:
+PMPI_Comm_rank(109): MPI_Comm_rank(comm=0x0, rank=0x1fffffba40) failed
+PMPI_Comm_rank(66).: Invalid communicator
+Abort(1) on node 579 (rank 579 in comm 1140850688): Fatal error in PMPI_Comm_rank: Invalid communicator, error stack:
+PMPI_Comm_rank(109): MPI_Comm_rank(comm=0x0, rank=0x1fffffba40) failed
+PMPI_Comm_rank(66).: Invalid communicator
+Abort(1) on node 1949 (rank 1949 in comm 1140850688): Fatal error in PMPI_Comm_rank: Invalid communicator, error stack:
+PMPI_Comm_rank(109): MPI_Comm_rank(comm=0x0, rank=0x1fffffba40) failed
+PMPI_Comm_rank(66).: Invalid communicator
+Abort(1) on node 855 (rank 855 in comm 1140850688): Fatal error in PMPI_Comm_rank: Invalid communicator, error stack:
+PMPI_Comm_rank(109): MPI_Comm_rank(comm=0x0, rank=0x1fffffba40) failed
+PMPI_Comm_rank(66).: Invalid communicator
+Abort(1) on node 1817 (rank 1817 in comm 1140850688): Fatal error in PMPI_Comm_rank: Invalid communicator, error stack:
+PMPI_Comm_rank(109): MPI_Comm_rank(comm=0x0, rank=0x1fffffba40) failed
+PMPI_Comm_rank(66).: Invalid communicator
+Abort(1) on node 611 (rank 611 in comm 1140850688): Fatal error in PMPI_Comm_rank: Invalid communicator, error stack:
+PMPI_Comm_rank(109): MPI_Comm_rank(comm=0x0, rank=0x1fffffba40) failed
+PMPI_Comm_rank(66).: Invalid communicator
+Abort(1) on node 1303 (rank 1303 in comm 1140850688): Fatal error in PMPI_Comm_rank: Invalid communicator, error stack:
+PMPI_Comm_rank(109): MPI_Comm_rank(comm=0x0, rank=0x1fffffba40) failed
+PMPI_Comm_rank(66).: Invalid communicator
+Abort(1) on node 1271 (rank 1271 in comm 1140850688): Fatal error in PMPI_Comm_rank: Invalid communicator, error stack:
+PMPI_Comm_rank(109): MPI_Comm_rank(comm=0x0, rank=0x1fffffba40) failed
+PMPI_Comm_rank(66).: Invalid communicator
+Abort(1) on node 1337 (rank 1337 in comm 1140850688): Fatal error in PMPI_Comm_rank: Invalid communicator, error stack:
+PMPI_Comm_rank(109): MPI_Comm_rank(comm=0x0, rank=0x1fffffba40) failed
+PMPI_Comm_rank(66).: Invalid communicator
+Abort(1) on node 1624 (rank 1624 in comm 1140850688): Fatal error in PMPI_Comm_rank: Invalid communicator, error stack:
+PMPI_Comm_rank(109): MPI_Comm_rank(comm=0x0, rank=0x1fffffba40) failed
+PMPI_Comm_rank(66).: Invalid communicator
+Abort(1) on node 1431 (rank 1431 in comm 1140850688): Fatal error in PMPI_Comm_rank: Invalid communicator, error stack:
+PMPI_Comm_rank(109): MPI_Comm_rank(comm=0x0, rank=0x1fffffba40) failed
+PMPI_Comm_rank(66).: Invalid communicator
+Abort(1) on node 1661 (rank 1661 in comm 1140850688): Fatal error in PMPI_Comm_rank: Invalid communicator, error stack:
+PMPI_Comm_rank(109): MPI_Comm_rank(comm=0x0, rank=0x1fffffba40) failed
+PMPI_Comm_rank(66).: Invalid communicator
+Abort(1) on node 1595 (rank 1595 in comm 1140850688): Fatal error in PMPI_Comm_rank: Invalid communicator, error stack:
+PMPI_Comm_rank(109): MPI_Comm_rank(comm=0x0, rank=0x1fffffba40) failed
+PMPI_Comm_rank(66).: Invalid communicator
+Abort(1) on node 1911 (rank 1911 in comm 1140850688): Fatal error in PMPI_Comm_rank: Invalid communicator, error stack:
+PMPI_Comm_rank(109): MPI_Comm_rank(comm=0x0, rank=0x1fffffba40) failed
+PMPI_Comm_rank(66).: Invalid communicator
+Abort(1) on node 1980 (rank 1980 in comm 1140850688): Fatal error in PMPI_Comm_rank: Invalid communicator, error stack:
+PMPI_Comm_rank(109): MPI_Comm_rank(comm=0x0, rank=0x1fffffba40) failed
+PMPI_Comm_rank(66).: Invalid communicator
+Abort(1) on node 1015 (rank 1015 in comm 1140850688): Fatal error in PMPI_Comm_rank: Invalid communicator, error stack:
+PMPI_Comm_rank(109): MPI_Comm_rank(comm=0x0, rank=0x1fffffba40) failed
+PMPI_Comm_rank(66).: Invalid communicator
+Abort(1) on node 1444 (rank 1444 in comm 1140850688): Fatal error in PMPI_Comm_rank: Invalid communicator, error stack:
+PMPI_Comm_rank(109): MPI_Comm_rank(comm=0x0, rank=0x1fffffba40) failed
+PMPI_Comm_rank(66).: Invalid communicator
+Abort(1) on node 989 (rank 989 in comm 1140850688): Fatal error in PMPI_Comm_rank: Invalid communicator, error stack:
+PMPI_Comm_rank(109): MPI_Comm_rank(comm=0x0, rank=0x1fffffba40) failed
+PMPI_Comm_rank(66).: Invalid communicator
+Abort(1) on node 932 (rank 932 in comm 1140850688): Fatal error in PMPI_Comm_rank: Invalid communicator, error stack:
+PMPI_Comm_rank(109): MPI_Comm_rank(comm=0x0, rank=0x1fffffba40) failed
+PMPI_Comm_rank(66).: Invalid communicator
+Abort(1) on node 1635 (rank 1635 in comm 1140850688): Fatal error in PMPI_Comm_rank: Invalid communicator, error stack:
+PMPI_Comm_rank(109): MPI_Comm_rank(comm=0x0, rank=0x1fffffba40) failed
+PMPI_Comm_rank(66).: Invalid communicator
+Abort(1) on node 703 (rank 703 in comm 1140850688): Fatal error in PMPI_Comm_rank: Invalid communicator, error stack:
+PMPI_Comm_rank(109): MPI_Comm_rank(comm=0x0, rank=0x1fffffba40) failed
+PMPI_Comm_rank(66).: Invalid communicator
+Abort(1) on node 2010 (rank 2010 in comm 1140850688): Fatal error in PMPI_Comm_rank: Invalid communicator, error stack:
+PMPI_Comm_rank(109): MPI_Comm_rank(comm=0x0, rank=0x1fffffba40) failed
+PMPI_Comm_rank(66).: Invalid communicator
+Abort(1) on node 443 (rank 443 in comm 1140850688): Fatal error in PMPI_Comm_rank: Invalid communicator, error stack:
+PMPI_Comm_rank(109): MPI_Comm_rank(comm=0x0, rank=0x1fffffba40) failed
+PMPI_Comm_rank(66).: Invalid communicator
+Abort(1) on node 89 (rank 89 in comm 1140850688): Fatal error in PMPI_Comm_rank: Invalid communicator, error stack:
+PMPI_Comm_rank(109): MPI_Comm_rank(comm=0x0, rank=0x1fffffba40) failed
+PMPI_Comm_rank(66).: Invalid communicator
+Abort(1) on node 1047 (rank 1047 in comm 1140850688): Fatal error in PMPI_Comm_rank: Invalid communicator, error stack:
+PMPI_Comm_rank(109): MPI_Comm_rank(comm=0x0, rank=0x1fffffba40) failed
+PMPI_Comm_rank(66).: Invalid communicator
+Abort(1) on node 2039 (rank 2039 in comm 1140850688): Fatal error in PMPI_Comm_rank: Invalid communicator, error stack:
+PMPI_Comm_rank(109): MPI_Comm_rank(comm=0x0, rank=0x1fffffba40) failed
+PMPI_Comm_rank(66).: Invalid communicator
+Abort(1) on node 531 (rank 531 in comm 1140850688): Fatal error in PMPI_Comm_rank: Invalid communicator, error stack:
+PMPI_Comm_rank(109): MPI_Comm_rank(comm=0x0, rank=0x1fffffba40) failed
+PMPI_Comm_rank(66).: Invalid communicator
+Abort(1) on node 1401 (rank 1401 in comm 1140850688): Fatal error in PMPI_Comm_rank: Invalid communicator, error stack:
+PMPI_Comm_rank(109): MPI_Comm_rank(comm=0x0, rank=0x1fffffba40) failed
+PMPI_Comm_rank(66).: Invalid communicator
+Abort(1) on node 1213 (rank 1213 in comm 1140850688): Fatal error in PMPI_Comm_rank: Invalid communicator, error stack:
+PMPI_Comm_rank(109): MPI_Comm_rank(comm=0x0, rank=0x1fffffba40) failed
+PMPI_Comm_rank(66).: Invalid communicator
+Abort(1) on node 1147 (rank 1147 in comm 1140850688): Fatal error in PMPI_Comm_rank: Invalid communicator, error stack:
+PMPI_Comm_rank(109): MPI_Comm_rank(comm=0x0, rank=0x1fffffba40) failed
+PMPI_Comm_rank(66).: Invalid communicator
+Abort(1) on node 909 (rank 909 in comm 1140850688): Fatal error in PMPI_Comm_rank: Invalid communicator, error stack:
+PMPI_Comm_rank(109): MPI_Comm_rank(comm=0x0, rank=0x1fffffba40) failed
+PMPI_Comm_rank(66).: Invalid communicator
+Abort(1) on node 500 (rank 500 in comm 1140850688): Fatal error in PMPI_Comm_rank: Invalid communicator, error stack:
+PMPI_Comm_rank(109): MPI_Comm_rank(comm=0x0, rank=0x1fffffba40) failed
+PMPI_Comm_rank(66).: Invalid communicator
+Abort(1) on node 1716 (rank 1716 in comm 1140850688): Fatal error in PMPI_Comm_rank: Invalid communicator, error stack:
+PMPI_Comm_rank(109): MPI_Comm_rank(comm=0x0, rank=0x1fffffba40) failed
+PMPI_Comm_rank(66).: Invalid communicator
+Abort(1) on node 1117 (rank 1117 in comm 1140850688): Fatal error in PMPI_Comm_rank: Invalid communicator, error stack:
+PMPI_Comm_rank(109): MPI_Comm_rank(comm=0x0, rank=0x1fffffba40) failed
+PMPI_Comm_rank(66).: Invalid communicator
+Abort(1) on node 1843 (rank 1843 in comm 1140850688): Fatal error in PMPI_Comm_rank: Invalid communicator, error stack:
+PMPI_Comm_rank(109): MPI_Comm_rank(comm=0x0, rank=0x1fffffba40) failed
+PMPI_Comm_rank(66).: Invalid communicator
+Abort(1) on node 1739 (rank 1739 in comm 1140850688): Fatal error in PMPI_Comm_rank: Invalid communicator, error stack:
+PMPI_Comm_rank(109): MPI_Comm_rank(comm=0x0, rank=0x1fffffba40) failed
+PMPI_Comm_rank(66).: Invalid communicator
+Abort(1) on node 575 (rank 575 in comm 1140850688): Fatal error in PMPI_Comm_rank: Invalid communicator, error stack:
+PMPI_Comm_rank(109): MPI_Comm_rank(comm=0x0, rank=0x1fffffba40) failed
+PMPI_Comm_rank(66).: Invalid communicator
+Abort(1) on node 1239 (rank 1239 in comm 1140850688): Fatal error in PMPI_Comm_rank: Invalid communicator, error stack:
+PMPI_Comm_rank(109): MPI_Comm_rank(comm=0x0, rank=0x1fffffba40) failed
+PMPI_Comm_rank(66).: Invalid communicator
+Abort(1) on node 1460 (rank 1460 in comm 1140850688): Fatal error in PMPI_Comm_rank: Invalid communicator, error stack:
+PMPI_Comm_rank(109): MPI_Comm_rank(comm=0x0, rank=0x1fffffba40) failed
+PMPI_Comm_rank(66).: Invalid communicator
+Abort(1) on node 1037 (rank 1037 in comm 1140850688): Fatal error in PMPI_Comm_rank: Invalid communicator, error stack:
+PMPI_Comm_rank(109): MPI_Comm_rank(comm=0x0, rank=0x1fffffba40) failed
+PMPI_Comm_rank(66).: Invalid communicator
+Abort(1) on node 298 (rank 298 in comm 1140850688): Fatal error in PMPI_Comm_rank: Invalid communicator, error stack:
+PMPI_Comm_rank(109): MPI_Comm_rank(comm=0x0, rank=0x1fffffba40) failed
+PMPI_Comm_rank(66).: Invalid communicator
+Abort(1) on node 1805 (rank 1805 in comm 1140850688): Fatal error in PMPI_Comm_rank: Invalid communicator, error stack:
+PMPI_Comm_rank(109): MPI_Comm_rank(comm=0x0, rank=0x1fffffba40) failed
+PMPI_Comm_rank(66).: Invalid communicator
+2012-12-13 01:54:27.722 (INFO ) [0xfff87831a70] 19420:tatu.runjob.monitor: tracklib completed
+2012-12-13 01:54:28.992 (WARN ) [0xfff86cba210] VST-20040-31371-128:92477:ibm.runjob.client.Job: terminated by signal 6
+2012-12-13 01:54:28.992 (WARN ) [0xfff86cba210] VST-20040-31371-128:92477:ibm.runjob.client.Job: abnormal termination by signal 6 from rank 1757
+2012-12-13 01:54:28.992 (INFO ) [0xfff86cba210] tatu.runjob.client: task terminated by signal 6
+2012-12-13 01:54:28.993 (INFO ) [0xfff87831a70] 19420:tatu.runjob.monitor: monitor terminating
+2012-12-13 01:54:28.994 (INFO ) [0xfff86cba210] tatu.runjob.client: monitor completed
