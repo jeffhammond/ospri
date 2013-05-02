@@ -106,20 +106,19 @@ int main(int argc, char* argv[])
     if (world_rank==0)
     {
         char * env_char;
-        int units = 1;
-        int num_count = 0;
         env_char = getenv("BG_SYMMETRIC_HEAP");
         if (env_char!=NULL) 
         {
+            int units = 1;
             if      ( NULL != strstr(env_char,"G") ) units = 1000000000;
             else if ( NULL != strstr(env_char,"M") ) units = 1000000;
             else if ( NULL != strstr(env_char,"K") ) units = 1000;
             else                                     units = 1;
 
-            num_count = strspn(env_char, "0123456789");
+            int num_count = strspn(env_char, "0123456789");
             memset( &env_char[num_count], ' ', strlen(env_char)-num_count);
+            sheap_size = units * atoi(env_char);
         }
-        sheap_size = units * atoi(env_char);
         printf("%7d: BG_SYMMETRIC_HEAP = %d bytes \n", world_rank, sheap_size );
     }
     mpi_result = MPI_Bcast( &sheap_size, 1, MPI_INT, 0, MPI_COMM_WORLD );
@@ -145,11 +144,11 @@ int main(int argc, char* argv[])
     MPIX_Hardware_t hw;
     MPIX_Hardware(&hw);
 
-    nodeid = hw.Size[0] * hw.Coords[1] * hw.Coords[2] * hw.Coords[3] * hw.Coords[4]
-           + hw.Size[1] * hw.Coords[2] * hw.Coords[3] * hw.Coords[4]
-           + hw.Size[2] * hw.Coords[3] * hw.Coords[4]
-           + hw.Size[3] * hw.Coords[4]
-           + hw.Size[4];
+    nodeid = hw.Coords[0] * hw.Size[1] * hw.Size[2] * hw.Size[3] * hw.Size[4]
+           + hw.Coords[1] * hw.Size[2] * hw.Size[3] * hw.Size[4]
+           + hw.Coords[2] * hw.Size[3] * hw.Size[4]
+           + hw.Coords[3] * hw.Size[4]
+           + hw.Coords[4];
     MPI_Comm_split(MPI_COMM_WORLD, nodeid, 0, &NodeComm);
 #elif defined(__CRAYXT) || defined(__CRAYXE)
     int nodeid;
