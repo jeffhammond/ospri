@@ -1,0 +1,12 @@
+PAMI_Context_post() multi-threaded performance test
+
+  Number of 'sender' threads:                 1
+  Number of 'receiver' threads:               8
+  Number of posts to each thread:         10000
+  Average number of cycles to post:         338
+
+  Number of 'sender' threads:                 8
+  Number of 'receiver' threads:               1
+  Number of posts from all threads:       80000
+  Average number of cycles to receive:      170
+
