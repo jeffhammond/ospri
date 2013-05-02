@@ -1,0 +1,3 @@
+2012-04-17 19:49:46.858 (INFO ) [0xfff8bba8a40] EAS-22040-33371-128:1802:ibm.runjob.client.options.Parser: set local socket to runjob_mux from properties file
+2012-04-17 19:49:49.438 (INFO ) [0xfff8bba8a40] EAS-22040-33371-128:14195:ibm.runjob.client.Job: job 14195 started
+2012-04-17 19:50:00.448 (INFO ) [0xfff8bba8a40] EAS-22040-33371-128:14195:ibm.runjob.client.Job: exited with status 0
