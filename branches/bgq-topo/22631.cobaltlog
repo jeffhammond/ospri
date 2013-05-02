@@ -1,0 +1,14 @@
+/usr/bin/qsub.py -n 128 --mode=c16 -t 30 ./capi.x
+
+submitted with cwd set to: /gpfs/vesta_home/jhammond/OSPRI/branches/bgq-topo
+
+Job 22631/jhammond/20307: Initiating boot at location VST-20040-31371-128.
+Job 22631/jhammond/20307: Initiating boot at location VST-20040-31371-128.
+Job 22631/jhammond/20307: Initiating boot at location VST-20040-31371-128.
+Job 22631/jhammond/20307: Initiating boot at location VST-20040-31371-128.
+Job 22631/jhammond/20307: Initiating boot at location VST-20040-31371-128.
+Job 22631/jhammond/20307: Initiating boot at location VST-20040-31371-128.
+Job 22631/jhammond/20307: Initiating boot at location VST-20040-31371-128.
+Job 22631/jhammond/20307: Initiating boot at location VST-20040-31371-128.
+Job 22631/jhammond/20307: Unable to boot block VST-20040-31371-128. Aborting job startup. Block stautus was Terminating
+Info: task completed normally with an exit code of 255; initiating job cleanup and removal
