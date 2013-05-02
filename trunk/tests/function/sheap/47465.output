@@ -1,0 +1,5 @@
+      0: BG_SYMMETRIC_HEAP = 400000000 bytes 
+    466: rank_in_node =  2, ranks_per_node =  2, my_node =   232, num_nodes =  1024, world_rank =     466, world_size =    2048 
+     50: rank_in_node =  2, ranks_per_node =  2, my_node =    24, num_nodes =  1024, world_rank =      50, world_size =    2048 
+    180: rank_in_node =  4, ranks_per_node =  4, my_node =    44, num_nodes =   512, world_rank =     180, world_size =    2048 
+   1456: rank_in_node = 16, ranks_per_node = 16, my_node =    90, num_nodes =   128, world_rank =    1456, world_size =    2048 
