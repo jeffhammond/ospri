@@ -1,0 +1,23 @@
+2012-08-20 03:31:06.014 (INFO ) [0xfffb0868ad0] VST-02000-13331-128:12222:ibm.runjob.client.options.Parser: set local socket to runjob_mux from properties file
+2012-08-20 03:31:08.566 (INFO ) [0xfffb0868ad0] VST-02000-13331-128:32322:ibm.runjob.client.Job: job 32322 started
+main: starting default test with 100000 elements per run, 4 pthreads enqueueing
+main: starting default test with 100000 elements per run, 4 pthreads enqueueing
+1: starting 100000 enqueues
+1: starting 100000 enqueues
+0: looking for 300000 dequeues
+0: looking for 300000 dequeues
+2: starting 100000 enqueues
+2: starting 100000 enqueues
+3: starting 100000 enqueues
+3: starting 100000 enqueues
+1: finished 100000 enqueues (275.924 cycles each)
+2: finished 100000 enqueues (278.55 cycles each)
+3: finished 100000 enqueues (277.104 cycles each)
+0: finished 300000 dequeues (1537.46 cycles ea, 294942 calls)
+1: finished 100000 enqueues (277.337 cycles each)
+test default main done. (status unknown)
+2: finished 100000 enqueues (276.828 cycles each)
+3: finished 100000 enqueues (276.76 cycles each)
+0: finished 300000 dequeues (1538.78 cycles ea, 295571 calls)
+test default main done. (status unknown)
+2012-08-20 03:31:12.063 (INFO ) [0xfffb0868ad0] VST-02000-13331-128:32322:ibm.runjob.client.Job: exited with status 0
