@@ -8,8 +8,8 @@ ifeq ($(COMPILER),GNU)
 endif
 
 ifeq ($(COMPILER),XL)
-  CC      = mpixlc_r
-  COPT    = -g -qstrict --qlanglvl=extc99 -O3 -qarch=qp -qtune=qp
+  CC      = /bgsys/drivers/ppcfloor/comm/xl.legacy.ndebug/bin/mpixlc_r 
+  COPT    = -g -qlanglvl=extc99 -O5 -qarch=qp -qtune=qp
 endif
 
 LD      = $(CC)
@@ -24,8 +24,9 @@ obj = safemalloc.o barrier.o allgather.o
 
 all: mpi pami
 
-pami: send.x endpoint.x put.x rput.x get.x rget.x rmw.x bug-allgather.x
+pami: send.x endpoint.x put.x rput.x get.x rget.x rmw.x type1.x
 mpi: mpi-put.x mpi-rput.x mpi-rput-ibm.x mpi-get.x mpi-rget.x
+bugs: bug-allgather.x
 
 %.o: %.c safemalloc.h coll.h preamble.h
 	$(CC) $(CFLAGS) -c $< -o $@

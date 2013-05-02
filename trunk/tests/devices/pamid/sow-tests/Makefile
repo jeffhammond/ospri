@@ -1,5 +1,5 @@
 ifndef COMPILER
-  COMPILER = GNU
+  COMPILER = XL
 endif
 
 ifeq ($(COMPILER),GNU)
@@ -10,7 +10,7 @@ endif
 
 ifeq ($(COMPILER),XL)
   CC      = mpixlc_r
-  COPT    = -g -qstrict --qlanglvl=extc99 -O3 -qarch=qp -qtune=qp
+  COPT    = -g -qstrict -qlanglvl=extc99 -O3 -qarch=qp -qtune=qp
   COPT   += -qsmp=omp:noauto
 endif
 
@@ -25,7 +25,7 @@ obj = safemalloc.o barrier.o allgather.o alltoall.o
 all: pami mpi coll
 
 pami: put.x rput.x get.x rget.x send.x acc1.x rmw.x
-coll: rput-a2a.x rput-a2a-mt.x
+coll: rput-a2a.x rput-a2a-mt.x rget-a2a-mt.x
 mpi: rsend.x
 
 %.o: %.c safemalloc.h coll.h preamble.h
