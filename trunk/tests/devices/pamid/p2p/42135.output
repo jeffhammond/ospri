@@ -1,0 +1,6 @@
+hello world from rank 0 of 4 
+0: PAMI_Put of 4000000 bytes achieves 1710.515098 MB/s 
+2: PAMI_Put of 4000000 bytes achieves 1709.733701 MB/s 
+1: PAMI_Put of 4000000 bytes achieves 1709.246033 MB/s 
+3: PAMI_Put of 4000000 bytes achieves 1707.799279 MB/s 
+0: end of test 
