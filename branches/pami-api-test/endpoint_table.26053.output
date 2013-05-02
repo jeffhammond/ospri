@@ -1,0 +1,4 @@
+before advance, active = 1, expect = 2
+before advance, active = 1, expect = 0
+Success (0)
+Success (1)
