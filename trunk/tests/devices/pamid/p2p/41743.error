@@ -1,0 +1,13 @@
+2012-11-07 04:53:07.036 (INFO ) [0xfff81f98ad0] ibm.runjob.AbstractOptions: using properties file /bgsys/local/etc/bg.properties
+2012-11-07 04:53:07.037 (INFO ) [0xfff81f98ad0] ibm.runjob.AbstractOptions: max open file descriptors: 65536
+2012-11-07 04:53:07.037 (INFO ) [0xfff81f98ad0] ibm.runjob.AbstractOptions: core file limit: 0
+2012-11-07 04:53:07.038 (INFO ) [0xfff81f98ad0] VST-20040-31371-128:8769:ibm.runjob.client.options.Parser: set local socket to runjob_mux from properties file
+2012-11-07 04:53:09.113 (INFO ) [0xfff81f98ad0] VST-20040-31371-128:85126:ibm.runjob.client.Job: job 85126 started
+2012-11-07 05:12:38.380 (WARN ) [0xfff81f98ad0] VST-20040-31371-128:ibm.runjob.LogSignalInfo: received signal 15
+2012-11-07 05:12:38.384 (WARN ) [0xfff81f98ad0] VST-20040-31371-128:ibm.runjob.LogSignalInfo: signal sent from USER
+2012-11-07 05:12:38.385 (WARN ) [0xfff81f98ad0] VST-20040-31371-128:ibm.runjob.LogSignalInfo: sent from pid 15443
+2012-11-07 05:12:38.385 (WARN ) [0xfff81f98ad0] VST-20040-31371-128:ibm.runjob.LogSignalInfo: could not read /proc/15443/exe
+2012-11-07 05:12:38.385 (WARN ) [0xfff81f98ad0] VST-20040-31371-128:ibm.runjob.LogSignalInfo: Permission denied
+2012-11-07 05:12:38.385 (WARN ) [0xfff81f98ad0] VST-20040-31371-128:ibm.runjob.LogSignalInfo: sent from uid 0 (root)
+2012-11-07 05:12:40.194 (WARN ) [0xfff81f98ad0] VST-20040-31371-128:85126:ibm.runjob.client.Job: terminated by signal 9
+2012-11-07 05:12:40.194 (WARN ) [0xfff81f98ad0] VST-20040-31371-128:85126:ibm.runjob.client.Job: abnormal termination by signal 9 from rank 1
