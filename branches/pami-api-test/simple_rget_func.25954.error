@@ -1,0 +1,53 @@
+2012-08-20 03:23:19.384 (INFO ) [0xfff99768ad0] VST-20040-31371-128:947:ibm.runjob.client.options.Parser: set local socket to runjob_mux from properties file
+2012-08-20 03:23:21.947 (INFO ) [0xfff99768ad0] VST-20040-31371-128:32292:ibm.runjob.client.Job: job 32292 started
+My task id = 1
+My task id = 0
+Number of tasks = 2
+Number of tasks = 2
+Before PAMI_Dispatch_set(0) .. &_rts_active = 0x1dbfffb9d0, _rts_active = 1
+Before PAMI_Dispatch_set(0) .. &_rts_active = 0x1dbfffb9d0, _rts_active = 1
+Before PAMI_Dispatch_set(1) .. &_ack_active = 0x1dbfffb9d8, _ack_active = 1
+Before PAMI_Dispatch_set(1) .. &_ack_active = 0x1dbfffb9d8, _ack_active = 1
+Wait for 'rts', _rts_active = 1, contextid = 0
+  addr[0000] (0x19c580d440): ef f0 f1 f2
+  addr[0004] (0x19c580d444): f3 f4 f5 f6
+  addr[0008] (0x19c580d448): f7 f8 f9 fa
+  addr[0012] (0x19c580d44c): fb fc fd fe
+Before PAMI_Send_immediate()
+Wait for 'ack', _ack_active = 1
+>> 'rts' dispatch function.  cookie = 0x1dbfffb9d0 (active: 1), header_size = 24, pipe_size = 0, recv = (nil)
+   'rts' dispatch function.  rts->origin = 0x00000000, rts->bytes = 16
+  addr[0000] (0x19c580d458): de ad be ef
+  addr[0004] (0x19c580d45c): de ad be ef
+  addr[0008] (0x19c580d460): de ad be ef
+  addr[0012] (0x19c580d464): de ad be ef
+  addr[0016] (0x19c580d468): de ad be ef
+  addr[0020] (0x19c580d46c): de ad be ef
+  addr[0024] (0x19c580d470): de ad be ef
+  addr[0028] (0x19c580d474): de ad be ef
+  addr[0032] (0x19c580d478): de ad be ef
+  addr[0036] (0x19c580d47c): de ad be ef
+  addr[0040] (0x19c580d480): de ad be ef
+  addr[0044] (0x19c580d484): de ad be ef
+   'rts' dispatch function.  Before PAMI_Rget()
+   'rts' dispatch function.   After PAMI_Rget(), status = 0
+<< 'rts' dispatch function.
+>> 'get_done' callback, cookie = 0x19c580d440 (info->value = 1 => 0), result = 0
+  addr[0000] (0x19c580d458): de ad be ef
+  addr[0004] (0x19c580d45c): de ad be ef
+  addr[0008] (0x19c580d460): de ad be ef
+  addr[0012] (0x19c580d464): de ad be ef
+  addr[0016] (0x19c580d468): ef f0 f1 f2
+  addr[0020] (0x19c580d46c): f3 f4 f5 f6
+  addr[0024] (0x19c580d470): f7 f8 f9 fa
+  addr[0028] (0x19c580d474): fb fc fd fe
+  addr[0032] (0x19c580d478): de ad be ef
+  addr[0036] (0x19c580d47c): de ad be ef
+  addr[0040] (0x19c580d480): de ad be ef
+  addr[0044] (0x19c580d484): de ad be ef
+<< 'get_done' callback
+>> 'ack' dispatch function.  cookie = 0x1dbfffb9d8 (active: 1), header_size = 8, pipe_size = 0, recv = (nil)
+Test completed .. cleanup
+<< 'ack' dispatch function.  cookie = 0x1dbfffb9d8 (active: 0)
+Test completed .. cleanup
+2012-08-20 03:23:24.679 (INFO ) [0xfff99768ad0] VST-20040-31371-128:32292:ibm.runjob.client.Job: exited with status 0
