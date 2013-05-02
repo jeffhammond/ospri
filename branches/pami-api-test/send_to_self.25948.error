@@ -1,0 +1,1415 @@
+2012-08-20 03:36:51.720 (INFO ) [0xfffaece8ad0] VST-20000-31331-128:9962:ibm.runjob.client.options.Parser: set local socket to runjob_mux from properties file
+2012-08-20 03:36:54.254 (INFO ) [0xfffaece8ad0] VST-20000-31331-128:32343:ibm.runjob.client.Job: job 32343 started
+Before Client initialize
+After Client initialize
+Before Client initialize
+before context createv
+After Client initialize
+before context createv
+after context createv
+after context createv
+My task id = 1
+My task id = 0
+Before PAMI_Dispatch_set() .. &recv_active = 0x1dbfffb9d0, recv_active = 1
+Before PAMI_Dispatch_set() .. &recv_active = 0x1dbfffb9d0, recv_active = 1
+before send ...
+before send ...
+Called send_done_local function.  active: 1 -> 0
+Called send_done_local function.  active: 1 -> 0
+... after send.
+... after send.
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5417f00, pipe_addr = 0x19c5417f08, pipe_size = 8
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5417f00, pipe_addr = 0x19c5417f08, pipe_size = 8
+Called recv_done function.  active: 1 -> 0
+Called recv_done function.  active: 1 -> 0
+... after send-recv advance loop
+... after send-recv advance loop
+before send ...
+before send ...
+Called send_done_local function.  active: 1 -> 0
+Called send_done_local function.  active: 1 -> 0
+... after send.
+... after send.
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5417f40, pipe_addr = 0x19c5417f48, pipe_size = 8
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5417f40, pipe_addr = 0x19c5417f48, pipe_size = 8
+Called recv_done function.  active: 1 -> 0
+Called recv_done function.  active: 1 -> 0
+... after send-recv advance loop
+... after send-recv advance loop
+before send ...
+before send ...
+Called send_done_local function.  active: 1 -> 0
+Called send_done_local function.  active: 1 -> 0
+... after send.
+... after send.
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5417f80, pipe_addr = 0x19c5417f88, pipe_size = 8
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5417f80, pipe_addr = 0x19c5417f88, pipe_size = 8
+Called recv_done function.  active: 1 -> 0
+Called recv_done function.  active: 1 -> 0
+... after send-recv advance loop
+... after send-recv advance loop
+before send ...
+before send ...
+Called send_done_local function.  active: 1 -> 0
+Called send_done_local function.  active: 1 -> 0
+... after send.
+... after send.
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5417fc0, pipe_addr = 0x19c5417fc8, pipe_size = 8
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5417fc0, pipe_addr = 0x19c5417fc8, pipe_size = 8
+Called recv_done function.  active: 1 -> 0
+Called recv_done function.  active: 1 -> 0
+... after send-recv advance loop
+... after send-recv advance loop
+before send ...
+before send ...
+Called send_done_local function.  active: 1 -> 0
+Called send_done_local function.  active: 1 -> 0
+... after send.
+... after send.
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5418000, pipe_addr = 0x19c5418008, pipe_size = 8
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5418000, pipe_addr = 0x19c5418008, pipe_size = 8
+Called recv_done function.  active: 1 -> 0
+Called recv_done function.  active: 1 -> 0
+... after send-recv advance loop
+... after send-recv advance loop
+before send ...
+before send ...
+Called send_done_local function.  active: 1 -> 0
+Called send_done_local function.  active: 1 -> 0
+... after send.
+... after send.
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5418040, pipe_addr = 0x19c5418048, pipe_size = 8
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5418040, pipe_addr = 0x19c5418048, pipe_size = 8
+Called recv_done function.  active: 1 -> 0
+Called recv_done function.  active: 1 -> 0
+... after send-recv advance loop
+... after send-recv advance loop
+before send ...
+before send ...
+Called send_done_local function.  active: 1 -> 0
+Called send_done_local function.  active: 1 -> 0
+... after send.
+... after send.
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5418080, pipe_addr = 0x19c5418088, pipe_size = 8
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5418080, pipe_addr = 0x19c5418088, pipe_size = 8
+Called recv_done function.  active: 1 -> 0
+Called recv_done function.  active: 1 -> 0
+... after send-recv advance loop
+... after send-recv advance loop
+before send ...
+before send ...
+Called send_done_local function.  active: 1 -> 0
+Called send_done_local function.  active: 1 -> 0
+... after send.
+... after send.
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c54180c0, pipe_addr = 0x19c54180c8, pipe_size = 8
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c54180c0, pipe_addr = 0x19c54180c8, pipe_size = 8
+Called recv_done function.  active: 1 -> 0
+Called recv_done function.  active: 1 -> 0
+... after send-recv advance loop
+... after send-recv advance loop
+before send ...
+before send ...
+Called send_done_local function.  active: 1 -> 0
+Called send_done_local function.  active: 1 -> 0
+... after send.
+... after send.
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5418100, pipe_addr = 0x19c5418108, pipe_size = 8
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5418100, pipe_addr = 0x19c5418108, pipe_size = 8
+Called recv_done function.  active: 1 -> 0
+Called recv_done function.  active: 1 -> 0
+... after send-recv advance loop
+... after send-recv advance loop
+before send ...
+before send ...
+Called send_done_local function.  active: 1 -> 0
+Called send_done_local function.  active: 1 -> 0
+... after send.
+... after send.
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5418140, pipe_addr = 0x19c5418148, pipe_size = 8
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5418140, pipe_addr = 0x19c5418148, pipe_size = 8
+Called recv_done function.  active: 1 -> 0
+Called recv_done function.  active: 1 -> 0
+... after send-recv advance loop
+... after send-recv advance loop
+before send ...
+before send ...
+Called send_done_local function.  active: 1 -> 0
+Called send_done_local function.  active: 1 -> 0
+... after send.
+... after send.
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5418180, pipe_addr = 0x19c5418188, pipe_size = 8
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5418180, pipe_addr = 0x19c5418188, pipe_size = 8
+Called recv_done function.  active: 1 -> 0
+Called recv_done function.  active: 1 -> 0
+... after send-recv advance loop
+... after send-recv advance loop
+before send ...
+before send ...
+Called send_done_local function.  active: 1 -> 0
+Called send_done_local function.  active: 1 -> 0
+... after send.
+... after send.
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c54181c0, pipe_addr = 0x19c54181c8, pipe_size = 8
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c54181c0, pipe_addr = 0x19c54181c8, pipe_size = 8
+Called recv_done function.  active: 1 -> 0
+Called recv_done function.  active: 1 -> 0
+... after send-recv advance loop
+... after send-recv advance loop
+before send ...
+before send ...
+Called send_done_local function.  active: 1 -> 0
+Called send_done_local function.  active: 1 -> 0
+... after send.
+... after send.
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5418200, pipe_addr = 0x19c5418208, pipe_size = 8
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5418200, pipe_addr = 0x19c5418208, pipe_size = 8
+Called recv_done function.  active: 1 -> 0
+Called recv_done function.  active: 1 -> 0
+... after send-recv advance loop
+... after send-recv advance loop
+before send ...
+before send ...
+Called send_done_local function.  active: 1 -> 0
+Called send_done_local function.  active: 1 -> 0
+... after send.
+... after send.
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5418240, pipe_addr = 0x19c5418248, pipe_size = 8
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5418240, pipe_addr = 0x19c5418248, pipe_size = 8
+Called recv_done function.  active: 1 -> 0
+Called recv_done function.  active: 1 -> 0
+... after send-recv advance loop
+... after send-recv advance loop
+before send ...
+before send ...
+Called send_done_local function.  active: 1 -> 0
+Called send_done_local function.  active: 1 -> 0
+... after send.
+... after send.
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5418280, pipe_addr = 0x19c5418288, pipe_size = 8
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5418280, pipe_addr = 0x19c5418288, pipe_size = 8
+Called recv_done function.  active: 1 -> 0
+Called recv_done function.  active: 1 -> 0
+... after send-recv advance loop
+... after send-recv advance loop
+before send ...
+before send ...
+Called send_done_local function.  active: 1 -> 0
+Called send_done_local function.  active: 1 -> 0
+... after send.
+... after send.
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c54182c0, pipe_addr = 0x19c54182c8, pipe_size = 8
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c54182c0, pipe_addr = 0x19c54182c8, pipe_size = 8
+Called recv_done function.  active: 1 -> 0
+Called recv_done function.  active: 1 -> 0
+... after send-recv advance loop
+... after send-recv advance loop
+before send ...
+before send ...
+Called send_done_local function.  active: 1 -> 0
+Called send_done_local function.  active: 1 -> 0
+... after send.
+... after send.
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5418300, pipe_addr = 0x19c5418308, pipe_size = 8
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5418300, pipe_addr = 0x19c5418308, pipe_size = 8
+Called recv_done function.  active: 1 -> 0
+Called recv_done function.  active: 1 -> 0
+... after send-recv advance loop
+... after send-recv advance loop
+before send ...
+before send ...
+Called send_done_local function.  active: 1 -> 0
+Called send_done_local function.  active: 1 -> 0
+... after send.
+... after send.
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5418340, pipe_addr = 0x19c5418348, pipe_size = 8
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5418340, pipe_addr = 0x19c5418348, pipe_size = 8
+Called recv_done function.  active: 1 -> 0
+Called recv_done function.  active: 1 -> 0
+... after send-recv advance loop
+... after send-recv advance loop
+before send ...
+before send ...
+Called send_done_local function.  active: 1 -> 0
+Called send_done_local function.  active: 1 -> 0
+... after send.
+... after send.
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5418380, pipe_addr = 0x19c5418388, pipe_size = 8
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5418380, pipe_addr = 0x19c5418388, pipe_size = 8
+Called recv_done function.  active: 1 -> 0
+Called recv_done function.  active: 1 -> 0
+... after send-recv advance loop
+... after send-recv advance loop
+before send ...
+before send ...
+Called send_done_local function.  active: 1 -> 0
+Called send_done_local function.  active: 1 -> 0
+... after send.
+... after send.
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c54183c0, pipe_addr = 0x19c54183c8, pipe_size = 8
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c54183c0, pipe_addr = 0x19c54183c8, pipe_size = 8
+Called recv_done function.  active: 1 -> 0
+Called recv_done function.  active: 1 -> 0
+... after send-recv advance loop
+... after send-recv advance loop
+before send ...
+before send ...
+Called send_done_local function.  active: 1 -> 0
+Called send_done_local function.  active: 1 -> 0
+... after send.
+... after send.
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5418400, pipe_addr = 0x19c5418408, pipe_size = 8
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5418400, pipe_addr = 0x19c5418408, pipe_size = 8
+Called recv_done function.  active: 1 -> 0
+Called recv_done function.  active: 1 -> 0
+... after send-recv advance loop
+... after send-recv advance loop
+before send ...
+before send ...
+Called send_done_local function.  active: 1 -> 0
+Called send_done_local function.  active: 1 -> 0
+... after send.
+... after send.
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5418440, pipe_addr = 0x19c5418448, pipe_size = 8
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5418440, pipe_addr = 0x19c5418448, pipe_size = 8
+Called recv_done function.  active: 1 -> 0
+Called recv_done function.  active: 1 -> 0
+... after send-recv advance loop
+... after send-recv advance loop
+before send ...
+before send ...
+Called send_done_local function.  active: 1 -> 0
+Called send_done_local function.  active: 1 -> 0
+... after send.
+... after send.
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5418480, pipe_addr = 0x19c5418488, pipe_size = 8
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5418480, pipe_addr = 0x19c5418488, pipe_size = 8
+Called recv_done function.  active: 1 -> 0
+Called recv_done function.  active: 1 -> 0
+... after send-recv advance loop
+... after send-recv advance loop
+before send ...
+before send ...
+Called send_done_local function.  active: 1 -> 0
+Called send_done_local function.  active: 1 -> 0
+... after send.
+... after send.
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c54184c0, pipe_addr = 0x19c54184c8, pipe_size = 8
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c54184c0, pipe_addr = 0x19c54184c8, pipe_size = 8
+Called recv_done function.  active: 1 -> 0
+Called recv_done function.  active: 1 -> 0
+... after send-recv advance loop
+... after send-recv advance loop
+before send ...
+before send ...
+Called send_done_local function.  active: 1 -> 0
+Called send_done_local function.  active: 1 -> 0
+... after send.
+... after send.
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5418500, pipe_addr = 0x19c5418508, pipe_size = 8
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5418500, pipe_addr = 0x19c5418508, pipe_size = 8
+Called recv_done function.  active: 1 -> 0
+Called recv_done function.  active: 1 -> 0
+... after send-recv advance loop
+... after send-recv advance loop
+before send ...
+before send ...
+Called send_done_local function.  active: 1 -> 0
+Called send_done_local function.  active: 1 -> 0
+... after send.
+... after send.
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5418540, pipe_addr = 0x19c5418548, pipe_size = 8
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5418540, pipe_addr = 0x19c5418548, pipe_size = 8
+Called recv_done function.  active: 1 -> 0
+Called recv_done function.  active: 1 -> 0
+... after send-recv advance loop
+... after send-recv advance loop
+before send ...
+before send ...
+Called send_done_local function.  active: 1 -> 0
+Called send_done_local function.  active: 1 -> 0
+... after send.
+... after send.
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5418580, pipe_addr = 0x19c5418588, pipe_size = 8
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5418580, pipe_addr = 0x19c5418588, pipe_size = 8
+Called recv_done function.  active: 1 -> 0
+Called recv_done function.  active: 1 -> 0
+... after send-recv advance loop
+... after send-recv advance loop
+before send ...
+before send ...
+Called send_done_local function.  active: 1 -> 0
+Called send_done_local function.  active: 1 -> 0
+... after send.
+... after send.
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c54185c0, pipe_addr = 0x19c54185c8, pipe_size = 8
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c54185c0, pipe_addr = 0x19c54185c8, pipe_size = 8
+Called recv_done function.  active: 1 -> 0
+Called recv_done function.  active: 1 -> 0
+... after send-recv advance loop
+... after send-recv advance loop
+before send ...
+before send ...
+Called send_done_local function.  active: 1 -> 0
+Called send_done_local function.  active: 1 -> 0
+... after send.
+... after send.
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5418600, pipe_addr = 0x19c5418608, pipe_size = 8
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5418600, pipe_addr = 0x19c5418608, pipe_size = 8
+Called recv_done function.  active: 1 -> 0
+Called recv_done function.  active: 1 -> 0
+... after send-recv advance loop
+... after send-recv advance loop
+before send ...
+before send ...
+Called send_done_local function.  active: 1 -> 0
+Called send_done_local function.  active: 1 -> 0
+... after send.
+... after send.
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5418640, pipe_addr = 0x19c5418648, pipe_size = 8
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5418640, pipe_addr = 0x19c5418648, pipe_size = 8
+Called recv_done function.  active: 1 -> 0
+Called recv_done function.  active: 1 -> 0
+... after send-recv advance loop
+... after send-recv advance loop
+before send ...
+before send ...
+Called send_done_local function.  active: 1 -> 0
+Called send_done_local function.  active: 1 -> 0
+... after send.
+... after send.
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5418680, pipe_addr = 0x19c5418688, pipe_size = 8
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5418680, pipe_addr = 0x19c5418688, pipe_size = 8
+Called recv_done function.  active: 1 -> 0
+Called recv_done function.  active: 1 -> 0
+... after send-recv advance loop
+... after send-recv advance loop
+before send ...
+before send ...
+Called send_done_local function.  active: 1 -> 0
+Called send_done_local function.  active: 1 -> 0
+... after send.
+... after send.
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c54186c0, pipe_addr = 0x19c54186c8, pipe_size = 8
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c54186c0, pipe_addr = 0x19c54186c8, pipe_size = 8
+Called recv_done function.  active: 1 -> 0
+Called recv_done function.  active: 1 -> 0
+... after send-recv advance loop
+... after send-recv advance loop
+before send ...
+before send ...
+Called send_done_local function.  active: 1 -> 0
+Called send_done_local function.  active: 1 -> 0
+... after send.
+... after send.
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5418700, pipe_addr = 0x19c5418708, pipe_size = 8
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5418700, pipe_addr = 0x19c5418708, pipe_size = 8
+Called recv_done function.  active: 1 -> 0
+Called recv_done function.  active: 1 -> 0
+... after send-recv advance loop
+... after send-recv advance loop
+before send ...
+before send ...
+Called send_done_local function.  active: 1 -> 0
+Called send_done_local function.  active: 1 -> 0
+... after send.
+... after send.
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5418740, pipe_addr = 0x19c5418748, pipe_size = 8
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5418740, pipe_addr = 0x19c5418748, pipe_size = 8
+Called recv_done function.  active: 1 -> 0
+Called recv_done function.  active: 1 -> 0
+... after send-recv advance loop
+... after send-recv advance loop
+before send ...
+before send ...
+Called send_done_local function.  active: 1 -> 0
+Called send_done_local function.  active: 1 -> 0
+... after send.
+... after send.
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5418780, pipe_addr = 0x19c5418788, pipe_size = 8
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5418780, pipe_addr = 0x19c5418788, pipe_size = 8
+Called recv_done function.  active: 1 -> 0
+Called recv_done function.  active: 1 -> 0
+... after send-recv advance loop
+... after send-recv advance loop
+before send ...
+before send ...
+Called send_done_local function.  active: 1 -> 0
+Called send_done_local function.  active: 1 -> 0
+... after send.
+... after send.
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c54187c0, pipe_addr = 0x19c54187c8, pipe_size = 8
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c54187c0, pipe_addr = 0x19c54187c8, pipe_size = 8
+Called recv_done function.  active: 1 -> 0
+Called recv_done function.  active: 1 -> 0
+... after send-recv advance loop
+... after send-recv advance loop
+before send ...
+before send ...
+Called send_done_local function.  active: 1 -> 0
+Called send_done_local function.  active: 1 -> 0
+... after send.
+... after send.
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5418800, pipe_addr = 0x19c5418808, pipe_size = 8
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5418800, pipe_addr = 0x19c5418808, pipe_size = 8
+Called recv_done function.  active: 1 -> 0
+Called recv_done function.  active: 1 -> 0
+... after send-recv advance loop
+... after send-recv advance loop
+before send ...
+before send ...
+Called send_done_local function.  active: 1 -> 0
+Called send_done_local function.  active: 1 -> 0
+... after send.
+... after send.
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5418840, pipe_addr = 0x19c5418848, pipe_size = 8
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5418840, pipe_addr = 0x19c5418848, pipe_size = 8
+Called recv_done function.  active: 1 -> 0
+Called recv_done function.  active: 1 -> 0
+... after send-recv advance loop
+... after send-recv advance loop
+before send ...
+before send ...
+Called send_done_local function.  active: 1 -> 0
+Called send_done_local function.  active: 1 -> 0
+... after send.
+... after send.
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5418880, pipe_addr = 0x19c5418888, pipe_size = 8
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5418880, pipe_addr = 0x19c5418888, pipe_size = 8
+Called recv_done function.  active: 1 -> 0
+Called recv_done function.  active: 1 -> 0
+... after send-recv advance loop
+... after send-recv advance loop
+before send ...
+before send ...
+Called send_done_local function.  active: 1 -> 0
+Called send_done_local function.  active: 1 -> 0
+... after send.
+... after send.
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c54188c0, pipe_addr = 0x19c54188c8, pipe_size = 8
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c54188c0, pipe_addr = 0x19c54188c8, pipe_size = 8
+Called recv_done function.  active: 1 -> 0
+Called recv_done function.  active: 1 -> 0
+... after send-recv advance loop
+... after send-recv advance loop
+before send ...
+before send ...
+Called send_done_local function.  active: 1 -> 0
+Called send_done_local function.  active: 1 -> 0
+... after send.
+... after send.
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5418900, pipe_addr = 0x19c5418908, pipe_size = 8
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5418900, pipe_addr = 0x19c5418908, pipe_size = 8
+Called recv_done function.  active: 1 -> 0
+Called recv_done function.  active: 1 -> 0
+... after send-recv advance loop
+... after send-recv advance loop
+before send ...
+before send ...
+Called send_done_local function.  active: 1 -> 0
+Called send_done_local function.  active: 1 -> 0
+... after send.
+... after send.
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5418940, pipe_addr = 0x19c5418948, pipe_size = 8
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5418940, pipe_addr = 0x19c5418948, pipe_size = 8
+Called recv_done function.  active: 1 -> 0
+Called recv_done function.  active: 1 -> 0
+... after send-recv advance loop
+... after send-recv advance loop
+before send ...
+before send ...
+Called send_done_local function.  active: 1 -> 0
+Called send_done_local function.  active: 1 -> 0
+... after send.
+... after send.
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5418980, pipe_addr = 0x19c5418988, pipe_size = 8
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5418980, pipe_addr = 0x19c5418988, pipe_size = 8
+Called recv_done function.  active: 1 -> 0
+Called recv_done function.  active: 1 -> 0
+... after send-recv advance loop
+... after send-recv advance loop
+before send ...
+before send ...
+Called send_done_local function.  active: 1 -> 0
+Called send_done_local function.  active: 1 -> 0
+... after send.
+... after send.
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c54189c0, pipe_addr = 0x19c54189c8, pipe_size = 8
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c54189c0, pipe_addr = 0x19c54189c8, pipe_size = 8
+Called recv_done function.  active: 1 -> 0
+Called recv_done function.  active: 1 -> 0
+... after send-recv advance loop
+... after send-recv advance loop
+before send ...
+before send ...
+Called send_done_local function.  active: 1 -> 0
+Called send_done_local function.  active: 1 -> 0
+... after send.
+... after send.
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5418a00, pipe_addr = 0x19c5418a08, pipe_size = 8
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5418a00, pipe_addr = 0x19c5418a08, pipe_size = 8
+Called recv_done function.  active: 1 -> 0
+Called recv_done function.  active: 1 -> 0
+... after send-recv advance loop
+... after send-recv advance loop
+before send ...
+before send ...
+Called send_done_local function.  active: 1 -> 0
+Called send_done_local function.  active: 1 -> 0
+... after send.
+... after send.
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5418a40, pipe_addr = 0x19c5418a48, pipe_size = 8
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5418a40, pipe_addr = 0x19c5418a48, pipe_size = 8
+Called recv_done function.  active: 1 -> 0
+Called recv_done function.  active: 1 -> 0
+... after send-recv advance loop
+... after send-recv advance loop
+before send ...
+before send ...
+Called send_done_local function.  active: 1 -> 0
+Called send_done_local function.  active: 1 -> 0
+... after send.
+... after send.
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5418a80, pipe_addr = 0x19c5418a88, pipe_size = 8
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5418a80, pipe_addr = 0x19c5418a88, pipe_size = 8
+Called recv_done function.  active: 1 -> 0
+Called recv_done function.  active: 1 -> 0
+... after send-recv advance loop
+... after send-recv advance loop
+before send ...
+before send ...
+Called send_done_local function.  active: 1 -> 0
+Called send_done_local function.  active: 1 -> 0
+... after send.
+... after send.
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5418ac0, pipe_addr = 0x19c5418ac8, pipe_size = 8
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5418ac0, pipe_addr = 0x19c5418ac8, pipe_size = 8
+Called recv_done function.  active: 1 -> 0
+Called recv_done function.  active: 1 -> 0
+... after send-recv advance loop
+... after send-recv advance loop
+before send ...
+before send ...
+Called send_done_local function.  active: 1 -> 0
+Called send_done_local function.  active: 1 -> 0
+... after send.
+... after send.
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5418b00, pipe_addr = 0x19c5418b08, pipe_size = 8
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5418b00, pipe_addr = 0x19c5418b08, pipe_size = 8
+Called recv_done function.  active: 1 -> 0
+Called recv_done function.  active: 1 -> 0
+... after send-recv advance loop
+... after send-recv advance loop
+before send ...
+before send ...
+Called send_done_local function.  active: 1 -> 0
+Called send_done_local function.  active: 1 -> 0
+... after send.
+... after send.
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5418b40, pipe_addr = 0x19c5418b48, pipe_size = 8
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5418b40, pipe_addr = 0x19c5418b48, pipe_size = 8
+Called recv_done function.  active: 1 -> 0
+Called recv_done function.  active: 1 -> 0
+... after send-recv advance loop
+... after send-recv advance loop
+before send ...
+before send ...
+Called send_done_local function.  active: 1 -> 0
+Called send_done_local function.  active: 1 -> 0
+... after send.
+... after send.
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5418b80, pipe_addr = 0x19c5418b88, pipe_size = 8
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5418b80, pipe_addr = 0x19c5418b88, pipe_size = 8
+Called recv_done function.  active: 1 -> 0
+Called recv_done function.  active: 1 -> 0
+... after send-recv advance loop
+... after send-recv advance loop
+before send ...
+before send ...
+Called send_done_local function.  active: 1 -> 0
+Called send_done_local function.  active: 1 -> 0
+... after send.
+... after send.
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5418bc0, pipe_addr = 0x19c5418bc8, pipe_size = 8
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5418bc0, pipe_addr = 0x19c5418bc8, pipe_size = 8
+Called recv_done function.  active: 1 -> 0
+Called recv_done function.  active: 1 -> 0
+... after send-recv advance loop
+... after send-recv advance loop
+before send ...
+before send ...
+Called send_done_local function.  active: 1 -> 0
+Called send_done_local function.  active: 1 -> 0
+... after send.
+... after send.
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5418c00, pipe_addr = 0x19c5418c08, pipe_size = 8
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5418c00, pipe_addr = 0x19c5418c08, pipe_size = 8
+Called recv_done function.  active: 1 -> 0
+Called recv_done function.  active: 1 -> 0
+... after send-recv advance loop
+... after send-recv advance loop
+before send ...
+before send ...
+Called send_done_local function.  active: 1 -> 0
+Called send_done_local function.  active: 1 -> 0
+... after send.
+... after send.
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5418c40, pipe_addr = 0x19c5418c48, pipe_size = 8
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5418c40, pipe_addr = 0x19c5418c48, pipe_size = 8
+Called recv_done function.  active: 1 -> 0
+Called recv_done function.  active: 1 -> 0
+... after send-recv advance loop
+... after send-recv advance loop
+before send ...
+before send ...
+Called send_done_local function.  active: 1 -> 0
+Called send_done_local function.  active: 1 -> 0
+... after send.
+... after send.
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5418c80, pipe_addr = 0x19c5418c88, pipe_size = 8
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5418c80, pipe_addr = 0x19c5418c88, pipe_size = 8
+Called recv_done function.  active: 1 -> 0
+Called recv_done function.  active: 1 -> 0
+... after send-recv advance loop
+... after send-recv advance loop
+before send ...
+before send ...
+Called send_done_local function.  active: 1 -> 0
+Called send_done_local function.  active: 1 -> 0
+... after send.
+... after send.
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5418cc0, pipe_addr = 0x19c5418cc8, pipe_size = 8
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5418cc0, pipe_addr = 0x19c5418cc8, pipe_size = 8
+Called recv_done function.  active: 1 -> 0
+Called recv_done function.  active: 1 -> 0
+... after send-recv advance loop
+... after send-recv advance loop
+before send ...
+before send ...
+Called send_done_local function.  active: 1 -> 0
+Called send_done_local function.  active: 1 -> 0
+... after send.
+... after send.
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5418d00, pipe_addr = 0x19c5418d08, pipe_size = 8
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5418d00, pipe_addr = 0x19c5418d08, pipe_size = 8
+Called recv_done function.  active: 1 -> 0
+Called recv_done function.  active: 1 -> 0
+... after send-recv advance loop
+... after send-recv advance loop
+before send ...
+before send ...
+Called send_done_local function.  active: 1 -> 0
+Called send_done_local function.  active: 1 -> 0
+... after send.
+... after send.
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5418d40, pipe_addr = 0x19c5418d48, pipe_size = 8
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5418d40, pipe_addr = 0x19c5418d48, pipe_size = 8
+Called recv_done function.  active: 1 -> 0
+Called recv_done function.  active: 1 -> 0
+... after send-recv advance loop
+... after send-recv advance loop
+before send ...
+before send ...
+Called send_done_local function.  active: 1 -> 0
+Called send_done_local function.  active: 1 -> 0
+... after send.
+... after send.
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5418d80, pipe_addr = 0x19c5418d88, pipe_size = 8
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5418d80, pipe_addr = 0x19c5418d88, pipe_size = 8
+Called recv_done function.  active: 1 -> 0
+Called recv_done function.  active: 1 -> 0
+... after send-recv advance loop
+... after send-recv advance loop
+before send ...
+before send ...
+Called send_done_local function.  active: 1 -> 0
+Called send_done_local function.  active: 1 -> 0
+... after send.
+... after send.
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5418dc0, pipe_addr = 0x19c5418dc8, pipe_size = 8
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5418dc0, pipe_addr = 0x19c5418dc8, pipe_size = 8
+Called recv_done function.  active: 1 -> 0
+Called recv_done function.  active: 1 -> 0
+... after send-recv advance loop
+... after send-recv advance loop
+before send ...
+before send ...
+Called send_done_local function.  active: 1 -> 0
+Called send_done_local function.  active: 1 -> 0
+... after send.
+... after send.
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5418e00, pipe_addr = 0x19c5418e08, pipe_size = 8
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5418e00, pipe_addr = 0x19c5418e08, pipe_size = 8
+Called recv_done function.  active: 1 -> 0
+Called recv_done function.  active: 1 -> 0
+... after send-recv advance loop
+... after send-recv advance loop
+before send ...
+before send ...
+Called send_done_local function.  active: 1 -> 0
+Called send_done_local function.  active: 1 -> 0
+... after send.
+... after send.
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5418e40, pipe_addr = 0x19c5418e48, pipe_size = 8
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5418e40, pipe_addr = 0x19c5418e48, pipe_size = 8
+Called recv_done function.  active: 1 -> 0
+Called recv_done function.  active: 1 -> 0
+... after send-recv advance loop
+... after send-recv advance loop
+before send ...
+before send ...
+Called send_done_local function.  active: 1 -> 0
+Called send_done_local function.  active: 1 -> 0
+... after send.
+... after send.
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5418e80, pipe_addr = 0x19c5418e88, pipe_size = 8
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5418e80, pipe_addr = 0x19c5418e88, pipe_size = 8
+Called recv_done function.  active: 1 -> 0
+Called recv_done function.  active: 1 -> 0
+... after send-recv advance loop
+... after send-recv advance loop
+before send ...
+before send ...
+Called send_done_local function.  active: 1 -> 0
+Called send_done_local function.  active: 1 -> 0
+... after send.
+... after send.
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5418ec0, pipe_addr = 0x19c5418ec8, pipe_size = 8
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5418ec0, pipe_addr = 0x19c5418ec8, pipe_size = 8
+Called recv_done function.  active: 1 -> 0
+Called recv_done function.  active: 1 -> 0
+... after send-recv advance loop
+... after send-recv advance loop
+before send ...
+before send ...
+Called send_done_local function.  active: 1 -> 0
+Called send_done_local function.  active: 1 -> 0
+... after send.
+... after send.
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5418f00, pipe_addr = 0x19c5418f08, pipe_size = 8
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5418f00, pipe_addr = 0x19c5418f08, pipe_size = 8
+Called recv_done function.  active: 1 -> 0
+Called recv_done function.  active: 1 -> 0
+... after send-recv advance loop
+... after send-recv advance loop
+before send ...
+before send ...
+Called send_done_local function.  active: 1 -> 0
+Called send_done_local function.  active: 1 -> 0
+... after send.
+... after send.
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5418f40, pipe_addr = 0x19c5418f48, pipe_size = 8
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5418f40, pipe_addr = 0x19c5418f48, pipe_size = 8
+Called recv_done function.  active: 1 -> 0
+Called recv_done function.  active: 1 -> 0
+... after send-recv advance loop
+... after send-recv advance loop
+before send ...
+before send ...
+Called send_done_local function.  active: 1 -> 0
+Called send_done_local function.  active: 1 -> 0
+... after send.
+... after send.
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5418f80, pipe_addr = 0x19c5418f88, pipe_size = 8
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5418f80, pipe_addr = 0x19c5418f88, pipe_size = 8
+Called recv_done function.  active: 1 -> 0
+Called recv_done function.  active: 1 -> 0
+... after send-recv advance loop
+... after send-recv advance loop
+before send ...
+before send ...
+Called send_done_local function.  active: 1 -> 0
+Called send_done_local function.  active: 1 -> 0
+... after send.
+... after send.
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5418fc0, pipe_addr = 0x19c5418fc8, pipe_size = 8
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5418fc0, pipe_addr = 0x19c5418fc8, pipe_size = 8
+Called recv_done function.  active: 1 -> 0
+Called recv_done function.  active: 1 -> 0
+... after send-recv advance loop
+... after send-recv advance loop
+before send ...
+before send ...
+Called send_done_local function.  active: 1 -> 0
+Called send_done_local function.  active: 1 -> 0
+... after send.
+... after send.
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5419000, pipe_addr = 0x19c5419008, pipe_size = 8
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5419000, pipe_addr = 0x19c5419008, pipe_size = 8
+Called recv_done function.  active: 1 -> 0
+Called recv_done function.  active: 1 -> 0
+... after send-recv advance loop
+... after send-recv advance loop
+before send ...
+before send ...
+Called send_done_local function.  active: 1 -> 0
+Called send_done_local function.  active: 1 -> 0
+... after send.
+... after send.
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5419040, pipe_addr = 0x19c5419048, pipe_size = 8
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5419040, pipe_addr = 0x19c5419048, pipe_size = 8
+Called recv_done function.  active: 1 -> 0
+Called recv_done function.  active: 1 -> 0
+... after send-recv advance loop
+... after send-recv advance loop
+before send ...
+before send ...
+Called send_done_local function.  active: 1 -> 0
+Called send_done_local function.  active: 1 -> 0
+... after send.
+... after send.
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5419080, pipe_addr = 0x19c5419088, pipe_size = 8
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5419080, pipe_addr = 0x19c5419088, pipe_size = 8
+Called recv_done function.  active: 1 -> 0
+Called recv_done function.  active: 1 -> 0
+... after send-recv advance loop
+... after send-recv advance loop
+before send ...
+before send ...
+Called send_done_local function.  active: 1 -> 0
+Called send_done_local function.  active: 1 -> 0
+... after send.
+... after send.
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c54190c0, pipe_addr = 0x19c54190c8, pipe_size = 8
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c54190c0, pipe_addr = 0x19c54190c8, pipe_size = 8
+Called recv_done function.  active: 1 -> 0
+Called recv_done function.  active: 1 -> 0
+... after send-recv advance loop
+... after send-recv advance loop
+before send ...
+before send ...
+Called send_done_local function.  active: 1 -> 0
+Called send_done_local function.  active: 1 -> 0
+... after send.
+... after send.
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5419100, pipe_addr = 0x19c5419108, pipe_size = 8
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5419100, pipe_addr = 0x19c5419108, pipe_size = 8
+Called recv_done function.  active: 1 -> 0
+Called recv_done function.  active: 1 -> 0
+... after send-recv advance loop
+... after send-recv advance loop
+before send ...
+before send ...
+Called send_done_local function.  active: 1 -> 0
+Called send_done_local function.  active: 1 -> 0
+... after send.
+... after send.
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5419140, pipe_addr = 0x19c5419148, pipe_size = 8
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5419140, pipe_addr = 0x19c5419148, pipe_size = 8
+Called recv_done function.  active: 1 -> 0
+Called recv_done function.  active: 1 -> 0
+... after send-recv advance loop
+... after send-recv advance loop
+before send ...
+before send ...
+Called send_done_local function.  active: 1 -> 0
+Called send_done_local function.  active: 1 -> 0
+... after send.
+... after send.
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5419180, pipe_addr = 0x19c5419188, pipe_size = 8
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5419180, pipe_addr = 0x19c5419188, pipe_size = 8
+Called recv_done function.  active: 1 -> 0
+Called recv_done function.  active: 1 -> 0
+... after send-recv advance loop
+... after send-recv advance loop
+before send ...
+before send ...
+Called send_done_local function.  active: 1 -> 0
+Called send_done_local function.  active: 1 -> 0
+... after send.
+... after send.
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c54191c0, pipe_addr = 0x19c54191c8, pipe_size = 8
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c54191c0, pipe_addr = 0x19c54191c8, pipe_size = 8
+Called recv_done function.  active: 1 -> 0
+Called recv_done function.  active: 1 -> 0
+... after send-recv advance loop
+... after send-recv advance loop
+before send ...
+before send ...
+Called send_done_local function.  active: 1 -> 0
+Called send_done_local function.  active: 1 -> 0
+... after send.
+... after send.
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5419200, pipe_addr = 0x19c5419208, pipe_size = 8
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5419200, pipe_addr = 0x19c5419208, pipe_size = 8
+Called recv_done function.  active: 1 -> 0
+Called recv_done function.  active: 1 -> 0
+... after send-recv advance loop
+... after send-recv advance loop
+before send ...
+before send ...
+Called send_done_local function.  active: 1 -> 0
+Called send_done_local function.  active: 1 -> 0
+... after send.
+... after send.
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5419240, pipe_addr = 0x19c5419248, pipe_size = 8
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5419240, pipe_addr = 0x19c5419248, pipe_size = 8
+Called recv_done function.  active: 1 -> 0
+Called recv_done function.  active: 1 -> 0
+... after send-recv advance loop
+... after send-recv advance loop
+before send ...
+before send ...
+Called send_done_local function.  active: 1 -> 0
+Called send_done_local function.  active: 1 -> 0
+... after send.
+... after send.
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5419280, pipe_addr = 0x19c5419288, pipe_size = 8
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5419280, pipe_addr = 0x19c5419288, pipe_size = 8
+Called recv_done function.  active: 1 -> 0
+Called recv_done function.  active: 1 -> 0
+... after send-recv advance loop
+... after send-recv advance loop
+before send ...
+before send ...
+Called send_done_local function.  active: 1 -> 0
+Called send_done_local function.  active: 1 -> 0
+... after send.
+... after send.
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c54192c0, pipe_addr = 0x19c54192c8, pipe_size = 8
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c54192c0, pipe_addr = 0x19c54192c8, pipe_size = 8
+Called recv_done function.  active: 1 -> 0
+Called recv_done function.  active: 1 -> 0
+... after send-recv advance loop
+... after send-recv advance loop
+before send ...
+before send ...
+Called send_done_local function.  active: 1 -> 0
+Called send_done_local function.  active: 1 -> 0
+... after send.
+... after send.
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5419300, pipe_addr = 0x19c5419308, pipe_size = 8
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5419300, pipe_addr = 0x19c5419308, pipe_size = 8
+Called recv_done function.  active: 1 -> 0
+Called recv_done function.  active: 1 -> 0
+... after send-recv advance loop
+... after send-recv advance loop
+before send ...
+before send ...
+Called send_done_local function.  active: 1 -> 0
+Called send_done_local function.  active: 1 -> 0
+... after send.
+... after send.
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5419340, pipe_addr = 0x19c5419348, pipe_size = 8
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5419340, pipe_addr = 0x19c5419348, pipe_size = 8
+Called recv_done function.  active: 1 -> 0
+Called recv_done function.  active: 1 -> 0
+... after send-recv advance loop
+... after send-recv advance loop
+before send ...
+before send ...
+Called send_done_local function.  active: 1 -> 0
+Called send_done_local function.  active: 1 -> 0
+... after send.
+... after send.
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5419380, pipe_addr = 0x19c5419388, pipe_size = 8
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5419380, pipe_addr = 0x19c5419388, pipe_size = 8
+Called recv_done function.  active: 1 -> 0
+Called recv_done function.  active: 1 -> 0
+... after send-recv advance loop
+... after send-recv advance loop
+before send ...
+before send ...
+Called send_done_local function.  active: 1 -> 0
+Called send_done_local function.  active: 1 -> 0
+... after send.
+... after send.
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c54193c0, pipe_addr = 0x19c54193c8, pipe_size = 8
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c54193c0, pipe_addr = 0x19c54193c8, pipe_size = 8
+Called recv_done function.  active: 1 -> 0
+Called recv_done function.  active: 1 -> 0
+... after send-recv advance loop
+... after send-recv advance loop
+before send ...
+before send ...
+Called send_done_local function.  active: 1 -> 0
+Called send_done_local function.  active: 1 -> 0
+... after send.
+... after send.
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5419400, pipe_addr = 0x19c5419408, pipe_size = 8
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5419400, pipe_addr = 0x19c5419408, pipe_size = 8
+Called recv_done function.  active: 1 -> 0
+Called recv_done function.  active: 1 -> 0
+... after send-recv advance loop
+... after send-recv advance loop
+before send ...
+before send ...
+Called send_done_local function.  active: 1 -> 0
+Called send_done_local function.  active: 1 -> 0
+... after send.
+... after send.
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5419440, pipe_addr = 0x19c5419448, pipe_size = 8
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5419440, pipe_addr = 0x19c5419448, pipe_size = 8
+Called recv_done function.  active: 1 -> 0
+Called recv_done function.  active: 1 -> 0
+... after send-recv advance loop
+... after send-recv advance loop
+before send ...
+before send ...
+Called send_done_local function.  active: 1 -> 0
+Called send_done_local function.  active: 1 -> 0
+... after send.
+... after send.
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5419480, pipe_addr = 0x19c5419488, pipe_size = 8
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5419480, pipe_addr = 0x19c5419488, pipe_size = 8
+Called recv_done function.  active: 1 -> 0
+Called recv_done function.  active: 1 -> 0
+... after send-recv advance loop
+... after send-recv advance loop
+before send ...
+before send ...
+Called send_done_local function.  active: 1 -> 0
+Called send_done_local function.  active: 1 -> 0
+... after send.
+... after send.
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c54194c0, pipe_addr = 0x19c54194c8, pipe_size = 8
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c54194c0, pipe_addr = 0x19c54194c8, pipe_size = 8
+Called recv_done function.  active: 1 -> 0
+Called recv_done function.  active: 1 -> 0
+... after send-recv advance loop
+... after send-recv advance loop
+before send ...
+before send ...
+Called send_done_local function.  active: 1 -> 0
+Called send_done_local function.  active: 1 -> 0
+... after send.
+... after send.
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5419500, pipe_addr = 0x19c5419508, pipe_size = 8
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5419500, pipe_addr = 0x19c5419508, pipe_size = 8
+Called recv_done function.  active: 1 -> 0
+Called recv_done function.  active: 1 -> 0
+... after send-recv advance loop
+... after send-recv advance loop
+before send ...
+before send ...
+Called send_done_local function.  active: 1 -> 0
+Called send_done_local function.  active: 1 -> 0
+... after send.
+... after send.
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5419540, pipe_addr = 0x19c5419548, pipe_size = 8
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5419540, pipe_addr = 0x19c5419548, pipe_size = 8
+Called recv_done function.  active: 1 -> 0
+Called recv_done function.  active: 1 -> 0
+... after send-recv advance loop
+... after send-recv advance loop
+before send ...
+before send ...
+Called send_done_local function.  active: 1 -> 0
+Called send_done_local function.  active: 1 -> 0
+... after send.
+... after send.
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5419580, pipe_addr = 0x19c5419588, pipe_size = 8
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5419580, pipe_addr = 0x19c5419588, pipe_size = 8
+Called recv_done function.  active: 1 -> 0
+Called recv_done function.  active: 1 -> 0
+... after send-recv advance loop
+... after send-recv advance loop
+before send ...
+before send ...
+Called send_done_local function.  active: 1 -> 0
+Called send_done_local function.  active: 1 -> 0
+... after send.
+... after send.
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c54195c0, pipe_addr = 0x19c54195c8, pipe_size = 8
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c54195c0, pipe_addr = 0x19c54195c8, pipe_size = 8
+Called recv_done function.  active: 1 -> 0
+Called recv_done function.  active: 1 -> 0
+... after send-recv advance loop
+... after send-recv advance loop
+before send ...
+before send ...
+Called send_done_local function.  active: 1 -> 0
+Called send_done_local function.  active: 1 -> 0
+... after send.
+... after send.
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5419600, pipe_addr = 0x19c5419608, pipe_size = 8
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5419600, pipe_addr = 0x19c5419608, pipe_size = 8
+Called recv_done function.  active: 1 -> 0
+Called recv_done function.  active: 1 -> 0
+... after send-recv advance loop
+... after send-recv advance loop
+before send ...
+before send ...
+Called send_done_local function.  active: 1 -> 0
+Called send_done_local function.  active: 1 -> 0
+... after send.
+... after send.
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5419640, pipe_addr = 0x19c5419648, pipe_size = 8
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5419640, pipe_addr = 0x19c5419648, pipe_size = 8
+Called recv_done function.  active: 1 -> 0
+Called recv_done function.  active: 1 -> 0
+... after send-recv advance loop
+... after send-recv advance loop
+before send ...
+before send ...
+Called send_done_local function.  active: 1 -> 0
+Called send_done_local function.  active: 1 -> 0
+... after send.
+... after send.
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5419680, pipe_addr = 0x19c5419688, pipe_size = 8
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5419680, pipe_addr = 0x19c5419688, pipe_size = 8
+Called recv_done function.  active: 1 -> 0
+Called recv_done function.  active: 1 -> 0
+... after send-recv advance loop
+... after send-recv advance loop
+before send ...
+before send ...
+Called send_done_local function.  active: 1 -> 0
+Called send_done_local function.  active: 1 -> 0
+... after send.
+... after send.
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c54196c0, pipe_addr = 0x19c54196c8, pipe_size = 8
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c54196c0, pipe_addr = 0x19c54196c8, pipe_size = 8
+Called recv_done function.  active: 1 -> 0
+Called recv_done function.  active: 1 -> 0
+... after send-recv advance loop
+... after send-recv advance loop
+before send ...
+before send ...
+Called send_done_local function.  active: 1 -> 0
+Called send_done_local function.  active: 1 -> 0
+... after send.
+... after send.
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5419700, pipe_addr = 0x19c5419708, pipe_size = 8
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5419700, pipe_addr = 0x19c5419708, pipe_size = 8
+Called recv_done function.  active: 1 -> 0
+Called recv_done function.  active: 1 -> 0
+... after send-recv advance loop
+... after send-recv advance loop
+before send ...
+before send ...
+Called send_done_local function.  active: 1 -> 0
+Called send_done_local function.  active: 1 -> 0
+... after send.
+... after send.
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5419740, pipe_addr = 0x19c5419748, pipe_size = 8
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5419740, pipe_addr = 0x19c5419748, pipe_size = 8
+Called recv_done function.  active: 1 -> 0
+Called recv_done function.  active: 1 -> 0
+... after send-recv advance loop
+... after send-recv advance loop
+before send ...
+before send ...
+Called send_done_local function.  active: 1 -> 0
+Called send_done_local function.  active: 1 -> 0
+... after send.
+... after send.
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5419780, pipe_addr = 0x19c5419788, pipe_size = 8
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c5419780, pipe_addr = 0x19c5419788, pipe_size = 8
+Called recv_done function.  active: 1 -> 0
+Called recv_done function.  active: 1 -> 0
+... after send-recv advance loop
+... after send-recv advance loop
+before send ...
+before send ...
+Called send_done_local function.  active: 1 -> 0
+Called send_done_local function.  active: 1 -> 0
+... after send.
+... after send.
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+before send-recv advance loop (send_active = 0, recv_active = 1) ...
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c54197c0, pipe_addr = 0x19c54197c8, pipe_size = 8
+Called dispatch function.  cookie = 0x1dbfffb9d0, active: 1, header_addr = 0x19c54197c0, pipe_addr = 0x19c54197c8, pipe_size = 8
+Called recv_done function.  active: 1 -> 0
+Called recv_done function.  active: 1 -> 0
+... after send-recv advance loop
+... after send-recv advance loop
+2012-08-20 03:36:56.549 (INFO ) [0xfffaece8ad0] VST-20000-31331-128:32343:ibm.runjob.client.Job: exited with status 0
