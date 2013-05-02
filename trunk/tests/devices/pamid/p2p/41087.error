@@ -1,0 +1,6 @@
+2012-11-02 16:09:27.097 (INFO ) [0xfff89f38ad0] ibm.runjob.AbstractOptions: using properties file /bgsys/local/etc/bg.properties
+2012-11-02 16:09:27.099 (INFO ) [0xfff89f38ad0] ibm.runjob.AbstractOptions: max open file descriptors: 65536
+2012-11-02 16:09:27.099 (INFO ) [0xfff89f38ad0] ibm.runjob.AbstractOptions: core file limit: 0
+2012-11-02 16:09:27.100 (INFO ) [0xfff89f38ad0] VST-00040-33371-512:17021:ibm.runjob.client.options.Parser: set local socket to runjob_mux from properties file
+2012-11-02 16:09:28.844 (INFO ) [0xfff89f38ad0] VST-00040-33371-512:84379:ibm.runjob.client.Job: job 84379 started
+2012-11-02 16:09:30.727 (INFO ) [0xfff89f38ad0] VST-00040-33371-512:84379:ibm.runjob.client.Job: exited with status 0
