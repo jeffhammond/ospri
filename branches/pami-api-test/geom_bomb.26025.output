@@ -1,0 +1,4 @@
+Contexts: [ (0|1)0x19c536ce20 ]
+Contexts: [ (0|0)0x19c536ce20 ]
+/gpfs/vesta_home/jhammond/OSPRI/branches/pami-api-test/./build/collectives/geom_bomb.x:  Querying World Geometry
+/gpfs/vesta_home/jhammond/OSPRI/branches/pami-api-test/./build/collectives/geom_bomb.x:  Tasks:2 Threads/task:1 Contexts/task:1
