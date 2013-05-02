@@ -1,0 +1,21 @@
+/usr/bin/qsub.py -t 30 -n 128 --mode script ./mpix.sh
+
+submitted with cwd set to: /veas_home/jhammond/OSPRI/branches/bgq-topo/devel
+
+Job 15272/jhammond/17997: Initiating boot at location EAS-00000-11331-128.
+Info: stdout sent to /veas_home/jhammond/OSPRI/branches/bgq-topo/devel/15272.output
+Info: stderr sent to /veas_home/jhammond/OSPRI/branches/bgq-topo/devel/15272.error
+
+Command: '/veas_home/jhammond/OSPRI/branches/bgq-topo/devel/./mpix.sh'
+
+Environment:
+COBALT_NODEFILE=/tmp/tmpOMSGrP
+COBALT_PARTNAME=EAS-00000-11331-128
+COBALT_JOBID=15272
+USER=jhammond
+COBALT_PARTSIZE=128
+HOME=/home/jhammond
+COBALT_JOBSIZE=128
+
+Job 15272/jhammond/17997: Block EAS-00000-11331-128 for location EAS-00000-11331-128 successfully booted.  Starting task for job 15272.
+Info: task completed normally with an exit code of 0; initiating job cleanup and removal
