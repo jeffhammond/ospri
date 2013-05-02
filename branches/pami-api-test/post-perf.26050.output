@@ -1,0 +1,8 @@
+PAMI_CLIENT_NUM_CONTEXTS=48
+PAMI_CLIENT_HWTHREADS_AVAILABLE=64
+PAMI_CLIENT_NUM_CONTEXTS=48
+ncontexts=48
+PAMI_CLIENT_HWTHREADS_AVAILABLE=64
+ncontexts=48
+Posted 32768 functions on each of 48 contexts in 801855628 cycles (509 cyclces per post).  The functions were called in 801881574 cycles (509 cyclces per call).
+Posted 32768 functions on each of 48 contexts in 801941602 cycles (509 cyclces per post).  The functions were called in 801967347 cycles (509 cyclces per call).
