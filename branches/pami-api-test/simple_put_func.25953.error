@@ -1,0 +1,41 @@
+2012-08-20 03:37:24.172 (INFO ) [0xfffa02a8ad0] VST-00040-11371-128:12723:ibm.runjob.client.options.Parser: set local socket to runjob_mux from properties file
+2012-08-20 03:37:26.726 (INFO ) [0xfffa02a8ad0] VST-00040-11371-128:32345:ibm.runjob.client.Job: job 32345 started
+My task id = 0
+Number of tasks = 2
+My task id = 1
+maximum contexts = 48, number of contexts used in this test = 2
+Before PAMI_Dispatch_set(10) .. &_done = 0x14bc1b8, _done = 0
+Before PAMI_Dispatch_set(10) .. &_done = 0x14bc1b8, _done = 0
+Before PAMI_Dispatch_set(10) .. &_done = 0x14bc1b8, _done = 0
+Before PAMI_Dispatch_set(10) .. &_done = 0x14bc1b8, _done = 0
+Wait for message, _done = 0, contextid = 1
+Before PAMI_Send_immediate()
+Wait for 'ack', _done (0x14bc1b8) = 0
+dispatch_send(), {{8, 0x14bc1b8}, {16384, 0x149c1b8}}
+before PAMI_Put(), parameters.rma.bytes = 8, parameters.addr.remote = 0x149c1b8
+before PAMI_Put(), parameters.rma.bytes = 16, parameters.addr.remote = 0x149c1c0
+before PAMI_Put(), parameters.rma.bytes = 32, parameters.addr.remote = 0x149c1d0
+before PAMI_Put(), parameters.rma.bytes = 64, parameters.addr.remote = 0x149c1f0
+before PAMI_Put(), parameters.rma.bytes = 128, parameters.addr.remote = 0x149c230
+before PAMI_Put(), parameters.rma.bytes = 256, parameters.addr.remote = 0x149c2b0
+before PAMI_Put(), parameters.rma.bytes = 512, parameters.addr.remote = 0x149c3b0
+before PAMI_Put(), parameters.rma.bytes = 1024, parameters.addr.remote = 0x149c5b0
+before PAMI_Put(), parameters.rma.bytes = 2048, parameters.addr.remote = 0x149c9b0
+before PAMI_Put(), parameters.rma.bytes = 4096, parameters.addr.remote = 0x149d1b0
+before PAMI_Put(), parameters.rma.bytes = 8192, parameters.addr.remote = 0x149e1b0
+before PAMI_Put(), parameters.rma.bytes = 16384, parameters.addr.remote = 0x14a01b0
+before PAMI_Put(), parameters.rma.bytes = 32768, parameters.addr.remote = 0x14a41b0
+== validate 8 byte (1 double) put ==
+== validate 16 byte (2 double) put ==
+== validate 32 byte (4 double) put ==
+== validate 64 byte (8 double) put ==
+== validate 128 byte (16 double) put ==
+== validate 256 byte (32 double) put ==
+== validate 512 byte (64 double) put ==
+== validate 1024 byte (128 double) put ==
+== validate 2048 byte (256 double) put ==
+== validate 4096 byte (512 double) put ==
+== validate 8192 byte (1024 double) put ==
+== validate 16384 byte (2048 double) put ==
+== validate 32768 byte (4096 double) put ==
+2012-08-20 03:37:28.725 (INFO ) [0xfffa02a8ad0] VST-00040-11371-128:32345:ibm.runjob.client.Job: exited with status 0
