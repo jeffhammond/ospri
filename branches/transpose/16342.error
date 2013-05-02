@@ -1,0 +1,4 @@
+2012-07-09 21:45:55.912 (INFO ) [0xfff9db28ad0] VST-20040-31371-128:22673:ibm.runjob.client.options.Parser: set local socket to runjob_mux from properties file
+2012-07-09 21:45:57.904 (INFO ) [0xfff9db28ad0] VST-20040-31371-128:18616:ibm.runjob.client.Job: job 18616 started
+starting test: OpenMP ON with 48 threads... 
+2012-07-09 21:46:07.657 (INFO ) [0xfff9db28ad0] VST-20040-31371-128:18616:ibm.runjob.client.Job: exited with status 0
