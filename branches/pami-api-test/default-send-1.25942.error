@@ -1,0 +1,45 @@
+2012-08-20 03:23:08.633 (INFO ) [0xfff94ae8ad0] VST-20000-31331-128:32585:ibm.runjob.client.options.Parser: set local socket to runjob_mux from properties file
+2012-08-20 03:23:11.203 (INFO ) [0xfff94ae8ad0] VST-20000-31331-128:32291:ibm.runjob.client.Job: job 32291 started
+My task id = 1
+My task id = 0
+Number of tasks = 2
+Number of tasks = 2
+WARNING (W):  No other local tasks exist with Rank 1.  Skipping creation of "SHMem" dispatch ID ...
+Both the MU and SHMem devices are initialized.
+WARNING (W):  No other local tasks exist with Rank 1.  Skipping creation of "SHMem" dispatch ID ...
+WARNING (W):  No other local tasks exist with Rank 0.  Skipping creation of "SHMem" dispatch ID ...
+WARNING (W):  No other local tasks exist with Rank 0.  Skipping creation of "SHMem" dispatch ID ...
+===== PAMI_Send() FUNCTIONAL Test [DEFAULT][no crosstalk][no callback] 0 0 (0, 0) -> (1, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [DEFAULT][no crosstalk][no callback] 0 0 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [DEFAULT][no crosstalk][callback] 0 0 (0, 0) -> (1, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [DEFAULT][no crosstalk][callback] 0 0 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [DEFAULT][crosstalk][no callback] 0 0 (0, 0) -> (1, 1) =====
+
+===== PAMI_Send() FUNCTIONAL Test [DEFAULT][crosstalk][no callback] 0 0 (1, 1) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [DEFAULT][crosstalk][callback] 0 0 (0, 0) -> (1, 1) =====
+
+===== PAMI_Send() FUNCTIONAL Test [DEFAULT][crosstalk][callback] 0 0 (1, 1) -> (0, 0) =====
+
+WARNING (W):  Rank 1 is unaddressable by Rank 0 when use_shmem = PAMI_HINT_ENABLE. Skipping until next use_shmem hint ...
+===== PAMI_Send() FUNCTIONAL Test [MU][no crosstalk][no callback] 0 0 (0, 0) -> (1, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [MU][no crosstalk][no callback] 0 0 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [MU][no crosstalk][callback] 0 0 (0, 0) -> (1, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [MU][no crosstalk][callback] 0 0 (1, 0) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [MU][crosstalk][no callback] 0 0 (0, 0) -> (1, 1) =====
+
+===== PAMI_Send() FUNCTIONAL Test [MU][crosstalk][no callback] 0 0 (1, 1) -> (0, 0) =====
+
+===== PAMI_Send() FUNCTIONAL Test [MU][crosstalk][callback] 0 0 (0, 0) -> (1, 1) =====
+
+===== PAMI_Send() FUNCTIONAL Test [MU][crosstalk][callback] 0 0 (1, 1) -> (0, 0) =====
+
+2012-08-20 03:23:13.409 (INFO ) [0xfff94ae8ad0] VST-20000-31331-128:32291:ibm.runjob.client.Job: exited with status 0
