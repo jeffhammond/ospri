@@ -1,0 +1,79 @@
+2012-08-20 03:14:27.312 (INFO ) [0xfff8d848ad0] VST-20000-31331-128:10257:ibm.runjob.client.options.Parser: set local socket to runjob_mux from properties file
+2012-08-20 03:14:29.862 (INFO ) [0xfff8d848ad0] VST-20000-31331-128:32255:ibm.runjob.client.Job: job 32255 started
+====== Combinations of header sizes and no_long_header hints that should pass ======
+Sending short header (128 bytes) from task 0 -> 1:
+		task 0 no_long_header hard hint = 0
+		task 0 no_long_header soft hint = 0
+		task 1 no_long_header hard hint = 0
+Sending short header (128 bytes) from task 1 -> 0:
+		task 1 no_long_header hard hint = 0
+		task 1 no_long_header soft hint = 0
+		task 0 no_long_header hard hint = 0
+Sending long header (544 bytes) from task 0 -> 1:
+		task 0 no_long_header hard hint = 0
+		task 0 no_long_header soft hint = 0
+		task 1 no_long_header hard hint = 0
+Sending long header (544 bytes) from task 1 -> 0:
+		task 1 no_long_header hard hint = 0
+		task 1 no_long_header soft hint = 0
+		task 0 no_long_header hard hint = 0
+Sending short header (128 bytes) from task 0 -> 1:
+		task 0 no_long_header hard hint = 0
+		task 0 no_long_header soft hint = 0
+		task 1 no_long_header hard hint = 1
+Sending short header (128 bytes) from task 1 -> 0:
+		task 1 no_long_header hard hint = 0
+		task 1 no_long_header soft hint = 0
+		task 0 no_long_header hard hint = 1
+Sending short header (128 bytes) from task 0 -> 1:
+		task 0 no_long_header hard hint = 0
+		task 0 no_long_header soft hint = 1
+		task 1 no_long_header hard hint = 0
+Sending short header (128 bytes) from task 1 -> 0:
+		task 1 no_long_header hard hint = 0
+		task 1 no_long_header soft hint = 1
+		task 0 no_long_header hard hint = 0
+Sending long header (544 bytes) from task 0 -> 1:
+		task 0 no_long_header hard hint = 0
+		task 0 no_long_header soft hint = 1
+		task 1 no_long_header hard hint = 0
+Sending long header (544 bytes) from task 1 -> 0:
+		task 1 no_long_header hard hint = 0
+		task 1 no_long_header soft hint = 1
+		task 0 no_long_header hard hint = 0
+Sending short header (128 bytes) from task 0 -> 1:
+		task 0 no_long_header hard hint = 0
+		task 0 no_long_header soft hint = 1
+		task 1 no_long_header hard hint = 1
+Sending short header (128 bytes) from task 1 -> 0:
+		task 1 no_long_header hard hint = 0
+		task 1 no_long_header soft hint = 1
+		task 0 no_long_header hard hint = 1
+Sending short header (128 bytes) from task 0 -> 1:
+		task 0 no_long_header hard hint = 1
+		task 0 no_long_header soft hint = 0
+		task 1 no_long_header hard hint = 0
+Sending short header (128 bytes) from task 1 -> 0:
+		task 1 no_long_header hard hint = 1
+		task 1 no_long_header soft hint = 0
+		task 0 no_long_header hard hint = 0
+Sending short header (128 bytes) from task 0 -> 1:
+		task 0 no_long_header hard hint = 1
+		task 0 no_long_header soft hint = 0
+		task 1 no_long_header hard hint = 1
+Sending short header (128 bytes) from task 1 -> 0:
+		task 1 no_long_header hard hint = 1
+		task 1 no_long_header soft hint = 0
+		task 0 no_long_header hard hint = 1
+====== Combinations of header sizes and no_long_header hints that should result in send FAILS ======
+Testcase 4 Sending long header (544 bytes) from task 0 -> 1:
+		task 0 no_long_header hard hint = 1
+		task 0 no_long_header soft hint = 0
+		task 1 no_long_header hard hint = 0
+PAMI Send failed as expected in Testcase 4.
+Testcase 5 Sending long header (544 bytes) from task 0 -> 1:
+		task 0 no_long_header hard hint = 1
+		task 0 no_long_header soft hint = 0
+		task 1 no_long_header hard hint = 1
+PAMI Send failed as expected in Testcase 5.
+2012-08-20 03:14:32.523 (INFO ) [0xfff8d848ad0] VST-20000-31331-128:32255:ibm.runjob.client.Job: exited with status 0
