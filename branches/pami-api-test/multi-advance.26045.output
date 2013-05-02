@@ -1,0 +1,192 @@
+Before PAMI_Context_advance(), context = 0
+Before PAMI_Context_advance(), context = 0
+ After PAMI_Context_advance(), context = 0, result = 0
+ After PAMI_Context_advance(), context = 0, result = 0
+Before PAMI_Context_advance(), context = 1
+Before PAMI_Context_advance(), context = 1
+ After PAMI_Context_advance(), context = 1, result = 0
+ After PAMI_Context_advance(), context = 1, result = 0
+Before PAMI_Context_advance(), context = 2
+Before PAMI_Context_advance(), context = 2
+ After PAMI_Context_advance(), context = 2, result = 0
+ After PAMI_Context_advance(), context = 2, result = 0
+Before PAMI_Context_advance(), context = 3
+Before PAMI_Context_advance(), context = 3
+ After PAMI_Context_advance(), context = 3, result = 0
+ After PAMI_Context_advance(), context = 3, result = 0
+Before PAMI_Context_advance(), context = 4
+Before PAMI_Context_advance(), context = 4
+ After PAMI_Context_advance(), context = 4, result = 0
+ After PAMI_Context_advance(), context = 4, result = 0
+Before PAMI_Context_advance(), context = 5
+Before PAMI_Context_advance(), context = 5
+ After PAMI_Context_advance(), context = 5, result = 0
+ After PAMI_Context_advance(), context = 5, result = 0
+Before PAMI_Context_advance(), context = 6
+Before PAMI_Context_advance(), context = 6
+ After PAMI_Context_advance(), context = 6, result = 0
+ After PAMI_Context_advance(), context = 6, result = 0
+Before PAMI_Context_advance(), context = 7
+Before PAMI_Context_advance(), context = 7
+ After PAMI_Context_advance(), context = 7, result = 0
+ After PAMI_Context_advance(), context = 7, result = 0
+Before PAMI_Context_advance(), context = 8
+Before PAMI_Context_advance(), context = 8
+ After PAMI_Context_advance(), context = 8, result = 0
+ After PAMI_Context_advance(), context = 8, result = 0
+Before PAMI_Context_advance(), context = 9
+Before PAMI_Context_advance(), context = 9
+ After PAMI_Context_advance(), context = 9, result = 0
+ After PAMI_Context_advance(), context = 9, result = 0
+Before PAMI_Context_advance(), context = 10
+Before PAMI_Context_advance(), context = 10
+ After PAMI_Context_advance(), context = 10, result = 0
+ After PAMI_Context_advance(), context = 10, result = 0
+Before PAMI_Context_advance(), context = 11
+Before PAMI_Context_advance(), context = 11
+ After PAMI_Context_advance(), context = 11, result = 0
+ After PAMI_Context_advance(), context = 11, result = 0
+Before PAMI_Context_advance(), context = 12
+Before PAMI_Context_advance(), context = 12
+ After PAMI_Context_advance(), context = 12, result = 0
+ After PAMI_Context_advance(), context = 12, result = 0
+Before PAMI_Context_advance(), context = 13
+Before PAMI_Context_advance(), context = 13
+ After PAMI_Context_advance(), context = 13, result = 0
+ After PAMI_Context_advance(), context = 13, result = 0
+Before PAMI_Context_advance(), context = 14
+Before PAMI_Context_advance(), context = 14
+ After PAMI_Context_advance(), context = 14, result = 0
+ After PAMI_Context_advance(), context = 14, result = 0
+Before PAMI_Context_advance(), context = 15
+Before PAMI_Context_advance(), context = 15
+ After PAMI_Context_advance(), context = 15, result = 0
+ After PAMI_Context_advance(), context = 15, result = 0
+Before PAMI_Context_advance(), context = 16
+Before PAMI_Context_advance(), context = 16
+ After PAMI_Context_advance(), context = 16, result = 0
+ After PAMI_Context_advance(), context = 16, result = 0
+Before PAMI_Context_advance(), context = 17
+Before PAMI_Context_advance(), context = 17
+ After PAMI_Context_advance(), context = 17, result = 0
+ After PAMI_Context_advance(), context = 17, result = 0
+Before PAMI_Context_advance(), context = 18
+Before PAMI_Context_advance(), context = 18
+ After PAMI_Context_advance(), context = 18, result = 0
+ After PAMI_Context_advance(), context = 18, result = 0
+Before PAMI_Context_advance(), context = 19
+Before PAMI_Context_advance(), context = 19
+ After PAMI_Context_advance(), context = 19, result = 0
+ After PAMI_Context_advance(), context = 19, result = 0
+Before PAMI_Context_advance(), context = 20
+Before PAMI_Context_advance(), context = 20
+ After PAMI_Context_advance(), context = 20, result = 0
+ After PAMI_Context_advance(), context = 20, result = 0
+Before PAMI_Context_advance(), context = 21
+Before PAMI_Context_advance(), context = 21
+ After PAMI_Context_advance(), context = 21, result = 0
+ After PAMI_Context_advance(), context = 21, result = 0
+Before PAMI_Context_advance(), context = 22
+Before PAMI_Context_advance(), context = 22
+ After PAMI_Context_advance(), context = 22, result = 0
+ After PAMI_Context_advance(), context = 22, result = 0
+Before PAMI_Context_advance(), context = 23
+Before PAMI_Context_advance(), context = 23
+ After PAMI_Context_advance(), context = 23, result = 0
+ After PAMI_Context_advance(), context = 23, result = 0
+Before PAMI_Context_advance(), context = 24
+Before PAMI_Context_advance(), context = 24
+ After PAMI_Context_advance(), context = 24, result = 0
+ After PAMI_Context_advance(), context = 24, result = 0
+Before PAMI_Context_advance(), context = 25
+Before PAMI_Context_advance(), context = 25
+ After PAMI_Context_advance(), context = 25, result = 0
+ After PAMI_Context_advance(), context = 25, result = 0
+Before PAMI_Context_advance(), context = 26
+Before PAMI_Context_advance(), context = 26
+ After PAMI_Context_advance(), context = 26, result = 0
+ After PAMI_Context_advance(), context = 26, result = 0
+Before PAMI_Context_advance(), context = 27
+Before PAMI_Context_advance(), context = 27
+ After PAMI_Context_advance(), context = 27, result = 0
+ After PAMI_Context_advance(), context = 27, result = 0
+Before PAMI_Context_advance(), context = 28
+Before PAMI_Context_advance(), context = 28
+ After PAMI_Context_advance(), context = 28, result = 0
+ After PAMI_Context_advance(), context = 28, result = 0
+Before PAMI_Context_advance(), context = 29
+Before PAMI_Context_advance(), context = 29
+ After PAMI_Context_advance(), context = 29, result = 0
+ After PAMI_Context_advance(), context = 29, result = 0
+Before PAMI_Context_advance(), context = 30
+Before PAMI_Context_advance(), context = 30
+ After PAMI_Context_advance(), context = 30, result = 0
+ After PAMI_Context_advance(), context = 30, result = 0
+Before PAMI_Context_advance(), context = 31
+Before PAMI_Context_advance(), context = 31
+ After PAMI_Context_advance(), context = 31, result = 0
+ After PAMI_Context_advance(), context = 31, result = 0
+Before PAMI_Context_advance(), context = 32
+Before PAMI_Context_advance(), context = 32
+ After PAMI_Context_advance(), context = 32, result = 0
+ After PAMI_Context_advance(), context = 32, result = 0
+Before PAMI_Context_advance(), context = 33
+Before PAMI_Context_advance(), context = 33
+ After PAMI_Context_advance(), context = 33, result = 0
+ After PAMI_Context_advance(), context = 33, result = 0
+Before PAMI_Context_advance(), context = 34
+Before PAMI_Context_advance(), context = 34
+ After PAMI_Context_advance(), context = 34, result = 0
+ After PAMI_Context_advance(), context = 34, result = 0
+Before PAMI_Context_advance(), context = 35
+Before PAMI_Context_advance(), context = 35
+ After PAMI_Context_advance(), context = 35, result = 0
+ After PAMI_Context_advance(), context = 35, result = 0
+Before PAMI_Context_advance(), context = 36
+Before PAMI_Context_advance(), context = 36
+ After PAMI_Context_advance(), context = 36, result = 0
+ After PAMI_Context_advance(), context = 36, result = 0
+Before PAMI_Context_advance(), context = 37
+Before PAMI_Context_advance(), context = 37
+ After PAMI_Context_advance(), context = 37, result = 0
+ After PAMI_Context_advance(), context = 37, result = 0
+Before PAMI_Context_advance(), context = 38
+Before PAMI_Context_advance(), context = 38
+ After PAMI_Context_advance(), context = 38, result = 0
+ After PAMI_Context_advance(), context = 38, result = 0
+Before PAMI_Context_advance(), context = 39
+Before PAMI_Context_advance(), context = 39
+ After PAMI_Context_advance(), context = 39, result = 0
+ After PAMI_Context_advance(), context = 39, result = 0
+Before PAMI_Context_advance(), context = 40
+Before PAMI_Context_advance(), context = 40
+ After PAMI_Context_advance(), context = 40, result = 0
+ After PAMI_Context_advance(), context = 40, result = 0
+Before PAMI_Context_advance(), context = 41
+Before PAMI_Context_advance(), context = 41
+ After PAMI_Context_advance(), context = 41, result = 0
+ After PAMI_Context_advance(), context = 41, result = 0
+Before PAMI_Context_advance(), context = 42
+Before PAMI_Context_advance(), context = 42
+ After PAMI_Context_advance(), context = 42, result = 0
+ After PAMI_Context_advance(), context = 42, result = 0
+Before PAMI_Context_advance(), context = 43
+Before PAMI_Context_advance(), context = 43
+ After PAMI_Context_advance(), context = 43, result = 0
+ After PAMI_Context_advance(), context = 43, result = 0
+Before PAMI_Context_advance(), context = 44
+Before PAMI_Context_advance(), context = 44
+ After PAMI_Context_advance(), context = 44, result = 0
+ After PAMI_Context_advance(), context = 44, result = 0
+Before PAMI_Context_advance(), context = 45
+Before PAMI_Context_advance(), context = 45
+ After PAMI_Context_advance(), context = 45, result = 0
+ After PAMI_Context_advance(), context = 45, result = 0
+Before PAMI_Context_advance(), context = 46
+Before PAMI_Context_advance(), context = 46
+ After PAMI_Context_advance(), context = 46, result = 0
+ After PAMI_Context_advance(), context = 46, result = 0
+Before PAMI_Context_advance(), context = 47
+Before PAMI_Context_advance(), context = 47
+ After PAMI_Context_advance(), context = 47, result = 0
+ After PAMI_Context_advance(), context = 47, result = 0
