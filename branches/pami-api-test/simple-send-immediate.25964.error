@@ -1,0 +1,7 @@
+2012-08-20 03:37:56.933 (INFO ) [0xfff82a88ad0] VST-22000-33331-128:15469:ibm.runjob.client.options.Parser: set local socket to runjob_mux from properties file
+2012-08-20 03:37:59.502 (INFO ) [0xfff82a88ad0] VST-22000-33331-128:32347:ibm.runjob.client.Job: job 32347 started
+>>> header validated.
+>>> payload validated.
+>>> header validated.
+>>> payload validated.
+2012-08-20 03:38:01.399 (INFO ) [0xfff82a88ad0] VST-22000-33331-128:32347:ibm.runjob.client.Job: exited with status 0
