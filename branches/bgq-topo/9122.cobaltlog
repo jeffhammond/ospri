@@ -1,0 +1,38 @@
+/usr/bin/qsub.py -t 15 -n 2 --mode c2 ./capi.x
+
+submitted with cwd set to: /veas_home/jhammond/OSPRI/branches/bgq-topo
+
+Job 9122/jhammond/12174: Initiating boot at location EAS-20040-31371-128.
+Info: stdout sent to /veas_home/jhammond/OSPRI/branches/bgq-topo/9122.output
+Info: stderr sent to /veas_home/jhammond/OSPRI/branches/bgq-topo/9122.error
+
+Command: '/bgsys/drivers/ppcfloor/bin/runjob' '--np' '4' '--ranks-per-node' '2' '--cwd' '/veas_home/jhammond/OSPRI/branches/bgq-topo' '--block' 'EAS-20040-31371-128' '--corner' 'R00-M1-N05-J28' '--shape' '2x2x2x2x2' '--envs' 'COBALT_JOBID=9122' '--envs' 'BG_SHAREDMEMSIZE=32' '--verbose' '4' ':' '/veas_home/jhammond/OSPRI/branches/bgq-topo/./capi.x'
+
+Environment:
+LOGNAME=root
+USER=root
+QTDIR=/usr/lib64/qt-3.3
+PATH=/sbin:/bin:/usr/sbin:/usr/bin:/dbhome/db2cat/sqllib/bin:/dbhome/db2cat/sqllib/adm:/dbhome/db2cat/sqllib/misc
+LD_LIBRARY_PATH=/bgsys/drivers/ppcfloor/lib64:/dbhome/db2cat/sqllib/lib64:/dbhome/db2cat/sqllib/lib32
+LANG=en_US.UTF-8
+TERM=screen
+SHELL=/bin/bash
+SHLVL=1
+DB2INSTANCE=db2cat
+HISTSIZE=1000
+_=/usr/bin/nohup
+SUDO_USER=wscullin
+HOME=/root
+USERNAME=root
+SUDO_UID=4224
+CLASSPATH=/dbhome/db2cat/sqllib/java/db2java.zip:/dbhome/db2cat/sqllib/java/db2jcc.jar:/dbhome/db2cat/sqllib/java/sqlj.zip:/dbhome/db2cat/sqllib/function:/dbhome/db2cat/sqllib/java/db2jcc_license_cu.jar:.
+MPIRUN_VERBOSE=1
+SUDO_COMMAND=/etc/init.d/cobalt start
+SUDO_GID=100
+HOSTNAME=cetussn1
+PWD=/veas_home/wscullin
+MAIL=/var/spool/mail/wscullin
+COBALT_JOBID=9122
+
+Job 9122/jhammond/12174: Block EAS-20040-31371-128 for location EAS-20240-31351-32 successfully booted.  Starting task for job 9122.
+Info: task completed normally with an exit code of 0; initiating job cleanup and removal
