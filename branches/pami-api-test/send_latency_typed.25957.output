@@ -1,0 +1,20 @@
+2 dispatches will be tested (2 tasks:1 local tasks)
+Using Standard Derived Datatype
+# PAMI_Send_typed() nearest-neighor half-pingpong blocking latency performance test
+#
+# testcase 0 : header bytes =   0
+#
+#          [-- testcase 0 --] [-- testcase 0 --] [-- testcase 0 --] 
+#          [--   default  --] [--  no shmem  --] [-- only shmem --] 
+#    bytes   cycles     usec    cycles     usec    cycles     usec  
+         0     3144   1.9650      3149   1.9681  
+         8     3437   2.1481      3481   2.1756  
+        16     3434   2.1463      3479   2.1744  
+        32     3609   2.2556      3547   2.2169  
+        56     3639   2.2744      3634   2.2713  
+        88     3696   2.3100      3723   2.3269  
+       136     4788   2.9925      4894   3.0588  
+       208     4802   3.0012      5105   3.1906  
+       320     5391   3.3694      5394   3.3713  
+       488     6257   3.9106      6274   3.9213  
+       736     8179   5.1119      8310   5.1937  
