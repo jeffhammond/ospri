@@ -1,0 +1,45 @@
+2012-11-07 03:18:45.791 (INFO ) [0xfffb65f8ad0] ibm.runjob.AbstractOptions: using properties file /bgsys/local/etc/bg.properties
+2012-11-07 03:18:45.792 (INFO ) [0xfffb65f8ad0] ibm.runjob.AbstractOptions: max open file descriptors: 65536
+2012-11-07 03:18:45.792 (INFO ) [0xfffb65f8ad0] ibm.runjob.AbstractOptions: core file limit: 0
+2012-11-07 03:18:45.792 (INFO ) [0xfffb65f8ad0] VST-22000-33331-128:13151:ibm.runjob.client.options.Parser: set local socket to runjob_mux from properties file
+2012-11-07 03:18:47.882 (INFO ) [0xfffb65f8ad0] VST-22000-33331-128:85084:ibm.runjob.client.Job: job 85084 started
+attempting to allocate 0 bytes 
+attempting to allocate 0 bytes 
+attempting to allocate 0 bytes 
+attempting to allocate 0 bytes 
+attempting to allocate 0 bytes 
+attempting to allocate 0 bytes 
+attempting to allocate 0 bytes 
+attempting to allocate 0 bytes 
+attempting to allocate 0 bytes 
+attempting to allocate 0 bytes 
+attempting to allocate 0 bytes 
+attempting to allocate 0 bytes 
+attempting to allocate 0 bytes 
+attempting to allocate 0 bytes 
+attempting to allocate 0 bytes 
+attempting to allocate 0 bytes 
+attempting to allocate 0 bytes 
+attempting to allocate 0 bytes 
+attempting to allocate 0 bytes 
+attempting to allocate 0 bytes 
+attempting to allocate 0 bytes 
+attempting to allocate 0 bytes 
+attempting to allocate 0 bytes 
+attempting to allocate 0 bytes 
+attempting to allocate 0 bytes 
+attempting to allocate 0 bytes 
+attempting to allocate 0 bytes 
+attempting to allocate 0 bytes 
+attempting to allocate 0 bytes 
+attempting to allocate 0 bytes 
+attempting to allocate 0 bytes 
+attempting to allocate 0 bytes 
+2012-11-07 03:38:03.052 (WARN ) [0xfffb65f8ad0] VST-22000-33331-128:ibm.runjob.LogSignalInfo: received signal 15
+2012-11-07 03:38:03.056 (WARN ) [0xfffb65f8ad0] VST-22000-33331-128:ibm.runjob.LogSignalInfo: signal sent from USER
+2012-11-07 03:38:03.056 (WARN ) [0xfffb65f8ad0] VST-22000-33331-128:ibm.runjob.LogSignalInfo: sent from pid 15443
+2012-11-07 03:38:03.057 (WARN ) [0xfffb65f8ad0] VST-22000-33331-128:ibm.runjob.LogSignalInfo: could not read /proc/15443/exe
+2012-11-07 03:38:03.092 (WARN ) [0xfffb65f8ad0] VST-22000-33331-128:ibm.runjob.LogSignalInfo: Permission denied
+2012-11-07 03:38:03.093 (WARN ) [0xfffb65f8ad0] VST-22000-33331-128:ibm.runjob.LogSignalInfo: sent from uid 0 (root)
+2012-11-07 03:38:04.851 (WARN ) [0xfffb65f8ad0] VST-22000-33331-128:85084:ibm.runjob.client.Job: terminated by signal 9
+2012-11-07 03:38:04.851 (WARN ) [0xfffb65f8ad0] VST-22000-33331-128:85084:ibm.runjob.client.Job: abnormal termination by signal 9 from rank 2
