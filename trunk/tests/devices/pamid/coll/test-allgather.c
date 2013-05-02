@@ -42,8 +42,8 @@ int main(int argc, char* argv[])
   config.name = PAMI_CLIENT_PROCESSOR_NAME;
   result = PAMI_Client_query( client, &config, 1);
   TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Client_query");
-  printf("rank %ld is processor %s \n", world_rank, config.value.chararray);
-  fflush(stdout);
+  //printf("rank %ld is processor %s \n", world_rank, config.value.chararray);
+  //fflush(stdout);
 
   config.name = PAMI_CLIENT_NUM_CONTEXTS;
   result = PAMI_Client_query( client, &config, 1);
@@ -112,20 +112,17 @@ int main(int argc, char* argv[])
         allgather.cookie    = (void*) &active;
         allgather.algorithm = safe_allgather_algs[b];
 
-        int * sbuf = safemalloc(d*sizeof(int));
-        int * rbuf = safemalloc(world_size*d*sizeof(int));
-        for (int k=0; k<d; k++)              sbuf[k]   = world_rank;
-        for (int k=0; k<(world_size*d); k++) rbuf[k]   = 0;
+        double * sbuf = safemalloc(d*sizeof(double));
+        double * rbuf = safemalloc(world_size*d*sizeof(double));
+        for (int k=0; k<d; k++)              sbuf[k]   = (double)world_rank;
+        for (int k=0; k<(world_size*d); k++) rbuf[k]   = 0.;
 
         allgather.cmd.xfer_allgather.sndbuf     = (void*)sbuf;
-        allgather.cmd.xfer_allgather.stype      = PAMI_TYPE_SIGNED_INT;
+        allgather.cmd.xfer_allgather.stype      = PAMI_TYPE_DOUBLE;
         allgather.cmd.xfer_allgather.stypecount = d;
         allgather.cmd.xfer_allgather.rcvbuf     = (void*)rbuf;
-        allgather.cmd.xfer_allgather.rtype      = PAMI_TYPE_SIGNED_INT;
+        allgather.cmd.xfer_allgather.rtype      = PAMI_TYPE_DOUBLE;
         allgather.cmd.xfer_allgather.rtypecount = d;
-
-        if ( world_rank == 0 ) printf("trying safe allgather algorithm %ld (%s) \n", b, safe_allgather_meta[b].name );
-        fflush(stdout);
 
         active = 1;
         double t0 = PAMI_Wtime(client);
@@ -138,13 +135,55 @@ int main(int argc, char* argv[])
 
         for (int s=0; s<world_size; s++ )
           for (int k=0; k<d; k++)
-            if (rbuf[s*d+k]!=s) printf("%4d: rbuf[%d] = %d \n", (int)world_rank, s*d+k, rbuf[s*d+k] );
+            if (rbuf[s*d+k]!=(double)s) printf("%4d: rbuf[%d] = %lf \n", (int)world_rank, s*d+k, rbuf[s*d+k] );
 
         free(sbuf);
         free(rbuf);
 
-        if ( world_rank == 0 ) printf("after safe allgather algorithm %ld (%s) - %d ints took %lf seconds (%lf MB/s) \n",
-                                       b, safe_allgather_meta[b].name, (int)world_size*d, t1-t0, 1e-6*world_size*d*sizeof(int)/(t1-t0) );
+        if ( world_rank == 0 ) printf("safe allgather algorithm %ld (%s) - %d ints took %lf seconds (%lf MB/s) \n",
+                                       b, safe_allgather_meta[b].name, (int)world_size*d, t1-t0, 1e-6*world_size*d*sizeof(double)/(t1-t0) );
+        fflush(stdout);
+    }
+
+  for ( int d = 1; d < 512 ; d*=2 ) /* allreduce and allgather barf >496 bytes */
+    for ( size_t b = 0 ; b < num_allgather_alg[1] ; b++ )
+    {
+        pami_xfer_t allgather;
+
+        allgather.cb_done   = cb_done;
+        allgather.cookie    = (void*) &active;
+        allgather.algorithm = fast_allgather_algs[b];
+
+        double * sbuf = safemalloc(d*sizeof(double));
+        double * rbuf = safemalloc(world_size*d*sizeof(double));
+        for (int k=0; k<d; k++)              sbuf[k]   = (double)world_rank;
+        for (int k=0; k<(world_size*d); k++) rbuf[k]   = 0.;
+
+        allgather.cmd.xfer_allgather.sndbuf     = (void*)sbuf;
+        allgather.cmd.xfer_allgather.stype      = PAMI_TYPE_DOUBLE;
+        allgather.cmd.xfer_allgather.stypecount = d;
+        allgather.cmd.xfer_allgather.rcvbuf     = (void*)rbuf;
+        allgather.cmd.xfer_allgather.rtype      = PAMI_TYPE_DOUBLE;
+        allgather.cmd.xfer_allgather.rtypecount = d;
+
+        active = 1;
+        double t0 = PAMI_Wtime(client);
+        result = PAMI_Collective( contexts[0], &allgather );
+        TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Collective - allgather");
+        while (active)
+          result = PAMI_Context_advance( contexts[0], 1 );
+        TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Context_advance - allgather");
+        double t1 = PAMI_Wtime(client);
+
+        for (int s=0; s<world_size; s++ )
+          for (int k=0; k<d; k++)
+            if (rbuf[s*d+k]!=(double)s) printf("%4d: rbuf[%d] = %lf \n", (int)world_rank, s*d+k, rbuf[s*d+k] );
+
+        free(sbuf);
+        free(rbuf);
+
+        if ( world_rank == 0 ) printf("fast allgather algorithm %ld (%s) - %d ints took %lf seconds (%lf MB/s) \n",
+                                       b, fast_allgather_meta[b].name, (int)world_size*d, t1-t0, 1e-6*world_size*d*sizeof(double)/(t1-t0) );
         fflush(stdout);
     }
 

@@ -42,8 +42,8 @@ int main(int argc, char* argv[])
   config.name = PAMI_CLIENT_PROCESSOR_NAME;
   result = PAMI_Client_query( client, &config, 1);
   TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Client_query");
-  printf("rank %ld is processor %s \n", world_rank, config.value.chararray);
-  fflush(stdout);
+  //printf("rank %ld is processor %s \n", world_rank, config.value.chararray);
+  //fflush(stdout);
 
   config.name = PAMI_CLIENT_NUM_CONTEXTS;
   result = PAMI_Client_query( client, &config, 1);
@@ -104,10 +104,8 @@ int main(int argc, char* argv[])
   PAMI_Endpoint_create(client, (pami_task_t)0, 0, &root);
 
   int max = (argc>1 ? atoi(argv[1]) : 1000000);
-  //int d = max;
 
   for ( int d = 1; d < max ; d*=2 )
-    //for ( size_t b = 0 ; b < 12 /*num_bcast_alg[0]*/ ; b++ )
     for ( size_t b = 0 ; b < num_bcast_alg[0] ; b++ )
     {
         pami_xfer_t bcast;
@@ -116,16 +114,13 @@ int main(int argc, char* argv[])
         bcast.cookie    = (void*) &active;
         bcast.algorithm = safe_bcast_algs[b];
 
-        int * buf = safemalloc(d*sizeof(int));
-        for (int k=0; k<d; k++) buf[k]   = world_rank;
+        double * buf = safemalloc(d*sizeof(double));
+        for (int k=0; k<d; k++) buf[k]   = (double)world_rank;
 
         bcast.cmd.xfer_broadcast.root      = root;
         bcast.cmd.xfer_broadcast.buf       = (void*)buf;
-        bcast.cmd.xfer_broadcast.type      = PAMI_TYPE_SIGNED_INT;
+        bcast.cmd.xfer_broadcast.type      = PAMI_TYPE_DOUBLE;
         bcast.cmd.xfer_broadcast.typecount = d;
-
-        if ( world_rank == 0 ) printf("trying safe bcast algorithm %ld (%s) \n", b, safe_bcast_meta[b].name );
-        fflush(stdout);
 
         active = 1;
         double t0 = PAMI_Wtime(client);
@@ -137,18 +132,17 @@ int main(int argc, char* argv[])
         double t1 = PAMI_Wtime(client);
 
         for (int k=0; k<d; k++) 
-          if (buf[k]!=0) printf("%4d: buf[%d] = %d \n", (int)world_rank, k, buf[k] );
+          if (buf[k]!=0) printf("%4d: buf[%d] = %lf \n", (int)world_rank, k, buf[k] );
 
         free(buf);
 
-        if ( world_rank == 0 ) printf("after safe bcast algorithm %ld (%s) - %d ints took %lf seconds (%lf MB/s) \n", 
-                                       b, safe_bcast_meta[b].name, d, t1-t0, 1e-6*d*sizeof(int)/(t1-t0) );
+        if ( world_rank == 0 ) printf("safe bcast algorithm %ld (%s) - %d ints took %lf seconds (%lf MB/s) \n", 
+                                       b, safe_bcast_meta[b].name, d, t1-t0, 1e-6*d*sizeof(double)/(t1-t0) );
         fflush(stdout);
     }
 
-#if 1
-  for ( int d = 1; d < 64 ; d*=2 ) /* fast (shortMU) algorithms fail for >64 bytes */
-    for ( size_t b = 0 ; b < 10 /* num_bcast_alg[1] */ ; b++ )
+  for ( int d = 1; d < 512 ; d*=2 ) /* fast (shortMU) algorithms fail for >512 bytes */
+    for ( size_t b = 0 ; b < num_bcast_alg[1] ; b++ )
     {
         pami_xfer_t bcast;
 
@@ -156,16 +150,13 @@ int main(int argc, char* argv[])
         bcast.cookie    = (void*) &active;
         bcast.algorithm = fast_bcast_algs[b];
 
-        int * buf = safemalloc(d*sizeof(int));
-        for (int k=0; k<d; k++) buf[k]   = world_rank;
+        double * buf = safemalloc(d*sizeof(double));
+        for (int k=0; k<d; k++) buf[k]   = (double)world_rank;
 
         bcast.cmd.xfer_broadcast.root      = root;
         bcast.cmd.xfer_broadcast.buf       = (void*)buf;
-        bcast.cmd.xfer_broadcast.type      = PAMI_TYPE_SIGNED_INT;
+        bcast.cmd.xfer_broadcast.type      = PAMI_TYPE_DOUBLE;
         bcast.cmd.xfer_broadcast.typecount = d;
-
-        if ( world_rank == 0 ) printf("trying fast bcast algorithm %ld (%s) \n", b, fast_bcast_meta[b].name );
-        fflush(stdout);
 
         active = 1;
         double t0 = PAMI_Wtime(client);
@@ -177,15 +168,14 @@ int main(int argc, char* argv[])
         double t1 = PAMI_Wtime(client);
 
         for (int k=0; k<d; k++) 
-          if (buf[k]!=0) printf("%4d: buf[%d] = %d \n", (int)world_rank, k, buf[k] );
+          if (buf[k]!=0) printf("%4d: buf[%d] = %lf \n", (int)world_rank, k, buf[k] );
 
         free(buf);
 
-        if ( world_rank == 0 ) printf("after fast bcast algorithm %ld (%s) - %d ints took %lf seconds (%lf MB/s) \n", 
-                                       b, fast_bcast_meta[b].name, d, t1-t0, 1e-6*d*sizeof(int)/(t1-t0) );
+        if ( world_rank == 0 ) printf("fast bcast algorithm %ld (%s) - %d ints took %lf seconds (%lf MB/s) \n", 
+                                       b, fast_bcast_meta[b].name, d, t1-t0, 1e-6*d*sizeof(double)/(t1-t0) );
         fflush(stdout);
     }
-#endif
 
   /* finalize the contexts */
   result = PAMI_Context_destroyv( contexts, num_contexts );

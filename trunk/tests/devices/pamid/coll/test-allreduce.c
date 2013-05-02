@@ -42,8 +42,8 @@ int main(int argc, char* argv[])
   config.name = PAMI_CLIENT_PROCESSOR_NAME;
   result = PAMI_Client_query( client, &config, 1);
   TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Client_query");
-  printf("rank %ld is processor %s \n", world_rank, config.value.chararray);
-  fflush(stdout);
+  //printf("rank %ld is processor %s \n", world_rank, config.value.chararray);
+  //fflush(stdout);
 
   config.name = PAMI_CLIENT_NUM_CONTEXTS;
   result = PAMI_Client_query( client, &config, 1);
@@ -111,21 +111,18 @@ int main(int argc, char* argv[])
         allreduce.cookie    = (void*) &active;
         allreduce.algorithm = safe_allreduce_algs[b];
 
-        int * sbuf = safemalloc(d*sizeof(int));
-        int * rbuf = safemalloc(d*sizeof(int));
-        for (int k=0; k<d; k++) sbuf[k]   = 1;
-        for (int k=0; k<d; k++) rbuf[k]   = 0;
+        double * sbuf = safemalloc(d*sizeof(double));
+        double * rbuf = safemalloc(d*sizeof(double));
+        for (int k=0; k<d; k++) sbuf[k]   = 1.;
+        for (int k=0; k<d; k++) rbuf[k]   = 0.;
 
         allreduce.cmd.xfer_allreduce.op         = PAMI_DATA_SUM;
         allreduce.cmd.xfer_allreduce.sndbuf     = (void*)sbuf;
-        allreduce.cmd.xfer_allreduce.stype      = PAMI_TYPE_SIGNED_INT;
+        allreduce.cmd.xfer_allreduce.stype      = PAMI_TYPE_DOUBLE;
         allreduce.cmd.xfer_allreduce.stypecount = d;
         allreduce.cmd.xfer_allreduce.rcvbuf     = (void*)rbuf;
-        allreduce.cmd.xfer_allreduce.rtype      = PAMI_TYPE_SIGNED_INT;
+        allreduce.cmd.xfer_allreduce.rtype      = PAMI_TYPE_DOUBLE;
         allreduce.cmd.xfer_allreduce.rtypecount = d;
-
-        if ( world_rank == 0 ) printf("trying safe allreduce algorithm %ld (%s) \n", b, safe_allreduce_meta[b].name );
-        fflush(stdout);
 
         active = 1;
         double t0 = PAMI_Wtime(client);
@@ -137,13 +134,55 @@ int main(int argc, char* argv[])
         double t1 = PAMI_Wtime(client);
 
         for (int k=0; k<d; k++) 
-          if (rbuf[k]!=world_size) printf("%4d: rbuf[%d] = %d \n", (int)world_rank, k, rbuf[k] );
+          if (rbuf[k]!=(double)world_size) printf("%4d: rbuf[%d] = %lf \n", (int)world_rank, k, rbuf[k] );
 
         free(sbuf);
         free(rbuf);
 
-        if ( world_rank == 0 ) printf("after safe allreduce algorithm %ld (%s) - %d ints took %lf seconds (%lf MB/s) \n",
-                                       b, safe_allreduce_meta[b].name, d, t1-t0, 1e-6*d*sizeof(int)/(t1-t0) );
+        if ( world_rank == 0 ) printf("safe allreduce algorithm %ld (%s) - %d ints took %lf seconds (%lf MB/s) \n",
+                                       b, safe_allreduce_meta[b].name, d, t1-t0, 1e-6*d*sizeof(double)/(t1-t0) );
+        fflush(stdout);
+    }
+
+  for ( int d = 1; d < 512 ; d++ ) /* allreduce and allgather barf >496 bytes */
+    for ( size_t b = 0 ; b < num_allreduce_alg[1] ; b++ )
+    {
+        pami_xfer_t allreduce;
+
+        allreduce.cb_done   = cb_done;
+        allreduce.cookie    = (void*) &active;
+        allreduce.algorithm = fast_allreduce_algs[b];
+
+        double * sbuf = safemalloc(d*sizeof(double));
+        double * rbuf = safemalloc(d*sizeof(double));
+        for (int k=0; k<d; k++) sbuf[k]   = 1.;
+        for (int k=0; k<d; k++) rbuf[k]   = 0.;
+
+        allreduce.cmd.xfer_allreduce.op         = PAMI_DATA_SUM;
+        allreduce.cmd.xfer_allreduce.sndbuf     = (void*)sbuf;
+        allreduce.cmd.xfer_allreduce.stype      = PAMI_TYPE_DOUBLE;
+        allreduce.cmd.xfer_allreduce.stypecount = d;
+        allreduce.cmd.xfer_allreduce.rcvbuf     = (void*)rbuf;
+        allreduce.cmd.xfer_allreduce.rtype      = PAMI_TYPE_DOUBLE;
+        allreduce.cmd.xfer_allreduce.rtypecount = d;
+
+        active = 1;
+        double t0 = PAMI_Wtime(client);
+        result = PAMI_Collective( contexts[0], &allreduce );
+        TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Collective - allreduce");
+        while (active)
+          result = PAMI_Context_advance( contexts[0], 1 );
+        TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Context_advance - allreduce");
+        double t1 = PAMI_Wtime(client);
+
+        for (int k=0; k<d; k++) 
+          if (rbuf[k]!=(double)world_size) printf("%4d: rbuf[%d] = %lf \n", (int)world_rank, k, rbuf[k] );
+
+        free(sbuf);
+        free(rbuf);
+
+        if ( world_rank == 0 ) printf("fast allreduce algorithm %ld (%s) - %d ints took %lf seconds (%lf MB/s) \n",
+                                       b, fast_allreduce_meta[b].name, d, t1-t0, 1e-6*d*sizeof(double)/(t1-t0) );
         fflush(stdout);
     }
 
