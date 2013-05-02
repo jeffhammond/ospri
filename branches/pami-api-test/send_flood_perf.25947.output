@@ -1,0 +1,11 @@
+# send flood performance test
+#   Number of tasks 'flooding' task 0: 1
+#
+# testcase 0 : header bytes =   0
+#
+#          [- testcase 0 -] 
+#    bytes  cycles    usec  
+       512    1780  1.1125  
+       769    2144  1.3400  
+      1154    2068  1.2925  
+      1732    2589  1.6181  
