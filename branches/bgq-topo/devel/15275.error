@@ -1,0 +1,4 @@
++ /bgsys/drivers/ppcfloor/bin/runjob --mapping TCEBAD --block EAS-20040-31371-128 --np 256 --ranks-per-node 2 --cwd /veas_home/jhammond/OSPRI/branches/bgq-topo/devel --envs BG_SHAREDMEMSIZE=32 --envs COBALT_JOBID=15275 --verbose 4 : /veas_home/jhammond/OSPRI/branches/bgq-topo/devel/mpix.x
+2012-04-30 03:23:11.668 (INFO ) [0xfff817f8f90] EAS-20040-31371-128:35700:ibm.runjob.client.options.Parser: set local socket to runjob_mux from properties file
+2012-04-30 03:23:13.537 (INFO ) [0xfff817f8f90] EAS-20040-31371-128:27198:ibm.runjob.client.Job: job 27198 started
+2012-04-30 03:23:15.116 (INFO ) [0xfff817f8f90] EAS-20040-31371-128:27198:ibm.runjob.client.Job: exited with status 0
