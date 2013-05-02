@@ -1,0 +1,1377 @@
+MPIDI_Process.*
+  verbose               : 1
+  statistics            : 0
+  contexts              : 1
+  async_progress        : 1
+  context_post          : 0
+  short_limit           : 113
+  eager_limit           : 2049
+  eager_limit_local     : 0
+  rma_pending           : 1000
+  shmem_pt2pt           : 1
+  optimized.collectives : 1
+  optimized.select_colls: 2
+  optimized.subcomms    : 1
+The following MPICH_* environment variables were specified:
+The following PAMID_* environment variables were specified:
+  PAMID_ASYNC_PROGRESS=1
+  PAMID_VERBOSE=1
+The following PAMI_* environment variables were specified:
+The following COMMAGENT_* environment variables were specified:
+The following MUSPI_* environment variables were specified:
+The following BG_* environment variables were specified:
+  BG_SHAREDMEMSIZE=32
+MPI test program running on 8 ranks. 
+================================================================= 
+Put individual from rank 0 to rank 0 of 1 bytes took 0.000842 seconds: 0.118722 MB/s 
+Put individual from rank 0 to rank 0 of 2 bytes took 0.000825 seconds: 0.242463 MB/s 
+Put individual from rank 0 to rank 0 of 4 bytes took 0.000827 seconds: 0.483751 MB/s 
+Put individual from rank 0 to rank 0 of 8 bytes took 0.000828 seconds: 0.966325 MB/s 
+Put individual from rank 0 to rank 0 of 16 bytes took 0.000835 seconds: 1.916437 MB/s 
+Put individual from rank 0 to rank 0 of 32 bytes took 0.000827 seconds: 3.871098 MB/s 
+Put individual from rank 0 to rank 0 of 64 bytes took 0.000827 seconds: 7.741225 MB/s 
+Put individual from rank 0 to rank 0 of 128 bytes took 0.000845 seconds: 15.145240 MB/s 
+Put individual from rank 0 to rank 0 of 256 bytes took 0.000883 seconds: 28.999955 MB/s 
+Put individual from rank 0 to rank 0 of 512 bytes took 0.000930 seconds: 55.046439 MB/s 
+Put individual from rank 0 to rank 0 of 1024 bytes took 0.000944 seconds: 108.482261 MB/s 
+Put individual from rank 0 to rank 0 of 2048 bytes took 0.001008 seconds: 203.215932 MB/s 
+Put individual from rank 0 to rank 0 of 4096 bytes took 0.001408 seconds: 290.850993 MB/s 
+Put individual from rank 0 to rank 0 of 8192 bytes took 0.001612 seconds: 508.205137 MB/s 
+Put individual from rank 0 to rank 0 of 16384 bytes took 0.002010 seconds: 814.999695 MB/s 
+Put individual from rank 0 to rank 0 of 32768 bytes took 0.002820 seconds: 1161.910106 MB/s 
+Put individual from rank 0 to rank 0 of 65536 bytes took 0.004234 seconds: 1547.735127 MB/s 
+Put individual from rank 0 to rank 0 of 131072 bytes took 0.008007 seconds: 1636.964842 MB/s 
+Put individual from rank 0 to rank 0 of 262144 bytes took 0.014790 seconds: 1772.404138 MB/s 
+Put individual from rank 0 to rank 0 of 524288 bytes took 0.028421 seconds: 1844.739844 MB/s 
+Put individual from rank 0 to rank 0 of 1048576 bytes took 0.055380 seconds: 1893.403981 MB/s 
+Put individual from rank 0 to rank 1 of 1 bytes took 0.001085 seconds: 0.092172 MB/s 
+Put individual from rank 0 to rank 1 of 2 bytes took 0.001020 seconds: 0.196109 MB/s 
+Put individual from rank 0 to rank 1 of 4 bytes took 0.001019 seconds: 0.392376 MB/s 
+Put individual from rank 0 to rank 1 of 8 bytes took 0.001022 seconds: 0.782599 MB/s 
+Put individual from rank 0 to rank 1 of 16 bytes took 0.001028 seconds: 1.557085 MB/s 
+Put individual from rank 0 to rank 1 of 32 bytes took 0.001042 seconds: 3.069655 MB/s 
+Put individual from rank 0 to rank 1 of 64 bytes took 0.001040 seconds: 6.155222 MB/s 
+Put individual from rank 0 to rank 1 of 128 bytes took 0.001032 seconds: 12.404348 MB/s 
+Put individual from rank 0 to rank 1 of 256 bytes took 0.001063 seconds: 24.084880 MB/s 
+Put individual from rank 0 to rank 1 of 512 bytes took 0.001068 seconds: 47.932950 MB/s 
+Put individual from rank 0 to rank 1 of 1024 bytes took 0.001088 seconds: 94.081869 MB/s 
+Put individual from rank 0 to rank 1 of 2048 bytes took 0.001172 seconds: 174.780937 MB/s 
+Put individual from rank 0 to rank 1 of 4096 bytes took 0.001604 seconds: 255.343687 MB/s 
+Put individual from rank 0 to rank 1 of 8192 bytes took 0.001791 seconds: 457.388844 MB/s 
+Put individual from rank 0 to rank 1 of 16384 bytes took 0.002170 seconds: 754.926067 MB/s 
+Put individual from rank 0 to rank 1 of 32768 bytes took 0.002940 seconds: 1114.728445 MB/s 
+Put individual from rank 0 to rank 1 of 65536 bytes took 0.004416 seconds: 1483.891218 MB/s 
+Put individual from rank 0 to rank 1 of 131072 bytes took 0.008299 seconds: 1579.419063 MB/s 
+Put individual from rank 0 to rank 1 of 262144 bytes took 0.015036 seconds: 1743.432404 MB/s 
+Put individual from rank 0 to rank 1 of 524288 bytes took 0.028623 seconds: 1831.714497 MB/s 
+Put individual from rank 0 to rank 1 of 1048576 bytes took 0.055887 seconds: 1876.244770 MB/s 
+Put individual from rank 0 to rank 2 of 1 bytes took 0.001165 seconds: 0.085860 MB/s 
+Put individual from rank 0 to rank 2 of 2 bytes took 0.001111 seconds: 0.180011 MB/s 
+Put individual from rank 0 to rank 2 of 4 bytes took 0.001098 seconds: 0.364214 MB/s 
+Put individual from rank 0 to rank 2 of 8 bytes took 0.001084 seconds: 0.737714 MB/s 
+Put individual from rank 0 to rank 2 of 16 bytes took 0.001082 seconds: 1.478530 MB/s 
+Put individual from rank 0 to rank 2 of 32 bytes took 0.001087 seconds: 2.944536 MB/s 
+Put individual from rank 0 to rank 2 of 64 bytes took 0.001082 seconds: 5.912759 MB/s 
+Put individual from rank 0 to rank 2 of 128 bytes took 0.001091 seconds: 11.732813 MB/s 
+Put individual from rank 0 to rank 2 of 256 bytes took 0.001095 seconds: 23.376781 MB/s 
+Put individual from rank 0 to rank 2 of 512 bytes took 0.001144 seconds: 44.774178 MB/s 
+Put individual from rank 0 to rank 2 of 1024 bytes took 0.001265 seconds: 80.921589 MB/s 
+Put individual from rank 0 to rank 2 of 2048 bytes took 0.001497 seconds: 136.828427 MB/s 
+Put individual from rank 0 to rank 2 of 4096 bytes took 0.001962 seconds: 208.760314 MB/s 
+Put individual from rank 0 to rank 2 of 8192 bytes took 0.002913 seconds: 281.228624 MB/s 
+Put individual from rank 0 to rank 2 of 16384 bytes took 0.004842 seconds: 338.339819 MB/s 
+Put individual from rank 0 to rank 2 of 32768 bytes took 0.008692 seconds: 376.969085 MB/s 
+Put individual from rank 0 to rank 2 of 65536 bytes took 0.016304 seconds: 401.951522 MB/s 
+Put individual from rank 0 to rank 2 of 131072 bytes took 0.030940 seconds: 423.630938 MB/s 
+Put individual from rank 0 to rank 2 of 262144 bytes took 0.060735 seconds: 431.618237 MB/s 
+Put individual from rank 0 to rank 2 of 524288 bytes took 0.120339 seconds: 435.674728 MB/s 
+Put individual from rank 0 to rank 2 of 1048576 bytes took 0.239556 seconds: 437.715599 MB/s 
+Put individual from rank 0 to rank 3 of 1 bytes took 0.001203 seconds: 0.083094 MB/s 
+Put individual from rank 0 to rank 3 of 2 bytes took 0.001183 seconds: 0.169046 MB/s 
+Put individual from rank 0 to rank 3 of 4 bytes took 0.001175 seconds: 0.340318 MB/s 
+Put individual from rank 0 to rank 3 of 8 bytes took 0.001153 seconds: 0.693874 MB/s 
+Put individual from rank 0 to rank 3 of 16 bytes took 0.001151 seconds: 1.390156 MB/s 
+Put individual from rank 0 to rank 3 of 32 bytes took 0.001153 seconds: 2.774611 MB/s 
+Put individual from rank 0 to rank 3 of 64 bytes took 0.001153 seconds: 5.550262 MB/s 
+Put individual from rank 0 to rank 3 of 128 bytes took 0.001156 seconds: 11.076257 MB/s 
+Put individual from rank 0 to rank 3 of 256 bytes took 0.001154 seconds: 22.188540 MB/s 
+Put individual from rank 0 to rank 3 of 512 bytes took 0.001301 seconds: 39.353360 MB/s 
+Put individual from rank 0 to rank 3 of 1024 bytes took 0.001387 seconds: 73.806390 MB/s 
+Put individual from rank 0 to rank 3 of 2048 bytes took 0.001624 seconds: 126.141386 MB/s 
+Put individual from rank 0 to rank 3 of 4096 bytes took 0.002097 seconds: 195.331315 MB/s 
+Put individual from rank 0 to rank 3 of 8192 bytes took 0.003039 seconds: 269.522225 MB/s 
+Put individual from rank 0 to rank 3 of 16384 bytes took 0.004917 seconds: 333.208258 MB/s 
+Put individual from rank 0 to rank 3 of 32768 bytes took 0.008540 seconds: 383.682375 MB/s 
+Put individual from rank 0 to rank 3 of 65536 bytes took 0.015997 seconds: 409.679952 MB/s 
+Put individual from rank 0 to rank 3 of 131072 bytes took 0.030894 seconds: 424.267714 MB/s 
+Put individual from rank 0 to rank 3 of 262144 bytes took 0.060850 seconds: 430.800474 MB/s 
+Put individual from rank 0 to rank 3 of 524288 bytes took 0.120439 seconds: 435.312457 MB/s 
+Put individual from rank 0 to rank 3 of 1048576 bytes took 0.239684 seconds: 437.483578 MB/s 
+Put individual from rank 0 to rank 4 of 1 bytes took 0.001113 seconds: 0.089850 MB/s 
+Put individual from rank 0 to rank 4 of 2 bytes took 0.001096 seconds: 0.182483 MB/s 
+Put individual from rank 0 to rank 4 of 4 bytes took 0.001085 seconds: 0.368712 MB/s 
+Put individual from rank 0 to rank 4 of 8 bytes took 0.001071 seconds: 0.746660 MB/s 
+Put individual from rank 0 to rank 4 of 16 bytes took 0.001067 seconds: 1.499129 MB/s 
+Put individual from rank 0 to rank 4 of 32 bytes took 0.001070 seconds: 2.989442 MB/s 
+Put individual from rank 0 to rank 4 of 64 bytes took 0.001071 seconds: 5.976658 MB/s 
+Put individual from rank 0 to rank 4 of 128 bytes took 0.001068 seconds: 11.982186 MB/s 
+Put individual from rank 0 to rank 4 of 256 bytes took 0.001072 seconds: 23.886920 MB/s 
+Put individual from rank 0 to rank 4 of 512 bytes took 0.001124 seconds: 45.537624 MB/s 
+Put individual from rank 0 to rank 4 of 1024 bytes took 0.001255 seconds: 81.615980 MB/s 
+Put individual from rank 0 to rank 4 of 2048 bytes took 0.001478 seconds: 138.548053 MB/s 
+Put individual from rank 0 to rank 4 of 4096 bytes took 0.001941 seconds: 211.052020 MB/s 
+Put individual from rank 0 to rank 4 of 8192 bytes took 0.002872 seconds: 285.226093 MB/s 
+Put individual from rank 0 to rank 4 of 16384 bytes took 0.004722 seconds: 346.989718 MB/s 
+Put individual from rank 0 to rank 4 of 32768 bytes took 0.008425 seconds: 388.958172 MB/s 
+Put individual from rank 0 to rank 4 of 65536 bytes took 0.015843 seconds: 413.665035 MB/s 
+Put individual from rank 0 to rank 4 of 131072 bytes took 0.030701 seconds: 426.936247 MB/s 
+Put individual from rank 0 to rank 4 of 262144 bytes took 0.060694 seconds: 431.907686 MB/s 
+Put individual from rank 0 to rank 4 of 524288 bytes took 0.120337 seconds: 435.682711 MB/s 
+Put individual from rank 0 to rank 4 of 1048576 bytes took 0.239588 seconds: 437.657817 MB/s 
+Put individual from rank 0 to rank 5 of 1 bytes took 0.001266 seconds: 0.078987 MB/s 
+Put individual from rank 0 to rank 5 of 2 bytes took 0.001230 seconds: 0.162543 MB/s 
+Put individual from rank 0 to rank 5 of 4 bytes took 0.001192 seconds: 0.335689 MB/s 
+Put individual from rank 0 to rank 5 of 8 bytes took 0.001154 seconds: 0.693209 MB/s 
+Put individual from rank 0 to rank 5 of 16 bytes took 0.001154 seconds: 1.387003 MB/s 
+Put individual from rank 0 to rank 5 of 32 bytes took 0.001156 seconds: 2.768552 MB/s 
+Put individual from rank 0 to rank 5 of 64 bytes took 0.001161 seconds: 5.513207 MB/s 
+Put individual from rank 0 to rank 5 of 128 bytes took 0.001150 seconds: 11.129600 MB/s 
+Put individual from rank 0 to rank 5 of 256 bytes took 0.001167 seconds: 21.941972 MB/s 
+Put individual from rank 0 to rank 5 of 512 bytes took 0.001334 seconds: 38.384586 MB/s 
+Put individual from rank 0 to rank 5 of 1024 bytes took 0.001386 seconds: 73.903136 MB/s 
+Put individual from rank 0 to rank 5 of 2048 bytes took 0.001624 seconds: 126.122548 MB/s 
+Put individual from rank 0 to rank 5 of 4096 bytes took 0.002093 seconds: 195.696680 MB/s 
+Put individual from rank 0 to rank 5 of 8192 bytes took 0.003038 seconds: 269.607157 MB/s 
+Put individual from rank 0 to rank 5 of 16384 bytes took 0.004919 seconds: 333.071512 MB/s 
+Put individual from rank 0 to rank 5 of 32768 bytes took 0.008533 seconds: 384.024395 MB/s 
+Put individual from rank 0 to rank 5 of 65536 bytes took 0.015988 seconds: 409.912783 MB/s 
+Put individual from rank 0 to rank 5 of 131072 bytes took 0.030871 seconds: 424.572998 MB/s 
+Put individual from rank 0 to rank 5 of 262144 bytes took 0.060818 seconds: 431.032103 MB/s 
+Put individual from rank 0 to rank 5 of 524288 bytes took 0.120440 seconds: 435.309746 MB/s 
+Put individual from rank 0 to rank 5 of 1048576 bytes took 0.239681 seconds: 437.487356 MB/s 
+Put individual from rank 0 to rank 6 of 1 bytes took 0.001173 seconds: 0.085228 MB/s 
+Put individual from rank 0 to rank 6 of 2 bytes took 0.001154 seconds: 0.173263 MB/s 
+Put individual from rank 0 to rank 6 of 4 bytes took 0.001134 seconds: 0.352851 MB/s 
+Put individual from rank 0 to rank 6 of 8 bytes took 0.001112 seconds: 0.719186 MB/s 
+Put individual from rank 0 to rank 6 of 16 bytes took 0.001112 seconds: 1.439017 MB/s 
+Put individual from rank 0 to rank 6 of 32 bytes took 0.001113 seconds: 2.874350 MB/s 
+Put individual from rank 0 to rank 6 of 64 bytes took 0.001111 seconds: 5.761296 MB/s 
+Put individual from rank 0 to rank 6 of 128 bytes took 0.001115 seconds: 11.475331 MB/s 
+Put individual from rank 0 to rank 6 of 256 bytes took 0.001132 seconds: 22.612069 MB/s 
+Put individual from rank 0 to rank 6 of 512 bytes took 0.001184 seconds: 43.245617 MB/s 
+Put individual from rank 0 to rank 6 of 1024 bytes took 0.001300 seconds: 78.771806 MB/s 
+Put individual from rank 0 to rank 6 of 2048 bytes took 0.001533 seconds: 133.554511 MB/s 
+Put individual from rank 0 to rank 6 of 4096 bytes took 0.001989 seconds: 205.925770 MB/s 
+Put individual from rank 0 to rank 6 of 8192 bytes took 0.002912 seconds: 281.343318 MB/s 
+Put individual from rank 0 to rank 6 of 16384 bytes took 0.004765 seconds: 343.867024 MB/s 
+Put individual from rank 0 to rank 6 of 32768 bytes took 0.008455 seconds: 387.554851 MB/s 
+Put individual from rank 0 to rank 6 of 65536 bytes took 0.015869 seconds: 412.985611 MB/s 
+Put individual from rank 0 to rank 6 of 131072 bytes took 0.030739 seconds: 426.404449 MB/s 
+Put individual from rank 0 to rank 6 of 262144 bytes took 0.060720 seconds: 431.724649 MB/s 
+Put individual from rank 0 to rank 6 of 524288 bytes took 0.120357 seconds: 435.609815 MB/s 
+Put individual from rank 0 to rank 6 of 1048576 bytes took 0.239568 seconds: 437.694003 MB/s 
+Put individual from rank 0 to rank 7 of 1 bytes took 0.001394 seconds: 0.071734 MB/s 
+Put individual from rank 0 to rank 7 of 2 bytes took 0.001365 seconds: 0.146561 MB/s 
+Put individual from rank 0 to rank 7 of 4 bytes took 0.001253 seconds: 0.319255 MB/s 
+Put individual from rank 0 to rank 7 of 8 bytes took 0.001174 seconds: 0.681239 MB/s 
+Put individual from rank 0 to rank 7 of 16 bytes took 0.001183 seconds: 1.352399 MB/s 
+Put individual from rank 0 to rank 7 of 32 bytes took 0.001186 seconds: 2.698833 MB/s 
+Put individual from rank 0 to rank 7 of 64 bytes took 0.001166 seconds: 5.487762 MB/s 
+Put individual from rank 0 to rank 7 of 128 bytes took 0.001167 seconds: 10.963691 MB/s 
+Put individual from rank 0 to rank 7 of 256 bytes took 0.001271 seconds: 20.146138 MB/s 
+Put individual from rank 0 to rank 7 of 512 bytes took 0.001384 seconds: 37.003410 MB/s 
+Put individual from rank 0 to rank 7 of 1024 bytes took 0.001384 seconds: 73.983762 MB/s 
+Put individual from rank 0 to rank 7 of 2048 bytes took 0.001620 seconds: 126.397224 MB/s 
+Put individual from rank 0 to rank 7 of 4096 bytes took 0.002093 seconds: 195.746481 MB/s 
+Put individual from rank 0 to rank 7 of 8192 bytes took 0.003036 seconds: 269.851499 MB/s 
+Put individual from rank 0 to rank 7 of 16384 bytes took 0.004919 seconds: 333.082346 MB/s 
+Put individual from rank 0 to rank 7 of 32768 bytes took 0.008555 seconds: 383.036872 MB/s 
+Put individual from rank 0 to rank 7 of 65536 bytes took 0.015990 seconds: 409.853981 MB/s 
+Put individual from rank 0 to rank 7 of 131072 bytes took 0.030905 seconds: 424.110356 MB/s 
+Put individual from rank 0 to rank 7 of 262144 bytes took 0.060843 seconds: 430.852135 MB/s 
+Put individual from rank 0 to rank 7 of 524288 bytes took 0.120473 seconds: 435.191942 MB/s 
+Put individual from rank 0 to rank 7 of 1048576 bytes took 0.239699 seconds: 437.454544 MB/s 
+================================================================= 
+Put bulk from rank 0 to rank 0 of 1 bytes took 0.000208 seconds: 0.480106 MB/s 
+Put bulk from rank 0 to rank 0 of 2 bytes took 0.000189 seconds: 1.057041 MB/s 
+Put bulk from rank 0 to rank 0 of 4 bytes took 0.000190 seconds: 2.101599 MB/s 
+Put bulk from rank 0 to rank 0 of 8 bytes took 0.000192 seconds: 4.170821 MB/s 
+Put bulk from rank 0 to rank 0 of 16 bytes took 0.000194 seconds: 8.228707 MB/s 
+Put bulk from rank 0 to rank 0 of 32 bytes took 0.000200 seconds: 15.968861 MB/s 
+Put bulk from rank 0 to rank 0 of 64 bytes took 0.000205 seconds: 31.272523 MB/s 
+Put bulk from rank 0 to rank 0 of 128 bytes took 0.000214 seconds: 59.935265 MB/s 
+Put bulk from rank 0 to rank 0 of 256 bytes took 0.000211 seconds: 121.612313 MB/s 
+Put bulk from rank 0 to rank 0 of 512 bytes took 0.000242 seconds: 211.904084 MB/s 
+Put bulk from rank 0 to rank 0 of 1024 bytes took 0.000262 seconds: 391.393359 MB/s 
+Put bulk from rank 0 to rank 0 of 2048 bytes took 0.000308 seconds: 664.091475 MB/s 
+Put bulk from rank 0 to rank 0 of 4096 bytes took 0.000579 seconds: 707.041937 MB/s 
+Put bulk from rank 0 to rank 0 of 8192 bytes took 0.000753 seconds: 1088.589050 MB/s 
+Put bulk from rank 0 to rank 0 of 16384 bytes took 0.001103 seconds: 1485.379878 MB/s 
+Put bulk from rank 0 to rank 0 of 32768 bytes took 0.001797 seconds: 1823.377043 MB/s 
+Put bulk from rank 0 to rank 0 of 65536 bytes took 0.003332 seconds: 1966.847562 MB/s 
+Put bulk from rank 0 to rank 0 of 131072 bytes took 0.007200 seconds: 1820.524408 MB/s 
+Put bulk from rank 0 to rank 0 of 262144 bytes took 0.013963 seconds: 1877.427464 MB/s 
+Put bulk from rank 0 to rank 0 of 524288 bytes took 0.027561 seconds: 1902.316463 MB/s 
+Put bulk from rank 0 to rank 0 of 1048576 bytes took 0.054488 seconds: 1924.405569 MB/s 
+Put bulk from rank 0 to rank 1 of 1 bytes took 0.000852 seconds: 0.117313 MB/s 
+Put bulk from rank 0 to rank 1 of 2 bytes took 0.000226 seconds: 0.885164 MB/s 
+Put bulk from rank 0 to rank 1 of 4 bytes took 0.000223 seconds: 1.791884 MB/s 
+Put bulk from rank 0 to rank 1 of 8 bytes took 0.000226 seconds: 3.532574 MB/s 
+Put bulk from rank 0 to rank 1 of 16 bytes took 0.000218 seconds: 7.341449 MB/s 
+Put bulk from rank 0 to rank 1 of 32 bytes took 0.000221 seconds: 14.484595 MB/s 
+Put bulk from rank 0 to rank 1 of 64 bytes took 0.000218 seconds: 29.332822 MB/s 
+Put bulk from rank 0 to rank 1 of 128 bytes took 0.000241 seconds: 53.104183 MB/s 
+Put bulk from rank 0 to rank 1 of 256 bytes took 0.000232 seconds: 110.161127 MB/s 
+Put bulk from rank 0 to rank 1 of 512 bytes took 0.000229 seconds: 223.935881 MB/s 
+Put bulk from rank 0 to rank 1 of 1024 bytes took 0.000230 seconds: 446.047670 MB/s 
+Put bulk from rank 0 to rank 1 of 2048 bytes took 0.000232 seconds: 883.899213 MB/s 
+Put bulk from rank 0 to rank 1 of 4096 bytes took 0.000322 seconds: 1273.144416 MB/s 
+Put bulk from rank 0 to rank 1 of 8192 bytes took 0.000506 seconds: 1617.799348 MB/s 
+Put bulk from rank 0 to rank 1 of 16384 bytes took 0.000879 seconds: 1863.582497 MB/s 
+Put bulk from rank 0 to rank 1 of 32768 bytes took 0.001667 seconds: 1965.689074 MB/s 
+Put bulk from rank 0 to rank 1 of 65536 bytes took 0.003198 seconds: 2049.528340 MB/s 
+Put bulk from rank 0 to rank 1 of 131072 bytes took 0.007049 seconds: 1859.476997 MB/s 
+Put bulk from rank 0 to rank 1 of 262144 bytes took 0.013793 seconds: 1900.558426 MB/s 
+Put bulk from rank 0 to rank 1 of 524288 bytes took 0.027362 seconds: 1916.117856 MB/s 
+Put bulk from rank 0 to rank 1 of 1048576 bytes took 0.054528 seconds: 1923.003505 MB/s 
+Put bulk from rank 0 to rank 2 of 1 bytes took 0.000568 seconds: 0.176181 MB/s 
+Put bulk from rank 0 to rank 2 of 2 bytes took 0.000250 seconds: 0.799742 MB/s 
+Put bulk from rank 0 to rank 2 of 4 bytes took 0.000253 seconds: 1.580914 MB/s 
+Put bulk from rank 0 to rank 2 of 8 bytes took 0.000247 seconds: 3.235093 MB/s 
+Put bulk from rank 0 to rank 2 of 16 bytes took 0.000246 seconds: 6.501208 MB/s 
+Put bulk from rank 0 to rank 2 of 32 bytes took 0.000248 seconds: 12.894744 MB/s 
+Put bulk from rank 0 to rank 2 of 64 bytes took 0.000246 seconds: 25.977386 MB/s 
+Put bulk from rank 0 to rank 2 of 128 bytes took 0.000247 seconds: 51.880017 MB/s 
+Put bulk from rank 0 to rank 2 of 256 bytes took 0.000247 seconds: 103.586322 MB/s 
+Put bulk from rank 0 to rank 2 of 512 bytes took 0.000248 seconds: 206.772089 MB/s 
+Put bulk from rank 0 to rank 2 of 1024 bytes took 0.000265 seconds: 385.895410 MB/s 
+Put bulk from rank 0 to rank 2 of 2048 bytes took 0.000500 seconds: 409.324218 MB/s 
+Put bulk from rank 0 to rank 2 of 4096 bytes took 0.000972 seconds: 421.597343 MB/s 
+Put bulk from rank 0 to rank 2 of 8192 bytes took 0.001904 seconds: 430.220326 MB/s 
+Put bulk from rank 0 to rank 2 of 16384 bytes took 0.003871 seconds: 423.212839 MB/s 
+Put bulk from rank 0 to rank 2 of 32768 bytes took 0.007670 seconds: 427.240737 MB/s 
+Put bulk from rank 0 to rank 2 of 65536 bytes took 0.015336 seconds: 427.336519 MB/s 
+Put bulk from rank 0 to rank 2 of 131072 bytes took 0.030098 seconds: 435.487902 MB/s 
+Put bulk from rank 0 to rank 2 of 262144 bytes took 0.059650 seconds: 439.472103 MB/s 
+Put bulk from rank 0 to rank 2 of 524288 bytes took 0.119184 seconds: 439.899754 MB/s 
+Put bulk from rank 0 to rank 2 of 1048576 bytes took 0.238323 seconds: 439.981676 MB/s 
+Put bulk from rank 0 to rank 3 of 1 bytes took 0.000316 seconds: 0.316624 MB/s 
+Put bulk from rank 0 to rank 3 of 2 bytes took 0.000258 seconds: 0.774704 MB/s 
+Put bulk from rank 0 to rank 3 of 4 bytes took 0.000253 seconds: 1.582087 MB/s 
+Put bulk from rank 0 to rank 3 of 8 bytes took 0.000252 seconds: 3.171968 MB/s 
+Put bulk from rank 0 to rank 3 of 16 bytes took 0.000256 seconds: 6.249802 MB/s 
+Put bulk from rank 0 to rank 3 of 32 bytes took 0.000252 seconds: 12.687431 MB/s 
+Put bulk from rank 0 to rank 3 of 64 bytes took 0.000255 seconds: 25.104992 MB/s 
+Put bulk from rank 0 to rank 3 of 128 bytes took 0.000252 seconds: 50.812428 MB/s 
+Put bulk from rank 0 to rank 3 of 256 bytes took 0.000254 seconds: 100.832806 MB/s 
+Put bulk from rank 0 to rank 3 of 512 bytes took 0.000249 seconds: 205.482716 MB/s 
+Put bulk from rank 0 to rank 3 of 1024 bytes took 0.000266 seconds: 385.397971 MB/s 
+Put bulk from rank 0 to rank 3 of 2048 bytes took 0.000493 seconds: 415.184754 MB/s 
+Put bulk from rank 0 to rank 3 of 4096 bytes took 0.000954 seconds: 429.127725 MB/s 
+Put bulk from rank 0 to rank 3 of 8192 bytes took 0.001878 seconds: 436.201329 MB/s 
+Put bulk from rank 0 to rank 3 of 16384 bytes took 0.003732 seconds: 439.043418 MB/s 
+Put bulk from rank 0 to rank 3 of 32768 bytes took 0.007435 seconds: 440.729370 MB/s 
+Put bulk from rank 0 to rank 3 of 65536 bytes took 0.014836 seconds: 441.750814 MB/s 
+Put bulk from rank 0 to rank 3 of 131072 bytes took 0.029733 seconds: 440.825162 MB/s 
+Put bulk from rank 0 to rank 3 of 262144 bytes took 0.059629 seconds: 439.625899 MB/s 
+Put bulk from rank 0 to rank 3 of 524288 bytes took 0.119216 seconds: 439.780034 MB/s 
+Put bulk from rank 0 to rank 3 of 1048576 bytes took 0.238309 seconds: 440.006559 MB/s 
+Put bulk from rank 0 to rank 4 of 1 bytes took 0.000322 seconds: 0.310776 MB/s 
+Put bulk from rank 0 to rank 4 of 2 bytes took 0.000252 seconds: 0.792513 MB/s 
+Put bulk from rank 0 to rank 4 of 4 bytes took 0.000256 seconds: 1.560409 MB/s 
+Put bulk from rank 0 to rank 4 of 8 bytes took 0.000255 seconds: 3.141081 MB/s 
+Put bulk from rank 0 to rank 4 of 16 bytes took 0.000253 seconds: 6.326783 MB/s 
+Put bulk from rank 0 to rank 4 of 32 bytes took 0.000253 seconds: 12.663832 MB/s 
+Put bulk from rank 0 to rank 4 of 64 bytes took 0.000253 seconds: 25.267044 MB/s 
+Put bulk from rank 0 to rank 4 of 128 bytes took 0.000253 seconds: 50.669867 MB/s 
+Put bulk from rank 0 to rank 4 of 256 bytes took 0.000252 seconds: 101.643014 MB/s 
+Put bulk from rank 0 to rank 4 of 512 bytes took 0.000254 seconds: 201.598118 MB/s 
+Put bulk from rank 0 to rank 4 of 1024 bytes took 0.000265 seconds: 386.775416 MB/s 
+Put bulk from rank 0 to rank 4 of 2048 bytes took 0.000493 seconds: 415.809597 MB/s 
+Put bulk from rank 0 to rank 4 of 4096 bytes took 0.000953 seconds: 429.928920 MB/s 
+Put bulk from rank 0 to rank 4 of 8192 bytes took 0.001881 seconds: 435.412765 MB/s 
+Put bulk from rank 0 to rank 4 of 16384 bytes took 0.003731 seconds: 439.103281 MB/s 
+Put bulk from rank 0 to rank 4 of 32768 bytes took 0.007433 seconds: 440.831277 MB/s 
+Put bulk from rank 0 to rank 4 of 65536 bytes took 0.014846 seconds: 441.441578 MB/s 
+Put bulk from rank 0 to rank 4 of 131072 bytes took 0.029730 seconds: 440.871460 MB/s 
+Put bulk from rank 0 to rank 4 of 262144 bytes took 0.059623 seconds: 439.670241 MB/s 
+Put bulk from rank 0 to rank 4 of 524288 bytes took 0.119189 seconds: 439.881235 MB/s 
+Put bulk from rank 0 to rank 4 of 1048576 bytes took 0.238274 seconds: 440.071251 MB/s 
+Put bulk from rank 0 to rank 5 of 1 bytes took 0.000318 seconds: 0.314846 MB/s 
+Put bulk from rank 0 to rank 5 of 2 bytes took 0.000256 seconds: 0.782134 MB/s 
+Put bulk from rank 0 to rank 5 of 4 bytes took 0.000254 seconds: 1.577719 MB/s 
+Put bulk from rank 0 to rank 5 of 8 bytes took 0.000252 seconds: 3.179184 MB/s 
+Put bulk from rank 0 to rank 5 of 16 bytes took 0.000252 seconds: 6.350199 MB/s 
+Put bulk from rank 0 to rank 5 of 32 bytes took 0.000255 seconds: 12.573581 MB/s 
+Put bulk from rank 0 to rank 5 of 64 bytes took 0.000250 seconds: 25.648154 MB/s 
+Put bulk from rank 0 to rank 5 of 128 bytes took 0.000253 seconds: 50.536207 MB/s 
+Put bulk from rank 0 to rank 5 of 256 bytes took 0.000252 seconds: 101.647806 MB/s 
+Put bulk from rank 0 to rank 5 of 512 bytes took 0.000253 seconds: 202.656402 MB/s 
+Put bulk from rank 0 to rank 5 of 1024 bytes took 0.000264 seconds: 387.910930 MB/s 
+Put bulk from rank 0 to rank 5 of 2048 bytes took 0.000494 seconds: 414.365724 MB/s 
+Put bulk from rank 0 to rank 5 of 4096 bytes took 0.000955 seconds: 428.689265 MB/s 
+Put bulk from rank 0 to rank 5 of 8192 bytes took 0.001879 seconds: 435.894085 MB/s 
+Put bulk from rank 0 to rank 5 of 16384 bytes took 0.003730 seconds: 439.265743 MB/s 
+Put bulk from rank 0 to rank 5 of 32768 bytes took 0.007438 seconds: 440.518959 MB/s 
+Put bulk from rank 0 to rank 5 of 65536 bytes took 0.014845 seconds: 441.463508 MB/s 
+Put bulk from rank 0 to rank 5 of 131072 bytes took 0.029722 seconds: 440.986156 MB/s 
+Put bulk from rank 0 to rank 5 of 262144 bytes took 0.059638 seconds: 439.561029 MB/s 
+Put bulk from rank 0 to rank 5 of 524288 bytes took 0.119195 seconds: 439.856906 MB/s 
+Put bulk from rank 0 to rank 5 of 1048576 bytes took 0.238292 seconds: 440.038813 MB/s 
+Put bulk from rank 0 to rank 6 of 1 bytes took 0.000325 seconds: 0.307505 MB/s 
+Put bulk from rank 0 to rank 6 of 2 bytes took 0.000254 seconds: 0.788412 MB/s 
+Put bulk from rank 0 to rank 6 of 4 bytes took 0.000254 seconds: 1.577680 MB/s 
+Put bulk from rank 0 to rank 6 of 8 bytes took 0.000253 seconds: 3.164956 MB/s 
+Put bulk from rank 0 to rank 6 of 16 bytes took 0.000251 seconds: 6.369348 MB/s 
+Put bulk from rank 0 to rank 6 of 32 bytes took 0.000254 seconds: 12.605776 MB/s 
+Put bulk from rank 0 to rank 6 of 64 bytes took 0.000250 seconds: 25.549603 MB/s 
+Put bulk from rank 0 to rank 6 of 128 bytes took 0.000254 seconds: 50.347615 MB/s 
+Put bulk from rank 0 to rank 6 of 256 bytes took 0.000251 seconds: 101.830513 MB/s 
+Put bulk from rank 0 to rank 6 of 512 bytes took 0.000253 seconds: 202.074520 MB/s 
+Put bulk from rank 0 to rank 6 of 1024 bytes took 0.000265 seconds: 385.829980 MB/s 
+Put bulk from rank 0 to rank 6 of 2048 bytes took 0.000493 seconds: 415.810652 MB/s 
+Put bulk from rank 0 to rank 6 of 4096 bytes took 0.000953 seconds: 429.633544 MB/s 
+Put bulk from rank 0 to rank 6 of 8192 bytes took 0.001879 seconds: 436.088129 MB/s 
+Put bulk from rank 0 to rank 6 of 16384 bytes took 0.003731 seconds: 439.087688 MB/s 
+Put bulk from rank 0 to rank 6 of 32768 bytes took 0.007435 seconds: 440.746709 MB/s 
+Put bulk from rank 0 to rank 6 of 65536 bytes took 0.014844 seconds: 441.494326 MB/s 
+Put bulk from rank 0 to rank 6 of 131072 bytes took 0.029726 seconds: 440.929728 MB/s 
+Put bulk from rank 0 to rank 6 of 262144 bytes took 0.059628 seconds: 439.634572 MB/s 
+Put bulk from rank 0 to rank 6 of 524288 bytes took 0.119207 seconds: 439.812600 MB/s 
+Put bulk from rank 0 to rank 6 of 1048576 bytes took 0.238269 seconds: 440.080269 MB/s 
+Put bulk from rank 0 to rank 7 of 1 bytes took 0.000324 seconds: 0.308731 MB/s 
+Put bulk from rank 0 to rank 7 of 2 bytes took 0.000256 seconds: 0.781435 MB/s 
+Put bulk from rank 0 to rank 7 of 4 bytes took 0.000251 seconds: 1.590493 MB/s 
+Put bulk from rank 0 to rank 7 of 8 bytes took 0.000252 seconds: 3.177811 MB/s 
+Put bulk from rank 0 to rank 7 of 16 bytes took 0.000255 seconds: 6.272895 MB/s 
+Put bulk from rank 0 to rank 7 of 32 bytes took 0.000253 seconds: 12.624675 MB/s 
+Put bulk from rank 0 to rank 7 of 64 bytes took 0.000253 seconds: 25.311262 MB/s 
+Put bulk from rank 0 to rank 7 of 128 bytes took 0.000254 seconds: 50.415907 MB/s 
+Put bulk from rank 0 to rank 7 of 256 bytes took 0.000253 seconds: 100.990924 MB/s 
+Put bulk from rank 0 to rank 7 of 512 bytes took 0.000253 seconds: 202.303074 MB/s 
+Put bulk from rank 0 to rank 7 of 1024 bytes took 0.000265 seconds: 387.119030 MB/s 
+Put bulk from rank 0 to rank 7 of 2048 bytes took 0.000494 seconds: 414.524027 MB/s 
+Put bulk from rank 0 to rank 7 of 4096 bytes took 0.000952 seconds: 430.232047 MB/s 
+Put bulk from rank 0 to rank 7 of 8192 bytes took 0.001881 seconds: 435.509697 MB/s 
+Put bulk from rank 0 to rank 7 of 16384 bytes took 0.003732 seconds: 439.057389 MB/s 
+Put bulk from rank 0 to rank 7 of 32768 bytes took 0.007435 seconds: 440.728406 MB/s 
+Put bulk from rank 0 to rank 7 of 65536 bytes took 0.014846 seconds: 441.439924 MB/s 
+Put bulk from rank 0 to rank 7 of 131072 bytes took 0.029725 seconds: 440.947918 MB/s 
+Put bulk from rank 0 to rank 7 of 262144 bytes took 0.059654 seconds: 439.443924 MB/s 
+Put bulk from rank 0 to rank 7 of 524288 bytes took 0.119190 seconds: 439.876008 MB/s 
+Put bulk from rank 0 to rank 7 of 1048576 bytes took 0.238275 seconds: 440.068924 MB/s 
+================================================================= 
+Get individual from rank 0 to rank 0 of 1 bytes took 0.000894 seconds: 0.111879 MB/s 
+Get individual from rank 0 to rank 0 of 2 bytes took 0.000865 seconds: 0.231312 MB/s 
+Get individual from rank 0 to rank 0 of 4 bytes took 0.000871 seconds: 0.459493 MB/s 
+Get individual from rank 0 to rank 0 of 8 bytes took 0.000870 seconds: 0.919359 MB/s 
+Get individual from rank 0 to rank 0 of 16 bytes took 0.000892 seconds: 1.794323 MB/s 
+Get individual from rank 0 to rank 0 of 32 bytes took 0.000905 seconds: 3.535189 MB/s 
+Get individual from rank 0 to rank 0 of 64 bytes took 0.000906 seconds: 7.066665 MB/s 
+Get individual from rank 0 to rank 0 of 128 bytes took 0.000913 seconds: 14.023872 MB/s 
+Get individual from rank 0 to rank 0 of 256 bytes took 0.000907 seconds: 28.236689 MB/s 
+Get individual from rank 0 to rank 0 of 512 bytes took 0.000971 seconds: 52.735561 MB/s 
+Get individual from rank 0 to rank 0 of 1024 bytes took 0.000985 seconds: 103.942771 MB/s 
+Get individual from rank 0 to rank 0 of 2048 bytes took 0.001037 seconds: 197.431011 MB/s 
+Get individual from rank 0 to rank 0 of 4096 bytes took 0.001385 seconds: 295.823773 MB/s 
+Get individual from rank 0 to rank 0 of 8192 bytes took 0.001553 seconds: 527.404539 MB/s 
+Get individual from rank 0 to rank 0 of 16384 bytes took 0.001903 seconds: 860.884852 MB/s 
+Get individual from rank 0 to rank 0 of 32768 bytes took 0.002605 seconds: 1258.049554 MB/s 
+Get individual from rank 0 to rank 0 of 65536 bytes took 0.004117 seconds: 1591.947954 MB/s 
+Get individual from rank 0 to rank 0 of 131072 bytes took 0.007968 seconds: 1645.057083 MB/s 
+Get individual from rank 0 to rank 0 of 262144 bytes took 0.014666 seconds: 1787.415275 MB/s 
+Get individual from rank 0 to rank 0 of 524288 bytes took 0.028036 seconds: 1870.059876 MB/s 
+Get individual from rank 0 to rank 0 of 1048576 bytes took 0.054411 seconds: 1927.129860 MB/s 
+Get individual from rank 0 to rank 1 of 1 bytes took 0.000725 seconds: 0.137955 MB/s 
+Get individual from rank 0 to rank 1 of 2 bytes took 0.000701 seconds: 0.285481 MB/s 
+Get individual from rank 0 to rank 1 of 4 bytes took 0.000700 seconds: 0.571169 MB/s 
+Get individual from rank 0 to rank 1 of 8 bytes took 0.000701 seconds: 1.141686 MB/s 
+Get individual from rank 0 to rank 1 of 16 bytes took 0.000700 seconds: 2.285945 MB/s 
+Get individual from rank 0 to rank 1 of 32 bytes took 0.000703 seconds: 4.552208 MB/s 
+Get individual from rank 0 to rank 1 of 64 bytes took 0.000700 seconds: 9.142229 MB/s 
+Get individual from rank 0 to rank 1 of 128 bytes took 0.000701 seconds: 18.271407 MB/s 
+Get individual from rank 0 to rank 1 of 256 bytes took 0.000700 seconds: 36.551488 MB/s 
+Get individual from rank 0 to rank 1 of 512 bytes took 0.000701 seconds: 73.046136 MB/s 
+Get individual from rank 0 to rank 1 of 1024 bytes took 0.000708 seconds: 144.613747 MB/s 
+Get individual from rank 0 to rank 1 of 2048 bytes took 0.000937 seconds: 218.544102 MB/s 
+Get individual from rank 0 to rank 1 of 4096 bytes took 0.001138 seconds: 360.048544 MB/s 
+Get individual from rank 0 to rank 1 of 8192 bytes took 0.001254 seconds: 653.140628 MB/s 
+Get individual from rank 0 to rank 1 of 16384 bytes took 0.001671 seconds: 980.273301 MB/s 
+Get individual from rank 0 to rank 1 of 32768 bytes took 0.002378 seconds: 1377.748498 MB/s 
+Get individual from rank 0 to rank 1 of 65536 bytes took 0.003914 seconds: 1674.456811 MB/s 
+Get individual from rank 0 to rank 1 of 131072 bytes took 0.007697 seconds: 1702.852709 MB/s 
+Get individual from rank 0 to rank 1 of 262144 bytes took 0.014323 seconds: 1830.229020 MB/s 
+Get individual from rank 0 to rank 1 of 524288 bytes took 0.027607 seconds: 1899.121229 MB/s 
+Get individual from rank 0 to rank 1 of 1048576 bytes took 0.075417 seconds: 1390.369973 MB/s 
+Get individual from rank 0 to rank 2 of 1 bytes took 0.001054 seconds: 0.094918 MB/s 
+Get individual from rank 0 to rank 2 of 2 bytes took 0.001009 seconds: 0.198269 MB/s 
+Get individual from rank 0 to rank 2 of 4 bytes took 0.001009 seconds: 0.396347 MB/s 
+Get individual from rank 0 to rank 2 of 8 bytes took 0.000982 seconds: 0.814335 MB/s 
+Get individual from rank 0 to rank 2 of 16 bytes took 0.000964 seconds: 1.659816 MB/s 
+Get individual from rank 0 to rank 2 of 32 bytes took 0.000972 seconds: 3.292626 MB/s 
+Get individual from rank 0 to rank 2 of 64 bytes took 0.000970 seconds: 6.596995 MB/s 
+Get individual from rank 0 to rank 2 of 128 bytes took 0.000997 seconds: 12.841204 MB/s 
+Get individual from rank 0 to rank 2 of 256 bytes took 0.001024 seconds: 25.003235 MB/s 
+Get individual from rank 0 to rank 2 of 512 bytes took 0.001152 seconds: 44.460027 MB/s 
+Get individual from rank 0 to rank 2 of 1024 bytes took 0.001182 seconds: 86.648862 MB/s 
+Get individual from rank 0 to rank 2 of 2048 bytes took 0.001312 seconds: 156.045972 MB/s 
+Get individual from rank 0 to rank 2 of 4096 bytes took 0.001572 seconds: 260.556274 MB/s 
+Get individual from rank 0 to rank 2 of 8192 bytes took 0.002056 seconds: 398.418388 MB/s 
+Get individual from rank 0 to rank 2 of 16384 bytes took 0.003068 seconds: 534.096577 MB/s 
+Get individual from rank 0 to rank 2 of 32768 bytes took 0.005062 seconds: 647.358967 MB/s 
+Get individual from rank 0 to rank 2 of 65536 bytes took 0.009069 seconds: 722.634170 MB/s 
+Get individual from rank 0 to rank 2 of 131072 bytes took 0.016423 seconds: 798.078236 MB/s 
+Get individual from rank 0 to rank 2 of 262144 bytes took 0.033063 seconds: 792.860073 MB/s 
+Get individual from rank 0 to rank 2 of 524288 bytes took 0.064669 seconds: 810.724242 MB/s 
+Get individual from rank 0 to rank 2 of 1048576 bytes took 0.127437 seconds: 822.820983 MB/s 
+Get individual from rank 0 to rank 3 of 1 bytes took 0.001179 seconds: 0.084843 MB/s 
+Get individual from rank 0 to rank 3 of 2 bytes took 0.001154 seconds: 0.173319 MB/s 
+Get individual from rank 0 to rank 3 of 4 bytes took 0.001155 seconds: 0.346377 MB/s 
+Get individual from rank 0 to rank 3 of 8 bytes took 0.001146 seconds: 0.698330 MB/s 
+Get individual from rank 0 to rank 3 of 16 bytes took 0.001157 seconds: 1.382412 MB/s 
+Get individual from rank 0 to rank 3 of 32 bytes took 0.001152 seconds: 2.777214 MB/s 
+Get individual from rank 0 to rank 3 of 64 bytes took 0.001156 seconds: 5.538147 MB/s 
+Get individual from rank 0 to rank 3 of 128 bytes took 0.001159 seconds: 11.045135 MB/s 
+Get individual from rank 0 to rank 3 of 256 bytes took 0.001152 seconds: 22.224489 MB/s 
+Get individual from rank 0 to rank 3 of 512 bytes took 0.001220 seconds: 41.981494 MB/s 
+Get individual from rank 0 to rank 3 of 1024 bytes took 0.001353 seconds: 75.696814 MB/s 
+Get individual from rank 0 to rank 3 of 2048 bytes took 0.001385 seconds: 147.913155 MB/s 
+Get individual from rank 0 to rank 3 of 4096 bytes took 0.001618 seconds: 253.087712 MB/s 
+Get individual from rank 0 to rank 3 of 8192 bytes took 0.002086 seconds: 392.704385 MB/s 
+Get individual from rank 0 to rank 3 of 16384 bytes took 0.003140 seconds: 521.787594 MB/s 
+Get individual from rank 0 to rank 3 of 32768 bytes took 0.005063 seconds: 647.183644 MB/s 
+Get individual from rank 0 to rank 3 of 65536 bytes took 0.008869 seconds: 738.901913 MB/s 
+Get individual from rank 0 to rank 3 of 131072 bytes took 0.016275 seconds: 805.373128 MB/s 
+Get individual from rank 0 to rank 3 of 262144 bytes took 0.033240 seconds: 788.628715 MB/s 
+Get individual from rank 0 to rank 3 of 524288 bytes took 0.064132 seconds: 817.517590 MB/s 
+Get individual from rank 0 to rank 3 of 1048576 bytes took 0.129338 seconds: 810.724689 MB/s 
+Get individual from rank 0 to rank 4 of 1 bytes took 0.001002 seconds: 0.099806 MB/s 
+Get individual from rank 0 to rank 4 of 2 bytes took 0.000984 seconds: 0.203331 MB/s 
+Get individual from rank 0 to rank 4 of 4 bytes took 0.000984 seconds: 0.406633 MB/s 
+Get individual from rank 0 to rank 4 of 8 bytes took 0.000979 seconds: 0.816853 MB/s 
+Get individual from rank 0 to rank 4 of 16 bytes took 0.000977 seconds: 1.638079 MB/s 
+Get individual from rank 0 to rank 4 of 32 bytes took 0.000980 seconds: 3.266456 MB/s 
+Get individual from rank 0 to rank 4 of 64 bytes took 0.000985 seconds: 6.499450 MB/s 
+Get individual from rank 0 to rank 4 of 128 bytes took 0.001008 seconds: 12.700413 MB/s 
+Get individual from rank 0 to rank 4 of 256 bytes took 0.001047 seconds: 24.450228 MB/s 
+Get individual from rank 0 to rank 4 of 512 bytes took 0.001103 seconds: 46.423224 MB/s 
+Get individual from rank 0 to rank 4 of 1024 bytes took 0.001214 seconds: 84.339619 MB/s 
+Get individual from rank 0 to rank 4 of 2048 bytes took 0.001456 seconds: 140.636762 MB/s 
+Get individual from rank 0 to rank 4 of 4096 bytes took 0.001960 seconds: 208.949742 MB/s 
+Get individual from rank 0 to rank 4 of 8192 bytes took 0.002947 seconds: 278.006141 MB/s 
+Get individual from rank 0 to rank 4 of 16384 bytes took 0.004937 seconds: 331.865151 MB/s 
+Get individual from rank 0 to rank 4 of 32768 bytes took 0.008893 seconds: 368.477973 MB/s 
+Get individual from rank 0 to rank 4 of 65536 bytes took 0.016814 seconds: 389.774979 MB/s 
+Get individual from rank 0 to rank 4 of 131072 bytes took 0.031196 seconds: 420.154191 MB/s 
+Get individual from rank 0 to rank 4 of 262144 bytes took 0.060687 seconds: 431.959088 MB/s 
+Get individual from rank 0 to rank 4 of 524288 bytes took 0.120331 seconds: 435.705359 MB/s 
+Get individual from rank 0 to rank 4 of 1048576 bytes took 0.239653 seconds: 437.538999 MB/s 
+Get individual from rank 0 to rank 5 of 1 bytes took 0.001180 seconds: 0.084730 MB/s 
+Get individual from rank 0 to rank 5 of 2 bytes took 0.001158 seconds: 0.172680 MB/s 
+Get individual from rank 0 to rank 5 of 4 bytes took 0.001157 seconds: 0.345605 MB/s 
+Get individual from rank 0 to rank 5 of 8 bytes took 0.001157 seconds: 0.691217 MB/s 
+Get individual from rank 0 to rank 5 of 16 bytes took 0.001158 seconds: 1.381617 MB/s 
+Get individual from rank 0 to rank 5 of 32 bytes took 0.001157 seconds: 2.764871 MB/s 
+Get individual from rank 0 to rank 5 of 64 bytes took 0.001158 seconds: 5.527409 MB/s 
+Get individual from rank 0 to rank 5 of 128 bytes took 0.001157 seconds: 11.061194 MB/s 
+Get individual from rank 0 to rank 5 of 256 bytes took 0.001149 seconds: 22.279371 MB/s 
+Get individual from rank 0 to rank 5 of 512 bytes took 0.001159 seconds: 44.173251 MB/s 
+Get individual from rank 0 to rank 5 of 1024 bytes took 0.001392 seconds: 73.558991 MB/s 
+Get individual from rank 0 to rank 5 of 2048 bytes took 0.001626 seconds: 125.925476 MB/s 
+Get individual from rank 0 to rank 5 of 4096 bytes took 0.002092 seconds: 195.806954 MB/s 
+Get individual from rank 0 to rank 5 of 8192 bytes took 0.003014 seconds: 271.834464 MB/s 
+Get individual from rank 0 to rank 5 of 16384 bytes took 0.004849 seconds: 337.895336 MB/s 
+Get individual from rank 0 to rank 5 of 32768 bytes took 0.008507 seconds: 385.189291 MB/s 
+Get individual from rank 0 to rank 5 of 65536 bytes took 0.015961 seconds: 410.599811 MB/s 
+Get individual from rank 0 to rank 5 of 131072 bytes took 0.030819 seconds: 425.292496 MB/s 
+Get individual from rank 0 to rank 5 of 262144 bytes took 0.060826 seconds: 430.976776 MB/s 
+Get individual from rank 0 to rank 5 of 524288 bytes took 0.120474 seconds: 435.188122 MB/s 
+Get individual from rank 0 to rank 5 of 1048576 bytes took 0.239732 seconds: 437.395682 MB/s 
+Get individual from rank 0 to rank 6 of 1 bytes took 0.001062 seconds: 0.094169 MB/s 
+Get individual from rank 0 to rank 6 of 2 bytes took 0.001040 seconds: 0.192395 MB/s 
+Get individual from rank 0 to rank 6 of 4 bytes took 0.001036 seconds: 0.386149 MB/s 
+Get individual from rank 0 to rank 6 of 8 bytes took 0.001027 seconds: 0.778716 MB/s 
+Get individual from rank 0 to rank 6 of 16 bytes took 0.001021 seconds: 1.566976 MB/s 
+Get individual from rank 0 to rank 6 of 32 bytes took 0.001006 seconds: 3.181670 MB/s 
+Get individual from rank 0 to rank 6 of 64 bytes took 0.001022 seconds: 6.262913 MB/s 
+Get individual from rank 0 to rank 6 of 128 bytes took 0.001040 seconds: 12.311436 MB/s 
+Get individual from rank 0 to rank 6 of 256 bytes took 0.001078 seconds: 23.751123 MB/s 
+Get individual from rank 0 to rank 6 of 512 bytes took 0.001128 seconds: 45.370563 MB/s 
+Get individual from rank 0 to rank 6 of 1024 bytes took 0.001235 seconds: 82.925639 MB/s 
+Get individual from rank 0 to rank 6 of 2048 bytes took 0.001483 seconds: 138.067377 MB/s 
+Get individual from rank 0 to rank 6 of 4096 bytes took 0.001984 seconds: 206.412988 MB/s 
+Get individual from rank 0 to rank 6 of 8192 bytes took 0.002979 seconds: 274.990569 MB/s 
+Get individual from rank 0 to rank 6 of 16384 bytes took 0.004970 seconds: 329.681413 MB/s 
+Get individual from rank 0 to rank 6 of 32768 bytes took 0.008892 seconds: 368.504287 MB/s 
+Get individual from rank 0 to rank 6 of 65536 bytes took 0.016811 seconds: 389.842044 MB/s 
+Get individual from rank 0 to rank 6 of 131072 bytes took 0.031247 seconds: 419.476106 MB/s 
+Get individual from rank 0 to rank 6 of 262144 bytes took 0.060759 seconds: 431.450463 MB/s 
+Get individual from rank 0 to rank 6 of 524288 bytes took 0.120389 seconds: 435.493965 MB/s 
+Get individual from rank 0 to rank 6 of 1048576 bytes took 0.239621 seconds: 437.597558 MB/s 
+Get individual from rank 0 to rank 7 of 1 bytes took 0.001172 seconds: 0.085329 MB/s 
+Get individual from rank 0 to rank 7 of 2 bytes took 0.001153 seconds: 0.173422 MB/s 
+Get individual from rank 0 to rank 7 of 4 bytes took 0.001154 seconds: 0.346722 MB/s 
+Get individual from rank 0 to rank 7 of 8 bytes took 0.001154 seconds: 0.693459 MB/s 
+Get individual from rank 0 to rank 7 of 16 bytes took 0.001154 seconds: 1.386443 MB/s 
+Get individual from rank 0 to rank 7 of 32 bytes took 0.001157 seconds: 2.765370 MB/s 
+Get individual from rank 0 to rank 7 of 64 bytes took 0.001153 seconds: 5.551056 MB/s 
+Get individual from rank 0 to rank 7 of 128 bytes took 0.001151 seconds: 11.124812 MB/s 
+Get individual from rank 0 to rank 7 of 256 bytes took 0.001148 seconds: 22.294699 MB/s 
+Get individual from rank 0 to rank 7 of 512 bytes took 0.001176 seconds: 43.540145 MB/s 
+Get individual from rank 0 to rank 7 of 1024 bytes took 0.001391 seconds: 73.638206 MB/s 
+Get individual from rank 0 to rank 7 of 2048 bytes took 0.001626 seconds: 125.966236 MB/s 
+Get individual from rank 0 to rank 7 of 4096 bytes took 0.002093 seconds: 195.720291 MB/s 
+Get individual from rank 0 to rank 7 of 8192 bytes took 0.003027 seconds: 270.631323 MB/s 
+Get individual from rank 0 to rank 7 of 16384 bytes took 0.004893 seconds: 334.843046 MB/s 
+Get individual from rank 0 to rank 7 of 32768 bytes took 0.008513 seconds: 384.926737 MB/s 
+Get individual from rank 0 to rank 7 of 65536 bytes took 0.015956 seconds: 410.728026 MB/s 
+Get individual from rank 0 to rank 7 of 131072 bytes took 0.030857 seconds: 424.767398 MB/s 
+Get individual from rank 0 to rank 7 of 262144 bytes took 0.060859 seconds: 430.740579 MB/s 
+Get individual from rank 0 to rank 7 of 524288 bytes took 0.120500 seconds: 435.095211 MB/s 
+Get individual from rank 0 to rank 7 of 1048576 bytes took 0.239778 seconds: 437.311747 MB/s 
+================================================================= 
+Get bulk from rank 0 to rank 0 of 1 bytes took 0.000214 seconds: 0.466875 MB/s 
+Get bulk from rank 0 to rank 0 of 2 bytes took 0.000188 seconds: 1.063201 MB/s 
+Get bulk from rank 0 to rank 0 of 4 bytes took 0.000190 seconds: 2.103478 MB/s 
+Get bulk from rank 0 to rank 0 of 8 bytes took 0.000192 seconds: 4.171582 MB/s 
+Get bulk from rank 0 to rank 0 of 16 bytes took 0.000194 seconds: 8.226856 MB/s 
+Get bulk from rank 0 to rank 0 of 32 bytes took 0.000200 seconds: 15.982669 MB/s 
+Get bulk from rank 0 to rank 0 of 64 bytes took 0.000205 seconds: 31.279305 MB/s 
+Get bulk from rank 0 to rank 0 of 128 bytes took 0.000214 seconds: 59.902483 MB/s 
+Get bulk from rank 0 to rank 0 of 256 bytes took 0.000211 seconds: 121.466254 MB/s 
+Get bulk from rank 0 to rank 0 of 512 bytes took 0.000242 seconds: 211.263065 MB/s 
+Get bulk from rank 0 to rank 0 of 1024 bytes took 0.000265 seconds: 386.853041 MB/s 
+Get bulk from rank 0 to rank 0 of 2048 bytes took 0.000330 seconds: 619.919218 MB/s 
+Get bulk from rank 0 to rank 0 of 4096 bytes took 0.000600 seconds: 682.263705 MB/s 
+Get bulk from rank 0 to rank 0 of 8192 bytes took 0.000804 seconds: 1018.410676 MB/s 
+Get bulk from rank 0 to rank 0 of 16384 bytes took 0.001211 seconds: 1352.539856 MB/s 
+Get bulk from rank 0 to rank 0 of 32768 bytes took 0.002034 seconds: 1610.835088 MB/s 
+Get bulk from rank 0 to rank 0 of 65536 bytes took 0.003451 seconds: 1899.268712 MB/s 
+Get bulk from rank 0 to rank 0 of 131072 bytes took 0.007144 seconds: 1834.783468 MB/s 
+Get bulk from rank 0 to rank 0 of 262144 bytes took 0.013848 seconds: 1893.011017 MB/s 
+Get bulk from rank 0 to rank 0 of 524288 bytes took 0.027179 seconds: 1929.038335 MB/s 
+Get bulk from rank 0 to rank 0 of 1048576 bytes took 0.053505 seconds: 1959.767451 MB/s 
+Get bulk from rank 0 to rank 1 of 1 bytes took 0.000172 seconds: 0.581047 MB/s 
+Get bulk from rank 0 to rank 1 of 2 bytes took 0.000156 seconds: 1.279908 MB/s 
+Get bulk from rank 0 to rank 1 of 4 bytes took 0.000154 seconds: 2.597571 MB/s 
+Get bulk from rank 0 to rank 1 of 8 bytes took 0.000175 seconds: 4.578116 MB/s 
+Get bulk from rank 0 to rank 1 of 16 bytes took 0.000176 seconds: 9.114440 MB/s 
+Get bulk from rank 0 to rank 1 of 32 bytes took 0.000177 seconds: 18.065636 MB/s 
+Get bulk from rank 0 to rank 1 of 64 bytes took 0.000186 seconds: 34.468714 MB/s 
+Get bulk from rank 0 to rank 1 of 128 bytes took 0.000186 seconds: 68.866494 MB/s 
+Get bulk from rank 0 to rank 1 of 256 bytes took 0.000166 seconds: 154.171011 MB/s 
+Get bulk from rank 0 to rank 1 of 512 bytes took 0.000168 seconds: 305.062655 MB/s 
+Get bulk from rank 0 to rank 1 of 1024 bytes took 0.000163 seconds: 630.027841 MB/s 
+Get bulk from rank 0 to rank 1 of 2048 bytes took 0.000192 seconds: 1064.514767 MB/s 
+Get bulk from rank 0 to rank 1 of 4096 bytes took 0.000433 seconds: 946.987705 MB/s 
+Get bulk from rank 0 to rank 1 of 8192 bytes took 0.000621 seconds: 1318.161019 MB/s 
+Get bulk from rank 0 to rank 1 of 16384 bytes took 0.001007 seconds: 1627.525081 MB/s 
+Get bulk from rank 0 to rank 1 of 32768 bytes took 0.001761 seconds: 1861.023150 MB/s 
+Get bulk from rank 0 to rank 1 of 65536 bytes took 0.003214 seconds: 2039.319350 MB/s 
+Get bulk from rank 0 to rank 1 of 131072 bytes took 0.007024 seconds: 1865.970231 MB/s 
+Get bulk from rank 0 to rank 1 of 262144 bytes took 0.013623 seconds: 1924.328624 MB/s 
+Get bulk from rank 0 to rank 1 of 524288 bytes took 0.026830 seconds: 1954.099325 MB/s 
+Get bulk from rank 0 to rank 1 of 1048576 bytes took 0.077090 seconds: 1360.198098 MB/s 
+Get bulk from rank 0 to rank 2 of 1 bytes took 0.000311 seconds: 0.322042 MB/s 
+Get bulk from rank 0 to rank 2 of 2 bytes took 0.000213 seconds: 0.940532 MB/s 
+Get bulk from rank 0 to rank 2 of 4 bytes took 0.000206 seconds: 1.944550 MB/s 
+Get bulk from rank 0 to rank 2 of 8 bytes took 0.000197 seconds: 4.062731 MB/s 
+Get bulk from rank 0 to rank 2 of 16 bytes took 0.000216 seconds: 7.391815 MB/s 
+Get bulk from rank 0 to rank 2 of 32 bytes took 0.000205 seconds: 15.586614 MB/s 
+Get bulk from rank 0 to rank 2 of 64 bytes took 0.000197 seconds: 32.418297 MB/s 
+Get bulk from rank 0 to rank 2 of 128 bytes took 0.000180 seconds: 71.178582 MB/s 
+Get bulk from rank 0 to rank 2 of 256 bytes took 0.000165 seconds: 155.055780 MB/s 
+Get bulk from rank 0 to rank 2 of 512 bytes took 0.000233 seconds: 219.967295 MB/s 
+Get bulk from rank 0 to rank 2 of 1024 bytes took 0.000233 seconds: 440.196992 MB/s 
+Get bulk from rank 0 to rank 2 of 2048 bytes took 0.000260 seconds: 786.752366 MB/s 
+Get bulk from rank 0 to rank 2 of 4096 bytes took 0.000501 seconds: 818.245721 MB/s 
+Get bulk from rank 0 to rank 2 of 8192 bytes took 0.000964 seconds: 849.973283 MB/s 
+Get bulk from rank 0 to rank 2 of 16384 bytes took 0.001915 seconds: 855.413670 MB/s 
+Get bulk from rank 0 to rank 2 of 32768 bytes took 0.003799 seconds: 862.493679 MB/s 
+Get bulk from rank 0 to rank 2 of 65536 bytes took 0.007546 seconds: 868.435762 MB/s 
+Get bulk from rank 0 to rank 2 of 131072 bytes took 0.015134 seconds: 866.092551 MB/s 
+Get bulk from rank 0 to rank 2 of 262144 bytes took 0.030295 seconds: 865.298686 MB/s 
+Get bulk from rank 0 to rank 2 of 524288 bytes took 0.061186 seconds: 856.879415 MB/s 
+Get bulk from rank 0 to rank 2 of 1048576 bytes took 0.122281 seconds: 857.515369 MB/s 
+Get bulk from rank 0 to rank 3 of 1 bytes took 0.000229 seconds: 0.436525 MB/s 
+Get bulk from rank 0 to rank 3 of 2 bytes took 0.000183 seconds: 1.094897 MB/s 
+Get bulk from rank 0 to rank 3 of 4 bytes took 0.000165 seconds: 2.429811 MB/s 
+Get bulk from rank 0 to rank 3 of 8 bytes took 0.000165 seconds: 4.842084 MB/s 
+Get bulk from rank 0 to rank 3 of 16 bytes took 0.000165 seconds: 9.722787 MB/s 
+Get bulk from rank 0 to rank 3 of 32 bytes took 0.000164 seconds: 19.553403 MB/s 
+Get bulk from rank 0 to rank 3 of 64 bytes took 0.000164 seconds: 39.047456 MB/s 
+Get bulk from rank 0 to rank 3 of 128 bytes took 0.000164 seconds: 78.082406 MB/s 
+Get bulk from rank 0 to rank 3 of 256 bytes took 0.000165 seconds: 154.954887 MB/s 
+Get bulk from rank 0 to rank 3 of 512 bytes took 0.000240 seconds: 213.468419 MB/s 
+Get bulk from rank 0 to rank 3 of 1024 bytes took 0.000230 seconds: 444.563834 MB/s 
+Get bulk from rank 0 to rank 3 of 2048 bytes took 0.000262 seconds: 782.610980 MB/s 
+Get bulk from rank 0 to rank 3 of 4096 bytes took 0.000501 seconds: 818.210987 MB/s 
+Get bulk from rank 0 to rank 3 of 8192 bytes took 0.000962 seconds: 851.916246 MB/s 
+Get bulk from rank 0 to rank 3 of 16384 bytes took 0.001941 seconds: 844.093097 MB/s 
+Get bulk from rank 0 to rank 3 of 32768 bytes took 0.003813 seconds: 859.280184 MB/s 
+Get bulk from rank 0 to rank 3 of 65536 bytes took 0.007553 seconds: 867.659530 MB/s 
+Get bulk from rank 0 to rank 3 of 131072 bytes took 0.015179 seconds: 863.485685 MB/s 
+Get bulk from rank 0 to rank 3 of 262144 bytes took 0.030297 seconds: 865.246420 MB/s 
+Get bulk from rank 0 to rank 3 of 524288 bytes took 0.060904 seconds: 860.837747 MB/s 
+Get bulk from rank 0 to rank 3 of 1048576 bytes took 0.122826 seconds: 853.711539 MB/s 
+Get bulk from rank 0 to rank 4 of 1 bytes took 0.000193 seconds: 0.517587 MB/s 
+Get bulk from rank 0 to rank 4 of 2 bytes took 0.000166 seconds: 1.205923 MB/s 
+Get bulk from rank 0 to rank 4 of 4 bytes took 0.000164 seconds: 2.436694 MB/s 
+Get bulk from rank 0 to rank 4 of 8 bytes took 0.000164 seconds: 4.868308 MB/s 
+Get bulk from rank 0 to rank 4 of 16 bytes took 0.000165 seconds: 9.703733 MB/s 
+Get bulk from rank 0 to rank 4 of 32 bytes took 0.000165 seconds: 19.386376 MB/s 
+Get bulk from rank 0 to rank 4 of 64 bytes took 0.000165 seconds: 38.833037 MB/s 
+Get bulk from rank 0 to rank 4 of 128 bytes took 0.000165 seconds: 77.522608 MB/s 
+Get bulk from rank 0 to rank 4 of 256 bytes took 0.000165 seconds: 154.809644 MB/s 
+Get bulk from rank 0 to rank 4 of 512 bytes took 0.000167 seconds: 307.298720 MB/s 
+Get bulk from rank 0 to rank 4 of 1024 bytes took 0.000256 seconds: 399.587340 MB/s 
+Get bulk from rank 0 to rank 4 of 2048 bytes took 0.000486 seconds: 421.352035 MB/s 
+Get bulk from rank 0 to rank 4 of 4096 bytes took 0.000948 seconds: 431.847430 MB/s 
+Get bulk from rank 0 to rank 4 of 8192 bytes took 0.001874 seconds: 437.209945 MB/s 
+Get bulk from rank 0 to rank 4 of 16384 bytes took 0.003729 seconds: 439.400337 MB/s 
+Get bulk from rank 0 to rank 4 of 32768 bytes took 0.007433 seconds: 440.827274 MB/s 
+Get bulk from rank 0 to rank 4 of 65536 bytes took 0.014845 seconds: 441.454401 MB/s 
+Get bulk from rank 0 to rank 4 of 131072 bytes took 0.029686 seconds: 441.532957 MB/s 
+Get bulk from rank 0 to rank 4 of 262144 bytes took 0.059651 seconds: 439.465086 MB/s 
+Get bulk from rank 0 to rank 4 of 524288 bytes took 0.119214 seconds: 439.788555 MB/s 
+Get bulk from rank 0 to rank 4 of 1048576 bytes took 0.238356 seconds: 439.919363 MB/s 
+Get bulk from rank 0 to rank 5 of 1 bytes took 0.000192 seconds: 0.521205 MB/s 
+Get bulk from rank 0 to rank 5 of 2 bytes took 0.000164 seconds: 1.219647 MB/s 
+Get bulk from rank 0 to rank 5 of 4 bytes took 0.000164 seconds: 2.440010 MB/s 
+Get bulk from rank 0 to rank 5 of 8 bytes took 0.000164 seconds: 4.877993 MB/s 
+Get bulk from rank 0 to rank 5 of 16 bytes took 0.000164 seconds: 9.757845 MB/s 
+Get bulk from rank 0 to rank 5 of 32 bytes took 0.000164 seconds: 19.571342 MB/s 
+Get bulk from rank 0 to rank 5 of 64 bytes took 0.000164 seconds: 39.026026 MB/s 
+Get bulk from rank 0 to rank 5 of 128 bytes took 0.000164 seconds: 78.097889 MB/s 
+Get bulk from rank 0 to rank 5 of 256 bytes took 0.000165 seconds: 154.765188 MB/s 
+Get bulk from rank 0 to rank 5 of 512 bytes took 0.000167 seconds: 307.006202 MB/s 
+Get bulk from rank 0 to rank 5 of 1024 bytes took 0.000256 seconds: 400.255045 MB/s 
+Get bulk from rank 0 to rank 5 of 2048 bytes took 0.000488 seconds: 420.016945 MB/s 
+Get bulk from rank 0 to rank 5 of 4096 bytes took 0.000950 seconds: 431.355126 MB/s 
+Get bulk from rank 0 to rank 5 of 8192 bytes took 0.001876 seconds: 436.621262 MB/s 
+Get bulk from rank 0 to rank 5 of 16384 bytes took 0.003727 seconds: 439.564788 MB/s 
+Get bulk from rank 0 to rank 5 of 32768 bytes took 0.007430 seconds: 441.024401 MB/s 
+Get bulk from rank 0 to rank 5 of 65536 bytes took 0.014843 seconds: 441.540096 MB/s 
+Get bulk from rank 0 to rank 5 of 131072 bytes took 0.029682 seconds: 441.586657 MB/s 
+Get bulk from rank 0 to rank 5 of 262144 bytes took 0.059631 seconds: 439.608077 MB/s 
+Get bulk from rank 0 to rank 5 of 524288 bytes took 0.119213 seconds: 439.789385 MB/s 
+Get bulk from rank 0 to rank 5 of 1048576 bytes took 0.238355 seconds: 439.921218 MB/s 
+Get bulk from rank 0 to rank 6 of 1 bytes took 0.000195 seconds: 0.511995 MB/s 
+Get bulk from rank 0 to rank 6 of 2 bytes took 0.000166 seconds: 1.205350 MB/s 
+Get bulk from rank 0 to rank 6 of 4 bytes took 0.000166 seconds: 2.416015 MB/s 
+Get bulk from rank 0 to rank 6 of 8 bytes took 0.000165 seconds: 4.837655 MB/s 
+Get bulk from rank 0 to rank 6 of 16 bytes took 0.000165 seconds: 9.720719 MB/s 
+Get bulk from rank 0 to rank 6 of 32 bytes took 0.000167 seconds: 19.190333 MB/s 
+Get bulk from rank 0 to rank 6 of 64 bytes took 0.000166 seconds: 38.507387 MB/s 
+Get bulk from rank 0 to rank 6 of 128 bytes took 0.000169 seconds: 75.919617 MB/s 
+Get bulk from rank 0 to rank 6 of 256 bytes took 0.000166 seconds: 153.910322 MB/s 
+Get bulk from rank 0 to rank 6 of 512 bytes took 0.000169 seconds: 302.215336 MB/s 
+Get bulk from rank 0 to rank 6 of 1024 bytes took 0.000257 seconds: 398.758747 MB/s 
+Get bulk from rank 0 to rank 6 of 2048 bytes took 0.000487 seconds: 420.660749 MB/s 
+Get bulk from rank 0 to rank 6 of 4096 bytes took 0.000949 seconds: 431.578968 MB/s 
+Get bulk from rank 0 to rank 6 of 8192 bytes took 0.001875 seconds: 436.809549 MB/s 
+Get bulk from rank 0 to rank 6 of 16384 bytes took 0.003727 seconds: 439.637622 MB/s 
+Get bulk from rank 0 to rank 6 of 32768 bytes took 0.007428 seconds: 441.125703 MB/s 
+Get bulk from rank 0 to rank 6 of 65536 bytes took 0.014842 seconds: 441.567541 MB/s 
+Get bulk from rank 0 to rank 6 of 131072 bytes took 0.029686 seconds: 441.525056 MB/s 
+Get bulk from rank 0 to rank 6 of 262144 bytes took 0.059617 seconds: 439.715478 MB/s 
+Get bulk from rank 0 to rank 6 of 524288 bytes took 0.119201 seconds: 439.835601 MB/s 
+Get bulk from rank 0 to rank 6 of 1048576 bytes took 0.238325 seconds: 439.977704 MB/s 
+Get bulk from rank 0 to rank 7 of 1 bytes took 0.000196 seconds: 0.510763 MB/s 
+Get bulk from rank 0 to rank 7 of 2 bytes took 0.000165 seconds: 1.211057 MB/s 
+Get bulk from rank 0 to rank 7 of 4 bytes took 0.000165 seconds: 2.420657 MB/s 
+Get bulk from rank 0 to rank 7 of 8 bytes took 0.000165 seconds: 4.844319 MB/s 
+Get bulk from rank 0 to rank 7 of 16 bytes took 0.000166 seconds: 9.666834 MB/s 
+Get bulk from rank 0 to rank 7 of 32 bytes took 0.000166 seconds: 19.226653 MB/s 
+Get bulk from rank 0 to rank 7 of 64 bytes took 0.000166 seconds: 38.532600 MB/s 
+Get bulk from rank 0 to rank 7 of 128 bytes took 0.000167 seconds: 76.810850 MB/s 
+Get bulk from rank 0 to rank 7 of 256 bytes took 0.000166 seconds: 154.000594 MB/s 
+Get bulk from rank 0 to rank 7 of 512 bytes took 0.000168 seconds: 304.012054 MB/s 
+Get bulk from rank 0 to rank 7 of 1024 bytes took 0.000256 seconds: 399.411998 MB/s 
+Get bulk from rank 0 to rank 7 of 2048 bytes took 0.000487 seconds: 420.716919 MB/s 
+Get bulk from rank 0 to rank 7 of 4096 bytes took 0.000949 seconds: 431.413053 MB/s 
+Get bulk from rank 0 to rank 7 of 8192 bytes took 0.001875 seconds: 436.799360 MB/s 
+Get bulk from rank 0 to rank 7 of 16384 bytes took 0.003731 seconds: 439.182437 MB/s 
+Get bulk from rank 0 to rank 7 of 32768 bytes took 0.007430 seconds: 441.049852 MB/s 
+Get bulk from rank 0 to rank 7 of 65536 bytes took 0.014843 seconds: 441.528867 MB/s 
+Get bulk from rank 0 to rank 7 of 131072 bytes took 0.029675 seconds: 441.688869 MB/s 
+Get bulk from rank 0 to rank 7 of 262144 bytes took 0.059627 seconds: 439.642194 MB/s 
+Get bulk from rank 0 to rank 7 of 524288 bytes took 0.119212 seconds: 439.793176 MB/s 
+Get bulk from rank 0 to rank 7 of 1048576 bytes took 0.238348 seconds: 439.934481 MB/s 
+================================================================= 
+Acc (Replace) individual from rank 0 to rank 0 of 1 bytes took 0.002008 seconds: 0.049793 MB/s 
+Acc (Replace) individual from rank 0 to rank 0 of 2 bytes took 0.001940 seconds: 0.103111 MB/s 
+Acc (Replace) individual from rank 0 to rank 0 of 4 bytes took 0.001945 seconds: 0.205671 MB/s 
+Acc (Replace) individual from rank 0 to rank 0 of 8 bytes took 0.001951 seconds: 0.409991 MB/s 
+Acc (Replace) individual from rank 0 to rank 0 of 16 bytes took 0.001956 seconds: 0.817873 MB/s 
+Acc (Replace) individual from rank 0 to rank 0 of 32 bytes took 0.001980 seconds: 1.616125 MB/s 
+Acc (Replace) individual from rank 0 to rank 0 of 64 bytes took 0.001989 seconds: 3.217614 MB/s 
+Acc (Replace) individual from rank 0 to rank 0 of 128 bytes took 0.002007 seconds: 6.376110 MB/s 
+Acc (Replace) individual from rank 0 to rank 0 of 256 bytes took 0.002001 seconds: 12.791230 MB/s 
+Acc (Replace) individual from rank 0 to rank 0 of 512 bytes took 0.002057 seconds: 24.890406 MB/s 
+Acc (Replace) individual from rank 0 to rank 0 of 1024 bytes took 0.002122 seconds: 48.260456 MB/s 
+Acc (Replace) individual from rank 0 to rank 0 of 2048 bytes took 0.002347 seconds: 87.242908 MB/s 
+Acc (Replace) individual from rank 0 to rank 0 of 4096 bytes took 0.002644 seconds: 154.897826 MB/s 
+Acc (Replace) individual from rank 0 to rank 0 of 8192 bytes took 0.002848 seconds: 287.690578 MB/s 
+Acc (Replace) individual from rank 0 to rank 0 of 16384 bytes took 0.003260 seconds: 502.624290 MB/s 
+Acc (Replace) individual from rank 0 to rank 0 of 32768 bytes took 0.004078 seconds: 803.554788 MB/s 
+Acc (Replace) individual from rank 0 to rank 0 of 65536 bytes took 0.005498 seconds: 1192.072435 MB/s 
+Acc (Replace) individual from rank 0 to rank 0 of 131072 bytes took 0.009243 seconds: 1418.138112 MB/s 
+Acc (Replace) individual from rank 0 to rank 0 of 262144 bytes took 0.016058 seconds: 1632.524061 MB/s 
+Acc (Replace) individual from rank 0 to rank 0 of 524288 bytes took 0.029695 seconds: 1765.588960 MB/s 
+Acc (Replace) individual from rank 0 to rank 0 of 1048576 bytes took 0.056959 seconds: 1840.920652 MB/s 
+Acc (Replace) individual from rank 0 to rank 1 of 1 bytes took 0.001729 seconds: 0.057853 MB/s 
+Acc (Replace) individual from rank 0 to rank 1 of 2 bytes took 0.001695 seconds: 0.117978 MB/s 
+Acc (Replace) individual from rank 0 to rank 1 of 4 bytes took 0.001695 seconds: 0.236021 MB/s 
+Acc (Replace) individual from rank 0 to rank 1 of 8 bytes took 0.001696 seconds: 0.471674 MB/s 
+Acc (Replace) individual from rank 0 to rank 1 of 16 bytes took 0.001699 seconds: 0.941990 MB/s 
+Acc (Replace) individual from rank 0 to rank 1 of 32 bytes took 0.001726 seconds: 1.853943 MB/s 
+Acc (Replace) individual from rank 0 to rank 1 of 64 bytes took 0.001731 seconds: 3.697621 MB/s 
+Acc (Replace) individual from rank 0 to rank 1 of 128 bytes took 0.001748 seconds: 7.324383 MB/s 
+Acc (Replace) individual from rank 0 to rank 1 of 256 bytes took 0.001738 seconds: 14.730485 MB/s 
+Acc (Replace) individual from rank 0 to rank 1 of 512 bytes took 0.001791 seconds: 28.586344 MB/s 
+Acc (Replace) individual from rank 0 to rank 1 of 1024 bytes took 0.001862 seconds: 54.993337 MB/s 
+Acc (Replace) individual from rank 0 to rank 1 of 2048 bytes took 0.002089 seconds: 98.051420 MB/s 
+Acc (Replace) individual from rank 0 to rank 1 of 4096 bytes took 0.002380 seconds: 172.100298 MB/s 
+Acc (Replace) individual from rank 0 to rank 1 of 8192 bytes took 0.002576 seconds: 317.983722 MB/s 
+Acc (Replace) individual from rank 0 to rank 1 of 16384 bytes took 0.002954 seconds: 554.558463 MB/s 
+Acc (Replace) individual from rank 0 to rank 1 of 32768 bytes took 0.003720 seconds: 880.889815 MB/s 
+Acc (Replace) individual from rank 0 to rank 1 of 65536 bytes took 0.005200 seconds: 1260.360409 MB/s 
+Acc (Replace) individual from rank 0 to rank 1 of 131072 bytes took 0.009109 seconds: 1438.911551 MB/s 
+Acc (Replace) individual from rank 0 to rank 1 of 262144 bytes took 0.015869 seconds: 1651.904968 MB/s 
+Acc (Replace) individual from rank 0 to rank 1 of 524288 bytes took 0.029489 seconds: 1777.915909 MB/s 
+Acc (Replace) individual from rank 0 to rank 1 of 1048576 bytes took 0.057041 seconds: 1838.300736 MB/s 
+Acc (Replace) individual from rank 0 to rank 2 of 1 bytes took 0.001758 seconds: 0.056880 MB/s 
+Acc (Replace) individual from rank 0 to rank 2 of 2 bytes took 0.001675 seconds: 0.119401 MB/s 
+Acc (Replace) individual from rank 0 to rank 2 of 4 bytes took 0.001647 seconds: 0.242824 MB/s 
+Acc (Replace) individual from rank 0 to rank 2 of 8 bytes took 0.001646 seconds: 0.486073 MB/s 
+Acc (Replace) individual from rank 0 to rank 2 of 16 bytes took 0.001642 seconds: 0.974234 MB/s 
+Acc (Replace) individual from rank 0 to rank 2 of 32 bytes took 0.001639 seconds: 1.952174 MB/s 
+Acc (Replace) individual from rank 0 to rank 2 of 64 bytes took 0.001638 seconds: 3.907521 MB/s 
+Acc (Replace) individual from rank 0 to rank 2 of 128 bytes took 0.001658 seconds: 7.719781 MB/s 
+Acc (Replace) individual from rank 0 to rank 2 of 256 bytes took 0.001719 seconds: 14.889093 MB/s 
+Acc (Replace) individual from rank 0 to rank 2 of 512 bytes took 0.001859 seconds: 27.547385 MB/s 
+Acc (Replace) individual from rank 0 to rank 2 of 1024 bytes took 0.002162 seconds: 47.362361 MB/s 
+Acc (Replace) individual from rank 0 to rank 2 of 2048 bytes took 0.002769 seconds: 73.951620 MB/s 
+Acc (Replace) individual from rank 0 to rank 2 of 4096 bytes took 0.003825 seconds: 107.073053 MB/s 
+Acc (Replace) individual from rank 0 to rank 2 of 8192 bytes took 0.005951 seconds: 137.655325 MB/s 
+Acc (Replace) individual from rank 0 to rank 2 of 16384 bytes took 0.010086 seconds: 162.450429 MB/s 
+Acc (Replace) individual from rank 0 to rank 2 of 32768 bytes took 0.018154 seconds: 180.497897 MB/s 
+Acc (Replace) individual from rank 0 to rank 2 of 65536 bytes took 0.034221 seconds: 191.506323 MB/s 
+Acc (Replace) individual from rank 0 to rank 2 of 131072 bytes took 0.066327 seconds: 197.613447 MB/s 
+Acc (Replace) individual from rank 0 to rank 2 of 262144 bytes took 0.130490 seconds: 200.892232 MB/s 
+Acc (Replace) individual from rank 0 to rank 2 of 524288 bytes took 0.258441 seconds: 202.866024 MB/s 
+Acc (Replace) individual from rank 0 to rank 2 of 1048576 bytes took 0.514359 seconds: 203.860554 MB/s 
+Acc (Replace) individual from rank 0 to rank 3 of 1 bytes took 0.002012 seconds: 0.049705 MB/s 
+Acc (Replace) individual from rank 0 to rank 3 of 2 bytes took 0.001974 seconds: 0.101322 MB/s 
+Acc (Replace) individual from rank 0 to rank 3 of 4 bytes took 0.001969 seconds: 0.203104 MB/s 
+Acc (Replace) individual from rank 0 to rank 3 of 8 bytes took 0.001977 seconds: 0.404689 MB/s 
+Acc (Replace) individual from rank 0 to rank 3 of 16 bytes took 0.001977 seconds: 0.809278 MB/s 
+Acc (Replace) individual from rank 0 to rank 3 of 32 bytes took 0.002003 seconds: 1.597966 MB/s 
+Acc (Replace) individual from rank 0 to rank 3 of 64 bytes took 0.002014 seconds: 3.177433 MB/s 
+Acc (Replace) individual from rank 0 to rank 3 of 128 bytes took 0.002034 seconds: 6.294007 MB/s 
+Acc (Replace) individual from rank 0 to rank 3 of 256 bytes took 0.002101 seconds: 12.182981 MB/s 
+Acc (Replace) individual from rank 0 to rank 3 of 512 bytes took 0.002253 seconds: 22.720925 MB/s 
+Acc (Replace) individual from rank 0 to rank 3 of 1024 bytes took 0.002559 seconds: 40.021193 MB/s 
+Acc (Replace) individual from rank 0 to rank 3 of 2048 bytes took 0.003192 seconds: 64.163404 MB/s 
+Acc (Replace) individual from rank 0 to rank 3 of 4096 bytes took 0.004460 seconds: 91.840457 MB/s 
+Acc (Replace) individual from rank 0 to rank 3 of 8192 bytes took 0.006512 seconds: 125.794650 MB/s 
+Acc (Replace) individual from rank 0 to rank 3 of 16384 bytes took 0.010820 seconds: 151.425381 MB/s 
+Acc (Replace) individual from rank 0 to rank 3 of 32768 bytes took 0.019127 seconds: 171.317332 MB/s 
+Acc (Replace) individual from rank 0 to rank 3 of 65536 bytes took 0.035415 seconds: 185.053018 MB/s 
+Acc (Replace) individual from rank 0 to rank 3 of 131072 bytes took 0.067608 seconds: 193.869817 MB/s 
+Acc (Replace) individual from rank 0 to rank 3 of 262144 bytes took 0.132089 seconds: 198.460785 MB/s 
+Acc (Replace) individual from rank 0 to rank 3 of 524288 bytes took 0.260648 seconds: 201.147626 MB/s 
+Acc (Replace) individual from rank 0 to rank 3 of 1048576 bytes took 0.517790 seconds: 202.509831 MB/s 
+Acc (Replace) individual from rank 0 to rank 4 of 1 bytes took 0.001702 seconds: 0.058761 MB/s 
+Acc (Replace) individual from rank 0 to rank 4 of 2 bytes took 0.001648 seconds: 0.121343 MB/s 
+Acc (Replace) individual from rank 0 to rank 4 of 4 bytes took 0.001623 seconds: 0.246431 MB/s 
+Acc (Replace) individual from rank 0 to rank 4 of 8 bytes took 0.001614 seconds: 0.495666 MB/s 
+Acc (Replace) individual from rank 0 to rank 4 of 16 bytes took 0.001600 seconds: 0.999956 MB/s 
+Acc (Replace) individual from rank 0 to rank 4 of 32 bytes took 0.001612 seconds: 1.985322 MB/s 
+Acc (Replace) individual from rank 0 to rank 4 of 64 bytes took 0.001613 seconds: 3.967733 MB/s 
+Acc (Replace) individual from rank 0 to rank 4 of 128 bytes took 0.001635 seconds: 7.830755 MB/s 
+Acc (Replace) individual from rank 0 to rank 4 of 256 bytes took 0.001696 seconds: 15.090519 MB/s 
+Acc (Replace) individual from rank 0 to rank 4 of 512 bytes took 0.001838 seconds: 27.854727 MB/s 
+Acc (Replace) individual from rank 0 to rank 4 of 1024 bytes took 0.002162 seconds: 47.358418 MB/s 
+Acc (Replace) individual from rank 0 to rank 4 of 2048 bytes took 0.002771 seconds: 73.909053 MB/s 
+Acc (Replace) individual from rank 0 to rank 4 of 4096 bytes took 0.003809 seconds: 107.523089 MB/s 
+Acc (Replace) individual from rank 0 to rank 4 of 8192 bytes took 0.005949 seconds: 137.696337 MB/s 
+Acc (Replace) individual from rank 0 to rank 4 of 16384 bytes took 0.010060 seconds: 162.868034 MB/s 
+Acc (Replace) individual from rank 0 to rank 4 of 32768 bytes took 0.018125 seconds: 180.784197 MB/s 
+Acc (Replace) individual from rank 0 to rank 4 of 65536 bytes took 0.034189 seconds: 191.688657 MB/s 
+Acc (Replace) individual from rank 0 to rank 4 of 131072 bytes took 0.066288 seconds: 197.731426 MB/s 
+Acc (Replace) individual from rank 0 to rank 4 of 262144 bytes took 0.130439 seconds: 200.970524 MB/s 
+Acc (Replace) individual from rank 0 to rank 4 of 524288 bytes took 0.258423 seconds: 202.879994 MB/s 
+Acc (Replace) individual from rank 0 to rank 4 of 1048576 bytes took 0.514407 seconds: 203.841611 MB/s 
+Acc (Replace) individual from rank 0 to rank 5 of 1 bytes took 0.002023 seconds: 0.049424 MB/s 
+Acc (Replace) individual from rank 0 to rank 5 of 2 bytes took 0.001982 seconds: 0.100924 MB/s 
+Acc (Replace) individual from rank 0 to rank 5 of 4 bytes took 0.001981 seconds: 0.201913 MB/s 
+Acc (Replace) individual from rank 0 to rank 5 of 8 bytes took 0.001982 seconds: 0.403557 MB/s 
+Acc (Replace) individual from rank 0 to rank 5 of 16 bytes took 0.001983 seconds: 0.806844 MB/s 
+Acc (Replace) individual from rank 0 to rank 5 of 32 bytes took 0.002006 seconds: 1.595058 MB/s 
+Acc (Replace) individual from rank 0 to rank 5 of 64 bytes took 0.002024 seconds: 3.162568 MB/s 
+Acc (Replace) individual from rank 0 to rank 5 of 128 bytes took 0.002048 seconds: 6.249529 MB/s 
+Acc (Replace) individual from rank 0 to rank 5 of 256 bytes took 0.002108 seconds: 12.146233 MB/s 
+Acc (Replace) individual from rank 0 to rank 5 of 512 bytes took 0.002256 seconds: 22.690151 MB/s 
+Acc (Replace) individual from rank 0 to rank 5 of 1024 bytes took 0.002554 seconds: 40.101615 MB/s 
+Acc (Replace) individual from rank 0 to rank 5 of 2048 bytes took 0.003177 seconds: 64.454289 MB/s 
+Acc (Replace) individual from rank 0 to rank 5 of 4096 bytes took 0.004476 seconds: 91.503390 MB/s 
+Acc (Replace) individual from rank 0 to rank 5 of 8192 bytes took 0.006516 seconds: 125.717189 MB/s 
+Acc (Replace) individual from rank 0 to rank 5 of 16384 bytes took 0.010841 seconds: 151.126877 MB/s 
+Acc (Replace) individual from rank 0 to rank 5 of 32768 bytes took 0.019160 seconds: 171.025815 MB/s 
+Acc (Replace) individual from rank 0 to rank 5 of 65536 bytes took 0.035459 seconds: 184.821168 MB/s 
+Acc (Replace) individual from rank 0 to rank 5 of 131072 bytes took 0.067635 seconds: 193.791811 MB/s 
+Acc (Replace) individual from rank 0 to rank 5 of 262144 bytes took 0.132162 seconds: 198.350526 MB/s 
+Acc (Replace) individual from rank 0 to rank 5 of 524288 bytes took 0.260679 seconds: 201.123910 MB/s 
+Acc (Replace) individual from rank 0 to rank 5 of 1048576 bytes took 0.517790 seconds: 202.509807 MB/s 
+Acc (Replace) individual from rank 0 to rank 6 of 1 bytes took 0.001761 seconds: 0.056770 MB/s 
+Acc (Replace) individual from rank 0 to rank 6 of 2 bytes took 0.001699 seconds: 0.117729 MB/s 
+Acc (Replace) individual from rank 0 to rank 6 of 4 bytes took 0.001666 seconds: 0.240162 MB/s 
+Acc (Replace) individual from rank 0 to rank 6 of 8 bytes took 0.001669 seconds: 0.479347 MB/s 
+Acc (Replace) individual from rank 0 to rank 6 of 16 bytes took 0.001661 seconds: 0.963480 MB/s 
+Acc (Replace) individual from rank 0 to rank 6 of 32 bytes took 0.001653 seconds: 1.936051 MB/s 
+Acc (Replace) individual from rank 0 to rank 6 of 64 bytes took 0.001653 seconds: 3.871712 MB/s 
+Acc (Replace) individual from rank 0 to rank 6 of 128 bytes took 0.001672 seconds: 7.655917 MB/s 
+Acc (Replace) individual from rank 0 to rank 6 of 256 bytes took 0.001734 seconds: 14.764888 MB/s 
+Acc (Replace) individual from rank 0 to rank 6 of 512 bytes took 0.001881 seconds: 27.215540 MB/s 
+Acc (Replace) individual from rank 0 to rank 6 of 1024 bytes took 0.002173 seconds: 47.116542 MB/s 
+Acc (Replace) individual from rank 0 to rank 6 of 2048 bytes took 0.002784 seconds: 73.556200 MB/s 
+Acc (Replace) individual from rank 0 to rank 6 of 4096 bytes took 0.003844 seconds: 106.565391 MB/s 
+Acc (Replace) individual from rank 0 to rank 6 of 8192 bytes took 0.005976 seconds: 137.078721 MB/s 
+Acc (Replace) individual from rank 0 to rank 6 of 16384 bytes took 0.010105 seconds: 162.135560 MB/s 
+Acc (Replace) individual from rank 0 to rank 6 of 32768 bytes took 0.018153 seconds: 180.510910 MB/s 
+Acc (Replace) individual from rank 0 to rank 6 of 65536 bytes took 0.034194 seconds: 191.660620 MB/s 
+Acc (Replace) individual from rank 0 to rank 6 of 131072 bytes took 0.066315 seconds: 197.649825 MB/s 
+Acc (Replace) individual from rank 0 to rank 6 of 262144 bytes took 0.130454 seconds: 200.946735 MB/s 
+Acc (Replace) individual from rank 0 to rank 6 of 524288 bytes took 0.258463 seconds: 202.848464 MB/s 
+Acc (Replace) individual from rank 0 to rank 6 of 1048576 bytes took 0.514392 seconds: 203.847808 MB/s 
+Acc (Replace) individual from rank 0 to rank 7 of 1 bytes took 0.002027 seconds: 0.049324 MB/s 
+Acc (Replace) individual from rank 0 to rank 7 of 2 bytes took 0.001984 seconds: 0.100818 MB/s 
+Acc (Replace) individual from rank 0 to rank 7 of 4 bytes took 0.001980 seconds: 0.201993 MB/s 
+Acc (Replace) individual from rank 0 to rank 7 of 8 bytes took 0.001986 seconds: 0.402882 MB/s 
+Acc (Replace) individual from rank 0 to rank 7 of 16 bytes took 0.001986 seconds: 0.805508 MB/s 
+Acc (Replace) individual from rank 0 to rank 7 of 32 bytes took 0.002010 seconds: 1.592421 MB/s 
+Acc (Replace) individual from rank 0 to rank 7 of 64 bytes took 0.002022 seconds: 3.165294 MB/s 
+Acc (Replace) individual from rank 0 to rank 7 of 128 bytes took 0.002051 seconds: 6.241940 MB/s 
+Acc (Replace) individual from rank 0 to rank 7 of 256 bytes took 0.002117 seconds: 12.093423 MB/s 
+Acc (Replace) individual from rank 0 to rank 7 of 512 bytes took 0.002262 seconds: 22.632654 MB/s 
+Acc (Replace) individual from rank 0 to rank 7 of 1024 bytes took 0.002563 seconds: 39.960089 MB/s 
+Acc (Replace) individual from rank 0 to rank 7 of 2048 bytes took 0.003236 seconds: 63.290736 MB/s 
+Acc (Replace) individual from rank 0 to rank 7 of 4096 bytes took 0.004503 seconds: 90.970609 MB/s 
+Acc (Replace) individual from rank 0 to rank 7 of 8192 bytes took 0.006546 seconds: 125.139404 MB/s 
+Acc (Replace) individual from rank 0 to rank 7 of 16384 bytes took 0.010855 seconds: 150.932541 MB/s 
+Acc (Replace) individual from rank 0 to rank 7 of 32768 bytes took 0.019186 seconds: 170.788971 MB/s 
+Acc (Replace) individual from rank 0 to rank 7 of 65536 bytes took 0.035489 seconds: 184.666117 MB/s 
+Acc (Replace) individual from rank 0 to rank 7 of 131072 bytes took 0.067647 seconds: 193.759590 MB/s 
+Acc (Replace) individual from rank 0 to rank 7 of 262144 bytes took 0.132129 seconds: 198.400606 MB/s 
+Acc (Replace) individual from rank 0 to rank 7 of 524288 bytes took 0.260742 seconds: 201.075419 MB/s 
+Acc (Replace) individual from rank 0 to rank 7 of 1048576 bytes took 0.517917 seconds: 202.460332 MB/s 
+================================================================= 
+Acc (Replace) bulk from rank 0 to rank 0 of 1 bytes took 0.001437 seconds: 0.069609 MB/s 
+Acc (Replace) bulk from rank 0 to rank 0 of 2 bytes took 0.001316 seconds: 0.151991 MB/s 
+Acc (Replace) bulk from rank 0 to rank 0 of 4 bytes took 0.001316 seconds: 0.303875 MB/s 
+Acc (Replace) bulk from rank 0 to rank 0 of 8 bytes took 0.001315 seconds: 0.608542 MB/s 
+Acc (Replace) bulk from rank 0 to rank 0 of 16 bytes took 0.001320 seconds: 1.212528 MB/s 
+Acc (Replace) bulk from rank 0 to rank 0 of 32 bytes took 0.001334 seconds: 2.398740 MB/s 
+Acc (Replace) bulk from rank 0 to rank 0 of 64 bytes took 0.001340 seconds: 4.776146 MB/s 
+Acc (Replace) bulk from rank 0 to rank 0 of 128 bytes took 0.001357 seconds: 9.433058 MB/s 
+Acc (Replace) bulk from rank 0 to rank 0 of 256 bytes took 0.001341 seconds: 19.083169 MB/s 
+Acc (Replace) bulk from rank 0 to rank 0 of 512 bytes took 0.001410 seconds: 36.322651 MB/s 
+Acc (Replace) bulk from rank 0 to rank 0 of 1024 bytes took 0.001458 seconds: 70.236448 MB/s 
+Acc (Replace) bulk from rank 0 to rank 0 of 2048 bytes took 0.001576 seconds: 129.913896 MB/s 
+Acc (Replace) bulk from rank 0 to rank 0 of 4096 bytes took 0.001922 seconds: 213.147662 MB/s 
+Acc (Replace) bulk from rank 0 to rank 0 of 8192 bytes took 0.002099 seconds: 390.361869 MB/s 
+Acc (Replace) bulk from rank 0 to rank 0 of 16384 bytes took 0.002444 seconds: 670.287984 MB/s 
+Acc (Replace) bulk from rank 0 to rank 0 of 32768 bytes took 0.003133 seconds: 1045.733279 MB/s 
+Acc (Replace) bulk from rank 0 to rank 0 of 65536 bytes took 0.004759 seconds: 1377.183929 MB/s 
+Acc (Replace) bulk from rank 0 to rank 0 of 131072 bytes took 0.008699 seconds: 1506.766089 MB/s 
+Acc (Replace) bulk from rank 0 to rank 0 of 262144 bytes took 0.015517 seconds: 1689.444316 MB/s 
+Acc (Replace) bulk from rank 0 to rank 0 of 524288 bytes took 0.029121 seconds: 1800.400068 MB/s 
+Acc (Replace) bulk from rank 0 to rank 0 of 1048576 bytes took 0.056371 seconds: 1860.119114 MB/s 
+Acc (Replace) bulk from rank 0 to rank 1 of 1 bytes took 0.000901 seconds: 0.110955 MB/s 
+Acc (Replace) bulk from rank 0 to rank 1 of 2 bytes took 0.000873 seconds: 0.229226 MB/s 
+Acc (Replace) bulk from rank 0 to rank 1 of 4 bytes took 0.000885 seconds: 0.452119 MB/s 
+Acc (Replace) bulk from rank 0 to rank 1 of 8 bytes took 0.000870 seconds: 0.919660 MB/s 
+Acc (Replace) bulk from rank 0 to rank 1 of 16 bytes took 0.000865 seconds: 1.850358 MB/s 
+Acc (Replace) bulk from rank 0 to rank 1 of 32 bytes took 0.000881 seconds: 3.633097 MB/s 
+Acc (Replace) bulk from rank 0 to rank 1 of 64 bytes took 0.000870 seconds: 7.355656 MB/s 
+Acc (Replace) bulk from rank 0 to rank 1 of 128 bytes took 0.000891 seconds: 14.358649 MB/s 
+Acc (Replace) bulk from rank 0 to rank 1 of 256 bytes took 0.000891 seconds: 28.721386 MB/s 
+Acc (Replace) bulk from rank 0 to rank 1 of 512 bytes took 0.000913 seconds: 56.064200 MB/s 
+Acc (Replace) bulk from rank 0 to rank 1 of 1024 bytes took 0.000958 seconds: 106.861606 MB/s 
+Acc (Replace) bulk from rank 0 to rank 1 of 2048 bytes took 0.001055 seconds: 194.175678 MB/s 
+Acc (Replace) bulk from rank 0 to rank 1 of 4096 bytes took 0.001341 seconds: 305.499513 MB/s 
+Acc (Replace) bulk from rank 0 to rank 1 of 8192 bytes took 0.001511 seconds: 542.109974 MB/s 
+Acc (Replace) bulk from rank 0 to rank 1 of 16384 bytes took 0.001899 seconds: 862.906767 MB/s 
+Acc (Replace) bulk from rank 0 to rank 1 of 32768 bytes took 0.002659 seconds: 1232.192380 MB/s 
+Acc (Replace) bulk from rank 0 to rank 1 of 65536 bytes took 0.004157 seconds: 1576.416770 MB/s 
+Acc (Replace) bulk from rank 0 to rank 1 of 131072 bytes took 0.008104 seconds: 1617.342454 MB/s 
+Acc (Replace) bulk from rank 0 to rank 1 of 262144 bytes took 0.014868 seconds: 1763.191534 MB/s 
+Acc (Replace) bulk from rank 0 to rank 1 of 524288 bytes took 0.028426 seconds: 1844.417793 MB/s 
+Acc (Replace) bulk from rank 0 to rank 1 of 1048576 bytes took 0.055836 seconds: 1877.954688 MB/s 
+Acc (Replace) bulk from rank 0 to rank 2 of 1 bytes took 0.000359 seconds: 0.278512 MB/s 
+Acc (Replace) bulk from rank 0 to rank 2 of 2 bytes took 0.000298 seconds: 0.671414 MB/s 
+Acc (Replace) bulk from rank 0 to rank 2 of 4 bytes took 0.000299 seconds: 1.339860 MB/s 
+Acc (Replace) bulk from rank 0 to rank 2 of 8 bytes took 0.000296 seconds: 2.700764 MB/s 
+Acc (Replace) bulk from rank 0 to rank 2 of 16 bytes took 0.000297 seconds: 5.392289 MB/s 
+Acc (Replace) bulk from rank 0 to rank 2 of 32 bytes took 0.000303 seconds: 10.555482 MB/s 
+Acc (Replace) bulk from rank 0 to rank 2 of 64 bytes took 0.000306 seconds: 20.933161 MB/s 
+Acc (Replace) bulk from rank 0 to rank 2 of 128 bytes took 0.000308 seconds: 41.529115 MB/s 
+Acc (Replace) bulk from rank 0 to rank 2 of 256 bytes took 0.000361 seconds: 71.001158 MB/s 
+Acc (Replace) bulk from rank 0 to rank 2 of 512 bytes took 0.000489 seconds: 104.781018 MB/s 
+Acc (Replace) bulk from rank 0 to rank 2 of 1024 bytes took 0.000750 seconds: 136.561328 MB/s 
+Acc (Replace) bulk from rank 0 to rank 2 of 2048 bytes took 0.001264 seconds: 162.053442 MB/s 
+Acc (Replace) bulk from rank 0 to rank 2 of 4096 bytes took 0.002292 seconds: 178.707821 MB/s 
+Acc (Replace) bulk from rank 0 to rank 2 of 8192 bytes took 0.004279 seconds: 191.464498 MB/s 
+Acc (Replace) bulk from rank 0 to rank 2 of 16384 bytes took 0.008269 seconds: 198.139749 MB/s 
+Acc (Replace) bulk from rank 0 to rank 2 of 32768 bytes took 0.016263 seconds: 201.488954 MB/s 
+Acc (Replace) bulk from rank 0 to rank 2 of 65536 bytes took 0.032256 seconds: 203.174450 MB/s 
+Acc (Replace) bulk from rank 0 to rank 2 of 131072 bytes took 0.064245 seconds: 204.018466 MB/s 
+Acc (Replace) bulk from rank 0 to rank 2 of 262144 bytes took 0.128312 seconds: 204.302695 MB/s 
+Acc (Replace) bulk from rank 0 to rank 2 of 524288 bytes took 0.256244 seconds: 204.604812 MB/s 
+Acc (Replace) bulk from rank 0 to rank 2 of 1048576 bytes took 0.512114 seconds: 204.754314 MB/s 
+Acc (Replace) bulk from rank 0 to rank 3 of 1 bytes took 0.000334 seconds: 0.299364 MB/s 
+Acc (Replace) bulk from rank 0 to rank 3 of 2 bytes took 0.000310 seconds: 0.644792 MB/s 
+Acc (Replace) bulk from rank 0 to rank 3 of 4 bytes took 0.000306 seconds: 1.305733 MB/s 
+Acc (Replace) bulk from rank 0 to rank 3 of 8 bytes took 0.000308 seconds: 2.598067 MB/s 
+Acc (Replace) bulk from rank 0 to rank 3 of 16 bytes took 0.000310 seconds: 5.154411 MB/s 
+Acc (Replace) bulk from rank 0 to rank 3 of 32 bytes took 0.000314 seconds: 10.204895 MB/s 
+Acc (Replace) bulk from rank 0 to rank 3 of 64 bytes took 0.000311 seconds: 20.577868 MB/s 
+Acc (Replace) bulk from rank 0 to rank 3 of 128 bytes took 0.000322 seconds: 39.790014 MB/s 
+Acc (Replace) bulk from rank 0 to rank 3 of 256 bytes took 0.000374 seconds: 68.484791 MB/s 
+Acc (Replace) bulk from rank 0 to rank 3 of 512 bytes took 0.000498 seconds: 102.735174 MB/s 
+Acc (Replace) bulk from rank 0 to rank 3 of 1024 bytes took 0.000759 seconds: 134.999959 MB/s 
+Acc (Replace) bulk from rank 0 to rank 3 of 2048 bytes took 0.001284 seconds: 159.446143 MB/s 
+Acc (Replace) bulk from rank 0 to rank 3 of 4096 bytes took 0.002314 seconds: 176.986179 MB/s 
+Acc (Replace) bulk from rank 0 to rank 3 of 8192 bytes took 0.004315 seconds: 189.827421 MB/s 
+Acc (Replace) bulk from rank 0 to rank 3 of 16384 bytes took 0.008328 seconds: 196.731990 MB/s 
+Acc (Replace) bulk from rank 0 to rank 3 of 32768 bytes took 0.016355 seconds: 200.353613 MB/s 
+Acc (Replace) bulk from rank 0 to rank 3 of 65536 bytes took 0.032424 seconds: 202.121916 MB/s 
+Acc (Replace) bulk from rank 0 to rank 3 of 131072 bytes took 0.064572 seconds: 202.986184 MB/s 
+Acc (Replace) bulk from rank 0 to rank 3 of 262144 bytes took 0.128911 seconds: 203.352383 MB/s 
+Acc (Replace) bulk from rank 0 to rank 3 of 524288 bytes took 0.257469 seconds: 203.631531 MB/s 
+Acc (Replace) bulk from rank 0 to rank 3 of 1048576 bytes took 0.514125 seconds: 203.953577 MB/s 
+Acc (Replace) bulk from rank 0 to rank 4 of 1 bytes took 0.000325 seconds: 0.308131 MB/s 
+Acc (Replace) bulk from rank 0 to rank 4 of 2 bytes took 0.000298 seconds: 0.671293 MB/s 
+Acc (Replace) bulk from rank 0 to rank 4 of 4 bytes took 0.000298 seconds: 1.342547 MB/s 
+Acc (Replace) bulk from rank 0 to rank 4 of 8 bytes took 0.000301 seconds: 2.661942 MB/s 
+Acc (Replace) bulk from rank 0 to rank 4 of 16 bytes took 0.000301 seconds: 5.321095 MB/s 
+Acc (Replace) bulk from rank 0 to rank 4 of 32 bytes took 0.000299 seconds: 10.707131 MB/s 
+Acc (Replace) bulk from rank 0 to rank 4 of 64 bytes took 0.000301 seconds: 21.280664 MB/s 
+Acc (Replace) bulk from rank 0 to rank 4 of 128 bytes took 0.000306 seconds: 41.774179 MB/s 
+Acc (Replace) bulk from rank 0 to rank 4 of 256 bytes took 0.000356 seconds: 71.832428 MB/s 
+Acc (Replace) bulk from rank 0 to rank 4 of 512 bytes took 0.000473 seconds: 108.213500 MB/s 
+Acc (Replace) bulk from rank 0 to rank 4 of 1024 bytes took 0.000733 seconds: 139.780194 MB/s 
+Acc (Replace) bulk from rank 0 to rank 4 of 2048 bytes took 0.001268 seconds: 161.452759 MB/s 
+Acc (Replace) bulk from rank 0 to rank 4 of 4096 bytes took 0.002293 seconds: 178.613575 MB/s 
+Acc (Replace) bulk from rank 0 to rank 4 of 8192 bytes took 0.004285 seconds: 191.186896 MB/s 
+Acc (Replace) bulk from rank 0 to rank 4 of 16384 bytes took 0.008283 seconds: 197.807281 MB/s 
+Acc (Replace) bulk from rank 0 to rank 4 of 32768 bytes took 0.016274 seconds: 201.346700 MB/s 
+Acc (Replace) bulk from rank 0 to rank 4 of 65536 bytes took 0.032268 seconds: 203.101351 MB/s 
+Acc (Replace) bulk from rank 0 to rank 4 of 131072 bytes took 0.064258 seconds: 203.977564 MB/s 
+Acc (Replace) bulk from rank 0 to rank 4 of 262144 bytes took 0.128302 seconds: 204.318686 MB/s 
+Acc (Replace) bulk from rank 0 to rank 4 of 524288 bytes took 0.256258 seconds: 204.593447 MB/s 
+Acc (Replace) bulk from rank 0 to rank 4 of 1048576 bytes took 0.512162 seconds: 204.735307 MB/s 
+Acc (Replace) bulk from rank 0 to rank 5 of 1 bytes took 0.000341 seconds: 0.293249 MB/s 
+Acc (Replace) bulk from rank 0 to rank 5 of 2 bytes took 0.000310 seconds: 0.645864 MB/s 
+Acc (Replace) bulk from rank 0 to rank 5 of 4 bytes took 0.000312 seconds: 1.283434 MB/s 
+Acc (Replace) bulk from rank 0 to rank 5 of 8 bytes took 0.000312 seconds: 2.561332 MB/s 
+Acc (Replace) bulk from rank 0 to rank 5 of 16 bytes took 0.000312 seconds: 5.133120 MB/s 
+Acc (Replace) bulk from rank 0 to rank 5 of 32 bytes took 0.000317 seconds: 10.107591 MB/s 
+Acc (Replace) bulk from rank 0 to rank 5 of 64 bytes took 0.000321 seconds: 19.953896 MB/s 
+Acc (Replace) bulk from rank 0 to rank 5 of 128 bytes took 0.000329 seconds: 38.863545 MB/s 
+Acc (Replace) bulk from rank 0 to rank 5 of 256 bytes took 0.000378 seconds: 67.783596 MB/s 
+Acc (Replace) bulk from rank 0 to rank 5 of 512 bytes took 0.000502 seconds: 102.007272 MB/s 
+Acc (Replace) bulk from rank 0 to rank 5 of 1024 bytes took 0.000762 seconds: 134.449809 MB/s 
+Acc (Replace) bulk from rank 0 to rank 5 of 2048 bytes took 0.001286 seconds: 159.262787 MB/s 
+Acc (Replace) bulk from rank 0 to rank 5 of 4096 bytes took 0.002318 seconds: 176.691192 MB/s 
+Acc (Replace) bulk from rank 0 to rank 5 of 8192 bytes took 0.004317 seconds: 189.778690 MB/s 
+Acc (Replace) bulk from rank 0 to rank 5 of 16384 bytes took 0.008333 seconds: 196.605572 MB/s 
+Acc (Replace) bulk from rank 0 to rank 5 of 32768 bytes took 0.016358 seconds: 200.311856 MB/s 
+Acc (Replace) bulk from rank 0 to rank 5 of 65536 bytes took 0.032424 seconds: 202.121901 MB/s 
+Acc (Replace) bulk from rank 0 to rank 5 of 131072 bytes took 0.064575 seconds: 202.977111 MB/s 
+Acc (Replace) bulk from rank 0 to rank 5 of 262144 bytes took 0.128925 seconds: 203.331190 MB/s 
+Acc (Replace) bulk from rank 0 to rank 5 of 524288 bytes took 0.257476 seconds: 203.626038 MB/s 
+Acc (Replace) bulk from rank 0 to rank 5 of 1048576 bytes took 0.514577 seconds: 203.774401 MB/s 
+Acc (Replace) bulk from rank 0 to rank 6 of 1 bytes took 0.000322 seconds: 0.310820 MB/s 
+Acc (Replace) bulk from rank 0 to rank 6 of 2 bytes took 0.000303 seconds: 0.661075 MB/s 
+Acc (Replace) bulk from rank 0 to rank 6 of 4 bytes took 0.000303 seconds: 1.322232 MB/s 
+Acc (Replace) bulk from rank 0 to rank 6 of 8 bytes took 0.000299 seconds: 2.676671 MB/s 
+Acc (Replace) bulk from rank 0 to rank 6 of 16 bytes took 0.000299 seconds: 5.346477 MB/s 
+Acc (Replace) bulk from rank 0 to rank 6 of 32 bytes took 0.000303 seconds: 10.560207 MB/s 
+Acc (Replace) bulk from rank 0 to rank 6 of 64 bytes took 0.000307 seconds: 20.824182 MB/s 
+Acc (Replace) bulk from rank 0 to rank 6 of 128 bytes took 0.000312 seconds: 41.045703 MB/s 
+Acc (Replace) bulk from rank 0 to rank 6 of 256 bytes took 0.000365 seconds: 70.219470 MB/s 
+Acc (Replace) bulk from rank 0 to rank 6 of 512 bytes took 0.000491 seconds: 104.319213 MB/s 
+Acc (Replace) bulk from rank 0 to rank 6 of 1024 bytes took 0.000745 seconds: 137.416463 MB/s 
+Acc (Replace) bulk from rank 0 to rank 6 of 2048 bytes took 0.001274 seconds: 160.793920 MB/s 
+Acc (Replace) bulk from rank 0 to rank 6 of 4096 bytes took 0.002289 seconds: 178.914778 MB/s 
+Acc (Replace) bulk from rank 0 to rank 6 of 8192 bytes took 0.004274 seconds: 191.664905 MB/s 
+Acc (Replace) bulk from rank 0 to rank 6 of 16384 bytes took 0.008267 seconds: 198.192240 MB/s 
+Acc (Replace) bulk from rank 0 to rank 6 of 32768 bytes took 0.016260 seconds: 201.525618 MB/s 
+Acc (Replace) bulk from rank 0 to rank 6 of 65536 bytes took 0.032256 seconds: 203.172103 MB/s 
+Acc (Replace) bulk from rank 0 to rank 6 of 131072 bytes took 0.064252 seconds: 203.996283 MB/s 
+Acc (Replace) bulk from rank 0 to rank 6 of 262144 bytes took 0.128298 seconds: 204.323822 MB/s 
+Acc (Replace) bulk from rank 0 to rank 6 of 524288 bytes took 0.256246 seconds: 204.603728 MB/s 
+Acc (Replace) bulk from rank 0 to rank 6 of 1048576 bytes took 0.512135 seconds: 204.745924 MB/s 
+Acc (Replace) bulk from rank 0 to rank 7 of 1 bytes took 0.000336 seconds: 0.297828 MB/s 
+Acc (Replace) bulk from rank 0 to rank 7 of 2 bytes took 0.000311 seconds: 0.642686 MB/s 
+Acc (Replace) bulk from rank 0 to rank 7 of 4 bytes took 0.000306 seconds: 1.307141 MB/s 
+Acc (Replace) bulk from rank 0 to rank 7 of 8 bytes took 0.000309 seconds: 2.592689 MB/s 
+Acc (Replace) bulk from rank 0 to rank 7 of 16 bytes took 0.000311 seconds: 5.151849 MB/s 
+Acc (Replace) bulk from rank 0 to rank 7 of 32 bytes took 0.000317 seconds: 10.104479 MB/s 
+Acc (Replace) bulk from rank 0 to rank 7 of 64 bytes took 0.000315 seconds: 20.322944 MB/s 
+Acc (Replace) bulk from rank 0 to rank 7 of 128 bytes took 0.000326 seconds: 39.270730 MB/s 
+Acc (Replace) bulk from rank 0 to rank 7 of 256 bytes took 0.000376 seconds: 68.064515 MB/s 
+Acc (Replace) bulk from rank 0 to rank 7 of 512 bytes took 0.000498 seconds: 102.896734 MB/s 
+Acc (Replace) bulk from rank 0 to rank 7 of 1024 bytes took 0.000756 seconds: 135.426000 MB/s 
+Acc (Replace) bulk from rank 0 to rank 7 of 2048 bytes took 0.001294 seconds: 158.256704 MB/s 
+Acc (Replace) bulk from rank 0 to rank 7 of 4096 bytes took 0.002316 seconds: 176.832980 MB/s 
+Acc (Replace) bulk from rank 0 to rank 7 of 8192 bytes took 0.004315 seconds: 189.869659 MB/s 
+Acc (Replace) bulk from rank 0 to rank 7 of 16384 bytes took 0.008330 seconds: 196.684756 MB/s 
+Acc (Replace) bulk from rank 0 to rank 7 of 32768 bytes took 0.016359 seconds: 200.310838 MB/s 
+Acc (Replace) bulk from rank 0 to rank 7 of 65536 bytes took 0.032428 seconds: 202.096540 MB/s 
+Acc (Replace) bulk from rank 0 to rank 7 of 131072 bytes took 0.064570 seconds: 202.990758 MB/s 
+Acc (Replace) bulk from rank 0 to rank 7 of 262144 bytes took 0.128915 seconds: 203.346509 MB/s 
+Acc (Replace) bulk from rank 0 to rank 7 of 524288 bytes took 0.257481 seconds: 203.621870 MB/s 
+Acc (Replace) bulk from rank 0 to rank 7 of 1048576 bytes took 0.514586 seconds: 203.770614 MB/s 
+================================================================= 
+Acc (Sum) individual from rank 0 to rank 0 of 1 bytes took 0.001985 seconds: 0.050384 MB/s 
+Acc (Sum) individual from rank 0 to rank 0 of 2 bytes took 0.001938 seconds: 0.103203 MB/s 
+Acc (Sum) individual from rank 0 to rank 0 of 4 bytes took 0.001933 seconds: 0.206923 MB/s 
+Acc (Sum) individual from rank 0 to rank 0 of 8 bytes took 0.001942 seconds: 0.411901 MB/s 
+Acc (Sum) individual from rank 0 to rank 0 of 16 bytes took 0.001958 seconds: 0.817125 MB/s 
+Acc (Sum) individual from rank 0 to rank 0 of 32 bytes took 0.001987 seconds: 1.610331 MB/s 
+Acc (Sum) individual from rank 0 to rank 0 of 64 bytes took 0.002030 seconds: 3.153302 MB/s 
+Acc (Sum) individual from rank 0 to rank 0 of 128 bytes took 0.002113 seconds: 6.057491 MB/s 
+Acc (Sum) individual from rank 0 to rank 0 of 256 bytes took 0.002277 seconds: 11.242018 MB/s 
+Acc (Sum) individual from rank 0 to rank 0 of 512 bytes took 0.002599 seconds: 19.698378 MB/s 
+Acc (Sum) individual from rank 0 to rank 0 of 1024 bytes took 0.003320 seconds: 30.845162 MB/s 
+Acc (Sum) individual from rank 0 to rank 0 of 2048 bytes took 0.004605 seconds: 44.474618 MB/s 
+Acc (Sum) individual from rank 0 to rank 0 of 4096 bytes took 0.006821 seconds: 60.051497 MB/s 
+Acc (Sum) individual from rank 0 to rank 0 of 8192 bytes took 0.011254 seconds: 72.791492 MB/s 
+Acc (Sum) individual from rank 0 to rank 0 of 16384 bytes took 0.020118 seconds: 81.438379 MB/s 
+Acc (Sum) individual from rank 0 to rank 0 of 32768 bytes took 0.037848 seconds: 86.578371 MB/s 
+Acc (Sum) individual from rank 0 to rank 0 of 65536 bytes took 0.073500 seconds: 89.164914 MB/s 
+Acc (Sum) individual from rank 0 to rank 0 of 131072 bytes took 0.145260 seconds: 90.232921 MB/s 
+Acc (Sum) individual from rank 0 to rank 0 of 262144 bytes took 0.288131 seconds: 90.980755 MB/s 
+Acc (Sum) individual from rank 0 to rank 0 of 524288 bytes took 0.573866 seconds: 91.360660 MB/s 
+Acc (Sum) individual from rank 0 to rank 0 of 1048576 bytes took 1.145511 seconds: 91.537804 MB/s 
+Acc (Sum) individual from rank 0 to rank 1 of 1 bytes took 0.001716 seconds: 0.058288 MB/s 
+Acc (Sum) individual from rank 0 to rank 1 of 2 bytes took 0.001699 seconds: 0.117730 MB/s 
+Acc (Sum) individual from rank 0 to rank 1 of 4 bytes took 0.001701 seconds: 0.235206 MB/s 
+Acc (Sum) individual from rank 0 to rank 1 of 8 bytes took 0.001709 seconds: 0.468013 MB/s 
+Acc (Sum) individual from rank 0 to rank 1 of 16 bytes took 0.001718 seconds: 0.931284 MB/s 
+Acc (Sum) individual from rank 0 to rank 1 of 32 bytes took 0.001741 seconds: 1.838524 MB/s 
+Acc (Sum) individual from rank 0 to rank 1 of 64 bytes took 0.001782 seconds: 3.591843 MB/s 
+Acc (Sum) individual from rank 0 to rank 1 of 128 bytes took 0.001863 seconds: 6.869735 MB/s 
+Acc (Sum) individual from rank 0 to rank 1 of 256 bytes took 0.002020 seconds: 12.674279 MB/s 
+Acc (Sum) individual from rank 0 to rank 1 of 512 bytes took 0.002354 seconds: 21.745801 MB/s 
+Acc (Sum) individual from rank 0 to rank 1 of 1024 bytes took 0.003087 seconds: 33.170800 MB/s 
+Acc (Sum) individual from rank 0 to rank 1 of 2048 bytes took 0.004383 seconds: 46.724774 MB/s 
+Acc (Sum) individual from rank 0 to rank 1 of 4096 bytes took 0.006600 seconds: 62.064591 MB/s 
+Acc (Sum) individual from rank 0 to rank 1 of 8192 bytes took 0.011033 seconds: 74.247841 MB/s 
+Acc (Sum) individual from rank 0 to rank 1 of 16384 bytes took 0.019898 seconds: 82.340472 MB/s 
+Acc (Sum) individual from rank 0 to rank 1 of 32768 bytes took 0.037627 seconds: 87.086456 MB/s 
+Acc (Sum) individual from rank 0 to rank 1 of 65536 bytes took 0.073286 seconds: 89.424427 MB/s 
+Acc (Sum) individual from rank 0 to rank 1 of 131072 bytes took 0.145058 seconds: 90.358288 MB/s 
+Acc (Sum) individual from rank 0 to rank 1 of 262144 bytes took 0.287977 seconds: 91.029392 MB/s 
+Acc (Sum) individual from rank 0 to rank 1 of 524288 bytes took 0.573741 seconds: 91.380678 MB/s 
+Acc (Sum) individual from rank 0 to rank 1 of 1048576 bytes took 1.145486 seconds: 91.539839 MB/s 
+Acc (Sum) individual from rank 0 to rank 2 of 1 bytes took 0.001707 seconds: 0.058567 MB/s 
+Acc (Sum) individual from rank 0 to rank 2 of 2 bytes took 0.001660 seconds: 0.120465 MB/s 
+Acc (Sum) individual from rank 0 to rank 2 of 4 bytes took 0.001637 seconds: 0.244291 MB/s 
+Acc (Sum) individual from rank 0 to rank 2 of 8 bytes took 0.001651 seconds: 0.484485 MB/s 
+Acc (Sum) individual from rank 0 to rank 2 of 16 bytes took 0.001647 seconds: 0.971277 MB/s 
+Acc (Sum) individual from rank 0 to rank 2 of 32 bytes took 0.001640 seconds: 1.951751 MB/s 
+Acc (Sum) individual from rank 0 to rank 2 of 64 bytes took 0.001681 seconds: 3.807457 MB/s 
+Acc (Sum) individual from rank 0 to rank 2 of 128 bytes took 0.001754 seconds: 7.295534 MB/s 
+Acc (Sum) individual from rank 0 to rank 2 of 256 bytes took 0.001937 seconds: 13.218843 MB/s 
+Acc (Sum) individual from rank 0 to rank 2 of 512 bytes took 0.002358 seconds: 21.715947 MB/s 
+Acc (Sum) individual from rank 0 to rank 2 of 1024 bytes took 0.003152 seconds: 32.485899 MB/s 
+Acc (Sum) individual from rank 0 to rank 2 of 2048 bytes took 0.004680 seconds: 43.756155 MB/s 
+Acc (Sum) individual from rank 0 to rank 2 of 4096 bytes took 0.007495 seconds: 54.651804 MB/s 
+Acc (Sum) individual from rank 0 to rank 2 of 8192 bytes took 0.013085 seconds: 62.604121 MB/s 
+Acc (Sum) individual from rank 0 to rank 2 of 16384 bytes took 0.024411 seconds: 67.117024 MB/s 
+Acc (Sum) individual from rank 0 to rank 2 of 32768 bytes took 0.046767 seconds: 70.066784 MB/s 
+Acc (Sum) individual from rank 0 to rank 2 of 65536 bytes took 0.091575 seconds: 71.565202 MB/s 
+Acc (Sum) individual from rank 0 to rank 2 of 131072 bytes took 0.181375 seconds: 72.265889 MB/s 
+Acc (Sum) individual from rank 0 to rank 2 of 262144 bytes took 0.361275 seconds: 72.560832 MB/s 
+Acc (Sum) individual from rank 0 to rank 2 of 524288 bytes took 0.720315 seconds: 72.785894 MB/s 
+Acc (Sum) individual from rank 0 to rank 2 of 1048576 bytes took 1.438430 seconds: 72.897274 MB/s 
+Acc (Sum) individual from rank 0 to rank 3 of 1 bytes took 0.002010 seconds: 0.049742 MB/s 
+Acc (Sum) individual from rank 0 to rank 3 of 2 bytes took 0.001980 seconds: 0.101013 MB/s 
+Acc (Sum) individual from rank 0 to rank 3 of 4 bytes took 0.001982 seconds: 0.201822 MB/s 
+Acc (Sum) individual from rank 0 to rank 3 of 8 bytes took 0.001990 seconds: 0.401959 MB/s 
+Acc (Sum) individual from rank 0 to rank 3 of 16 bytes took 0.002002 seconds: 0.799158 MB/s 
+Acc (Sum) individual from rank 0 to rank 3 of 32 bytes took 0.002030 seconds: 1.576443 MB/s 
+Acc (Sum) individual from rank 0 to rank 3 of 64 bytes took 0.002068 seconds: 3.095465 MB/s 
+Acc (Sum) individual from rank 0 to rank 3 of 128 bytes took 0.002152 seconds: 5.949139 MB/s 
+Acc (Sum) individual from rank 0 to rank 3 of 256 bytes took 0.002353 seconds: 10.882003 MB/s 
+Acc (Sum) individual from rank 0 to rank 3 of 512 bytes took 0.002756 seconds: 18.575808 MB/s 
+Acc (Sum) individual from rank 0 to rank 3 of 1024 bytes took 0.003583 seconds: 28.582978 MB/s 
+Acc (Sum) individual from rank 0 to rank 3 of 2048 bytes took 0.004873 seconds: 42.026415 MB/s 
+Acc (Sum) individual from rank 0 to rank 3 of 4096 bytes took 0.008162 seconds: 50.182914 MB/s 
+Acc (Sum) individual from rank 0 to rank 3 of 8192 bytes took 0.013631 seconds: 60.098203 MB/s 
+Acc (Sum) individual from rank 0 to rank 3 of 16384 bytes took 0.024838 seconds: 65.964676 MB/s 
+Acc (Sum) individual from rank 0 to rank 3 of 32768 bytes took 0.047552 seconds: 68.909442 MB/s 
+Acc (Sum) individual from rank 0 to rank 3 of 65536 bytes took 0.092370 seconds: 70.949261 MB/s 
+Acc (Sum) individual from rank 0 to rank 3 of 131072 bytes took 0.182471 seconds: 71.831603 MB/s 
+Acc (Sum) individual from rank 0 to rank 3 of 262144 bytes took 0.362610 seconds: 72.293651 MB/s 
+Acc (Sum) individual from rank 0 to rank 3 of 524288 bytes took 0.722264 seconds: 72.589481 MB/s 
+Acc (Sum) individual from rank 0 to rank 3 of 1048576 bytes took 1.441565 seconds: 72.738728 MB/s 
+Acc (Sum) individual from rank 0 to rank 4 of 1 bytes took 0.001696 seconds: 0.058970 MB/s 
+Acc (Sum) individual from rank 0 to rank 4 of 2 bytes took 0.001651 seconds: 0.121130 MB/s 
+Acc (Sum) individual from rank 0 to rank 4 of 4 bytes took 0.001632 seconds: 0.245082 MB/s 
+Acc (Sum) individual from rank 0 to rank 4 of 8 bytes took 0.001639 seconds: 0.487977 MB/s 
+Acc (Sum) individual from rank 0 to rank 4 of 16 bytes took 0.001639 seconds: 0.976473 MB/s 
+Acc (Sum) individual from rank 0 to rank 4 of 32 bytes took 0.001625 seconds: 1.969633 MB/s 
+Acc (Sum) individual from rank 0 to rank 4 of 64 bytes took 0.001654 seconds: 3.870386 MB/s 
+Acc (Sum) individual from rank 0 to rank 4 of 128 bytes took 0.001737 seconds: 7.367487 MB/s 
+Acc (Sum) individual from rank 0 to rank 4 of 256 bytes took 0.001929 seconds: 13.271869 MB/s 
+Acc (Sum) individual from rank 0 to rank 4 of 512 bytes took 0.002319 seconds: 22.079345 MB/s 
+Acc (Sum) individual from rank 0 to rank 4 of 1024 bytes took 0.003129 seconds: 32.721215 MB/s 
+Acc (Sum) individual from rank 0 to rank 4 of 2048 bytes took 0.004661 seconds: 43.936553 MB/s 
+Acc (Sum) individual from rank 0 to rank 4 of 4096 bytes took 0.007481 seconds: 54.748622 MB/s 
+Acc (Sum) individual from rank 0 to rank 4 of 8192 bytes took 0.013091 seconds: 62.579133 MB/s 
+Acc (Sum) individual from rank 0 to rank 4 of 16384 bytes took 0.024437 seconds: 67.046036 MB/s 
+Acc (Sum) individual from rank 0 to rank 4 of 32768 bytes took 0.046811 seconds: 70.000758 MB/s 
+Acc (Sum) individual from rank 0 to rank 4 of 65536 bytes took 0.091616 seconds: 71.532990 MB/s 
+Acc (Sum) individual from rank 0 to rank 4 of 131072 bytes took 0.181491 seconds: 72.219492 MB/s 
+Acc (Sum) individual from rank 0 to rank 4 of 262144 bytes took 0.361455 seconds: 72.524693 MB/s 
+Acc (Sum) individual from rank 0 to rank 4 of 524288 bytes took 0.720638 seconds: 72.753292 MB/s 
+Acc (Sum) individual from rank 0 to rank 4 of 1048576 bytes took 1.439062 seconds: 72.865216 MB/s 
+Acc (Sum) individual from rank 0 to rank 5 of 1 bytes took 0.002015 seconds: 0.049626 MB/s 
+Acc (Sum) individual from rank 0 to rank 5 of 2 bytes took 0.001995 seconds: 0.100240 MB/s 
+Acc (Sum) individual from rank 0 to rank 5 of 4 bytes took 0.001998 seconds: 0.200211 MB/s 
+Acc (Sum) individual from rank 0 to rank 5 of 8 bytes took 0.002001 seconds: 0.399785 MB/s 
+Acc (Sum) individual from rank 0 to rank 5 of 16 bytes took 0.002012 seconds: 0.795234 MB/s 
+Acc (Sum) individual from rank 0 to rank 5 of 32 bytes took 0.002036 seconds: 1.571348 MB/s 
+Acc (Sum) individual from rank 0 to rank 5 of 64 bytes took 0.002086 seconds: 3.068574 MB/s 
+Acc (Sum) individual from rank 0 to rank 5 of 128 bytes took 0.002164 seconds: 5.914834 MB/s 
+Acc (Sum) individual from rank 0 to rank 5 of 256 bytes took 0.002366 seconds: 10.817689 MB/s 
+Acc (Sum) individual from rank 0 to rank 5 of 512 bytes took 0.002778 seconds: 18.430795 MB/s 
+Acc (Sum) individual from rank 0 to rank 5 of 1024 bytes took 0.003585 seconds: 28.560496 MB/s 
+Acc (Sum) individual from rank 0 to rank 5 of 2048 bytes took 0.004886 seconds: 41.917710 MB/s 
+Acc (Sum) individual from rank 0 to rank 5 of 4096 bytes took 0.008119 seconds: 50.448829 MB/s 
+Acc (Sum) individual from rank 0 to rank 5 of 8192 bytes took 0.013633 seconds: 60.088649 MB/s 
+Acc (Sum) individual from rank 0 to rank 5 of 16384 bytes took 0.024833 seconds: 65.976869 MB/s 
+Acc (Sum) individual from rank 0 to rank 5 of 32768 bytes took 0.047560 seconds: 68.898200 MB/s 
+Acc (Sum) individual from rank 0 to rank 5 of 65536 bytes took 0.092376 seconds: 70.944709 MB/s 
+Acc (Sum) individual from rank 0 to rank 5 of 131072 bytes took 0.182475 seconds: 71.830309 MB/s 
+Acc (Sum) individual from rank 0 to rank 5 of 262144 bytes took 0.362608 seconds: 72.293996 MB/s 
+Acc (Sum) individual from rank 0 to rank 5 of 524288 bytes took 0.722325 seconds: 72.583409 MB/s 
+Acc (Sum) individual from rank 0 to rank 5 of 1048576 bytes took 1.441644 seconds: 72.734714 MB/s 
+Acc (Sum) individual from rank 0 to rank 6 of 1 bytes took 0.001728 seconds: 0.057885 MB/s 
+Acc (Sum) individual from rank 0 to rank 6 of 2 bytes took 0.001696 seconds: 0.117913 MB/s 
+Acc (Sum) individual from rank 0 to rank 6 of 4 bytes took 0.001670 seconds: 0.239522 MB/s 
+Acc (Sum) individual from rank 0 to rank 6 of 8 bytes took 0.001684 seconds: 0.475039 MB/s 
+Acc (Sum) individual from rank 0 to rank 6 of 16 bytes took 0.001667 seconds: 0.959820 MB/s 
+Acc (Sum) individual from rank 0 to rank 6 of 32 bytes took 0.001659 seconds: 1.928439 MB/s 
+Acc (Sum) individual from rank 0 to rank 6 of 64 bytes took 0.001701 seconds: 3.761394 MB/s 
+Acc (Sum) individual from rank 0 to rank 6 of 128 bytes took 0.001774 seconds: 7.213333 MB/s 
+Acc (Sum) individual from rank 0 to rank 6 of 256 bytes took 0.001970 seconds: 12.994796 MB/s 
+Acc (Sum) individual from rank 0 to rank 6 of 512 bytes took 0.002369 seconds: 21.611474 MB/s 
+Acc (Sum) individual from rank 0 to rank 6 of 1024 bytes took 0.003171 seconds: 32.287784 MB/s 
+Acc (Sum) individual from rank 0 to rank 6 of 2048 bytes took 0.004696 seconds: 43.609454 MB/s 
+Acc (Sum) individual from rank 0 to rank 6 of 4096 bytes took 0.007510 seconds: 54.537739 MB/s 
+Acc (Sum) individual from rank 0 to rank 6 of 8192 bytes took 0.013076 seconds: 62.647203 MB/s 
+Acc (Sum) individual from rank 0 to rank 6 of 16384 bytes took 0.024436 seconds: 67.049236 MB/s 
+Acc (Sum) individual from rank 0 to rank 6 of 32768 bytes took 0.046792 seconds: 70.029489 MB/s 
+Acc (Sum) individual from rank 0 to rank 6 of 65536 bytes took 0.091595 seconds: 71.549687 MB/s 
+Acc (Sum) individual from rank 0 to rank 6 of 131072 bytes took 0.181404 seconds: 72.254381 MB/s 
+Acc (Sum) individual from rank 0 to rank 6 of 262144 bytes took 0.361291 seconds: 72.557557 MB/s 
+Acc (Sum) individual from rank 0 to rank 6 of 524288 bytes took 0.720351 seconds: 72.782269 MB/s 
+Acc (Sum) individual from rank 0 to rank 6 of 1048576 bytes took 1.438499 seconds: 72.893769 MB/s 
+Acc (Sum) individual from rank 0 to rank 7 of 1 bytes took 0.002020 seconds: 0.049510 MB/s 
+Acc (Sum) individual from rank 0 to rank 7 of 2 bytes took 0.001989 seconds: 0.100555 MB/s 
+Acc (Sum) individual from rank 0 to rank 7 of 4 bytes took 0.001993 seconds: 0.200657 MB/s 
+Acc (Sum) individual from rank 0 to rank 7 of 8 bytes took 0.001995 seconds: 0.400953 MB/s 
+Acc (Sum) individual from rank 0 to rank 7 of 16 bytes took 0.002008 seconds: 0.796898 MB/s 
+Acc (Sum) individual from rank 0 to rank 7 of 32 bytes took 0.002034 seconds: 1.573450 MB/s 
+Acc (Sum) individual from rank 0 to rank 7 of 64 bytes took 0.002080 seconds: 3.076429 MB/s 
+Acc (Sum) individual from rank 0 to rank 7 of 128 bytes took 0.002165 seconds: 5.911808 MB/s 
+Acc (Sum) individual from rank 0 to rank 7 of 256 bytes took 0.002364 seconds: 10.829988 MB/s 
+Acc (Sum) individual from rank 0 to rank 7 of 512 bytes took 0.002762 seconds: 18.540082 MB/s 
+Acc (Sum) individual from rank 0 to rank 7 of 1024 bytes took 0.003597 seconds: 28.467530 MB/s 
+Acc (Sum) individual from rank 0 to rank 7 of 2048 bytes took 0.004959 seconds: 41.299487 MB/s 
+Acc (Sum) individual from rank 0 to rank 7 of 4096 bytes took 0.008188 seconds: 50.022650 MB/s 
+Acc (Sum) individual from rank 0 to rank 7 of 8192 bytes took 0.013665 seconds: 59.950960 MB/s 
+Acc (Sum) individual from rank 0 to rank 7 of 16384 bytes took 0.024862 seconds: 65.900285 MB/s 
+Acc (Sum) individual from rank 0 to rank 7 of 32768 bytes took 0.047593 seconds: 68.850303 MB/s 
+Acc (Sum) individual from rank 0 to rank 7 of 65536 bytes took 0.092411 seconds: 70.917591 MB/s 
+Acc (Sum) individual from rank 0 to rank 7 of 131072 bytes took 0.182525 seconds: 71.810305 MB/s 
+Acc (Sum) individual from rank 0 to rank 7 of 262144 bytes took 0.362680 seconds: 72.279640 MB/s 
+Acc (Sum) individual from rank 0 to rank 7 of 524288 bytes took 0.722349 seconds: 72.581023 MB/s 
+Acc (Sum) individual from rank 0 to rank 7 of 1048576 bytes took 1.441689 seconds: 72.732461 MB/s 
+================================================================= 
+Acc (Sum) bulk from rank 0 to rank 0 of 1 bytes took 0.001400 seconds: 0.071404 MB/s 
+Acc (Sum) bulk from rank 0 to rank 0 of 2 bytes took 0.001324 seconds: 0.151009 MB/s 
+Acc (Sum) bulk from rank 0 to rank 0 of 4 bytes took 0.001326 seconds: 0.301683 MB/s 
+Acc (Sum) bulk from rank 0 to rank 0 of 8 bytes took 0.001334 seconds: 0.599530 MB/s 
+Acc (Sum) bulk from rank 0 to rank 0 of 16 bytes took 0.001336 seconds: 1.197387 MB/s 
+Acc (Sum) bulk from rank 0 to rank 0 of 32 bytes took 0.001367 seconds: 2.341517 MB/s 
+Acc (Sum) bulk from rank 0 to rank 0 of 64 bytes took 0.001403 seconds: 4.560977 MB/s 
+Acc (Sum) bulk from rank 0 to rank 0 of 128 bytes took 0.001484 seconds: 8.622581 MB/s 
+Acc (Sum) bulk from rank 0 to rank 0 of 256 bytes took 0.001622 seconds: 15.781348 MB/s 
+Acc (Sum) bulk from rank 0 to rank 0 of 512 bytes took 0.001924 seconds: 26.607622 MB/s 
+Acc (Sum) bulk from rank 0 to rank 0 of 1024 bytes took 0.002553 seconds: 40.111845 MB/s 
+Acc (Sum) bulk from rank 0 to rank 0 of 2048 bytes took 0.003909 seconds: 52.394446 MB/s 
+Acc (Sum) bulk from rank 0 to rank 0 of 4096 bytes took 0.006122 seconds: 66.907408 MB/s 
+Acc (Sum) bulk from rank 0 to rank 0 of 8192 bytes took 0.010552 seconds: 77.637119 MB/s 
+Acc (Sum) bulk from rank 0 to rank 0 of 16384 bytes took 0.019413 seconds: 84.397638 MB/s 
+Acc (Sum) bulk from rank 0 to rank 0 of 32768 bytes took 0.037139 seconds: 88.231635 MB/s 
+Acc (Sum) bulk from rank 0 to rank 0 of 65536 bytes took 0.072868 seconds: 89.937862 MB/s 
+Acc (Sum) bulk from rank 0 to rank 0 of 131072 bytes took 0.144698 seconds: 90.582944 MB/s 
+Acc (Sum) bulk from rank 0 to rank 0 of 262144 bytes took 0.287593 seconds: 91.151114 MB/s 
+Acc (Sum) bulk from rank 0 to rank 0 of 524288 bytes took 0.573335 seconds: 91.445295 MB/s 
+Acc (Sum) bulk from rank 0 to rank 0 of 1048576 bytes took 1.144992 seconds: 91.579292 MB/s 
+Acc (Sum) bulk from rank 0 to rank 1 of 1 bytes took 0.000918 seconds: 0.108991 MB/s 
+Acc (Sum) bulk from rank 0 to rank 1 of 2 bytes took 0.000878 seconds: 0.227913 MB/s 
+Acc (Sum) bulk from rank 0 to rank 1 of 4 bytes took 0.001164 seconds: 0.343776 MB/s 
+Acc (Sum) bulk from rank 0 to rank 1 of 8 bytes took 0.000866 seconds: 0.923517 MB/s 
+Acc (Sum) bulk from rank 0 to rank 1 of 16 bytes took 0.000877 seconds: 1.824278 MB/s 
+Acc (Sum) bulk from rank 0 to rank 1 of 32 bytes took 0.000884 seconds: 3.620470 MB/s 
+Acc (Sum) bulk from rank 0 to rank 1 of 64 bytes took 0.000923 seconds: 6.930903 MB/s 
+Acc (Sum) bulk from rank 0 to rank 1 of 128 bytes took 0.000988 seconds: 12.957539 MB/s 
+Acc (Sum) bulk from rank 0 to rank 1 of 256 bytes took 0.001109 seconds: 23.089741 MB/s 
+Acc (Sum) bulk from rank 0 to rank 1 of 512 bytes took 0.001388 seconds: 36.875437 MB/s 
+Acc (Sum) bulk from rank 0 to rank 1 of 1024 bytes took 0.002020 seconds: 50.692207 MB/s 
+Acc (Sum) bulk from rank 0 to rank 1 of 2048 bytes took 0.003294 seconds: 62.180433 MB/s 
+Acc (Sum) bulk from rank 0 to rank 1 of 4096 bytes took 0.005497 seconds: 74.514091 MB/s 
+Acc (Sum) bulk from rank 0 to rank 1 of 8192 bytes took 0.009927 seconds: 82.525547 MB/s 
+Acc (Sum) bulk from rank 0 to rank 1 of 16384 bytes took 0.018792 seconds: 87.186991 MB/s 
+Acc (Sum) bulk from rank 0 to rank 1 of 32768 bytes took 0.036519 seconds: 89.728335 MB/s 
+Acc (Sum) bulk from rank 0 to rank 1 of 65536 bytes took 0.072209 seconds: 90.759318 MB/s 
+Acc (Sum) bulk from rank 0 to rank 1 of 131072 bytes took 0.144001 seconds: 91.021280 MB/s 
+Acc (Sum) bulk from rank 0 to rank 1 of 262144 bytes took 0.286878 seconds: 91.378169 MB/s 
+Acc (Sum) bulk from rank 0 to rank 1 of 524288 bytes took 0.572623 seconds: 91.559033 MB/s 
+Acc (Sum) bulk from rank 0 to rank 1 of 1048576 bytes took 1.144315 seconds: 91.633539 MB/s 
+Acc (Sum) bulk from rank 0 to rank 2 of 1 bytes took 0.000326 seconds: 0.306582 MB/s 
+Acc (Sum) bulk from rank 0 to rank 2 of 2 bytes took 0.000280 seconds: 0.714063 MB/s 
+Acc (Sum) bulk from rank 0 to rank 2 of 4 bytes took 0.000278 seconds: 1.436801 MB/s 
+Acc (Sum) bulk from rank 0 to rank 2 of 8 bytes took 0.000279 seconds: 2.871475 MB/s 
+Acc (Sum) bulk from rank 0 to rank 2 of 16 bytes took 0.000280 seconds: 5.704964 MB/s 
+Acc (Sum) bulk from rank 0 to rank 2 of 32 bytes took 0.000289 seconds: 11.067160 MB/s 
+Acc (Sum) bulk from rank 0 to rank 2 of 64 bytes took 0.000320 seconds: 20.003204 MB/s 
+Acc (Sum) bulk from rank 0 to rank 2 of 128 bytes took 0.000386 seconds: 33.167603 MB/s 
+Acc (Sum) bulk from rank 0 to rank 2 of 256 bytes took 0.000565 seconds: 45.333505 MB/s 
+Acc (Sum) bulk from rank 0 to rank 2 of 512 bytes took 0.000926 seconds: 55.313305 MB/s 
+Acc (Sum) bulk from rank 0 to rank 2 of 1024 bytes took 0.001662 seconds: 61.599913 MB/s 
+Acc (Sum) bulk from rank 0 to rank 2 of 2048 bytes took 0.003103 seconds: 66.011122 MB/s 
+Acc (Sum) bulk from rank 0 to rank 2 of 4096 bytes took 0.005909 seconds: 69.319940 MB/s 
+Acc (Sum) bulk from rank 0 to rank 2 of 8192 bytes took 0.011502 seconds: 71.220833 MB/s 
+Acc (Sum) bulk from rank 0 to rank 2 of 16384 bytes took 0.022694 seconds: 72.196053 MB/s 
+Acc (Sum) bulk from rank 0 to rank 2 of 32768 bytes took 0.045064 seconds: 72.713569 MB/s 
+Acc (Sum) bulk from rank 0 to rank 2 of 65536 bytes took 0.089828 seconds: 72.956928 MB/s 
+Acc (Sum) bulk from rank 0 to rank 2 of 131072 bytes took 0.179561 seconds: 72.995927 MB/s 
+Acc (Sum) bulk from rank 0 to rank 2 of 262144 bytes took 0.359457 seconds: 72.927800 MB/s 
+Acc (Sum) bulk from rank 0 to rank 2 of 524288 bytes took 0.718542 seconds: 72.965565 MB/s 
+Acc (Sum) bulk from rank 0 to rank 2 of 1048576 bytes took 1.436737 seconds: 72.983157 MB/s 
+Acc (Sum) bulk from rank 0 to rank 3 of 1 bytes took 0.000317 seconds: 0.315435 MB/s 
+Acc (Sum) bulk from rank 0 to rank 3 of 2 bytes took 0.000288 seconds: 0.694101 MB/s 
+Acc (Sum) bulk from rank 0 to rank 3 of 4 bytes took 0.000288 seconds: 1.387083 MB/s 
+Acc (Sum) bulk from rank 0 to rank 3 of 8 bytes took 0.000289 seconds: 2.766778 MB/s 
+Acc (Sum) bulk from rank 0 to rank 3 of 16 bytes took 0.000297 seconds: 5.394766 MB/s 
+Acc (Sum) bulk from rank 0 to rank 3 of 32 bytes took 0.000308 seconds: 10.389400 MB/s 
+Acc (Sum) bulk from rank 0 to rank 3 of 64 bytes took 0.000339 seconds: 18.898428 MB/s 
+Acc (Sum) bulk from rank 0 to rank 3 of 128 bytes took 0.000402 seconds: 31.815965 MB/s 
+Acc (Sum) bulk from rank 0 to rank 3 of 256 bytes took 0.000573 seconds: 44.653856 MB/s 
+Acc (Sum) bulk from rank 0 to rank 3 of 512 bytes took 0.000933 seconds: 54.903738 MB/s 
+Acc (Sum) bulk from rank 0 to rank 3 of 1024 bytes took 0.001675 seconds: 61.133462 MB/s 
+Acc (Sum) bulk from rank 0 to rank 3 of 2048 bytes took 0.003127 seconds: 65.500603 MB/s 
+Acc (Sum) bulk from rank 0 to rank 3 of 4096 bytes took 0.005938 seconds: 68.978932 MB/s 
+Acc (Sum) bulk from rank 0 to rank 3 of 8192 bytes took 0.011526 seconds: 71.073623 MB/s 
+Acc (Sum) bulk from rank 0 to rank 3 of 16384 bytes took 0.022736 seconds: 72.061853 MB/s 
+Acc (Sum) bulk from rank 0 to rank 3 of 32768 bytes took 0.045147 seconds: 72.581400 MB/s 
+Acc (Sum) bulk from rank 0 to rank 3 of 65536 bytes took 0.089974 seconds: 72.838758 MB/s 
+Acc (Sum) bulk from rank 0 to rank 3 of 131072 bytes took 0.179844 seconds: 72.880948 MB/s 
+Acc (Sum) bulk from rank 0 to rank 3 of 262144 bytes took 0.360017 seconds: 72.814421 MB/s 
+Acc (Sum) bulk from rank 0 to rank 3 of 524288 bytes took 0.719638 seconds: 72.854396 MB/s 
+Acc (Sum) bulk from rank 0 to rank 3 of 1048576 bytes took 1.438887 seconds: 72.874120 MB/s 
+Acc (Sum) bulk from rank 0 to rank 4 of 1 bytes took 0.000308 seconds: 0.324278 MB/s 
+Acc (Sum) bulk from rank 0 to rank 4 of 2 bytes took 0.000277 seconds: 0.721979 MB/s 
+Acc (Sum) bulk from rank 0 to rank 4 of 4 bytes took 0.000276 seconds: 1.450859 MB/s 
+Acc (Sum) bulk from rank 0 to rank 4 of 8 bytes took 0.000277 seconds: 2.887370 MB/s 
+Acc (Sum) bulk from rank 0 to rank 4 of 16 bytes took 0.000280 seconds: 5.708348 MB/s 
+Acc (Sum) bulk from rank 0 to rank 4 of 32 bytes took 0.000289 seconds: 11.065342 MB/s 
+Acc (Sum) bulk from rank 0 to rank 4 of 64 bytes took 0.000322 seconds: 19.902277 MB/s 
+Acc (Sum) bulk from rank 0 to rank 4 of 128 bytes took 0.000389 seconds: 32.910383 MB/s 
+Acc (Sum) bulk from rank 0 to rank 4 of 256 bytes took 0.000562 seconds: 45.529829 MB/s 
+Acc (Sum) bulk from rank 0 to rank 4 of 512 bytes took 0.000920 seconds: 55.651191 MB/s 
+Acc (Sum) bulk from rank 0 to rank 4 of 1024 bytes took 0.001654 seconds: 61.903549 MB/s 
+Acc (Sum) bulk from rank 0 to rank 4 of 2048 bytes took 0.003112 seconds: 65.802289 MB/s 
+Acc (Sum) bulk from rank 0 to rank 4 of 4096 bytes took 0.005912 seconds: 69.279358 MB/s 
+Acc (Sum) bulk from rank 0 to rank 4 of 8192 bytes took 0.011502 seconds: 71.223936 MB/s 
+Acc (Sum) bulk from rank 0 to rank 4 of 16384 bytes took 0.022692 seconds: 72.202258 MB/s 
+Acc (Sum) bulk from rank 0 to rank 4 of 32768 bytes took 0.045064 seconds: 72.715140 MB/s 
+Acc (Sum) bulk from rank 0 to rank 4 of 65536 bytes took 0.089829 seconds: 72.956098 MB/s 
+Acc (Sum) bulk from rank 0 to rank 4 of 131072 bytes took 0.179559 seconds: 72.996580 MB/s 
+Acc (Sum) bulk from rank 0 to rank 4 of 262144 bytes took 0.359437 seconds: 72.931764 MB/s 
+Acc (Sum) bulk from rank 0 to rank 4 of 524288 bytes took 0.718559 seconds: 72.963788 MB/s 
+Acc (Sum) bulk from rank 0 to rank 4 of 1048576 bytes took 1.436554 seconds: 72.992450 MB/s 
+Acc (Sum) bulk from rank 0 to rank 5 of 1 bytes took 0.000320 seconds: 0.312273 MB/s 
+Acc (Sum) bulk from rank 0 to rank 5 of 2 bytes took 0.000288 seconds: 0.694472 MB/s 
+Acc (Sum) bulk from rank 0 to rank 5 of 4 bytes took 0.000291 seconds: 1.376291 MB/s 
+Acc (Sum) bulk from rank 0 to rank 5 of 8 bytes took 0.000290 seconds: 2.754121 MB/s 
+Acc (Sum) bulk from rank 0 to rank 5 of 16 bytes took 0.000294 seconds: 5.439286 MB/s 
+Acc (Sum) bulk from rank 0 to rank 5 of 32 bytes took 0.000307 seconds: 10.411879 MB/s 
+Acc (Sum) bulk from rank 0 to rank 5 of 64 bytes took 0.000338 seconds: 18.924203 MB/s 
+Acc (Sum) bulk from rank 0 to rank 5 of 128 bytes took 0.000400 seconds: 32.005601 MB/s 
+Acc (Sum) bulk from rank 0 to rank 5 of 256 bytes took 0.000574 seconds: 44.616501 MB/s 
+Acc (Sum) bulk from rank 0 to rank 5 of 512 bytes took 0.000933 seconds: 54.884021 MB/s 
+Acc (Sum) bulk from rank 0 to rank 5 of 1024 bytes took 0.001674 seconds: 61.188028 MB/s 
+Acc (Sum) bulk from rank 0 to rank 5 of 2048 bytes took 0.003122 seconds: 65.594274 MB/s 
+Acc (Sum) bulk from rank 0 to rank 5 of 4096 bytes took 0.005926 seconds: 69.117474 MB/s 
+Acc (Sum) bulk from rank 0 to rank 5 of 8192 bytes took 0.011521 seconds: 71.105826 MB/s 
+Acc (Sum) bulk from rank 0 to rank 5 of 16384 bytes took 0.022735 seconds: 72.066156 MB/s 
+Acc (Sum) bulk from rank 0 to rank 5 of 32768 bytes took 0.045142 seconds: 72.588390 MB/s 
+Acc (Sum) bulk from rank 0 to rank 5 of 65536 bytes took 0.089973 seconds: 72.839335 MB/s 
+Acc (Sum) bulk from rank 0 to rank 5 of 131072 bytes took 0.179845 seconds: 72.880527 MB/s 
+Acc (Sum) bulk from rank 0 to rank 5 of 262144 bytes took 0.360006 seconds: 72.816533 MB/s 
+Acc (Sum) bulk from rank 0 to rank 5 of 524288 bytes took 0.719624 seconds: 72.855859 MB/s 
+Acc (Sum) bulk from rank 0 to rank 5 of 1048576 bytes took 1.438869 seconds: 72.875017 MB/s 
+Acc (Sum) bulk from rank 0 to rank 6 of 1 bytes took 0.000308 seconds: 0.324996 MB/s 
+Acc (Sum) bulk from rank 0 to rank 6 of 2 bytes took 0.000281 seconds: 0.711203 MB/s 
+Acc (Sum) bulk from rank 0 to rank 6 of 4 bytes took 0.000279 seconds: 1.434161 MB/s 
+Acc (Sum) bulk from rank 0 to rank 6 of 8 bytes took 0.000281 seconds: 2.843408 MB/s 
+Acc (Sum) bulk from rank 0 to rank 6 of 16 bytes took 0.000280 seconds: 5.706770 MB/s 
+Acc (Sum) bulk from rank 0 to rank 6 of 32 bytes took 0.000289 seconds: 11.064194 MB/s 
+Acc (Sum) bulk from rank 0 to rank 6 of 64 bytes took 0.000322 seconds: 19.906300 MB/s 
+Acc (Sum) bulk from rank 0 to rank 6 of 128 bytes took 0.000388 seconds: 33.000429 MB/s 
+Acc (Sum) bulk from rank 0 to rank 6 of 256 bytes took 0.000567 seconds: 45.152699 MB/s 
+Acc (Sum) bulk from rank 0 to rank 6 of 512 bytes took 0.000924 seconds: 55.412080 MB/s 
+Acc (Sum) bulk from rank 0 to rank 6 of 1024 bytes took 0.001662 seconds: 61.602878 MB/s 
+Acc (Sum) bulk from rank 0 to rank 6 of 2048 bytes took 0.003103 seconds: 65.994583 MB/s 
+Acc (Sum) bulk from rank 0 to rank 6 of 4096 bytes took 0.005916 seconds: 69.233118 MB/s 
+Acc (Sum) bulk from rank 0 to rank 6 of 8192 bytes took 0.011503 seconds: 71.217907 MB/s 
+Acc (Sum) bulk from rank 0 to rank 6 of 16384 bytes took 0.022689 seconds: 72.210165 MB/s 
+Acc (Sum) bulk from rank 0 to rank 6 of 32768 bytes took 0.045058 seconds: 72.724775 MB/s 
+Acc (Sum) bulk from rank 0 to rank 6 of 65536 bytes took 0.089812 seconds: 72.970397 MB/s 
+Acc (Sum) bulk from rank 0 to rank 6 of 131072 bytes took 0.179528 seconds: 73.009371 MB/s 
+Acc (Sum) bulk from rank 0 to rank 6 of 262144 bytes took 0.359392 seconds: 72.941050 MB/s 
+Acc (Sum) bulk from rank 0 to rank 6 of 524288 bytes took 0.718437 seconds: 72.976198 MB/s 
+Acc (Sum) bulk from rank 0 to rank 6 of 1048576 bytes took 1.436509 seconds: 72.994720 MB/s 
+Acc (Sum) bulk from rank 0 to rank 7 of 1 bytes took 0.000325 seconds: 0.307256 MB/s 
+Acc (Sum) bulk from rank 0 to rank 7 of 2 bytes took 0.000289 seconds: 0.691600 MB/s 
+Acc (Sum) bulk from rank 0 to rank 7 of 4 bytes took 0.000291 seconds: 1.376282 MB/s 
+Acc (Sum) bulk from rank 0 to rank 7 of 8 bytes took 0.000293 seconds: 2.734383 MB/s 
+Acc (Sum) bulk from rank 0 to rank 7 of 16 bytes took 0.000298 seconds: 5.360920 MB/s 
+Acc (Sum) bulk from rank 0 to rank 7 of 32 bytes took 0.000308 seconds: 10.391656 MB/s 
+Acc (Sum) bulk from rank 0 to rank 7 of 64 bytes took 0.000340 seconds: 18.837276 MB/s 
+Acc (Sum) bulk from rank 0 to rank 7 of 128 bytes took 0.000400 seconds: 32.025270 MB/s 
+Acc (Sum) bulk from rank 0 to rank 7 of 256 bytes took 0.000576 seconds: 44.479049 MB/s 
+Acc (Sum) bulk from rank 0 to rank 7 of 512 bytes took 0.000930 seconds: 55.052801 MB/s 
+Acc (Sum) bulk from rank 0 to rank 7 of 1024 bytes took 0.001666 seconds: 61.480685 MB/s 
+Acc (Sum) bulk from rank 0 to rank 7 of 2048 bytes took 0.003121 seconds: 65.628891 MB/s 
+Acc (Sum) bulk from rank 0 to rank 7 of 4096 bytes took 0.005926 seconds: 69.122380 MB/s 
+Acc (Sum) bulk from rank 0 to rank 7 of 8192 bytes took 0.011521 seconds: 71.105012 MB/s 
+Acc (Sum) bulk from rank 0 to rank 7 of 16384 bytes took 0.022729 seconds: 72.082760 MB/s 
+Acc (Sum) bulk from rank 0 to rank 7 of 32768 bytes took 0.045137 seconds: 72.597300 MB/s 
+Acc (Sum) bulk from rank 0 to rank 7 of 65536 bytes took 0.089968 seconds: 72.843489 MB/s 
+Acc (Sum) bulk from rank 0 to rank 7 of 131072 bytes took 0.179843 seconds: 72.881466 MB/s 
+Acc (Sum) bulk from rank 0 to rank 7 of 262144 bytes took 0.360006 seconds: 72.816586 MB/s 
+Acc (Sum) bulk from rank 0 to rank 7 of 524288 bytes took 0.719623 seconds: 72.855898 MB/s 
+Acc (Sum) bulk from rank 0 to rank 7 of 1048576 bytes took 1.438867 seconds: 72.875099 MB/s 
+================================================================= 
