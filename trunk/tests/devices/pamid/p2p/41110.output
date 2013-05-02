@@ -1,0 +1,23 @@
+hello world from rank 0 of 16 
+allocating arrays on the heap with malloc 
+shared 0x1f84b14300 0 
+local  0x1f84b14380 0 
+value  0x1f84b14400 0 
+test   0x1f84b14480 -1 
+0: PAMI_Rmw local = 55 shared = 120 in 69845 cycles = 43.653125 microseconds 
+9: PAMI_Rmw local = 99 shared = 0 in 78340 cycles = 48.962500 microseconds 
+12: PAMI_Rmw local = 108 shared = 0 in 78633 cycles = 49.145625 microseconds 
+8: PAMI_Rmw local = 10 shared = 0 in 46704 cycles = 29.190000 microseconds 
+11: PAMI_Rmw local = 21 shared = 0 in 47946 cycles = 29.966250 microseconds 
+7: PAMI_Rmw local = 34 shared = 0 in 50485 cycles = 31.553125 microseconds 
+4: PAMI_Rmw local = 82 shared = 0 in 76263 cycles = 47.664375 microseconds 
+1: PAMI_Rmw local = 55 shared = 0 in 71013 cycles = 44.383125 microseconds 
+5: PAMI_Rmw local = 62 shared = 0 in 72838 cycles = 45.523750 microseconds 
+6: PAMI_Rmw local = 56 shared = 0 in 72703 cycles = 45.439375 microseconds 
+13: PAMI_Rmw local = 86 shared = 0 in 75800 cycles = 47.375000 microseconds 
+14: PAMI_Rmw local = 41 shared = 0 in 68940 cycles = 43.087500 microseconds 
+10: PAMI_Rmw local = 0 shared = 0 in 43493 cycles = 27.183125 microseconds 
+3: PAMI_Rmw local = 18 shared = 0 in 46081 cycles = 28.800625 microseconds 
+15: PAMI_Rmw local = 67 shared = 0 in 74756 cycles = 46.722500 microseconds 
+2: PAMI_Rmw local = 32 shared = 0 in 49009 cycles = 30.630625 microseconds 
+0: end of test 
