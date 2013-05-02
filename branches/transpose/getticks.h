@@ -19,7 +19,7 @@ inline unsigned long long getticks(void)
   return(result);
 }
 #elif defined(__bgq__)
-inline unsigned long long getticks(void)
+unsigned long long getticks(void)
 {
   unsigned long long int result=0;
   unsigned long int upper, lower,tmp;
