@@ -2,7 +2,7 @@
 #include "safemalloc.h"
 #include "preamble.h"
 
-int barrier(pami_geometry_t geometry, pami_context_t context)
+int barrier_init(pami_geometry_t geometry), pami_context_t context)
 {
 	pami_result_t rc = PAMI_ERROR;
 
@@ -23,6 +23,11 @@ int barrier(pami_geometry_t geometry, pami_context_t context)
 
 	size_t barrier_alg = 0; /* 0 is not necessarily the best one... */
 
+    return 0;
+}
+
+int barrier_impl(pami_context_t context)
+{
 	pami_xfer_t this;
 	volatile int active = 1;
 
@@ -39,7 +44,12 @@ int barrier(pami_geometry_t geometry, pami_context_t context)
 		rc = PAMI_Context_trylock_advancev( &context, 1, 1000 );
 	    TEST_ASSERT(rc==PAMI_SUCCESS,"PAMI_Context_trylock_advancev - barrier");
     }
+    
+    return 0;
+}
 
+int barrier_final(void)
+{
 	free(safe_algs);
 	free(fast_algs);
 	free(safe_meta);

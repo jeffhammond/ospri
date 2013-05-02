@@ -11,6 +11,8 @@
 #include "preamble.h"
 #include "coll.h"
 
+const double tic = 1.0/(1.6e9);
+
 static void dispatch_done_cb(pami_context_t context, void * cookie, pami_result_t result)
 {
   return;
@@ -129,65 +131,54 @@ int main(int argc, char* argv[])
   result = allgather(world_geometry, contexts[0], sizeof(int64_t*), &shared, shptrs);
   TEST_ASSERT(result == PAMI_SUCCESS,"allgather");
 
-  int target = (world_rank>0 ? world_rank-1 : world_size-1);
-  pami_endpoint_t target_endpoints * = safemalloc(num_contexts * sizeof(pami_endpoint_t) );
-  for (int i=0; i<num_contexts; i++)
+  pami_endpoint_t target_endpoints * = safemalloc(world_size * sizeof(pami_endpoint_t) );
+  for (int i=0; i<world_size; i++)
   {
+      int target = i
       result = PAMI_Endpoint_create(client, (pami_task_t) target, i, &(target_endpoints[i]));
       TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Endpoint_create");
   }
 
+  int partners[16]; /* need to populate with 5D +/- */
+
   result = barrier(world_geometry, contexts[0]);
   TEST_ASSERT(result == PAMI_SUCCESS,"barrier");
 
-  pami_send_immediate_t parameters = { .header.iov_base = &(shptrs[target]),
-                                       .header.iov_len  = sizeof(int64_t *),
-                                       .data.iov_base   = local,
-                                       .data.iov_len    = bytes,
-                                       .dispatch        = dispatch_id,
-                                       .dest            = target_ep };
-
-  uint64_t t0 = GetTimeBase();
-
-#ifdef _OPENMP
-#pragma omp parallel default(shared) firstprivate(n, num_async, num_sync)
-#endif
+  if (world_rank==0)
   {
-    int tid = omp_get_thread_num();
+      pami_send_immediate_t parameters = { .header.iov_base = &(shptrs[target]),
+                                           .header.iov_len  = sizeof(int64_t *),
+                                           .data.iov_base   = local,
+                                           .data.iov_len    = bytes,
+                                           .dispatch        = dispatch_id,
+                                           .dest            = target_endpoints[0] };
 
-    #pragma omp parallel for
-    for (int i=0; i<n; i++)
-    {
-        parameters.iov_base = &(shptrs[target])+i;
-        result = PAMI_Send_immediate(contexts[tid], &parameters);
-        TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Send");
-    }
+      uint64_t t0 = GetTimeBase();
+
+    #ifdef _OPENMP
+    #pragma omp parallel default(shared) firstprivate(n, num_async, num_sync)
+    #endif
+      {
+        int tid = omp_get_thread_num();
+        int num = omp_get_num_threads();
+
+        parameters.dest = target_endpoints[tid];
+
+        for (int i=0; i<n; i++)
+        {
+            parameters.iov_base = &(shptrs[target])+i;
+            result = PAMI_Send_immediate(contexts[tid], &parameters);
+            TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Send_immediate");
+        }
+      }
+
+      uint64_t t1 = GetTimeBase();
+      uint64_t dt = t1-t0;
+
+      printf("%ld: PAMI_Send_immediate of %n 8-byte sends in %lf seconds, rate = %lf per second \n", (long)world_rank, n, tic*dt, (double)n/(tic*dt) );
+      fflush(stdout);
+
   }
-
-  uint64_t t1 = GetTimeBase();
-  uint64_t dt = t1-t0;
-
-  printf("%ld: PAMI_Send_immediate of %ld bytes achieves %lf MB/s \n", (long)world_rank, bytes, 1.6e9*1e-6*(double)bytes/(double)dt );
-  fflush(stdout);
-
-  int errors = 0;
-  
-  target = (world_rank<(world_size-1) ? world_rank+1 : 0);
-  for (int i=0; i<n; i++)
-    if (shared[i] != target)
-       errors++;
-
-  if (errors>0)
-    for (int i=0; i<n; i++)
-      if (shared[i] != target)
-        printf("%ld: shared[%d] = %d (%d) \n", (long)world_rank, i, shared[i], target);
-  else
-    printf("%ld: no errors :-) \n", (long)world_rank); 
-
-  fflush(stdout);
-
-  if (errors>0)
-    exit(13);
 
   result = barrier(world_geometry, contexts[0]);
   TEST_ASSERT(result == PAMI_SUCCESS,"barrier");
