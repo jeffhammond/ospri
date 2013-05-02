@@ -11,9 +11,15 @@ ifdef BGP
     HPM=-L/soft/apps/UPC/lib -lhpm
     LIBS=$(HPM) safemalloc.o
 endif
-ifdef BGQ
+ifdef BGQGCC
+    CC=mpicc
+    CFLAGS=-g -O3 -std=gnu99 -DMPI
+    OMPFLAGS=-fopenmp -DOMP
+    LIBS=$(HPM) safemalloc.o
+endif
+ifdef BGQXL
     CC=mpixlc_r
-    CFLAGS=-g -O5 -qhot -qipa=list="transpose.x.lst" -qtune=qp -qarch=qp -qlanglvl=stdc99 -qreport -DMPI
+    CFLAGS=-g -O3 -qstrict -qnoipa -qtune=qp -qarch=qp -qlanglvl=stdc99 -qreport -DMPI
     OMPFLAGS=-qsmp=omp -DOMP
     LIBS=$(HPM) safemalloc.o
 endif
@@ -46,14 +52,16 @@ submit: all
 else
 ifdef BGQ
 submit: all
-		qsub --mode smp -n 1 -t 55 --env OMP_NUM_THREADS=1  ./transpose.x 1 550 1
-		qsub --mode smp -n 1 -t 55 --env OMP_NUM_THREADS=4  ./transpose-omp.x 1 550 1
-		qsub --mode smp -n 1 -t 55 --env OMP_NUM_THREADS=16 ./transpose-omp.x 1 550 1
-		qsub --mode smp -n 1 -t 55 --env OMP_NUM_THREADS=64 ./transpose-omp.x 1 550 1
-		qsub --mode smp -n 1 -t 55 --env OMP_NUM_THREADS=1  ./transpose.x 16 3072 16
-		qsub --mode smp -n 1 -t 55 --env OMP_NUM_THREADS=4  ./transpose-omp.x 16 3072 16
-		qsub --mode smp -n 1 -t 55 --env OMP_NUM_THREADS=16 ./transpose.x 16 3072 16
-		qsub --mode smp -n 1 -t 55 --env OMP_NUM_THREADS=64 ./transpose-omp.x 16 3072 16
+	qsub -q R.l2p --mode=c1 -n 1 -t 55 --env OMP_NUM_THREADS=1  ./transpose.x     1 550 1
+	qsub -q R.l2p --mode=c1 -n 1 -t 55 --env OMP_NUM_THREADS=1  ./transpose.x     16 3072 16
+	qsub -q R.l2p --mode=c1 -n 1 -t 55 --env OMP_NUM_THREADS=1  ./transpose-omp.x 1 550 1
+	qsub -q R.l2p --mode=c1 -n 1 -t 55 --env OMP_NUM_THREADS=4  ./transpose-omp.x 1 550 1
+	qsub -q R.l2p --mode=c1 -n 1 -t 55 --env OMP_NUM_THREADS=16 ./transpose-omp.x 1 550 1
+	qsub -q R.l2p --mode=c1 -n 1 -t 55 --env OMP_NUM_THREADS=64 ./transpose-omp.x 1 550 1
+	qsub -q R.l2p --mode=c1 -n 1 -t 55 --env OMP_NUM_THREADS=1  ./transpose-omp.x 16 3072 16
+	qsub -q R.l2p --mode=c1 -n 1 -t 55 --env OMP_NUM_THREADS=4  ./transpose-omp.x 16 3072 16
+	qsub -q R.l2p --mode=c1 -n 1 -t 55 --env OMP_NUM_THREADS=16 ./transpose-omp.x 16 3072 16
+	qsub -q R.l2p --mode=c1 -n 1 -t 55 --env OMP_NUM_THREADS=64 ./transpose-omp.x 16 3072 16
 else
 submit: all
 	OMP_NUM_THREADS=1 ./transpose.x     1> transpose.out     2> transpose.err
