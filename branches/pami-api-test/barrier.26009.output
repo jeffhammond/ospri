@@ -1,0 +1,19 @@
+# Context: 0
+# Barrier Test -- context = 0, optimize = -1, protocol: I1:Barrier:P2P:P2P (1 of 9 algorithms)
+# -------------------------------------------------------------------
+# Barrier Test -- context = 0, optimize = -1, protocol: I0:Binomial:-:MU (2 of 9 algorithms)
+# -------------------------------------------------------------------
+# Barrier Test -- context = 0, optimize = -1, protocol: I0:Binomial:-:ShortMU (3 of 9 algorithms)
+# -------------------------------------------------------------------
+# Barrier Test -- context = 0, optimize = -1, protocol: I0:OptBinomial:P2P:P2P (4 of 9 algorithms)
+# -------------------------------------------------------------------
+# Barrier Test -- context = 0, optimize = -1, protocol: I0:MultiSync:-:GI (5 of 9 algorithms)
+# -------------------------------------------------------------------
+# Barrier Test -- context = 0, optimize = -1, protocol: I0:RectangleMultiSync:-:MU (6 of 9 algorithms)
+# -------------------------------------------------------------------
+# Barrier Test -- context = 0, optimize = -1, protocol: I0:MultiSync2Device:SHMEM:GI (7 of 9 algorithms)
+# -------------------------------------------------------------------
+# Barrier Test -- context = 0, optimize = -1, protocol: I0:RectangleMultiSync2Device:SHMEM:MU (8 of 9 algorithms)
+# -------------------------------------------------------------------
+# Barrier Test -- context = 0, optimize = -1, protocol: I0:MultiSync2Device:SHMEM:MU (9 of 9 algorithms)
+# -------------------------------------------------------------------
