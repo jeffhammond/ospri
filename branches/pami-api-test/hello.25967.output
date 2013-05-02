@@ -1,0 +1,8 @@
+Before PAMI_Client_create()
+Before PAMI_Client_create()
+After PAMI_Client_create(), result = 0
+After PAMI_Client_create(), result = 0
+Before PAMI_Client_destroy()
+Before PAMI_Client_destroy()
+After PAMI_Client_destroy(), result = 0
+After PAMI_Client_destroy(), result = 0
