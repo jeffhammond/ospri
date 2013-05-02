@@ -1,0 +1,6 @@
+hello world from rank 0 of 4 
+allocating arrays on the text segment (?) 
+shared 0x1dbfffb950 0 
+local  0x1dbfffb954 0 
+value  0x1dbfffb958 0 
+test   0x1dbfffb95c -1 
