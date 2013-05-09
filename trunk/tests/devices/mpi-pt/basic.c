@@ -8,8 +8,6 @@
 
 #include <mpi.h>
 
-#define SHORT_DATA_SIZE 0
-
 MPI_Comm MSG_COMM_WORLD;
  
 typedef enum
@@ -17,10 +15,8 @@ typedef enum
     MSG_FENCE,
     MSG_RMW,
     MSG_GET,
-    MSG_SHORT_PUT,
-    MSG_SHORT_ACC,
-    MSG_LONG_PUT,
-    MSG_LONG_ACC,
+    MSG_PUT,
+    MSG_ACC,
     MSG_CHT_EXIT
 } 
 msg_type_e;
@@ -43,7 +39,6 @@ typedef struct
     int          count; 
     MPI_Datatype dt;
     MPI_Op       op; /* only used for MSG_ACC */
-    char         shortdata[SHORT_DATA_SIZE];
 }
 msg_info_t;
 
@@ -90,31 +85,16 @@ void Poll(void)
             MPI_Send(info.address, info.count, info.dt, source, MSG_GET_TAG, MSG_COMM_WORLD);
             break;
 
-        case MSG_SHORT_PUT:
+        case MSG_PUT:
 #ifdef DEBUG
-            printf("MSG_SHORT_PUT \n");
-#endif
-            MPI_Type_size(info.dt, &type_size);
-            memcpy(info.address, info.shortdata, info.count*type_size);
-            break;
-
-        case MSG_SHORT_ACC: /* TODO: need to do pipelining to limit buffering */
-#ifdef DEBUG
-            printf("MSG_SHORT_ACC \n");
-#endif
-            MPI_Reduce_local(info.shortdata, info.address, info.count, info.dt, info.op);
-            break;
-
-        case MSG_LONG_PUT:
-#ifdef DEBUG
-            printf("MSG_LONG_PUT \n");
+            printf("MSG_PUT \n");
 #endif
             MPI_Recv(info.address, info.count, info.dt, source, MSG_PUT_TAG, MSG_COMM_WORLD, MPI_STATUS_IGNORE);
             break;
 
-        case MSG_LONG_ACC: /* TODO: need to do pipelining to limit buffering */
+        case MSG_ACC: /* TODO: need to do pipelining to limit buffering */
 #ifdef DEBUG
-            printf("MSG_LONG_ACC \n");
+            printf("MSG_ACC \n");
 #endif
             void * temp = NULL;
             MPI_Type_size(info.dt, &type_size);
@@ -208,31 +188,18 @@ void MSG_Win_put(int target, msg_window_t * win, size_t offset, int count, MPI_D
     int type_size;
     MPI_Type_size(type, &type_size);
         
+    info.type     = MSG_PUT;
+    info.address  = win->base[target]+offset;
+    info.count    = count; 
+    info.dt       = type;
+
 #ifdef DEBUG
     printf("MSG_Win_put win->base[%d]=%p address=%p count=%d\n", target, win->base[target], info.address, info.count);
     fflush(stdout);
 #endif
 
-    if (count*type_size < SHORT_DATA_SIZE)
-    {
-        info.type     = MSG_SHORT_PUT;
-        info.address  = win->base[target]+offset;
-        info.count    = count; 
-        info.dt       = type;
-
-        memcpy(info.shortdata, buffer, count*type_size);
-        MPI_Send(&info, sizeof(msg_info_t), MPI_BYTE, target, MSG_INFO_TAG, MSG_COMM_WORLD);
-    }
-    else
-    {
-        info.type     = MSG_LONG_PUT;
-        info.address  = win->base[target]+offset;
-        info.count    = count; 
-        info.dt       = type;
-
-        MPI_Send(&info, sizeof(msg_info_t), MPI_BYTE, target, MSG_INFO_TAG, MSG_COMM_WORLD);
-        MPI_Send(buffer, info.count, info.dt, target, MSG_PUT_TAG, MSG_COMM_WORLD);
-    }
+    MPI_Send(&info, sizeof(msg_info_t), MPI_BYTE, target, MSG_INFO_TAG, MSG_COMM_WORLD);
+    MPI_Send(buffer, info.count, info.dt, target, MSG_PUT_TAG, MSG_COMM_WORLD);
 
     return;
 }
@@ -244,33 +211,19 @@ void MSG_Win_acc(int target, msg_window_t * win, size_t offset, int count, MPI_D
     int type_size;
     MPI_Type_size(type, &type_size);
 
+    info.type     = MSG_ACC;
+    info.address  = win->base[target]+offset;
+    info.count    = count; 
+    info.dt       = type;
+    info.op       = op;
+
 #ifdef DEBUG
     printf("MSG_Win_acc win->base[%d]=%p address=%p count=%d \n", target, win->base[target], info.address, info.count);
     fflush(stdout);
 #endif
 
-    if (count*type_size < SHORT_DATA_SIZE)
-    {
-        info.type     = MSG_SHORT_ACC;
-        info.address  = win->base[target]+offset;
-        info.count    = count; 
-        info.dt       = type;
-        info.op       = op;
-
-        memcpy(info.shortdata, buffer, count*type_size);
-        MPI_Send(&info, sizeof(msg_info_t), MPI_BYTE, target, MSG_INFO_TAG, MSG_COMM_WORLD);
-    }
-    else
-    {
-        info.type     = MSG_LONG_ACC;
-        info.address  = win->base[target]+offset;
-        info.count    = count; 
-        info.dt       = type;
-        info.op       = op;
-
-        MPI_Send(&info, sizeof(msg_info_t), MPI_BYTE, target, MSG_INFO_TAG, MSG_COMM_WORLD);
-        MPI_Send(buffer, info.count, info.dt, target, MSG_ACC_TAG, MSG_COMM_WORLD);
-    }
+    MPI_Send(&info, sizeof(msg_info_t), MPI_BYTE, target, MSG_INFO_TAG, MSG_COMM_WORLD);
+    MPI_Send(buffer, info.count, info.dt, target, MSG_ACC_TAG, MSG_COMM_WORLD);
 
     return;
 }
