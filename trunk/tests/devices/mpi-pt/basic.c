@@ -313,6 +313,8 @@ int main(int argc, char * argv[])
         if (rank==0)
         {
             int smallcount = (argc>1) ? atoi(argv[1]) : 1024;
+            if (smallcount>bigcount)
+                MPI_Abort(MPI_COMM_WORLD,1);
 
             void * in  = NULL;
             void * out = NULL;
@@ -356,6 +358,8 @@ int main(int argc, char * argv[])
         if (rank==0)
         {
             int smallcount = (argc>1) ? atoi(argv[1]) : 1024;
+            if (smallcount>bigcount)
+                MPI_Abort(MPI_COMM_WORLD,1);
 
             double * in  = NULL;
             double * out = NULL;
