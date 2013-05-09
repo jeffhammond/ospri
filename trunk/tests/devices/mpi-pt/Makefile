@@ -4,16 +4,16 @@ COPT    = -g -O0 -Wall -std=gnu99
 
 LD      = $(CC)
 CFLAGS  = $(COPT) -DDEBUG
-LDFLAGS = $(COPT) safemalloc.o
+LDFLAGS = $(COPT) 
 LIBS    = -lm
 
 TESTS := basic.x bug.x hello.x
 
 OBJECTS := $(patsubst %.c,%.o,$(wildcard *.c))
 
-all: $(TESTS) safemalloc.o
+all: $(TESTS) 
 
-%.x: %.o safemalloc.o
+%.x: %.o
 	$(LD) $(LDFLAGS) $< $(LIBS) -o $@
 
 %.o: %.c
