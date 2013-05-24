@@ -5,13 +5,21 @@
 #include <pthread.h>
 #include <pami.h>
 
-#include "safemalloc.h"
-
-//#define SLEEP sleep
-#define SLEEP usleep
+//#include "safemalloc.h"
+int posix_memalign(void **memptr, size_t alignment, size_t size);
+static void * safemalloc(size_t n) 
+{
+    void * ptr = NULL;
+    int rc = posix_memalign(&ptr , 128, n);
+    if (ptr==NULL || n<0) {
+        fprintf( stderr , "%d bytes could not be allocated \n" , n );
+        exit(n);
+    }
+    return ptr;
+}
 
 #define RESULT_CHECK(result) \
-if (result!=PAMI_SUCCESS) { printf("result!=PAMI_SUCCESS\n"); SLEEP(1); exit(1); }
+if (result!=PAMI_SUCCESS) { printf("result!=PAMI_SUCCESS\n"); fflush(NULL); exit(1); }
 
 pami_client_t client;
 size_t num_contexts;
