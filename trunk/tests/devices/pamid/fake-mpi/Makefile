@@ -16,13 +16,13 @@ LD      = $(CC)
 CFLAGS  = $(COPT) -I.
 LDFLAGS = $(COPT) -lpthread
 
-all: safemalloc.o james_allreduce.x adi.x
+all: fakempi.x
 
-%.o: %.c safemalloc.h
+%.o: %.c 
 	$(CC) $(CFLAGS) -c $< -o $@
 
-%.x: %.o safemalloc.o
-	$(LD) $(LDFLAGS) $< safemalloc.o -o $@
+%.x: %.o 
+	$(LD) $(LDFLAGS) $< -o $@
 
 clean:
 	$(RM) $(RMFLAGS) *.o
