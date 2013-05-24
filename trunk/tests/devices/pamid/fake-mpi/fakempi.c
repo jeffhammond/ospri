@@ -27,6 +27,9 @@ pami_context_t * contexts = NULL;
 size_t task_id;
 size_t num_tasks;
 
+const size_t barrier_alg_num = 0;
+const size_t allreduce_alg_num = 0;
+
 typedef struct MPI_Comm
 {
     int                is_world;
@@ -263,8 +266,6 @@ int MPI_Comm_size(MPI_Comm comm, int * size)
     return MPI_SUCCESS;
 }
 
-const size_t barrier_alg_num = 0;
-
 int MPI_Barrier(MPI_Comm comm)
 {
     pami_result_t result = PAMI_ERROR;
@@ -286,8 +287,6 @@ int MPI_Barrier(MPI_Comm comm)
 
     return MPI_SUCCESS;
 }
-
-const size_t allreduce_alg_num = 0;
 
 int MPI_Allreduce(void * sendbuf, void * recvbuf, int count, int datatype, int op, MPI_Comm comm)
 {
