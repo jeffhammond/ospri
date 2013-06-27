@@ -155,7 +155,11 @@ int main(int argc, char* argv[])
 #pragma omp parallel default(shared) firstprivate(n, num_async, num_sync)
 #endif
     {
+#ifdef _OPENMP
         int tid = omp_get_thread_num();
+#else
+        int tid = 0;
+#endif
 
         for (int count=0; count<remote_targets_per_thread; count++)
         {
