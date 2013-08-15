@@ -15,4 +15,8 @@ cd ${PBS_O_WORKDIR}
 export MPPWIDTH="${PBS_NP}"
 echo "MPPWIDTH=${MPPWIDTH}"
 
-aprun -n ${MPPWIDTH} ./driver.x 100000000 2>&1 > driver.${PBS_JOBID}.log
+export MPICH_GNI_DYNAMIC_CONN=disabled
+
+env > driver.n${MPPWIDTH}.${PBS_JOBID}.log
+
+aprun -n ${MPPWIDTH} ./driver.x 100000000 2>&1 > driver.n${MPPWIDTH}.${PBS_JOBID}.log

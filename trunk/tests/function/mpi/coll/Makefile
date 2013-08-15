@@ -1,4 +1,4 @@
-CC      = mpicc
+CC      = cc
 COPT    = -g -O2 -Wall -std=gnu99
 
 LD      = $(CC)
