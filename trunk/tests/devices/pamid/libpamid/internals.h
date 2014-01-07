@@ -11,39 +11,40 @@ void cb_remote_done (void *ctxt, void * clientdata, pami_result_t err);
 
 /*********** INTERNAL STATE ***********/
 
+extern int pamid_progress_active;
 extern pthread_t PAMID_Progress_thread;
 
 typedef struct {
-	pami_xfer_type_t xfer;
-	size_t num_alg[2];
-	pami_algorithm_t * safe_algs;
-	pami_algorithm_t * fast_algs;
-	pami_metadata_t  * safe_meta;
-	pami_metadata_t  * fast_meta;
+    pami_xfer_type_t xfer;
+    size_t num_alg[2];
+    pami_algorithm_t * safe_algs;
+    pami_algorithm_t * fast_algs;
+    pami_metadata_t  * safe_meta;
+    pami_metadata_t  * fast_meta;
 } pamid_collective_state_t;
 
 typedef struct {
-	int local_blocking_context; /* synchronous:  for outbound/collective calls that block  */
-	int local_offload_context;  /* asynchronous: for context post nonblocking operations   */
-	int remote_put_context;     /* asynchronous: for PAMI_Rput and PAMI_Put 			   */
-	int remote_get_context;     /* asynchronous: for PAMI_Rput and PAMI_Put 			   */
-	int remote_acc_context;     /* asynchronous: for PAMI_Send doing accumulate            */
-	int remote_rmw_context;     /* asynchronous: for PAMI_Send_immediate doing RMW         */
+    int local_blocking_context; /* synchronous:  for outbound/collective calls that block  */
+    int local_offload_context;  /* asynchronous: for context post nonblocking operations   */
+    int remote_put_context;     /* asynchronous: for PAMI_Rput and PAMI_Put                */
+    int remote_get_context;     /* asynchronous: for PAMI_Rput and PAMI_Put                */
+    int remote_acc_context;     /* asynchronous: for PAMI_Send doing accumulate            */
+    int remote_rmw_context;     /* asynchronous: for PAMI_Send_immediate doing RMW         */
 } pamid_context_roles_t;
 
 typedef struct {
-	pami_client_t pami_client;
-	size_t world_rank;
-	size_t world_size;
-	size_t num_contexts;
-	pami_context_t * pami_contexts;
-	pamid_context_roles_t context_roles;
-	pami_geometry_t world_geometry;
-	pamid_collective_state_t world_barrier;
-	pamid_collective_state_t world_sync;
-	pamid_collective_state_t world_bcast;
-	pamid_collective_state_t world_allreduce;
-	pamid_collective_state_t world_allgather;
+    pami_client_t pami_client;
+    size_t world_rank;
+    size_t world_size;
+    size_t num_contexts;
+    pami_context_t * pami_contexts;
+    pamid_context_roles_t context_roles;
+    pami_geometry_t world_geometry;
+    pamid_collective_state_t world_barrier;
+    pamid_collective_state_t world_sync;
+    pamid_collective_state_t world_bcast;
+    pamid_collective_state_t world_allreduce;
+    pamid_collective_state_t world_allgather;
 } pamid_global_state_t;
 
 extern pamid_global_state_t PAMID_INTERNAL_STATE;
@@ -53,18 +54,18 @@ extern pamid_global_state_t PAMID_INTERNAL_STATE;
 #define PRINT_SUCCESS 1
 
 #define PAMID_ASSERT(c,m) \
-		do { \
-			if (!(c)) { \
-				fprintf(stderr,m" FAILED\n"); \
-				fflush(stderr); \
-			    abort(); \
-			} \
-			else if (PRINT_SUCCESS) { \
-				fprintf(stderr,m" SUCCEEDED \n"); \
-				fflush(stderr); \
-			} \
-		} \
-		while(0);
+        do { \
+            if (!(c)) { \
+                fprintf(stderr,m" FAILED\n"); \
+                fflush(stderr); \
+                abort(); \
+            } \
+            else if (PRINT_SUCCESS) { \
+                fprintf(stderr,m" SUCCEEDED \n"); \
+                fflush(stderr); \
+            } \
+        } \
+        while(0);
 
 /*********** INTERNAL DECLARATIONS ***********/
 

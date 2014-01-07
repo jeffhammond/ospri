@@ -3,7 +3,7 @@
 
 #include <pami.h>
 
-#define PRINT_SUCCESS 0
+#define PRINT_SUCCESS 1
 
 #define TEST_ASSERT(c,m) \
         do { \
@@ -35,17 +35,16 @@ pthread_t Progress_thread;
 
 static void * Progress_function(void * dummy)
 {
-	//pami_result_t result = PAMI_ERROR;
+    pami_result_t result = PAMI_ERROR;
 
-	while (1)
-	{
-        PAMI_Context_trylock_advancev(&(contexts[1]), 1, 1000);
-        //result = PAMI_Context_trylock_advancev(&(contexts[1]), 1, 1000);
-        //TEST_ASSERT(result == PAMI_SUCCESS || result == PAMI_EAGAIN,"PAMI_Context_trylock_advancev");
-		usleep(1);
-	}
+    while (1)
+    {
+        result = PAMI_Context_trylock_advancev(&(contexts[1]), 1, 1000);
+        TEST_ASSERT(result == PAMI_SUCCESS || result == PAMI_EAGAIN,"PAMI_Context_trylock_advancev");
+        usleep(1);
+    }
 
-	return NULL;
+    return NULL;
 }
 #endif
 

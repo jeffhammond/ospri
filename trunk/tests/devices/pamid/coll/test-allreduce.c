@@ -99,17 +99,40 @@ int main(int argc, char* argv[])
 
   /* perform a reduction */
   volatile int active = 0;
+  volatile int active2 = 0;
 
   int max = (argc>1 ? atoi(argv[1]) : 1000000);
 
   for ( int d = 1; d < max ; d*=2 )
     for ( size_t b = 0 ; b < num_allreduce_alg[0] ; b++ )
     {
+        /*******************************************************************/
+
+        pami_xfer_t barrier;
+
+        barrier.cb_done   = cb_done;
+        barrier.cookie    = (void*) &active2;
+        barrier.algorithm = safe_barrier_algs[0];
+
+        result = PAMI_Collective( contexts[0], &barrier );
+        TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Collective - barrier");
+        while (active)
+          result = PAMI_Context_advance( contexts[0], 1 );
+        TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Context_advance - barrier");
+
+        sleep(1);
+
+        /*******************************************************************/
+
         pami_xfer_t allreduce;
 
         allreduce.cb_done   = cb_done;
         allreduce.cookie    = (void*) &active;
         allreduce.algorithm = safe_allreduce_algs[b];
+
+        printf("safe allreduce algorithm %ld (%s) \n", b, safe_allreduce_meta[b].name );
+        fflush(stdout);
+        sleep(1);
 
         double * sbuf = safemalloc(d*sizeof(double));
         double * rbuf = safemalloc(d*sizeof(double));
@@ -147,11 +170,30 @@ int main(int argc, char* argv[])
   for ( int d = 1; d < 512 ; d++ ) /* allreduce and allgather barf >496 bytes */
     for ( size_t b = 0 ; b < num_allreduce_alg[1] ; b++ )
     {
+        /*******************************************************************/
+
+        pami_xfer_t barrier;
+
+        barrier.cb_done   = cb_done;
+        barrier.cookie    = (void*) &active2;
+        barrier.algorithm = safe_barrier_algs[0];
+
+        result = PAMI_Collective( contexts[0], &barrier );
+        TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Collective - barrier");
+        while (active)
+          result = PAMI_Context_advance( contexts[0], 1 );
+        TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Context_advance - barrier");
+
+        /*******************************************************************/
+
         pami_xfer_t allreduce;
 
         allreduce.cb_done   = cb_done;
         allreduce.cookie    = (void*) &active;
         allreduce.algorithm = fast_allreduce_algs[b];
+
+        if ( world_rank == 0 ) printf("fast allreduce algorithm %ld (%s) \n", b, fast_allreduce_meta[b].name );
+        fflush(stdout);
 
         double * sbuf = safemalloc(d*sizeof(double));
         double * rbuf = safemalloc(d*sizeof(double));

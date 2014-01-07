@@ -1,11 +1,11 @@
 ifndef COMPILER
-  COMPILER = XL
+  COMPILER = GNU
 endif
 
 ifeq ($(COMPILER),GNU)
   CC      = mpicc
   COPT    = -g -std=gnu99 -O2 -mcpu=a2 -mtune=a2 
-  COPT   += -fopenmp
+  #COPT   += -fopenmp
 endif
 
 ifeq ($(COMPILER),XL)

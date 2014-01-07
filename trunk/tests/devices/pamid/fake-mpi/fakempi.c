@@ -11,8 +11,8 @@ static void * safemalloc(size_t n)
 {
     void * ptr = NULL;
     int rc = posix_memalign(&ptr , 128, n);
-    if (ptr==NULL || n<0) {
-        fprintf( stderr , "%d bytes could not be allocated \n" , n );
+    if (ptr==NULL || n<0 || rc!=0 ) {
+        fprintf( stderr , "%zu bytes could not be allocated \n" , n );
         exit(n);
     }
     return ptr;
@@ -22,8 +22,8 @@ static void * safemalloc(size_t n)
 if (result!=PAMI_SUCCESS) { printf("result!=PAMI_SUCCESS\n"); fflush(NULL); exit(1); }
 
 pami_client_t client;
-size_t num_contexts;
-pami_context_t * contexts = NULL;
+size_t num_contexts = 1;
+pami_context_t * contexts;
 size_t task_id;
 size_t num_tasks;
 
@@ -182,12 +182,12 @@ int MPI_Init(int * argc, char ** argv[])
     RESULT_CHECK(result); 
     num_tasks = config.value.intval;
 
-    config.name = PAMI_CLIENT_NUM_CONTEXTS;
-    result = PAMI_Client_query( client, &config, 1);
-    RESULT_CHECK(result); 
-    num_contexts = config.value.intval;
+    //config.name = PAMI_CLIENT_NUM_CONTEXTS;
+    //result = PAMI_Client_query( client, &config, 1);
+    //RESULT_CHECK(result); 
+    //num_contexts = config.value.intval;
  
-    printf("MPI_Init: rank %ld of %ld, %ld contexts available \n", task_id, num_tasks, num_contexts);
+    printf("MPI_Init: rank %ld of %ld \n", task_id, num_tasks);
 
     /* initialize the contexts */
     contexts = (pami_context_t *) safemalloc( num_contexts * sizeof(pami_context_t) );

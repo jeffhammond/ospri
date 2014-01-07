@@ -58,7 +58,7 @@ pthread_t Progress_thread;
 
 static void * Progress_function(void * input)
 {
-	pami_result_t result = PAMI_ERROR;
+    pami_result_t result = PAMI_ERROR;
 
     int * ptr        = (int *) input;
     int   my_context = (ptr!=NULL) ? (*ptr) : 1;
@@ -67,14 +67,14 @@ static void * Progress_function(void * input)
     printf("%ld: Progress_function advancing context %d \n", g_world_rank, my_context);
 #endif
 
-	while (1)
-	{
+    while (1)
+    {
         result = PAMI_Context_trylock_advancev(&(contexts[my_context]), 1, 1000);
-        TEST_ASSERT(result == PAMI_SUCCESS,"PAMI_Context_trylock_advancev");
-		usleep(1);
-	}
+        TEST_ASSERT(result == PAMI_SUCCESS || result == PAMI_EAGAIN,"PAMI_Context_trylock_advancev");
+        usleep(1);
+    }
 
-	return NULL;
+    return NULL;
 }
 #else
 #warning No progress enabled - may not work.
