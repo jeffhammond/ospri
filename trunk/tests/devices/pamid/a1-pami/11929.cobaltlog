@@ -1,0 +1,39 @@
+/usr/bin/qsub.py -t 30 -n 128 --mode c2 --env PAMI_CLIENTS=MPI, ./accumulate.cnk
+
+submitted with cwd set to: /veas_home/jhammond/ARMCI-PAMI/a1-pami
+
+Job 11929/jhammond/14824: Initiating boot at location EAS-22000-33331-128.
+Info: stdout sent to /veas_home/jhammond/ARMCI-PAMI/a1-pami/11929.output
+Info: stderr sent to /veas_home/jhammond/ARMCI-PAMI/a1-pami/11929.error
+
+Command: '/bgsys/drivers/ppcfloor/bin/runjob' '--np' '256' '--ranks-per-node' '2' '--cwd' '/veas_home/jhammond/ARMCI-PAMI/a1-pami' '--block' 'EAS-22000-33331-128' '--envs' 'COBALT_JOBID=11929' '--envs' 'PAMI_CLIENTS=MPI,' '--envs' 'BG_SHAREDMEMSIZE=32' '--verbose' '4' ':' '/veas_home/jhammond/ARMCI-PAMI/a1-pami/./accumulate.cnk'
+
+Environment:
+LESSOPEN=|/usr/bin/lesspipe.sh %s
+CVS_RSH=ssh
+LOGNAME=root
+USER=root
+PATH=/usr/lib64/qt-3.3/bin:/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/bgsys/drivers/ppcfloor/bin:/bgsys/drivers/ppcfloor/sbin:/opt/bin:/usr/lpp/mmfs/bin:/root/bin:/bgsys/drivers/ppcfloor/bin:/bgsys/drivers/ppcfloor/sbin:/usr/lpp/mmfs/bin:/dbhome/db2cat/sqllib/bin:/dbhome/db2cat/sqllib/adm:/dbhome/db2cat/sqllib/misc
+QTDIR=/usr/lib64/qt-3.3
+LD_LIBRARY_PATH=/bgsys/drivers/ppcfloor/lib64:/dbhome/db2cat/sqllib/lib64:/dbhome/db2cat/sqllib/lib32
+LANG=C
+QTLIB=/usr/lib64/qt-3.3/lib
+TERM=screen
+SHELL=/bin/bash
+QTINC=/usr/lib64/qt-3.3/include
+DB2INSTANCE=db2cat
+G_BROKEN_FILENAMES=1
+HISTSIZE=1000
+_=/usr/bin/nohup
+HOME=/root
+CLASSPATH=/dbhome/db2cat/sqllib/java/db2java.zip:/dbhome/db2cat/sqllib/java/db2jcc.jar:/dbhome/db2cat/sqllib/java/sqlj.zip:/dbhome/db2cat/sqllib/function:/dbhome/db2cat/sqllib/java/db2jcc_license_cu.jar:.
+MPIRUN_VERBOSE=1
+HOSTNAME=cetussn1
+HISTCONTROL=ignoredups
+SHLVL=3
+PWD=/bgsys/linux/ionfloor
+MAIL=/var/spool/mail/root
+COBALT_JOBID=11929
+
+Job 11929/jhammond/14824: Block EAS-22000-33331-128 for location EAS-22000-33331-128 successfully booted.  Starting task for job 11929.
+Info: task completed normally with an exit code of 0; initiating job cleanup and removal
