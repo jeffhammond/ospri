@@ -71,79 +71,95 @@ void done(void *clientdata, DCMF_Error_t *error)
 
 int main()
 {
-
-    int i, rank, nranks, msgsize, status, expected;
-    long bufsize;
-    int * src_buffer;
-    int * trg_buffer;
-    unsigned *ranks;
-
-    volatile unsigned allreduce_active = 0;
-
-    DCMF_CollectiveProtocol_t barrier_protocol, lbarrier_protocol;
-    DCMF_CollectiveProtocol_t allreduce_protocol, allreduce_notree_protocol;
-    DCMF_Barrier_Configuration_t barrier_conf;
-    DCMF_Allreduce_Configuration_t allreduce_conf;
-    DCMF_CollectiveRequest_t crequest, crequest1, crequest2;
-    DCMF_Callback_t done_callback;
+    DCMF_Result status;
 
     DCMF_Messager_initialize();
-
     DCMF_Collective_initialize();
 
-    rank = DCMF_Messager_rank();
-    nranks = DCMF_Messager_size();
+    int rank = DCMF_Messager_rank();
+    int nranks = DCMF_Messager_size();
 
-    ranks = (unsigned *) malloc(nranks * sizeof(int));
-    for(i=0; i<nranks; i++)
-        ranks[i] = i;
+    /* barrier and geometry setup */
 
-    bufsize = MAX_MSG_SIZE;
-    src_buffer = (int *) malloc(bufsize);
-    trg_buffer = (int *) malloc(bufsize);
+    /* used temporarily by both barrier protocols */
+    DCMF_Barrier_Configuration_t barrier_conf;
 
+    DCMF_CollectiveProtocol_t barrier_protocol;
     barrier_conf.protocol = DCMF_GI_BARRIER_PROTOCOL;
     barrier_conf.cb_geometry = getGeometry; 
     status = DCMF_Barrier_register( &barrier_protocol, &barrier_conf);
     assert( status == DCMF_SUCCESS );
 
+    DCMF_CollectiveProtocol_t lbarrier_protocol;
     barrier_conf.protocol = DCMF_LOCKBOX_BARRIER_PROTOCOL;
     barrier_conf.cb_geometry = getGeometry;
     status = DCMF_Barrier_register( &lbarrier_protocol, &barrier_conf);
     assert( status == DCMF_SUCCESS );
 
+    unsigned * ranks = (unsigned *) malloc(nranks * sizeof(int)); assert(ranks!=NULL);
+    for(int i=0; i<nranks; i++)
+        ranks[i] = i;
+
     DCMF_CollectiveProtocol_t  *barrier_ptr, *lbarrier_ptr;
-    barrier_ptr = &barrier_protocol;
+    barrier_ptr   = &barrier_protocol;
     lbarrier_ptr  = &lbarrier_protocol;
+
+    DCMF_CollectiveRequest_t crequest;
     status = DCMF_Geometry_initialize(&geometry, 0, ranks, nranks, &barrier_ptr, 1, &lbarrier_ptr, 1, &crequest, 0, 1);
     assert( status == DCMF_SUCCESS );
 
-    allreduce_conf.protocol = DCMF_TREE_ALLREDUCE_PROTOCOL;
+    /* allreduce setup */
+
+#if 0
+DCMF_TREE_ALLREDUCE_PROTOCOL                        Tree allreduce.  
+DCMF_TREE_PIPELINED_ALLREDUCE_PROTOCOL              Tree allreduce.  
+DCMF_TREE_DPUT_PIPELINED_ALLREDUCE_PROTOCOL         Tree allreduce.  
+DCMF_TORUS_BINOMIAL_ALLREDUCE_PROTOCOL              Torus binomial allreduce.  
+DCMF_TORUS_SHORT_BINOMIAL_ALLREDUCE_PROTOCOL        Torus binomial short allreduce.  
+DCMF_TORUS_ASYNC_BINOMIAL_ALLREDUCE_PROTOCOL        Torus binomial allreduce.  
+DCMF_TORUS_ASYNC_SHORT_BINOMIAL_ALLREDUCE_PROTOCOL  Torus binomial short async allreduce.  
+DCMF_TORUS_RECTANGLE_ALLREDUCE_PROTOCOL             Torus rectangle/binomial allreduce.  
+DCMF_TORUS_RECTANGLE_RING_ALLREDUCE_PROTOCOL        Torus rectangle/ring allreduce.  
+DCMF_TORUS_ASYNC_RECTANGLE_ALLREDUCE_PROTOCOL       Torus rectangle/binomial async allreduce.  
+DCMF_TORUS_ASYNC_RECTANGLE_RING_ALLREDUCE_PROTOCOL  Torus rectangle/ring async allreduce.  
+DCMF_TORUS_ASYNC_SHORT_RECTANGLE_ALLREDUCE_PROTOCOL Torus rectangle short async allreduce.
+#endif
+
+    /* used temporarily by both allreduce protocols */
+    DCMF_Allreduce_Configuration_t allreduce_conf;
+
+    DCMF_CollectiveProtocol_t allreduce_protocol1;
+    allreduce_conf.protocol = DCMF_TORUS_ASYNC_SHORT_RECTANGLE_ALLREDUCE_PROTOCOL;
     allreduce_conf.cb_geometry = getGeometry;
     allreduce_conf.reuse_storage = 1;
-    status = DCMF_Allreduce_register( &allreduce_protocol, &allreduce_conf);
+    status = DCMF_Allreduce_register( &allreduce_protocol1, &allreduce_conf);
     assert( status == DCMF_SUCCESS );
 
-    if (!DCMF_Geometry_analyze(&geometry, &allreduce_protocol))
+    if (!DCMF_Geometry_analyze(&geometry, &allreduce_protocol1))
     {
         printf("Not a supported geometry!! \n");
         fflush(stdout);
         return -1;
     }
 
+    DCMF_CollectiveProtocol_t allreduce_protocol2;
     allreduce_conf.protocol = DCMF_TORUS_BINOMIAL_ALLREDUCE_PROTOCOL;
     allreduce_conf.cb_geometry = getGeometry;
     allreduce_conf.reuse_storage = 1;
-    status = DCMF_Allreduce_register( &allreduce_notree_protocol, &allreduce_conf);
+    status = DCMF_Allreduce_register( &allreduce_protocol2, &allreduce_conf);
     assert( status == DCMF_SUCCESS );
 
-    if (!DCMF_Geometry_analyze(&geometry, &allreduce_notree_protocol))
+    if (!DCMF_Geometry_analyze(&geometry, &allreduce_protocol2))
     {
         printf("Not a supported geometry!! \n");
         fflush(stdout);
         return -1;
     }
 
+    /* allreduce_active would go in the nonblocking request, along with the DCMF request noted below */
+    volatile unsigned allreduce_active;
+
+    DCMF_Callback_t done_callback;
     done_callback.function = done;
     done_callback.clientdata = (void *) &allreduce_active;
 
@@ -153,38 +169,47 @@ int main()
         fflush(stdout);
     }
 
-    for (msgsize = sizeof(int); msgsize < MAX_MSG_SIZE; msgsize *= 2)
+    size_t bufsize = MAX_MSG_SIZE;
+    long long * src_buffer = (long long *) malloc(bufsize); assert(src_buffer!=NULL);
+    long long * trg_buffer = (long long *) malloc(bufsize); assert(trg_buffer!=NULL);
+
+    for (size_t msgsize = sizeof(long long); msgsize < MAX_MSG_SIZE; msgsize *= 2)
     {
         /*initializing buffer*/
-        for (i = 0; i < bufsize/sizeof(int); i++)
+        for (int i = 0; i < bufsize/sizeof(long long); i++)
         {
             src_buffer[i] = rank;
             trg_buffer[i] = 0;
         }
 
-        allreduce_active += 1;
+        allreduce_active = 1;
+
+        /* this state has to be on the heap in the nonblocking version because it must not
+           be deallocated until the collective has finished */
+        DCMF_CollectiveRequest_t crequest1;
 
         /*sum reduce operation*/
-        status = DCMF_Allreduce(&allreduce_protocol,
-                &crequest1,
-                done_callback,
-                DCMF_SEQUENTIAL_CONSISTENCY,
-                &geometry,
-                (char *) src_buffer,
-                (char *) trg_buffer,
-                msgsize/sizeof(int),
-                DCMF_SIGNED_INT,
-                DCMF_SUM);
+        status = DCMF_Allreduce(&allreduce_protocol1,
+                                &crequest1,
+                                done_callback,
+                                DCMF_RELAXED_CONSISTENCY,
+                                &geometry,
+                                (char *) src_buffer,
+                                (char *) trg_buffer,
+                                msgsize/sizeof(long long),
+                                DCMF_SIGNED_LONG_LONG,
+                                DCMF_SUM);
         assert( status == DCMF_SUCCESS );
 
+        /* this is what the nonblocking wait would do */
         while(allreduce_active > 0) DCMF_Messager_advance();
 
-        expected = (nranks-1)*(nranks)/2;
-        for (i = 0; i < msgsize/sizeof(int); i++)
+        long long expected = (nranks-1)*(nranks)/2;
+        for (int i = 0; i < msgsize/sizeof(long long); i++)
         {
             if (trg_buffer[i] - expected != 0)
             {
-                printf("[%d] Validation has failed Expected: %d, Actual: %d, i: %d \n",
+                printf("[%d] Validation has failed Expected: %lld, Actual: %lld, i: %d \n",
                         rank, expected, trg_buffer[i], i);
                 fflush(stdout);
                 exit(-1);
@@ -194,35 +219,39 @@ int main()
         printf("[%d] %d message sum allreduce successful \n", rank, msgsize);
         fflush(stdout);
 
-        for (i = 0; i < bufsize/sizeof(int); i++)
+        for (int i = 0; i < bufsize/sizeof(long long); i++)
         {
-            src_buffer[i] = 1;
+            src_buffer[i] = rank;
             trg_buffer[i] = 0;
         }
 
-        allreduce_active += 1;
+        allreduce_active = 1;
+
+        /* this state has to be on the heap in the nonblocking version because it must not
+           be deallocated until the collective has finished */
+        DCMF_CollectiveRequest_t crequest2;
 
         /*sum reduce operation*/
-        status = DCMF_Allreduce(&allreduce_notree_protocol,
-                &crequest2,
-                done_callback,
-                DCMF_SEQUENTIAL_CONSISTENCY,
-                &geometry,
-                (char *) src_buffer,
-                (char *) trg_buffer,
-                msgsize/sizeof(int),
-                DCMF_SIGNED_INT,
-                DCMF_PROD);
+        status = DCMF_Allreduce(&allreduce_protocol2,
+                                &crequest2,
+                                done_callback,
+                                DCMF_RELAXED_CONSISTENCY,
+                                &geometry,
+                                (char *) src_buffer,
+                                (char *) trg_buffer,
+                                msgsize/sizeof(long long),
+                                DCMF_SIGNED_LONG_LONG,
+                                DCMF_SUM);
         assert( status == DCMF_SUCCESS );
 
+        /* this is what the nonblocking wait would do */
         while ( allreduce_active > 0 ) DCMF_Messager_advance();
 
-        expected = 1;
-        for (i = 0; i < msgsize/sizeof(int); i++)
+        for (int i = 0; i < msgsize/sizeof(long long); i++)
         {
             if ( trg_buffer[i] - expected != 0 )
             {
-                printf("[%d] Validation has failed Expected: %d, Actual: %d, i: %d \n",
+                printf("[%d] Validation has failed Expected: %lld, Actual: %lld, i: %d \n",
                         rank, expected, trg_buffer[i], i);
                 fflush(stdout);
                 exit(-1);

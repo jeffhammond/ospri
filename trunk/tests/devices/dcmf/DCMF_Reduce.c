@@ -50,9 +50,10 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <osp.h>
+#include <assert.h>
+
 #include <dcmf.h>
-#include "dcmf_collectives.h"
+#include <dcmf_collectives.h>
 
 #define MAX_MSG_SIZE 1024*1024
 
