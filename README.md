@@ -1,4 +1,4 @@
-ospri
+OSPRI
 =====
 
 One-Sided Primitives
