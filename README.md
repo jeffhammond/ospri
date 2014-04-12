@@ -21,7 +21,7 @@ The corresponding Bibtex is:
    month = oct,
    year = {2012},
    location = {Santa Barbara, CA, USA},
-   url = {http://www.mcs.anl.gov/publications/paper_detail.php?id=1545},
+   url = {http://www.mcs.anl.gov/publication/ospri-optimized-one-sided-communication-runtime-leadership-class-machines},
 }
 ```
 
