@@ -101,6 +101,7 @@ geomprog_list[15] = 32767
 geomprog_list[16] = 65535 
 geomprog_list[17] = 131071 
 geomprog_list[18] = 262143 
+
 MPI_Group_incl of group_geomprog (geometric progression) from group_world 
 MPI_Comm_create of comm_geomprog from group_geomprog on MPI_COMM_WORLD 
 MEMORY INFORMATION: after MPI_Comm_create 
