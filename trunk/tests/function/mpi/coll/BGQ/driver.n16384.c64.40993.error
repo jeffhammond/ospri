@@ -1,8 +1,0 @@
-2012-11-26 07:05:22.138 (INFO ) [0x400013a8ad0] ibm.runjob.AbstractOptions: using properties file /bgsys/local/etc/bg.properties
-2012-11-26 07:05:22.140 (INFO ) [0x400013a8ad0] ibm.runjob.AbstractOptions: max open file descriptors: 524287
-2012-11-26 07:05:22.140 (INFO ) [0x400013a8ad0] ibm.runjob.AbstractOptions: core file limit: 18446744073709551615
-2012-11-26 07:05:22.141 (INFO ) [0x400013a8ad0] MIR-08000-7BFF1-16384:31823:ibm.runjob.client.options.Parser: set local socket to runjob_mux from properties file
-2012-11-26 07:06:01.337 (INFO ) [0x400013a8ad0] MIR-08000-7BFF1-16384:77017:ibm.runjob.client.Job: job 77017 started
-2012-11-26 07:32:49.033 (INFO ) [0x400013a8ad0] MIR-08000-7BFF1-16384:77017:ibm.runjob.client.Job: exited with status 0
-2012-11-26 07:32:49.033 (WARN ) [0x400013a8ad0] MIR-08000-7BFF1-16384:77017:ibm.runjob.client.Job: 22 RAS events
-2012-11-26 07:32:49.034 (WARN ) [0x400013a8ad0] MIR-08000-7BFF1-16384:77017:ibm.runjob.client.Job: most recent RAS event text: DDR Maintenance Correctable Error Summary : count=2 MCFIR error status:  [MEMORY_ECC_MARKING_STORE_UPDATED] BGQ: This bit is set when the memory ECC check logic has updated the marking store;

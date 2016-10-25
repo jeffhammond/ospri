@@ -1,8 +1,0 @@
-2012-10-06 11:38:53.900 (INFO ) [0x40001398ad0] ibm.runjob.AbstractOptions: using properties file /bgsys/local/etc/bg.properties
-2012-10-06 11:38:53.902 (INFO ) [0x40001398ad0] ibm.runjob.AbstractOptions: max open file descriptors: 131072
-2012-10-06 11:38:53.902 (INFO ) [0x40001398ad0] ibm.runjob.AbstractOptions: core file limit: 18446744073709551615
-2012-10-06 11:38:53.902 (INFO ) [0x40001398ad0] MIR-00000-73FF1-16384:58190:ibm.runjob.client.options.Parser: set local socket to runjob_mux from properties file
-2012-10-06 11:38:56.879 (INFO ) [0x40001398ad0] MIR-00000-73FF1-16384:63808:ibm.runjob.client.Job: job 63808 started
-2012-10-06 11:40:03.329 (INFO ) [0x40001398ad0] MIR-00000-73FF1-16384:63808:ibm.runjob.client.Job: exited with status 0
-2012-10-06 11:40:03.329 (WARN ) [0x40001398ad0] MIR-00000-73FF1-16384:63808:ibm.runjob.client.Job: 21 RAS events
-2012-10-06 11:40:03.329 (WARN ) [0x40001398ad0] MIR-00000-73FF1-16384:63808:ibm.runjob.client.Job: most recent RAS event text: ND Sender Retransmission Correctable Error : D+ count=17 

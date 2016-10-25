@@ -1,8 +1,0 @@
-2012-10-06 11:46:51.753 (INFO ) [0x40001398ad0] ibm.runjob.AbstractOptions: using properties file /bgsys/local/etc/bg.properties
-2012-10-06 11:46:51.754 (INFO ) [0x40001398ad0] ibm.runjob.AbstractOptions: max open file descriptors: 131072
-2012-10-06 11:46:51.754 (INFO ) [0x40001398ad0] ibm.runjob.AbstractOptions: core file limit: 18446744073709551615
-2012-10-06 11:46:51.755 (INFO ) [0x40001398ad0] MIR-00000-73FF1-16384:17918:ibm.runjob.client.options.Parser: set local socket to runjob_mux from properties file
-2012-10-06 11:46:53.916 (INFO ) [0x40001398ad0] MIR-00000-73FF1-16384:63809:ibm.runjob.client.Job: job 63809 started
-2012-10-06 11:47:26.380 (INFO ) [0x40001398ad0] MIR-00000-73FF1-16384:63809:ibm.runjob.client.Job: exited with status 0
-2012-10-06 11:47:26.381 (WARN ) [0x40001398ad0] MIR-00000-73FF1-16384:63809:ibm.runjob.client.Job: 20 RAS events
-2012-10-06 11:47:26.381 (WARN ) [0x40001398ad0] MIR-00000-73FF1-16384:63809:ibm.runjob.client.Job: most recent RAS event text: A BQL double bit error threshold was exceeded for Switch 1 Group EVEN and ODD

@@ -1,8 +1,0 @@
-2012-10-06 06:19:37.921 (INFO ) [0x40001398ad0] ibm.runjob.AbstractOptions: using properties file /bgsys/local/etc/bg.properties
-2012-10-06 06:19:37.922 (INFO ) [0x40001398ad0] ibm.runjob.AbstractOptions: max open file descriptors: 131072
-2012-10-06 06:19:37.922 (INFO ) [0x40001398ad0] ibm.runjob.AbstractOptions: core file limit: 18446744073709551615
-2012-10-06 06:19:37.923 (INFO ) [0x40001398ad0] MIR-04000-77FF1-0020-12288:42829:ibm.runjob.client.options.Parser: set local socket to runjob_mux from properties file
-2012-10-06 06:19:40.805 (INFO ) [0x40001398ad0] MIR-04000-77FF1-0020-12288:63795:ibm.runjob.client.Job: job 63795 started
-2012-10-06 06:20:23.895 (INFO ) [0x40001398ad0] MIR-04000-77FF1-0020-12288:63795:ibm.runjob.client.Job: exited with status 0
-2012-10-06 06:20:23.895 (WARN ) [0x40001398ad0] MIR-04000-77FF1-0020-12288:63795:ibm.runjob.client.Job: 81 RAS events
-2012-10-06 06:20:23.895 (WARN ) [0x40001398ad0] MIR-04000-77FF1-0020-12288:63795:ibm.runjob.client.Job: most recent RAS event text: DDR Correctable Error Summary : count=1 MCFIR error status:  [MEMORY_CE] This bit is set when a memory CE is detected on a non-maintenance memory read op;
